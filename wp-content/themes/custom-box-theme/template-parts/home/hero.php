@@ -38,7 +38,7 @@
 
         <!-- RIGHT IMAGE -->
         <div class="hero-image">
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1.png'); ?>" alt="Custom luxury product packaging box">
+            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1.png'); ?>" alt="Custom luxury product packaging box" width="666" height="374" decoding="async" fetchpriority="high">
         </div>
 
     </div>
@@ -73,6 +73,7 @@
                         src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/client-logos/' . $logo); ?>"
                         alt="Brand Logo"
                         loading="lazy"
+                        decoding="async"
                     >
                 <?php endforeach; ?>
             <?php endfor; ?>

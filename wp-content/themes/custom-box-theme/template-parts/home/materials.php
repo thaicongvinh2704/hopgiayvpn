@@ -27,7 +27,7 @@
 
             <!-- BIG LEFT -->
             <div class="material-card big">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rigid-Packaging.webp">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Rigid-Packaging.webp" alt="Rigid packaging material" loading="lazy" decoding="async">
                 <div class="card-overlay">
                     <strong>Rigid</strong>
                     <p>Luxury feel premium impact</p>
@@ -36,7 +36,7 @@
 
             <!-- TOP CENTER -->
             <div class="material-card wide">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/SBS-Paperboard-Packaging.webp">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/SBS-Paperboard-Packaging.webp" alt="SBS paperboard packaging material" loading="lazy" decoding="async">
                 <div class="card-overlay">
                     <strong>SBS Paperboard</strong>
                     <p>Perfect for high-quality print finishes</p>
@@ -45,7 +45,7 @@
 
             <!-- RIGHT -->
             <div class="material-card tall">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Kraft-Packaging.webp">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Kraft-Packaging.webp" alt="Kraft packaging material" loading="lazy" decoding="async">
                 <div class="card-overlay">
                     <strong>Kraft</strong>
                     <p>100% recyclable & natural appeal</p>
@@ -54,7 +54,7 @@
 
             <!-- BOTTOM LEFT -->
             <div class="material-card">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Cardboard-Packaging.webp">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Cardboard-Packaging.webp" alt="Cardboard packaging material" loading="lazy" decoding="async">
                 <div class="card-overlay">
                     <strong>Cardboard</strong>
                     <p>Lightweight & Economical</p>
@@ -63,7 +63,7 @@
 
             <!-- BOTTOM RIGHT -->
             <div class="material-card wide">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Corrugated-Packaging.webp">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Corrugated-Packaging.webp" alt="Corrugated packaging material" loading="lazy" decoding="async">
                 <div class="card-overlay">
                     <strong>Corrugated</strong>
                     <p>Ideal for shipping & eCommerce</p>

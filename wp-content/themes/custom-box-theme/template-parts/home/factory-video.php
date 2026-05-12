@@ -40,6 +40,16 @@
                 src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/factory-team showcase.jpg'); ?>"
                 alt="VPN Printing Factory team and production showcase"
                 loading="lazy"
+                decoding="async"
+            >
+        </div>
+
+        <div class="factory-certification-media">
+            <img
+                src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/vpn-packaging-iso-9001-certification-banner.jpg'); ?>"
+                alt="<?php esc_attr_e('VPN Packaging ISO 9001 certification banner', 'custom-box-theme'); ?>"
+                loading="lazy"
+                decoding="async"
             >
         </div>
     </div>

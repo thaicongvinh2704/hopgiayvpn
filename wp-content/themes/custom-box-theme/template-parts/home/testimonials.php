@@ -47,6 +47,7 @@
                                     src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/' . $review['image']); ?>"
                                     alt="<?php echo esc_attr($review['alt']); ?>"
                                     loading="lazy"
+                                    decoding="async"
                                 >
                             </div>
 

@@ -4,7 +4,7 @@
 
         <!-- LEFT IMAGE -->
         <div class="finishing-image">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gift-box.png" alt="Finishing">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gift-box.png" alt="Finishing" loading="lazy" decoding="async">
         </div>
 
         <!-- RIGHT CONTENT -->

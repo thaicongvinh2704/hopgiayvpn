@@ -1,5 +1,69 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+    const productGallery = document.querySelector("[data-product-gallery]");
+
+    if (productGallery) {
+        const slides = Array.from(productGallery.querySelectorAll(".product-gallery-slide"));
+        const thumbs = Array.from(productGallery.querySelectorAll(".product-gallery-thumb"));
+        const prevButton = productGallery.querySelector(".product-gallery-prev");
+        const nextButton = productGallery.querySelector(".product-gallery-next");
+        let galleryIndex = 0;
+        let galleryTimer = null;
+
+        const showGallerySlide = (nextIndex) => {
+            if (!slides.length) return;
+
+            galleryIndex = (nextIndex + slides.length) % slides.length;
+
+            slides.forEach((slide, index) => {
+                slide.classList.toggle("is-active", index === galleryIndex);
+            });
+
+            thumbs.forEach((thumb, index) => {
+                thumb.classList.toggle("is-active", index === galleryIndex);
+            });
+        };
+
+        const startGalleryTimer = () => {
+            if (galleryTimer || slides.length < 2) return;
+            galleryTimer = setInterval(() => {
+                showGallerySlide(galleryIndex + 1);
+            }, 3500);
+        };
+
+        const restartGalleryTimer = () => {
+            if (galleryTimer) {
+                clearInterval(galleryTimer);
+                galleryTimer = null;
+            }
+            startGalleryTimer();
+        };
+
+        thumbs.forEach((thumb, index) => {
+            thumb.addEventListener("click", () => {
+                showGallerySlide(index);
+                restartGalleryTimer();
+            });
+        });
+
+        if (prevButton) {
+            prevButton.addEventListener("click", () => {
+                showGallerySlide(galleryIndex - 1);
+                restartGalleryTimer();
+            });
+        }
+
+        if (nextButton) {
+            nextButton.addEventListener("click", () => {
+                showGallerySlide(galleryIndex + 1);
+                restartGalleryTimer();
+            });
+        }
+
+        showGallerySlide(0);
+        startGalleryTimer();
+    }
+
     const categoriesSection = document.querySelector(".categories-section");
     const categoriesMore = document.querySelector(".categories-more");
 
@@ -162,12 +226,112 @@ document.querySelectorAll(".faq-question").forEach(item => {
 document.addEventListener("DOMContentLoaded", function () {
 
     const toggle = document.querySelector(".menu-toggle");
+    const mobileToggle = document.querySelector(".mobile-menu-icon");
     const menu = document.querySelector(".nav-menu");
+    const navInner = document.querySelector(".nav-inner");
 
-    if (toggle && menu) {
-        toggle.addEventListener("click", function () {
-            menu.classList.toggle("active");
+    const setMenuState = (isOpen) => {
+        menu.classList.toggle("active", isOpen);
+        if (navInner) {
+            navInner.classList.toggle("is-open", isOpen);
+        }
+        if (toggle) {
+            toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        }
+        if (mobileToggle) {
+            mobileToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        }
+    };
+
+    const handleMenuToggle = () => {
+        const isOpen = !menu.classList.contains("active");
+        setMenuState(isOpen);
+    };
+
+    if (menu && (toggle || mobileToggle)) {
+        if (toggle) {
+            toggle.addEventListener("click", handleMenuToggle);
+        }
+
+        if (mobileToggle) {
+            mobileToggle.addEventListener("click", handleMenuToggle);
+        }
+
+        if (false) {
+            const isOpen = menu.classList.toggle("active");
+            if (navInner) {
+                navInner.classList.toggle("is-open", isOpen);
+            }
+            toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        }
+
+        menu.querySelectorAll("a").forEach(link => {
+            link.addEventListener("click", function () {
+                if (!window.matchMedia("(max-width: 768px)").matches) return;
+                setMenuState(false);
+            });
+        });
+
+        window.addEventListener("resize", function () {
+            if (window.matchMedia("(min-width: 769px)").matches) {
+                setMenuState(false);
+            }
         });
     }
 
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const toc = document.querySelector(".blog-toc");
+
+    if (toc) {
+        const tocToggle = toc.querySelector(".blog-toc-toggle");
+        const tocLinks = Array.from(toc.querySelectorAll(".blog-toc-link"));
+        const headings = tocLinks
+            .map(link => document.querySelector(link.getAttribute("href")))
+            .filter(Boolean);
+
+        if (tocToggle) {
+            tocToggle.addEventListener("click", function () {
+                const isOpen = toc.classList.toggle("is-open");
+                tocToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+            });
+        }
+
+        tocLinks.forEach(link => {
+            link.addEventListener("click", function () {
+                if (window.matchMedia("(max-width: 900px)").matches && tocToggle) {
+                    toc.classList.remove("is-open");
+                    tocToggle.setAttribute("aria-expanded", "false");
+                }
+            });
+        });
+
+        if ("IntersectionObserver" in window && headings.length) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (!entry.isIntersecting) return;
+
+                    tocLinks.forEach(link => link.classList.remove("is-active"));
+                    const activeLink = toc.querySelector(`.blog-toc-link[href="#${entry.target.id}"]`);
+                    if (activeLink) activeLink.classList.add("is-active");
+                });
+            }, {
+                rootMargin: "-20% 0px -70% 0px",
+                threshold: 0
+            });
+
+            headings.forEach(heading => observer.observe(heading));
+        }
+    }
+
+    document.querySelectorAll(".blog-faq-question").forEach(button => {
+        button.addEventListener("click", function () {
+            const item = button.closest(".blog-faq-item");
+            if (!item) return;
+
+            const isOpen = item.classList.toggle("is-open");
+            button.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        });
+    });
 });

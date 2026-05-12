@@ -3,17 +3,19 @@
     <div class="container">
 
         <!-- HEADER -->
-        <div class="brand-header">
-            <h2>Build Your <span>Own Brand</span></h2>
+       <div class="brand-header">
+    <h2>Build Your <span>Own Brand</span></h2>
 
-            <p class="subtitle">Packaging That Defines Your Business Identity</p>
+    <p class="subtitle">
+        Packaging That Defines Your Business Identity
+    </p>
 
-            <p class="desc">
-                Your packaging is more than protection — it’s the first impression customers remember.
-                Custom Boxes Inc. helps brands tell their story through design, quality, and craftsmanship
-                that convert products into memorable experiences.
-            </p>
-        </div>
+    <p class="desc">
+        Packaging is more than product protection — it is the first impression customers remember about your brand.
+        VPN Packaging helps businesses create premium packaging solutions through professional design,
+        high-quality printing, and refined craftsmanship that transform products into memorable brand experiences.
+    </p>
+</div>
 
         <!-- CARDS -->
         <div class="brand-grid">

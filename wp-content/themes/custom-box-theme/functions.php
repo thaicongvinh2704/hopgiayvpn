@@ -7,8 +7,11 @@
 
 $custom_box_inc_files = array(
     'inc/setup.php',
+    'inc/dev.php',
     'inc/enqueue.php',
     'inc/admin-category-fields.php',
+    'inc/quote-form-handler.php',
+    'inc/woocommerce.php',
 );
 
 foreach ($custom_box_inc_files as $custom_box_inc_file) {

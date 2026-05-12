@@ -12,7 +12,7 @@
             <div class="contact-item">
                 <i class="fas fa-map-marker-alt"></i>
                 <strong>Address</strong>
-                <p>20 Street No.2, Binh Tri Dong B Ward,<br>Binh Tan District, Ho Chi Minh City, Vietnam</p>
+                <p>VPN Printing Factory<br>1032 An Phu Tay, Hamlet 4, Hung Long Commune,<br>Binh Chanh District, Ho Chi Minh City, Vietnam</p>
             </div>
 
             <div class="contact-item">
@@ -39,15 +39,16 @@
 
             <!-- COL 1 -->
             <div class="footer-col">
-                <h4>Serving All Across the USA</h4>
-                <p>We proudly serve businesses in all 50 states.</p>
+              <h4>Premium Packaging Factory</h4>
+<p>
+VPN Printing Factory delivers custom packaging, paper bags, and printed accessories tailored for modern brands worldwide.
+</p>
 
                 <div class="footer-social">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-youtube"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="social-facebook" href="https://www.facebook.com/people/Vietnam-Paper-Box-Factory" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a class="social-youtube" href="https://www.youtube.com/@VietnamPaperBoxFactory" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a class="social-tiktok" href="https://www.tiktok.com/@paperbox84" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a class="social-linkedin" href="https://www.linkedin.com/company/vpn-advertising-co/" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
                 </div>
 
                 <!-- PAYMENT -->
@@ -56,67 +57,72 @@
 
                     <div class="payment-grid">
                         <div class="payment-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/paypal.png">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/paypal.png" alt="PayPal" loading="lazy" decoding="async">
                         </div>
                         <div class="payment-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/master-card.png">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/master-card.png" alt="Mastercard" loading="lazy" decoding="async">
                         </div>
                         <div class="payment-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/visa.png">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/visa.png" alt="Visa" loading="lazy" decoding="async">
                         </div>
                         <div class="payment-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/maestro.png">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/maestro.png" alt="Maestro" loading="lazy" decoding="async">
                         </div>
                         <div class="payment-item">
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/bank.png">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/bank.png" alt="Bank transfer" loading="lazy" decoding="async">
                         </div>
                     </div>
                 </div>
             </div> <!-- ❗ THIẾU cái này trước đó -->
 
             <!-- COL 2 -->
-            <div class="footer-col">
-                <h4>Contact Us</h4>
-                <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Get Price Quote</a></li>
-                    <li><a href="#">Read FAQs</a></li>
-                    <li><a href="#">Our Blogs</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
-                </ul>
-            </div>
+          <div class="footer-col">
+    <h4>Quick Links</h4>
 
-            <!-- COL 3 -->
-            <div class="footer-col">
-                <h4>Our Custom Packaging</h4>
-                <ul>
-                    <li><a href="#">Makeup Packaging</a></li>
-                    <li><a href="#">Confectionery Packaging</a></li>
-                    <li><a href="#">Pet Products Packaging</a></li>
-                    <li><a href="#">Retail Display Boxes</a></li>
-                    <li><a href="#">Custom Presentation Boxes</a></li>
-                    <li><a href="#">Product Packaging Boxes</a></li>
-                    <li><a href="#">Eco-Friendly Boxes</a></li>
-                </ul>
-            </div>
+    <ul>
+        <li><a href="<?php echo esc_url(home_url('/about/')); ?>">About Us</a></li>
+        <li><a href="<?php echo esc_url(home_url('/contact/')); ?>">Contact Us</a></li>
+        <li><a href="<?php echo esc_url(home_url('/#quote')); ?>">Request a Quote</a></li>
+        <li><a href="<?php echo esc_url(home_url('/#faq')); ?>">Read FAQs</a></li>
+        <li><a href="#">Our Blogs</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms & Conditions</a></li>
+    </ul>
+</div>
 
-            <!-- COL 4 -->
-            <div class="footer-col">
-                <h4>Why Choose Us</h4>
-                <ul>
-                    <li>Total Custom Packaging Control</li>
-                    <li>Free Expert Design</li>
-                    <li>Instant Quotes</li>
-                    <li>Made in USA</li>
-                    <li>Eco-Friendly Materials</li>
-                    <li>No Setup Fees</li>
-                    <li>Transparent Pricing</li>
-                </ul>
-            </div>
+<!-- COL 3 -->
+<div class="footer-col">
 
-        </div>
+    <h4>Our Packaging Solutions</h4>
+
+    <ul>
+        <li><a href="#">Cosmetic Packaging</a></li>
+        <li><a href="#">Luxury Rigid Boxes</a></li>
+        <li><a href="#">Jewelry Packaging</a></li>
+        <li><a href="#">Custom Paper Bags</a></li>
+        <li><a href="#">Gift Packaging Boxes</a></li>
+        <li><a href="#">Retail Packaging</a></li>
+        <li><a href="#">Eco-Friendly Packaging</a></li>
+    </ul>
+
+</div>
+
+<!-- COL 4 -->
+<div class="footer-col">
+
+    <h4>Why Choose VPN Packaging</h4>
+
+    <ul>
+        <li>Direct Factory Production</li>
+        <li>Premium Packaging Expertise</li>
+        <li>Custom Design & Manufacturing</li>
+        <li>Made in Vietnam</li>
+        <li>Eco-Friendly Materials</li>
+        <li>Fast Production Turnaround</li>
+        <li>Transparent Factory Pricing</li>
+    </ul>
+
+</div>
 
     </div>
 

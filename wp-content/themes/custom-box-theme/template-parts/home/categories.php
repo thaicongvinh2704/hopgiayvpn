@@ -11,12 +11,12 @@
         <div class="categories-grid">
 
             <?php
-            $parent_category = get_term_by('name', 'Custom Packaging Boxes', 'category');
+            $parent_category = get_term_by('name', 'Custom Packaging Boxes', 'product_cat');
             $packaging_categories = array();
 
             if ($parent_category && !is_wp_error($parent_category)) {
                 $packaging_categories = get_terms(array(
-                    'taxonomy'   => 'category',
+                    'taxonomy'   => 'product_cat',
                     'parent'     => $parent_category->term_id,
                     'hide_empty' => false,
                     'orderby'    => 'term_id',
@@ -40,7 +40,10 @@
 
             if (!empty($packaging_categories) && !is_wp_error($packaging_categories)) :
                 foreach ($packaging_categories as $category) :
-                    $image_id = (int) get_term_meta($category->term_id, 'custom_box_category_image_id', true);
+                    $image_id = (int) get_term_meta($category->term_id, 'thumbnail_id', true);
+                    if (!$image_id) {
+                        $image_id = (int) get_term_meta($category->term_id, 'custom_box_category_image_id', true);
+                    }
                     $image_url = $image_id ? wp_get_attachment_image_url($image_id, 'medium') : get_template_directory_uri() . '/assets/images/custom-cardboard-boxes.webp';
                     $category_link = get_term_link($category);
 
@@ -51,7 +54,7 @@
 
                 <a class="category-card" href="<?php echo esc_url($category_link); ?>">
                     <div class="card-img">
-                        <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($category->name); ?>" loading="lazy">
+                        <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($category->name); ?>" loading="lazy" decoding="async">
                     </div>
 
                     <p class="card-title">

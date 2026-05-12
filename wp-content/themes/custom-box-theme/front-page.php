@@ -7,10 +7,8 @@
     <?php get_template_part('template-parts/home/trust'); ?>
 
     <?php get_template_part('template-parts/home/company-profile'); ?>
-    <!-- Đặt banner Company Profile / Why Choose Us ở đây -->
 
     <?php get_template_part('template-parts/home/factory-video'); ?>
-    <!-- Đặt ảnh 1: Production Capacity + video ở đây -->
 
     <?php get_template_part('template-parts/home/categories'); ?>
 
@@ -24,17 +22,11 @@
 
     <?php get_template_part('template-parts/home/brand'); ?>
 
-    <?php get_template_part('template-parts/home/team'); ?>
-    <!-- Đặt ảnh 2: đội ngũ văn phòng ở đây -->
-
     <?php get_template_part('template-parts/home/industries'); ?>
 
     <?php get_template_part('template-parts/home/benefits'); ?>
 
     <?php get_template_part('template-parts/home/core-values'); ?>
-
-    <?php get_template_part('template-parts/home/production-staff'); ?>
-    <!-- Đặt ảnh 3: nhân viên xưởng / kỹ thuật ở đây -->
 
     <?php get_template_part('template-parts/home/partner'); ?>
 
