@@ -52,6 +52,195 @@ body.page-template-page-landing-packaging .nav-menu a:hover {
     grid-template-columns: minmax(0, 1fr) minmax(360px, 520px);
 }
 
+.landing-wow {
+    background: #f5f8fb;
+    padding: 34px 0 48px;
+}
+
+.landing-wow-grid {
+    align-items: center;
+    display: grid;
+    gap: 48px;
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 500px);
+}
+
+.landing-wow .landing-eyebrow,
+.landing-wow .landing-hero h1 {
+    color: #ffffff;
+}
+
+.landing-wow .landing-hero-copy h1,
+.landing-wow .landing-hero-copy p {
+    color: #ffffff;
+}
+
+.landing-wow .landing-hero-copy p {
+    color: rgba(255, 255, 255, 0.84);
+}
+
+.landing-wow .btn-outline {
+    border-color: rgba(255, 255, 255, 0.72);
+    color: #ffffff;
+}
+
+.landing-wow-media {
+    position: relative;
+}
+
+.landing-wow-media img {
+    aspect-ratio: 4 / 3;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
+    object-fit: contain;
+    padding: 24px;
+    width: 100%;
+}
+
+.landing-wow-note {
+    background: #ffffff;
+    border-left: 5px solid #f58220;
+    border-radius: 7px;
+    bottom: 24px;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
+    left: -28px;
+    max-width: 300px;
+    padding: 18px 20px;
+    position: absolute;
+}
+
+.landing-wow-note strong,
+.landing-wow-note span {
+    display: block;
+}
+
+.landing-wow-note strong {
+    color: #0b2f57;
+    font-size: 17px;
+    margin-bottom: 5px;
+}
+
+.landing-wow-note span {
+    color: #516173;
+    line-height: 1.45;
+}
+
+.landing-banner-frame {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 24px 70px rgba(11, 47, 87, 0.14);
+    cursor: pointer;
+    display: block;
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.landing-banner-frame:hover,
+.landing-banner-frame:focus-visible {
+    box-shadow: 0 28px 80px rgba(11, 47, 87, 0.18);
+    transform: translateY(-2px);
+}
+
+.landing-banner-frame img {
+    display: block;
+    width: 100%;
+}
+
+.landing-banner-copy {
+    align-items: center;
+    display: grid;
+    gap: 18px 32px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    margin-top: 28px;
+}
+
+.landing-banner-copy .landing-eyebrow,
+.landing-banner-copy h1,
+.landing-banner-copy p {
+    grid-column: 1;
+}
+
+.landing-banner-copy .landing-eyebrow {
+    color: #f58220;
+}
+
+.landing-banner-copy h1 {
+    color: #0b2f57;
+    font-size: clamp(34px, 4vw, 52px);
+    max-width: 860px;
+}
+
+.landing-banner-copy p {
+    color: #516173;
+    margin: 0;
+    max-width: 780px;
+}
+
+.landing-banner-copy .btn-outline {
+    border-color: #0b2f57;
+    color: #0b2f57;
+}
+
+.landing-banner-copy .landing-hero-actions {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    justify-content: flex-end;
+}
+
+.landing-banner-copy .landing-proof-row {
+    grid-column: 1 / -1;
+}
+
+.landing-banner-copy .landing-proof-row span {
+    background: #ffffff;
+    border-color: #dbe6f2;
+    color: #516173;
+}
+
+.landing-banner-copy .landing-proof-row strong {
+    color: #0b2f57;
+}
+
+.landing-soft-cta,
+.landing-small-cta {
+    background: #ffffff;
+    border-bottom: 1px solid #dfe7ef;
+    border-top: 1px solid #dfe7ef;
+}
+
+.landing-soft-cta-inner,
+.landing-small-cta-inner {
+    align-items: center;
+    display: flex;
+    gap: 18px;
+    justify-content: space-between;
+    padding: 22px 0;
+}
+
+.landing-soft-cta span {
+    color: #0b2f57;
+    font-size: 18px;
+    font-weight: 850;
+}
+
+.landing-soft-cta a {
+    color: #f58220;
+    font-weight: 850;
+    text-decoration: none;
+}
+
+.landing-small-cta {
+    background: #fff8ef;
+}
+
+.landing-small-cta h2 {
+    color: #0b2f57;
+    font-size: 26px;
+    line-height: 1.2;
+    margin: 0;
+}
+
 .landing-eyebrow {
     color: #f58220;
     display: inline-flex;
@@ -109,11 +298,11 @@ body.page-template-page-landing-packaging .nav-menu a:hover {
 }
 
 .landing-proof-row span {
-    background: rgba(255, 255, 255, 0.82);
-    border: 1px solid #dbe6f2;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.24);
     border-radius: 8px;
-    box-shadow: 0 14px 30px rgba(12, 47, 87, 0.08);
-    color: #516173;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+    color: rgba(255, 255, 255, 0.78);
     display: flex;
     flex-direction: column;
     gap: 3px;
@@ -122,7 +311,7 @@ body.page-template-page-landing-packaging .nav-menu a:hover {
 }
 
 .landing-proof-row strong {
-    color: #0b2f57;
+    color: #ffffff;
     font-size: 25px;
     line-height: 1;
 }
@@ -382,6 +571,127 @@ body.page-template-page-landing-packaging .nav-menu a:hover {
     align-items: flex-start;
 }
 
+.landing-mini-form-section {
+    background: #0b2f57;
+    color: #ffffff;
+}
+
+.landing-mini-form-grid {
+    align-items: center;
+    display: grid;
+    gap: 34px;
+    grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1fr);
+}
+
+.landing-mini-form-section h2,
+.landing-mini-form-section p {
+    color: #ffffff;
+}
+
+.landing-mini-form-section p {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 17px;
+    line-height: 1.65;
+    max-width: 620px;
+}
+
+.landing-mini-form {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.2);
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 22px;
+}
+
+.landing-mini-form input,
+.landing-mini-form button {
+    min-height: 48px;
+    width: 100%;
+}
+
+.landing-mini-form input {
+    border: 1px solid #d8e4eb;
+    border-radius: 6px;
+    color: #14213d;
+    font-size: 14px;
+    padding: 0 14px;
+}
+
+.landing-mini-form input:first-of-type,
+.landing-mini-form button {
+    grid-column: 1 / -1;
+}
+
+.landing-pain-points {
+    background: #f5f8fb;
+}
+
+.landing-pain-grid,
+.landing-testimonial-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.landing-pain-grid article,
+.landing-testimonial-grid article {
+    background: #ffffff;
+    border: 1px solid #dfe7ef;
+    border-radius: 8px;
+    padding: 24px;
+}
+
+.landing-pain-grid i {
+    color: #f58220;
+    font-size: 24px;
+    margin-bottom: 16px;
+}
+
+.landing-pain-grid h3 {
+    color: #0b2f57;
+    font-size: 19px;
+    margin: 0 0 10px;
+}
+
+.landing-pain-grid p,
+.landing-testimonial-grid p {
+    color: #566779;
+    line-height: 1.65;
+    margin: 0;
+}
+
+.landing-testimonials {
+    background: #ffffff;
+}
+
+.landing-testimonial-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.landing-stars {
+    color: #f58220;
+    font-size: 16px;
+    margin-bottom: 14px;
+}
+
+.landing-testimonial-grid strong,
+.landing-testimonial-grid span {
+    display: block;
+}
+
+.landing-testimonial-grid strong {
+    color: #0b2f57;
+    margin-top: 18px;
+}
+
+.landing-testimonial-grid span {
+    color: #748292;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
 .landing-faq-grid {
     display: grid;
     gap: 18px;
@@ -422,21 +732,56 @@ body.page-template-page-landing-packaging .nav-menu a:hover {
 
 @media (max-width: 1024px) {
     .landing-hero-grid,
+    .landing-wow-grid,
     .landing-factory-grid,
-    .landing-options-grid {
+    .landing-options-grid,
+    .landing-mini-form-grid {
         grid-template-columns: 1fr;
     }
 
     .landing-trust-grid,
     .landing-category-grid,
-    .landing-process-list {
+    .landing-process-list,
+    .landing-pain-grid,
+    .landing-testimonial-grid {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .landing-wow {
+        min-height: auto;
+    }
+
+    .landing-banner-copy {
+        align-items: flex-start;
+        grid-template-columns: 1fr;
+    }
+
+    .landing-banner-copy .landing-hero-actions {
+        grid-column: 1;
+        grid-row: auto;
+        justify-content: flex-start;
     }
 }
 
 @media (max-width: 680px) {
     .landing-hero {
         padding: 48px 0 36px;
+    }
+
+    .landing-wow {
+        padding: 22px 0 38px;
+    }
+
+    .landing-wow-note {
+        left: 14px;
+        right: 14px;
+        max-width: none;
+    }
+
+    .landing-soft-cta-inner,
+    .landing-small-cta-inner {
+        align-items: flex-start;
+        flex-direction: column;
     }
 
     .landing-section {
@@ -451,7 +796,10 @@ body.page-template-page-landing-packaging .nav-menu a:hover {
     }
 
     .landing-proof-row,
-    .landing-faq-grid {
+    .landing-faq-grid,
+    .landing-mini-form,
+    .landing-pain-grid,
+    .landing-testimonial-grid {
         grid-template-columns: 1fr;
     }
 

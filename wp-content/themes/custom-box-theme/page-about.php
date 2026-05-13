@@ -14,8 +14,8 @@ $quote_url = home_url('/#quote');
         <div class="container about-hero-grid">
             <div class="about-hero-content">
                 <div class="about-eyebrow">Packaging Manufacturer + Brand Partner</div>
-                <h1>Premium Paper Packaging Factory for Modern Brands</h1>
-                <p>VPN specializes in high-quality custom paper boxes, rigid boxes, paper bags, and packaging solutions for cosmetic, retail, gift, and luxury brands worldwide.</p>
+                <h1>About VPN Packaging Factory | Paper Box Manufacturer in Vietnam</h1>
+                <p>Learn more about VPN Packaging Factory, a Vietnam-based paper box manufacturer specializing in custom rigid boxes, gift boxes, cosmetic packaging, and factory-direct packaging solutions for global brands and wholesalers.</p>
                 <div class="about-hero-actions">
                     <a class="btn-primary" href="#about-factory">Explore Our Factory</a>
                     <a class="btn-outline" href="<?php echo esc_url($quote_url); ?>">Request Quotation</a>
@@ -144,8 +144,8 @@ $quote_url = home_url('/#quote');
                     array('Gift Boxes', 'luxury-rigid-gift-boxes', 'gift-box2.jpg'),
                     array('Jewelry & Watch Boxes', 'watch-packaging-boxes', 'Rigid-Packaging.webp'),
                     array('Paper Tube Boxes', 'custom-paper-tube-packaging-boxes', 'Kraft-Packaging.webp'),
+                    array('Luxury Wine Bottle Packaging Boxes', 'luxury-wine-bottle-packaging-boxes', 'gift-box2.jpg'),
                     array('Pizza Packaging Boxes', 'pizza-packaging-boxes', 'Takeout-Boxes_1758880241.jpg'),
-                    array('Luxury Watch Boxes', 'luxury-watch-packaging-boxes', 'product-banner1.png'),
                     array('Chocolate Gift Boxes', 'custom-chocolate-gift-boxes', 'Cardboard-Packaging.webp'),
                     array('Mooncake Gift Boxes', 'mooncake-gift-packaging-boxes', 'SBS-Paperboard-Packaging.webp'),
                 );

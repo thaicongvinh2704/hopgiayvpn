@@ -9,7 +9,7 @@ function custom_box_enqueue_category_image_admin($hook) {
     }
 
     $screen = get_current_screen();
-    if (!$screen || 'category' !== $screen->taxonomy) {
+    if (!$screen || !in_array($screen->taxonomy, array('category', 'product_cat'), true)) {
         return;
     }
 
@@ -76,6 +76,7 @@ function custom_box_category_image_add_field() {
     <?php
 }
 add_action('category_add_form_fields', 'custom_box_category_image_add_field');
+add_action('product_cat_add_form_fields', 'custom_box_category_image_add_field');
 
 function custom_box_category_image_edit_field($term) {
     $image_id = (int) get_term_meta($term->term_id, 'custom_box_category_image_id', true);
@@ -110,6 +111,7 @@ function custom_box_category_image_edit_field($term) {
     <?php
 }
 add_action('category_edit_form_fields', 'custom_box_category_image_edit_field');
+add_action('product_cat_edit_form_fields', 'custom_box_category_image_edit_field');
 
 function custom_box_save_category_image($term_id) {
     if (!isset($_POST['custom_box_category_image_id'])) {
@@ -126,6 +128,8 @@ function custom_box_save_category_image($term_id) {
 }
 add_action('created_category', 'custom_box_save_category_image');
 add_action('edited_category', 'custom_box_save_category_image');
+add_action('created_product_cat', 'custom_box_save_category_image');
+add_action('edited_product_cat', 'custom_box_save_category_image');
 
 function custom_box_save_category_featured($term_id) {
     if (!empty($_POST['custom_box_category_featured'])) {
@@ -137,6 +141,8 @@ function custom_box_save_category_featured($term_id) {
 }
 add_action('created_category', 'custom_box_save_category_featured');
 add_action('edited_category', 'custom_box_save_category_featured');
+add_action('created_product_cat', 'custom_box_save_category_featured');
+add_action('edited_product_cat', 'custom_box_save_category_featured');
 
 function custom_box_category_image_columns($columns) {
     $new_columns = array();
@@ -153,6 +159,7 @@ function custom_box_category_image_columns($columns) {
     return $new_columns;
 }
 add_filter('manage_edit-category_columns', 'custom_box_category_image_columns');
+add_filter('manage_edit-product_cat_columns', 'custom_box_category_image_columns');
 
 function custom_box_category_image_column_content($content, $column_name, $term_id) {
     if ('custom_box_category_image' !== $column_name) {
@@ -173,3 +180,4 @@ function custom_box_category_image_column_content($content, $column_name, $term_
     ));
 }
 add_filter('manage_category_custom_column', 'custom_box_category_image_column_content', 10, 3);
+add_filter('manage_product_cat_custom_column', 'custom_box_category_image_column_content', 10, 3);

@@ -12,13 +12,13 @@
 
             <!-- Headline -->
             <h1>
-                VPN Printing Factory <br>
-                <span class="highlight">Factory-Direct Pricing</span>
+                VPN Paper Box Manufacturer <br>
+                <span class="highlight">Custom Paper Boxes Factory</span>
             </h1>
 
             <!-- Subtext -->
             <p>
-                In-house production • No middlemen • Cost-effective solutions for your business
+                VPN Packaging Factory is a Vietnam-based custom paper box manufacturer specializing in rigid boxes, gift boxes, cosmetic packaging, and factory-direct packaging solutions for global brands and wholesalers.
             </p>
 
             <!-- Features -->

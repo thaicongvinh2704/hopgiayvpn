@@ -105,7 +105,7 @@ $factory_three = vpn_company_profile_image('anh-nha-may-3', 'product-banner1.png
                 <div class="vpn-profile-bottom">
                     <h2>PRODUCT CATEGORY</h2>
                     <p>Packaging and printing solutions that add value to your brand</p>
-                    <a href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/')); ?>">GET CATALOG &gt;&gt;</a>
+                    <a href="<?php echo esc_url('https://online.fliphtml5.com/ibmst/ybfa/index.html#p=4'); ?>" target="_blank" rel="noopener">GET CATALOG &gt;&gt;</a>
                 </div>
             </div>
         </div>

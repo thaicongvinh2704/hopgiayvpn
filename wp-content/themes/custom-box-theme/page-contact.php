@@ -11,7 +11,7 @@ $theme_uri = get_template_directory_uri();
 $phone_display = '(+84) 933 102 653';
 $phone_link = 'tel:+84933102653';
 $email = 'paperbox@hopgiayvpn.com';
-$factory_name = 'Xưởng In VPN';
+$factory_name = 'VPN Paper Box Factory';
 $address = '1032 An Phu Tay, Hamlet 4, Hung Long Commune, Binh Chanh District, Ho Chi Minh City, Vietnam';
 $map_url = 'https://www.google.com/maps/place/X%C6%B0%E1%BB%9Fng+In+VPN/@10.6610408,106.6027949,16.5z/data=!4m14!1m7!3m6!1s0x31753300767fbee3:0x57937201bb84acb2!2zWMaw4bufbmcgSW4gVlBO!8m2!3d10.6604288!4d106.6085237!16s%2Fg%2F11ldlz6hl_!3m5!1s0x31753300767fbee3:0x57937201bb84acb2!8m2!3d10.6604288!4d106.6085237!16s%2Fg%2F11ldlz6hl_?entry=ttu&g_ep=EgoyMDI2MDUwNi4wIKXMDSoASAFQAw%3D%3D';
 $map_embed_url = 'https://www.google.com/maps?q=10.6604288,106.6085237&z=17&output=embed';
@@ -21,7 +21,7 @@ $map_embed_url = 'https://www.google.com/maps?q=10.6604288,106.6085237&z=17&outp
     <section class="contact-hero">
         <div class="container contact-hero-grid">
             <div class="contact-hero-copy">
-                <span class="contact-kicker">Contact VPN Packaging Factory</span>
+                <span class="contact-kicker">Contact VPN Paper Box Factory</span>
                 <h1>Talk to a Real Packaging Manufacturer</h1>
                 <p>Send your packaging brief, artwork, quantity, or product idea. Our factory team will help you confirm structure, material, finishing, pricing, sampling, and production timeline.</p>
                 <div class="contact-hero-actions">
@@ -112,7 +112,7 @@ $map_embed_url = 'https://www.google.com/maps?q=10.6604288,106.6085237&z=17&outp
             </div>
             <div class="contact-map">
                 <iframe
-                    title="VPN Packaging Factory location map"
+                    title="VPN Paper Box Factory location map"
                     src="<?php echo esc_url($map_embed_url); ?>"
                     loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade"

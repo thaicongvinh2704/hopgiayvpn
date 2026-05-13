@@ -8,15 +8,18 @@ defined('ABSPATH') || exit;
 $current_term = isset($args['current_term']) ? $args['current_term'] : null;
 $archive_title = isset($args['archive_title']) ? $args['archive_title'] : '';
 $archive_description = isset($args['archive_description']) ? $args['archive_description'] : '';
+$products_url = function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
 ?>
 
 <section class="product-archive-hero product-category-landing-hero">
     <div class="container">
         <div class="product-archive-breadcrumb">
             <a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'custom-box-theme'); ?></a>
-            <span><?php esc_html_e('Products', 'custom-box-theme'); ?></span>
+            <a href="<?php echo esc_url($products_url); ?>"><?php esc_html_e('Products', 'custom-box-theme'); ?></a>
             <?php if ($current_term && !is_wp_error($current_term)) : ?>
                 <span><?php echo esc_html($current_term->name); ?></span>
+            <?php else : ?>
+                <span><?php echo esc_html($archive_title); ?></span>
             <?php endif; ?>
         </div>
 

@@ -33,6 +33,7 @@ function custom_box_enqueue_assets() {
     $about_css_path = get_template_directory() . '/assets/css/about.css';
     $contact_css_path = get_template_directory() . '/assets/css/contact.css';
     $landing_css_path = get_template_directory() . '/assets/css/landing.css';
+    $landing_two_css_path = get_template_directory() . '/assets/css/landing-two.css';
     $responsive_css_path = get_template_directory() . '/assets/css/responsive.css';
     $main_js_path = get_template_directory() . '/assets/js/main.js';
 
@@ -90,6 +91,15 @@ function custom_box_enqueue_assets() {
         );
     }
 
+    if (is_page_template('page-landing-packaging-two.php') || is_page('packaging-landing-two')) {
+        wp_enqueue_style(
+            'landing-two-style',
+            get_template_directory_uri() . '/assets/css/landing-two.css',
+            array('main-style', 'responsive-style'),
+            file_exists($landing_two_css_path) ? filemtime($landing_two_css_path) : '1.0'
+        );
+    }
+
     wp_enqueue_script(
         'main-js',
         get_template_directory_uri() . '/assets/js/main.js',
@@ -130,7 +140,7 @@ function custom_box_dequeue_non_critical_assets() {
         wp_dequeue_script('wc-order-attribution');
     }
 
-    if (is_front_page() || is_page(array('about', 'contact', 'packaging-landing', 'products'))) {
+    if (is_front_page() || is_page(array('about', 'contact', 'packaging-landing', 'packaging-landing-two', 'products'))) {
         wp_dequeue_style('wp-block-library');
         wp_dequeue_style('classic-theme-styles');
         wp_dequeue_style('global-styles');
@@ -196,3 +206,15 @@ function custom_box_non_blocking_styles($html, $handle, $href, $media) {
         . '<noscript><link rel="stylesheet" href="' . $href . '" media="all"></noscript>' . "\n";
 }
 add_filter('style_loader_tag', 'custom_box_non_blocking_styles', 10, 4);
+
+function custom_box_theme_favicon() {
+    $favicon_url = get_template_directory_uri() . '/assets/images/favicon.jpg';
+
+    printf(
+        '<link rel="icon" href="%1$s" type="image/jpeg">' . "\n"
+        . '<link rel="shortcut icon" href="%1$s" type="image/jpeg">' . "\n"
+        . '<link rel="apple-touch-icon" href="%1$s">' . "\n",
+        esc_url($favicon_url)
+    );
+}
+add_action('wp_head', 'custom_box_theme_favicon', 2);

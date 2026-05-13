@@ -55,7 +55,7 @@ if ($current_term && !is_wp_error($current_term)) {
 }
 
 if (is_shop() && $parent_term && !is_wp_error($parent_term)) {
-    $archive_title = __('All Packaging Products', 'custom-box-theme');
+    $archive_title = __('Custom Packaging Boxes Manufacturer', 'custom-box-theme');
     $archive_description = __('Explore all custom packaging products available for branded presentation, product protection, and flexible production requirements.', 'custom-box-theme');
     $child_categories = $sidebar_categories;
 }

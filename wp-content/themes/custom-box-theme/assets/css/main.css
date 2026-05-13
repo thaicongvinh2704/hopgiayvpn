@@ -3193,6 +3193,8 @@ html {
 
 /* RIGHT ITEMS */
 .values-items {
+    --value-dot-size: 36px;
+    --value-dot-center: calc(var(--value-dot-size) / 2);
     display: flex;
     width: 70%;
     justify-content: space-between;
@@ -3203,11 +3205,12 @@ html {
 .values-items::before {
     content: "";
     position: absolute;
-    top: 20px;
-    left: 0;
-    right: 0;
+    top: var(--value-dot-center);
+    left: var(--value-dot-center);
+    right: var(--value-dot-center);
     height: 1px;
     background: rgba(255,255,255,0.3);
+    transform: translateY(-50%);
 }
 
 /* ITEM */
@@ -3219,8 +3222,8 @@ html {
 
 /* ICON TRÃ’N */
 .value-item .icon {
-    width: 36px;
-    height: 36px;
+    width: var(--value-dot-size);
+    height: var(--value-dot-size);
     border: 2px solid #fff;
     border-radius: 50%;
     line-height: 32px;

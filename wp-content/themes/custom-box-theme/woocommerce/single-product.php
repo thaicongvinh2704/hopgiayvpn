@@ -18,7 +18,8 @@ while (have_posts()) :
     $product_gallery_ids = array_values(array_filter(array_merge($image_id ? array($image_id) : array(), $gallery_ids)));
     $image_url = $image_id ? wp_get_attachment_image_url($image_id, 'large') : get_template_directory_uri() . '/assets/images/custom-cardboard-boxes.webp';
     $short_description = $product ? apply_filters('woocommerce_short_description', $product->get_short_description()) : '';
-    $product_categories = get_the_terms($product_id, 'product_cat');
+    $primary_product_category = function_exists('custom_box_get_primary_product_category') ? custom_box_get_primary_product_category($product_id) : null;
+    $products_url = function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
     $related_ids = $product ? wc_get_related_products($product_id, 8) : array();
 
     if (count($related_ids) < 5) {
@@ -78,15 +79,15 @@ while (have_posts()) :
 
             <div class="product-detail-content">
                 <div class="product-breadcrumb">
-                    <a href="<?php echo esc_url(home_url('/')); ?>">Home</a>
-                    <span>Packaging</span>
-                    <?php if (!empty($product_categories) && !is_wp_error($product_categories)) : ?>
-                        <?php foreach (array_slice($product_categories, 0, 2) as $product_category) : ?>
-                            <a href="<?php echo esc_url(get_term_link($product_category)); ?>"><?php echo esc_html($product_category->name); ?></a>
-                        <?php endforeach; ?>
-                    <?php else : ?>
-                        <span>Custom Boxes</span>
+                    <a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'custom-box-theme'); ?></a>
+                    <a href="<?php echo esc_url($products_url); ?>"><?php esc_html_e('Products', 'custom-box-theme'); ?></a>
+                    <?php if ($primary_product_category) : ?>
+                        <?php $primary_product_category_link = get_term_link($primary_product_category); ?>
+                        <?php if (!is_wp_error($primary_product_category_link)) : ?>
+                            <a href="<?php echo esc_url($primary_product_category_link); ?>"><?php echo esc_html($primary_product_category->name); ?></a>
+                        <?php endif; ?>
                     <?php endif; ?>
+                    <span><?php the_title(); ?></span>
                 </div>
 
                 <h1><?php the_title(); ?></h1>
