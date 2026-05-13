@@ -11,42 +11,40 @@
 
   RewriteCond %{HTTP_ACCEPT} image/avif
   RewriteCond %{REQUEST_FILENAME} -f
-  RewriteCond %{DOCUMENT_ROOT}/trangchu1/wp-content/uploads-webpc/uploads/$1.jpg.avif -f [OR]
+  RewriteCond %{DOCUMENT_ROOT}/wp-content/uploads-webpc/uploads/$1.jpg.avif -f [OR]
   RewriteCond %{DOCUMENT_ROOT}/wp-content/uploads-webpc/uploads/$1.jpg.avif -f
-  RewriteRule (?:.*/wp-content/)?(.+)\.jpg$ /trangchu1/wp-content/uploads-webpc/uploads/$1.jpg.avif [NC,T=image/avif,L]
+  RewriteRule (?:.*/wp-content/)?(.+)\.jpg$ /wp-content/uploads-webpc/uploads/$1.jpg.avif [NC,T=image/avif,L]
   RewriteCond %{HTTP_ACCEPT} image/avif
   RewriteCond %{REQUEST_FILENAME} -f
-  RewriteCond %{DOCUMENT_ROOT}/trangchu1/wp-content/uploads-webpc/uploads/$1.png.avif -f [OR]
+  RewriteCond %{DOCUMENT_ROOT}/wp-content/uploads-webpc/uploads/$1.png.avif -f [OR]
   RewriteCond %{DOCUMENT_ROOT}/wp-content/uploads-webpc/uploads/$1.png.avif -f
-  RewriteRule (?:.*/wp-content/)?(.+)\.png$ /trangchu1/wp-content/uploads-webpc/uploads/$1.png.avif [NC,T=image/avif,L]
+  RewriteRule (?:.*/wp-content/)?(.+)\.png$ /wp-content/uploads-webpc/uploads/$1.png.avif [NC,T=image/avif,L]
   RewriteCond %{HTTP_ACCEPT} image/avif
   RewriteCond %{REQUEST_FILENAME} -f
-  RewriteCond %{DOCUMENT_ROOT}/trangchu1/wp-content/uploads-webpc/uploads/$1.webp.avif -f [OR]
+  RewriteCond %{DOCUMENT_ROOT}/wp-content/uploads-webpc/uploads/$1.webp.avif -f [OR]
   RewriteCond %{DOCUMENT_ROOT}/wp-content/uploads-webpc/uploads/$1.webp.avif -f
-  RewriteRule (?:.*/wp-content/)?(.+)\.webp$ /trangchu1/wp-content/uploads-webpc/uploads/$1.webp.avif [NC,T=image/avif,L]
+  RewriteRule (?:.*/wp-content/)?(.+)\.webp$ /wp-content/uploads-webpc/uploads/$1.webp.avif [NC,T=image/avif,L]
   RewriteCond %{HTTP_ACCEPT} image/avif
   RewriteCond %{REQUEST_FILENAME} -f
-  RewriteCond %{DOCUMENT_ROOT}/trangchu1/wp-content/uploads-webpc/uploads/$1.jpeg.avif -f [OR]
+  RewriteCond %{DOCUMENT_ROOT}/wp-content/uploads-webpc/uploads/$1.jpeg.avif -f [OR]
   RewriteCond %{DOCUMENT_ROOT}/wp-content/uploads-webpc/uploads/$1.jpeg.avif -f
-  RewriteRule (?:.*/wp-content/)?(.+)\.jpeg$ /trangchu1/wp-content/uploads-webpc/uploads/$1.jpeg.avif [NC,T=image/avif,L]
+  RewriteRule (?:.*/wp-content/)?(.+)\.jpeg$ /wp-content/uploads-webpc/uploads/$1.jpeg.avif [NC,T=image/avif,L]
 
   RewriteCond %{HTTP_ACCEPT} image/webp
   RewriteCond %{REQUEST_FILENAME} -f
-  RewriteCond %{DOCUMENT_ROOT}/trangchu1/wp-content/uploads-webpc/uploads/$1.jpg.webp -f [OR]
+  RewriteCond %{DOCUMENT_ROOT}/wp-content/uploads-webpc/uploads/$1.jpg.webp -f [OR]
   RewriteCond %{DOCUMENT_ROOT}/wp-content/uploads-webpc/uploads/$1.jpg.webp -f
-  RewriteRule (?:.*/wp-content/)?(.+)\.jpg$ /trangchu1/wp-content/uploads-webpc/uploads/$1.jpg.webp [NC,T=image/webp,L]
+  RewriteRule (?:.*/wp-content/)?(.+)\.jpg$ /wp-content/uploads-webpc/uploads/$1.jpg.webp [NC,T=image/webp,L]
   RewriteCond %{HTTP_ACCEPT} image/webp
   RewriteCond %{REQUEST_FILENAME} -f
-  RewriteCond %{DOCUMENT_ROOT}/trangchu1/wp-content/uploads-webpc/uploads/$1.png.webp -f [OR]
+  RewriteCond %{DOCUMENT_ROOT}/wp-content/uploads-webpc/uploads/$1.png.webp -f [OR]
   RewriteCond %{DOCUMENT_ROOT}/wp-content/uploads-webpc/uploads/$1.png.webp -f
-  RewriteRule (?:.*/wp-content/)?(.+)\.png$ /trangchu1/wp-content/uploads-webpc/uploads/$1.png.webp [NC,T=image/webp,L]
+  RewriteRule (?:.*/wp-content/)?(.+)\.png$ /wp-content/uploads-webpc/uploads/$1.png.webp [NC,T=image/webp,L]
   RewriteCond %{HTTP_ACCEPT} image/webp
   RewriteCond %{REQUEST_FILENAME} -f
-  RewriteCond %{DOCUMENT_ROOT}/trangchu1/wp-content/uploads-webpc/uploads/$1.jpeg.webp -f [OR]
+  RewriteCond %{DOCUMENT_ROOT}/wp-content/uploads-webpc/uploads/$1.jpeg.webp -f [OR]
   RewriteCond %{DOCUMENT_ROOT}/wp-content/uploads-webpc/uploads/$1.jpeg.webp -f
-  RewriteRule (?:.*/wp-content/)?(.+)\.jpeg$ /trangchu1/wp-content/uploads-webpc/uploads/$1.jpeg.webp [NC,T=image/webp,L]
+  RewriteRule (?:.*/wp-content/)?(.+)\.jpeg$ /wp-content/uploads-webpc/uploads/$1.jpeg.webp [NC,T=image/webp,L]
 </IfModule>
 # ! --- DO NOT EDIT NEXT LINE --- !
 # END Converter for Media
-
-
