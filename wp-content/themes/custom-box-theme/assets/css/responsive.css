@@ -2536,6 +2536,11 @@ body {
         padding-right: 16px;
     }
 
+    .material-card {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
     .product-gallery-arrow {
         height: 38px;
         width: 38px;
