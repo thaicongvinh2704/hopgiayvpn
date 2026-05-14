@@ -158,6 +158,7 @@ function custom_box_get_all_categories_menu_columns() {
 }
 
 function custom_box_build_blog_article_content($raw_content) {
+    $has_toc_placeholder = false !== strpos($raw_content, '[vpn_toc]');
     $content = apply_filters('the_content', $raw_content);
     $toc = array();
     $seen_ids = array();
@@ -199,10 +200,66 @@ function custom_box_build_blog_article_content($raw_content) {
         return '<h' . $level . $attributes . ' id="' . esc_attr($heading_id) . '">' . $heading_html . '</h' . $level . '>';
     }, $content);
 
+    if (count($toc) >= 2) {
+        $toc_html = custom_box_render_blog_toc($toc);
+
+        if ($has_toc_placeholder) {
+            $content = preg_replace('/<p>\s*\[vpn_toc\]\s*<\/p>/i', $toc_html, $content);
+            $content = str_replace('[vpn_toc]', $toc_html, $content);
+        } else {
+            $content = preg_replace('/<h2\b/i', $toc_html . '<h2', $content, 1);
+        }
+    }
+
     return array(
         'content' => $content,
         'toc'     => $toc,
     );
+}
+
+function custom_box_render_blog_toc($toc) {
+    if (empty($toc) || !is_array($toc)) {
+        return '';
+    }
+
+    $section_index = 0;
+    $subsection_index = 0;
+
+    ob_start();
+    ?>
+    <nav class="blog-toc blog-toc-easy is-open" aria-label="<?php esc_attr_e('Table of contents', 'custom-box-theme'); ?>">
+        <button class="blog-toc-toggle" type="button" aria-expanded="true">
+            <span><?php esc_html_e('Table of Contents', 'custom-box-theme'); ?></span>
+            <i class="fas fa-chevron-up"></i>
+        </button>
+        <ul class="blog-toc-panel">
+            <?php foreach ($toc as $item) : ?>
+                <?php
+                if (2 === (int) $item['level']) {
+                    $section_index++;
+                    $subsection_index = 0;
+                    $toc_number = (string) $section_index;
+                } else {
+                    if (0 === $section_index) {
+                        $section_index = 1;
+                    }
+
+                    $subsection_index++;
+                    $toc_number = $section_index . '.' . $subsection_index;
+                }
+                ?>
+                <li class="blog-toc-item blog-toc-level-<?php echo esc_attr($item['level']); ?>">
+                    <span class="blog-toc-number"><?php echo esc_html($toc_number); ?></span>
+                    <a class="blog-toc-link" href="#<?php echo esc_attr($item['id']); ?>">
+                        <?php echo esc_html($item['title']); ?>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </nav>
+    <?php
+
+    return ob_get_clean();
 }
 
 function custom_box_get_image_alt_caption($image_html) {

@@ -282,9 +282,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-    const toc = document.querySelector(".blog-toc");
+    const tocBlocks = Array.from(document.querySelectorAll(".blog-toc"));
 
-    if (toc) {
+    tocBlocks.forEach(toc => {
         const tocToggle = toc.querySelector(".blog-toc-toggle");
         const tocLinks = Array.from(toc.querySelectorAll(".blog-toc-link"));
         const headings = tocLinks
@@ -295,6 +295,12 @@ document.addEventListener("DOMContentLoaded", function () {
             tocToggle.addEventListener("click", function () {
                 const isOpen = toc.classList.toggle("is-open");
                 tocToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+                const icon = tocToggle.querySelector("i");
+
+                if (icon) {
+                    icon.classList.toggle("fa-chevron-up", isOpen);
+                    icon.classList.toggle("fa-chevron-down", !isOpen);
+                }
             });
         }
 
@@ -323,7 +329,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             headings.forEach(heading => observer.observe(heading));
         }
-    }
+    });
 
     document.querySelectorAll(".blog-faq-question").forEach(button => {
         button.addEventListener("click", function () {

@@ -1712,6 +1712,33 @@ body {
         font-size: 15px;
     }
 
+    .blog-toc {
+        margin: 26px 0;
+    }
+
+    .blog-toc-toggle {
+        font-size: 14px;
+        padding: 13px 15px;
+    }
+
+    .blog-toc-panel {
+        padding: 12px 14px 14px;
+    }
+
+    .blog-toc-item {
+        grid-template-columns: 30px minmax(0, 1fr);
+        gap: 7px;
+    }
+
+    .blog-toc-level-3 {
+        grid-template-columns: 42px minmax(0, 1fr);
+        padding-left: 10px;
+    }
+
+    .blog-toc-link {
+        font-size: 13px;
+    }
+
     .blog-content h2,
     .blog-section-heading h2,
     .blog-bottom-cta-inner h2 {
@@ -2317,7 +2344,63 @@ body {
     }
 
     .partner-scroll {
-        min-width: 560px;
+        height: auto;
+        max-height: 70vh;
+        min-width: 0;
+        padding: 20px 16px;
+        width: 100%;
+    }
+
+    .partner-scroll h2 {
+        font-size: 18px;
+        line-height: 1.25;
+    }
+
+    .partner-scroll p,
+    .partner-scroll li {
+        font-size: 14px;
+        line-height: 1.65;
+    }
+
+    .partner-table,
+    .partner-table tbody,
+    .partner-table tr,
+    .partner-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .partner-table {
+        border: 0;
+        table-layout: auto;
+    }
+
+    .partner-table tr:first-child {
+        display: none;
+    }
+
+    .partner-table tr {
+        border: 1px solid var(--color-line, #d8e4eb);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        overflow: hidden;
+    }
+
+    .partner-table td {
+        border: 0;
+        font-size: 14px;
+        padding: 12px 14px;
+    }
+
+    .partner-table td:first-child {
+        background: var(--color-primary-soft, #eaf3f8);
+        color: var(--color-ink, #123243);
+        font-weight: 800;
+        padding-bottom: 8px;
+    }
+
+    .partner-table td + td {
+        border-top: 1px solid var(--color-line, #d8e4eb);
     }
 
     .site-footer {
@@ -2405,6 +2488,38 @@ body {
     .blog-pagination,
     .product-archive-pagination ul {
         flex-wrap: wrap;
+    }
+
+    .blog-toc {
+        margin: 22px 0;
+    }
+
+    .blog-toc-toggle {
+        font-size: 13px;
+        padding: 12px 13px;
+    }
+
+    .blog-toc-panel {
+        padding: 10px 12px 12px;
+    }
+
+    .blog-toc-item {
+        grid-template-columns: 26px minmax(0, 1fr);
+        gap: 6px;
+        padding: 5px 0;
+    }
+
+    .blog-toc-number {
+        font-size: 12px;
+    }
+
+    .blog-toc-level-3 {
+        grid-template-columns: 36px minmax(0, 1fr);
+        padding-left: 6px;
+    }
+
+    .blog-toc-level-3 .blog-toc-link {
+        font-size: 12px;
     }
 
     .payment-grid {
