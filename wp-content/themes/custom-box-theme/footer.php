@@ -5,8 +5,10 @@ $footer_phone_display = '(+84) 933 102 653';
 $footer_phone_link = 'tel:+84933102653';
 $footer_email = 'paperbox@hopgiayvpn.com';
 $footer_factory_name = 'VPN Packaging Factory';
-$footer_address = '1032 An Phu Tay, Hamlet 4, Hung Long Commune, Binh Chanh District, Ho Chi Minh City, Vietnam';
-$footer_map_url = 'https://www.google.com/maps/place/X%C6%B0%E1%BB%9Fng+In+VPN/@10.6610408,106.6027949,16.5z/data=!4m14!1m7!3m6!1s0x31753300767fbee3:0x57937201bb84acb2!2zWMaw4bufbmcgSW4gVlBO!8m2!3d10.6604288!4d106.6085237!16s%2Fg%2F11ldlz6hl_!3m5!1s0x31753300767fbee3:0x57937201bb84acb2!8m2!3d10.6604288!4d106.6085237!16s%2Fg%2F11ldlz6hl_?entry=ttu&g_ep=EgoyMDI2MDUwNi4wIKXMDSoASAFQAw%3D%3D';
+$footer_office_address = '20 Street No. 2, Binh Tri Dong B Ward, Binh Tan District, Ho Chi Minh City, Vietnam';
+$footer_factory_address = '1032 An Phu Tay, Hamlet 4, Hung Long Commune, Binh Chanh District, Ho Chi Minh City, Vietnam';
+$footer_office_map_url = 'https://www.google.com/maps/search/?api=1&query=20%20Street%20No.%202%2C%20Binh%20Tri%20Dong%20B%20Ward%2C%20Binh%20Tan%20District%2C%20Ho%20Chi%20Minh%20City%2C%20Vietnam';
+$footer_factory_map_url = 'https://www.google.com/maps/place/X%C6%B0%E1%BB%9Fng+In+VPN/@10.6610408,106.6027949,16.5z/data=!4m14!1m7!3m6!1s0x31753300767fbee3:0x57937201bb84acb2!2zWMaw4bufbmcgSW4gVlBO!8m2!3d10.6604288!4d106.6085237!16s%2Fg%2F11ldlz6hl_!3m5!1s0x31753300767fbee3:0x57937201bb84acb2!8m2!3d10.6604288!4d106.6085237!16s%2Fg%2F11ldlz6hl_?entry=ttu&g_ep=EgoyMDI2MDUwNi4wIKXMDSoASAFQAw%3D%3D';
 $footer_shop_url = function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : (function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/products/'));
 $footer_blog_page_id = (int) get_option('page_for_posts');
 $footer_blog_url = $footer_blog_page_id ? get_permalink($footer_blog_page_id) : home_url('/blog/');
@@ -31,7 +33,14 @@ $footer_social_links = array(
                 <strong><?php esc_html_e('Address', 'custom-box-theme'); ?></strong>
                 <p>
                     <?php echo esc_html($footer_factory_name); ?><br>
-                    <a href="<?php echo esc_url($footer_map_url); ?>" target="_blank" rel="noopener"><?php echo esc_html($footer_address); ?></a>
+                    <span class="footer-address-line">
+                        <span class="footer-address-label"><?php esc_html_e('Office', 'custom-box-theme'); ?></span>
+                        <a href="<?php echo esc_url($footer_office_map_url); ?>" target="_blank" rel="noopener"><?php echo esc_html($footer_office_address); ?></a>
+                    </span>
+                    <span class="footer-address-line">
+                        <span class="footer-address-label"><?php esc_html_e('Factory', 'custom-box-theme'); ?></span>
+                        <a href="<?php echo esc_url($footer_factory_map_url); ?>" target="_blank" rel="noopener"><?php echo esc_html($footer_factory_address); ?></a>
+                    </span>
                 </p>
             </div>
 

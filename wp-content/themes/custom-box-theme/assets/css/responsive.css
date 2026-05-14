@@ -593,12 +593,42 @@ iframe {
     }
 
     .materials-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-template-rows: none;
     }
 
     .material-card {
-        min-height: 240px;
+        aspect-ratio: 1 / 0.82;
+        min-height: 0;
+    }
+
+    .material-card.big {
+        aspect-ratio: 16 / 9;
+        grid-column: 1 / -1;
+        grid-row: auto;
+    }
+
+    .card-overlay {
+        bottom: 10px;
+        left: 8px;
+        max-height: calc(100% - 16px);
+        max-width: calc(100% - 16px);
+        min-width: 0;
+        overflow: hidden;
+        padding: 8px 9px;
+        right: 8px;
+        transform: none;
+    }
+
+    .card-overlay strong {
+        font-size: 13px;
+        line-height: 1.2;
+    }
+
+    .card-overlay p {
+        font-size: 11px;
+        line-height: 1.25;
+        margin: 0;
     }
 
     .form-row {
@@ -2314,6 +2344,35 @@ body {
         gap: 16px;
     }
 
+    .materials-grid {
+        gap: 12px;
+    }
+
+    .material-card {
+        aspect-ratio: 1 / 0.9;
+    }
+
+    .material-card.big {
+        aspect-ratio: 16 / 9;
+    }
+
+    .card-overlay {
+        bottom: 7px;
+        left: 7px;
+        max-height: calc(100% - 14px);
+        max-width: calc(100% - 14px);
+        padding: 7px 8px;
+        right: 7px;
+    }
+
+    .card-overlay strong {
+        font-size: 12px;
+    }
+
+    .card-overlay p {
+        font-size: 10px;
+    }
+
     .product-archive-toolbar,
     .product-listing-category-section .product-archive-toolbar {
         align-items: stretch;
@@ -2338,6 +2397,7 @@ body {
     .partner-card {
         margin-left: -18px;
         margin-right: -18px;
+        overflow: visible;
         padding-left: 18px;
         padding-right: 18px;
         width: calc(100% + 36px);
@@ -2345,8 +2405,9 @@ body {
 
     .partner-scroll {
         height: auto;
-        max-height: 70vh;
+        max-height: none;
         min-width: 0;
+        overflow: visible;
         padding: 20px 16px;
         width: 100%;
     }
@@ -2405,6 +2466,15 @@ body {
 
     .site-footer {
         text-align: center;
+    }
+
+    .site-footer .contact-item p,
+    .site-footer .contact-item:first-child p {
+        max-width: 360px;
+    }
+
+    .footer-address-line {
+        margin-top: 10px;
     }
 
     .footer-logo,
@@ -2528,6 +2598,19 @@ body {
 }
 
 @media (max-width: 380px) {
+    .card-overlay {
+        padding: 6px 7px;
+    }
+
+    .card-overlay strong {
+        font-size: 11px;
+    }
+
+    .card-overlay p {
+        font-size: 9px;
+        line-height: 1.2;
+    }
+
     .hero-content h1,
     .hero-left h1,
     .product-archive-hero-content h1,
