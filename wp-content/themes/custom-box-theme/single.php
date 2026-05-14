@@ -37,11 +37,6 @@ while (have_posts()) :
                         'after'  => '</nav>',
                     ));
                     ?>
-
-                    <?php get_template_part('template-parts/blog/product-recommendations', null, $blog_context); ?>
-                    <?php get_template_part('template-parts/blog/trust', null, $blog_context); ?>
-                    <?php get_template_part('template-parts/blog/faq', null, $blog_context); ?>
-                    <?php get_template_part('template-parts/blog/final-cta', null, $blog_context); ?>
                 </article>
             </div>
         </section>

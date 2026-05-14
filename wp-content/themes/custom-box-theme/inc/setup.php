@@ -162,6 +162,8 @@ function custom_box_build_blog_article_content($raw_content) {
     $toc = array();
     $seen_ids = array();
 
+    $content = custom_box_enhance_blog_article_images($content);
+
     $content = preg_replace_callback('/<h([23])([^>]*)>(.*?)<\/h\1>/is', function ($matches) use (&$toc, &$seen_ids) {
         $level = (int) $matches[1];
         $attributes = $matches[2];
@@ -201,6 +203,106 @@ function custom_box_build_blog_article_content($raw_content) {
         'content' => $content,
         'toc'     => $toc,
     );
+}
+
+function custom_box_get_image_alt_caption($image_html) {
+    if (!preg_match('/\salt=(["\'])(.*?)\1/i', $image_html, $alt_match)) {
+        return '';
+    }
+
+    $caption = trim(wp_strip_all_tags(html_entity_decode($alt_match[2], ENT_QUOTES, get_bloginfo('charset'))));
+
+    if (!custom_box_is_meaningful_blog_image_caption($caption)) {
+        return '';
+    }
+
+    return $caption;
+}
+
+function custom_box_is_meaningful_blog_image_caption($caption) {
+    $caption = trim(wp_strip_all_tags((string) $caption));
+
+    if (!$caption || filter_var($caption, FILTER_VALIDATE_URL)) {
+        return false;
+    }
+
+    return !preg_match('#^https?://#i', $caption);
+}
+
+function custom_box_get_attachment_image_caption($attachment_id) {
+    $attachment = get_post($attachment_id);
+
+    if (!$attachment) {
+        return '';
+    }
+
+    $candidates = array(
+        $attachment->post_excerpt,
+        get_post_meta($attachment_id, '_wp_attachment_image_alt', true),
+    );
+
+    foreach ($candidates as $candidate) {
+        $candidate = trim(wp_strip_all_tags((string) $candidate));
+
+        if (custom_box_is_meaningful_blog_image_caption($candidate)) {
+            return $candidate;
+        }
+    }
+
+    return '';
+}
+
+function custom_box_wrap_blog_image_html($image_html) {
+    $caption = custom_box_get_image_alt_caption($image_html);
+    $caption_html = $caption ? '<figcaption>' . esc_html($caption) . '</figcaption>' : '';
+
+    return '<figure class="blog-content-figure">' . $image_html . $caption_html . '</figure>';
+}
+
+function custom_box_enhance_blog_article_images($content) {
+    $content = preg_replace_callback('/<p\b[^>]*>\s*((?:<a[^>]*>\s*)?<img[^>]+>(?:\s*<\/a>)?)\s*<\/p>/i', function ($matches) {
+        return custom_box_wrap_blog_image_html($matches[1]);
+    }, $content);
+
+    $content = preg_replace('/\ssizes=(["\']).*?\1/i', ' sizes="(max-width: 820px) 100vw, 820px"', $content);
+
+    $content = preg_replace_callback('/<img\b[^>]*class=(["\'])[^"\']*wp-image-(\d+)[^"\']*\1[^>]*>/i', function ($matches) {
+        $image_html = $matches[0];
+        $attachment_id = (int) $matches[2];
+        $full_url = wp_get_attachment_url($attachment_id);
+        $metadata = wp_get_attachment_metadata($attachment_id);
+
+        if (!$full_url) {
+            return $image_html;
+        }
+
+        $image_html = preg_replace('/\ssrc=(["\']).*?\1/i', ' src="' . esc_url($full_url) . '"', $image_html);
+
+        if (!empty($metadata['width']) && !empty($metadata['height'])) {
+            $image_html = preg_replace('/\swidth=(["\']).*?\1/i', ' width="' . (int) $metadata['width'] . '"', $image_html);
+            $image_html = preg_replace('/\sheight=(["\']).*?\1/i', ' height="' . (int) $metadata['height'] . '"', $image_html);
+        }
+
+        return $image_html;
+    }, $content);
+
+    $content = preg_replace_callback('/(<figure\b[^>]*>.*?wp-image-(\d+).*?)(<figcaption\b[^>]*>)(.*?)(<\/figcaption>)(.*?<\/figure>)/is', function ($matches) {
+        $caption = trim(wp_strip_all_tags(html_entity_decode($matches[4], ENT_QUOTES, get_bloginfo('charset'))));
+
+        if (custom_box_is_meaningful_blog_image_caption($caption)) {
+            return $matches[0];
+        }
+
+        $fallback_caption = custom_box_get_attachment_image_caption((int) $matches[2]);
+
+        if (!$fallback_caption) {
+            return $matches[1] . $matches[6];
+        }
+
+        return $matches[1] . $matches[3] . esc_html($fallback_caption) . $matches[5] . $matches[6];
+    }, $content);
+
+    return $content;
 }
 
 function custom_box_get_blog_product_recommendations($limit = 3) {

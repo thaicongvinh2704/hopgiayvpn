@@ -40,17 +40,6 @@ $intro = has_excerpt() ? get_the_excerpt() : wp_trim_words(wp_strip_all_tags(get
                 <span><i class="far fa-user"></i><?php echo esc_html(get_the_author()); ?></span>
                 <span><i class="far fa-clock"></i><?php echo esc_html(max(3, ceil(str_word_count(wp_strip_all_tags(get_the_content())) / 220))); ?> <?php esc_html_e('min read', 'custom-box-theme'); ?></span>
             </div>
-
-            <div class="blog-seo-actions">
-                <a class="btn-primary" href="<?php echo esc_url(home_url('/#quote')); ?>"><?php esc_html_e('Request Packaging Quote', 'custom-box-theme'); ?></a>
-                <a class="btn-outline" href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/products/')); ?>"><?php esc_html_e('View Products', 'custom-box-theme'); ?></a>
-            </div>
-
-            <div class="blog-trust-badges" aria-label="<?php esc_attr_e('Trust badges', 'custom-box-theme'); ?>">
-                <span><i class="fas fa-industry"></i><?php esc_html_e('Factory Direct', 'custom-box-theme'); ?></span>
-                <span><i class="fas fa-leaf"></i><?php esc_html_e('Eco Materials', 'custom-box-theme'); ?></span>
-                <span><i class="fas fa-globe"></i><?php esc_html_e('Global B2B Support', 'custom-box-theme'); ?></span>
-            </div>
         </div>
 
         <figure class="blog-seo-hero-image">

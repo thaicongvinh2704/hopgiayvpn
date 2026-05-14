@@ -5115,14 +5115,14 @@ textarea {
 .blog-single-layout {
     align-items: start;
     display: grid;
-    gap: 30px;
+    gap: 38px;
     grid-template-columns: minmax(0, 1fr) 300px;
 }
 
 .blog-card-grid {
     display: grid;
-    gap: 24px;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 28px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .blog-card {
@@ -5139,13 +5139,13 @@ textarea {
 .blog-card-image {
     background: #eef4f6;
     display: block;
+    aspect-ratio: 16 / 9;
     overflow: hidden;
 }
 
 .blog-card-image img {
-    aspect-ratio: 4 / 3;
     display: block;
-    height: auto;
+    height: 100%;
     object-fit: cover;
     transition: transform 0.35s ease;
     width: 100%;
@@ -5551,20 +5551,30 @@ textarea {
    SEO BLOG POST TEMPLATE
 ========================= */
 .blog-seo-template {
-    background: #f6fafc;
+    background: #fff;
 }
 
 .blog-seo-hero {
     background: #fff;
     border-bottom: 1px solid var(--color-line, #d8e4eb);
-    padding: 54px 0 46px;
+    padding: 42px 0 0;
 }
 
 .blog-seo-hero-grid {
-    align-items: center;
     display: grid;
-    gap: 46px;
-    grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
+    gap: 30px;
+    grid-template-columns: 1fr;
+    margin: 0 auto;
+    max-width: 980px;
+}
+
+.blog-seo-hero-copy {
+    text-align: center;
+}
+
+.blog-seo-hero-copy .blog-breadcrumb,
+.blog-seo-meta {
+    justify-content: center;
 }
 
 .blog-seo-category,
@@ -5580,17 +5590,17 @@ textarea {
 
 .blog-seo-hero h1 {
     color: var(--color-ink, #123243);
-    font-size: 48px;
-    line-height: 1.1;
+    font-size: 46px;
+    line-height: 1.12;
     margin: 14px 0 16px;
-    max-width: 840px;
+    max-width: none;
 }
 
 .blog-seo-hero-copy > p {
     color: var(--color-muted, #50606b);
     font-size: 18px;
     line-height: 1.7;
-    margin: 0;
+    margin: 0 auto;
     max-width: 760px;
 }
 
@@ -5634,27 +5644,27 @@ textarea {
 }
 
 .blog-seo-hero-image {
-    border-radius: 10px;
-    box-shadow: 0 24px 52px rgba(18, 50, 67, 0.14);
+    border-radius: 8px 8px 0 0;
+    box-shadow: none;
     margin: 0;
     overflow: hidden;
 }
 
 .blog-seo-hero-image img {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 16 / 9;
     display: block;
     object-fit: cover;
     width: 100%;
 }
 
 .blog-article-section {
-    padding: 46px 0 72px;
+    padding: 44px 0 64px;
 }
 
 .blog-article-layout {
     align-items: start;
     display: grid;
-    grid-template-columns: minmax(0, 980px);
+    grid-template-columns: minmax(0, 820px);
     justify-content: center;
 }
 
@@ -5719,7 +5729,6 @@ textarea {
     width: 100%;
 }
 
-.blog-article-content,
 .blog-product-recommendations,
 .blog-factory-trust,
 .blog-faq,
@@ -5734,7 +5743,7 @@ textarea {
     color: #2f4652;
     font-size: 18px;
     line-height: 1.88;
-    padding: 54px 68px;
+    padding: 0;
 }
 
 .blog-article-content h2,
@@ -5785,9 +5794,53 @@ textarea {
 }
 
 .blog-article-content img {
-    border-radius: 10px;
+    display: block;
     height: auto;
     max-width: 100%;
+}
+
+.blog-article-content .blog-content-figure,
+.blog-article-content .wp-caption,
+.blog-article-content .wp-block-image {
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    margin: 34px 0;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0;
+    text-align: center;
+    width: 100% !important;
+}
+
+.blog-article-content .blog-content-figure img,
+.blog-article-content .wp-caption img,
+.blog-article-content .wp-block-image img,
+.blog-article-content figure img {
+    border-radius: 0;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: contain;
+}
+
+.blog-article-content .blog-content-figure img,
+.blog-article-content .wp-caption img,
+.blog-article-content .wp-block-image img {
+    width: 100%;
+}
+
+.blog-article-content .blog-content-figure figcaption,
+.blog-article-content figcaption,
+.blog-article-content .wp-caption-text {
+    background: #f1f1f1;
+    border-top: 0;
+    color: #6b7280;
+    font-size: 14px;
+    font-style: italic;
+    line-height: 1.5;
+    margin: 0;
+    padding: 9px 16px 11px;
+    text-align: center;
 }
 
 .blog-product-recommendations,
