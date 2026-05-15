@@ -72,7 +72,7 @@
 
         <!-- BUTTON -->
         <div class="shapes-btn">
-            <a href="#" class="btn-primary">Start Customizing Now</a>
+            <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>" class="btn-primary">Start Customizing Now</a>
         </div>
 
     </div>

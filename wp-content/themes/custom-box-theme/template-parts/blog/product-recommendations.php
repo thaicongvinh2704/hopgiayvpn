@@ -30,7 +30,7 @@ $recommended_products = function_exists('custom_box_get_blog_product_recommendat
                     <div>
                         <h3><a href="<?php echo esc_url(get_permalink($product_id)); ?>"><?php echo esc_html($recommended_product->get_name()); ?></a></h3>
                         <p><?php echo esc_html(wp_trim_words(wp_strip_all_tags($recommended_product->get_short_description()), 16, '...')); ?></p>
-                        <a class="blog-product-quote" href="<?php echo esc_url(home_url('/#quote')); ?>"><?php esc_html_e('Request Quote', 'custom-box-theme'); ?></a>
+                        <a class="blog-product-quote" href="<?php echo esc_url(home_url('/contact/#quote')); ?>"><?php esc_html_e('Request Quote', 'custom-box-theme'); ?></a>
                     </div>
                 </article>
             <?php endforeach; ?>

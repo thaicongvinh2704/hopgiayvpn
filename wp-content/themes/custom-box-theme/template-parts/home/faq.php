@@ -52,7 +52,7 @@
     </div>
 
     <div class="faq-btn">
-        <a href="#">More FAQs</a>
+        <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>">More FAQs</a>
     </div>
 
 </section>

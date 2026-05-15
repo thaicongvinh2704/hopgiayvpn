@@ -18,20 +18,20 @@
 
             <!-- Subtext -->
             <p>
-                VPN Packaging Factory is a Vietnam-based custom paper box manufacturer specializing in rigid boxes, gift boxes, cosmetic packaging, and factory-direct packaging solutions for global brands and wholesalers.
+                VPN Paper Box Manufacturer is a Vietnam-based custom paper box manufacturer specializing in rigid boxes, gift boxes, cosmetic packaging, and factory-direct packaging solutions for global brands and wholesalers.
             </p>
 
             <!-- Features -->
             <ul class="hero-features">
                 <li>Free Design Support</li>
                 <li>Fast, Reliable Shipping</li>
-                <li>Low Minimum Orders</li>
+                <li>Production Capacity: 10,000-3,000,000 Boxes / Month</li>
             </ul>
 
             <!-- CTA -->
             <div class="hero-buttons">
-                <a href="#" class="btn-primary">Get Instant Quote</a>
-                <a href="#" class="btn-outline">Request Free Sample</a>
+                <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>" class="btn-primary">Get Instant Quote</a>
+                <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>" class="btn-outline">Request Free Sample</a>
             </div>
 
         </div>

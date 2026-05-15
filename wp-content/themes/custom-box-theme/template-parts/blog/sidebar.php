@@ -21,7 +21,7 @@ $packaging_categories = function_exists('custom_box_get_packaging_categories') ?
         <span><?php esc_html_e('Need a packaging quote?', 'custom-box-theme'); ?></span>
         <h2><?php esc_html_e('Talk to VPN Packaging', 'custom-box-theme'); ?></h2>
         <p><?php esc_html_e('Share size, quantity, artwork, and destination. We will suggest the best production option.', 'custom-box-theme'); ?></p>
-        <a class="btn-primary" href="<?php echo esc_url(home_url('/#quote')); ?>"><?php esc_html_e('Request Quote', 'custom-box-theme'); ?></a>
+        <a class="btn-primary" href="<?php echo esc_url(home_url('/contact/#quote')); ?>"><?php esc_html_e('Request Quote', 'custom-box-theme'); ?></a>
     </section>
 
     <?php if (!empty($packaging_categories)) : ?>
@@ -53,7 +53,7 @@ $packaging_categories = function_exists('custom_box_get_packaging_categories') ?
         <i class="fas fa-file-arrow-down"></i>
         <h2><?php esc_html_e('Download Catalog', 'custom-box-theme'); ?></h2>
         <p><?php esc_html_e('Review packaging styles, materials, and finishing options for your next order.', 'custom-box-theme'); ?></p>
-        <a href="<?php echo esc_url(home_url('/#quote')); ?>"><?php esc_html_e('Request Catalog', 'custom-box-theme'); ?></a>
+        <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>"><?php esc_html_e('Request Catalog', 'custom-box-theme'); ?></a>
     </section>
 
     <?php if ($recent_posts->have_posts()) : ?>

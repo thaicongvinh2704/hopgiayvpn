@@ -36,14 +36,14 @@ $factory_three = vpn_company_profile_image('anh-nha-may-3', 'product-banner1.png
 
             <div class="vpn-profile-copy">
                 <p class="vpn-profile-small-title">COMPANY PROFILE</p>
-                <h2 id="vpn-company-profile-title">VPN Packaging Factory</h2>
+                <h2 id="vpn-company-profile-title">VPN Paper Box Manufacturer</h2>
                 <p>
-                    VPN Packaging Factory is a professional packaging manufacturer based in Vietnam, specializing in custom paper boxes, paper bags, and fabric bags. With the advantage of being a direct factory, we provide optimized packaging solutions in terms of cost, quality, and lead time. Our team consists of experienced professionals in design, engineering, and production, ensuring every product meets high standards before reaching our customers. We offer a one-stop packaging solution from design and sampling to mass production, serving businesses, brands, and distributors both domestically and internationally.
+                    VPN Paper Box Manufacturer is a professional packaging manufacturer based in Vietnam, specializing in custom paper boxes, paper bags, and fabric bags. With the advantage of being a direct factory, we provide optimized packaging solutions in terms of cost, quality, and lead time. Our team consists of experienced professionals in design, engineering, and production, ensuring every product meets high standards before reaching our customers. We offer a one-stop packaging solution from design and sampling to mass production, serving businesses, brands, and distributors both domestically and internationally.
                 </p>
             </div>
 
             <div class="vpn-profile-plant-card">
-                <img src="<?php echo esc_url($factory_fly); ?>" alt="Aerial view of VPN Packaging Factory in Vietnam" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($factory_fly); ?>" alt="Aerial view of VPN Paper Box Manufacturer in Vietnam" loading="lazy" decoding="async">
             </div>
 
             <div class="vpn-profile-categories">
@@ -59,18 +59,18 @@ $factory_three = vpn_company_profile_image('anh-nha-may-3', 'product-banner1.png
             </div>
         </div>
 
-        <div class="vpn-profile-photo-cluster" aria-label="VPN Packaging Factory production photos">
+        <div class="vpn-profile-photo-cluster" aria-label="VPN Paper Box Manufacturer production photos">
             <figure class="vpn-profile-photo vpn-profile-photo-one">
-                <img src="<?php echo esc_url($factory_one); ?>" alt="Workers producing packaging inside VPN Packaging Factory" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($factory_one); ?>" alt="Workers producing packaging inside VPN Paper Box Manufacturer" loading="lazy" decoding="async">
             </figure>
             <figure class="vpn-profile-photo vpn-profile-photo-two">
-                <img src="<?php echo esc_url($factory_two); ?>" alt="Packaging finishing and production process at VPN Packaging Factory" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($factory_two); ?>" alt="Packaging finishing and production process at VPN Paper Box Manufacturer" loading="lazy" decoding="async">
             </figure>
             <figure class="vpn-profile-photo vpn-profile-photo-three">
-                <img src="<?php echo esc_url($factory_three); ?>" alt="Premium packaging products produced by VPN Packaging Factory" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($factory_three); ?>" alt="Premium packaging products produced by VPN Paper Box Manufacturer" loading="lazy" decoding="async">
             </figure>
             <figure class="vpn-profile-photo vpn-profile-photo-four">
-                <img src="<?php echo esc_url($factory_fly); ?>" alt="Aerial view of VPN Packaging Factory facility" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($factory_fly); ?>" alt="Aerial view of VPN Paper Box Manufacturer facility" loading="lazy" decoding="async">
             </figure>
         </div>
 

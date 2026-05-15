@@ -9,7 +9,7 @@
                 <h2>Premium Packaging Manufacturer From Vietnam</h2>
 
                 <p>
-                    VPN Packaging is a professional packaging manufacturer based in Vietnam, specializing in premium paper packaging solutions that help elevate brand value.
+                    VPN Paper Box Manufacturer is a professional packaging manufacturer based in Vietnam, specializing in premium paper packaging solutions that help elevate brand value.
                     We support cosmetic, fashion, jewelry, gift, retail, and lifestyle brands with custom packaging designed for modern business needs.
                 </p>
 
@@ -23,7 +23,7 @@
                     We help businesses create packaging that is not only protective, but also beautiful, memorable, and aligned with their brand identity.
                 </p>
 
-                <h2>Why Businesses Choose VPN Packaging</h2>
+                <h2>Why Businesses Choose VPN Paper Box Manufacturer</h2>
 
                 <table class="partner-table">
                     <tr>
@@ -100,7 +100,7 @@
                 <h2>Your Trusted B2B Packaging Partner</h2>
 
                 <p>
-                    VPN Packaging works with cosmetic brands, fashion labels, jewelry businesses, agencies, resellers, and international B2B buyers seeking reliable premium packaging production from Vietnam.
+                    VPN Paper Box Manufacturer works with cosmetic brands, fashion labels, jewelry businesses, agencies, resellers, and international B2B buyers seeking reliable premium packaging production from Vietnam.
                 </p>
 
                 <p>
@@ -110,11 +110,11 @@
                 <h2>Start Your Custom Packaging Project With VPN</h2>
 
                 <p>
-                    From concept development to final production, VPN Packaging is committed to delivering professional service, stable quality, and long-term manufacturing support.
+                    From concept development to final production, VPN Paper Box Manufacturer is committed to delivering professional service, stable quality, and long-term manufacturing support.
                 </p>
 
                 <p>
-                    <a href="#">Request Your Custom Packaging Quote Today</a>
+                    <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>">Request Your Custom Packaging Quote Today</a>
                 </p>
 
             </div>

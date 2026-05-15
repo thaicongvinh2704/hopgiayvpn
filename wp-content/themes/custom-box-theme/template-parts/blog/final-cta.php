@@ -13,7 +13,7 @@ defined('ABSPATH') || exit;
         <p><?php esc_html_e('Send your packaging requirements and our factory team will recommend materials, structure, printing, finishing, and a practical production path.', 'custom-box-theme'); ?></p>
     </div>
     <div class="blog-final-actions">
-        <a class="btn-primary" href="<?php echo esc_url(home_url('/#quote')); ?>"><?php esc_html_e('Get a Custom Quote', 'custom-box-theme'); ?></a>
+        <a class="btn-primary" href="<?php echo esc_url(home_url('/contact/#quote')); ?>"><?php esc_html_e('Get a Custom Quote', 'custom-box-theme'); ?></a>
         <a class="btn-outline" href="mailto:paperbox@hopgiayvpn.com"><?php esc_html_e('Email Factory Team', 'custom-box-theme'); ?></a>
     </div>
 </section>

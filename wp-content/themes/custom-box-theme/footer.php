@@ -1,10 +1,10 @@
 <?php
 $footer_theme_uri = get_template_directory_uri();
-$footer_site_name = get_bloginfo('name') ?: 'VPN Packaging Factory';
+$footer_site_name = get_bloginfo('name') ?: 'VPN Paper Box Manufacturer';
 $footer_phone_display = '(+84) 933 102 653';
 $footer_phone_link = 'tel:+84933102653';
 $footer_email = 'paperbox@hopgiayvpn.com';
-$footer_factory_name = 'VPN Packaging Factory';
+$footer_factory_name = 'VPN Paper Box Manufacturer';
 $footer_office_address = '20 Street No. 2, Binh Tri Dong B Ward, Binh Tan District, Ho Chi Minh City, Vietnam';
 $footer_factory_address = '1032 An Phu Tay, Hamlet 4, Hung Long Commune, Binh Chanh District, Ho Chi Minh City, Vietnam';
 $footer_office_map_url = 'https://www.google.com/maps/search/?api=1&query=20%20Street%20No.%202%2C%20Binh%20Tri%20Dong%20B%20Ward%2C%20Binh%20Tan%20District%2C%20Ho%20Chi%20Minh%20City%2C%20Vietnam';
@@ -14,7 +14,7 @@ $footer_blog_page_id = (int) get_option('page_for_posts');
 $footer_blog_url = $footer_blog_page_id ? get_permalink($footer_blog_page_id) : home_url('/blog/');
 $footer_categories = function_exists('custom_box_get_packaging_categories') ? custom_box_get_packaging_categories(7) : array();
 $footer_social_links = array(
-    array('class' => 'social-facebook', 'url' => 'https://www.facebook.com/people/Vietnam-Paper-Box-Factory', 'label' => 'Facebook', 'icon' => 'fab fa-facebook-f'),
+    array('class' => 'social-facebook', 'url' => 'https://www.facebook.com/people/Vietnam-Paper-Box-Factory/61576428668265/', 'label' => 'Facebook', 'icon' => 'fab fa-facebook-f'),
     array('class' => 'social-youtube', 'url' => 'https://www.youtube.com/@VietnamPaperBoxFactory', 'label' => 'YouTube', 'icon' => 'fab fa-youtube'),
     array('class' => 'social-tiktok', 'url' => 'https://www.tiktok.com/@paperbox84', 'label' => 'TikTok', 'icon' => 'fab fa-tiktok'),
     array('class' => 'social-linkedin', 'url' => 'https://www.linkedin.com/company/vpn-advertising-co/', 'label' => 'LinkedIn', 'icon' => 'fab fa-linkedin-in'),
@@ -65,7 +65,7 @@ $footer_social_links = array(
 
         <div class="footer-main">
             <div class="footer-col">
-                <h4><?php esc_html_e('VPN Packaging Factory', 'custom-box-theme'); ?></h4>
+                <h4><?php echo esc_html($footer_site_name); ?></h4>
                 <p>
                     <?php esc_html_e('Vietnam-based packaging manufacturer specializing in custom paper boxes, rigid boxes, paper bags, and export-ready packaging for brands, importers, distributors, and agencies.', 'custom-box-theme'); ?>
                 </p>
@@ -107,7 +107,7 @@ $footer_social_links = array(
                     <li><a href="<?php echo esc_url($footer_shop_url); ?>"><?php esc_html_e('Products', 'custom-box-theme'); ?></a></li>
                     <li><a href="<?php echo esc_url($footer_blog_url); ?>"><?php esc_html_e('Blog', 'custom-box-theme'); ?></a></li>
                     <li><a href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Contact Us', 'custom-box-theme'); ?></a></li>
-                    <li><a href="<?php echo esc_url(home_url('/#quote')); ?>"><?php esc_html_e('Request a Quote', 'custom-box-theme'); ?></a></li>
+                    <li><a href="<?php echo esc_url(home_url('/contact/#quote')); ?>"><?php esc_html_e('Request a Quote', 'custom-box-theme'); ?></a></li>
                     <li><a href="<?php echo esc_url(home_url('/#faq')); ?>"><?php esc_html_e('Read FAQs', 'custom-box-theme'); ?></a></li>
                 </ul>
             </div>

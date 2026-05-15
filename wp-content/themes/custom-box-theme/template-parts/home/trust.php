@@ -5,10 +5,10 @@
 
         <!-- LEFT -->
         <div class="trust-left">
-            <h2>Why Businesses Choose<br>VPN Printing Factory</h2>
+            <h2>Why Businesses Choose<br>VPN Paper Box Manufacturer</h2>
             <p>
-                Factory-direct printing that reduces costs while ensuring speed,
-                consistency, and full control over production.
+                Factory-direct paper box production that reduces costs while ensuring speed,
+                consistency, and full control over packaging quality.
             </p>
         </div>
 
@@ -17,17 +17,17 @@
 
             <!-- TRUST AUTHORITY -->
             <p class="trust-highlight">
-                <strong>VPN Printing Factory – One of Vietnam’s leading printing manufacturers for international markets</strong>
+                <strong>VPN Paper Box Manufacturer - one of Vietnam's leading custom paper box manufacturers for international markets</strong>
             </p>
 
             <p>
-                We provide high-quality packaging and printing solutions for clients in the US, UK, and India.
+                We provide high-quality custom paper box and packaging solutions for clients in the US, UK, and India.
                 With fully in-house production, we ensure factory-direct pricing, strict quality control,
                 and reliable turnaround times.
             </p>
 
             <p>
-                Printing directly at our factory helps you cut costs, shorten production time,
+                Producing directly at our factory helps you cut costs, shorten production time,
                 and maintain 100% quality control at every stage. With no middlemen involved,
                 you get better pricing while ensuring your packaging always reflects a
                 professional, high-end brand image.
@@ -80,7 +80,7 @@
 
     <!-- CTA -->
     <div class="trust-cta">
-        <a href="#" class="btn-primary">Get Your Instant Quote</a>
+        <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>" class="btn-primary">Get Your Instant Quote</a>
     </div>
 
 </section>

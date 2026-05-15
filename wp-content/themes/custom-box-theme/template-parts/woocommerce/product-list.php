@@ -123,7 +123,7 @@ $product_query = new WP_Query($product_query_args);
                 <div class="product-archive-empty">
                     <h2><?php esc_html_e('Products are coming soon', 'custom-box-theme'); ?></h2>
                     <p><?php esc_html_e('This category is ready. Add WooCommerce products and assign them here to show them in this grid.', 'custom-box-theme'); ?></p>
-                    <a class="btn-primary" href="<?php echo esc_url(home_url('/#quote')); ?>"><?php esc_html_e('Request a Custom Quote', 'custom-box-theme'); ?></a>
+                    <a class="btn-primary" href="<?php echo esc_url(home_url('/contact/#quote')); ?>"><?php esc_html_e('Request a Custom Quote', 'custom-box-theme'); ?></a>
                 </div>
             <?php endif; ?>
         </div>

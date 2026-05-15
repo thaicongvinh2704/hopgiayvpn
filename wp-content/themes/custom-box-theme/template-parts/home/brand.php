@@ -12,7 +12,7 @@
 
     <p class="desc">
         Packaging is more than product protection — it is the first impression customers remember about your brand.
-        VPN Packaging helps businesses create premium packaging solutions through professional design,
+        VPN Paper Box Manufacturer helps businesses create premium packaging solutions through professional design,
         high-quality printing, and refined craftsmanship that transform products into memorable brand experiences.
     </p>
 </div>
@@ -49,7 +49,7 @@
 
         <!-- BUTTON -->
         <div class="brand-btn">
-            <a href="#" class="btn-primary">Start a Fully Custom Project Today</a>
+            <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>" class="btn-primary">Start a Fully Custom Project Today</a>
         </div>
 
     </div>

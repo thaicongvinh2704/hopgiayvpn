@@ -44,7 +44,7 @@
 
     <!-- BUTTON -->
     <div class="benefits-btn">
-      <a href="#">Let’s Talk Today</a>
+      <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>">Let's Talk Today</a>
     </div>
 
   </div>

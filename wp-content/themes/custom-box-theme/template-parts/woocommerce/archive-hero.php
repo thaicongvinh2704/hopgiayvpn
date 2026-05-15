@@ -29,8 +29,8 @@ $products_url = function_exists('custom_box_get_products_url') ? custom_box_get_
                 <h1><?php echo esc_html($archive_title); ?></h1>
                 <p><?php echo esc_html(wp_strip_all_tags($archive_description)); ?></p>
                 <div class="product-category-hero-actions">
-                    <a class="btn-primary" href="<?php echo esc_url(home_url('/#quote')); ?>"><?php esc_html_e('Get Your Box', 'custom-box-theme'); ?></a>
-                    <a class="btn-outline" href="<?php echo esc_url(home_url('/#quote')); ?>"><?php esc_html_e('Request Free Sample', 'custom-box-theme'); ?></a>
+                    <a class="btn-primary" href="<?php echo esc_url(home_url('/contact/#quote')); ?>"><?php esc_html_e('Get Your Box', 'custom-box-theme'); ?></a>
+                    <a class="btn-outline" href="<?php echo esc_url(home_url('/contact/#quote')); ?>"><?php esc_html_e('Request Free Sample', 'custom-box-theme'); ?></a>
                 </div>
             </div>
             <div class="product-category-hero-image">
