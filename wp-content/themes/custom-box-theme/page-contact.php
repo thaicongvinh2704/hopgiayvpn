@@ -13,8 +13,8 @@ $phone_link = 'tel:+84933102653';
 $email = 'paperbox@hopgiayvpn.com';
 $factory_name = 'VPN Paper Box Factory';
 $address = '1032 An Phu Tay, Hamlet 4, Hung Long Commune, Binh Chanh District, Ho Chi Minh City, Vietnam';
-$map_url = 'https://www.google.com/maps/place/X%C6%B0%E1%BB%9Fng+In+VPN/@10.6610408,106.6027949,16.5z/data=!4m14!1m7!3m6!1s0x31753300767fbee3:0x57937201bb84acb2!2zWMaw4bufbmcgSW4gVlBO!8m2!3d10.6604288!4d106.6085237!16s%2Fg%2F11ldlz6hl_!3m5!1s0x31753300767fbee3:0x57937201bb84acb2!8m2!3d10.6604288!4d106.6085237!16s%2Fg%2F11ldlz6hl_?entry=ttu&g_ep=EgoyMDI2MDUwNi4wIKXMDSoASAFQAw%3D%3D';
-$map_embed_url = 'https://www.google.com/maps?q=10.6604288,106.6085237&z=17&output=embed';
+$map_url = 'https://maps.app.goo.gl/Z68geWnrTmx6kaCg6';
+$map_embed_url = 'https://maps.google.com/maps?cid=6310512854642764978&z=17&output=embed';
 ?>
 
 <main class="contact-page">
