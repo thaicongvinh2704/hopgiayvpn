@@ -2136,6 +2136,12 @@ html {
     padding: 76px 0;
 }
 
+.product-detail-overview-grid {
+    align-items: stretch;
+    gap: 32px;
+    grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
+}
+
 .product-detail-description h2,
 .product-section-header h2,
 .product-process-grid h2 {
@@ -2143,6 +2149,11 @@ html {
     font-size: 32px;
     line-height: 1.2;
     margin: 0 0 16px;
+}
+
+.product-story-section .product-detail-description h2 {
+    font-size: 26px;
+    letter-spacing: 0;
 }
 
 .product-detail-description p,
@@ -2159,41 +2170,58 @@ html {
 }
 
 .product-spec-card {
-    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
 }
 
 .product-spec-card h3 {
+    border-bottom: 1px solid var(--color-line, #d8e4eb);
     color: var(--color-ink, #123243);
     font-size: 22px;
-    margin: 0 0 18px;
+    line-height: 1.2;
+    margin: 0 0 12px;
+    padding-bottom: 16px;
 }
 
 .product-spec-card ul {
+    display: grid;
+    gap: 8px;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
 .product-spec-card li {
-    align-items: center;
-    border-bottom: 1px solid var(--color-line, #d8e4eb);
-    display: flex;
-    gap: 16px;
-    justify-content: space-between;
-    padding: 13px 0;
+    align-items: start;
+    background: #f8fbfd;
+    border: 1px solid rgba(216, 228, 235, 0.72);
+    border-radius: 7px;
+    display: grid;
+    gap: 18px;
+    grid-template-columns: minmax(128px, 0.38fr) minmax(0, 1fr);
+    min-height: 46px;
+    padding: 12px 14px;
 }
 
-.product-spec-card li:last-child {
-    border-bottom: none;
+.product-spec-card li:nth-child(even) {
+    background: #fff;
 }
 
 .product-spec-card span {
     color: var(--color-muted, #5c6f7b);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.45;
 }
 
 .product-spec-card strong {
     color: var(--color-ink, #123243);
-    text-align: right;
+    font-size: 13px;
+    font-weight: 800;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+    text-align: left;
 }
 
 .product-options-section {

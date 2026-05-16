@@ -1452,6 +1452,7 @@ body {
         align-items: flex-start;
         flex-direction: column;
         gap: 4px;
+        grid-template-columns: 1fr;
     }
 
     .product-spec-card strong {
