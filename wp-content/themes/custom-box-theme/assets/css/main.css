@@ -5394,8 +5394,17 @@ textarea {
 }
 
 .blog-sidebar-cta .btn-primary {
+    align-items: center;
     background: #fff;
     color: var(--color-primary, #2A6A92);
+    display: flex;
+    justify-content: center;
+    line-height: 1.25;
+    min-height: 44px;
+    padding-left: 14px;
+    padding-right: 14px;
+    text-align: center;
+    white-space: normal;
     width: 100%;
 }
 
