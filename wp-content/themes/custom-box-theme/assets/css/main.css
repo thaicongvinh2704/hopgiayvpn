@@ -2137,7 +2137,7 @@ html {
 }
 
 .product-detail-overview-grid {
-    align-items: stretch;
+    align-items: start;
     gap: 32px;
     grid-template-columns: minmax(0, 0.92fr) minmax(420px, 1.08fr);
 }
