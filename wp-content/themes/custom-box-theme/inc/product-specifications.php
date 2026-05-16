@@ -93,6 +93,12 @@ function custom_box_render_product_specs_meta_box($post) {
     ?>
     <div class="custom-box-product-specs">
         <p class="description"><?php esc_html_e('Enter the technical specifications shown on the product detail page. Empty rows will not be displayed.', 'custom-box-theme'); ?></p>
+        <div class="custom-box-product-specs-bulk">
+            <label for="custom-box-product-specs-bulk-input"><?php esc_html_e('Quick paste specifications', 'custom-box-theme'); ?></label>
+            <textarea id="custom-box-product-specs-bulk-input" rows="8" placeholder="<?php esc_attr_e('Feature: custom logo&#10;Industrial Use: Jewelry&#10;Paper Type: Kraft Paper&#10;Box Type: rigid square box&#10;MOQ: 10000 pieces', 'custom-box-theme'); ?>"></textarea>
+            <p class="description"><?php esc_html_e('Paste one specification per line. Supported formats: "Label: Value", "Label - Value", or tab-separated text.', 'custom-box-theme'); ?></p>
+            <button type="button" class="button button-primary custom-box-apply-bulk-specs"><?php esc_html_e('Apply pasted specifications', 'custom-box-theme'); ?></button>
+        </div>
         <table class="widefat custom-box-product-specs-table">
             <thead>
                 <tr>
@@ -163,6 +169,22 @@ function custom_box_enqueue_product_specs_admin($hook) {
         .custom-box-product-specs-table td { vertical-align: middle; }
         .custom-box-product-specs-table input { width: 100%; }
         .custom-box-product-specs-actions { width: 90px; }
+        .custom-box-product-specs-bulk {
+            background: #f6f7f7;
+            border: 1px solid #dcdcde;
+            margin: 12px 0 16px;
+            padding: 12px;
+        }
+        .custom-box-product-specs-bulk label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .custom-box-product-specs-bulk textarea {
+            box-sizing: border-box;
+            font-family: Consolas, Monaco, monospace;
+            width: 100%;
+        }
         '
     );
 
@@ -170,19 +192,83 @@ function custom_box_enqueue_product_specs_admin($hook) {
         'jquery-core',
         "
         jQuery(function($) {
-            $(document).on('click', '.custom-box-add-spec-row', function(e) {
-                e.preventDefault();
-                var row = '<tr>' +
-                    '<td><input type=\"text\" name=\"custom_box_product_spec_label[]\" placeholder=\"Paper Type\"></td>' +
-                    '<td><input type=\"text\" name=\"custom_box_product_spec_value[]\" placeholder=\"Kraft Paper\"></td>' +
+            function escapeSpecValue(value) {
+                return $('<div>').text(value || '').html();
+            }
+
+            function createSpecRow(label, value) {
+                return '<tr>' +
+                    '<td><input type=\"text\" name=\"custom_box_product_spec_label[]\" value=\"' + escapeSpecValue(label) + '\" placeholder=\"Paper Type\"></td>' +
+                    '<td><input type=\"text\" name=\"custom_box_product_spec_value[]\" value=\"' + escapeSpecValue(value) + '\" placeholder=\"Kraft Paper\"></td>' +
                     '<td><button type=\"button\" class=\"button custom-box-remove-spec-row\">Remove</button></td>' +
                     '</tr>';
-                $('.custom-box-product-specs-table tbody').append(row);
+            }
+
+            function parseSpecLine(line) {
+                var parts;
+                line = $.trim(line || '').replace(/^[-*•]\\s*/, '');
+
+                if (!line) {
+                    return null;
+                }
+
+                parts = line.split('\\t');
+                if (parts.length >= 2) {
+                    return {
+                        label: $.trim(parts.shift()),
+                        value: $.trim(parts.join(' '))
+                    };
+                }
+
+                parts = line.split(/\\s[:：]\\s|[:：]\\s|\\s[:：]/);
+                if (parts.length >= 2) {
+                    return {
+                        label: $.trim(parts.shift()),
+                        value: $.trim(parts.join(': '))
+                    };
+                }
+
+                parts = line.split(/\\s[-–—]\\s/);
+                if (parts.length >= 2) {
+                    return {
+                        label: $.trim(parts.shift()),
+                        value: $.trim(parts.join(' - '))
+                    };
+                }
+
+                return null;
+            }
+
+            $(document).on('click', '.custom-box-add-spec-row', function(e) {
+                e.preventDefault();
+                $('.custom-box-product-specs-table tbody').append(createSpecRow('', ''));
             });
 
             $(document).on('click', '.custom-box-remove-spec-row', function(e) {
                 e.preventDefault();
                 $(this).closest('tr').remove();
+            });
+
+            $(document).on('click', '.custom-box-apply-bulk-specs', function(e) {
+                e.preventDefault();
+
+                var rows = [];
+                var lines = $('#custom-box-product-specs-bulk-input').val().split(/\\r?\\n/);
+
+                $.each(lines, function(index, line) {
+                    var parsed = parseSpecLine(line);
+
+                    if (parsed && parsed.label && parsed.value) {
+                        rows.push(createSpecRow(parsed.label, parsed.value));
+                    }
+                });
+
+                if (!rows.length) {
+                    alert('No valid specifications found. Use one line per item, for example: Paper Type: Kraft Paper');
+                    return;
+                }
+
+                $('.custom-box-product-specs-table tbody').html(rows.join(''));
             });
         });
         "
