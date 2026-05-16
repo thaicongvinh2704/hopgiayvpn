@@ -20,6 +20,7 @@ while (have_posts()) :
     $short_description = $product ? apply_filters('woocommerce_short_description', $product->get_short_description()) : '';
     $primary_product_category = function_exists('custom_box_get_primary_product_category') ? custom_box_get_primary_product_category($product_id) : null;
     $products_url = function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
+    $product_specs = function_exists('custom_box_get_product_specifications') ? custom_box_get_product_specifications($product_id) : array();
     $related_ids = $product ? wc_get_related_products($product_id, 8) : array();
 
     if (count($related_ids) < 5) {
@@ -158,11 +159,12 @@ while (have_posts()) :
             <div class="product-spec-card">
                 <h3>Specifications</h3>
                 <ul>
-                    <li><span>Materials</span><strong>SBS, Kraft, Corrugated</strong></li>
-                    <li><span>Printing</span><strong>CMYK, Pantone, Digital</strong></li>
-                    <li><span>Finishing</span><strong>Matte, Gloss, Foil, Spot UV</strong></li>
-                    <li><span>Sizes</span><strong>Fully Custom</strong></li>
-                    <li><span>Artwork</span><strong>AI, PDF, PSD, EPS</strong></li>
+                    <?php foreach ($product_specs as $product_spec) : ?>
+                        <li>
+                            <span><?php echo esc_html($product_spec['label']); ?></span>
+                            <strong><?php echo esc_html($product_spec['value']); ?></strong>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         </div>

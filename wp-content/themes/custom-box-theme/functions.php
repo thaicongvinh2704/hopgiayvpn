@@ -11,6 +11,7 @@ $custom_box_inc_files = array(
     'inc/enqueue.php',
     'inc/breadcrumbs.php',
     'inc/admin-category-fields.php',
+    'inc/product-specifications.php',
     'inc/quote-form-handler.php',
     'inc/woocommerce.php',
 );
