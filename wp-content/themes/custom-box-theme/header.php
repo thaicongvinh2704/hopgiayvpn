@@ -62,6 +62,13 @@
         <!-- RIGHT -->
         <div class="header-right">
 
+            <a href="<?php echo esc_url(home_url('/catalog/')); ?>" class="btn-catalog">
+                <span class="icon-circle">
+                    <i class="fas fa-book-open"></i>
+                </span>
+                <span>Catalog</span>
+            </a>
+
             <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>" class="btn-quote">
                 <span class="icon-circle">
                     <i class="far fa-comment"></i>

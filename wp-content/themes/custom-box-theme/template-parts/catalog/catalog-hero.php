@@ -18,9 +18,9 @@ $quote_url = isset($args['quote_url']) ? $args['quote_url'] : home_url('/contact
         </nav>
 
         <?php if ($hero_image) : ?>
-            <a class="catalog-banner-frame" href="<?php echo esc_url($quote_url); ?>" aria-label="<?php esc_attr_e('Request a custom paper box quote', 'custom-box-theme'); ?>">
+            <div class="catalog-banner-frame">
                 <img src="<?php echo esc_url($hero_image); ?>" alt="<?php esc_attr_e('VPN Packaging Factory custom paper box catalog banner', 'custom-box-theme'); ?>" decoding="async" fetchpriority="high">
-            </a>
+            </div>
         <?php endif; ?>
 
         <div class="catalog-banner-copy">

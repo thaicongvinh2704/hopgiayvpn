@@ -172,6 +172,8 @@ iframe {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
+    .btn-catalog,
+    .btn-catalog,
     .btn-quote,
     .btn-phone {
         padding: 8px 12px;
@@ -1023,6 +1025,7 @@ body {
 }
 
 .btn-outline,
+.btn-catalog,
 .btn-quote {
     background: transparent;
     border-color: var(--ui-blue);
@@ -1030,6 +1033,7 @@ body {
 }
 
 .btn-outline:hover,
+.btn-catalog:hover,
 .btn-quote:hover,
 .btn-primary:hover,
 .btn-phone:hover,
@@ -1041,6 +1045,7 @@ body {
     color: var(--ui-white);
 }
 
+.btn-catalog:hover i,
 .btn-quote:hover i,
 .btn-outline:hover i {
     color: var(--ui-white);
@@ -1850,6 +1855,7 @@ body {
 
     .btn-primary,
     .btn-outline,
+    .btn-catalog,
     .btn-quote,
     .btn-phone,
     .custom-product-actions a,
@@ -2866,6 +2872,7 @@ body {
         width: 150px;
     }
 
+    .btn-catalog,
     .btn-quote,
     .btn-phone {
         border-radius: 999px;
@@ -2882,6 +2889,7 @@ body {
         width: 100%;
     }
 
+    .btn-catalog .icon-circle,
     .btn-quote .icon-circle,
     .btn-phone .icon-circle {
         display: none;
@@ -3113,6 +3121,7 @@ body {
         width: 170px;
     }
 
+    .main-header .btn-catalog,
     .main-header .btn-quote,
     .main-header .btn-phone {
         border-radius: 999px;
@@ -3131,6 +3140,7 @@ body {
         width: 100%;
     }
 
+    .main-header .btn-catalog,
     .main-header .btn-quote {
         background: #fff;
         border-color: #2A6A92;
@@ -3143,6 +3153,7 @@ body {
         color: #fff;
     }
 
+    .main-header .btn-catalog .icon-circle,
     .main-header .btn-quote .icon-circle,
     .main-header .btn-phone .icon-circle {
         display: none;
@@ -3299,6 +3310,7 @@ body {
         width: 150px;
     }
 
+    .main-header .btn-catalog,
     .main-header .btn-quote,
     .main-header .btn-phone {
         font-size: 9px;

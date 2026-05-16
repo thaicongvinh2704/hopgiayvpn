@@ -147,7 +147,8 @@ html {
     margin-right: 8px;
 }
 
-/* ===== QUOTE BUTTON ===== */
+/* ===== HEADER ACTION BUTTONS ===== */
+.btn-catalog,
 .btn-quote {
     display: flex;
     align-items: center;
@@ -160,20 +161,28 @@ html {
     transition: all 0.3s ease;
 }
 
+.btn-catalog {
+    background: #fff;
+}
+
+.btn-catalog i,
 .btn-quote i {
     color: #2A6A92;
 }
 
 /* HOVER */
+.btn-catalog:hover,
 .btn-quote:hover {
     background: #2A6A92;
     color: #fff;
 }
 
+.btn-catalog:hover i,
 .btn-quote:hover i {
     color: #fff;
 }
 
+.btn-catalog:hover .icon-circle,
 .btn-quote:hover .icon-circle {
     background: rgba(255,255,255,0.2);
 }
@@ -512,6 +521,7 @@ html {
     justify-self: end;
 }
 
+.btn-catalog,
 .btn-quote,
 .btn-phone {
     min-height: 44px;

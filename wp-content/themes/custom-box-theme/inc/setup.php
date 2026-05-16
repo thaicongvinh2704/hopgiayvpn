@@ -387,6 +387,7 @@ function custom_box_primary_menu() {
                 <?php esc_html_e('Products', 'custom-box-theme'); ?>
             </a>
         </li>
+        <li><a href="<?php echo esc_url(home_url('/catalog/')); ?>"><?php esc_html_e('Catalog', 'custom-box-theme'); ?></a></li>
         <li><a href="<?php echo esc_url($blog_link); ?>"><?php esc_html_e('Blog', 'custom-box-theme'); ?></a></li>
         <li><a href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Contact Us', 'custom-box-theme'); ?></a></li>
     </ul>
