@@ -118,6 +118,38 @@ while (have_posts()) :
         </div>
     </section>
 
+    <section class="product-specifications-section">
+        <div class="container">
+            <div class="product-spec-card product-spec-card-wide">
+                <h3>Specifications</h3>
+                <ul>
+                    <?php foreach ($product_specs as $product_spec) : ?>
+                        <li>
+                            <span><?php echo esc_html($product_spec['label']); ?></span>
+                            <strong><?php echo esc_html($product_spec['value']); ?></strong>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="product-detail-overview product-story-section">
+        <div class="container">
+            <div class="product-detail-description product-content-body">
+                <h2><?php echo esc_html(get_the_title()); ?> That Balance Presentation and Function</h2>
+                <?php if (get_the_content()) : ?>
+                    <?php the_content(); ?>
+                <?php else : ?>
+                    <p>
+                        This product can be customized by size, material, printing method, finishing option, and order quantity.
+                        Share your artwork or packaging idea and our team will prepare a clear quote for production.
+                    </p>
+                <?php endif; ?>
+            </div>
+        </div>
+    </section>
+
     <section class="product-quote-intro">
         <div class="container">
             <h2>Request a Quote for Your Custom<br><?php echo esc_html(get_the_title()); ?> Today</h2>
@@ -138,34 +170,6 @@ while (have_posts()) :
                 <div><i class="fas fa-print"></i><span>Start Printing</span></div>
                 <div><i class="fas fa-box"></i><span>QC, Packed & Shipped</span></div>
                 <div><i class="fas fa-truck"></i><span>Track & Receive</span></div>
-            </div>
-        </div>
-    </section>
-
-    <section class="product-detail-overview product-story-section">
-        <div class="container product-detail-overview-grid">
-            <div class="product-detail-description">
-                <h2><?php echo esc_html(get_the_title()); ?> That Balance Presentation and Function</h2>
-                <?php if (get_the_content()) : ?>
-                    <?php the_content(); ?>
-                <?php else : ?>
-                    <p>
-                        This product can be customized by size, material, printing method, finishing option, and order quantity.
-                        Share your artwork or packaging idea and our team will prepare a clear quote for production.
-                    </p>
-                <?php endif; ?>
-            </div>
-
-            <div class="product-spec-card">
-                <h3>Specifications</h3>
-                <ul>
-                    <?php foreach ($product_specs as $product_spec) : ?>
-                        <li>
-                            <span><?php echo esc_html($product_spec['label']); ?></span>
-                            <strong><?php echo esc_html($product_spec['value']); ?></strong>
-                        </li>
-                    <?php endforeach; ?>
-                </ul>
             </div>
         </div>
     </section>

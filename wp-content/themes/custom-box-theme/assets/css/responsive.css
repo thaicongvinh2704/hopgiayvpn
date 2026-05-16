@@ -1423,6 +1423,7 @@ body {
 
 @media (max-width: 640px) {
     .product-detail-hero,
+    .product-specifications-section,
     .product-detail-overview,
     .product-options-section,
     .product-process-section {
@@ -1842,6 +1843,12 @@ body {
 
     .blog-final-actions {
         min-width: 0;
+    }
+}
+
+@media (max-width: 900px) {
+    .product-spec-card ul {
+        grid-template-columns: 1fr;
     }
 }
 
