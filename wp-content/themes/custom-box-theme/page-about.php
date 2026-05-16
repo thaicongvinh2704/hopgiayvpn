@@ -6,7 +6,7 @@
 get_header();
 
 $theme_uri = get_template_directory_uri();
-$quote_url = home_url('/#quote');
+$quote_url = home_url('/contact/#quote');
 ?>
 
 <main class="about-page">

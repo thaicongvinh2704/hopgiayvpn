@@ -41,13 +41,7 @@ if ($landing_parent_category && !is_wp_error($landing_parent_category)) {
             return $a->term_id <=> $b->term_id;
         });
 
-        $landing_categories = array_values(array_filter($product_categories, function ($category) {
-            return (bool) get_term_meta($category->term_id, 'custom_box_category_featured', true);
-        }));
-
-        if (empty($landing_categories)) {
-            $landing_categories = $product_categories;
-        }
+        $landing_categories = $product_categories;
     }
 }
 

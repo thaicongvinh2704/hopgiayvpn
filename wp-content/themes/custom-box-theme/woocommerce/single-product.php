@@ -110,8 +110,8 @@ while (have_posts()) :
                 </ul>
 
                 <div class="product-detail-actions">
-                    <a href="<?php echo esc_url(home_url('/#quote')); ?>" class="btn-primary">Customize It Now</a>
-                    <a href="<?php echo esc_url(home_url('/#quote')); ?>" class="btn-outline">Request Free Sample</a>
+                    <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>" class="btn-primary">Request Custom Packaging Quote</a>
+                    <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>" class="btn-outline">Request Free Sample</a>
                 </div>
             </div>
         </div>

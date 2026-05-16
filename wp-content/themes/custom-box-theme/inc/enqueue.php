@@ -28,10 +28,12 @@ function custom_box_is_commerce_context() {
 }
 
 function custom_box_enqueue_assets() {
+    $is_catalog_page = is_page_template('page-catalog.php') || is_page('catalog');
     $main_css_path = get_template_directory() . '/assets/css/main.css';
     $woocommerce_css_path = get_template_directory() . '/assets/css/woocommerce.css';
     $about_css_path = get_template_directory() . '/assets/css/about.css';
     $contact_css_path = get_template_directory() . '/assets/css/contact.css';
+    $catalog_css_path = get_template_directory() . '/assets/css/catalog.css';
     $landing_css_path = get_template_directory() . '/assets/css/landing.css';
     $landing_two_css_path = get_template_directory() . '/assets/css/landing-two.css';
     $responsive_css_path = get_template_directory() . '/assets/css/responsive.css';
@@ -46,7 +48,7 @@ function custom_box_enqueue_assets() {
 
     $responsive_deps = array('main-style');
 
-    if (custom_box_is_commerce_context()) {
+    if (custom_box_is_commerce_context() || $is_catalog_page) {
         wp_enqueue_style(
             'woocommerce-theme-style',
             get_template_directory_uri() . '/assets/css/woocommerce.css',
@@ -79,6 +81,15 @@ function custom_box_enqueue_assets() {
             get_template_directory_uri() . '/assets/css/contact.css',
             array('main-style', 'responsive-style'),
             file_exists($contact_css_path) ? filemtime($contact_css_path) : '1.0'
+        );
+    }
+
+    if ($is_catalog_page) {
+        wp_enqueue_style(
+            'catalog-style',
+            get_template_directory_uri() . '/assets/css/catalog.css',
+            array('main-style', 'woocommerce-theme-style', 'responsive-style'),
+            file_exists($catalog_css_path) ? filemtime($catalog_css_path) : '1.0'
         );
     }
 
@@ -140,7 +151,7 @@ function custom_box_dequeue_non_critical_assets() {
         wp_dequeue_script('wc-order-attribution');
     }
 
-    if (is_front_page() || is_page(array('about', 'contact', 'packaging-landing', 'packaging-landing-two', 'products'))) {
+    if (is_front_page() || is_page(array('about', 'contact', 'catalog', 'packaging-landing', 'packaging-landing-two', 'products'))) {
         wp_dequeue_style('wp-block-library');
         wp_dequeue_style('classic-theme-styles');
         wp_dequeue_style('global-styles');

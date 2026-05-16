@@ -132,6 +132,10 @@ add_action('created_product_cat', 'custom_box_save_category_image');
 add_action('edited_product_cat', 'custom_box_save_category_image');
 
 function custom_box_save_category_featured($term_id) {
+    if (!isset($_POST['custom_box_category_image_id']) && !isset($_POST['custom_box_category_featured'])) {
+        return;
+    }
+
     if (!empty($_POST['custom_box_category_featured'])) {
         update_term_meta($term_id, 'custom_box_category_featured', 1);
         return;

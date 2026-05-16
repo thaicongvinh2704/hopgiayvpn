@@ -90,7 +90,7 @@ if ($is_blog_page_template) {
                     <div class="blog-empty">
                         <h2><?php esc_html_e('Packaging articles are coming soon', 'custom-box-theme'); ?></h2>
                         <p><?php esc_html_e('We are preparing practical guides about custom boxes, printing, materials, and finishing for global packaging buyers.', 'custom-box-theme'); ?></p>
-                        <a class="btn-primary" href="<?php echo esc_url(home_url('/#quote')); ?>"><?php esc_html_e('Request a Custom Quote', 'custom-box-theme'); ?></a>
+                        <a class="btn-primary" href="<?php echo esc_url(home_url('/contact/#quote')); ?>"><?php esc_html_e('Request a Custom Paper Box Quote', 'custom-box-theme'); ?></a>
                     </div>
                 <?php endif; ?>
             </div>
@@ -145,7 +145,7 @@ if ($is_blog_page_template) {
                 <section class="blog-sidebar-cta">
                     <span><?php esc_html_e('Need custom packaging?', 'custom-box-theme'); ?></span>
                     <p><?php esc_html_e('Share your box size, material, artwork, and quantity. Our team will recommend a production-ready solution.', 'custom-box-theme'); ?></p>
-                    <a class="btn-primary" href="<?php echo esc_url(home_url('/#quote')); ?>"><?php esc_html_e('Request a Custom Quote', 'custom-box-theme'); ?></a>
+                    <a class="btn-primary" href="<?php echo esc_url(home_url('/contact/#quote')); ?>"><?php esc_html_e('Request a Custom Paper Box Quote', 'custom-box-theme'); ?></a>
                 </section>
             </aside>
         </div>

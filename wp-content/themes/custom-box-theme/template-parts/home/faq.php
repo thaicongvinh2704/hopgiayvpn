@@ -1,4 +1,4 @@
-<section class="faq-section">
+<section class="faq-section" id="faq">
 
     <div class="container faq-wrapper">
 
@@ -52,7 +52,7 @@
     </div>
 
     <div class="faq-btn">
-        <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>">More FAQs</a>
+        <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>">Ask a Custom Packaging Question</a>
     </div>
 
 </section>

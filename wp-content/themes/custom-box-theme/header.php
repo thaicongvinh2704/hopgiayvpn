@@ -62,7 +62,7 @@
         <!-- RIGHT -->
         <div class="header-right">
 
-            <a href="<?php echo esc_url(home_url('/#quote')); ?>" class="btn-quote">
+            <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>" class="btn-quote">
                 <span class="icon-circle">
                     <i class="far fa-comment"></i>
                 </span>

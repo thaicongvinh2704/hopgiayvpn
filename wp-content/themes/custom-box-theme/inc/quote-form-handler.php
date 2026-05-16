@@ -13,9 +13,10 @@ function custom_box_quote_form_redirect($status) {
     $redirect_to = wp_get_referer();
 
     if (!$redirect_to) {
-        $redirect_to = home_url('/#quote');
+        $redirect_to = home_url('/contact/');
     }
 
+    $redirect_to = strtok($redirect_to, '#');
     $redirect_to = remove_query_arg('quote_status', $redirect_to);
     $redirect_to = add_query_arg('quote_status', $status, $redirect_to);
 
