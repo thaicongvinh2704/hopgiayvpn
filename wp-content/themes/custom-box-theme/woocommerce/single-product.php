@@ -21,6 +21,13 @@ while (have_posts()) :
     $primary_product_category = function_exists('custom_box_get_primary_product_category') ? custom_box_get_primary_product_category($product_id) : null;
     $products_url = function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
     $product_specs = function_exists('custom_box_get_product_specifications') ? custom_box_get_product_specifications($product_id) : array();
+    $product_long_content = get_the_content();
+    $product_long_content_html = $product_long_content ? apply_filters('the_content', $product_long_content) : '';
+
+    if ($product_long_content_html && function_exists('custom_box_enhance_blog_article_images')) {
+        $product_long_content_html = custom_box_enhance_blog_article_images($product_long_content_html);
+    }
+
     $related_ids = $product ? wc_get_related_products($product_id, 8) : array();
 
     if (count($related_ids) < 5) {
@@ -136,10 +143,10 @@ while (have_posts()) :
 
     <section class="product-detail-overview product-story-section">
         <div class="container">
-            <div class="product-detail-description product-content-body">
+            <div class="product-detail-description product-content-body blog-content blog-article-content">
                 <h2><?php echo esc_html(get_the_title()); ?> That Balance Presentation and Function</h2>
-                <?php if (get_the_content()) : ?>
-                    <?php the_content(); ?>
+                <?php if ($product_long_content_html) : ?>
+                    <?php echo wp_kses_post($product_long_content_html); ?>
                 <?php else : ?>
                     <p>
                         This product can be customized by size, material, printing method, finishing option, and order quantity.
