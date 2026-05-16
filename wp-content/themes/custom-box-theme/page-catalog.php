@@ -301,7 +301,6 @@ $catalog_context = array(
 <main class="catalog-page">
     <?php
     get_template_part('template-parts/catalog/catalog-hero', null, $catalog_context);
-    get_template_part('template-parts/catalog/catalog-download', null, $catalog_context);
     get_template_part('template-parts/catalog/catalog-flipbooks', null, $catalog_context);
     get_template_part('template-parts/catalog/catalog-categories', null, $catalog_context);
     get_template_part('template-parts/catalog/catalog-materials-finishing', null, $catalog_context);
