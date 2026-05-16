@@ -187,7 +187,7 @@ $catalog_context = array(
     'profile_url' => $profile_url,
     'contact_url' => $contact_url,
     'quote_url' => $quote_url,
-    'hero_image' => $theme_uri . '/assets/images/product-banner1.png',
+    'hero_image' => $theme_uri . '/assets/images/banner-landing-page.webp',
     'categories' => array(
         array(
             'title' => 'Rigid Boxes',

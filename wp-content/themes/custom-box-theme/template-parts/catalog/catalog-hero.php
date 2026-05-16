@@ -11,25 +11,33 @@ $quote_url = isset($args['quote_url']) ? $args['quote_url'] : home_url('/contact
 ?>
 
 <section class="catalog-hero">
-    <div class="container catalog-hero-grid">
-        <div class="catalog-hero-copy">
-            <nav class="catalog-breadcrumb" aria-label="<?php esc_attr_e('Breadcrumb', 'custom-box-theme'); ?>">
-                <a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'custom-box-theme'); ?></a>
-                <span><?php esc_html_e('Catalog', 'custom-box-theme'); ?></span>
-            </nav>
-            <span class="catalog-kicker"><?php esc_html_e('Custom Packaging Catalog', 'custom-box-theme'); ?></span>
-            <h1><?php esc_html_e('Custom Paper Box Catalog', 'custom-box-theme'); ?></h1>
-            <p><?php esc_html_e('Explore our custom paper box packaging catalog for rigid boxes, folding cartons, cosmetic boxes, gift boxes, food packaging boxes, and OEM/ODM packaging solutions.', 'custom-box-theme'); ?></p>
-            <div class="catalog-actions">
-                <a class="btn-primary" href="<?php echo esc_url($catalog_url); ?>"><?php esc_html_e('Download Catalog', 'custom-box-theme'); ?></a>
-                <a class="btn-outline" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Request a Quote', 'custom-box-theme'); ?></a>
-            </div>
-        </div>
+    <div class="container">
+        <nav class="catalog-breadcrumb" aria-label="<?php esc_attr_e('Breadcrumb', 'custom-box-theme'); ?>">
+            <a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'custom-box-theme'); ?></a>
+            <span><?php esc_html_e('Catalog', 'custom-box-theme'); ?></span>
+        </nav>
 
         <?php if ($hero_image) : ?>
-            <div class="catalog-hero-media">
-                <img src="<?php echo esc_url($hero_image); ?>" alt="<?php esc_attr_e('custom paper box catalog product showcase', 'custom-box-theme'); ?>" decoding="async">
-            </div>
+            <a class="catalog-banner-frame" href="<?php echo esc_url($quote_url); ?>" aria-label="<?php esc_attr_e('Request a custom paper box quote', 'custom-box-theme'); ?>">
+                <img src="<?php echo esc_url($hero_image); ?>" alt="<?php esc_attr_e('VPN Packaging Factory custom paper box catalog banner', 'custom-box-theme'); ?>" decoding="async" fetchpriority="high">
+            </a>
         <?php endif; ?>
+
+        <div class="catalog-banner-copy">
+            <div class="catalog-hero-copy">
+                <span class="catalog-kicker"><?php esc_html_e('Custom Packaging Catalog', 'custom-box-theme'); ?></span>
+                <h1><?php esc_html_e('Custom Paper Box Catalog', 'custom-box-theme'); ?></h1>
+                <p><?php esc_html_e('Explore our custom paper box packaging catalog for rigid boxes, folding cartons, cosmetic boxes, gift boxes, food packaging boxes, and OEM/ODM packaging solutions.', 'custom-box-theme'); ?></p>
+            </div>
+            <div class="catalog-actions">
+                <a class="btn-primary" href="<?php echo esc_url($catalog_url); ?>"><?php esc_html_e('View Catalog Preview', 'custom-box-theme'); ?></a>
+                <a class="btn-outline" href="<?php echo esc_url($quote_url); ?>"><?php esc_html_e('Request a Quote', 'custom-box-theme'); ?></a>
+            </div>
+            <div class="catalog-proof-row" aria-label="<?php esc_attr_e('Factory highlights', 'custom-box-theme'); ?>">
+                <span><strong>9+</strong> <?php esc_html_e('Years Experience', 'custom-box-theme'); ?></span>
+                <span><strong>50+</strong> <?php esc_html_e('Packaging Categories', 'custom-box-theme'); ?></span>
+                <span><strong>OEM</strong> / <?php esc_html_e('ODM Support', 'custom-box-theme'); ?></span>
+            </div>
+        </div>
     </div>
 </section>
