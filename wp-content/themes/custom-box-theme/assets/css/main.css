@@ -61,6 +61,13 @@ html {
     opacity: 0.8;
 }
 
+.social-icon-img {
+    display: block;
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
 /* =========================
    MAIN HEADER
 ========================= */
@@ -3842,6 +3849,12 @@ html {
 .footer-social .social-youtube { background: #ff0000; }
 .footer-social .social-tiktok { background: #111; }
 .footer-social .social-linkedin { background: #0077b5; }
+.footer-social .social-alibaba { background: #ff6a00; }
+
+.footer-social .social-icon-img {
+    width: 17px;
+    height: 17px;
+}
 
 /* ===== PAYMENT ===== */
 .payment-grid {

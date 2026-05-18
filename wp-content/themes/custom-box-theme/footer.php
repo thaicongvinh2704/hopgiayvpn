@@ -18,6 +18,7 @@ $footer_social_links = array(
     array('class' => 'social-youtube', 'url' => 'https://www.youtube.com/@VietnamPaperBoxFactory', 'label' => 'YouTube', 'icon' => 'fab fa-youtube'),
     array('class' => 'social-tiktok', 'url' => 'https://www.tiktok.com/@paperbox84', 'label' => 'TikTok', 'icon' => 'fab fa-tiktok'),
     array('class' => 'social-linkedin', 'url' => 'https://www.linkedin.com/company/vpn-advertising-co/', 'label' => 'LinkedIn', 'icon' => 'fab fa-linkedin-in'),
+    array('class' => 'social-alibaba', 'url' => 'https://vpnadvertising.trustpass.alibaba.com/', 'label' => 'Alibaba TrustPass', 'image' => 'https://cdn.simpleicons.org/alibabadotcom/FFFFFF'),
 );
 ?>
 
@@ -73,7 +74,11 @@ $footer_social_links = array(
                 <div class="footer-social">
                     <?php foreach ($footer_social_links as $social_link) : ?>
                         <a class="<?php echo esc_attr($social_link['class']); ?>" href="<?php echo esc_url($social_link['url']); ?>" aria-label="<?php echo esc_attr($social_link['label']); ?>" target="_blank" rel="noopener">
-                            <i class="<?php echo esc_attr($social_link['icon']); ?>"></i>
+                            <?php if (!empty($social_link['image'])) : ?>
+                                <img class="social-icon-img" src="<?php echo esc_url($social_link['image']); ?>" alt="" loading="lazy" decoding="async">
+                            <?php else : ?>
+                                <i class="<?php echo esc_attr($social_link['icon']); ?>"></i>
+                            <?php endif; ?>
                         </a>
                     <?php endforeach; ?>
                 </div>

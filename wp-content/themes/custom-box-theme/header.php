@@ -23,6 +23,9 @@
             <a href="https://www.youtube.com/@VietnamPaperBoxFactory" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
             <a href="https://www.tiktok.com/@paperbox84" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
             <a href="https://www.linkedin.com/company/vpn-advertising-co/" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://vpnadvertising.trustpass.alibaba.com/" aria-label="Alibaba TrustPass" target="_blank" rel="noopener">
+                <img class="social-icon-img" src="https://cdn.simpleicons.org/alibabadotcom/FFFFFF" alt="" loading="lazy" decoding="async">
+            </a>
         </div>
 
     </div>
