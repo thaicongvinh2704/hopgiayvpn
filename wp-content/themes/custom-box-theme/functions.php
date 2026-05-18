@@ -9,6 +9,7 @@ $custom_box_inc_files = array(
     'inc/setup.php',
     'inc/dev.php',
     'inc/enqueue.php',
+    'inc/seo.php',
     'inc/breadcrumbs.php',
     'inc/admin-category-fields.php',
     'inc/product-specifications.php',

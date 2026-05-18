@@ -30,7 +30,7 @@ function custom_box_get_breadcrumb_schema_items() {
         ),
     );
 
-    if (is_home()) {
+    if (is_home() && !is_front_page()) {
         $blog_page_id = (int) get_option('page_for_posts');
         $items[] = array(
             'name' => __('Blog', 'custom-box-theme'),
@@ -95,7 +95,7 @@ function custom_box_get_breadcrumb_schema_items() {
             'name' => get_the_title() ?: __('Custom Packaging', 'custom-box-theme'),
             'url'  => get_permalink(),
         );
-    } elseif (is_page()) {
+    } elseif (is_page() && !is_front_page()) {
         $items[] = array(
             'name' => get_the_title(),
             'url'  => get_permalink(),
