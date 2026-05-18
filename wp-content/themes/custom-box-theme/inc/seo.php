@@ -50,12 +50,61 @@ function custom_box_rank_math_sitemap_excluded_posts($post_ids) {
 }
 add_filter('rank_math/sitemap/posts_to_exclude', 'custom_box_rank_math_sitemap_excluded_posts');
 
+function custom_box_get_quote_product_offer($product) {
+    $product_url = $product instanceof WC_Product ? $product->get_permalink() : get_permalink();
+
+    return array(
+        '@type'              => 'Offer',
+        'name'               => 'Request a Quote',
+        'url'                => $product_url,
+        'priceCurrency'      => 'USD',
+        'price'              => '0',
+        'availability'       => 'https://schema.org/InStock',
+        'itemCondition'      => 'https://schema.org/NewCondition',
+        'priceSpecification' => array(
+            '@type'         => 'PriceSpecification',
+            'price'         => '0',
+            'priceCurrency' => 'USD',
+            'description'   => 'Price available upon request based on size, material, printing, finishing, and order quantity.',
+        ),
+    );
+}
+
+function custom_box_add_quote_product_schema_fields($entity, $product) {
+    $entity['brand'] = array(
+        '@type' => 'Brand',
+        'name'  => 'VPN Packaging',
+    );
+
+    $entity['offers'] = custom_box_get_quote_product_offer($product);
+
+    if ($product instanceof WC_Product && $product->get_image_id() && empty($entity['image'])) {
+        $image = wp_get_attachment_image_src($product->get_image_id(), 'full');
+
+        if (!empty($image)) {
+            $entity['image'] = array(
+                array(
+                    '@type'  => 'ImageObject',
+                    'url'    => $image[0],
+                    'width'  => (int) $image[1],
+                    'height' => (int) $image[2],
+                ),
+            );
+        }
+    }
+
+    return $entity;
+}
+
 function custom_box_rank_math_json_ld($data) {
     if (!is_array($data)) {
         return $data;
     }
 
     $remove_article_schema = custom_box_is_low_value_page();
+    $is_product_page = function_exists('is_product') && is_product();
+    $product = $is_product_page && function_exists('wc_get_product') ? wc_get_product(get_queried_object_id()) : null;
+    $has_product_schema = false;
 
     foreach ($data as $key => $entity) {
         if (!is_array($entity)) {
@@ -63,6 +112,7 @@ function custom_box_rank_math_json_ld($data) {
         }
 
         $types = isset($entity['@type']) ? (array) $entity['@type'] : array();
+        $is_product_schema = array_intersect($types, array('Product', 'WooCommerceProduct', 'ProductGroup'));
 
         if (is_front_page() && in_array('CollectionPage', $types, true)) {
             $data[$key]['@type'] = count($types) > 1
@@ -84,6 +134,23 @@ function custom_box_rank_math_json_ld($data) {
                 unset($data[$key]['sameAs']);
             }
         }
+
+        if ($is_product_page && $product instanceof WC_Product && $is_product_schema) {
+            $has_product_schema = true;
+            $data[$key] = custom_box_add_quote_product_schema_fields($data[$key], $product);
+        }
+    }
+
+    if ($is_product_page && $product instanceof WC_Product && !$has_product_schema) {
+        $data['schema-customBoxProduct'] = custom_box_add_quote_product_schema_fields(
+            array(
+                '@type'       => 'Product',
+                'name'        => $product->get_name(),
+                'description' => wp_strip_all_tags($product->get_short_description() ? $product->get_short_description() : $product->get_description()),
+                'sku'         => $product->get_sku() ? $product->get_sku() : '',
+            ),
+            $product
+        );
     }
 
     return $data;
