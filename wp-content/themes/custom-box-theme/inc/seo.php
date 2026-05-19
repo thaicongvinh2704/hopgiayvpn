@@ -176,6 +176,7 @@ function custom_box_get_business_schema() {
             'https://www.facebook.com/people/Vietnam-Paper-Box-Factory/61576428668265/',
             'https://www.youtube.com/@VietnamPaperBoxFactory',
             'https://www.tiktok.com/@paperbox84',
+            'https://www.pinterest.com/VPNPaperBox',
             'https://www.linkedin.com/company/vpn-advertising-co/',
             'https://vpnadvertising.trustpass.alibaba.com/',
         ),

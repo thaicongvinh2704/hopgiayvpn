@@ -17,6 +17,7 @@ $footer_social_links = array(
     array('class' => 'social-facebook', 'url' => 'https://www.facebook.com/people/Vietnam-Paper-Box-Factory/61576428668265/', 'label' => 'Facebook', 'icon' => 'fab fa-facebook-f'),
     array('class' => 'social-youtube', 'url' => 'https://www.youtube.com/@VietnamPaperBoxFactory', 'label' => 'YouTube', 'icon' => 'fab fa-youtube'),
     array('class' => 'social-tiktok', 'url' => 'https://www.tiktok.com/@paperbox84', 'label' => 'TikTok', 'icon' => 'fab fa-tiktok'),
+    array('class' => 'social-pinterest', 'url' => 'https://www.pinterest.com/VPNPaperBox', 'label' => 'Pinterest', 'icon' => 'fab fa-pinterest-p'),
     array('class' => 'social-linkedin', 'url' => 'https://www.linkedin.com/company/vpn-advertising-co/', 'label' => 'LinkedIn', 'icon' => 'fab fa-linkedin-in'),
     array('class' => 'social-alibaba', 'url' => 'https://vpnadvertising.trustpass.alibaba.com/', 'label' => 'Alibaba TrustPass', 'image' => 'https://cdn.simpleicons.org/alibabadotcom/FFFFFF'),
 );
