@@ -33,7 +33,7 @@ $quote_url = home_url('/contact/#quote');
                 <span class="about-section-kicker">Company Overview</span>
                 <h2>Vietnam-Based Packaging Manufacturing for Global Buyers</h2>
                 <p>VPN Paper Packaging Factory is a Vietnam-based manufacturer specializing in custom paper packaging solutions for brands worldwide.</p>
-                <p>With modern machinery, skilled craftsmanship, and a fully integrated production process, we provide premium rigid boxes, folding cartons, paper bags, and luxury packaging tailored to each client’s brand identity.</p>
+                <p>With modern machinery, skilled craftsmanship, and a fully integrated production process, we provide premium rigid boxes, folding cartons, paper bags, and luxury packaging tailored to each client's brand identity.</p>
                 <div class="about-check-grid">
                     <span><i class="fas fa-check-circle"></i> Direct factory production</span>
                     <span><i class="fas fa-check-circle"></i> OEM & ODM packaging</span>
@@ -54,7 +54,7 @@ $quote_url = home_url('/contact/#quote');
         <div class="container about-stats-grid">
             <?php
             $stats = array(
-                array('value' => '2,000m²+', 'label' => 'Factory Area', 'icon' => 'fa-industry'),
+                array('value' => '2,000 m²+', 'label' => 'Factory Area', 'icon' => 'fa-industry'),
                 array('value' => '100+', 'label' => 'Packaging Styles', 'icon' => 'fa-boxes-stacked'),
                 array('value' => '500+', 'label' => 'Business Clients', 'icon' => 'fa-handshake'),
                 array('value' => '50+', 'label' => 'Product Categories', 'icon' => 'fa-layer-group'),
@@ -206,7 +206,7 @@ $quote_url = home_url('/contact/#quote');
                 <p>VPN Packaging works with cosmetic brands, coffee businesses, fashion startups, jewelry companies, wholesalers, agencies, and growing retail brands that need reliable manufacturing support.</p>
             </div>
             <blockquote>
-                “VPN helped us create premium cosmetic packaging with excellent finishing quality and fast turnaround.”
+                &ldquo;VPN helped us create premium cosmetic packaging with excellent finishing quality and fast turnaround.&rdquo;
                 <cite>Procurement Manager, Cosmetic Packaging Client</cite>
             </blockquote>
         </div>
@@ -214,7 +214,7 @@ $quote_url = home_url('/contact/#quote');
 
     <section class="about-final-cta">
         <div class="container">
-            <h2>Let’s Build Packaging That Elevates Your Brand</h2>
+            <h2>Let's Build Packaging That Elevates Your Brand</h2>
             <p>Share your product, artwork, quantity, and packaging goals. Our factory team will help you choose the right structure, material, and finishing path.</p>
             <div class="about-hero-actions">
                 <a class="btn-primary" href="<?php echo esc_url($quote_url); ?>">Get Free Quote</a>

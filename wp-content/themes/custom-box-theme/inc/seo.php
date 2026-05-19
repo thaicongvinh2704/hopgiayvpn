@@ -96,6 +96,103 @@ function custom_box_add_quote_product_schema_fields($entity, $product) {
     return $entity;
 }
 
+function custom_box_get_business_schema() {
+    $logo_url = get_template_directory_uri() . '/assets/images/logo-hop-giay-vpn-hcm.png';
+    $custom_logo_id = (int) get_theme_mod('custom_logo');
+
+    if ($custom_logo_id) {
+        $custom_logo_url = wp_get_attachment_image_url($custom_logo_id, 'full');
+        if ($custom_logo_url) {
+            $logo_url = $custom_logo_url;
+        }
+    }
+
+    $site_url = home_url('/');
+    $factory_map_url = 'https://maps.app.goo.gl/Z68geWnrTmx6kaCg6';
+
+    return array(
+        '@type'       => array('Organization', 'LocalBusiness'),
+        '@id'         => home_url('/#organization'),
+        'name'        => 'VPN Paper Box Manufacturer',
+        'alternateName' => array(
+            'VPN Packaging',
+            'VPN Paper Box Factory',
+            'Vietnam Paper Box Factory',
+        ),
+        'url'         => $site_url,
+        'logo'        => array(
+            '@type' => 'ImageObject',
+            'url'   => $logo_url,
+        ),
+        'image'       => get_template_directory_uri() . '/assets/images/anh-nha-may-2.png',
+        'description' => 'Vietnam-based paper box and packaging manufacturer specializing in custom paper boxes, rigid boxes, paper bags, and export-ready packaging for brands, importers, distributors, and agencies.',
+        'telephone'   => '+84933102653',
+        'email'       => 'paperbox@hopgiayvpn.com',
+        'priceRange'  => '$$',
+        'address'     => array(
+            '@type'           => 'PostalAddress',
+            'streetAddress'   => '1032 An Phu Tay, Hamlet 4, Hung Long Commune',
+            'addressLocality' => 'Binh Chanh District',
+            'addressRegion'   => 'Ho Chi Minh City',
+            'addressCountry'  => 'VN',
+        ),
+        'hasMap'      => $factory_map_url,
+        'areaServed'  => array(
+            array(
+                '@type' => 'Country',
+                'name'  => 'Vietnam',
+            ),
+            array(
+                '@type' => 'Place',
+                'name'  => 'Worldwide',
+            ),
+        ),
+        'openingHoursSpecification' => array(
+            array(
+                '@type'     => 'OpeningHoursSpecification',
+                'dayOfWeek' => array(
+                    'Monday',
+                    'Tuesday',
+                    'Wednesday',
+                    'Thursday',
+                    'Friday',
+                    'Saturday',
+                ),
+                'opens'     => '08:00',
+                'closes'    => '18:00',
+            ),
+        ),
+        'contactPoint' => array(
+            array(
+                '@type'       => 'ContactPoint',
+                'telephone'   => '+84933102653',
+                'email'       => 'paperbox@hopgiayvpn.com',
+                'contactType' => 'sales',
+                'areaServed'  => 'Worldwide',
+                'availableLanguage' => array('English', 'Vietnamese'),
+            ),
+        ),
+        'sameAs'      => array(
+            'https://www.facebook.com/people/Vietnam-Paper-Box-Factory/61576428668265/',
+            'https://www.youtube.com/@VietnamPaperBoxFactory',
+            'https://www.tiktok.com/@paperbox84',
+            'https://www.linkedin.com/company/vpn-advertising-co/',
+            'https://vpnadvertising.trustpass.alibaba.com/',
+        ),
+        'knowsAbout'  => array(
+            'Custom paper boxes',
+            'Rigid boxes',
+            'Gift packaging',
+            'Cosmetic packaging',
+            'Paper bags',
+            'Packaging printing',
+            'Foil stamping',
+            'Embossing',
+            'Lamination',
+        ),
+    );
+}
+
 function custom_box_rank_math_json_ld($data) {
     if (!is_array($data)) {
         return $data;
@@ -152,6 +249,8 @@ function custom_box_rank_math_json_ld($data) {
             $product
         );
     }
+
+    $data['schema-customBoxOrganization'] = custom_box_get_business_schema();
 
     return $data;
 }

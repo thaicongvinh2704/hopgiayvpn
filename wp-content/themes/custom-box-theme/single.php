@@ -37,6 +37,8 @@ while (have_posts()) :
                         'after'  => '</nav>',
                     ));
                     ?>
+
+                    <?php get_template_part('template-parts/blog/author-box'); ?>
                 </article>
             </div>
         </section>

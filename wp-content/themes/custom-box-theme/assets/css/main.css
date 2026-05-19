@@ -747,7 +747,7 @@ html {
    HERO SECTION
 ========================= */
 .hero {
-    background: #2A6A92; /* mÃ u ná»n giá»‘ng áº£nh */
+    background: #2A6A92; /* Background color matches reference */
     padding: 80px 0;
 }
 
@@ -2679,7 +2679,7 @@ html {
 .materials-grid {
     display: grid;
     grid-template-columns: 1.2fr 1fr 1fr;
-    grid-template-rows: 260px 260px; /* FIX TRÃ€N */
+    grid-template-rows: 260px 260px; /* Top fix */
     gap: 20px;
     margin-bottom: 40px;
 }
@@ -2711,7 +2711,7 @@ html {
 }
 
 /* =========================
-   CARD FIX TRÃ€N
+   Top card fix
 ========================= */
 .material-card {
     position: relative;
@@ -3231,7 +3231,7 @@ html {
   background: #2A6A92;
 }
 
-/* ===== FIX THEME (trÃ¡nh bá»‹ lá»‡ch) ===== */
+/* ===== Theme alignment fix ===== */
 .benefits-section * {
   box-sizing: border-box;
 }
@@ -3320,7 +3320,7 @@ html {
     z-index: 1;
 }
 
-/* ICON TRÃ’N */
+/* Round icon */
 .value-item .icon {
     width: var(--value-dot-size);
     height: var(--value-dot-size);
@@ -3819,7 +3819,7 @@ html {
     color: #2A6A92;
 }
 
-/* ===== ICON LIST (giá»‘ng hÃ¬nh 2 cÃ³ icon xanh) */
+/* ===== Icon list with blue icons ===== */
 .footer-col ul li::before {
     content: "\25C6";
     color: #2A6A92;
@@ -3844,7 +3844,7 @@ html {
     color: #fff;
 }
 
-/* mÃ u giá»‘ng hÃ¬nh */
+/* Reference color */
 .footer-social .social-facebook { background: #1877f2; }
 .footer-social .social-youtube { background: #ff0000; }
 .footer-social .social-tiktok { background: #111; }
@@ -4030,7 +4030,7 @@ html {
     animation-play-state: paused;
 }
 
-/* fade 2 bÃªn */
+/* Side fade */
 .brand-slider::before,
 .brand-slider::after {
     content: "";
@@ -6033,6 +6033,109 @@ textarea {
     margin: 0;
     padding: 9px 16px 11px;
     text-align: center;
+}
+
+.vpn-author-box {
+    align-items: flex-start;
+    background: #f8fbfd;
+    border: 1px solid var(--color-line, #d8e4eb);
+    border-radius: 16px;
+    display: grid;
+    gap: 22px;
+    grid-template-columns: 96px minmax(0, 1fr);
+    margin-top: 42px;
+    padding: 26px;
+}
+
+.vpn-author-avatar {
+    flex: 0 0 auto;
+}
+
+.vpn-author-avatar-img {
+    background: #fff;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    box-sizing: border-box;
+    box-shadow: 0 10px 24px rgba(15, 44, 62, 0.12);
+    display: block;
+    height: 96px;
+    object-fit: contain;
+    padding: 10px;
+    width: 96px;
+}
+
+.vpn-author-content {
+    min-width: 0;
+}
+
+.vpn-author-label {
+    color: var(--color-primary, #2A6A92);
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.vpn-author-name {
+    color: var(--color-heading, #0f2c3e);
+    font-size: 1.35rem;
+    line-height: 1.25;
+    margin: 0 0 6px;
+}
+
+.vpn-author-title {
+    color: var(--color-primary, #2A6A92);
+    font-size: 0.98rem;
+    font-weight: 700;
+    margin: 0 0 12px;
+}
+
+.vpn-author-bio {
+    color: var(--color-muted, #50606b);
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 0 0 16px;
+}
+
+.vpn-author-link {
+    align-items: center;
+    border: 1px solid var(--color-primary, #2A6A92);
+    border-radius: 999px;
+    color: var(--color-primary, #2A6A92);
+    display: inline-flex;
+    font-size: 0.92rem;
+    font-weight: 700;
+    justify-content: center;
+    line-height: 1;
+    padding: 11px 18px;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.vpn-author-link:hover,
+.vpn-author-link:focus {
+    background: var(--color-primary, #2A6A92);
+    color: #fff;
+}
+
+@media (max-width: 767px) {
+    .vpn-author-box {
+        grid-template-columns: 1fr;
+        margin-top: 34px;
+        padding: 22px;
+        text-align: left;
+    }
+
+    .vpn-author-avatar-img {
+        height: 84px;
+        width: 84px;
+    }
+
+    .vpn-author-name {
+        font-size: 1.18rem;
+    }
 }
 
 .blog-product-recommendations,
