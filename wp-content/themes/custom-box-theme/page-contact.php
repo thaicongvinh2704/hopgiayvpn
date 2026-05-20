@@ -12,8 +12,9 @@ $phone_display = '(+84) 933 102 653';
 $phone_link = 'tel:+84933102653';
 $email = 'paperbox@hopgiayvpn.com';
 $factory_name = 'VPN Paper Box Factory';
-$address = '1032 An Phu Tay, Hamlet 4, Hung Long Commune, Binh Chanh District, Ho Chi Minh City, Vietnam';
-$map_url = 'https://maps.app.goo.gl/Z68geWnrTmx6kaCg6';
+$factory_address = '1032 An Phu Tay, Hamlet 4, Hung Long Commune, Binh Chanh District, Ho Chi Minh City, Vietnam';
+$office_address = '20 Street No. 2, Binh Tri Dong B Ward, Binh Tan District, Ho Chi Minh City, Vietnam';
+$factory_map_url = 'https://maps.app.goo.gl/Z68geWnrTmx6kaCg6';
 $map_embed_url = 'https://maps.google.com/maps?cid=6310512854642764978&z=17&output=embed';
 ?>
 
@@ -59,7 +60,7 @@ $map_embed_url = 'https://maps.google.com/maps?cid=6310512854642764978&z=17&outp
                 <em>Vietnam time zone</em>
             </div>
 
-            <a class="contact-quick-card" href="<?php echo esc_url($map_url); ?>" target="_blank" rel="noopener">
+            <a class="contact-quick-card" href="<?php echo esc_url($factory_map_url); ?>" target="_blank" rel="noopener">
                 <i class="fas fa-location-dot"></i>
                 <span>Factory Office</span>
                 <strong><?php echo esc_html($factory_name); ?></strong>
@@ -104,11 +105,20 @@ $map_embed_url = 'https://maps.google.com/maps?cid=6310512854642764978&z=17&outp
     <section class="contact-location-section">
         <div class="container contact-location-grid">
             <div class="contact-location-copy">
-                <span class="contact-kicker">Factory Location</span>
+                <span class="contact-kicker">Factory &amp; Office</span>
                 <h2>Visit or Contact Our Ho Chi Minh City Team</h2>
                 <h3><?php echo esc_html($factory_name); ?></h3>
-                <p><?php echo esc_html($address); ?></p>
-                <a class="btn-outline" href="<?php echo esc_url($map_url); ?>" target="_blank" rel="noopener">Open Google Maps</a>
+                <div class="contact-address-list">
+                    <div class="contact-address-item">
+                        <strong>Factory</strong>
+                        <p><?php echo esc_html($factory_address); ?></p>
+                        <a class="btn-outline" href="<?php echo esc_url($factory_map_url); ?>" target="_blank" rel="noopener">Open Factory Map</a>
+                    </div>
+                    <div class="contact-address-item">
+                        <strong>Office</strong>
+                        <p><?php echo esc_html($office_address); ?></p>
+                    </div>
+                </div>
             </div>
             <div class="contact-map">
                 <iframe

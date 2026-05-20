@@ -348,8 +348,25 @@
     margin: 0 0 10px;
 }
 
+.contact-address-list {
+    display: grid;
+    gap: 18px;
+}
+
+.contact-address-item strong {
+    color: var(--color-ink, #123243);
+    display: block;
+    font-size: 15px;
+    line-height: 1.35;
+    margin-bottom: 6px;
+}
+
 .contact-location-copy p {
-    margin-bottom: 24px;
+    margin-bottom: 12px;
+}
+
+.contact-address-item .btn-outline {
+    margin-top: 2px;
 }
 
 .contact-map iframe {
