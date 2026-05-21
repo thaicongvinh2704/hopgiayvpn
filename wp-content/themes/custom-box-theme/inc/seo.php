@@ -5,6 +5,37 @@
 
 defined('ABSPATH') || exit;
 
+function custom_box_get_home_seo_title() {
+    return 'VPN Paper Box Manufacturer | Custom Paper Boxes Factory';
+}
+
+function custom_box_get_home_seo_description() {
+    return 'VPN Paper Box Manufacturer in Vietnam for custom rigid boxes, gift boxes, cosmetic packaging, paper bags, and factory-direct export packaging solutions.';
+}
+
+function custom_box_is_public_home() {
+    return !is_admin() && is_front_page();
+}
+
+function custom_box_home_document_title($title) {
+    if (!custom_box_is_public_home()) {
+        return $title;
+    }
+
+    return custom_box_get_home_seo_title();
+}
+add_filter('pre_get_document_title', 'custom_box_home_document_title', 20);
+add_filter('rank_math/frontend/title', 'custom_box_home_document_title', 20);
+
+function custom_box_home_rank_math_description($description) {
+    if (!custom_box_is_public_home()) {
+        return $description;
+    }
+
+    return custom_box_get_home_seo_description();
+}
+add_filter('rank_math/frontend/description', 'custom_box_home_rank_math_description', 20);
+
 function custom_box_low_value_page_slugs() {
     return array('cart', 'checkout', 'my-account', 'trang-mau');
 }
