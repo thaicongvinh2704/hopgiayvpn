@@ -190,6 +190,76 @@
 
             </form>
 
+            <script>
+                (function() {
+                    var forms = document.querySelectorAll('.quote-form');
+
+                    forms.forEach(function(form, index) {
+                        if (form.dataset.quoteIframeReady) {
+                            return;
+                        }
+
+                        form.dataset.quoteIframeReady = '1';
+
+                        var iframeName = 'custom_box_quote_submit_' + index + '_' + Date.now();
+                        var iframe = document.createElement('iframe');
+                        iframe.name = iframeName;
+                        iframe.title = 'Quote form submission';
+                        iframe.hidden = true;
+                        iframe.style.display = 'none';
+                        form.parentNode.appendChild(iframe);
+
+                        form.addEventListener('submit', function() {
+                            var button = form.querySelector('button[type="submit"]');
+                            var message = form.parentNode.querySelector('.quote-form-message');
+
+                            form.target = iframeName;
+
+                            if (!message) {
+                                message = document.createElement('div');
+                                form.parentNode.insertBefore(message, form);
+                            }
+
+                            message.className = 'quote-form-message quote-form-message-success';
+                            message.textContent = 'Thank you. Your quote request has been sent successfully.';
+
+                            if (button) {
+                                button.disabled = true;
+                                button.textContent = 'Submitted';
+                            }
+                        });
+
+                        iframe.addEventListener('load', function() {
+                            var button = form.querySelector('button[type="submit"]');
+                            var message = form.parentNode.querySelector('.quote-form-message');
+                            var status = '';
+
+                            try {
+                                status = new URL(iframe.contentWindow.location.href).searchParams.get('quote_status') || '';
+                            } catch (error) {
+                                status = '';
+                            }
+
+                            if (!status) {
+                                return;
+                            }
+
+                            if ('success' === status) {
+                                form.reset();
+                            } else if (message) {
+                                message.className = 'quote-form-message quote-form-message-' + status;
+                                message.textContent = 'Sorry, we could not send your request right now. Please try again later.';
+                            }
+
+                            if (button) {
+                                button.disabled = false;
+                                button.textContent = 'Submit Quote';
+                            }
+                        });
+                    });
+                })();
+            </script>
+
         </div>
 
     </div>
