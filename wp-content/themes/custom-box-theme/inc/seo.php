@@ -5,6 +5,21 @@
 
 defined('ABSPATH') || exit;
 
+function custom_box_output_google_tag() {
+    ?>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8ELLLW3RQ6"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-8ELLLW3RQ6');
+    </script>
+    <?php
+}
+add_action('wp_head', 'custom_box_output_google_tag', 5);
+
 function custom_box_get_home_seo_title() {
     return 'VPN Paper Box Manufacturer | Custom Paper Boxes Factory';
 }
