@@ -8,13 +8,13 @@ defined('ABSPATH') || exit;
 function custom_box_output_google_tag() {
     ?>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8ELLLW3RQ6"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-H6E36WMHV6"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', 'G-8ELLLW3RQ6');
+      gtag('config', 'G-H6E36WMHV6');
     </script>
     <?php
 }
