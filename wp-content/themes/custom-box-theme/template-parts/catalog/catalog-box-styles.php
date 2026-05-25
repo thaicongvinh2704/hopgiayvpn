@@ -46,7 +46,7 @@ $style_details = array(
     ),
     'Folding Carton Box' => array(
         'icon' => 'fa-cube',
-        'image' => get_template_directory_uri() . '/assets/images/Tuck-Top-Boxes_1758880242.jpg',
+        'image' => get_template_directory_uri() . '/assets/images/Tuck-Top-Boxes_1758880242.webp',
         'alt' => __('custom printed folding carton paper boxes', 'custom-box-theme'),
         'badge' => '',
         'description' => __('Lightweight printed paper box for retail products and large-volume production.', 'custom-box-theme'),

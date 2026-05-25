@@ -53,7 +53,7 @@
                     the_custom_logo();
                 } else {
                     ?>
-                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-hop-giay-vpn-hcm.png'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-hop-giay-vpn-hcm.webp'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
                     <?php
                 }
                 ?>

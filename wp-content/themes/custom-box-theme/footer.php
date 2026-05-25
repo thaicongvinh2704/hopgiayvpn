@@ -26,7 +26,7 @@ $footer_social_links = array(
 <footer class="site-footer">
     <div class="container">
         <div class="footer-logo">
-            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/logo-hop-giay-vpn-hcm.png'); ?>" alt="<?php echo esc_attr($footer_site_name); ?>">
+            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/logo-hop-giay-vpn-hcm.webp'); ?>" alt="<?php echo esc_attr($footer_site_name); ?>">
         </div>
 
         <div class="footer-contact">
@@ -88,19 +88,19 @@ $footer_social_links = array(
                     <h5><?php esc_html_e('Payment System:', 'custom-box-theme'); ?></h5>
                     <div class="payment-grid">
                         <div class="payment-item">
-                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/paypal.png'); ?>" alt="PayPal" loading="lazy" decoding="async">
+                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/paypal.webp'); ?>" alt="PayPal" loading="lazy" decoding="async">
                         </div>
                         <div class="payment-item">
-                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/master-card.png'); ?>" alt="Mastercard" loading="lazy" decoding="async">
+                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/master-card.webp'); ?>" alt="Mastercard" loading="lazy" decoding="async">
                         </div>
                         <div class="payment-item">
-                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/visa.png'); ?>" alt="Visa" loading="lazy" decoding="async">
+                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/visa.webp'); ?>" alt="Visa" loading="lazy" decoding="async">
                         </div>
                         <div class="payment-item">
-                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/maestro.png'); ?>" alt="Maestro" loading="lazy" decoding="async">
+                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/maestro.webp'); ?>" alt="Maestro" loading="lazy" decoding="async">
                         </div>
                         <div class="payment-item">
-                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/bank.png'); ?>" alt="<?php esc_attr_e('Bank transfer', 'custom-box-theme'); ?>" loading="lazy" decoding="async">
+                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/bank.webp'); ?>" alt="<?php esc_attr_e('Bank transfer', 'custom-box-theme'); ?>" loading="lazy" decoding="async">
                         </div>
                     </div>
                 </div>

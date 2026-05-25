@@ -4,7 +4,7 @@
 
         <!-- LEFT IMAGE -->
         <div class="faq-left">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Faq-Section-Image.jpg" alt="Packaging support team reviewing custom box questions" loading="lazy" decoding="async">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Faq-Section-Image.webp" alt="Packaging support team reviewing custom box questions" loading="lazy" decoding="async">
         </div>
 
         <!-- RIGHT FAQ -->

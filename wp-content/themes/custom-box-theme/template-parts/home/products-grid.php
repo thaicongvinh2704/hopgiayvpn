@@ -15,56 +15,56 @@
 
             <!-- LEFT TALL -->
             <div class="shape-card tall">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Pyramid-Boxes.jpg" alt="Perfume Boxes" loading="lazy" decoding="async">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Pyramid-Boxes.webp" alt="Perfume Boxes" loading="lazy" decoding="async">
                 <div class="shape-label">Perfume Boxes</div>
             </div>
 
             <!-- CENTER BIG -->
             <div class="shape-card wide">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Cone-Boxes.jpg" alt="Watch Boxes" loading="lazy" decoding="async">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Cone-Boxes.webp" alt="Watch Boxes" loading="lazy" decoding="async">
                 <div class="shape-label">Watch Boxes</div>
             </div>
 
             <!-- RIGHT -->
             <div class="shape-card">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Hexagon-Boxes.jpg" alt="Kraft Boxes" loading="lazy" decoding="async">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Hexagon-Boxes.webp" alt="Kraft Boxes" loading="lazy" decoding="async">
                 <div class="shape-label">Kraft Boxes</div>
             </div>
 
             <!-- LEFT BOTTOM -->
             <div class="shape-card tall">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Octagon-Boxes.jpg" alt="Pizza Boxes" loading="lazy" decoding="async">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Octagon-Boxes.webp" alt="Pizza Boxes" loading="lazy" decoding="async">
                 <div class="shape-label">Pizza Boxes</div>
             </div>
 
             <!-- SMALL CARDS -->
             <div class="shape-card">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Dispenser-Boxes.jpg" alt="Wine Boxes" loading="lazy" decoding="async">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Dispenser-Boxes.webp" alt="Wine Boxes" loading="lazy" decoding="async">
                 <div class="shape-label">Wine Boxes</div>
             </div>
 
             <div class="shape-card">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Perforated-Boxes.jpg" alt="Drawer Boxes" loading="lazy" decoding="async">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Perforated-Boxes.webp" alt="Drawer Boxes" loading="lazy" decoding="async">
                 <div class="shape-label">Drawer Boxes</div>
             </div>
 
             <div class="shape-card">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Tuck-Top-Boxes_1758880242.jpg" alt="Product Display Boxes" loading="lazy" decoding="async">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Tuck-Top-Boxes_1758880242.webp" alt="Product Display Boxes" loading="lazy" decoding="async">
                 <div class="shape-label">Product Display Boxes</div>
             </div>
 
             <div class="shape-card">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gift-box2.jpg" alt="Magnetic Gift Boxes" loading="lazy" decoding="async">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gift-box2.webp" alt="Magnetic Gift Boxes" loading="lazy" decoding="async">
                 <div class="shape-label">Magnetic Gift Boxes</div>
             </div>
 
             <div class="shape-card">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/RETT-Boxes.jpg" alt="Wine Gift Boxes" loading="lazy" decoding="async">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/RETT-Boxes.webp" alt="Wine Gift Boxes" loading="lazy" decoding="async">
                 <div class="shape-label">Wine Gift Boxes</div>
             </div>
 
             <div class="shape-card">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Pillow-Boxes.jpg" alt="Candle Boxes" loading="lazy" decoding="async">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Pillow-Boxes.webp" alt="Candle Boxes" loading="lazy" decoding="async">
                 <div class="shape-label">Candle Boxes</div>
             </div>
 

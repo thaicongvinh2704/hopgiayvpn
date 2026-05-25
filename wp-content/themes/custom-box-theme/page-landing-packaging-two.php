@@ -22,12 +22,12 @@ $landing_two_products = new WP_Query(array(
 ));
 
 $landing_two_logos = array(
-    'client-logos/dcons-logo.png',
-    'client-logos/iplus-logo.png',
-    'client-logos/lcsgroup-logo.png',
-    'client-logos/mkt-logo.png',
-    'client-logos/saokim-logo.png',
-    'client-logos/sharon-logo-.png',
+    'client-logos/dcons-logo.webp',
+    'client-logos/iplus-logo.webp',
+    'client-logos/lcsgroup-logo.webp',
+    'client-logos/mkt-logo.webp',
+    'client-logos/saokim-logo.webp',
+    'client-logos/sharon-logo-.webp',
 );
 ?>
 
@@ -244,7 +244,7 @@ $landing_two_logos = array(
                 </form>
             </div>
             <aside class="landing-two-support">
-                <img src="<?php echo esc_url($theme_uri . '/assets/images/factory-team-and-production.jpg'); ?>" alt="<?php esc_attr_e('Packaging support team', 'custom-box-theme'); ?>" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($theme_uri . '/assets/images/factory-team-and-production.webp'); ?>" alt="<?php esc_attr_e('Packaging support team', 'custom-box-theme'); ?>" loading="lazy" decoding="async">
                 <div>
                     <span><?php esc_html_e('Dedicated support', 'custom-box-theme'); ?></span>
                     <h2><?php esc_html_e('Helpful answers at every order stage', 'custom-box-theme'); ?></h2>

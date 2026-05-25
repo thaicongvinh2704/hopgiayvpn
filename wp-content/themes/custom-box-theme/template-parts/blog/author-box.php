@@ -34,7 +34,7 @@ if ('' === $author_bio) {
 }
 
 $author_url = $author_id ? get_author_posts_url($author_id) : home_url('/author/');
-$author_logo_url = get_template_directory_uri() . '/assets/images/logo-hop-giay-vpn-hcm.png';
+$author_logo_url = get_template_directory_uri() . '/assets/images/logo-hop-giay-vpn-hcm.webp';
 $custom_logo_id = (int) get_theme_mod('custom_logo');
 if ($custom_logo_id) {
     $custom_logo_url = wp_get_attachment_image_url($custom_logo_id, 'full');

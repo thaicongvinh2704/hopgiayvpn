@@ -32,7 +32,7 @@ $map_embed_url = 'https://maps.google.com/maps?cid=6310512854642764978&z=17&outp
             </div>
 
             <div class="contact-hero-media">
-                <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-2.png'); ?>" alt="VPN Packaging factory production team" decoding="async">
+                <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-2.webp'); ?>" alt="VPN Packaging factory production team" decoding="async">
             </div>
         </div>
     </section>

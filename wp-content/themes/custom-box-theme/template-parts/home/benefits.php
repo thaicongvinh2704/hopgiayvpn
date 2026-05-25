@@ -33,7 +33,7 @@
       <!-- RIGHT -->
       <div class="benefits-right">
         <img 
-          src="<?php echo get_template_directory_uri(); ?>/assets/images/gift-box2.jpg" 
+          src="<?php echo get_template_directory_uri(); ?>/assets/images/gift-box2.webp" 
           alt="Custom Box"
           loading="lazy"
           decoding="async"

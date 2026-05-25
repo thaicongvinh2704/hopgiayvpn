@@ -144,7 +144,7 @@ function custom_box_add_quote_product_schema_fields($entity, $product) {
 }
 
 function custom_box_get_business_schema() {
-    $logo_url = get_template_directory_uri() . '/assets/images/logo-hop-giay-vpn-hcm.png';
+    $logo_url = get_template_directory_uri() . '/assets/images/logo-hop-giay-vpn-hcm.webp';
     $custom_logo_id = (int) get_theme_mod('custom_logo');
 
     if ($custom_logo_id) {
@@ -171,7 +171,7 @@ function custom_box_get_business_schema() {
             '@type' => 'ImageObject',
             'url'   => $logo_url,
         ),
-        'image'       => get_template_directory_uri() . '/assets/images/anh-nha-may-2.png',
+        'image'       => get_template_directory_uri() . '/assets/images/anh-nha-may-2.webp',
         'description' => 'Vietnam-based paper box and packaging manufacturer specializing in custom paper boxes, rigid boxes, paper bags, and export-ready packaging for brands, importers, distributors, and agencies.',
         'telephone'   => '+84933102653',
         'email'       => 'paperbox@hopgiayvpn.com',

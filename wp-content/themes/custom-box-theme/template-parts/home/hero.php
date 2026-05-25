@@ -39,7 +39,7 @@
 
         <!-- RIGHT IMAGE -->
         <div class="hero-image">
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1.png'); ?>" alt="Custom luxury product packaging box" width="666" height="374" decoding="async" fetchpriority="high">
+            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1.webp'); ?>" alt="Custom luxury product packaging box" width="666" height="374" decoding="async" fetchpriority="high">
         </div>
 
     </div>
@@ -53,16 +53,16 @@
 
             <?php
             $brand_logos = array(
-                'dcons-logo.png',
-                'hibiscus-gift-logo.png',
-                'iplus-logo.png',
-                'lcsgroup-logo.png',
-                'lovedears.png',
-                'mkt-logo.png',
-                'saokim-logo.png',
-                'sharon-logo-.png',
-                'tien-giang-logo.png',
-                'trungtamdungcu-logo.png',
+                'dcons-logo.webp',
+                'hibiscus-gift-logo.webp',
+                'iplus-logo.webp',
+                'lcsgroup-logo.webp',
+                'lovedears.webp',
+                'mkt-logo.webp',
+                'saokim-logo.webp',
+                'sharon-logo-.webp',
+                'tien-giang-logo.webp',
+                'trungtamdungcu-logo.webp',
             );
             ?>
 

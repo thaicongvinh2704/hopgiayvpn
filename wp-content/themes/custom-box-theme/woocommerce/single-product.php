@@ -218,7 +218,7 @@ while (have_posts()) :
             <h2>Client Feedback That Matters</h2>
             <div class="product-feedback-card">
                 <div class="product-feedback-image">
-                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/feedback1.jpeg'); ?>" alt="Custom packaging client feedback" loading="lazy" decoding="async">
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/feedback1.webp'); ?>" alt="Custom packaging client feedback" loading="lazy" decoding="async">
                 </div>
                 <div class="product-feedback-content">
                     <div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>

@@ -172,13 +172,13 @@ $landing_testimonials = array(
             </div>
             <div class="landing-factory-media">
                 <figure class="landing-factory-large">
-                    <img src="<?php echo esc_url($theme_uri . '/assets/images/factory-team-and-production.jpg'); ?>" alt="VPN Packaging factory production team" loading="lazy" decoding="async">
+                    <img src="<?php echo esc_url($theme_uri . '/assets/images/factory-team-and-production.webp'); ?>" alt="VPN Packaging factory production team" loading="lazy" decoding="async">
                 </figure>
                 <figure>
                     <img src="<?php echo esc_url($theme_uri . '/assets/images/print-finishing-carton-boxex.webp'); ?>" alt="Packaging printing and finishing process" loading="lazy" decoding="async">
                 </figure>
                 <figure>
-                    <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-fly.png'); ?>" alt="Aerial view of VPN Packaging Factory" loading="lazy" decoding="async">
+                    <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-fly.webp'); ?>" alt="Aerial view of VPN Packaging Factory" loading="lazy" decoding="async">
                 </figure>
             </div>
         </div>

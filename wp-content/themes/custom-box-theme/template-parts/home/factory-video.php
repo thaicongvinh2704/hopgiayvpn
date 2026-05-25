@@ -37,7 +37,7 @@
 
         <div class="factory-showcase-media">
             <img
-                src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/factory-team showcase.jpg'); ?>"
+                src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/factory-team showcase.webp'); ?>"
                 alt="VPN Paper Box Manufacturer team and production showcase"
                 loading="lazy"
                 decoding="async"
@@ -46,7 +46,7 @@
 
         <div class="factory-certification-media">
             <img
-                src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/vpn-packaging-iso-9001-certification-banner.jpg'); ?>"
+                src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/vpn-packaging-iso-9001-certification-banner.webp'); ?>"
                 alt="<?php esc_attr_e('VPN Paper Box Manufacturer ISO 9001 certification banner', 'custom-box-theme'); ?>"
                 loading="lazy"
                 decoding="async"

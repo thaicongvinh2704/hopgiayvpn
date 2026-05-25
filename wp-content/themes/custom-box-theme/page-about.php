@@ -22,7 +22,7 @@ $quote_url = home_url('/contact/#quote');
                 </div>
             </div>
             <div class="about-hero-media">
-                <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-2.png'); ?>" alt="VPN Packaging factory team and production area" decoding="async">
+                <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-2.webp'); ?>" alt="VPN Packaging factory team and production area" decoding="async">
             </div>
         </div>
     </section>
@@ -42,7 +42,7 @@ $quote_url = home_url('/contact/#quote');
                 </div>
             </div>
             <div class="about-overview-media">
-                <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-1.jpg'); ?>" alt="VPN Packaging factory worker operating packaging production equipment" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-1.webp'); ?>" alt="VPN Packaging factory worker operating packaging production equipment" loading="lazy" decoding="async">
             </div>
         </div>
         <div class="container about-overview-brochure">
@@ -80,23 +80,23 @@ $quote_url = home_url('/contact/#quote');
             </div>
             <div class="about-factory-grid">
                 <figure class="about-factory-large">
-                    <img src="<?php echo esc_url($theme_uri . '/assets/images/factory-team-and-production.jpg'); ?>" alt="VPN Packaging Factory Team & Production" loading="lazy" decoding="async">
+                    <img src="<?php echo esc_url($theme_uri . '/assets/images/factory-team-and-production.webp'); ?>" alt="VPN Packaging Factory Team & Production" loading="lazy" decoding="async">
                     <figcaption>Factory Team & Production</figcaption>
                 </figure>
                 <figure>
-                    <img src="<?php echo esc_url($theme_uri . '/assets/images/Faq-Section-Image.jpg'); ?>" alt="Packaging finishing process" loading="lazy" decoding="async">
+                    <img src="<?php echo esc_url($theme_uri . '/assets/images/Faq-Section-Image.webp'); ?>" alt="Packaging finishing process" loading="lazy" decoding="async">
                     <figcaption>Packaging Finishing</figcaption>
                 </figure>
                 <figure>
-                    <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-2.png'); ?>" alt="Rigid box assembly" loading="lazy" decoding="async">
+                    <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-2.webp'); ?>" alt="Rigid box assembly" loading="lazy" decoding="async">
                     <figcaption>Rigid Box Assembly</figcaption>
                 </figure>
                 <figure>
-                    <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-1.jpg'); ?>" alt="Custom paper packaging quality inspection" loading="lazy" decoding="async">
+                    <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-1.webp'); ?>" alt="Custom paper packaging quality inspection" loading="lazy" decoding="async">
                     <figcaption>Quality Inspection</figcaption>
                 </figure>
                 <figure>
-                    <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-3.png'); ?>" alt="VPN Packaging factory packing and dispatch area" loading="lazy" decoding="async">
+                    <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-3.webp'); ?>" alt="VPN Packaging factory packing and dispatch area" loading="lazy" decoding="async">
                     <figcaption>Packing & Dispatch</figcaption>
                 </figure>
             </div>
@@ -140,12 +140,12 @@ $quote_url = home_url('/contact/#quote');
             <div class="about-industry-grid">
                 <?php
                 $industries = array(
-                    array('Cosmetic Packaging', 'cosmetic-set-packaging-boxes', 'gift-box.png'),
-                    array('Gift Boxes', 'luxury-rigid-gift-boxes', 'gift-box2.jpg'),
+                    array('Cosmetic Packaging', 'cosmetic-set-packaging-boxes', 'gift-box.webp'),
+                    array('Gift Boxes', 'luxury-rigid-gift-boxes', 'gift-box2.webp'),
                     array('Jewelry & Watch Boxes', 'watch-packaging-boxes', 'Rigid-Packaging.webp'),
                     array('Paper Tube Boxes', 'custom-paper-tube-packaging-boxes', 'Kraft-Packaging.webp'),
-                    array('Luxury Wine Bottle Packaging Boxes', 'luxury-wine-bottle-packaging-boxes', 'gift-box2.jpg'),
-                    array('Pizza Packaging Boxes', 'pizza-packaging-boxes', 'Takeout-Boxes_1758880241.jpg'),
+                    array('Luxury Wine Bottle Packaging Boxes', 'luxury-wine-bottle-packaging-boxes', 'gift-box2.webp'),
+                    array('Pizza Packaging Boxes', 'pizza-packaging-boxes', 'Takeout-Boxes_1758880241.webp'),
                     array('Chocolate Gift Boxes', 'custom-chocolate-gift-boxes', 'Cardboard-Packaging.webp'),
                     array('Mooncake Gift Boxes', 'mooncake-gift-packaging-boxes', 'SBS-Paperboard-Packaging.webp'),
                 );

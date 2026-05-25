@@ -11,7 +11,7 @@ if (!function_exists('vpn_company_profile_image')) {
         $image_dir = get_template_directory() . '/assets/images/';
         $image_uri = get_template_directory_uri() . '/assets/images/';
 
-        foreach (array('jpg', 'jpeg', 'png', 'webp') as $extension) {
+        foreach (array('webp', 'jpg', 'jpeg', 'png') as $extension) {
             $file_name = $base_name . '.' . $extension;
 
             if (file_exists($image_dir . $file_name)) {
@@ -23,10 +23,10 @@ if (!function_exists('vpn_company_profile_image')) {
     }
 }
 
-$factory_fly = vpn_company_profile_image('anh-nha-may-fly', 'profile-company.jpg');
-$factory_one = vpn_company_profile_image('anh-nha-may-1', 'factory-team showcase.jpg');
+$factory_fly = vpn_company_profile_image('anh-nha-may-fly', 'profile-company.webp');
+$factory_one = vpn_company_profile_image('anh-nha-may-1', 'factory-team showcase.webp');
 $factory_two = vpn_company_profile_image('anh-nha-may-2', 'print-finishing-carton-boxex.webp');
-$factory_three = vpn_company_profile_image('anh-nha-may-3', 'product-banner1.png');
+$factory_three = vpn_company_profile_image('anh-nha-may-3', 'product-banner1.webp');
 ?>
 
 <section class="vpn-company-profile-banner" aria-labelledby="vpn-company-profile-title">

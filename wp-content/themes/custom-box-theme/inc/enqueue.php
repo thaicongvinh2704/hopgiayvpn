@@ -184,7 +184,7 @@ function custom_box_preload_hero_assets() {
 
     printf(
         '<link rel="preload" as="image" href="%s" fetchpriority="high">' . "\n",
-        esc_url(get_template_directory_uri() . '/assets/images/product-banner1.png')
+        esc_url(get_template_directory_uri() . '/assets/images/product-banner1.webp')
     );
 }
 add_action('wp_head', 'custom_box_preload_hero_assets', 1);
@@ -219,11 +219,11 @@ function custom_box_non_blocking_styles($html, $handle, $href, $media) {
 add_filter('style_loader_tag', 'custom_box_non_blocking_styles', 10, 4);
 
 function custom_box_theme_favicon() {
-    $favicon_url = get_template_directory_uri() . '/assets/images/favicon.jpg';
+    $favicon_url = get_template_directory_uri() . '/assets/images/favicon.webp';
 
     printf(
-        '<link rel="icon" href="%1$s" type="image/jpeg">' . "\n"
-        . '<link rel="shortcut icon" href="%1$s" type="image/jpeg">' . "\n"
+        '<link rel="icon" href="%1$s" type="image/webp">' . "\n"
+        . '<link rel="shortcut icon" href="%1$s" type="image/webp">' . "\n"
         . '<link rel="apple-touch-icon" href="%1$s">' . "\n",
         esc_url($favicon_url)
     );
