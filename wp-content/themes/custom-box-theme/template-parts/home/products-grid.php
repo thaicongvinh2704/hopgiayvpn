@@ -4,9 +4,9 @@
 
         <!-- HEADER -->
         <div class="shapes-header">
-            <h2>Discover <span>Unique Packaging</span> Shapes and Styles</h2>
+            <h2>Explore <span>Custom Packaging</span> by Product Type</h2>
             <p>
-                From elegant rigid boxes to innovative mailers, our diverse packaging styles cater to every brand’s personality.
+                From perfume and jewelry boxes to food, cosmetic, and gift packaging, each style is made to match your product presentation.
             </p>
         </div>
 
@@ -15,57 +15,57 @@
 
             <!-- LEFT TALL -->
             <div class="shape-card tall">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Pyramid-Boxes.jpg" alt="Pyramid Boxes" loading="lazy" decoding="async">
-                <div class="shape-label">Pyramid Boxes</div>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Pyramid-Boxes.jpg" alt="Perfume Boxes" loading="lazy" decoding="async">
+                <div class="shape-label">Perfume Boxes</div>
             </div>
 
             <!-- CENTER BIG -->
             <div class="shape-card wide">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Cone-Boxes.jpg" alt="Cone Boxes" loading="lazy" decoding="async">
-                <div class="shape-label">Cone Boxes</div>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Cone-Boxes.jpg" alt="Watch Boxes" loading="lazy" decoding="async">
+                <div class="shape-label">Watch Boxes</div>
             </div>
 
             <!-- RIGHT -->
             <div class="shape-card">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Hexagon-Boxes.jpg" alt="Hexagon Boxes" loading="lazy" decoding="async">
-                <div class="shape-label">Hexagon Boxes</div>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Hexagon-Boxes.jpg" alt="Kraft Boxes" loading="lazy" decoding="async">
+                <div class="shape-label">Kraft Boxes</div>
             </div>
 
             <!-- LEFT BOTTOM -->
             <div class="shape-card tall">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Octagon-Boxes.jpg" alt="Octagon Boxes" loading="lazy" decoding="async">
-                <div class="shape-label">Octagon Boxes</div>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Octagon-Boxes.jpg" alt="Pizza Boxes" loading="lazy" decoding="async">
+                <div class="shape-label">Pizza Boxes</div>
             </div>
 
             <!-- SMALL CARDS -->
             <div class="shape-card">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Dispenser-Boxes.jpg" alt="Dispenser Boxes" loading="lazy" decoding="async">
-                <div class="shape-label">Dispenser Boxes</div>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Dispenser-Boxes.jpg" alt="Wine Boxes" loading="lazy" decoding="async">
+                <div class="shape-label">Wine Boxes</div>
             </div>
 
             <div class="shape-card">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Perforated-Boxes.jpg" alt="Perforated Boxes" loading="lazy" decoding="async">
-                <div class="shape-label">Perforated Boxes</div>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Perforated-Boxes.jpg" alt="Drawer Boxes" loading="lazy" decoding="async">
+                <div class="shape-label">Drawer Boxes</div>
             </div>
 
             <div class="shape-card">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Tuck-Top-Boxes_1758880242.jpg" alt="Tuck Top Boxes" loading="lazy" decoding="async">
-                <div class="shape-label">Tuck Top Boxes</div>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Tuck-Top-Boxes_1758880242.jpg" alt="Product Display Boxes" loading="lazy" decoding="async">
+                <div class="shape-label">Product Display Boxes</div>
             </div>
 
             <div class="shape-card">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Takeout-Boxes_1758880241.jpg" alt="Takeout Boxes" loading="lazy" decoding="async">
-                <div class="shape-label">Takeout Boxes</div>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gift-box2.jpg" alt="Magnetic Gift Boxes" loading="lazy" decoding="async">
+                <div class="shape-label">Magnetic Gift Boxes</div>
             </div>
 
             <div class="shape-card">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/RETT-Boxes.jpg" alt="RETT Boxes" loading="lazy" decoding="async">
-                <div class="shape-label">RETT Boxes</div>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/RETT-Boxes.jpg" alt="Wine Gift Boxes" loading="lazy" decoding="async">
+                <div class="shape-label">Wine Gift Boxes</div>
             </div>
 
             <div class="shape-card">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Pillow-Boxes.jpg" alt="Pillow Boxes" loading="lazy" decoding="async">
-                <div class="shape-label">Pillow Boxes</div>
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Pillow-Boxes.jpg" alt="Candle Boxes" loading="lazy" decoding="async">
+                <div class="shape-label">Candle Boxes</div>
             </div>
 
         </div>
