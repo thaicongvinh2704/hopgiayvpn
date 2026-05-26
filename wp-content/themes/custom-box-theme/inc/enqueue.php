@@ -123,11 +123,13 @@ function custom_box_enqueue_assets() {
 add_action('wp_enqueue_scripts', 'custom_box_enqueue_assets');
 
 function load_fontawesome() {
+    $fontawesome_css_path = get_template_directory() . '/assets/vendor/fontawesome/css/all.min.css';
+
     wp_enqueue_style(
         'font-awesome',
-        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css',
+        get_template_directory_uri() . '/assets/vendor/fontawesome/css/all.min.css',
         array(),
-        '6.5.0'
+        file_exists($fontawesome_css_path) ? filemtime($fontawesome_css_path) : '6.5.0'
     );
 }
 add_action('wp_enqueue_scripts', 'load_fontawesome');
@@ -212,8 +214,7 @@ function custom_box_non_blocking_styles($html, $handle, $href, $media) {
 
     $href = esc_url($href);
 
-    return '<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>' . "\n"
-        . '<link rel="preload" href="' . $href . '" as="style" onload="this.onload=null;this.rel=\'stylesheet\'" crossorigin="anonymous">' . "\n"
+    return '<link rel="preload" href="' . $href . '" as="style" onload="this.onload=null;this.rel=\'stylesheet\'">' . "\n"
         . '<noscript><link rel="stylesheet" href="' . $href . '" media="all"></noscript>' . "\n";
 }
 add_filter('style_loader_tag', 'custom_box_non_blocking_styles', 10, 4);
