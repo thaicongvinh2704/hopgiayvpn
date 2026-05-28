@@ -21,7 +21,7 @@
 
             <!-- CENTER BIG -->
             <div class="shape-card wide">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Cone-Boxes.webp" alt="Watch Boxes" loading="lazy" decoding="async">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/banner-watch-box.webp" alt="Watch Boxes" loading="lazy" decoding="async">
                 <div class="shape-label">Watch Boxes</div>
             </div>
 

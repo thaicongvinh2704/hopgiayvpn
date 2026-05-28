@@ -1,10 +1,18 @@
-.landing-page {
+.vpn-packaging-money-page {
     background: #ffffff;
-    color: #14213d;
+    color: #18283a;
+}
+
+.vpn-packaging-money-page .container {
+    width: min(100% - 32px, 1200px);
 }
 
 body.page-template-page-landing-packaging .top-bar {
     background: #0b2f57;
+}
+
+body.page-template-page-landing-packaging .main-nav {
+    background: #ffffff;
 }
 
 body.page-template-page-landing-packaging .btn-quote {
@@ -23,865 +31,553 @@ body.page-template-page-landing-packaging .btn-phone {
     color: #ffffff;
 }
 
-body.page-template-page-landing-packaging .main-nav {
-    background: #ffffff;
-}
-
-body.page-template-page-landing-packaging .nav-menu a:hover {
-    color: #f58220;
-}
-
-.landing-page .container {
-    width: min(100%, 1200px);
-}
-
-.landing-hero {
-    background: linear-gradient(135deg, #f7fbff 0%, #ffffff 58%, #fff4e8 100%);
-    padding: 72px 0 56px;
-}
-
-.landing-hero-grid,
-.landing-factory-grid,
-.landing-options-grid {
-    display: grid;
-    gap: 42px;
-    align-items: center;
-}
-
-.landing-hero-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(360px, 520px);
-}
-
-.landing-wow {
-    background: #f5f8fb;
-    padding: 34px 0 48px;
-}
-
-.landing-wow-grid {
-    align-items: center;
-    display: grid;
-    gap: 48px;
-    grid-template-columns: minmax(0, 1fr) minmax(360px, 500px);
-}
-
-.landing-wow .landing-eyebrow,
-.landing-wow .landing-hero h1 {
-    color: #ffffff;
-}
-
-.landing-wow .landing-hero-copy h1,
-.landing-wow .landing-hero-copy p {
-    color: #ffffff;
-}
-
-.landing-wow .landing-hero-copy p {
-    color: rgba(255, 255, 255, 0.84);
-}
-
-.landing-wow .btn-outline {
-    border-color: rgba(255, 255, 255, 0.72);
-    color: #ffffff;
-}
-
-.landing-wow-media {
-    position: relative;
-}
-
-.landing-wow-media img {
-    aspect-ratio: 4 / 3;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 28px 70px rgba(0, 0, 0, 0.28);
-    object-fit: contain;
-    padding: 24px;
-    width: 100%;
-}
-
-.landing-wow-note {
-    background: #ffffff;
-    border-left: 5px solid #f58220;
-    border-radius: 7px;
-    bottom: 24px;
-    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.22);
-    left: -28px;
-    max-width: 300px;
-    padding: 18px 20px;
-    position: absolute;
-}
-
-.landing-wow-note strong,
-.landing-wow-note span {
-    display: block;
-}
-
-.landing-wow-note strong {
-    color: #0b2f57;
-    font-size: 17px;
-    margin-bottom: 5px;
-}
-
-.landing-wow-note span {
-    color: #516173;
-    line-height: 1.45;
-}
-
-.landing-banner-frame {
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 24px 70px rgba(11, 47, 87, 0.14);
-    cursor: pointer;
-    display: block;
+.vpn-packaging-hero {
+    background:
+        linear-gradient(110deg, rgba(11, 47, 87, 0.94) 0%, rgba(11, 47, 87, 0.88) 48%, rgba(245, 130, 32, 0.08) 100%),
+        #0b2f57;
     overflow: hidden;
-    text-decoration: none;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 56px 0 68px;
 }
 
-.landing-banner-frame:hover,
-.landing-banner-frame:focus-visible {
-    box-shadow: 0 28px 80px rgba(11, 47, 87, 0.18);
-    transform: translateY(-2px);
+.vpn-packaging-hero .container {
+    width: min(100% - 48px, 1280px);
 }
 
-.landing-banner-frame img {
-    display: block;
-    width: 100%;
-}
-
-.landing-banner-copy {
+.vpn-packaging-hero-grid,
+.vpn-packaging-split,
+.vpn-packaging-final-inner {
     align-items: center;
     display: grid;
-    gap: 18px 32px;
-    grid-template-columns: minmax(0, 1fr) auto;
-    margin-top: 28px;
+    gap: 44px;
 }
 
-.landing-banner-copy .landing-eyebrow,
-.landing-banner-copy h1,
-.landing-banner-copy p {
-    grid-column: 1;
+.vpn-packaging-hero-grid {
+    gap: 34px;
+    grid-template-columns: 1fr;
 }
 
-.landing-banner-copy .landing-eyebrow {
-    color: #f58220;
+.vpn-packaging-hero-copy,
+.vpn-packaging-hero-copy h1,
+.vpn-packaging-hero-copy p {
+    color: #ffffff;
 }
 
-.landing-banner-copy h1 {
-    color: #0b2f57;
-    font-size: clamp(34px, 4vw, 52px);
+.vpn-packaging-hero-copy {
     max-width: 860px;
 }
 
-.landing-banner-copy p {
-    color: #516173;
-    margin: 0;
-    max-width: 780px;
-}
-
-.landing-banner-copy .btn-outline {
-    border-color: #0b2f57;
-    color: #0b2f57;
-}
-
-.landing-banner-copy .landing-hero-actions {
-    grid-column: 2;
-    grid-row: 1 / span 3;
-    justify-content: flex-end;
-}
-
-.landing-banner-copy .landing-proof-row {
-    grid-column: 1 / -1;
-}
-
-.landing-banner-copy .landing-proof-row span {
-    background: #ffffff;
-    border-color: #dbe6f2;
-    color: #516173;
-}
-
-.landing-banner-copy .landing-proof-row strong {
-    color: #0b2f57;
-}
-
-.landing-soft-cta,
-.landing-small-cta {
-    background: #ffffff;
-    border-bottom: 1px solid #dfe7ef;
-    border-top: 1px solid #dfe7ef;
-}
-
-.landing-soft-cta-inner,
-.landing-small-cta-inner {
-    align-items: center;
-    display: flex;
-    gap: 18px;
-    justify-content: space-between;
-    padding: 22px 0;
-}
-
-.landing-soft-cta span {
-    color: #0b2f57;
-    font-size: 18px;
-    font-weight: 850;
-}
-
-.landing-soft-cta a {
-    color: #f58220;
-    font-weight: 850;
-    text-decoration: none;
-}
-
-.landing-small-cta {
-    background: #fff8ef;
-}
-
-.landing-small-cta h2 {
-    color: #0b2f57;
-    font-size: 26px;
-    line-height: 1.2;
-    margin: 0;
-}
-
-.landing-eyebrow {
+.vpn-packaging-eyebrow {
     color: #f58220;
     display: inline-flex;
     font-size: 13px;
-    font-weight: 800;
+    font-weight: 850;
     letter-spacing: 0;
     margin-bottom: 14px;
     text-transform: uppercase;
 }
 
-.landing-hero h1,
-.landing-section h2,
-.landing-final-cta h2 {
-    color: #0b2f57;
+.vpn-packaging-hero h1,
+.vpn-packaging-section h2,
+.vpn-packaging-final-cta h2 {
     font-weight: 850;
     letter-spacing: 0;
     line-height: 1.08;
     margin: 0;
 }
 
-.landing-hero h1 {
-    font-size: clamp(42px, 6vw, 68px);
+.vpn-packaging-hero h1 {
+    font-size: clamp(38px, 4.4vw, 58px);
+    line-height: 1.04;
+    max-width: 860px;
+}
+
+.vpn-packaging-hero p {
+    color: rgba(255, 255, 255, 0.86);
+    font-size: 17px;
+    line-height: 1.68;
+    margin: 20px 0 0;
     max-width: 760px;
 }
 
-.landing-hero p,
-.landing-section-header p,
-.landing-factory-copy p,
-.landing-options-grid > div:first-child p,
-.landing-quote-intro p,
-.landing-final-cta p {
-    color: #516173;
-    font-size: 17px;
-    line-height: 1.75;
-}
-
-.landing-hero p {
-    max-width: 650px;
-}
-
-.landing-hero-actions,
-.landing-final-inner {
-    align-items: center;
+.vpn-packaging-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 14px;
+    margin-top: 28px;
 }
 
-.landing-proof-row {
+.vpn-packaging-actions .btn-outline {
+    border-color: rgba(255, 255, 255, 0.75);
+    color: #ffffff;
+}
+
+.vpn-packaging-proof {
     display: grid;
     gap: 12px;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    margin-top: 30px;
-    max-width: 640px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
-.landing-proof-row span {
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(255, 255, 255, 0.24);
+.vpn-packaging-proof span {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     border-radius: 8px;
-    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
-    color: rgba(255, 255, 255, 0.78);
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    min-height: 86px;
-    padding: 16px;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 750;
+    line-height: 1.32;
+    min-height: 58px;
+    padding: 13px 14px;
 }
 
-.landing-proof-row strong {
-    color: #ffffff;
-    font-size: 25px;
-    line-height: 1;
-}
-
-.landing-hero-media {
-    position: relative;
-}
-
-.landing-hero-media img {
-    aspect-ratio: 1 / 1;
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 24px 60px rgba(11, 47, 87, 0.16);
-    object-fit: contain;
-    padding: 24px;
-    width: 100%;
-}
-
-.landing-trust {
-    background: #0b2f57;
-    color: #ffffff;
-}
-
-.landing-trust-grid {
-    display: grid;
-    gap: 1px;
-    grid-template-columns: repeat(4, 1fr);
-}
-
-.landing-trust-grid div {
-    background: rgba(255, 255, 255, 0.06);
-    min-height: 170px;
-    padding: 28px 24px;
-}
-
-.landing-trust-grid i {
-    color: #f58220;
-    display: block;
-    font-size: 26px;
-    margin-bottom: 16px;
-}
-
-.landing-trust-grid strong,
-.landing-category-card span,
-.landing-option-panel h3,
-.landing-faq h3 {
-    color: inherit;
-    display: block;
-    font-size: 18px;
-    margin-bottom: 8px;
-}
-
-.landing-trust-grid span {
-    color: rgba(255, 255, 255, 0.76);
-    line-height: 1.55;
-}
-
-.landing-section {
-    padding: 76px 0;
-}
-
-.landing-section-header,
-.landing-quote-intro {
-    margin: 0 auto 34px;
-    max-width: 780px;
-    text-align: center;
-}
-
-.landing-section h2 {
-    font-size: clamp(32px, 4vw, 48px);
-}
-
-.landing-category-grid {
-    display: grid;
-    gap: 22px;
-    grid-template-columns: repeat(3, 1fr);
-}
-
-.landing-category-card {
-    border: 1px solid #dfe7ef;
-    border-radius: 8px;
-    background: #ffffff;
+.vpn-packaging-hero-media {
+    margin: 0;
+    justify-self: stretch;
+    border-radius: 10px;
     overflow: hidden;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.landing-category-card:hover {
-    border-color: #f7b56d;
-    box-shadow: 0 18px 40px rgba(12, 47, 87, 0.12);
-    transform: translateY(-4px);
-}
-
-.landing-category-card a {
-    color: #0b2f57;
+.vpn-packaging-hero-media a {
     display: block;
-    text-decoration: none;
 }
 
-.landing-category-card img {
-    aspect-ratio: 4 / 3;
-    background: #f5f8fb;
-    object-fit: cover;
+.vpn-packaging-hero-media img,
+.vpn-packaging-finishing figure img,
+.vpn-packaging-factory-gallery img {
+    border-radius: 8px;
+    display: block;
     width: 100%;
 }
 
-.landing-category-card span {
-    font-size: 19px;
-    font-weight: 800;
-    padding: 18px 20px 0;
+.vpn-packaging-hero-media img {
+    background: #ffffff;
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.28);
+    height: auto;
+    object-fit: contain;
 }
 
-.landing-category-card p {
-    color: #566779;
-    line-height: 1.65;
-    margin: 8px 20px 22px;
+.vpn-packaging-section {
+    padding: 78px 0;
 }
 
-.landing-factory {
+.vpn-packaging-muted {
     background: #f5f8fb;
 }
 
-.landing-factory-grid {
+.vpn-packaging-buyers {
+    border-bottom: 1px solid #dfe7ef;
+}
+
+.vpn-packaging-split {
     grid-template-columns: minmax(0, 0.85fr) minmax(420px, 1fr);
 }
 
-.landing-check-list {
-    display: grid;
-    gap: 14px;
-    list-style: none;
-    margin: 24px 0 0;
-    padding: 0;
-}
-
-.landing-check-list li {
-    align-items: flex-start;
-    color: #25364a;
-    display: flex;
-    gap: 12px;
-    line-height: 1.55;
-}
-
-.landing-check-list i {
-    color: #16a085;
-    margin-top: 4px;
-}
-
-.landing-factory-media {
-    display: grid;
-    gap: 14px;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.landing-factory-media figure {
-    border-radius: 8px;
-    margin: 0;
-    overflow: hidden;
-}
-
-.landing-factory-media img {
-    aspect-ratio: 4 / 3;
-    height: 100%;
-    object-fit: cover;
-    width: 100%;
-}
-
-.landing-factory-large {
-    grid-row: span 2;
-}
-
-.landing-factory-large img {
-    aspect-ratio: 3 / 4;
-}
-
-.landing-process-list {
-    counter-reset: process;
-    display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(5, 1fr);
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.landing-process-list li {
-    background: #ffffff;
-    border: 1px solid #dfe7ef;
-    border-radius: 8px;
-    min-height: 230px;
-    padding: 22px;
-}
-
-.landing-process-list span {
-    color: #f58220;
-    display: block;
-    font-size: 28px;
-    font-weight: 850;
-    margin-bottom: 18px;
-}
-
-.landing-process-list strong {
+.vpn-packaging-section h2 {
     color: #0b2f57;
-    display: block;
-    font-size: 18px;
-    margin-bottom: 10px;
+    font-size: clamp(31px, 4vw, 48px);
 }
 
-.landing-process-list p,
-.landing-faq p {
-    color: #566779;
-    line-height: 1.65;
-    margin: 0;
+.vpn-packaging-section p,
+.vpn-packaging-final-cta p {
+    color: #516173;
+    font-size: 17px;
+    line-height: 1.72;
 }
 
-.landing-options {
-    background: #fff8ef;
+.vpn-packaging-section-head {
+    margin: 0 auto 36px;
+    max-width: 820px;
+    text-align: center;
 }
 
-.landing-options-grid {
-    grid-template-columns: 0.9fr 1fr 1fr;
-}
-
-.landing-option-panel {
-    background: #ffffff;
-    border: 1px solid #f4d3ad;
-    border-radius: 8px;
-    padding: 26px;
-}
-
-.landing-tags {
+.vpn-packaging-buyer-grid,
+.vpn-packaging-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
 }
 
-.landing-tags span {
-    background: #f5f8fb;
-    border: 1px solid #dfe7ef;
+.vpn-packaging-buyer-grid span,
+.vpn-packaging-tags span {
+    background: #ffffff;
+    border: 1px solid #dbe6f2;
     border-radius: 999px;
     color: #25364a;
-    display: inline-flex;
     font-size: 14px;
-    font-weight: 700;
-    padding: 9px 13px;
+    font-weight: 800;
+    padding: 10px 14px;
 }
 
-.landing-quote-band {
+.vpn-packaging-category-grid {
+    display: grid;
+    gap: 22px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.vpn-packaging-category-card,
+.vpn-packaging-material-grid article,
+.vpn-packaging-problem-grid article,
+.vpn-packaging-project-grid article,
+.vpn-packaging-faq-grid article,
+.vpn-packaging-process li {
+    background: #ffffff;
+    border: 1px solid #dfe7ef;
+    border-radius: 8px;
+}
+
+.vpn-packaging-category-card {
+    overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.vpn-packaging-category-card:hover {
+    border-color: #9bb5cf;
+    box-shadow: 0 18px 42px rgba(11, 47, 87, 0.14);
+    transform: translateY(-3px);
+}
+
+.vpn-packaging-category-card a {
+    color: #0b2f57;
+    display: block;
+    text-decoration: none;
+}
+
+.vpn-packaging-category-card img {
+    aspect-ratio: 4 / 3;
     background: #f5f8fb;
-    padding-bottom: 0;
+    object-fit: cover;
+    width: 100%;
 }
 
-.landing-quote-band .quote-section {
-    background: transparent;
-    padding-top: 10px;
+.vpn-packaging-category-card span,
+.vpn-packaging-material-grid h3,
+.vpn-packaging-problem-grid h3,
+.vpn-packaging-project-grid h3,
+.vpn-packaging-faq-grid h3,
+.vpn-packaging-process h3 {
+    color: #0b2f57;
+    display: block;
+    font-size: 19px;
+    font-weight: 850;
+    line-height: 1.28;
+    margin: 0;
 }
 
-.landing-quote-band .quote-wrapper {
-    align-items: flex-start;
+.vpn-packaging-category-card span {
+    padding: 18px 20px 0;
 }
 
-.landing-mini-form-section {
+.vpn-packaging-category-card p {
+    font-size: 15px;
+    margin: 10px 20px 22px;
+}
+
+.vpn-packaging-material-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.vpn-packaging-material-grid article,
+.vpn-packaging-problem-grid article,
+.vpn-packaging-project-grid article,
+.vpn-packaging-faq-grid article {
+    padding: 24px;
+}
+
+.vpn-packaging-finishing figure,
+.vpn-packaging-factory-gallery {
+    margin: 0;
+}
+
+.vpn-packaging-finishing figure img {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+.vpn-packaging-tags {
+    margin-top: 24px;
+}
+
+.vpn-packaging-tags span {
+    background: #f5f8fb;
+}
+
+.vpn-packaging-factory {
     background: #0b2f57;
     color: #ffffff;
 }
 
-.landing-mini-form-grid {
-    align-items: center;
-    display: grid;
-    gap: 34px;
-    grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1fr);
-}
-
-.landing-mini-form-section h2,
-.landing-mini-form-section p {
+.vpn-packaging-factory h2,
+.vpn-packaging-factory p {
     color: #ffffff;
 }
 
-.landing-mini-form-section p {
-    color: rgba(255, 255, 255, 0.78);
-    font-size: 17px;
-    line-height: 1.65;
-    max-width: 620px;
-}
-
-.landing-mini-form {
-    background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 22px 60px rgba(0, 0, 0, 0.2);
+.vpn-packaging-check-list {
     display: grid;
-    gap: 12px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    padding: 22px;
+    gap: 13px;
+    list-style: none;
+    margin: 24px 0 0;
+    padding: 0;
 }
 
-.landing-mini-form input,
-.landing-mini-form button {
-    min-height: 48px;
-    width: 100%;
+.vpn-packaging-check-list li {
+    align-items: flex-start;
+    display: flex;
+    gap: 10px;
+    line-height: 1.55;
 }
 
-.landing-mini-form input {
-    border: 1px solid #d8e4eb;
-    border-radius: 6px;
-    color: #14213d;
-    font-size: 14px;
-    padding: 0 14px;
-}
-
-.landing-mini-form input:first-of-type,
-.landing-mini-form button {
-    grid-column: 1 / -1;
-}
-
-.landing-pain-points {
-    background: #f5f8fb;
-}
-
-.landing-pain-grid,
-.landing-testimonial-grid {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-}
-
-.landing-pain-grid article,
-.landing-testimonial-grid article {
-    background: #ffffff;
-    border: 1px solid #dfe7ef;
-    border-radius: 8px;
-    padding: 24px;
-}
-
-.landing-pain-grid i {
-    color: #f58220;
-    font-size: 24px;
-    margin-bottom: 16px;
-}
-
-.landing-pain-grid h3 {
-    color: #0b2f57;
-    font-size: 19px;
-    margin: 0 0 10px;
-}
-
-.landing-pain-grid p,
-.landing-testimonial-grid p {
-    color: #566779;
-    line-height: 1.65;
-    margin: 0;
-}
-
-.landing-testimonials {
-    background: #ffffff;
-}
-
-.landing-testimonial-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.landing-stars {
-    color: #f58220;
-    font-size: 16px;
-    margin-bottom: 14px;
-}
-
-.landing-testimonial-grid strong,
-.landing-testimonial-grid span {
-    display: block;
-}
-
-.landing-testimonial-grid strong {
-    color: #0b2f57;
-    margin-top: 18px;
-}
-
-.landing-testimonial-grid span {
-    color: #748292;
-    font-size: 14px;
+.vpn-packaging-check-list i {
+    color: #16a085;
     margin-top: 4px;
 }
 
-.landing-faq-grid {
+.vpn-packaging-factory-gallery {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.vpn-packaging-factory-gallery img {
+    aspect-ratio: 4 / 3;
+    height: 100%;
+    object-fit: cover;
+}
+
+.vpn-packaging-factory-gallery img:first-child {
+    grid-row: span 2;
+    aspect-ratio: 3 / 4;
+}
+
+.vpn-packaging-process {
     display: grid;
     gap: 18px;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-.landing-faq article {
+.vpn-packaging-process li {
+    min-height: 0;
+    padding: 26px;
+    position: relative;
+}
+
+.vpn-packaging-process span {
+    align-items: center;
+    background: #fff4e8;
+    border-radius: 999px;
+    color: #f58220;
+    display: inline-flex;
+    font-size: 20px;
+    font-weight: 850;
+    height: 46px;
+    justify-content: center;
+    margin-bottom: 18px;
+    width: 46px;
+}
+
+.vpn-packaging-process p,
+.vpn-packaging-problem-grid p,
+.vpn-packaging-project-grid p,
+.vpn-packaging-faq-grid p,
+.vpn-packaging-material-grid p {
+    font-size: 15px;
+    margin: 10px 0 0;
+}
+
+.vpn-packaging-problem-grid,
+.vpn-packaging-project-grid,
+.vpn-packaging-faq-grid {
+    display: grid;
+    gap: 18px;
+}
+
+.vpn-packaging-problem-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.vpn-packaging-project-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.vpn-packaging-faq-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.vpn-packaging-table-wrap {
+    overflow-x: auto;
+}
+
+.vpn-packaging-table {
+    border-collapse: collapse;
+    min-width: 780px;
+    width: 100%;
+}
+
+.vpn-packaging-table th,
+.vpn-packaging-table td {
     border: 1px solid #dfe7ef;
-    border-radius: 8px;
-    padding: 24px;
+    line-height: 1.55;
+    padding: 18px;
+    text-align: left;
+    vertical-align: top;
 }
 
-.landing-faq h3 {
+.vpn-packaging-table thead th {
+    background: #0b2f57;
+    color: #ffffff;
+}
+
+.vpn-packaging-table tbody th {
     color: #0b2f57;
-    font-size: 19px;
-    font-weight: 800;
+    width: 18%;
 }
 
-.landing-final-cta {
+.vpn-packaging-quote {
+    background: #fff8ef;
+}
+
+.vpn-packaging-quote {
+    padding: 0;
+}
+
+.vpn-packaging-quote .quote-section {
+    background: transparent;
+    padding: 78px 0;
+}
+
+.vpn-packaging-quote .quote-left li:nth-child(6) i {
+    color: #16a085;
+}
+
+.vpn-packaging-final-cta {
     background: #0b2f57;
     color: #ffffff;
     padding: 58px 0;
 }
 
-.landing-final-inner {
-    justify-content: space-between;
+.vpn-packaging-final-inner {
+    grid-template-columns: minmax(0, 1fr) auto;
 }
 
-.landing-final-inner h2,
-.landing-final-inner p {
+.vpn-packaging-final-cta h2,
+.vpn-packaging-final-cta p {
     color: #ffffff;
 }
 
-.landing-final-inner p {
+.vpn-packaging-final-cta p {
     margin: 12px 0 0;
-    max-width: 680px;
+    max-width: 760px;
 }
 
-@media (max-width: 1024px) {
-    .landing-hero-grid,
-    .landing-wow-grid,
-    .landing-factory-grid,
-    .landing-options-grid,
-    .landing-mini-form-grid {
+@media (max-width: 1180px) {
+    .vpn-packaging-hero h1 {
+        font-size: clamp(40px, 4.7vw, 54px);
+    }
+
+    .vpn-packaging-category-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .vpn-packaging-process {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 980px) {
+    .vpn-packaging-hero-grid,
+    .vpn-packaging-split,
+    .vpn-packaging-final-inner {
         grid-template-columns: 1fr;
     }
 
-    .landing-trust-grid,
-    .landing-category-grid,
-    .landing-process-list,
-    .landing-pain-grid,
-    .landing-testimonial-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .vpn-packaging-material-grid,
+    .vpn-packaging-problem-grid,
+    .vpn-packaging-project-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .landing-wow {
-        min-height: auto;
-    }
-
-    .landing-banner-copy {
+    .vpn-packaging-final-inner {
         align-items: flex-start;
-        grid-template-columns: 1fr;
     }
 
-    .landing-banner-copy .landing-hero-actions {
-        grid-column: 1;
-        grid-row: auto;
-        justify-content: flex-start;
+    .vpn-packaging-hero-copy {
+        max-width: none;
+    }
+
+    .vpn-packaging-hero-media img {
+        min-height: 0;
     }
 }
 
 @media (max-width: 680px) {
-    .landing-hero {
-        padding: 48px 0 36px;
-    }
-
-    .landing-wow {
-        padding: 22px 0 38px;
-    }
-
-    .landing-wow-note {
-        left: 14px;
-        right: 14px;
-        max-width: none;
-    }
-
-    .landing-soft-cta-inner,
-    .landing-small-cta-inner {
-        align-items: flex-start;
-        flex-direction: column;
-    }
-
-    .landing-section {
-        padding: 54px 0;
-    }
-
-    .landing-hero-actions .btn-primary,
-    .landing-hero-actions .btn-outline,
-    .landing-final-inner .btn-primary {
-        justify-content: center;
-        width: 100%;
-    }
-
-    .landing-proof-row,
-    .landing-faq-grid,
-    .landing-mini-form,
-    .landing-pain-grid,
-    .landing-testimonial-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .landing-trust-grid,
-    .landing-category-grid,
-    .landing-process-list,
-    .landing-factory-media {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .landing-category-card span,
-    .landing-process-list strong {
-        font-size: 15px;
-        line-height: 1.32;
-    }
-
-    .landing-category-card p,
-    .landing-process-list p {
-        font-size: 13px;
-        line-height: 1.5;
-    }
-
-    .landing-trust-grid div {
-        min-height: auto;
-    }
-
-    .landing-process-list li {
-        min-height: auto;
-    }
-
-    .landing-final-inner {
-        align-items: flex-start;
-    }
-}
-
-@media (max-width: 768px) {
-    body.page-template-page-landing-packaging .top-bar {
-        background: #0b2f57;
-    }
-
     body.page-template-page-landing-packaging .main-header {
         background: #ffffff;
         border-bottom-color: #dfe7ef;
     }
 
-    body.page-template-page-landing-packaging .main-header .btn-quote {
-        background: #ffffff;
-        border-color: #0b2f57;
-        color: #0b2f57;
-    }
-
-    body.page-template-page-landing-packaging .main-header .btn-phone {
-        background: #0b2f57;
-        border-color: #0b2f57;
-        color: #ffffff;
-    }
-
-    body.page-template-page-landing-packaging .main-header .mobile-menu-icon,
-    body.page-template-page-landing-packaging .main-nav .menu-toggle {
-        border-color: #dfe7ef;
-        color: #0b2f57;
-    }
-
     body.page-template-page-landing-packaging .main-nav {
         background: #f7fbff;
-        border-bottom-color: #dfe7ef;
     }
 
-    body.page-template-page-landing-packaging .main-nav .all-categories > i:first-child,
-    body.page-template-page-landing-packaging .main-nav .menu-toggle i {
-        color: #0b2f57;
+    .vpn-packaging-money-page .container {
+        width: min(100% - 24px, 1200px);
     }
 
-    body.page-template-page-landing-packaging .main-nav .all-categories > i:last-child,
-    body.page-template-page-landing-packaging .nav-menu > li.menu-item-has-children > a::after {
-        background: #0b2f57;
+    .vpn-packaging-hero {
+        padding: 34px 0 48px;
     }
 
-    body.page-template-page-landing-packaging .main-nav .all-categories,
-    body.page-template-page-landing-packaging .main-nav .nav-menu > li > a,
-    body.page-template-page-landing-packaging .main-nav .nav-menu a {
-        border-color: #dfe7ef;
-        color: #14213d;
+    .vpn-packaging-hero .container {
+        width: min(100% - 24px, 1200px);
+    }
+
+    .vpn-packaging-hero h1 {
+        font-size: clamp(34px, 11vw, 42px);
+    }
+
+    .vpn-packaging-section {
+        padding: 56px 0;
+    }
+
+    .vpn-packaging-actions .btn-primary,
+    .vpn-packaging-actions .btn-outline,
+    .vpn-packaging-final-inner .btn-primary {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .vpn-packaging-proof,
+    .vpn-packaging-category-grid,
+    .vpn-packaging-material-grid,
+    .vpn-packaging-problem-grid,
+    .vpn-packaging-project-grid,
+    .vpn-packaging-faq-grid,
+    .vpn-packaging-process {
+        grid-template-columns: 1fr;
+    }
+
+    .vpn-packaging-process li {
+        min-height: auto;
+    }
+
+    .vpn-packaging-category-card span,
+    .vpn-packaging-process h3 {
+        font-size: 16px;
+    }
+
+    .vpn-packaging-section p,
+    .vpn-packaging-hero p {
+        font-size: 16px;
+    }
+
+    .vpn-packaging-factory-gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .vpn-packaging-factory-gallery img:first-child {
+        grid-row: auto;
+        aspect-ratio: 4 / 3;
     }
 }

@@ -163,6 +163,7 @@ function custom_box_build_blog_article_content($raw_content) {
     $toc = array();
     $seen_ids = array();
 
+    $content = custom_box_normalize_blog_article_headings($content);
     $content = custom_box_enhance_blog_article_images($content);
 
     $content = preg_replace_callback('/<h([23])([^>]*)>(.*?)<\/h\1>/is', function ($matches) use (&$toc, &$seen_ids) {
@@ -215,6 +216,10 @@ function custom_box_build_blog_article_content($raw_content) {
         'content' => $content,
         'toc'     => $toc,
     );
+}
+
+function custom_box_normalize_blog_article_headings($content) {
+    return preg_replace('/<h1\b([^>]*)>(.*?)<\/h1>/is', '<h2$1>$2</h2>', $content);
 }
 
 function custom_box_render_blog_toc($toc) {
@@ -378,6 +383,9 @@ function custom_box_get_blog_product_recommendations($limit = 3) {
 function custom_box_primary_menu() {
     $blog_page_id = (int) get_option('page_for_posts');
     $blog_link = $blog_page_id ? get_permalink($blog_page_id) : home_url('/blog/');
+    $packaging_money_page_url = function_exists('custom_box_get_packaging_money_page_url')
+        ? custom_box_get_packaging_money_page_url()
+        : home_url('/custom-packaging-boxes-manufacturer/');
     ?>
     <ul class="nav-menu">
         <li><a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'custom-box-theme'); ?></a></li>
@@ -387,12 +395,42 @@ function custom_box_primary_menu() {
                 <?php esc_html_e('Products', 'custom-box-theme'); ?>
             </a>
         </li>
+        <li><a href="<?php echo esc_url($packaging_money_page_url); ?>"><?php esc_html_e('Custom Packaging', 'custom-box-theme'); ?></a></li>
         <li><a href="<?php echo esc_url(home_url('/catalog/')); ?>"><?php esc_html_e('Catalog', 'custom-box-theme'); ?></a></li>
         <li><a href="<?php echo esc_url($blog_link); ?>"><?php esc_html_e('Blog', 'custom-box-theme'); ?></a></li>
         <li><a href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Contact Us', 'custom-box-theme'); ?></a></li>
     </ul>
     <?php
 }
+
+function custom_box_add_packaging_money_page_to_primary_menu($items, $args) {
+    if (empty($args->theme_location) || 'primary' !== $args->theme_location) {
+        return $items;
+    }
+
+    $packaging_money_page_url = function_exists('custom_box_get_packaging_money_page_url')
+        ? custom_box_get_packaging_money_page_url()
+        : home_url('/custom-packaging-boxes-manufacturer/');
+    $packaging_path = wp_parse_url($packaging_money_page_url, PHP_URL_PATH);
+
+    if ($packaging_path && false !== strpos($items, $packaging_path)) {
+        return $items;
+    }
+
+    $menu_item = sprintf(
+        '<li class="menu-item menu-item-packaging-money-page"><a href="%s">%s</a></li>',
+        esc_url($packaging_money_page_url),
+        esc_html__('Custom Packaging', 'custom-box-theme')
+    );
+
+    if (preg_match('/<li[^>]*>\s*<a[^>]+href=["\'][^"\']*\/products\/?["\'][^>]*>.*?<\/a>\s*<\/li>/is', $items, $matches, PREG_OFFSET_CAPTURE)) {
+        $insert_at = $matches[0][1] + strlen($matches[0][0]);
+        return substr($items, 0, $insert_at) . $menu_item . substr($items, $insert_at);
+    }
+
+    return $items . $menu_item;
+}
+add_filter('wp_nav_menu_items', 'custom_box_add_packaging_money_page_to_primary_menu', 20, 2);
 
 function custom_box_widgets_init() {
     register_sidebar(array(

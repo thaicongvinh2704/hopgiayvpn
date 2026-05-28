@@ -21,6 +21,119 @@ function custom_box_output_google_tag() {
 }
 add_action('wp_head', 'custom_box_output_google_tag', 5);
 
+function custom_box_get_packaging_money_page_old_path() {
+    return '/packaging-landing/';
+}
+
+function custom_box_get_packaging_money_page_new_path() {
+    return '/custom-packaging-boxes-manufacturer/';
+}
+
+function custom_box_get_packaging_money_page_url() {
+    return home_url(custom_box_get_packaging_money_page_new_path());
+}
+
+function custom_box_packaging_money_page_permalink($link, $post_id) {
+    $post = get_post($post_id);
+    if (!$post || 'packaging-landing' !== $post->post_name) {
+        return $link;
+    }
+
+    return custom_box_get_packaging_money_page_url();
+}
+add_filter('page_link', 'custom_box_packaging_money_page_permalink', 20, 2);
+
+function custom_box_add_packaging_money_page_rewrite() {
+    add_rewrite_rule(
+        '^custom-packaging-boxes-manufacturer/?$',
+        'index.php?pagename=packaging-landing',
+        'top'
+    );
+}
+add_action('init', 'custom_box_add_packaging_money_page_rewrite');
+
+function custom_box_map_packaging_money_page_request($query_vars) {
+    if (isset($query_vars['pagename']) && 'custom-packaging-boxes-manufacturer' === trim($query_vars['pagename'], '/')) {
+        $query_vars['pagename'] = 'packaging-landing';
+    }
+
+    return $query_vars;
+}
+add_filter('request', 'custom_box_map_packaging_money_page_request', 1);
+
+function custom_box_current_request_path() {
+    $request_uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '';
+    $path = wp_parse_url($request_uri, PHP_URL_PATH);
+    $home_path = wp_parse_url(home_url('/'), PHP_URL_PATH);
+    $path = '/' . trim((string) $path, '/');
+
+    if ($home_path && '/' !== $home_path) {
+        $home_path = '/' . trim($home_path, '/');
+
+        if (0 === strpos($path, $home_path . '/')) {
+            $path = substr($path, strlen($home_path));
+        } elseif ($path === $home_path) {
+            $path = '/';
+        }
+    }
+
+    return trailingslashit('/' . trim((string) $path, '/'));
+}
+
+function custom_box_packaging_money_page_locale($locale) {
+    if (is_admin()) {
+        return $locale;
+    }
+
+    $request_path = custom_box_current_request_path();
+    if (
+        custom_box_get_packaging_money_page_new_path() === $request_path
+        || custom_box_get_packaging_money_page_old_path() === $request_path
+    ) {
+        return 'en_US';
+    }
+
+    return $locale;
+}
+add_filter('locale', 'custom_box_packaging_money_page_locale', 20);
+
+function custom_box_parse_packaging_money_page_request($wp) {
+    if (custom_box_current_request_path() !== custom_box_get_packaging_money_page_new_path()) {
+        return;
+    }
+
+    $wp->query_vars = array(
+        'pagename' => 'packaging-landing',
+    );
+}
+add_action('parse_request', 'custom_box_parse_packaging_money_page_request', 1);
+
+function custom_box_is_packaging_money_page() {
+    return !is_admin() && is_page('packaging-landing');
+}
+
+function custom_box_redirect_old_packaging_landing_url() {
+    if (!custom_box_is_packaging_money_page()) {
+        return;
+    }
+
+    if (custom_box_current_request_path() !== custom_box_get_packaging_money_page_old_path()) {
+        return;
+    }
+
+    wp_safe_redirect(custom_box_get_packaging_money_page_url(), 301);
+    exit;
+}
+add_action('template_redirect', 'custom_box_redirect_old_packaging_landing_url', 1);
+
+function custom_box_get_packaging_money_page_title() {
+    return 'Custom Packaging Boxes Manufacturer in Vietnam | VPN Paper Box';
+}
+
+function custom_box_get_packaging_money_page_description() {
+    return 'VPN Paper Box Manufacturer produces custom packaging boxes, rigid boxes, folding cartons, paper bags and printed paper packaging in Vietnam for B2B brands, importers and export buyers. Request a factory quote.';
+}
+
 function custom_box_get_home_seo_title() {
     return 'VPN Paper Box Manufacturer | Custom Paper Boxes Factory';
 }
@@ -34,6 +147,10 @@ function custom_box_is_public_home() {
 }
 
 function custom_box_home_document_title($title) {
+    if (custom_box_is_packaging_money_page()) {
+        return custom_box_get_packaging_money_page_title();
+    }
+
     if (!custom_box_is_public_home()) {
         return $title;
     }
@@ -44,6 +161,29 @@ add_filter('pre_get_document_title', 'custom_box_home_document_title', 20);
 add_filter('rank_math/frontend/title', 'custom_box_home_document_title', 20);
 
 function custom_box_home_rank_math_description($description) {
+    if (custom_box_is_packaging_money_page()) {
+        return custom_box_get_packaging_money_page_description();
+    }
+
+    if (is_home() || is_page('blog')) {
+        return 'Read custom paper packaging guides from VPN Paper Box Manufacturer, including paper boxes, paper bags, rigid boxes, materials, printing, finishing, and B2B packaging tips.';
+    }
+
+    if (is_page('catalog')) {
+        return 'Explore VPN Paper Box Manufacturer catalog for custom paper boxes, rigid boxes, folding cartons, paper bags, materials, printing, finishing, and export-ready packaging options.';
+    }
+
+    if (function_exists('is_product_category') && is_product_category()) {
+        $term = get_queried_object();
+
+        if ($term && !is_wp_error($term) && !empty($term->name)) {
+            return sprintf(
+                'Explore %s from VPN Paper Box Manufacturer in Vietnam, with custom size, material, printing, finishing, sampling, and export-ready packaging support.',
+                wp_strip_all_tags($term->name)
+            );
+        }
+    }
+
     if (!custom_box_is_public_home()) {
         return $description;
     }
@@ -52,8 +192,26 @@ function custom_box_home_rank_math_description($description) {
 }
 add_filter('rank_math/frontend/description', 'custom_box_home_rank_math_description', 20);
 
+function custom_box_packaging_money_page_canonical($canonical) {
+    if (!custom_box_is_packaging_money_page()) {
+        return $canonical;
+    }
+
+    return custom_box_get_packaging_money_page_url();
+}
+add_filter('rank_math/frontend/canonical', 'custom_box_packaging_money_page_canonical', 20);
+
+function custom_box_packaging_money_page_og_type($type) {
+    if (!custom_box_is_packaging_money_page()) {
+        return $type;
+    }
+
+    return 'website';
+}
+add_filter('rank_math/opengraph/type', 'custom_box_packaging_money_page_og_type', 20);
+
 function custom_box_low_value_page_slugs() {
-    return array('cart', 'checkout', 'my-account', 'trang-mau');
+    return array('cart', 'checkout', 'my-account', 'trang-mau', 'home-2', 'packaging-landing-two');
 }
 
 function custom_box_is_low_value_page() {
@@ -96,6 +254,27 @@ function custom_box_rank_math_sitemap_excluded_posts($post_ids) {
     return array_values(array_unique(array_filter($post_ids)));
 }
 add_filter('rank_math/sitemap/posts_to_exclude', 'custom_box_rank_math_sitemap_excluded_posts');
+
+function custom_box_rank_math_sitemap_exclude_low_value_page_slugs($where, $post_type) {
+    if ('page' !== $post_type) {
+        return $where;
+    }
+
+    global $wpdb;
+
+    $slugs = array_map('sanitize_title', custom_box_low_value_page_slugs());
+    $slugs = array_filter($slugs);
+
+    if (empty($slugs)) {
+        return $where;
+    }
+
+    $placeholders = implode(', ', array_fill(0, count($slugs), '%s'));
+
+    return $where . $wpdb->prepare(" AND p.post_name NOT IN ($placeholders)", $slugs);
+}
+add_filter('rank_math/sitemap/get_posts/where', 'custom_box_rank_math_sitemap_exclude_low_value_page_slugs', 20, 2);
+add_filter('rank_math/sitemap/post_count/where', 'custom_box_rank_math_sitemap_exclude_low_value_page_slugs', 20, 2);
 
 function custom_box_get_quote_product_offer($product) {
     $product_url = $product instanceof WC_Product ? $product->get_permalink() : get_permalink();
@@ -247,7 +426,9 @@ function custom_box_rank_math_json_ld($data) {
     }
 
     $remove_article_schema = custom_box_is_low_value_page();
+    $is_packaging_money_page = custom_box_is_packaging_money_page();
     $is_product_page = function_exists('is_product') && is_product();
+    $is_non_article_page = (is_page() || is_front_page() || is_home() || (function_exists('is_product_taxonomy') && is_product_taxonomy())) && !is_singular('post') && !$is_product_page;
     $product = $is_product_page && function_exists('wc_get_product') ? wc_get_product(get_queried_object_id()) : null;
     $has_product_schema = false;
 
@@ -259,13 +440,29 @@ function custom_box_rank_math_json_ld($data) {
         $types = isset($entity['@type']) ? (array) $entity['@type'] : array();
         $is_product_schema = array_intersect($types, array('Product', 'WooCommerceProduct', 'ProductGroup'));
 
+        if ($is_packaging_money_page) {
+            $data[$key]['inLanguage'] = 'en-US';
+        }
+
         if (is_front_page() && in_array('CollectionPage', $types, true)) {
             $data[$key]['@type'] = count($types) > 1
                 ? array_values(array_unique(array_merge(array_diff($types, array('CollectionPage')), array('WebPage'))))
                 : 'WebPage';
         }
 
-        if ($remove_article_schema && array_intersect($types, array('Article', 'BlogPosting'))) {
+        if ($is_packaging_money_page && in_array('WebPage', $types, true)) {
+            $data[$key]['@id'] = custom_box_get_packaging_money_page_url() . '#webpage';
+            $data[$key]['url'] = custom_box_get_packaging_money_page_url();
+            $data[$key]['name'] = custom_box_get_packaging_money_page_title();
+            $data[$key]['description'] = custom_box_get_packaging_money_page_description();
+        }
+
+        if (($remove_article_schema || $is_packaging_money_page || $is_non_article_page) && array_intersect($types, array('Article', 'BlogPosting'))) {
+            unset($data[$key]);
+            continue;
+        }
+
+        if ($is_non_article_page && in_array('Person', $types, true)) {
             unset($data[$key]);
             continue;
         }
@@ -299,6 +496,10 @@ function custom_box_rank_math_json_ld($data) {
     }
 
     $data['schema-customBoxOrganization'] = custom_box_get_business_schema();
+
+    if ($is_packaging_money_page) {
+        $data['schema-customBoxOrganization']['inLanguage'] = 'en-US';
+    }
 
     return $data;
 }

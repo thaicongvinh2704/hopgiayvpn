@@ -2,7 +2,7 @@
 /**
  * Template Name: Packaging Landing Page
  *
- * International landing page for custom packaging buyers.
+ * B2B money page for global custom packaging buyers.
  */
 
 add_filter('language_attributes', function () {
@@ -12,251 +12,432 @@ add_filter('language_attributes', function () {
 get_header();
 
 $theme_uri = get_template_directory_uri();
-$quote_url = '#landing-quote';
-$shop_url = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/');
+$quote_url = '#factory-quote';
 
-$landing_categories = array();
+$landing_url = function_exists('custom_box_get_packaging_money_page_url')
+    ? custom_box_get_packaging_money_page_url()
+    : home_url('/custom-packaging-boxes-manufacturer/');
 
-$landing_parent_category = taxonomy_exists('product_cat') ? get_term_by('name', 'Custom Packaging Boxes', 'product_cat') : false;
+$fallback_products_url = home_url('/products/');
+$contact_url = home_url('/contact/');
+$uploads_2026_05_uri = content_url('/uploads/2026/05/');
 
-if ($landing_parent_category && !is_wp_error($landing_parent_category)) {
-    $product_categories = get_terms(array(
-        'taxonomy'   => 'product_cat',
-        'parent'     => $landing_parent_category->term_id,
-        'hide_empty' => false,
-        'orderby'    => 'term_id',
-        'order'      => 'ASC',
-        'number'     => 55,
-    ));
+$resolve_internal_url = function ($path, $fallback = '/products/') {
+    $path = '/' . trim($path, '/') . '/';
+    $url = home_url($path);
 
-    if (!empty($product_categories) && !is_wp_error($product_categories)) {
-        usort($product_categories, function ($a, $b) {
-            $a_featured = (int) get_term_meta($a->term_id, 'custom_box_category_featured', true);
-            $b_featured = (int) get_term_meta($b->term_id, 'custom_box_category_featured', true);
-
-            if ($a_featured !== $b_featured) {
-                return $b_featured <=> $a_featured;
-            }
-
-            return $a->term_id <=> $b->term_id;
-        });
-
-        $landing_categories = $product_categories;
+    if (url_to_postid($url)) {
+        return $url;
     }
-}
 
-$landing_categories = array_slice($landing_categories, 0, 6);
+    return home_url($fallback);
+};
 
-$landing_steps = array(
-    array('01', 'Share Requirements', 'Send size, quantity, artwork, material preference, and delivery destination.'),
-    array('02', 'Design & Quotation', 'Our team recommends structure, material, finishing, and a production-ready price.'),
-    array('03', 'Sampling', 'Approve dieline, printing details, materials, and finishing before mass production.'),
-    array('04', 'Manufacturing', 'Printing, die cutting, finishing, assembly, quality control, and export packing.'),
-    array('05', 'Delivery', 'Your packaging is packed safely and shipped according to the agreed timeline.'),
+$categories = array(
+    array(
+        'title' => 'Custom Paper Boxes',
+        'text'  => 'Printed paper boxes for retail, ecommerce, gifts, cosmetics, food, and promotional packaging projects.',
+        'image' => $uploads_2026_05_uri . 'orange-corrugated-mailer-box-open-600x600.jpeg',
+        'alt'   => 'Orange corrugated mailer box with custom printed structure',
+        'url'   => home_url('/product/custom-corrugated-mailer-box/'),
+    ),
+    array(
+        'title' => 'Rigid Boxes',
+        'text'  => 'Premium rigid gift boxes with strong greyboard structure, luxury wrapping paper, inserts, and finishing.',
+        'image' => $uploads_2026_05_uri . 'purple-luxury-rigid-gift-box-open-600x600.jpeg',
+        'alt'   => 'Purple luxury rigid gift box with magnetic closure',
+        'url'   => home_url('/product/custom-magnetic-closure-gift-box/'),
+    ),
+    array(
+        'title' => 'Folding Carton Boxes',
+        'text'  => 'Lightweight folding cartons for cosmetics, food, healthcare, retail, and consumer goods packaging.',
+        'image' => $uploads_2026_05_uri . 'white-perfume-display-packaging-box-open-600x600.jpeg',
+        'alt'   => 'White perfume display folding carton box with sleeve',
+        'url'   => home_url('/product/custom-perfume-display-box-with-sleeve/'),
+    ),
+    array(
+        'title' => 'Cosmetic Paper Boxes',
+        'text'  => 'Brand-ready cosmetic boxes for skincare, perfume, beauty tools, personal care, and launch kits.',
+        'image' => $uploads_2026_05_uri . 'blue-cosmetic-set-packaging-box-600x600.jpg',
+        'alt'   => 'Blue cosmetic set paper packaging box',
+        'url'   => home_url('/product/custom-cosmetic-drawer-box-with-insert/'),
+    ),
+    array(
+        'title' => 'Gift Paper Boxes',
+        'text'  => 'Custom gift packaging with drawer, lid-and-base, magnetic closure, ribbon, sleeve, and insert options.',
+        'image' => $uploads_2026_05_uri . 'red-floral-mooncake-gift-packaging-box-open-600x600.jpeg',
+        'alt'   => 'Floral mooncake gift paper box with custom insert',
+        'url'   => home_url('/product/custom-magnetic-gift-box/'),
+    ),
+    array(
+        'title' => 'Food Paper Boxes',
+        'text'  => 'Paper boxes for bakery, pastry, chocolate, tea, coffee, takeaway, and retail food presentation.',
+        'image' => $uploads_2026_05_uri . 'cream-drawer-cookie-gift-packaging-box-open-600x913.jpeg',
+        'alt'   => 'Cream drawer cookie gift packaging box',
+        'url'   => home_url('/product/custom-pastry-gift-box-with-insert/'),
+    ),
+    array(
+        'title' => 'Paper Bags with Logo',
+        'text'  => 'Custom printed paper bags with logo, handles, reinforced bottoms, and retail-ready finishing.',
+        'image' => $uploads_2026_05_uri . 'custom-red-paper-shopping-bag-open-600x600.jpeg',
+        'alt'   => 'Red custom paper shopping bag with handles',
+        'url'   => home_url('/product/custom-paper-shopping-bag-with-handles/'),
+    ),
+    array(
+        'title' => 'Paper Tube Packaging',
+        'text'  => 'Custom cylindrical paper tubes for food, tea, cosmetics, gifts, and specialty retail packaging.',
+        'image' => $uploads_2026_05_uri . 'custom-paper-tube-food-packaging-box-open-600x903.jpeg',
+        'alt'   => 'Custom cylindrical paper tube food packaging box',
+        'url'   => home_url('/product/custom-paper-tube-packaging/'),
+    ),
 );
 
-$landing_faqs = array(
-    array('What information should I send for a quote?', 'Please send product size, packaging style, order quantity, material preference, printing and finishing requirements, artwork if available, and destination country.'),
-    array('Can you support custom structure and dieline design?', 'Yes. We support custom sizing, structural design, dieline preparation, material selection, printing, inserts, and finishing for OEM and ODM packaging projects.'),
-    array('Do you provide samples before mass production?', 'Yes. Sampling is available so your team can confirm structure, material, color, and finishing before production begins.'),
-    array('What packaging materials can you produce?', 'Common materials include SBS paperboard, kraft paper, corrugated board, rigid greyboard, duplex board, coated paper, and recycled paper options.'),
-    array('Do you ship internationally?', 'Yes. VPN Packaging supports local and international B2B buyers with export-ready packing and practical shipping coordination.'),
+$buyer_groups = array(
+    'Cosmetic brands',
+    'Gift brands',
+    'Food & bakery businesses',
+    'Retail stores',
+    'Distributors',
+    'Wholesalers',
+    'Importers',
+    'Packaging agencies',
+    'Ecommerce brands',
 );
 
-$landing_pain_points = array(
-    array('Unclear pricing', 'Factory-direct consultation helps you compare material, finish, and quantity options before production.'),
-    array('Slow sampling', 'Our team prepares dielines, artwork checks, and samples so your project can move with fewer delays.'),
-    array('Weak packaging structure', 'We match paperboard, rigid board, inserts, and carton strength to the product and shipping route.'),
-    array('Color and finishing risk', 'Offset printing, foil, embossing, lamination, and spot UV are reviewed before mass production.'),
+$materials = array(
+    array('Ivory Board', 'A smooth white paperboard for cosmetics, retail boxes, medicine packaging, and products that need clean full-color printing at a practical cost.'),
+    array('Kraft Paper', 'A natural-looking paper option for eco-positioned brands, bakery packaging, takeaway boxes, and simple retail packs with a warm handmade feel.'),
+    array('Art Paper', 'Often used as wrapping paper for rigid boxes when brands need refined color, texture, lamination, foil, or embossing on premium packaging.'),
+    array('Duplex Board', 'A cost-conscious paperboard for larger folding cartons and consumer packaging where structure and print value need to stay balanced.'),
+    array('Greyboard', 'The core material for rigid boxes, drawer boxes, magnetic boxes, and gift sets that require strong structure and premium presentation.'),
+    array('Corrugated Paperboard', 'A stronger option for mailer boxes, ecommerce packaging, export cartons, and projects that need more protection during shipping.'),
+    array('Recycled Paper Options', 'Useful for brands that want a more sustainable packaging direction while still checking print quality, stiffness, and product safety requirements.'),
 );
 
-$landing_testimonials = array(
-    array('Premium rigid gift boxes arrived with sharp foil details and clean assembly. The team understood export packing and kept our schedule on track.', 'Sophia Bennett', 'Royal Estate Wines'),
-    array('VPN helped us choose structure, inserts, and matte finish for our cosmetic launch. Communication was fast and the sample process was clear.', 'Daniel Carter', 'Nova Beauty Supply'),
-    array('The final food packaging was sturdy, neatly printed, and ready for retail presentation. Factory support made the bulk order much easier.', 'Michael Laurent', 'Bakery Retail Group'),
+$finishes = array(
+    'Offset printing',
+    'Digital printing',
+    'Pantone color support',
+    'Matte lamination',
+    'Gloss lamination',
+    'Soft-touch lamination',
+    'Foil stamping',
+    'Embossing',
+    'Debossing',
+    'Spot UV',
+    'Die-cutting',
+    'Custom inserts',
+);
+
+$capabilities = array(
+    'Direct production support from Vietnam',
+    'Sample before mass production',
+    'Artwork and dieline checking',
+    'Material and structure consultation',
+    'Quality inspection before packing',
+    'Export-ready carton packing',
+    'Support for USA, UK, India, Europe, and global B2B buyers',
+);
+
+$process_steps = array(
+    array('01', 'Share Project Details', 'Send product type, size, quantity, artwork status, and delivery country.'),
+    array('02', 'Confirm Material & Structure', 'Choose paper material, box style, insert needs, printing, and finishing direction.'),
+    array('03', 'Review Dieline & Artwork', 'Check dieline, logo placement, bleed, color notes, and production details.'),
+    array('04', 'Make Sample if Needed', 'Approve structure, material, color direction, and finishing before bulk production.'),
+    array('05', 'Start Bulk Production', 'Move into printing, mounting, die-cutting, finishing, assembly, and scheduling.'),
+    array('06', 'Inspect & Pack', 'Check finished packaging, count quantities, and prepare export-ready cartons.'),
+    array('07', 'Coordinate Delivery', 'Support shipment discussion for importers, distributors, agencies, and B2B buyers.'),
+);
+
+$problems = array(
+    array('Unclear material selection', 'We compare ivory board, kraft, corrugated board, greyboard, and recycled options around product weight, print effect, and cost.'),
+    array('Wrong box structure', 'Our team helps match folding cartons, rigid boxes, inserts, sleeves, or mailers to your product dimensions and selling channel.'),
+    array('Color difference after mass production', 'Artwork checking, Pantone notes, printing method discussion, and sample review reduce avoidable color surprises.'),
+    array('Weak export packing', 'Carton packing, product arrangement, and box strength are reviewed before international delivery coordination.'),
+    array('Slow supplier communication', 'Factory-side communication helps buyers clarify samples, dielines, material choices, and order details with fewer handoffs.'),
+    array('Trader price markup', 'Factory-direct discussion keeps quotation, technical advice, sampling, and repeat order control closer to production.'),
+);
+
+$comparison_rows = array(
+    array('Pricing', 'Factory-direct quotation based on structure, material, finishing, and quantity.', 'Extra margin can be added before the project reaches production.'),
+    array('Technical advice', 'Direct discussion about dieline, paperboard, inserts, printing, and finishing.', 'Advice may be delayed or simplified through several handoffs.'),
+    array('Sampling', 'Sample details can be coordinated with the production team before bulk orders.', 'Sampling often depends on another factory behind the supplier.'),
+    array('Quality control', 'Factory-side checking before packing helps maintain order consistency.', 'Quality feedback may arrive late after goods are already produced.'),
+    array('Customization', 'Custom size, structure, paper, printing, finishing, and inserts can be discussed together.', 'Customization is limited by what the middleman can source.'),
+    array('Repeat orders', 'Production notes and specifications can be kept for consistent reorder support.', 'Repeat order consistency can vary if production source changes.'),
+);
+
+$projects = array(
+    array('Wine gift box packaging project', 'Rigid greyboard, printed art paper wrapping, foil logo, and insert support for premium bottle presentation.'),
+    array('Cosmetic packaging project', 'Ivory board folding cartons with full-color offset printing, matte lamination, and spot UV details.'),
+    array('Food and bakery packaging project', 'Kraft and SBS paper packaging options for bakery products, takeaway presentation, and seasonal gift sets.'),
+    array('Retail paper bag and box set', 'Matching paper bags and custom printed boxes for retail stores, promotional campaigns, and brand launches.'),
+);
+
+$faqs = array(
+    array('What types of custom packaging boxes can VPN Paper Box produce?', 'VPN Paper Box can support custom paper boxes, rigid boxes, folding cartons, cosmetic boxes, food boxes, gift boxes, paper bags, inserts, sleeves, and printed paper packaging for B2B projects.'),
+    array('Can you print our logo and brand colors on the packaging?', 'Yes. We can support custom logo printing, CMYK artwork, Pantone color notes, foil stamping, embossing, debossing, spot UV, matte lamination, gloss lamination, and soft-touch effects.'),
+    array('What materials are available for custom paper boxes?', 'Common material options include ivory board, kraft paper, art paper, duplex board, greyboard, corrugated paperboard, and recycled paper options depending on the structure and product use.'),
+    array('Do you support OEM/ODM packaging production?', 'Yes. VPN Paper Box supports OEM and ODM packaging projects including custom size, structure, material selection, dieline review, printing, finishing, sampling, and bulk production.'),
+    array('Can you make samples before bulk production?', 'Yes. Sample support is available when buyers need to confirm structure, size, paper material, color direction, finishing, and inserts before mass production.'),
+    array('What information should I send to get a quotation?', 'Please send product type, box size, quantity, material preference, printing and finishing requirements, artwork if available, and delivery country. Photos or reference styles are also helpful.'),
+    array('Do you support international B2B orders?', 'Yes. VPN Paper Box supports B2B buyers, importers, distributors, ecommerce brands, and agencies from the USA, UK, India, Europe, and other global markets.'),
+    array('What is the difference between rigid boxes and folding cartons?', 'Rigid boxes use thick greyboard and are usually chosen for premium gift or luxury packaging. Folding cartons are lighter, foldable, and often used for cosmetics, food, healthcare, and retail products.'),
 );
 ?>
 
-<main class="landing-page">
-    <section class="landing-hero landing-wow">
-        <div class="container">
-            <a class="landing-banner-frame" href="<?php echo esc_url($quote_url); ?>" aria-label="<?php esc_attr_e('Get your instant packaging quote', 'custom-box-theme'); ?>">
-                <img src="<?php echo esc_url($theme_uri . '/assets/images/banner-landing-page.webp'); ?>" alt="VPN Packaging Factory premium packaging factory price banner" decoding="async" fetchpriority="high">
-            </a>
-            <div class="landing-banner-copy">
-                <span class="landing-eyebrow">Vietnam Custom Packaging Manufacturer</span>
-                <h1>Custom Packaging Boxes Ready for Your Next Order</h1>
-                <p>Build paper boxes, rigid boxes, food packaging, cosmetic boxes, paper bags, and branded retail packaging with direct factory support from Vietnam.</p>
-                <div class="landing-hero-actions">
-                    <a class="btn-primary" href="<?php echo esc_url($quote_url); ?>">Start Free Quote</a>
-                    <a class="btn-outline" href="#landing-showcase">View Packaging Options</a>
+<main class="vpn-packaging-money-page">
+    <section class="vpn-packaging-hero">
+        <div class="container vpn-packaging-hero-grid">
+            <div class="vpn-packaging-hero-copy">
+                <span class="vpn-packaging-eyebrow">VPN Paper Box Manufacturer</span>
+                <h1>Custom Packaging Boxes Manufacturer in Vietnam</h1>
+                <p>VPN Paper Box Manufacturer produces custom paper boxes, rigid boxes, folding cartons, paper bags and printed packaging for B2B brands, importers, distributors and export buyers.</p>
+                <div class="vpn-packaging-actions">
+                    <a class="btn-primary" href="<?php echo esc_url($quote_url); ?>">Request a Factory Quote</a>
+                    <a class="btn-outline" href="#packaging-categories">View Packaging Categories</a>
                 </div>
-                <div class="landing-proof-row" aria-label="Factory highlights">
-                    <span><strong>9+</strong> Years Experience</span>
-                    <span><strong>50+</strong> Packaging Categories</span>
-                    <span><strong>OEM</strong> / ODM Production</span>
-                </div>
+            </div>
+            <figure class="vpn-packaging-hero-media">
+                <a href="<?php echo esc_url($quote_url); ?>" aria-label="<?php esc_attr_e('Request a factory quote from VPN Paper Box', 'custom-box-theme'); ?>">
+                    <img src="<?php echo esc_url($theme_uri . '/assets/images/banner-landing-page.webp'); ?>" alt="Custom packaging boxes produced by VPN Paper Box in Vietnam" decoding="async" fetchpriority="high">
+                </a>
+            </figure>
+            <div class="vpn-packaging-proof" aria-label="Factory proof points">
+                <span>9+ Years Manufacturing Experience</span>
+                <span>OEM/ODM Packaging Production</span>
+                <span>Factory-Direct Support from Vietnam</span>
+                <span>Custom Printing &amp; Finishing</span>
             </div>
         </div>
     </section>
 
-    <section class="landing-soft-cta">
-        <div class="container landing-soft-cta-inner">
-            <span>Not sure which box style fits your product?</span>
-            <a href="<?php echo esc_url($quote_url); ?>">Send basic details for a fast recommendation</a>
+    <section class="vpn-packaging-section vpn-packaging-buyers">
+        <div class="container vpn-packaging-split">
+            <div>
+                <span class="vpn-packaging-eyebrow">Who We Support</span>
+                <h2>Custom Packaging Solutions for B2B Buyers</h2>
+                <p>VPN Paper Box works with brands and trade buyers that need reliable custom paper packaging, practical production advice, and export-ready packing from Vietnam.</p>
+            </div>
+            <div class="vpn-packaging-buyer-grid">
+                <?php foreach ($buyer_groups as $buyer_group) : ?>
+                    <span><?php echo esc_html($buyer_group); ?></span>
+                <?php endforeach; ?>
+            </div>
         </div>
     </section>
 
-    <section class="landing-section landing-categories" id="landing-showcase">
+    <section class="vpn-packaging-section" id="packaging-categories">
         <div class="container">
-            <div class="landing-section-header">
-                <span class="landing-eyebrow">Packaging Showcase</span>
-                <h2>Choose a Packaging Direction Before You Quote</h2>
-                <p>Start from a proven packaging type, then customize size, material, printing, finish, inserts, and order quantity around your product.</p>
+            <div class="vpn-packaging-section-head">
+                <span class="vpn-packaging-eyebrow">Manufacturing Range</span>
+                <h2>Custom Packaging Boxes We Manufacture</h2>
+                <p>Start from the packaging type that fits your product, then customize the structure, paper material, printing, finishing, inserts, and order quantity.</p>
             </div>
-            <div class="landing-category-grid">
-                <?php if (!empty($landing_categories) && !is_wp_error($landing_categories)) : ?>
-                <?php foreach ($landing_categories as $category) : ?>
-                    <?php
-                    $image_id = (int) get_term_meta($category->term_id, 'thumbnail_id', true);
-                    if (!$image_id) {
-                        $image_id = (int) get_term_meta($category->term_id, 'custom_box_category_image_id', true);
-                    }
-
-                    $image_url = $image_id ? wp_get_attachment_image_url($image_id, 'medium_large') : $theme_uri . '/assets/images/custom-cardboard-boxes.webp';
-                    $category_link = get_term_link($category);
-                    if (is_wp_error($category_link)) {
-                        continue;
-                    }
-
-                    $category_description = $category->description
-                        ? wp_trim_words(wp_strip_all_tags($category->description), 16)
-                        : 'Custom packaging options tailored by size, material, printing, finishing, and order quantity.';
-                    ?>
-                    <article class="landing-category-card">
-                        <a href="<?php echo esc_url($category_link); ?>">
-                            <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($category->name); ?>" loading="lazy" decoding="async">
-                            <span><?php echo esc_html($category->name); ?></span>
+            <div class="vpn-packaging-category-grid">
+                <?php foreach ($categories as $category) : ?>
+                    <article class="vpn-packaging-category-card">
+                        <a href="<?php echo esc_url($category['url']); ?>">
+                            <img src="<?php echo esc_url($category['image']); ?>" alt="<?php echo esc_attr($category['alt']); ?>" loading="lazy" decoding="async">
+                            <span><?php echo esc_html($category['title']); ?></span>
                         </a>
-                        <p><?php echo esc_html($category_description); ?></p>
+                        <p><?php echo esc_html($category['text']); ?></p>
                     </article>
                 <?php endforeach; ?>
-                <?php else : ?>
-                    <p class="landing-categories-empty">
-                        <?php esc_html_e('Please mark product categories as featured to show them in this showcase.', 'custom-box-theme'); ?>
-                    </p>
-                <?php endif; ?>
             </div>
         </div>
     </section>
 
-    <section class="landing-small-cta">
-        <div class="container landing-small-cta-inner">
-            <h2>Have size, quantity, or artwork ready?</h2>
-            <a class="btn-primary" href="<?php echo esc_url($quote_url); ?>">Get Production Advice</a>
+    <section class="vpn-packaging-section vpn-packaging-muted">
+        <div class="container">
+            <div class="vpn-packaging-section-head">
+                <span class="vpn-packaging-eyebrow">Material Consultation</span>
+                <h2>Paper Materials for Custom Packaging Boxes</h2>
+                <p>The right material depends on your product weight, box structure, print effect, brand positioning, budget, and shipping route.</p>
+            </div>
+            <div class="vpn-packaging-material-grid">
+                <?php foreach ($materials as $material) : ?>
+                    <article>
+                        <h3><?php echo esc_html($material[0]); ?></h3>
+                        <p><?php echo esc_html($material[1]); ?></p>
+                    </article>
+                <?php endforeach; ?>
+            </div>
         </div>
     </section>
 
-    <section class="landing-section landing-factory">
-        <div class="container landing-factory-grid">
-            <div class="landing-factory-copy">
-                <span class="landing-eyebrow">Factory Trust</span>
-                <h2>Factory-Direct Packaging With Export Support</h2>
-                <p>Our in-house workflow helps brands control cost, quality, and delivery across custom packaging projects. From design discussion to finished packing, your order is handled by a team that understands B2B production needs.</p>
-                <ul class="landing-check-list">
-                    <li><i class="fas fa-check-circle"></i> Custom paper boxes, rigid boxes, cartons, bags, and inserts</li>
-                    <li><i class="fas fa-check-circle"></i> Material, structure, color, and finishing consultation</li>
-                    <li><i class="fas fa-check-circle"></i> Sampling before mass production</li>
-                    <li><i class="fas fa-check-circle"></i> Reliable support for brands, importers, distributors, and agencies</li>
+    <section class="vpn-packaging-section">
+        <div class="container vpn-packaging-split vpn-packaging-finishing">
+            <div>
+                <span class="vpn-packaging-eyebrow">Printing &amp; Finish</span>
+                <h2>Custom Printing and Finishing Options</h2>
+                <p>From clean retail cartons to premium rigid gift boxes, VPN Paper Box helps buyers choose production details that match the brand style and product use.</p>
+                <div class="vpn-packaging-tags">
+                    <?php foreach ($finishes as $finish) : ?>
+                        <span><?php echo esc_html($finish); ?></span>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+            <figure>
+                <img src="<?php echo esc_url(content_url('/uploads/2026/05/tao_nhieu_goc_202604181627-Copy-2-768x768.png')); ?>" alt="Rigid paper box sample with custom logo finishing" loading="lazy" decoding="async">
+            </figure>
+        </div>
+    </section>
+
+    <section class="vpn-packaging-section vpn-packaging-factory">
+        <div class="container vpn-packaging-split">
+            <div>
+                <span class="vpn-packaging-eyebrow">Factory Capability</span>
+                <h2>Factory-Direct Custom Packaging Production in Vietnam</h2>
+                <p>Work directly with a Vietnam packaging manufacturer for clearer material choices, sample discussion, artwork review, quality checking, and export-ready carton packing.</p>
+                <ul class="vpn-packaging-check-list">
+                    <?php foreach ($capabilities as $capability) : ?>
+                        <li><i class="fas fa-check-circle"></i><?php echo esc_html($capability); ?></li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
-            <div class="landing-factory-media">
-                <figure class="landing-factory-large">
-                    <img src="<?php echo esc_url($theme_uri . '/assets/images/factory-team-and-production.webp'); ?>" alt="VPN Packaging factory production team" loading="lazy" decoding="async">
-                </figure>
-                <figure>
-                    <img src="<?php echo esc_url($theme_uri . '/assets/images/print-finishing-carton-boxex.webp'); ?>" alt="Packaging printing and finishing process" loading="lazy" decoding="async">
-                </figure>
-                <figure>
-                    <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-fly.webp'); ?>" alt="Aerial view of VPN Packaging Factory" loading="lazy" decoding="async">
-                </figure>
+            <div class="vpn-packaging-factory-gallery">
+                <img src="<?php echo esc_url($theme_uri . '/assets/images/factory-team-and-production.webp'); ?>" alt="VPN Packaging factory production team" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-1.webp'); ?>" alt="Paper packaging production area in Vietnam" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-fly.webp'); ?>" alt="Aerial view of VPN Paper Box factory" loading="lazy" decoding="async">
             </div>
         </div>
     </section>
 
-    <section class="landing-section landing-mini-form-section">
-        <div class="container landing-mini-form-grid">
-            <div>
-                <span class="landing-eyebrow">Quick Start</span>
-                <h2>Send 3 Details and Get Direction</h2>
-                <p>Use this short form if you only know the product type and contact details. Our team can help define material, size, quantity, and finishing later.</p>
-            </div>
-            <form class="landing-mini-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>">
-                <input type="hidden" name="action" value="custom_box_quote_form">
-                <input type="hidden" name="product_type" value="boxes">
-                <input type="hidden" name="custom_box_quote_nonce" value="<?php echo esc_attr(wp_create_nonce('custom_box_quote_form')); ?>">
-                <input type="text" name="product_name" placeholder="Packaging type or product name" required>
-                <input type="text" name="full_name" placeholder="Your name" required>
-                <input type="email" name="email" placeholder="Email address" required>
-                <input type="hidden" name="message" value="Mini landing form request. Please contact this customer for packaging details.">
-                <button class="btn-primary" type="submit">Send Quick Request</button>
-            </form>
-        </div>
-    </section>
-
-    <section class="landing-section landing-pain-points">
+    <section class="vpn-packaging-section">
         <div class="container">
-            <div class="landing-section-header">
-                <span class="landing-eyebrow">Common Buyer Problems</span>
-                <h2>We Help Remove Packaging Order Friction</h2>
+            <div class="vpn-packaging-section-head">
+                <span class="vpn-packaging-eyebrow">Order Workflow</span>
+                <h2>How to Start a Custom Packaging Order</h2>
+                <p>A clear process helps international B2B buyers control structure, cost, sample approval, bulk production, and export packing.</p>
             </div>
-            <div class="landing-pain-grid">
-                <?php foreach ($landing_pain_points as $pain_point) : ?>
+            <ol class="vpn-packaging-process">
+                <?php foreach ($process_steps as $step) : ?>
+                    <li>
+                        <span><?php echo esc_html($step[0]); ?></span>
+                        <h3><?php echo esc_html($step[1]); ?></h3>
+                        <p><?php echo esc_html($step[2]); ?></p>
+                    </li>
+                <?php endforeach; ?>
+            </ol>
+        </div>
+    </section>
+
+    <section class="vpn-packaging-section vpn-packaging-muted">
+        <div class="container">
+            <div class="vpn-packaging-section-head">
+                <span class="vpn-packaging-eyebrow">Buyer Risk Reduction</span>
+                <h2>Common Problems We Help B2B Buyers Avoid</h2>
+            </div>
+            <div class="vpn-packaging-problem-grid">
+                <?php foreach ($problems as $problem) : ?>
                     <article>
-                        <i class="fas fa-circle-exclamation"></i>
-                        <h3><?php echo esc_html($pain_point[0]); ?></h3>
-                        <p><?php echo esc_html($pain_point[1]); ?></p>
+                        <h3><?php echo esc_html($problem[0]); ?></h3>
+                        <p><?php echo esc_html($problem[1]); ?></p>
                     </article>
                 <?php endforeach; ?>
             </div>
         </div>
     </section>
 
-    <section class="landing-section landing-quote-band" id="landing-quote">
-        <div class="container landing-quote-intro">
-            <span class="landing-eyebrow">Main Conversion Form</span>
-            <h2>Send Full Packaging Requirements</h2>
-            <p>Tell us your size, quantity, material, printing, finishing, artwork, and delivery country. Our team will recommend a practical production path and quotation.</p>
+    <section class="vpn-packaging-section">
+        <div class="container">
+            <div class="vpn-packaging-section-head">
+                <span class="vpn-packaging-eyebrow">Factory vs Middleman</span>
+                <h2>Why Work Directly with VPN Paper Box Manufacturer?</h2>
+            </div>
+            <div class="vpn-packaging-table-wrap">
+                <table class="vpn-packaging-table">
+                    <thead>
+                        <tr>
+                            <th>Factor</th>
+                            <th>VPN Paper Box Manufacturer</th>
+                            <th>Trader / Middleman</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($comparison_rows as $row) : ?>
+                            <tr>
+                                <th><?php echo esc_html($row[0]); ?></th>
+                                <td><?php echo esc_html($row[1]); ?></td>
+                                <td><?php echo esc_html($row[2]); ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
+    </section>
+
+    <section class="vpn-packaging-section vpn-packaging-quote" id="factory-quote">
         <?php get_template_part('template-parts/home/quote-form'); ?>
     </section>
 
-    <section class="landing-section landing-testimonials">
+    <section class="vpn-packaging-section">
         <div class="container">
-            <div class="landing-section-header">
-                <span class="landing-eyebrow">Buyer Feedback</span>
-                <h2>Packaging Results from Real Projects</h2>
+            <div class="vpn-packaging-section-head">
+                <span class="vpn-packaging-eyebrow">Use Cases</span>
+                <h2>Packaging Solutions by Use Case</h2>
+                <p>These examples show common project directions without overstating customer claims.</p>
             </div>
-            <div class="landing-testimonial-grid">
-                <?php foreach ($landing_testimonials as $testimonial) : ?>
+            <div class="vpn-packaging-project-grid">
+                <?php foreach ($projects as $project) : ?>
                     <article>
-                        <div class="landing-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                        <p>&ldquo;<?php echo esc_html($testimonial[0]); ?>&rdquo;</p>
-                        <strong><?php echo esc_html($testimonial[1]); ?></strong>
-                        <span><?php echo esc_html($testimonial[2]); ?></span>
+                        <h3><?php echo esc_html($project[0]); ?></h3>
+                        <p><?php echo esc_html($project[1]); ?></p>
                     </article>
                 <?php endforeach; ?>
             </div>
         </div>
     </section>
 
-    <section class="landing-final-cta">
-        <div class="container landing-final-inner">
-            <h2>Ready to Produce Custom Packaging for Your Brand?</h2>
-            <p>VPN Packaging helps international buyers develop practical, premium, and production-ready packaging directly from Vietnam.</p>
-            <a class="btn-primary" href="<?php echo esc_url($quote_url); ?>">Start Your Quote</a>
+    <section class="vpn-packaging-section vpn-packaging-muted">
+        <div class="container">
+            <div class="vpn-packaging-section-head">
+                <span class="vpn-packaging-eyebrow">FAQ</span>
+                <h2>Custom Packaging Boxes FAQ</h2>
+            </div>
+            <div class="vpn-packaging-faq-grid">
+                <?php foreach ($faqs as $faq) : ?>
+                    <article>
+                        <h3><?php echo esc_html($faq[0]); ?></h3>
+                        <p><?php echo esc_html($faq[1]); ?></p>
+                    </article>
+                <?php endforeach; ?>
+            </div>
         </div>
     </section>
+
+    <section class="vpn-packaging-final-cta">
+        <div class="container vpn-packaging-final-inner">
+            <div>
+                <h2>Build Custom Packaging with a Vietnam Factory Team</h2>
+                <p>Share your product type, box size, quantity, artwork, and delivery country. VPN Paper Box will help you define a production-ready packaging solution.</p>
+            </div>
+            <a class="btn-primary" href="<?php echo esc_url($quote_url); ?>">Request a Factory Quote</a>
+        </div>
+    </section>
+
+    <script type="application/ld+json">
+        <?php
+        $faq_schema = array(
+            '@context'   => 'https://schema.org',
+            '@type'      => 'FAQPage',
+            'mainEntity' => array_map(function ($faq) {
+                return array(
+                    '@type'          => 'Question',
+                    'name'           => $faq[0],
+                    'acceptedAnswer' => array(
+                        '@type' => 'Answer',
+                        'text'  => $faq[1],
+                    ),
+                );
+            }, $faqs),
+        );
+
+        echo wp_json_encode($faq_schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+        ?>
+    </script>
 </main>
 
 <?php get_footer(); ?>

@@ -27,6 +27,14 @@ function custom_box_is_commerce_context() {
     return is_page(array('products', 'shop'));
 }
 
+function custom_box_is_packaging_landing_page() {
+    if (function_exists('custom_box_is_packaging_money_page') && custom_box_is_packaging_money_page()) {
+        return true;
+    }
+
+    return is_page_template('page-landing-packaging.php') || is_page('packaging-landing');
+}
+
 function custom_box_enqueue_assets() {
     $is_catalog_page = is_page_template('page-catalog.php') || is_page('catalog');
     $main_css_path = get_template_directory() . '/assets/css/main.css';
@@ -93,7 +101,7 @@ function custom_box_enqueue_assets() {
         );
     }
 
-    if (is_page_template('page-landing-packaging.php') || is_page('packaging-landing')) {
+    if (custom_box_is_packaging_landing_page()) {
         wp_enqueue_style(
             'landing-style',
             get_template_directory_uri() . '/assets/css/landing.css',
@@ -158,15 +166,56 @@ function custom_box_dequeue_non_critical_assets() {
         wp_dequeue_style('classic-theme-styles');
         wp_dequeue_style('global-styles');
     }
+
+    if (custom_box_is_packaging_landing_page()) {
+        custom_box_dequeue_dflip_assets();
+    }
+}
+
+function custom_box_dequeue_dflip_assets() {
+    $dflip_style_handles = array(
+        'dflip',
+        'dflip-style',
+        'dflip-styles',
+        'dflip-frontend',
+        'dearflip',
+        'dearflip-style',
+        'dearflip-styles',
+        'dearflip-frontend',
+    );
+
+    $dflip_script_handles = array(
+        'dflip',
+        'dflip-script',
+        'dflip-scripts',
+        'dflip-frontend',
+        'dearflip',
+        'dearflip-script',
+        'dearflip-scripts',
+        'dearflip-frontend',
+    );
+
+    foreach ($dflip_style_handles as $handle) {
+        wp_dequeue_style($handle);
+        wp_deregister_style($handle);
+    }
+
+    foreach ($dflip_script_handles as $handle) {
+        wp_dequeue_script($handle);
+        wp_deregister_script($handle);
+    }
 }
 
 function custom_box_optimize_non_critical_assets() {
     custom_box_dequeue_non_critical_assets();
 }
 add_action('wp_enqueue_scripts', 'custom_box_optimize_non_critical_assets', 100);
+add_action('wp_enqueue_scripts', 'custom_box_optimize_non_critical_assets', 9999);
 add_action('wp_head', 'custom_box_dequeue_non_critical_assets', 0);
 add_action('wp_print_styles', 'custom_box_dequeue_non_critical_assets', 100);
+add_action('wp_print_styles', 'custom_box_dequeue_non_critical_assets', 9999);
 add_action('wp_print_scripts', 'custom_box_dequeue_non_critical_assets', 100);
+add_action('wp_print_scripts', 'custom_box_dequeue_non_critical_assets', 9999);
 
 function custom_box_disable_emoji_assets() {
     remove_action('wp_head', 'print_emoji_detection_script', 7);
@@ -180,6 +229,14 @@ function custom_box_disable_emoji_assets() {
 add_action('init', 'custom_box_disable_emoji_assets');
 
 function custom_box_preload_hero_assets() {
+    if (custom_box_is_packaging_landing_page()) {
+        printf(
+            '<link rel="preload" as="image" href="%s" fetchpriority="high">' . "\n",
+            esc_url(get_template_directory_uri() . '/assets/images/banner-landing-page.webp')
+        );
+        return;
+    }
+
     if (!is_front_page() && !is_home()) {
         return;
     }
@@ -192,6 +249,10 @@ function custom_box_preload_hero_assets() {
 add_action('wp_head', 'custom_box_preload_hero_assets', 1);
 
 function custom_box_non_blocking_styles($html, $handle, $href, $media) {
+    if (custom_box_is_packaging_landing_page() && custom_box_is_dflip_asset_url($href)) {
+        return '';
+    }
+
     $blocked_handles = array(
         'wc-blocks-style',
         'wc-blocks-vendors-style',
@@ -218,6 +279,28 @@ function custom_box_non_blocking_styles($html, $handle, $href, $media) {
         . '<noscript><link rel="stylesheet" href="' . $href . '" media="all"></noscript>' . "\n";
 }
 add_filter('style_loader_tag', 'custom_box_non_blocking_styles', 10, 4);
+
+function custom_box_remove_dflip_script_tag($tag, $handle, $src) {
+    if (custom_box_is_packaging_landing_page() && custom_box_is_dflip_asset_url($src)) {
+        return '';
+    }
+
+    return $tag;
+}
+add_filter('script_loader_tag', 'custom_box_remove_dflip_script_tag', 10, 3);
+
+function custom_box_is_dflip_asset_url($url) {
+    if (empty($url)) {
+        return false;
+    }
+
+    $path = wp_parse_url($url, PHP_URL_PATH);
+    $path = strtolower((string) $path);
+
+    return false !== strpos($path, 'dflip')
+        || false !== strpos($path, 'dearflip')
+        || false !== strpos($path, '3d-flipbook');
+}
 
 function custom_box_theme_favicon() {
     $favicon_url = get_template_directory_uri() . '/assets/images/favicon.webp';

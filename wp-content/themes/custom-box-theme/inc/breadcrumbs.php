@@ -92,8 +92,10 @@ function custom_box_get_breadcrumb_schema_items() {
         );
     } elseif (is_page_template('page-landing-packaging.php') || is_page('packaging-landing')) {
         $items[] = array(
-            'name' => get_the_title() ?: __('Custom Packaging', 'custom-box-theme'),
-            'url'  => get_permalink(),
+            'name' => __('Custom Packaging Boxes Manufacturer', 'custom-box-theme'),
+            'url'  => function_exists('custom_box_get_packaging_money_page_url')
+                ? custom_box_get_packaging_money_page_url()
+                : get_permalink(),
         );
     } elseif (is_page() && !is_front_page()) {
         $items[] = array(

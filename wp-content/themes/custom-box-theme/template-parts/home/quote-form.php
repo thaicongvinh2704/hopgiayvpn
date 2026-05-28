@@ -55,8 +55,8 @@
                 <li>
                     <i class="fas fa-check-circle"></i>
                     <div>
-                        <strong>Free Nationwide Shipping</strong>
-                        <p>Available across USA and Canada.</p>
+                        <strong>Global Export Support</strong>
+                        <p>Export-ready packing for international buyers.</p>
                     </div>
                 </li>
 
