@@ -302,6 +302,41 @@ function custom_box_is_dflip_asset_url($url) {
         || false !== strpos($path, '3d-flipbook');
 }
 
+function custom_box_start_packaging_landing_output_buffer() {
+    if (!custom_box_is_packaging_landing_page()) {
+        return;
+    }
+
+    ob_start('custom_box_filter_packaging_landing_output');
+}
+add_action('template_redirect', 'custom_box_start_packaging_landing_output_buffer', 0);
+
+function custom_box_filter_packaging_landing_output($html) {
+    if (false === stripos($html, 'dflip') && false === stripos($html, 'dearflip') && false === stripos($html, '3d-flipbook')) {
+        return $html;
+    }
+
+    $html = preg_replace(
+        '#<link\b[^>]+href=["\'][^"\']*(?:dflip|dearflip|3d-flipbook)[^"\']*["\'][^>]*>\s*#i',
+        '',
+        $html
+    );
+
+    $html = preg_replace(
+        '#<script\b[^>]+src=["\'][^"\']*(?:dflip|dearflip|3d-flipbook)[^"\']*["\'][^>]*>\s*</script>\s*#is',
+        '',
+        $html
+    );
+
+    $html = preg_replace(
+        '#<script\b[^>]*>[\s\S]*?(?:window\.dFlipLocation|window\.dFlipWPGlobal|dFlipLocation|dFlipWPGlobal)[\s\S]*?</script>\s*#i',
+        '',
+        $html
+    );
+
+    return $html;
+}
+
 function custom_box_theme_favicon() {
     $favicon_url = get_template_directory_uri() . '/assets/images/favicon.webp';
 
