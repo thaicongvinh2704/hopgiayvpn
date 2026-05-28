@@ -4,6 +4,7 @@ $footer_site_name = get_bloginfo('name') ?: 'VPN Paper Box Manufacturer';
 $footer_phone_display = '(+84) 933 102 653';
 $footer_phone_link = 'tel:+84933102653';
 $footer_email = 'paperbox@hopgiayvpn.com';
+$footer_sales_email = 'sale02.vpn@hopgiayvpn.com';
 $footer_factory_name = 'VPN Paper Box Manufacturer';
 $footer_office_address = '20 Street No. 2, Binh Tri Dong B Ward, Binh Tan District, Ho Chi Minh City, Vietnam';
 $footer_factory_address = '1032 An Phu Tay, Hamlet 4, Hung Long Commune, Binh Chanh District, Ho Chi Minh City, Vietnam';
@@ -55,7 +56,10 @@ $footer_social_links = array(
             <div class="contact-item">
                 <i class="fas fa-envelope"></i>
                 <strong><?php esc_html_e('Email', 'custom-box-theme'); ?></strong>
-                <p><a href="mailto:<?php echo esc_attr($footer_email); ?>"><?php echo esc_html($footer_email); ?></a></p>
+                <p>
+                    <a href="mailto:<?php echo esc_attr($footer_email); ?>"><?php echo esc_html($footer_email); ?></a><br>
+                    <a href="mailto:<?php echo esc_attr($footer_sales_email); ?>"><?php echo esc_html($footer_sales_email); ?></a>
+                </p>
             </div>
 
             <div class="contact-item">

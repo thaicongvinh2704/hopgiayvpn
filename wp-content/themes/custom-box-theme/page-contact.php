@@ -11,6 +11,7 @@ $theme_uri = get_template_directory_uri();
 $phone_display = '(+84) 933 102 653';
 $phone_link = 'tel:+84933102653';
 $email = 'paperbox@hopgiayvpn.com';
+$sales_email = 'sale02.vpn@hopgiayvpn.com';
 $factory_name = 'VPN Paper Box Factory';
 $factory_address = '1032 An Phu Tay, Hamlet 4, Hung Long Commune, Binh Chanh District, Ho Chi Minh City, Vietnam';
 $office_address = '20 Street No. 2, Binh Tri Dong B Ward, Binh Tan District, Ho Chi Minh City, Vietnam';
@@ -46,10 +47,10 @@ $map_embed_url = 'https://maps.google.com/maps?cid=6310512854642764978&z=17&outp
                 <em>Sales and production support</em>
             </a>
 
-            <a class="contact-quick-card" href="mailto:<?php echo esc_attr($email); ?>">
+            <a class="contact-quick-card" href="mailto:<?php echo esc_attr($email . ',' . $sales_email); ?>">
                 <i class="fas fa-envelope"></i>
                 <span>Email</span>
-                <strong><?php echo esc_html($email); ?></strong>
+                <strong><?php echo esc_html($email); ?><br><?php echo esc_html($sales_email); ?></strong>
                 <em>Send artwork and specifications</em>
             </a>
 

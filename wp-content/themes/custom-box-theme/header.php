@@ -24,7 +24,12 @@
     <div class="container top-inner">
 
         <div class="top-left">
-            <span><i class="far fa-envelope"></i> paperbox@hopgiayvpn.com</span>
+            <span>
+                <i class="far fa-envelope"></i>
+                <a href="mailto:paperbox@hopgiayvpn.com">paperbox@hopgiayvpn.com</a>
+                /
+                <a href="mailto:sale02.vpn@hopgiayvpn.com">sale02.vpn@hopgiayvpn.com</a>
+            </span>
         </div>
 
         <div class="top-right">

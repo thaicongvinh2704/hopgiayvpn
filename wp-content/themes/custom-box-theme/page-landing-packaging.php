@@ -33,62 +33,41 @@ $resolve_internal_url = function ($path, $fallback = '/products/') {
     return home_url($fallback);
 };
 
-$categories = array(
+$category_groups = array(
     array(
-        'title' => 'Custom Paper Boxes',
-        'text'  => 'Printed paper boxes for retail, ecommerce, gifts, cosmetics, food, and promotional packaging projects.',
-        'image' => $uploads_2026_05_uri . 'orange-corrugated-mailer-box-open-600x600.jpeg',
-        'alt'   => 'Orange corrugated mailer box with custom printed structure',
-        'url'   => home_url('/product/custom-corrugated-mailer-box/'),
+        'title' => 'Paper Box Types',
+        'items' => array(
+            array('Custom Paper Boxes', 'custom-paper-boxes'),
+            array('Custom Printed Paper Boxes', 'custom-printed-paper-boxes'),
+            array('Rigid Boxes', 'rigid-boxes'),
+            array('Folding Carton Boxes', 'folding-carton-boxes'),
+            array('Magnetic Closure Boxes', 'magnetic-closure-boxes'),
+            array('Drawer Boxes', 'drawer-boxes'),
+            array('Lid and Base Boxes', 'lid-and-base-boxes'),
+            array('Paper Tube Packaging', 'paper-tube-packaging'),
+            array('Corrugated Mailer Boxes', 'corrugated-mailer-boxes'),
+        ),
     ),
     array(
-        'title' => 'Rigid Boxes',
-        'text'  => 'Premium rigid gift boxes with strong greyboard structure, luxury wrapping paper, inserts, and finishing.',
-        'image' => $uploads_2026_05_uri . 'purple-luxury-rigid-gift-box-open-600x600.jpeg',
-        'alt'   => 'Purple luxury rigid gift box with magnetic closure',
-        'url'   => home_url('/product/custom-magnetic-closure-gift-box/'),
+        'title' => 'Packaging by Industry',
+        'items' => array(
+            array('Cosmetic Paper Boxes', 'cosmetic-paper-boxes'),
+            array('Perfume Packaging Boxes', 'perfume-packaging-boxes'),
+            array('Skincare Packaging Boxes', 'skincare-packaging-boxes'),
+            array('Jewelry Paper Boxes', 'jewelry-paper-boxes'),
+            array('Gift Paper Boxes', 'gift-paper-boxes'),
+            array('Chocolate Gift Boxes', 'chocolate-gift-boxes'),
+            array('Food Paper Boxes', 'food-paper-boxes'),
+            array('Bakery Packaging Boxes', 'bakery-packaging-boxes'),
+            array('Candle Packaging Boxes', 'candle-packaging-boxes'),
+        ),
     ),
     array(
-        'title' => 'Folding Carton Boxes',
-        'text'  => 'Lightweight folding cartons for cosmetics, food, healthcare, retail, and consumer goods packaging.',
-        'image' => $uploads_2026_05_uri . 'white-perfume-display-packaging-box-open-600x600.jpeg',
-        'alt'   => 'White perfume display folding carton box with sleeve',
-        'url'   => home_url('/product/custom-perfume-display-box-with-sleeve/'),
-    ),
-    array(
-        'title' => 'Cosmetic Paper Boxes',
-        'text'  => 'Brand-ready cosmetic boxes for skincare, perfume, beauty tools, personal care, and launch kits.',
-        'image' => $uploads_2026_05_uri . 'blue-cosmetic-set-packaging-box-600x600.jpg',
-        'alt'   => 'Blue cosmetic set paper packaging box',
-        'url'   => home_url('/product/custom-cosmetic-drawer-box-with-insert/'),
-    ),
-    array(
-        'title' => 'Gift Paper Boxes',
-        'text'  => 'Custom gift packaging with drawer, lid-and-base, magnetic closure, ribbon, sleeve, and insert options.',
-        'image' => $uploads_2026_05_uri . 'red-floral-mooncake-gift-packaging-box-open-600x600.jpeg',
-        'alt'   => 'Floral mooncake gift paper box with custom insert',
-        'url'   => home_url('/product/custom-magnetic-gift-box/'),
-    ),
-    array(
-        'title' => 'Food Paper Boxes',
-        'text'  => 'Paper boxes for bakery, pastry, chocolate, tea, coffee, takeaway, and retail food presentation.',
-        'image' => $uploads_2026_05_uri . 'cream-drawer-cookie-gift-packaging-box-open-600x913.jpeg',
-        'alt'   => 'Cream drawer cookie gift packaging box',
-        'url'   => home_url('/product/custom-pastry-gift-box-with-insert/'),
-    ),
-    array(
-        'title' => 'Paper Bags with Logo',
-        'text'  => 'Custom printed paper bags with logo, handles, reinforced bottoms, and retail-ready finishing.',
-        'image' => $uploads_2026_05_uri . 'custom-red-paper-shopping-bag-open-600x600.jpeg',
-        'alt'   => 'Red custom paper shopping bag with handles',
-        'url'   => home_url('/product/custom-paper-shopping-bag-with-handles/'),
-    ),
-    array(
-        'title' => 'Paper Tube Packaging',
-        'text'  => 'Custom cylindrical paper tubes for food, tea, cosmetics, gifts, and specialty retail packaging.',
-        'image' => $uploads_2026_05_uri . 'custom-paper-tube-food-packaging-box-open-600x903.jpeg',
-        'alt'   => 'Custom cylindrical paper tube food packaging box',
-        'url'   => home_url('/product/custom-paper-tube-packaging/'),
+        'title' => 'Paper Bags & Packaging Add-ons',
+        'items' => array(
+            array('Paper Bags with Logo', 'paper-bags-with-logo'),
+            array('Packaging Accessories', 'packaging-accessories'),
+        ),
     ),
 );
 
@@ -231,17 +210,22 @@ $faqs = array(
         <div class="container">
             <div class="vpn-packaging-section-head">
                 <span class="vpn-packaging-eyebrow">Manufacturing Range</span>
-                <h2>Custom Packaging Boxes We Manufacture</h2>
-                <p>Start from the packaging type that fits your product, then customize the structure, paper material, printing, finishing, inserts, and order quantity.</p>
+                <h2>Explore Our Paper Packaging Categories</h2>
+                <p>Choose by box structure, industry use, or packaging add-on, then customize size, material, printing, finishing, inserts, and order quantity.</p>
             </div>
-            <div class="vpn-packaging-category-grid">
-                <?php foreach ($categories as $category) : ?>
-                    <article class="vpn-packaging-category-card">
-                        <a href="<?php echo esc_url($category['url']); ?>">
-                            <img src="<?php echo esc_url($category['image']); ?>" alt="<?php echo esc_attr($category['alt']); ?>" loading="lazy" decoding="async">
-                            <span><?php echo esc_html($category['title']); ?></span>
-                        </a>
-                        <p><?php echo esc_html($category['text']); ?></p>
+            <div class="vpn-packaging-category-groups">
+                <?php foreach ($category_groups as $category_group) : ?>
+                    <article class="vpn-packaging-category-group">
+                        <h3><?php echo esc_html($category_group['title']); ?></h3>
+                        <ul>
+                            <?php foreach ($category_group['items'] as $category_item) : ?>
+                                <li>
+                                    <a href="<?php echo esc_url($resolve_internal_url('/packaging/' . $category_item[1] . '/')); ?>">
+                                        <?php echo esc_html($category_item[0]); ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
                     </article>
                 <?php endforeach; ?>
             </div>

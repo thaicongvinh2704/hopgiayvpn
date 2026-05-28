@@ -1,14 +1,26 @@
 .vpn-packaging-money-page {
     background: #ffffff;
-    color: #18283a;
+    color: var(--color-ink, #123243);
 }
 
 .vpn-packaging-money-page .container {
     width: min(100% - 32px, 1200px);
 }
 
+body.page-template-page-landing-packaging {
+    --vpn-landing-primary: var(--color-primary, #2A6A92);
+    --vpn-landing-primary-dark: var(--color-primary-dark, #144b68);
+    --vpn-landing-primary-soft: var(--color-primary-soft, #eaf3f8);
+    --vpn-landing-surface-soft: var(--color-surface-soft, #f4f8fb);
+    --vpn-landing-line: var(--color-line, #d8e4eb);
+    --vpn-landing-ink: var(--color-ink, #123243);
+    --vpn-landing-muted: var(--color-muted, #50606b);
+    --vpn-landing-accent: var(--color-accent, #F7B24D);
+    --vpn-landing-accent-strong: #f58220;
+}
+
 body.page-template-page-landing-packaging .top-bar {
-    background: #0b2f57;
+    background: var(--vpn-landing-primary);
 }
 
 body.page-template-page-landing-packaging .main-nav {
@@ -16,25 +28,25 @@ body.page-template-page-landing-packaging .main-nav {
 }
 
 body.page-template-page-landing-packaging .btn-quote {
-    border-color: #0b2f57;
-    color: #0b2f57;
+    border-color: var(--vpn-landing-primary);
+    color: var(--vpn-landing-primary);
 }
 
 body.page-template-page-landing-packaging .btn-quote i {
-    color: #0b2f57;
+    color: var(--vpn-landing-primary);
 }
 
 body.page-template-page-landing-packaging .btn-quote:hover,
 body.page-template-page-landing-packaging .btn-phone {
-    background: #0b2f57;
-    border-color: #0b2f57;
+    background: var(--vpn-landing-primary);
+    border-color: var(--vpn-landing-primary);
     color: #ffffff;
 }
 
 .vpn-packaging-hero {
     background:
-        linear-gradient(110deg, rgba(11, 47, 87, 0.94) 0%, rgba(11, 47, 87, 0.88) 48%, rgba(245, 130, 32, 0.08) 100%),
-        #0b2f57;
+        linear-gradient(110deg, rgba(20, 75, 104, 0.96) 0%, rgba(42, 106, 146, 0.92) 56%, rgba(247, 178, 77, 0.16) 100%),
+        var(--vpn-landing-primary);
     overflow: hidden;
     padding: 56px 0 68px;
 }
@@ -67,7 +79,7 @@ body.page-template-page-landing-packaging .btn-phone {
 }
 
 .vpn-packaging-eyebrow {
-    color: #f58220;
+    color: var(--vpn-landing-accent);
     display: inline-flex;
     font-size: 13px;
     font-weight: 850;
@@ -159,11 +171,11 @@ body.page-template-page-landing-packaging .btn-phone {
 }
 
 .vpn-packaging-muted {
-    background: #f5f8fb;
+    background: var(--vpn-landing-surface-soft);
 }
 
 .vpn-packaging-buyers {
-    border-bottom: 1px solid #dfe7ef;
+    border-bottom: 1px solid var(--vpn-landing-line);
 }
 
 .vpn-packaging-split {
@@ -171,13 +183,13 @@ body.page-template-page-landing-packaging .btn-phone {
 }
 
 .vpn-packaging-section h2 {
-    color: #0b2f57;
+    color: var(--vpn-landing-primary-dark);
     font-size: clamp(31px, 4vw, 48px);
 }
 
 .vpn-packaging-section p,
 .vpn-packaging-final-cta p {
-    color: #516173;
+    color: var(--vpn-landing-muted);
     font-size: 17px;
     line-height: 1.72;
 }
@@ -198,62 +210,49 @@ body.page-template-page-landing-packaging .btn-phone {
 .vpn-packaging-buyer-grid span,
 .vpn-packaging-tags span {
     background: #ffffff;
-    border: 1px solid #dbe6f2;
+    border: 1px solid var(--vpn-landing-line);
     border-radius: 999px;
-    color: #25364a;
+    color: var(--vpn-landing-ink);
     font-size: 14px;
     font-weight: 800;
     padding: 10px 14px;
 }
 
-.vpn-packaging-category-grid {
+.vpn-packaging-category-groups {
     display: grid;
     gap: 22px;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-.vpn-packaging-category-card,
+.vpn-packaging-category-group,
 .vpn-packaging-material-grid article,
 .vpn-packaging-problem-grid article,
 .vpn-packaging-project-grid article,
 .vpn-packaging-faq-grid article,
 .vpn-packaging-process li {
     background: #ffffff;
-    border: 1px solid #dfe7ef;
+    border: 1px solid var(--vpn-landing-line);
     border-radius: 8px;
 }
 
-.vpn-packaging-category-card {
-    overflow: hidden;
+.vpn-packaging-category-group {
+    padding: 26px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.vpn-packaging-category-card:hover {
-    border-color: #9bb5cf;
-    box-shadow: 0 18px 42px rgba(11, 47, 87, 0.14);
+.vpn-packaging-category-group:hover {
+    border-color: rgba(42, 106, 146, 0.42);
+    box-shadow: 0 18px 42px rgba(42, 106, 146, 0.14);
     transform: translateY(-3px);
 }
 
-.vpn-packaging-category-card a {
-    color: #0b2f57;
-    display: block;
-    text-decoration: none;
-}
-
-.vpn-packaging-category-card img {
-    aspect-ratio: 4 / 3;
-    background: #f5f8fb;
-    object-fit: cover;
-    width: 100%;
-}
-
-.vpn-packaging-category-card span,
+.vpn-packaging-category-group h3,
 .vpn-packaging-material-grid h3,
 .vpn-packaging-problem-grid h3,
 .vpn-packaging-project-grid h3,
 .vpn-packaging-faq-grid h3,
 .vpn-packaging-process h3 {
-    color: #0b2f57;
+    color: var(--vpn-landing-primary-dark);
     display: block;
     font-size: 19px;
     font-weight: 850;
@@ -261,13 +260,38 @@ body.page-template-page-landing-packaging .btn-phone {
     margin: 0;
 }
 
-.vpn-packaging-category-card span {
-    padding: 18px 20px 0;
+.vpn-packaging-category-group ul {
+    display: grid;
+    gap: 10px;
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
 }
 
-.vpn-packaging-category-card p {
-    font-size: 15px;
-    margin: 10px 20px 22px;
+.vpn-packaging-category-group a {
+    align-items: center;
+    border-bottom: 1px solid var(--vpn-landing-line);
+    color: var(--vpn-landing-ink);
+    display: flex;
+    font-weight: 750;
+    justify-content: space-between;
+    line-height: 1.35;
+    min-height: 34px;
+    padding: 0 0 10px;
+    text-decoration: none;
+}
+
+.vpn-packaging-category-group a::after {
+    color: var(--vpn-landing-accent-strong);
+    content: "\f105";
+    font-family: "Font Awesome 6 Free";
+    font-size: 12px;
+    font-weight: 900;
+    margin-left: 12px;
+}
+
+.vpn-packaging-category-group a:hover {
+    color: var(--vpn-landing-primary);
 }
 
 .vpn-packaging-material-grid {
@@ -298,11 +322,11 @@ body.page-template-page-landing-packaging .btn-phone {
 }
 
 .vpn-packaging-tags span {
-    background: #f5f8fb;
+    background: var(--vpn-landing-primary-soft);
 }
 
 .vpn-packaging-factory {
-    background: #0b2f57;
+    background: var(--vpn-landing-primary);
     color: #ffffff;
 }
 
@@ -367,7 +391,7 @@ body.page-template-page-landing-packaging .btn-phone {
     align-items: center;
     background: #fff4e8;
     border-radius: 999px;
-    color: #f58220;
+    color: var(--vpn-landing-accent-strong);
     display: inline-flex;
     font-size: 20px;
     font-weight: 850;
@@ -417,7 +441,7 @@ body.page-template-page-landing-packaging .btn-phone {
 
 .vpn-packaging-table th,
 .vpn-packaging-table td {
-    border: 1px solid #dfe7ef;
+    border: 1px solid var(--vpn-landing-line);
     line-height: 1.55;
     padding: 18px;
     text-align: left;
@@ -425,17 +449,17 @@ body.page-template-page-landing-packaging .btn-phone {
 }
 
 .vpn-packaging-table thead th {
-    background: #0b2f57;
+    background: var(--vpn-landing-primary);
     color: #ffffff;
 }
 
 .vpn-packaging-table tbody th {
-    color: #0b2f57;
+    color: var(--vpn-landing-primary-dark);
     width: 18%;
 }
 
 .vpn-packaging-quote {
-    background: #fff8ef;
+    background: var(--vpn-landing-surface-soft);
 }
 
 .vpn-packaging-quote {
@@ -452,7 +476,7 @@ body.page-template-page-landing-packaging .btn-phone {
 }
 
 .vpn-packaging-final-cta {
-    background: #0b2f57;
+    background: var(--vpn-landing-primary-dark);
     color: #ffffff;
     padding: 58px 0;
 }
@@ -476,7 +500,7 @@ body.page-template-page-landing-packaging .btn-phone {
         font-size: clamp(40px, 4.7vw, 54px);
     }
 
-    .vpn-packaging-category-grid {
+    .vpn-packaging-category-groups {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
@@ -514,11 +538,11 @@ body.page-template-page-landing-packaging .btn-phone {
 @media (max-width: 680px) {
     body.page-template-page-landing-packaging .main-header {
         background: #ffffff;
-        border-bottom-color: #dfe7ef;
+        border-bottom-color: var(--vpn-landing-line);
     }
 
     body.page-template-page-landing-packaging .main-nav {
-        background: #f7fbff;
+        background: var(--vpn-landing-surface-soft);
     }
 
     .vpn-packaging-money-page .container {
@@ -549,7 +573,7 @@ body.page-template-page-landing-packaging .btn-phone {
     }
 
     .vpn-packaging-proof,
-    .vpn-packaging-category-grid,
+    .vpn-packaging-category-groups,
     .vpn-packaging-material-grid,
     .vpn-packaging-problem-grid,
     .vpn-packaging-project-grid,
@@ -562,7 +586,7 @@ body.page-template-page-landing-packaging .btn-phone {
         min-height: auto;
     }
 
-    .vpn-packaging-category-card span,
+    .vpn-packaging-category-group h3,
     .vpn-packaging-process h3 {
         font-size: 16px;
     }
