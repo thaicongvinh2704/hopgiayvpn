@@ -20,56 +20,6 @@ $landing_url = function_exists('custom_box_get_packaging_money_page_url')
 
 $fallback_products_url = home_url('/products/');
 $contact_url = home_url('/contact/');
-$uploads_2026_05_uri = content_url('/uploads/2026/05/');
-
-$resolve_internal_url = function ($path, $fallback = '/products/') {
-    $path = '/' . trim($path, '/') . '/';
-    $url = home_url($path);
-
-    if (url_to_postid($url)) {
-        return $url;
-    }
-
-    return home_url($fallback);
-};
-
-$category_groups = array(
-    array(
-        'title' => 'Paper Box Types',
-        'items' => array(
-            array('Custom Paper Boxes', 'custom-paper-boxes'),
-            array('Custom Printed Paper Boxes', 'custom-printed-paper-boxes'),
-            array('Rigid Boxes', 'rigid-boxes'),
-            array('Folding Carton Boxes', 'folding-carton-boxes'),
-            array('Magnetic Closure Boxes', 'magnetic-closure-boxes'),
-            array('Drawer Boxes', 'drawer-boxes'),
-            array('Lid and Base Boxes', 'lid-and-base-boxes'),
-            array('Paper Tube Packaging', 'paper-tube-packaging'),
-            array('Corrugated Mailer Boxes', 'corrugated-mailer-boxes'),
-        ),
-    ),
-    array(
-        'title' => 'Packaging by Industry',
-        'items' => array(
-            array('Cosmetic Paper Boxes', 'cosmetic-paper-boxes'),
-            array('Perfume Packaging Boxes', 'perfume-packaging-boxes'),
-            array('Skincare Packaging Boxes', 'skincare-packaging-boxes'),
-            array('Jewelry Paper Boxes', 'jewelry-paper-boxes'),
-            array('Gift Paper Boxes', 'gift-paper-boxes'),
-            array('Chocolate Gift Boxes', 'chocolate-gift-boxes'),
-            array('Food Paper Boxes', 'food-paper-boxes'),
-            array('Bakery Packaging Boxes', 'bakery-packaging-boxes'),
-            array('Candle Packaging Boxes', 'candle-packaging-boxes'),
-        ),
-    ),
-    array(
-        'title' => 'Paper Bags & Packaging Add-ons',
-        'items' => array(
-            array('Paper Bags with Logo', 'paper-bags-with-logo'),
-            array('Packaging Accessories', 'packaging-accessories'),
-        ),
-    ),
-);
 
 $buyer_groups = array(
     'Cosmetic brands',
@@ -206,31 +156,7 @@ $faqs = array(
         </div>
     </section>
 
-    <section class="vpn-packaging-section" id="packaging-categories">
-        <div class="container">
-            <div class="vpn-packaging-section-head">
-                <span class="vpn-packaging-eyebrow">Manufacturing Range</span>
-                <h2>Explore Our Paper Packaging Categories</h2>
-                <p>Choose by box structure, industry use, or packaging add-on, then customize size, material, printing, finishing, inserts, and order quantity.</p>
-            </div>
-            <div class="vpn-packaging-category-groups">
-                <?php foreach ($category_groups as $category_group) : ?>
-                    <article class="vpn-packaging-category-group">
-                        <h3><?php echo esc_html($category_group['title']); ?></h3>
-                        <ul>
-                            <?php foreach ($category_group['items'] as $category_item) : ?>
-                                <li>
-                                    <a href="<?php echo esc_url($resolve_internal_url('/packaging/' . $category_item[1] . '/')); ?>">
-                                        <?php echo esc_html($category_item[0]); ?>
-                                    </a>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </article>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </section>
+    <?php get_template_part('template-parts/home/packaging-category-groups'); ?>
 
     <section class="vpn-packaging-section vpn-packaging-muted">
         <div class="container">
