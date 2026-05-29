@@ -1,6 +1,7 @@
 <?php
 $uploads_2026_05_uri = content_url('/uploads/2026/05/');
 $old_category_image_uri = $uploads_2026_05_uri;
+$theme_image_uri = get_template_directory_uri() . '/assets/images/';
 
 $resolve_category_url = function ($slug) {
     $term = get_term_by('slug', $slug, 'product_cat');
@@ -58,18 +59,17 @@ $category_groups = array(
     ),
     array(
         'title' => 'Packaging by Industry',
-        'hidden' => true,
         'items' => array(
-            array('Pharmaceutical Packaging Boxes', 'pharmaceutical-packaging-boxes', ''),
-            array('Supplement Packaging Boxes', 'supplement-packaging-boxes', ''),
-            array('Beauty and Skincare Packaging', 'beauty-skincare-packaging', ''),
-            array('Premium Food and Beverage Packaging', 'premium-food-beverage-packaging', ''),
-            array('Electronics Accessories Packaging', 'electronics-accessories-packaging', ''),
+            array('Pharmaceutical Packaging Boxes', 'pharmaceutical-packaging-boxes', $theme_image_uri . 'custom-pharmaceutical-medicine-packaging-boxes.webp'),
+            array('Supplement Packaging Boxes', 'supplement-packaging-boxes', $theme_image_uri . 'custom-supplement-vitamin-packaging-boxes.webp'),
+            array('Beauty and Skincare Packaging', 'beauty-skincare-packaging', $theme_image_uri . 'custom-cosmetic-skincare-packaging-boxes.webp'),
+            array('Premium Food and Beverage Packaging', 'premium-food-beverage-packaging', $theme_image_uri . 'premium-tea-coffee-chocolate-packaging-boxes.webp'),
+            array('Electronics Accessories Packaging', 'electronics-accessories-packaging', $theme_image_uri . 'custom-phone-accessories-packaging-boxes.webp'),
             array('Fashion and Sportswear Packaging', 'fashion-sportswear-packaging', ''),
-            array('Wine and Premium Drink Packaging', 'wine-premium-drink-packaging', ''),
-            array('Corporate Gift Packaging', 'corporate-gift-packaging', ''),
-            array('Home and Lifestyle Packaging', 'home-lifestyle-packaging', ''),
-            array('Back-to-School and Stationery Packaging', 'back-to-school-stationery-packaging', ''),
+            array('Wine and Premium Drink Packaging', 'wine-premium-drink-packaging', $theme_image_uri . 'custom-wine-premium-beverage-packaging-boxes.webp'),
+            array('Corporate Gift Packaging', 'corporate-gift-packaging', $theme_image_uri . 'custom-corporate-gift-set-packaging-boxes.webp'),
+            array('Home and Lifestyle Packaging', 'home-lifestyle-packaging', $theme_image_uri . 'custom-home-lifestyle-product-packaging-boxes.webp'),
+            array('Back-to-School and Stationery Packaging', 'back-to-school-stationery-packaging', $theme_image_uri . 'custom-stationery-school-supplies-packaging-boxes.webp'),
         ),
     ),
 );
