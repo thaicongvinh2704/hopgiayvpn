@@ -1181,6 +1181,11 @@ html {
     overflow: hidden;
 }
 
+.home-packaging-category-image.is-empty {
+    aspect-ratio: 1 / 1;
+    background: #eef4f7;
+}
+
 .home-packaging-category-image img {
     aspect-ratio: 1 / 1;
     display: block;

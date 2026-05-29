@@ -59,16 +59,16 @@ $category_groups = array(
     array(
         'title' => 'Packaging by Industry',
         'items' => array(
-            array('Pharmaceutical Packaging Boxes', 'pharmaceutical-packaging-boxes', $old_category_image_uri . 'custom-medical-kit-packaging-box.jpeg'),
-            array('Supplement Packaging Boxes', 'supplement-packaging-boxes', $old_category_image_uri . 'white-essential-oil-gift-packaging-box.png'),
-            array('Beauty and Skincare Packaging', 'beauty-skincare-packaging', $old_category_image_uri . 'blue-cosmetic-set-packaging-box-open-1024x930.png'),
-            array('Premium Food and Beverage Packaging', 'premium-food-beverage-packaging', $old_category_image_uri . 'orange-mooncake-chocolate-gift-box.png'),
-            array('Electronics Accessories Packaging', 'electronics-accessories-packaging', $old_category_image_uri . 'black-drawer-watch-packaging-box.jpeg'),
-            array('Fashion and Sportswear Packaging', 'fashion-sportswear-packaging', $old_category_image_uri . 'printed-paper-shopping-bag.jpeg'),
-            array('Wine and Premium Drink Packaging', 'wine-premium-drink-packaging', $old_category_image_uri . 'bottle-display-carrier-packaging-box.png'),
-            array('Corporate Gift Packaging', 'corporate-gift-packaging', $old_category_image_uri . 'cream-drawer-gift-box.png'),
-            array('Home and Lifestyle Packaging', 'home-lifestyle-packaging', $old_category_image_uri . 'custom-teal-rigid-gift-box.png'),
-            array('Back-to-School and Stationery Packaging', 'back-to-school-stationery-packaging', $old_category_image_uri . 'kraft-bakery-food-packaging-box-open.png'),
+            array('Pharmaceutical Packaging Boxes', 'pharmaceutical-packaging-boxes', ''),
+            array('Supplement Packaging Boxes', 'supplement-packaging-boxes', ''),
+            array('Beauty and Skincare Packaging', 'beauty-skincare-packaging', ''),
+            array('Premium Food and Beverage Packaging', 'premium-food-beverage-packaging', ''),
+            array('Electronics Accessories Packaging', 'electronics-accessories-packaging', ''),
+            array('Fashion and Sportswear Packaging', 'fashion-sportswear-packaging', ''),
+            array('Wine and Premium Drink Packaging', 'wine-premium-drink-packaging', ''),
+            array('Corporate Gift Packaging', 'corporate-gift-packaging', ''),
+            array('Home and Lifestyle Packaging', 'home-lifestyle-packaging', ''),
+            array('Back-to-School and Stationery Packaging', 'back-to-school-stationery-packaging', ''),
         ),
     ),
 );
@@ -86,8 +86,10 @@ $category_groups = array(
             <?php foreach ($category_groups as $category_group) : ?>
                 <?php foreach ($category_group['items'] as $category_item) : ?>
                     <a class="home-packaging-category-card" href="<?php echo esc_url($resolve_category_url($category_item[1])); ?>">
-                        <span class="home-packaging-category-image">
-                            <img src="<?php echo esc_url($category_item[2]); ?>" alt="<?php echo esc_attr($category_item[0]); ?>" loading="lazy" decoding="async">
+                        <span class="home-packaging-category-image <?php echo empty($category_item[2]) ? 'is-empty' : ''; ?>">
+                            <?php if (!empty($category_item[2])) : ?>
+                                <img src="<?php echo esc_url($category_item[2]); ?>" alt="<?php echo esc_attr($category_item[0]); ?>" loading="lazy" decoding="async">
+                            <?php endif; ?>
                         </span>
                         <span class="home-packaging-category-title"><?php echo esc_html($category_item[0]); ?></span>
                     </a>
