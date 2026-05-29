@@ -323,7 +323,7 @@ function custom_box_add_quote_product_schema_fields($entity, $product) {
 }
 
 function custom_box_get_business_schema() {
-    $logo_url = get_template_directory_uri() . '/assets/images/logo-hop-giay-vpn-hcm.webp';
+    $logo_url = get_template_directory_uri() . '/assets/images/logo-hop-giay-vpn-hcm.png';
     $custom_logo_id = (int) get_theme_mod('custom_logo');
 
     if ($custom_logo_id) {

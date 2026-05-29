@@ -34,7 +34,7 @@ $products_url = function_exists('custom_box_get_products_url') ? custom_box_get_
                 </div>
             </div>
             <div class="product-category-hero-image">
-                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1.webp'); ?>" alt="<?php echo esc_attr($archive_title); ?>" decoding="async">
+                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1.png'); ?>" alt="<?php echo esc_attr($archive_title); ?>" decoding="async">
             </div>
         </div>
     </div>

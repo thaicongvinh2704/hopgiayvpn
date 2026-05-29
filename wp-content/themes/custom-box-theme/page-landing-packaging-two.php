@@ -22,12 +22,12 @@ $landing_two_products = new WP_Query(array(
 ));
 
 $landing_two_logos = array(
-    'client-logos/dcons-logo.webp',
-    'client-logos/iplus-logo.webp',
-    'client-logos/lcsgroup-logo.webp',
-    'client-logos/mkt-logo.webp',
-    'client-logos/saokim-logo.webp',
-    'client-logos/sharon-logo-.webp',
+    'client-logos/dcons-logo.png',
+    'client-logos/iplus-logo.png',
+    'client-logos/lcsgroup-logo.png',
+    'client-logos/mkt-logo.png',
+    'client-logos/saokim-logo.png',
+    'client-logos/sharon-logo-.png',
 );
 ?>
 
