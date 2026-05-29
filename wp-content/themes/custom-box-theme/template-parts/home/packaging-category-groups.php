@@ -58,6 +58,7 @@ $category_groups = array(
     ),
     array(
         'title' => 'Packaging by Industry',
+        'hidden' => true,
         'items' => array(
             array('Pharmaceutical Packaging Boxes', 'pharmaceutical-packaging-boxes', ''),
             array('Supplement Packaging Boxes', 'supplement-packaging-boxes', ''),
@@ -84,6 +85,9 @@ $category_groups = array(
 
         <div class="home-packaging-category-cards">
             <?php foreach ($category_groups as $category_group) : ?>
+                <?php if (!empty($category_group['hidden'])) : ?>
+                    <?php continue; ?>
+                <?php endif; ?>
                 <?php foreach ($category_group['items'] as $category_item) : ?>
                     <a class="home-packaging-category-card" href="<?php echo esc_url($resolve_category_url($category_item[1])); ?>">
                         <span class="home-packaging-category-image <?php echo empty($category_item[2]) ? 'is-empty' : ''; ?>">
