@@ -13,6 +13,7 @@ $custom_box_inc_files = array(
     'inc/breadcrumbs.php',
     'inc/admin-category-fields.php',
     'inc/product-specifications.php',
+    'inc/product-category-migration.php',
     'inc/quote-form-handler.php',
     'inc/woocommerce.php',
 );
