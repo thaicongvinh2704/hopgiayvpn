@@ -56,6 +56,21 @@ $category_groups = array(
             array('Packaging Accessories', 'packaging-accessories', $old_category_image_uri . '33.jpg'),
         ),
     ),
+    array(
+        'title' => 'Packaging by Industry',
+        'items' => array(
+            array('Pharmaceutical Packaging Boxes', 'pharmaceutical-packaging-boxes', $old_category_image_uri . 'custom-medical-kit-packaging-box.jpeg'),
+            array('Supplement Packaging Boxes', 'supplement-packaging-boxes', $old_category_image_uri . 'white-essential-oil-gift-packaging-box.png'),
+            array('Beauty and Skincare Packaging', 'beauty-skincare-packaging', $old_category_image_uri . 'blue-cosmetic-set-packaging-box-open-1024x930.png'),
+            array('Premium Food and Beverage Packaging', 'premium-food-beverage-packaging', $old_category_image_uri . 'orange-mooncake-chocolate-gift-box.png'),
+            array('Electronics Accessories Packaging', 'electronics-accessories-packaging', $old_category_image_uri . 'black-drawer-watch-packaging-box.jpeg'),
+            array('Fashion and Sportswear Packaging', 'fashion-sportswear-packaging', $old_category_image_uri . 'printed-paper-shopping-bag.jpeg'),
+            array('Wine and Premium Drink Packaging', 'wine-premium-drink-packaging', $old_category_image_uri . 'bottle-display-carrier-packaging-box.png'),
+            array('Corporate Gift Packaging', 'corporate-gift-packaging', $old_category_image_uri . 'cream-drawer-gift-box.png'),
+            array('Home and Lifestyle Packaging', 'home-lifestyle-packaging', $old_category_image_uri . 'custom-teal-rigid-gift-box.png'),
+            array('Back-to-School and Stationery Packaging', 'back-to-school-stationery-packaging', $old_category_image_uri . 'kraft-bakery-food-packaging-box-open.png'),
+        ),
+    ),
 );
 ?>
 

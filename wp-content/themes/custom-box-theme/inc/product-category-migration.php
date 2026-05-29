@@ -27,6 +27,16 @@ function custom_box_category_migration_targets() {
         'candle-packaging-boxes'      => 'Candle Packaging Boxes',
         'paper-bags-with-logo'        => 'Paper Bags with Logo',
         'packaging-accessories'       => 'Packaging Accessories',
+        'pharmaceutical-packaging-boxes'        => 'Pharmaceutical Packaging Boxes',
+        'supplement-packaging-boxes'            => 'Supplement Packaging Boxes',
+        'beauty-skincare-packaging'             => 'Beauty and Skincare Packaging',
+        'premium-food-beverage-packaging'       => 'Premium Food and Beverage Packaging',
+        'electronics-accessories-packaging'     => 'Electronics Accessories Packaging',
+        'fashion-sportswear-packaging'          => 'Fashion and Sportswear Packaging',
+        'wine-premium-drink-packaging'          => 'Wine and Premium Drink Packaging',
+        'corporate-gift-packaging'              => 'Corporate Gift Packaging',
+        'home-lifestyle-packaging'              => 'Home and Lifestyle Packaging',
+        'back-to-school-stationery-packaging'   => 'Back-to-School and Stationery Packaging',
     );
 }
 
