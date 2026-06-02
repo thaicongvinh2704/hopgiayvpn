@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-02-latest-batch-default-1' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-02-cleanup-old-batches-1' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -111,6 +111,79 @@ function custom_box_product_sample_deploy_admin_post() {
 	exit;
 }
 add_action( 'admin_post_custom_box_product_sample_deploy', 'custom_box_product_sample_deploy_admin_post' );
+
+function custom_box_product_sample_cleanup_old_batches_admin_post() {
+	if ( ! custom_box_product_sample_deploy_can_run() ) {
+		wp_die( esc_html__( 'You do not have permission to clean product samples.', 'custom-box-theme' ) );
+	}
+
+	check_admin_referer( 'custom_box_product_sample_cleanup_old_batches' );
+
+	$old_markers = array(
+		'product-samples-10',
+		'product-samples-batch-2-five',
+	);
+
+	delete_transient( 'custom_box_product_sample_deploy_state_' . get_current_user_id() );
+
+	$products = get_posts(
+		array(
+			'post_type'      => 'product',
+			'post_status'    => array( 'publish', 'draft', 'private', 'pending', 'future' ),
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'meta_query'     => array(
+				array(
+					'key'     => '_vpn_sample_import',
+					'value'   => $old_markers,
+					'compare' => 'IN',
+				),
+			),
+		)
+	);
+
+	$trashed = 0;
+	$failed  = array();
+
+	foreach ( $products as $product_id ) {
+		$result = wp_trash_post( (int) $product_id );
+		if ( $result ) {
+			++$trashed;
+		} else {
+			$failed[] = (int) $product_id;
+		}
+	}
+
+	$output = 'Cleanup scope: old sample batches only' . PHP_EOL;
+	$output .= 'Kept marker: product-samples-batch-3-ten' . PHP_EOL;
+	$output .= 'Trashed products: ' . $trashed . PHP_EOL;
+	if ( $failed ) {
+		$output .= 'Failed product IDs: ' . implode( ', ', $failed ) . PHP_EOL;
+	}
+
+	set_transient(
+		'custom_box_product_sample_deploy_result_' . get_current_user_id(),
+		array(
+			'output' => $output,
+			'error'  => '',
+			'status' => 'complete',
+			'time'   => current_time( 'mysql' ),
+		),
+		10 * MINUTE_IN_SECONDS
+	);
+
+	wp_safe_redirect(
+		add_query_arg(
+			array(
+				'page'         => 'custom-box-product-sample-deploy',
+				'cleanup_done' => '1',
+			),
+			admin_url( 'tools.php' )
+		)
+	);
+	exit;
+}
+add_action( 'admin_post_custom_box_product_sample_cleanup_old_batches', 'custom_box_product_sample_cleanup_old_batches_admin_post' );
 
 function custom_box_product_sample_deploy_batch_products( string $marker ): array {
 	return get_posts(
@@ -475,6 +548,15 @@ function custom_box_product_sample_deploy_page() {
 			</p>
 			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
 			<?php submit_button( 'Run Product Sample Deploy', 'primary large' ); ?>
+		</form>
+
+		<hr>
+
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+			<input type="hidden" name="action" value="custom_box_product_sample_cleanup_old_batches">
+			<?php wp_nonce_field( 'custom_box_product_sample_cleanup_old_batches' ); ?>
+			<p>This moves Batch 1 and Batch 2 sample products to Trash, keeping the latest Batch 3 products.</p>
+			<?php submit_button( 'Move Old Sample Batches to Trash', 'delete' ); ?>
 		</form>
 
 		<?php if ( $result && empty( $result['error'] ) && ! empty( $result['status'] ) && 'running' === $result['status'] ) : ?>
