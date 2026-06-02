@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-02-batch-4-remaining-1' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-02-batch-4-featured-repair-1' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -266,7 +266,7 @@ function custom_box_product_sample_deploy_batch_complete( string $marker, int $e
 			}
 		}
 
-		if ( $words < $min_words || preg_match( '/<h1\b/i', $content ) || ! is_array( $specs ) || count( $specs ) < 21 || '1000 boxes' !== $moq ) {
+		if ( $words < $min_words || preg_match( '/<h1\b/i', $content ) || ! is_array( $specs ) || count( $specs ) < 21 || '1000 boxes' !== $moq || ! has_post_thumbnail( $product->ID ) ) {
 			return false;
 		}
 	}
@@ -346,6 +346,7 @@ function custom_box_product_sample_deploy_batches(): array {
 			'expected' => 17,
 			'scripts'  => array(
 				'tools/import-product-samples-batch-4-remaining.php',
+				'tools/repair-product-samples-batch-4-featured-images.php',
 				'tools/verify-product-samples-batch-4-remaining.php',
 			),
 		),

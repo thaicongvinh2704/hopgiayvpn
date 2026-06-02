@@ -17,6 +17,7 @@ function vpn_b4_link( string $url, string $anchor ): string {
 function vpn_b4_attachment_id( string $relative_path ): int {
 	$uploads       = wp_get_upload_dir();
 	$base_dir      = str_replace( '\\', '/', $uploads['basedir'] );
+	$base_url      = str_replace( '\\', '/', $uploads['baseurl'] );
 	$file_path     = ABSPATH . $relative_path;
 
 	if ( ! file_exists( $file_path ) ) {
@@ -24,6 +25,7 @@ function vpn_b4_attachment_id( string $relative_path ): int {
 	}
 
 	$attached_file = ltrim( str_replace( $base_dir, '', str_replace( '\\', '/', $file_path ) ), '/' );
+	$file_url      = trailingslashit( $base_url ) . $attached_file;
 	$existing      = get_posts(
 		array(
 			'post_type'      => 'attachment',
@@ -39,10 +41,26 @@ function vpn_b4_attachment_id( string $relative_path ): int {
 		return (int) $existing[0];
 	}
 
+	$existing = get_posts(
+		array(
+			'post_type'      => 'attachment',
+			'post_status'    => 'inherit',
+			'posts_per_page' => 1,
+			'fields'         => 'ids',
+			's'              => preg_replace( '/\.[^.]+$/', '', basename( $relative_path ) ),
+		)
+	);
+
+	if ( $existing ) {
+		update_post_meta( (int) $existing[0], '_wp_attached_file', $attached_file );
+		return (int) $existing[0];
+	}
+
 	require_once ABSPATH . 'wp-admin/includes/image.php';
 
 	$attachment_id = wp_insert_attachment(
 		array(
+			'guid'           => $file_url,
 			'post_mime_type' => wp_check_filetype( $file_path )['type'] ?? 'image/webp',
 			'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $file_path ) ),
 			'post_status'    => 'inherit',
