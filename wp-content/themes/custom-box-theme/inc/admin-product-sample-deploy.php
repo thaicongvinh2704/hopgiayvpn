@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-02-restore-path-2' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-02-admin-direct-1' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -37,24 +37,19 @@ function custom_box_product_sample_deploy_admin_post() {
 
 	$restore_log = custom_box_product_sample_deploy_restore_tools();
 	$restore_log .= custom_box_product_sample_deploy_restore_assets();
-	$script = ABSPATH . 'tools/deploy-product-samples-all.php';
 
 	$output = '';
 	$error  = '';
 
-	if ( ! file_exists( $script ) ) {
-		$error = 'Missing deploy script: tools/deploy-product-samples-all.php';
-	} else {
-		try {
-			ob_start();
-			echo $restore_log;
-			include $script;
-			$output = ob_get_clean();
-		} catch ( Throwable $e ) {
-			$output = ob_get_clean();
-			$output = $restore_log . $output;
-			$error  = $e->getMessage();
-		}
+	try {
+		ob_start();
+		echo $restore_log;
+		custom_box_product_sample_deploy_run_batches();
+		$output = ob_get_clean();
+	} catch ( Throwable $e ) {
+		$output = ob_get_clean();
+		$output = $restore_log . $output;
+		$error  = $e->getMessage();
 	}
 
 	set_transient(
@@ -79,6 +74,139 @@ function custom_box_product_sample_deploy_admin_post() {
 	exit;
 }
 add_action( 'admin_post_custom_box_product_sample_deploy', 'custom_box_product_sample_deploy_admin_post' );
+
+function custom_box_product_sample_deploy_batch_products( string $marker ): array {
+	return get_posts(
+		array(
+			'post_type'      => 'product',
+			'post_status'    => array( 'publish', 'draft', 'private' ),
+			'posts_per_page' => -1,
+			'meta_query'     => array(
+				array(
+					'key'   => '_vpn_sample_import',
+					'value' => $marker,
+				),
+			),
+		)
+	);
+}
+
+function custom_box_product_sample_deploy_batch_complete( string $marker, int $expected_count, int $min_words = 1500 ): bool {
+	$products = custom_box_product_sample_deploy_batch_products( $marker );
+	if ( count( $products ) < $expected_count ) {
+		return false;
+	}
+
+	foreach ( $products as $product ) {
+		$content = (string) $product->post_content;
+		$words   = str_word_count( wp_strip_all_tags( $content ) );
+		$specs   = get_post_meta( $product->ID, '_custom_box_product_specs', true );
+		$moq     = '';
+
+		if ( is_array( $specs ) ) {
+			foreach ( $specs as $row ) {
+				if ( isset( $row['label'], $row['value'] ) && 'Minimum Order Quantity (MOQ)' === $row['label'] ) {
+					$moq = $row['value'];
+					break;
+				}
+			}
+		}
+
+		if ( $words < $min_words || preg_match( '/<h1\b/i', $content ) || ! is_array( $specs ) || count( $specs ) < 21 || '1000 boxes' !== $moq ) {
+			return false;
+		}
+	}
+
+	return true;
+}
+
+function custom_box_product_sample_deploy_run_script( string $relative_script ): void {
+	$script = trailingslashit( ABSPATH ) . ltrim( $relative_script, '/\\' );
+
+	if ( ! file_exists( $script ) ) {
+		throw new RuntimeException(
+			'Missing deploy script: ' . $relative_script
+			. ' | Checked path: ' . $script
+			. ' | ABSPATH: ' . ABSPATH
+			. ' | Current working directory: ' . getcwd()
+		);
+	}
+
+	echo PHP_EOL . '>> ' . $relative_script . PHP_EOL;
+
+	$previous_cwd = getcwd();
+	chdir( ABSPATH );
+	include $script;
+	if ( $previous_cwd ) {
+		chdir( $previous_cwd );
+	}
+}
+
+function custom_box_product_sample_deploy_run_batches(): void {
+	$batches = array(
+		array(
+			'name'     => 'Batch 1 product samples',
+			'marker'   => 'product-samples-10',
+			'expected' => 10,
+			'scripts'  => array(
+				'tools/import-product-samples-10.php',
+				'tools/update-product-samples-rich-content.php',
+				'tools/rewrite-product-samples-batch-1.php',
+				'tools/expand-product-samples-batch-1.php',
+				'tools/top-up-product-samples-batch-1.php',
+				'tools/trim-charging-cable-sample.php',
+				'tools/verify-product-samples-10.php',
+				'tools/verify-rich-product-samples-10.php',
+				'tools/verify-product-samples-content-shape.php',
+			),
+		),
+		array(
+			'name'     => 'Batch 2 product samples',
+			'marker'   => 'product-samples-batch-2-five',
+			'expected' => 5,
+			'scripts'  => array(
+				'tools/import-product-samples-batch-2-five.php',
+				'tools/top-up-product-samples-batch-2-five.php',
+				'tools/top-up-product-samples-batch-2-five-final.php',
+				'tools/top-up-product-samples-batch-2-two-text-floor.php',
+				'tools/verify-product-samples-batch-2-five.php',
+			),
+		),
+		array(
+			'name'     => 'Batch 3 product samples',
+			'marker'   => 'product-samples-batch-3-ten',
+			'expected' => 10,
+			'scripts'  => array(
+				'tools/import-product-samples-batch-3-ten.php',
+				'tools/top-up-product-samples-batch-3-ten.php',
+				'tools/top-up-product-samples-batch-3-final.php',
+				'tools/top-up-product-samples-batch-3-text-floor.php',
+				'tools/fix-batch-3-inline-image-classes.php',
+				'tools/verify-product-samples-batch-3-ten.php',
+				'tools/verify-batch-3-inline-image-classes.php',
+			),
+		),
+	);
+
+	foreach ( $batches as $batch ) {
+		echo PHP_EOL . '== ' . $batch['name'] . ' ==' . PHP_EOL;
+
+		if ( custom_box_product_sample_deploy_batch_complete( $batch['marker'], $batch['expected'] ) ) {
+			echo 'Already complete, skipped.' . PHP_EOL;
+			continue;
+		}
+
+		foreach ( $batch['scripts'] as $script ) {
+			custom_box_product_sample_deploy_run_script( $script );
+		}
+
+		echo 'Completed: ' . $batch['name'] . PHP_EOL;
+	}
+
+	custom_box_product_sample_deploy_run_script( 'tools/create-local-packaging-materials-guide.php' );
+
+	echo PHP_EOL . 'Product sample deployment complete.' . PHP_EOL;
+}
 
 function custom_box_product_sample_deploy_restore_tools() {
 	$source_dir = get_template_directory() . '/inc/product-sample-deploy-tools';
