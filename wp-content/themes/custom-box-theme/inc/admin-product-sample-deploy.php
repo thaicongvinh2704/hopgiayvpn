@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-02-restore-debug-1' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-02-restore-assets-1' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -36,6 +36,7 @@ function custom_box_product_sample_deploy_admin_post() {
 	}
 
 	$restore_log = custom_box_product_sample_deploy_restore_tools();
+	$restore_log .= custom_box_product_sample_deploy_restore_assets();
 	$script = ABSPATH . 'tools/deploy-product-samples-all.php';
 
 	$output = '';
@@ -121,6 +122,64 @@ function custom_box_product_sample_deploy_restore_tools() {
 	}
 
 	$log[] = 'Required script exists after restore: ' . ( file_exists( $required ) ? 'yes' : 'no' );
+	$log[] = '';
+
+	return implode( PHP_EOL, $log ) . PHP_EOL;
+}
+
+function custom_box_product_sample_deploy_restore_assets() {
+	$source_root    = get_template_directory() . '/inc/product-sample-deploy-assets/root';
+	$source_uploads = get_template_directory() . '/inc/product-sample-deploy-assets/uploads/2026/05';
+	$target_uploads = ABSPATH . 'wp-content/uploads/2026/05';
+	$log            = array();
+
+	$log[] = 'Asset restore source root: ' . $source_root;
+	$log[] = 'Asset restore source uploads: ' . $source_uploads;
+	$log[] = 'Asset restore target uploads: ' . $target_uploads;
+
+	if ( is_dir( $source_root ) ) {
+		$root_files = glob( $source_root . '/*' );
+		$log[]      = 'Root asset count: ' . ( $root_files ? count( $root_files ) : 0 );
+
+		if ( $root_files ) {
+			foreach ( $root_files as $file ) {
+				$target = ABSPATH . basename( $file );
+				if ( copy( $file, $target ) ) {
+					$log[] = 'Copied root asset: ' . basename( $file );
+				} else {
+					$log[] = 'Copy root asset failed: ' . basename( $file );
+				}
+			}
+		}
+	} else {
+		$log[] = 'Root asset source missing.';
+	}
+
+	if ( is_dir( $source_uploads ) ) {
+		if ( ! is_dir( $target_uploads ) ) {
+			wp_mkdir_p( $target_uploads );
+		}
+
+		$image_files = glob( $source_uploads . '/*' );
+		$log[]       = 'Upload asset count: ' . ( $image_files ? count( $image_files ) : 0 );
+		$log[]       = 'Upload target writable: ' . ( is_dir( $target_uploads ) && wp_is_writable( $target_uploads ) ? 'yes' : 'no' );
+
+		if ( $image_files ) {
+			foreach ( $image_files as $file ) {
+				$target = trailingslashit( $target_uploads ) . basename( $file );
+				if ( copy( $file, $target ) ) {
+					$log[] = 'Copied upload asset: ' . basename( $file );
+				} else {
+					$log[] = 'Copy upload asset failed: ' . basename( $file );
+				}
+			}
+		}
+	} else {
+		$log[] = 'Upload asset source missing.';
+	}
+
+	$log[] = 'Required sample data exists after restore: ' . ( file_exists( ABSPATH . 'product-samples-10.md' ) ? 'yes' : 'no' );
+	$log[] = 'Required sample image exists after restore: ' . ( file_exists( ABSPATH . 'wp-content/uploads/2026/05/custom-ampoule-packaging-box-1.webp' ) ? 'yes' : 'no' );
 	$log[] = '';
 
 	return implode( PHP_EOL, $log ) . PHP_EOL;
