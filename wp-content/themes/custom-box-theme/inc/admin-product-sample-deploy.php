@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-02-admin-stepped-1' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-02-latest-batch-default-1' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -44,6 +44,11 @@ function custom_box_product_sample_deploy_admin_post() {
 
 	$state = get_transient( $state_key );
 	if ( ! is_array( $state ) ) {
+		$scope = isset( $_POST['deploy_scope'] ) ? sanitize_key( wp_unslash( $_POST['deploy_scope'] ) ) : 'latest';
+		if ( 'all' !== $scope ) {
+			$scope = 'latest';
+		}
+
 		$state = array(
 			'log'          => '',
 			'batch_index'  => 0,
@@ -51,6 +56,7 @@ function custom_box_product_sample_deploy_admin_post() {
 			'restored'     => false,
 			'guide_done'   => false,
 			'complete'     => false,
+			'scope'        => $scope,
 		);
 	}
 
@@ -220,8 +226,24 @@ function custom_box_product_sample_deploy_batches(): array {
 	);
 }
 
-function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
+function custom_box_product_sample_deploy_selected_batches( string $scope ): array {
 	$batches = custom_box_product_sample_deploy_batches();
+
+	if ( 'all' === $scope ) {
+		return $batches;
+	}
+
+	return array_slice( $batches, -1 );
+}
+
+function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
+	$scope  = isset( $state['scope'] ) && 'all' === $state['scope'] ? 'all' : 'latest';
+	$batches = custom_box_product_sample_deploy_selected_batches( $scope );
+
+	if ( empty( $state['scope_logged'] ) ) {
+		echo 'Deploy scope: ' . $scope . PHP_EOL;
+		$state['scope_logged'] = true;
+	}
 
 	while ( isset( $batches[ (int) $state['batch_index'] ] ) ) {
 		$batch = $batches[ (int) $state['batch_index'] ];
@@ -250,7 +272,7 @@ function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
 		$state['script_index'] = 0;
 	}
 
-	if ( empty( $state['guide_done'] ) ) {
+	if ( 'all' === $scope && empty( $state['guide_done'] ) ) {
 		$state['guide_done'] = true;
 		custom_box_product_sample_deploy_run_script( 'tools/create-local-packaging-materials-guide.php' );
 		echo 'Step complete. Continuing in the next request.' . PHP_EOL;
@@ -262,7 +284,7 @@ function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
 }
 
 function custom_box_product_sample_deploy_run_batches(): void {
-	$batches = custom_box_product_sample_deploy_batches();
+	$batches = custom_box_product_sample_deploy_selected_batches( 'latest' );
 
 	foreach ( $batches as $batch ) {
 		echo PHP_EOL . '== ' . $batch['name'] . ' ==' . PHP_EOL;
@@ -439,6 +461,18 @@ function custom_box_product_sample_deploy_page() {
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 			<input type="hidden" name="action" value="custom_box_product_sample_deploy">
 			<input type="hidden" name="reset" value="1">
+			<p>
+				<label>
+					<input type="radio" name="deploy_scope" value="latest" checked>
+					Latest batch only (Batch 3, 10 newest products)
+				</label>
+			</p>
+			<p>
+				<label>
+					<input type="radio" name="deploy_scope" value="all">
+					All batches (25 sample products)
+				</label>
+			</p>
 			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
 			<?php submit_button( 'Run Product Sample Deploy', 'primary large' ); ?>
 		</form>
