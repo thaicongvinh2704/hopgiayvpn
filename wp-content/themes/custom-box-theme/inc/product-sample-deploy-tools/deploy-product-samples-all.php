@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	require_once dirname( __DIR__ ) . '/wp-load.php';
 }
 
-$root = rtrim( ABSPATH, '/\\' );
+$root = dirname( __DIR__ );
 chdir( $root );
 
 function vpn_deploy_batch_products( string $marker ): array {
