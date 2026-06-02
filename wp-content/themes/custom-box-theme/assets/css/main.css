@@ -2585,6 +2585,34 @@ html {
     display: block;
 }
 
+.product-story-section .product-detail-description .product-inline-figure-small,
+.woocommerce div.product .product-inline-figure-small,
+.single-product .product-inline-figure-small,
+.blog-article-content .product-inline-figure-small {
+    margin: 30px auto;
+    max-width: 420px;
+    width: min(100%, 420px) !important;
+}
+
+.product-story-section .product-detail-description .product-inline-figure-small.is-narrow,
+.woocommerce div.product .product-inline-figure-small.is-narrow,
+.single-product .product-inline-figure-small.is-narrow,
+.blog-article-content .product-inline-figure-small.is-narrow {
+    max-width: 360px;
+    width: min(100%, 360px) !important;
+}
+
+.product-story-section .product-detail-description .product-inline-figure-small img,
+.woocommerce div.product .product-inline-figure-small img,
+.single-product .product-inline-figure-small img,
+.blog-article-content .product-inline-figure-small img {
+    border-radius: 6px;
+    height: auto;
+    max-height: 520px;
+    object-fit: contain;
+    width: 100% !important;
+}
+
 .product-customization-section {
     background: #fff;
     padding-top: 0;
