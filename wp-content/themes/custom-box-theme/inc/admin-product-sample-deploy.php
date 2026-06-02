@@ -33,11 +33,7 @@ function custom_box_product_sample_deploy_admin_post() {
 		@set_time_limit( 300 );
 	}
 
-	$script = ABSPATH . 'tools/deploy-product-samples-all.php';
-	if ( ! file_exists( $script ) ) {
-		custom_box_product_sample_deploy_restore_tools();
-	}
-
+	custom_box_product_sample_deploy_restore_tools();
 	$script = ABSPATH . 'tools/deploy-product-samples-all.php';
 
 	$output = '';
@@ -98,10 +94,6 @@ function custom_box_product_sample_deploy_restore_tools() {
 
 	foreach ( $files as $file ) {
 		$target = trailingslashit( $target_dir ) . basename( $file );
-		if ( file_exists( $target ) ) {
-			continue;
-		}
-
 		copy( $file, $target );
 	}
 }
