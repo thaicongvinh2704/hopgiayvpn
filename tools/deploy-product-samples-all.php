@@ -63,13 +63,20 @@ function vpn_deploy_run_script( string $relative_script ): void {
 		throw new RuntimeException( 'Missing deploy script: ' . $relative_script );
 	}
 
-	$command = escapeshellarg( PHP_BINARY ) . ' ' . escapeshellarg( $script );
 	echo PHP_EOL . '>> ' . $relative_script . PHP_EOL;
-	passthru( $command, $exit_code );
 
-	if ( 0 !== $exit_code ) {
-		throw new RuntimeException( 'Deploy script failed: ' . $relative_script );
+	if ( 'cli' === PHP_SAPI ) {
+		$command = escapeshellarg( PHP_BINARY ) . ' ' . escapeshellarg( $script );
+		passthru( $command, $exit_code );
+
+		if ( 0 !== $exit_code ) {
+			throw new RuntimeException( 'Deploy script failed: ' . $relative_script );
+		}
+
+		return;
 	}
+
+	include $script;
 }
 
 $batches = array(
