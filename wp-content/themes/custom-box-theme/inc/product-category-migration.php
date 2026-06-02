@@ -42,6 +42,16 @@ function custom_box_category_migration_targets() {
 
 function custom_box_category_migration_old_slug_map() {
     return array(
+        'cosmetic-packaging-boxes'               => 'beauty-skincare-packaging',
+        'electronics-packaging-boxes'            => 'electronics-accessories-packaging',
+        'food-packaging-boxes'                   => 'premium-food-beverage-packaging',
+        'gift-packaging-boxes'                   => 'corporate-gift-packaging',
+        'health-supplement-packaging-boxes'      => 'supplement-packaging-boxes',
+        'healthcare-packaging-boxes'             => 'pharmaceutical-packaging-boxes',
+        'paper-bags'                             => 'beauty-skincare-packaging',
+        'retail-packaging-boxes'                 => 'home-lifestyle-packaging',
+        'stationery-packaging-boxes'             => 'back-to-school-stationery-packaging',
+        'wine-packaging-boxes'                   => 'wine-premium-drink-packaging',
         'custom-paper-tube-packaging-boxes'      => 'paper-tube-packaging',
         'luxury-rigid-gift-boxes'                => 'rigid-boxes',
         'custom-cake-packaging-boxes'            => 'bakery-packaging-boxes',
@@ -78,6 +88,16 @@ function custom_box_category_migration_old_slug_map() {
 
 function custom_box_category_migration_keyword_map() {
     return array(
+        'pharmaceutical-packaging-boxes'        => array('pharmaceutical', 'medicine', 'medical', 'pill', 'tablet', 'vial'),
+        'supplement-packaging-boxes'            => array('supplement', 'vitamin', 'wellness', 'collagen', 'probiotic'),
+        'beauty-skincare-packaging'             => array('beauty', 'skincare', 'cosmetic', 'ampoule', 'serum', 'makeup', 'perfume'),
+        'premium-food-beverage-packaging'       => array('food', 'beverage', 'coffee', 'tea', 'chocolate', 'mug', 'paper tube', 'pet food'),
+        'electronics-accessories-packaging'     => array('electronics', 'phone', 'charging cable', 'cable', 'adapter'),
+        'fashion-sportswear-packaging'          => array('fashion', 'sportswear', 'apparel', 'clothing', 'shoe'),
+        'wine-premium-drink-packaging'          => array('wine', 'drink bottle', 'beverage bottle'),
+        'corporate-gift-packaging'              => array('corporate', 'gift', 'rigid gift', 'magnetic gift', 'drawer gift'),
+        'home-lifestyle-packaging'              => array('home', 'lifestyle', 'dinnerware', 'thermos', 'knife', 'homeware'),
+        'back-to-school-stationery-packaging'   => array('stationery', 'school', 'pencil', 'crayon', 'pen'),
         'paper-tube-packaging'     => array('tube', 'cylindrical'),
         'corrugated-mailer-boxes'  => array('corrugated', 'mailer', 'ecommerce', 'pet food'),
         'magnetic-closure-boxes'   => array('magnetic'),
@@ -140,12 +160,12 @@ function custom_box_category_migration_target_for_product($product_id) {
 
     if (!empty($terms) && !is_wp_error($terms)) {
         foreach ($terms as $term) {
-            if (in_array($term->slug, $target_slugs, true)) {
-                return $term->slug;
-            }
-
             if (!empty($old_slug_map[$term->slug])) {
                 return $old_slug_map[$term->slug];
+            }
+
+            if (in_array($term->slug, $target_slugs, true)) {
+                return $term->slug;
             }
         }
     }
@@ -174,13 +194,7 @@ function custom_box_category_migration_products() {
     ));
 }
 
-function custom_box_category_migration_apply() {
-    check_admin_referer('custom_box_category_migration_apply');
-
-    if (!custom_box_category_migration_can_run()) {
-        wp_die(esc_html__('You do not have permission to run this migration.', 'custom-box-theme'));
-    }
-
+function custom_box_category_migration_apply_products_to_targets() {
     $targets = custom_box_category_migration_targets();
     $target_ids = array();
 
@@ -202,6 +216,18 @@ function custom_box_category_migration_apply() {
     }
 
     flush_rewrite_rules(false);
+
+    return $updated;
+}
+
+function custom_box_category_migration_apply() {
+    check_admin_referer('custom_box_category_migration_apply');
+
+    if (!custom_box_category_migration_can_run()) {
+        wp_die(esc_html__('You do not have permission to run this migration.', 'custom-box-theme'));
+    }
+
+    $updated = custom_box_category_migration_apply_products_to_targets();
 
     wp_safe_redirect(add_query_arg(array(
         'page'    => 'custom-box-category-migration',

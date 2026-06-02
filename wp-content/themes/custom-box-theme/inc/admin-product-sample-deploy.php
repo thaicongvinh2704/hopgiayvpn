@@ -393,6 +393,14 @@ function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
 		return;
 	}
 
+	if ( empty( $state['category_migration_done'] ) && function_exists( 'custom_box_category_migration_apply_products_to_targets' ) ) {
+		$state['category_migration_done'] = true;
+		$updated = custom_box_category_migration_apply_products_to_targets();
+		echo 'Product category migration updated: ' . (int) $updated . ' products.' . PHP_EOL;
+		echo 'Step complete. Continuing in the next request.' . PHP_EOL;
+		return;
+	}
+
 	$state['complete'] = true;
 	echo PHP_EOL . 'Product sample deployment complete.' . PHP_EOL;
 }
@@ -416,6 +424,11 @@ function custom_box_product_sample_deploy_run_batches(): void {
 	}
 
 	custom_box_product_sample_deploy_run_script( 'tools/create-local-packaging-materials-guide.php' );
+
+	if ( function_exists( 'custom_box_category_migration_apply_products_to_targets' ) ) {
+		$updated = custom_box_category_migration_apply_products_to_targets();
+		echo 'Product category migration updated: ' . (int) $updated . ' products.' . PHP_EOL;
+	}
 
 	echo PHP_EOL . 'Product sample deployment complete.' . PHP_EOL;
 }

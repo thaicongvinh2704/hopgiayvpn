@@ -18,23 +18,30 @@ $sidebar_categories = array();
 $child_categories = array();
 $landing_categories = array();
 $landing_root_link = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/');
+$homepage_category_slugs = array(
+    'pharmaceutical-packaging-boxes',
+    'supplement-packaging-boxes',
+    'beauty-skincare-packaging',
+    'premium-food-beverage-packaging',
+    'electronics-accessories-packaging',
+    'fashion-sportswear-packaging',
+    'wine-premium-drink-packaging',
+    'corporate-gift-packaging',
+    'home-lifestyle-packaging',
+    'back-to-school-stationery-packaging',
+);
 
 if ($parent_term && !is_wp_error($parent_term)) {
     $parent_term_link = get_term_link($parent_term);
     if (!is_wp_error($parent_term_link)) {
         $landing_root_link = $parent_term_link;
     }
+}
 
-    $sidebar_categories = get_terms(array(
-        'taxonomy'   => 'product_cat',
-        'parent'     => $parent_term->term_id,
-        'hide_empty' => false,
-        'orderby'    => 'term_id',
-        'order'      => 'ASC',
-    ));
-
-    if (is_wp_error($sidebar_categories)) {
-        $sidebar_categories = array();
+foreach ($homepage_category_slugs as $category_slug) {
+    $category = get_term_by('slug', $category_slug, 'product_cat');
+    if ($category && !is_wp_error($category)) {
+        $sidebar_categories[] = $category;
     }
 }
 
