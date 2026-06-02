@@ -6,9 +6,12 @@
  *   php tools/deploy-product-samples-all.php
  */
 
-require_once dirname( __DIR__ ) . '/wp-load.php';
+if ( ! defined( 'ABSPATH' ) ) {
+	require_once dirname( __DIR__ ) . '/wp-load.php';
+}
 
-$root = dirname( __DIR__ );
+$root = rtrim( ABSPATH, '/\\' );
+chdir( $root );
 
 function vpn_deploy_batch_products( string $marker ): array {
 	return get_posts(
@@ -60,7 +63,11 @@ function vpn_deploy_run_script( string $relative_script ): void {
 
 	$script = $root . '/' . $relative_script;
 	if ( ! file_exists( $script ) ) {
-		throw new RuntimeException( 'Missing deploy script: ' . $relative_script );
+		throw new RuntimeException(
+			'Missing deploy script: ' . $relative_script
+			. ' | Checked path: ' . $script
+			. ' | Current working directory: ' . getcwd()
+		);
 	}
 
 	echo PHP_EOL . '>> ' . $relative_script . PHP_EOL;

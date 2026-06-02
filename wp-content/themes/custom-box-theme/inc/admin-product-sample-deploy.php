@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-02-restore-assets-1' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-02-restore-path-1' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -83,6 +83,7 @@ add_action( 'admin_post_custom_box_product_sample_deploy', 'custom_box_product_s
 function custom_box_product_sample_deploy_restore_tools() {
 	$source_dir = get_template_directory() . '/inc/product-sample-deploy-tools';
 	$target_dir = ABSPATH . 'tools';
+	$source_required = $source_dir . '/import-product-samples-10.php';
 	$required   = $target_dir . '/import-product-samples-10.php';
 	$log        = array();
 
@@ -111,6 +112,7 @@ function custom_box_product_sample_deploy_restore_tools() {
 	$log[] = 'Target tools: ' . $target_dir;
 	$log[] = 'Target writable: ' . ( wp_is_writable( $target_dir ) ? 'yes' : 'no' );
 	$log[] = 'Bundled tool count: ' . count( $files );
+	$log[] = 'Required source script exists: ' . ( file_exists( $source_required ) ? 'yes' : 'no' );
 
 	foreach ( $files as $file ) {
 		$target = trailingslashit( $target_dir ) . basename( $file );
@@ -118,6 +120,14 @@ function custom_box_product_sample_deploy_restore_tools() {
 			$log[] = 'Copied: ' . basename( $file );
 		} else {
 			$log[] = 'Copy failed: ' . basename( $file ) . ' -> ' . $target;
+		}
+	}
+
+	if ( ! file_exists( $required ) && file_exists( $source_required ) ) {
+		if ( copy( $source_required, $required ) ) {
+			$log[] = 'Required script copied explicitly: import-product-samples-10.php';
+		} else {
+			$log[] = 'Required script explicit copy failed: ' . $required;
 		}
 	}
 
