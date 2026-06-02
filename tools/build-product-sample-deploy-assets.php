@@ -12,6 +12,7 @@ $source_files = array(
 	$root . '/product-samples-10.md',
 	$root . '/tools/import-product-samples-batch-2-five.php',
 	$root . '/tools/import-product-samples-batch-3-ten.php',
+	$root . '/tools/import-product-samples-batch-4-remaining.php',
 );
 
 $asset_root    = $root . '/wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/root';

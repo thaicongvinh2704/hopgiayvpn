@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-02-cleanup-duplicates-1' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-02-batch-4-remaining-1' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -123,7 +123,10 @@ function custom_box_product_sample_cleanup_old_batches_admin_post() {
 		'product-samples-10',
 		'product-samples-batch-2-five',
 	);
-	$keep_marker = 'product-samples-batch-3-ten';
+	$keep_markers = array(
+		'product-samples-batch-3-ten',
+		'product-samples-batch-4-remaining',
+	);
 	$duplicate_slugs = array(
 		'custom-printed-corrugated-pet-food-packaging-box',
 		'custom-paper-tube-packaging',
@@ -171,7 +174,7 @@ function custom_box_product_sample_cleanup_old_batches_admin_post() {
 			continue;
 		}
 
-		if ( $keep_marker === get_post_meta( $product_id, '_vpn_sample_import', true ) ) {
+		if ( in_array( (string) get_post_meta( $product_id, '_vpn_sample_import', true ), $keep_markers, true ) ) {
 			continue;
 		}
 
@@ -195,7 +198,7 @@ function custom_box_product_sample_cleanup_old_batches_admin_post() {
 	}
 
 	$output = 'Cleanup scope: old sample batches and known duplicate product concepts' . PHP_EOL;
-	$output .= 'Kept marker: ' . $keep_marker . PHP_EOL;
+	$output .= 'Kept markers: ' . implode( ', ', $keep_markers ) . PHP_EOL;
 	$output .= 'Duplicate slugs checked: ' . implode( ', ', $duplicate_slugs ) . PHP_EOL;
 	$output .= 'Trashed products: ' . $trashed . PHP_EOL;
 	if ( $failed ) {
@@ -335,6 +338,15 @@ function custom_box_product_sample_deploy_batches(): array {
 				'tools/fix-batch-3-inline-image-classes.php',
 				'tools/verify-product-samples-batch-3-ten.php',
 				'tools/verify-batch-3-inline-image-classes.php',
+			),
+		),
+		array(
+			'name'     => 'Batch 4 remaining product samples',
+			'marker'   => 'product-samples-batch-4-remaining',
+			'expected' => 17,
+			'scripts'  => array(
+				'tools/import-product-samples-batch-4-remaining.php',
+				'tools/verify-product-samples-batch-4-remaining.php',
 			),
 		),
 	);
@@ -591,13 +603,13 @@ function custom_box_product_sample_deploy_page() {
 			<p>
 				<label>
 					<input type="radio" name="deploy_scope" value="latest" checked>
-					Latest batch only (Batch 3, 10 newest products)
+					Latest batch only (Batch 4, 17 remaining products)
 				</label>
 			</p>
 			<p>
 				<label>
 					<input type="radio" name="deploy_scope" value="all">
-					All batches (25 sample products)
+					All batches (42 sample products)
 				</label>
 			</p>
 			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
@@ -609,7 +621,7 @@ function custom_box_product_sample_deploy_page() {
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 			<input type="hidden" name="action" value="custom_box_product_sample_cleanup_old_batches">
 			<?php wp_nonce_field( 'custom_box_product_sample_cleanup_old_batches' ); ?>
-			<p>This moves Batch 1, Batch 2, and known duplicate old product concepts to Trash, keeping the latest Batch 3 products.</p>
+			<p>This moves Batch 1, Batch 2, and known duplicate old product concepts to Trash, keeping the latest Batch 3 and Batch 4 products.</p>
 			<?php submit_button( 'Move Old/Duplicate Sample Products to Trash', 'delete' ); ?>
 		</form>
 
