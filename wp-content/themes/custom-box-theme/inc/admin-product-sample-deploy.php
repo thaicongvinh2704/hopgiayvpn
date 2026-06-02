@@ -7,6 +7,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-02-restore-debug-1' );
+
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
 }
@@ -33,7 +35,7 @@ function custom_box_product_sample_deploy_admin_post() {
 		@set_time_limit( 300 );
 	}
 
-	custom_box_product_sample_deploy_restore_tools();
+	$restore_log = custom_box_product_sample_deploy_restore_tools();
 	$script = ABSPATH . 'tools/deploy-product-samples-all.php';
 
 	$output = '';
@@ -44,10 +46,12 @@ function custom_box_product_sample_deploy_admin_post() {
 	} else {
 		try {
 			ob_start();
+			echo $restore_log;
 			include $script;
 			$output = ob_get_clean();
 		} catch ( Throwable $e ) {
 			$output = ob_get_clean();
+			$output = $restore_log . $output;
 			$error  = $e->getMessage();
 		}
 	}
@@ -78,24 +82,48 @@ add_action( 'admin_post_custom_box_product_sample_deploy', 'custom_box_product_s
 function custom_box_product_sample_deploy_restore_tools() {
 	$source_dir = get_template_directory() . '/inc/product-sample-deploy-tools';
 	$target_dir = ABSPATH . 'tools';
+	$required   = $target_dir . '/import-product-samples-10.php';
+	$log        = array();
 
 	if ( ! is_dir( $source_dir ) ) {
-		return;
+		return "Product deploy restore version: " . CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION . PHP_EOL
+			. "ABSPATH: " . ABSPATH . PHP_EOL
+			. "Source bundle missing: " . $source_dir . PHP_EOL;
 	}
 
 	if ( ! is_dir( $target_dir ) && ! wp_mkdir_p( $target_dir ) ) {
-		return;
+		return "Product deploy restore version: " . CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION . PHP_EOL
+			. "ABSPATH: " . ABSPATH . PHP_EOL
+			. "Cannot create target tools directory: " . $target_dir . PHP_EOL;
 	}
 
 	$files = glob( $source_dir . '/*.php' );
 	if ( ! $files ) {
-		return;
+		return "Product deploy restore version: " . CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION . PHP_EOL
+			. "ABSPATH: " . ABSPATH . PHP_EOL
+			. "No bundled PHP tools found in: " . $source_dir . PHP_EOL;
 	}
+
+	$log[] = 'Product deploy restore version: ' . CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION;
+	$log[] = 'ABSPATH: ' . ABSPATH;
+	$log[] = 'Source bundle: ' . $source_dir;
+	$log[] = 'Target tools: ' . $target_dir;
+	$log[] = 'Target writable: ' . ( wp_is_writable( $target_dir ) ? 'yes' : 'no' );
+	$log[] = 'Bundled tool count: ' . count( $files );
 
 	foreach ( $files as $file ) {
 		$target = trailingslashit( $target_dir ) . basename( $file );
-		copy( $file, $target );
+		if ( copy( $file, $target ) ) {
+			$log[] = 'Copied: ' . basename( $file );
+		} else {
+			$log[] = 'Copy failed: ' . basename( $file ) . ' -> ' . $target;
+		}
 	}
+
+	$log[] = 'Required script exists after restore: ' . ( file_exists( $required ) ? 'yes' : 'no' );
+	$log[] = '';
+
+	return implode( PHP_EOL, $log ) . PHP_EOL;
 }
 
 function custom_box_product_sample_deploy_page() {
@@ -112,6 +140,7 @@ function custom_box_product_sample_deploy_page() {
 	?>
 	<div class="wrap">
 		<h1>Product Sample Deploy</h1>
+		<p><strong>Tool version:</strong> <?php echo esc_html( CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION ); ?></p>
 		<p>This tool imports or updates the generated WooCommerce product sample batches from the Git-tracked deploy scripts and images.</p>
 		<p>It skips completed batches automatically, so it can be run after every deploy without creating duplicate products.</p>
 
