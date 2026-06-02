@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-02-admin-direct-1' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-02-admin-stepped-1' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -32,31 +32,61 @@ function custom_box_product_sample_deploy_admin_post() {
 	check_admin_referer( 'custom_box_product_sample_deploy' );
 
 	if ( function_exists( 'set_time_limit' ) ) {
-		@set_time_limit( 300 );
+		@set_time_limit( 120 );
 	}
 
-	$restore_log = custom_box_product_sample_deploy_restore_tools();
-	$restore_log .= custom_box_product_sample_deploy_restore_assets();
+	$result_key = 'custom_box_product_sample_deploy_result_' . get_current_user_id();
+	$state_key  = 'custom_box_product_sample_deploy_state_' . get_current_user_id();
 
-	$output = '';
+	if ( ! empty( $_POST['reset'] ) ) {
+		delete_transient( $state_key );
+	}
+
+	$state = get_transient( $state_key );
+	if ( ! is_array( $state ) ) {
+		$state = array(
+			'log'          => '',
+			'batch_index'  => 0,
+			'script_index' => 0,
+			'restored'     => false,
+			'guide_done'   => false,
+			'complete'     => false,
+		);
+	}
+
 	$error  = '';
+	$status = 'running';
 
 	try {
 		ob_start();
-		echo $restore_log;
-		custom_box_product_sample_deploy_run_batches();
-		$output = ob_get_clean();
+
+		if ( empty( $state['restored'] ) ) {
+			echo custom_box_product_sample_deploy_restore_tools();
+			echo custom_box_product_sample_deploy_restore_assets();
+			$state['restored'] = true;
+		}
+
+		custom_box_product_sample_deploy_run_next_step( $state );
+		$state['log'] .= ob_get_clean();
+		$status        = ! empty( $state['complete'] ) ? 'complete' : 'running';
 	} catch ( Throwable $e ) {
-		$output = ob_get_clean();
-		$output = $restore_log . $output;
-		$error  = $e->getMessage();
+		$state['log'] .= ob_get_clean();
+		$error         = $e->getMessage();
+		$status        = 'error';
+	}
+
+	if ( 'running' === $status ) {
+		set_transient( $state_key, $state, HOUR_IN_SECONDS );
+	} else {
+		delete_transient( $state_key );
 	}
 
 	set_transient(
-		'custom_box_product_sample_deploy_result_' . get_current_user_id(),
+		$result_key,
 		array(
-			'output' => $output,
+			'output' => $state['log'],
 			'error'  => $error,
+			'status' => $status,
 			'time'   => current_time( 'mysql' ),
 		),
 		10 * MINUTE_IN_SECONDS
@@ -67,6 +97,7 @@ function custom_box_product_sample_deploy_admin_post() {
 			array(
 				'page'        => 'custom-box-product-sample-deploy',
 				'deploy_done' => '1',
+				'deploy_status' => $status,
 			),
 			admin_url( 'tools.php' )
 		)
@@ -142,8 +173,8 @@ function custom_box_product_sample_deploy_run_script( string $relative_script ):
 	}
 }
 
-function custom_box_product_sample_deploy_run_batches(): void {
-	$batches = array(
+function custom_box_product_sample_deploy_batches(): array {
+	return array(
 		array(
 			'name'     => 'Batch 1 product samples',
 			'marker'   => 'product-samples-10',
@@ -187,6 +218,51 @@ function custom_box_product_sample_deploy_run_batches(): void {
 			),
 		),
 	);
+}
+
+function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
+	$batches = custom_box_product_sample_deploy_batches();
+
+	while ( isset( $batches[ (int) $state['batch_index'] ] ) ) {
+		$batch = $batches[ (int) $state['batch_index'] ];
+
+		if ( 0 === (int) $state['script_index'] ) {
+			echo PHP_EOL . '== ' . $batch['name'] . ' ==' . PHP_EOL;
+
+			if ( custom_box_product_sample_deploy_batch_complete( $batch['marker'], $batch['expected'] ) ) {
+				echo 'Already complete, skipped.' . PHP_EOL;
+				++$state['batch_index'];
+				$state['script_index'] = 0;
+				continue;
+			}
+		}
+
+		if ( isset( $batch['scripts'][ (int) $state['script_index'] ] ) ) {
+			$script = $batch['scripts'][ (int) $state['script_index'] ];
+			++$state['script_index'];
+			custom_box_product_sample_deploy_run_script( $script );
+			echo 'Step complete. Continuing in the next request.' . PHP_EOL;
+			return;
+		}
+
+		echo 'Completed: ' . $batch['name'] . PHP_EOL;
+		++$state['batch_index'];
+		$state['script_index'] = 0;
+	}
+
+	if ( empty( $state['guide_done'] ) ) {
+		$state['guide_done'] = true;
+		custom_box_product_sample_deploy_run_script( 'tools/create-local-packaging-materials-guide.php' );
+		echo 'Step complete. Continuing in the next request.' . PHP_EOL;
+		return;
+	}
+
+	$state['complete'] = true;
+	echo PHP_EOL . 'Product sample deployment complete.' . PHP_EOL;
+}
+
+function custom_box_product_sample_deploy_run_batches(): void {
+	$batches = custom_box_product_sample_deploy_batches();
 
 	foreach ( $batches as $batch ) {
 		echo PHP_EOL . '== ' . $batch['name'] . ' ==' . PHP_EOL;
@@ -346,6 +422,10 @@ function custom_box_product_sample_deploy_page() {
 				<div class="notice notice-error">
 					<p><strong>Deploy failed:</strong> <?php echo esc_html( $result['error'] ); ?></p>
 				</div>
+			<?php elseif ( ! empty( $result['status'] ) && 'running' === $result['status'] ) : ?>
+				<div class="notice notice-info">
+					<p><strong>Deploy is running.</strong> The next step will start automatically.</p>
+				</div>
 			<?php else : ?>
 				<div class="notice notice-success">
 					<p><strong>Deploy finished.</strong> Completed at <?php echo esc_html( $result['time'] ); ?>.</p>
@@ -358,9 +438,25 @@ function custom_box_product_sample_deploy_page() {
 
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 			<input type="hidden" name="action" value="custom_box_product_sample_deploy">
+			<input type="hidden" name="reset" value="1">
 			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
 			<?php submit_button( 'Run Product Sample Deploy', 'primary large' ); ?>
 		</form>
+
+		<?php if ( $result && empty( $result['error'] ) && ! empty( $result['status'] ) && 'running' === $result['status'] ) : ?>
+			<form id="custom-box-product-sample-deploy-next" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+				<input type="hidden" name="action" value="custom_box_product_sample_deploy">
+				<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
+			</form>
+			<script>
+				window.setTimeout(function () {
+					var form = document.getElementById('custom-box-product-sample-deploy-next');
+					if (form) {
+						form.submit();
+					}
+				}, 1500);
+			</script>
+		<?php endif; ?>
 	</div>
 	<?php
 }
