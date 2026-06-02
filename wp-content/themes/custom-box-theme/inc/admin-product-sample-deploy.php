@@ -33,9 +33,9 @@ function custom_box_product_sample_deploy_admin_post() {
 		@set_time_limit( 300 );
 	}
 
-	$script = dirname( ABSPATH ) . '/tools/deploy-product-samples-all.php';
+	$script = ABSPATH . 'tools/deploy-product-samples-all.php';
 	if ( ! file_exists( $script ) ) {
-		$script = ABSPATH . 'tools/deploy-product-samples-all.php';
+		$script = dirname( ABSPATH ) . '/tools/deploy-product-samples-all.php';
 	}
 
 	$output = '';
