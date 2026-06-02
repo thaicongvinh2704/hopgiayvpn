@@ -35,8 +35,10 @@ function custom_box_product_sample_deploy_admin_post() {
 
 	$script = ABSPATH . 'tools/deploy-product-samples-all.php';
 	if ( ! file_exists( $script ) ) {
-		$script = dirname( ABSPATH ) . '/tools/deploy-product-samples-all.php';
+		custom_box_product_sample_deploy_restore_tools();
 	}
+
+	$script = ABSPATH . 'tools/deploy-product-samples-all.php';
 
 	$output = '';
 	$error  = '';
@@ -76,6 +78,33 @@ function custom_box_product_sample_deploy_admin_post() {
 	exit;
 }
 add_action( 'admin_post_custom_box_product_sample_deploy', 'custom_box_product_sample_deploy_admin_post' );
+
+function custom_box_product_sample_deploy_restore_tools() {
+	$source_dir = get_template_directory() . '/inc/product-sample-deploy-tools';
+	$target_dir = ABSPATH . 'tools';
+
+	if ( ! is_dir( $source_dir ) ) {
+		return;
+	}
+
+	if ( ! is_dir( $target_dir ) && ! wp_mkdir_p( $target_dir ) ) {
+		return;
+	}
+
+	$files = glob( $source_dir . '/*.php' );
+	if ( ! $files ) {
+		return;
+	}
+
+	foreach ( $files as $file ) {
+		$target = trailingslashit( $target_dir ) . basename( $file );
+		if ( file_exists( $target ) ) {
+			continue;
+		}
+
+		copy( $file, $target );
+	}
+}
 
 function custom_box_product_sample_deploy_page() {
 	if ( ! custom_box_product_sample_deploy_can_run() ) {
