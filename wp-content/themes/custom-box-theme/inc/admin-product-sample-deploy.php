@@ -422,7 +422,7 @@ function custom_box_product_sample_deploy_batch_products( string $marker ): arra
 	return get_posts(
 		array(
 			'post_type'      => 'product',
-			'post_status'    => array( 'publish', 'draft', 'private' ),
+			'post_status'    => array( 'publish', 'draft', 'private', 'trash' ),
 			'posts_per_page' => -1,
 			'meta_query'     => array(
 				array(
@@ -533,6 +533,7 @@ function custom_box_product_sample_deploy_batches(): array {
 			'name'     => 'Batch 4 remaining product samples',
 			'marker'   => 'product-samples-batch-4-remaining',
 			'expected' => 17,
+			'min_words' => 1000,
 			'scripts'  => array(
 				'tools/import-product-samples-batch-4-remaining.php',
 				'tools/repair-product-samples-batch-4-featured-images.php',
@@ -566,8 +567,9 @@ function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
 
 		if ( 0 === (int) $state['script_index'] ) {
 			echo PHP_EOL . '== ' . $batch['name'] . ' ==' . PHP_EOL;
+			$min_words = $batch['min_words'] ?? 1500;
 
-			if ( custom_box_product_sample_deploy_batch_complete( $batch['marker'], $batch['expected'] ) ) {
+			if ( custom_box_product_sample_deploy_batch_complete( $batch['marker'], $batch['expected'], $min_words ) ) {
 				echo 'Already complete, skipped.' . PHP_EOL;
 				++$state['batch_index'];
 				$state['script_index'] = 0;
@@ -590,6 +592,7 @@ function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
 
 	if ( 'all' === $scope && empty( $state['guide_done'] ) ) {
 		$state['guide_done'] = true;
+		custom_box_product_sample_deploy_run_script( 'tools/import-final-category-products.php' );
 		custom_box_product_sample_deploy_run_script( 'tools/create-local-packaging-materials-guide.php' );
 		echo 'Step complete. Continuing in the next request.' . PHP_EOL;
 		return;
@@ -605,6 +608,13 @@ function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
 		return;
 	}
 
+	if ( empty( $state['final_cleanup_done'] ) ) {
+		$state['final_cleanup_done'] = true;
+		custom_box_product_sample_deploy_run_script( 'tools/cleanup-final-category-products.php' );
+		echo 'Step complete. Continuing in the next request.' . PHP_EOL;
+		return;
+	}
+
 	$state['complete'] = true;
 	echo PHP_EOL . 'Product sample deployment complete.' . PHP_EOL;
 }
@@ -614,8 +624,9 @@ function custom_box_product_sample_deploy_run_batches(): void {
 
 	foreach ( $batches as $batch ) {
 		echo PHP_EOL . '== ' . $batch['name'] . ' ==' . PHP_EOL;
+		$min_words = $batch['min_words'] ?? 1500;
 
-		if ( custom_box_product_sample_deploy_batch_complete( $batch['marker'], $batch['expected'] ) ) {
+		if ( custom_box_product_sample_deploy_batch_complete( $batch['marker'], $batch['expected'], $min_words ) ) {
 			echo 'Already complete, skipped.' . PHP_EOL;
 			continue;
 		}
@@ -627,6 +638,7 @@ function custom_box_product_sample_deploy_run_batches(): void {
 		echo 'Completed: ' . $batch['name'] . PHP_EOL;
 	}
 
+	custom_box_product_sample_deploy_run_script( 'tools/import-final-category-products.php' );
 	custom_box_product_sample_deploy_run_script( 'tools/create-local-packaging-materials-guide.php' );
 
 	if ( function_exists( 'custom_box_category_migration_apply_products_to_targets' ) ) {
@@ -635,6 +647,8 @@ function custom_box_product_sample_deploy_run_batches(): void {
 		echo 'Published balanced sample products: ' . (int) $published . ' products.' . PHP_EOL;
 		echo 'Product category migration updated: ' . (int) $updated . ' products.' . PHP_EOL;
 	}
+
+	custom_box_product_sample_deploy_run_script( 'tools/cleanup-final-category-products.php' );
 
 	echo PHP_EOL . 'Product sample deployment complete.' . PHP_EOL;
 }

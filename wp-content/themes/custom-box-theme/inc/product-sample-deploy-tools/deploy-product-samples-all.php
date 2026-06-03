@@ -17,7 +17,7 @@ function vpn_deploy_batch_products( string $marker ): array {
 	return get_posts(
 		array(
 			'post_type'      => 'product',
-			'post_status'    => array( 'publish', 'draft', 'private' ),
+			'post_status'    => array( 'publish', 'draft', 'private', 'trash' ),
 			'posts_per_page' => -1,
 			'meta_query'     => array(
 				array(
@@ -129,12 +129,24 @@ $batches = array(
 			'tools/verify-batch-3-inline-image-classes.php',
 		),
 	),
+	array(
+		'name'     => 'Batch 4 remaining product samples',
+		'marker'   => 'product-samples-batch-4-remaining',
+		'expected' => 17,
+		'min_words' => 1000,
+		'scripts'  => array(
+			'tools/import-product-samples-batch-4-remaining.php',
+			'tools/repair-product-samples-batch-4-featured-images.php',
+			'tools/verify-product-samples-batch-4-remaining.php',
+		),
+	),
 );
 
 foreach ( $batches as $batch ) {
 	echo PHP_EOL . '== ' . $batch['name'] . ' ==' . PHP_EOL;
+	$min_words = $batch['min_words'] ?? 1500;
 
-	if ( vpn_deploy_batch_complete( $batch['marker'], $batch['expected'] ) ) {
+	if ( vpn_deploy_batch_complete( $batch['marker'], $batch['expected'], $min_words ) ) {
 		echo 'Already complete, skipped.' . PHP_EOL;
 		continue;
 	}
@@ -143,13 +155,25 @@ foreach ( $batches as $batch ) {
 		vpn_deploy_run_script( $script );
 	}
 
-	if ( ! vpn_deploy_batch_complete( $batch['marker'], $batch['expected'] ) ) {
+	if ( ! vpn_deploy_batch_complete( $batch['marker'], $batch['expected'], $min_words ) ) {
 		throw new RuntimeException( 'Batch did not pass completion check: ' . $batch['name'] );
 	}
 
 	echo 'Completed: ' . $batch['name'] . PHP_EOL;
 }
 
+vpn_deploy_run_script( 'tools/import-final-category-products.php' );
 vpn_deploy_run_script( 'tools/create-local-packaging-materials-guide.php' );
+
+if ( function_exists( 'custom_box_category_migration_apply_products_to_targets' ) ) {
+	$published = function_exists( 'custom_box_product_sample_publish_category_balance_products' )
+		? custom_box_product_sample_publish_category_balance_products()
+		: 0;
+	$updated = custom_box_category_migration_apply_products_to_targets();
+	echo 'Published balanced sample products: ' . (int) $published . ' products.' . PHP_EOL;
+	echo 'Product category migration updated: ' . (int) $updated . ' products.' . PHP_EOL;
+}
+
+vpn_deploy_run_script( 'tools/cleanup-final-category-products.php' );
 
 echo PHP_EOL . 'Product sample deployment complete.' . PHP_EOL;
