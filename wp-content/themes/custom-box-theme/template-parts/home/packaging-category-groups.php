@@ -65,7 +65,7 @@ $category_groups = array(
             array('Beauty and Skincare Packaging', 'beauty-skincare-packaging', $theme_image_uri . 'custom-cosmetic-skincare-packaging-boxes.webp'),
             array('Premium Food and Beverage Packaging', 'premium-food-beverage-packaging', $theme_image_uri . 'premium-tea-coffee-chocolate-packaging-boxes.webp'),
             array('Electronics Accessories Packaging', 'electronics-accessories-packaging', $theme_image_uri . 'custom-phone-accessories-packaging-boxes.webp'),
-            array('Fashion and Sportswear Packaging', 'fashion-sportswear-packaging', ''),
+            array('Fashion and Sportswear Packaging', 'fashion-sportswear-packaging', $theme_image_uri . 'category-fasion.webp'),
             array('Wine and Premium Drink Packaging', 'wine-premium-drink-packaging', $theme_image_uri . 'custom-wine-premium-beverage-packaging-boxes.webp'),
             array('Corporate Gift Packaging', 'corporate-gift-packaging', $theme_image_uri . 'custom-corporate-gift-set-packaging-boxes.webp'),
             array('Home and Lifestyle Packaging', 'home-lifestyle-packaging', $theme_image_uri . 'custom-home-lifestyle-product-packaging-boxes.webp'),
