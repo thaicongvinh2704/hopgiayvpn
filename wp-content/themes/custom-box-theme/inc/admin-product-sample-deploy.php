@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-03-category-balance-1' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-03-category-balance-2' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -228,6 +228,126 @@ function custom_box_product_sample_cleanup_old_batches_admin_post() {
 	exit;
 }
 add_action( 'admin_post_custom_box_product_sample_cleanup_old_batches', 'custom_box_product_sample_cleanup_old_batches_admin_post' );
+
+function custom_box_product_sample_category_balance_admin_post() {
+	if ( ! custom_box_product_sample_deploy_can_run() ) {
+		wp_die( esc_html__( 'You do not have permission to balance product categories.', 'custom-box-theme' ) );
+	}
+
+	check_admin_referer( 'custom_box_product_sample_category_balance' );
+
+	$output = '';
+	$error  = '';
+
+	delete_transient( 'custom_box_product_sample_deploy_state_' . get_current_user_id() );
+
+	if ( ! function_exists( 'custom_box_category_migration_apply_products_to_targets' ) ) {
+		$error = 'Product category migration function is not available.';
+	} else {
+		$updated = custom_box_category_migration_apply_products_to_targets();
+		$output .= 'Product category balance updated: ' . (int) $updated . ' products.' . PHP_EOL . PHP_EOL;
+		$output .= custom_box_product_sample_category_balance_report();
+	}
+
+	set_transient(
+		'custom_box_product_sample_deploy_result_' . get_current_user_id(),
+		array(
+			'output' => $output,
+			'error'  => $error,
+			'status' => $error ? 'error' : 'complete',
+			'time'   => current_time( 'mysql' ),
+		),
+		10 * MINUTE_IN_SECONDS
+	);
+
+	wp_safe_redirect(
+		add_query_arg(
+			array(
+				'page'                  => 'custom-box-product-sample-deploy',
+				'category_balance_done' => '1',
+			),
+			admin_url( 'tools.php' )
+		)
+	);
+	exit;
+}
+add_action( 'admin_post_custom_box_product_sample_category_balance', 'custom_box_product_sample_category_balance_admin_post' );
+
+function custom_box_product_sample_category_balance_targets(): array {
+	if ( ! function_exists( 'custom_box_category_migration_targets' ) ) {
+		return array();
+	}
+
+	$targets = custom_box_category_migration_targets();
+	unset( $targets['fashion-sportswear-packaging'] );
+
+	return $targets;
+}
+
+function custom_box_product_sample_category_balance_counts(): array {
+	$counts = array();
+
+	foreach ( custom_box_product_sample_category_balance_targets() as $slug => $name ) {
+		$term = get_term_by( 'slug', $slug, 'product_cat' );
+
+		if ( ! $term || is_wp_error( $term ) ) {
+			$counts[ $slug ] = array(
+				'name'    => $name,
+				'count'   => 0,
+				'missing' => true,
+			);
+			continue;
+		}
+
+		$products = get_posts(
+			array(
+				'post_type'      => 'product',
+				'post_status'    => array( 'publish', 'draft', 'pending', 'private' ),
+				'posts_per_page' => -1,
+				'fields'         => 'ids',
+				'tax_query'      => array(
+					array(
+						'taxonomy' => 'product_cat',
+						'field'    => 'term_id',
+						'terms'    => array( (int) $term->term_id ),
+					),
+				),
+				'meta_query'     => array(
+					array(
+						'key'     => '_vpn_sample_import',
+						'compare' => 'EXISTS',
+					),
+				),
+			)
+		);
+
+		$counts[ $slug ] = array(
+			'name'    => $name,
+			'count'   => count( $products ),
+			'missing' => false,
+		);
+	}
+
+	return $counts;
+}
+
+function custom_box_product_sample_category_balance_report(): string {
+	$lines = array( 'Category balance report, excluding Fashion and Sportswear Packaging:' );
+
+	foreach ( custom_box_product_sample_category_balance_counts() as $slug => $data ) {
+		$status  = $data['count'] >= 4 ? 'OK' : 'Needs more products';
+		$status .= ! empty( $data['missing'] ) ? ' / category missing' : '';
+		$lines[] = sprintf(
+			'- %s (%s): %d sample products - %s',
+			$data['name'],
+			$slug,
+			(int) $data['count'],
+			$status
+		);
+	}
+
+	return implode( PHP_EOL, $lines ) . PHP_EOL;
+}
 
 function custom_box_product_sample_deploy_batch_products( string $marker ): array {
 	return get_posts(
@@ -597,6 +717,47 @@ function custom_box_product_sample_deploy_page() {
 			<h2>Deploy Log</h2>
 			<textarea readonly rows="22" style="width:100%;font-family:Consolas,Monaco,monospace;"><?php echo esc_textarea( $result['output'] ); ?></textarea>
 		<?php endif; ?>
+
+		<?php $category_counts = custom_box_product_sample_category_balance_counts(); ?>
+		<?php if ( $category_counts ) : ?>
+			<h2>Sample Product Category Balance</h2>
+			<p>Fashion and Sportswear Packaging is excluded. Each category below should have at least 4 recently imported sample products.</p>
+			<table class="widefat striped" style="max-width:980px;">
+				<thead>
+					<tr>
+						<th>Category</th>
+						<th>Slug</th>
+						<th>Sample products</th>
+						<th>Status</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ( $category_counts as $slug => $data ) : ?>
+						<?php $is_ok = (int) $data['count'] >= 4 && empty( $data['missing'] ); ?>
+						<tr>
+							<td><?php echo esc_html( $data['name'] ); ?></td>
+							<td><code><?php echo esc_html( $slug ); ?></code></td>
+							<td><?php echo esc_html( (string) (int) $data['count'] ); ?></td>
+							<td>
+								<?php if ( $is_ok ) : ?>
+									<strong style="color:#008a20;">OK</strong>
+								<?php else : ?>
+									<strong style="color:#b32d2e;">Needs balance</strong>
+								<?php endif; ?>
+							</td>
+						</tr>
+					<?php endforeach; ?>
+				</tbody>
+			</table>
+
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-top:12px;">
+				<input type="hidden" name="action" value="custom_box_product_sample_category_balance">
+				<?php wp_nonce_field( 'custom_box_product_sample_category_balance' ); ?>
+				<?php submit_button( 'Run Product Category Balance', 'secondary large', 'submit', false ); ?>
+			</form>
+		<?php endif; ?>
+
+		<hr>
 
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 			<input type="hidden" name="action" value="custom_box_product_sample_deploy">
