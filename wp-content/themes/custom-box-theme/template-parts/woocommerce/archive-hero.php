@@ -9,6 +9,43 @@ $current_term = isset($args['current_term']) ? $args['current_term'] : null;
 $archive_title = isset($args['archive_title']) ? $args['archive_title'] : '';
 $archive_description = isset($args['archive_description']) ? $args['archive_description'] : '';
 $products_url = function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
+$hero_image_url = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
+
+if ($current_term && !is_wp_error($current_term) && 'product_cat' === $current_term->taxonomy) {
+    $image_id = (int) get_term_meta($current_term->term_id, 'thumbnail_id', true);
+
+    if (!$image_id) {
+        $image_id = (int) get_term_meta($current_term->term_id, 'custom_box_category_image_id', true);
+    }
+
+    if ($image_id) {
+        $term_image_url = wp_get_attachment_image_url($image_id, 'large');
+
+        if ($term_image_url) {
+            $hero_image_url = $term_image_url;
+        }
+    }
+
+    if (!$image_id && function_exists('wc_get_products')) {
+        $category_products = wc_get_products(array(
+            'status'   => 'publish',
+            'limit'    => 1,
+            'orderby'  => 'date',
+            'order'    => 'DESC',
+            'category' => array($current_term->slug),
+            'return'   => 'ids',
+        ));
+
+        if (!empty($category_products[0])) {
+            $product_image_id = get_post_thumbnail_id((int) $category_products[0]);
+            $product_image_url = $product_image_id ? wp_get_attachment_image_url($product_image_id, 'large') : '';
+
+            if ($product_image_url) {
+                $hero_image_url = $product_image_url;
+            }
+        }
+    }
+}
 ?>
 
 <section class="product-archive-hero product-category-landing-hero">
@@ -34,7 +71,7 @@ $products_url = function_exists('custom_box_get_products_url') ? custom_box_get_
                 </div>
             </div>
             <div class="product-category-hero-image">
-                <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1.png'); ?>" alt="<?php echo esc_attr($archive_title); ?>" decoding="async">
+                <img src="<?php echo esc_url($hero_image_url); ?>" alt="<?php echo esc_attr($archive_title); ?>" decoding="async">
             </div>
         </div>
     </div>
