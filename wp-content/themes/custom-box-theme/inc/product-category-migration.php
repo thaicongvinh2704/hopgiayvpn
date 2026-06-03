@@ -118,6 +118,57 @@ function custom_box_category_migration_keyword_map() {
     );
 }
 
+function custom_box_category_migration_explicit_product_map() {
+    return array(
+        'custom-pharmaceutical-medicine-packaging-boxes' => array('pharmaceutical-packaging-boxes'),
+        'custom-medical-kit-packaging-box'               => array('pharmaceutical-packaging-boxes'),
+        'custom-pill-packaging-box'                      => array('pharmaceutical-packaging-boxes'),
+        'custom-vial-packaging-box'                      => array('pharmaceutical-packaging-boxes', 'supplement-packaging-boxes'),
+
+        'custom-supplement-vitamin-packaging-boxes'      => array('supplement-packaging-boxes'),
+        'custom-supplement-drawer-packaging-box'         => array('supplement-packaging-boxes'),
+        'custom-kraft-paper-bag-for-supplement-packaging' => array('supplement-packaging-boxes'),
+        'custom-tablet-packaging-box'                    => array('supplement-packaging-boxes'),
+
+        'custom-cosmetic-skincare-packaging-boxes'       => array('beauty-skincare-packaging'),
+        'custom-skincare-gift-box-with-insert'           => array('beauty-skincare-packaging'),
+        'custom-cosmetic-packaging-box'                  => array('beauty-skincare-packaging'),
+        'custom-ampoule-packaging-box'                   => array('beauty-skincare-packaging'),
+
+        'premium-tea-coffee-chocolate-packaging-boxes'   => array('premium-food-beverage-packaging'),
+        'custom-paper-tube-food-packaging-box'           => array('premium-food-beverage-packaging'),
+        'custom-printed-corrugated-pet-food-box'         => array('premium-food-beverage-packaging'),
+        'custom-mug-packaging-box-with-window'           => array('premium-food-beverage-packaging'),
+
+        'custom-phone-accessories-packaging-boxes'       => array('electronics-accessories-packaging'),
+        'custom-phone-packaging-box-with-paper-bag'      => array('electronics-accessories-packaging'),
+        'custom-phone-packaging-box'                     => array('electronics-accessories-packaging'),
+        'custom-charging-cable-packaging-box'            => array('electronics-accessories-packaging'),
+
+        'custom-wine-premium-beverage-packaging-boxes'   => array('wine-premium-drink-packaging'),
+        'custom-wine-bottle-packaging-box'               => array('wine-premium-drink-packaging'),
+        'custom-wine-bottle-gift-box-with-paper-bag'     => array('wine-premium-drink-packaging'),
+        'custom-double-wine-bottle-gift-box'             => array('wine-premium-drink-packaging'),
+
+        'custom-corporate-gift-set-packaging-boxes'      => array('corporate-gift-packaging'),
+        'custom-luxury-gift-box-with-paper-bag'          => array('corporate-gift-packaging'),
+        'custom-magnetic-gift-box'                       => array('corporate-gift-packaging'),
+        'custom-teal-rigid-gift-box'                     => array('corporate-gift-packaging'),
+
+        'custom-home-lifestyle-product-packaging-boxes'  => array('home-lifestyle-packaging'),
+        'custom-thermos-bottle-packaging-box'            => array('home-lifestyle-packaging'),
+        'custom-dinnerware-packaging-box'                => array('home-lifestyle-packaging'),
+        'custom-knife-set-packaging-box'                 => array('home-lifestyle-packaging'),
+
+        'custom-stationery-packaging-box'                => array('back-to-school-stationery-packaging'),
+        'custom-stationery-school-supplies-packaging-boxes' => array('back-to-school-stationery-packaging'),
+        'custom-colored-pencil-packaging-box'            => array('back-to-school-stationery-packaging'),
+        'custom-crayon-packaging-box'                    => array('back-to-school-stationery-packaging'),
+
+        'custom-red-paper-shopping-bag'                  => array('paper-bags-with-logo'),
+    );
+}
+
 function custom_box_category_migration_can_run() {
     return current_user_can('manage_woocommerce') || current_user_can('manage_options');
 }
@@ -154,18 +205,31 @@ function custom_box_category_migration_get_or_create_term($slug, $name, $create)
 }
 
 function custom_box_category_migration_target_for_product($product_id) {
+    $target_slugs = custom_box_category_migration_target_slugs_for_product($product_id);
+
+    return $target_slugs[0] ?? 'custom-paper-boxes';
+}
+
+function custom_box_category_migration_target_slugs_for_product($product_id) {
     $target_slugs = array_keys(custom_box_category_migration_targets());
+    $explicit_map = custom_box_category_migration_explicit_product_map();
     $old_slug_map = custom_box_category_migration_old_slug_map();
+    $post_slug = get_post_field('post_name', $product_id);
+
+    if (!empty($explicit_map[$post_slug])) {
+        return array_values(array_unique(array_intersect($explicit_map[$post_slug], $target_slugs)));
+    }
+
     $terms = get_the_terms($product_id, 'product_cat');
 
     if (!empty($terms) && !is_wp_error($terms)) {
         foreach ($terms as $term) {
             if (!empty($old_slug_map[$term->slug])) {
-                return $old_slug_map[$term->slug];
+                return array($old_slug_map[$term->slug]);
             }
 
             if (in_array($term->slug, $target_slugs, true)) {
-                return $term->slug;
+                return array($term->slug);
             }
         }
     }
@@ -175,12 +239,12 @@ function custom_box_category_migration_target_for_product($product_id) {
     foreach (custom_box_category_migration_keyword_map() as $target_slug => $keywords) {
         foreach ($keywords as $keyword) {
             if (false !== strpos($haystack, $keyword)) {
-                return $target_slug;
+                return array($target_slug);
             }
         }
     }
 
-    return 'custom-paper-boxes';
+    return array('custom-paper-boxes');
 }
 
 function custom_box_category_migration_products() {
@@ -205,13 +269,20 @@ function custom_box_category_migration_apply_products_to_targets() {
     $updated = 0;
 
     foreach (custom_box_category_migration_products() as $product_id) {
-        $target_slug = custom_box_category_migration_target_for_product($product_id);
+        $target_slugs = custom_box_category_migration_target_slugs_for_product($product_id);
+        $term_ids = array();
 
-        if (empty($target_ids[$target_slug])) {
+        foreach ($target_slugs as $target_slug) {
+            if (!empty($target_ids[$target_slug])) {
+                $term_ids[] = (int) $target_ids[$target_slug];
+            }
+        }
+
+        if (!$term_ids) {
             continue;
         }
 
-        wp_set_object_terms($product_id, array((int) $target_ids[$target_slug]), 'product_cat', false);
+        wp_set_object_terms($product_id, array_values(array_unique($term_ids)), 'product_cat', false);
         $updated++;
     }
 
@@ -289,7 +360,12 @@ function custom_box_category_migration_page() {
                         }
                     }
 
-                    $target_slug = custom_box_category_migration_target_for_product($product_id);
+                    $target_slugs = custom_box_category_migration_target_slugs_for_product($product_id);
+                    $target_names = array();
+
+                    foreach ($target_slugs as $target_slug) {
+                        $target_names[] = ($targets[$target_slug] ?? $target_slug) . ' (' . $target_slug . ')';
+                    }
                     ?>
                     <tr>
                         <td>
@@ -299,8 +375,7 @@ function custom_box_category_migration_page() {
                         </td>
                         <td><?php echo esc_html($current_names ? implode(', ', $current_names) : 'None'); ?></td>
                         <td>
-                            <?php echo esc_html($targets[$target_slug] ?? $target_slug); ?>
-                            <code><?php echo esc_html($target_slug); ?></code>
+                            <?php echo esc_html(implode(', ', $target_names)); ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
