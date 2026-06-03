@@ -122,8 +122,9 @@ function custom_box_category_migration_explicit_product_map() {
     return array(
         'custom-pharmaceutical-medicine-packaging-boxes' => array('pharmaceutical-packaging-boxes'),
         'custom-medical-kit-packaging-box'               => array('pharmaceutical-packaging-boxes'),
-        'custom-pill-packaging-box'                      => array('pharmaceutical-packaging-boxes'),
+        'custom-pill-packaging-box'                      => array('pharmaceutical-packaging-boxes', 'supplement-packaging-boxes'),
         'custom-vial-packaging-box'                      => array('pharmaceutical-packaging-boxes', 'supplement-packaging-boxes'),
+        'custom-ampoule-packaging-box'                   => array('pharmaceutical-packaging-boxes', 'beauty-skincare-packaging'),
 
         'custom-supplement-vitamin-packaging-boxes'      => array('supplement-packaging-boxes'),
         'custom-supplement-drawer-packaging-box'         => array('supplement-packaging-boxes'),
@@ -133,26 +134,31 @@ function custom_box_category_migration_explicit_product_map() {
         'custom-cosmetic-skincare-packaging-boxes'       => array('beauty-skincare-packaging'),
         'custom-skincare-gift-box-with-insert'           => array('beauty-skincare-packaging'),
         'custom-cosmetic-packaging-box'                  => array('beauty-skincare-packaging'),
-        'custom-ampoule-packaging-box'                   => array('beauty-skincare-packaging'),
+        'custom-cosmetic-paper-bag'                      => array('beauty-skincare-packaging'),
 
         'premium-tea-coffee-chocolate-packaging-boxes'   => array('premium-food-beverage-packaging'),
         'custom-paper-tube-food-packaging-box'           => array('premium-food-beverage-packaging'),
         'custom-printed-corrugated-pet-food-box'         => array('premium-food-beverage-packaging'),
-        'custom-mug-packaging-box-with-window'           => array('premium-food-beverage-packaging'),
+        'custom-paper-tube-packaging-box'                => array('premium-food-beverage-packaging'),
+        'custom-mug-packaging-box-with-window'           => array('premium-food-beverage-packaging', 'home-lifestyle-packaging'),
 
         'custom-phone-accessories-packaging-boxes'       => array('electronics-accessories-packaging'),
         'custom-phone-packaging-box-with-paper-bag'      => array('electronics-accessories-packaging'),
         'custom-phone-packaging-box'                     => array('electronics-accessories-packaging'),
         'custom-charging-cable-packaging-box'            => array('electronics-accessories-packaging'),
+        'custom-phone-case-packaging-box'                => array('electronics-accessories-packaging'),
+        'custom-corporate-gift-set-packaging-boxes'      => array('electronics-accessories-packaging', 'corporate-gift-packaging'),
 
         'custom-wine-premium-beverage-packaging-boxes'   => array('wine-premium-drink-packaging'),
         'custom-wine-bottle-packaging-box'               => array('wine-premium-drink-packaging'),
         'custom-wine-bottle-gift-box-with-paper-bag'     => array('wine-premium-drink-packaging'),
         'custom-double-wine-bottle-gift-box'             => array('wine-premium-drink-packaging'),
+        'custom-single-wine-bottle-gift-box'             => array('wine-premium-drink-packaging'),
 
-        'custom-corporate-gift-set-packaging-boxes'      => array('corporate-gift-packaging'),
         'custom-luxury-gift-box-with-paper-bag'          => array('corporate-gift-packaging'),
         'custom-magnetic-gift-box'                       => array('corporate-gift-packaging'),
+        'custom-rigid-gift-box'                          => array('corporate-gift-packaging'),
+        'custom-drawer-gift-box'                         => array('corporate-gift-packaging'),
         'custom-teal-rigid-gift-box'                     => array('corporate-gift-packaging'),
 
         'custom-home-lifestyle-product-packaging-boxes'  => array('home-lifestyle-packaging'),
