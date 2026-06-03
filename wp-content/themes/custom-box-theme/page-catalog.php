@@ -241,7 +241,7 @@ $catalog_context = array(
         array(
             'title' => 'Paper Shopping Bags',
             'description' => 'Custom printed paper bags for retail stores, fashion brands, gifts, and promotional packaging.',
-            'image' => vpn_catalog_category_image(array('printed-paper-shopping-bags', 'luxury-retail-paper-bags', 'custom-red-paper-bags', 'luxury-teal-paper-bags'), $theme_uri . '/assets/images/custom-cardboard-boxes.webp'),
+            'image' => vpn_catalog_category_image(array('printed-paper-shopping-bags', 'luxury-retail-paper-bags', 'custom-red-paper-bags', 'luxury-teal-paper-bags'), $theme_uri . '/assets/images/Cardboard-Packaging.webp'),
             'alt' => 'custom paper shopping bags vietnam',
             'url' => home_url('/packaging/printed-paper-shopping-bags/'),
         ),

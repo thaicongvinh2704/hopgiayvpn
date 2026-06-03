@@ -31,7 +31,7 @@ $related_posts = new WP_Query(array(
                     <?php
                     $related_image = get_the_post_thumbnail_url(get_the_ID(), 'medium_large');
                     if (!$related_image) {
-                        $related_image = get_template_directory_uri() . '/assets/images/custom-cardboard-boxes.webp';
+                        $related_image = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
                     }
                     ?>
                     <article <?php post_class('blog-card'); ?>>

@@ -7,7 +7,7 @@ get_header();
 
 $blog_page_id = (int) get_option('page_for_posts');
 $blog_url = $blog_page_id ? get_permalink($blog_page_id) : home_url('/blog/');
-$fallback_image = get_template_directory_uri() . '/assets/images/custom-cardboard-boxes.webp';
+$fallback_image = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
 $is_blog_page_template = is_page();
 $blog_paged = max(1, (int) get_query_var('paged'), (int) get_query_var('page'));
 $blog_query = $GLOBALS['wp_query'];

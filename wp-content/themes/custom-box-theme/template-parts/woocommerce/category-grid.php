@@ -43,7 +43,7 @@ $is_all_categories = $current_term && $parent_term && !is_wp_error($current_term
                 }
 
                 $thumbnail_id = (int) get_term_meta($category->term_id, 'thumbnail_id', true);
-                $image_url = $thumbnail_id ? wp_get_attachment_image_url($thumbnail_id, 'medium_large') : get_template_directory_uri() . '/assets/images/custom-cardboard-boxes.webp';
+                $image_url = $thumbnail_id ? wp_get_attachment_image_url($thumbnail_id, 'medium_large') : get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
                 $is_current_category = $current_term && !is_wp_error($current_term) && (int) $current_term->term_id === (int) $category->term_id;
                 ?>
                 <a class="product-category-card <?php echo $is_current_category ? 'is-active' : ''; ?>" href="<?php echo esc_url($category_link); ?>">

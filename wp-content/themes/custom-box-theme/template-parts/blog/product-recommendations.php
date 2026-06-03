@@ -20,7 +20,7 @@ $recommended_products = function_exists('custom_box_get_blog_product_recommendat
                 $product_id = $recommended_product->get_id();
                 $product_image = get_the_post_thumbnail_url($product_id, 'medium_large');
                 if (!$product_image) {
-                    $product_image = get_template_directory_uri() . '/assets/images/custom-cardboard-boxes.webp';
+                    $product_image = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
                 }
                 ?>
                 <article class="blog-product-card">

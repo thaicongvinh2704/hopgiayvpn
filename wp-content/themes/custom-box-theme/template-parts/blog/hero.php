@@ -9,7 +9,7 @@ $blog_page_id = (int) get_option('page_for_posts');
 $blog_url = $blog_page_id ? get_permalink($blog_page_id) : home_url('/blog/');
 $post_image = get_the_post_thumbnail_url(get_the_ID(), 'full');
 if (!$post_image) {
-    $post_image = get_template_directory_uri() . '/assets/images/custom-cardboard-boxes.webp';
+    $post_image = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
 }
 
 $post_categories = get_the_category();

@@ -91,7 +91,7 @@ $product_query = new WP_Query($product_query_args);
                         $product_link = get_permalink();
                         $product_image = get_the_post_thumbnail_url(get_the_ID(), 'medium_large');
                         if (!$product_image) {
-                            $product_image = get_template_directory_uri() . '/assets/images/custom-cardboard-boxes.webp';
+                            $product_image = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
                         }
                         ?>
 

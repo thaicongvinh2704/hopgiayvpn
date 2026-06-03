@@ -69,7 +69,7 @@ $landing_two_logos = array(
                         $product_link = get_permalink();
                         $product_image = get_the_post_thumbnail_url(get_the_ID(), 'medium_large');
                         if (!$product_image) {
-                            $product_image = $theme_uri . '/assets/images/custom-cardboard-boxes.webp';
+                            $product_image = $theme_uri . '/assets/images/Cardboard-Packaging.webp';
                         }
                         ?>
                         <article <?php wc_product_class('custom-product-card', $product); ?>>
@@ -114,7 +114,7 @@ $landing_two_logos = array(
                 </ul>
             </div>
             <figure class="landing-two-process">
-                <img src="<?php echo esc_url($theme_uri . '/assets/images/print-finishing-carton-boxex.webp'); ?>" alt="<?php esc_attr_e('Packaging production workflow', 'custom-box-theme'); ?>" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($theme_uri . '/assets/images/factory-team-and-production.jpg'); ?>" alt="<?php esc_attr_e('Packaging production workflow', 'custom-box-theme'); ?>" loading="lazy" decoding="async">
             </figure>
         </div>
     </section>

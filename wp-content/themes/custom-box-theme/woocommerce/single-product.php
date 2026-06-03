@@ -16,7 +16,7 @@ while (have_posts()) :
     $image_id = $product ? $product->get_image_id() : 0;
     $gallery_ids = $product ? $product->get_gallery_image_ids() : array();
     $product_gallery_ids = array_values(array_filter(array_merge($image_id ? array($image_id) : array(), $gallery_ids)));
-    $image_url = $image_id ? wp_get_attachment_image_url($image_id, 'large') : get_template_directory_uri() . '/assets/images/custom-cardboard-boxes.webp';
+    $image_url = $image_id ? wp_get_attachment_image_url($image_id, 'large') : get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
     $short_description = $product ? apply_filters('woocommerce_short_description', $product->get_short_description()) : '';
     $primary_product_category = function_exists('custom_box_get_primary_product_category') ? custom_box_get_primary_product_category($product_id) : null;
     $products_url = function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
@@ -251,7 +251,7 @@ while (have_posts()) :
 
                         $related_image = get_the_post_thumbnail_url($related_id, 'medium');
                         if (!$related_image) {
-                            $related_image = get_template_directory_uri() . '/assets/images/custom-cardboard-boxes.webp';
+                            $related_image = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
                         }
                         ?>
                         <a class="product-category-card product-related-card" href="<?php echo esc_url(get_permalink($related_id)); ?>">

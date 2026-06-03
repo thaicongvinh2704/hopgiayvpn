@@ -25,7 +25,7 @@ if (!function_exists('vpn_company_profile_image')) {
 
 $factory_fly = vpn_company_profile_image('anh-nha-may-fly', 'profile-company.webp');
 $factory_one = vpn_company_profile_image('anh-nha-may-1', 'factory-team showcase.webp');
-$factory_two = vpn_company_profile_image('anh-nha-may-2', 'print-finishing-carton-boxex.webp');
+$factory_two = vpn_company_profile_image('anh-nha-may-2', 'factory-team-and-production.jpg');
 $factory_three = vpn_company_profile_image('anh-nha-may-3', 'product-banner1.png');
 ?>
 
