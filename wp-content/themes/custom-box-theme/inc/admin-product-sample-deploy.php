@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-03-category-balance-2' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-03-category-balance-3' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -244,7 +244,9 @@ function custom_box_product_sample_category_balance_admin_post() {
 	if ( ! function_exists( 'custom_box_category_migration_apply_products_to_targets' ) ) {
 		$error = 'Product category migration function is not available.';
 	} else {
+		$published = custom_box_product_sample_publish_category_balance_products();
 		$updated = custom_box_category_migration_apply_products_to_targets();
+		$output .= 'Published balanced sample products: ' . (int) $published . ' products.' . PHP_EOL;
 		$output .= 'Product category balance updated: ' . (int) $updated . ' products.' . PHP_EOL . PHP_EOL;
 		$output .= custom_box_product_sample_category_balance_report();
 	}
@@ -272,6 +274,63 @@ function custom_box_product_sample_category_balance_admin_post() {
 	exit;
 }
 add_action( 'admin_post_custom_box_product_sample_category_balance', 'custom_box_product_sample_category_balance_admin_post' );
+
+function custom_box_product_sample_category_balance_product_slugs(): array {
+	if ( ! function_exists( 'custom_box_category_migration_explicit_product_map' ) ) {
+		return array();
+	}
+
+	$slugs = array();
+
+	foreach ( custom_box_category_migration_explicit_product_map() as $product_slug => $target_slugs ) {
+		if ( in_array( 'fashion-sportswear-packaging', $target_slugs, true ) ) {
+			continue;
+		}
+
+		$slugs[] = $product_slug;
+	}
+
+	return array_values( array_unique( $slugs ) );
+}
+
+function custom_box_product_sample_publish_category_balance_products(): int {
+	$published = 0;
+
+	foreach ( custom_box_product_sample_category_balance_product_slugs() as $slug ) {
+		$products = get_posts(
+			array(
+				'name'           => $slug,
+				'post_type'      => 'product',
+				'post_status'    => array( 'publish', 'draft', 'pending', 'private', 'future' ),
+				'posts_per_page' => 1,
+				'fields'         => 'ids',
+			)
+		);
+
+		if ( empty( $products[0] ) ) {
+			continue;
+		}
+
+		$product_id = (int) $products[0];
+		if ( 'publish' === get_post_status( $product_id ) ) {
+			continue;
+		}
+
+		$updated = wp_update_post(
+			array(
+				'ID'          => $product_id,
+				'post_status' => 'publish',
+			),
+			true
+		);
+
+		if ( ! is_wp_error( $updated ) && $updated ) {
+			++$published;
+		}
+	}
+
+	return $published;
+}
 
 function custom_box_product_sample_category_balance_targets(): array {
 	if ( ! function_exists( 'custom_box_category_migration_targets' ) ) {
@@ -302,7 +361,7 @@ function custom_box_product_sample_category_balance_counts(): array {
 		$products = get_posts(
 			array(
 				'post_type'      => 'product',
-				'post_status'    => array( 'publish', 'draft', 'pending', 'private' ),
+				'post_status'    => 'publish',
 				'posts_per_page' => -1,
 				'fields'         => 'ids',
 				'tax_query'      => array(
@@ -528,7 +587,9 @@ function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
 
 	if ( empty( $state['category_migration_done'] ) && function_exists( 'custom_box_category_migration_apply_products_to_targets' ) ) {
 		$state['category_migration_done'] = true;
+		$published = custom_box_product_sample_publish_category_balance_products();
 		$updated = custom_box_category_migration_apply_products_to_targets();
+		echo 'Published balanced sample products: ' . (int) $published . ' products.' . PHP_EOL;
 		echo 'Product category migration updated: ' . (int) $updated . ' products.' . PHP_EOL;
 		echo 'Step complete. Continuing in the next request.' . PHP_EOL;
 		return;
@@ -559,7 +620,9 @@ function custom_box_product_sample_deploy_run_batches(): void {
 	custom_box_product_sample_deploy_run_script( 'tools/create-local-packaging-materials-guide.php' );
 
 	if ( function_exists( 'custom_box_category_migration_apply_products_to_targets' ) ) {
+		$published = custom_box_product_sample_publish_category_balance_products();
 		$updated = custom_box_category_migration_apply_products_to_targets();
+		echo 'Published balanced sample products: ' . (int) $published . ' products.' . PHP_EOL;
 		echo 'Product category migration updated: ' . (int) $updated . ' products.' . PHP_EOL;
 	}
 
