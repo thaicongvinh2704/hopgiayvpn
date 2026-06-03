@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-03-category-balance-4' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-03-category-balance-5' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -338,9 +338,19 @@ function custom_box_product_sample_category_balance_targets(): array {
 	}
 
 	$targets = custom_box_category_migration_targets();
-	unset( $targets['fashion-sportswear-packaging'] );
+	$balance_slugs = array(
+		'pharmaceutical-packaging-boxes',
+		'supplement-packaging-boxes',
+		'beauty-skincare-packaging',
+		'premium-food-beverage-packaging',
+		'electronics-accessories-packaging',
+		'wine-premium-drink-packaging',
+		'corporate-gift-packaging',
+		'home-lifestyle-packaging',
+		'back-to-school-stationery-packaging',
+	);
 
-	return $targets;
+	return array_intersect_key( $targets, array_flip( $balance_slugs ) );
 }
 
 function custom_box_product_sample_category_balance_counts(): array {

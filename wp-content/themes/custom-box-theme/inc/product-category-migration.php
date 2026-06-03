@@ -124,10 +124,10 @@ function custom_box_category_migration_explicit_product_map() {
         'custom-medical-kit-packaging-box'               => array('pharmaceutical-packaging-boxes'),
         'custom-pill-packaging-box'                      => array('pharmaceutical-packaging-boxes', 'supplement-packaging-boxes'),
         'custom-vial-packaging-box'                      => array('pharmaceutical-packaging-boxes', 'supplement-packaging-boxes'),
-        'custom-ampoule-packaging-box'                   => array('pharmaceutical-packaging-boxes', 'beauty-skincare-packaging'),
+        'custom-ampoule-packaging-box'                   => array('pharmaceutical-packaging-boxes', 'supplement-packaging-boxes', 'beauty-skincare-packaging'),
 
         'custom-supplement-vitamin-packaging-boxes'      => array('supplement-packaging-boxes'),
-        'custom-supplement-drawer-packaging-box'         => array('supplement-packaging-boxes'),
+        'custom-supplement-drawer-packaging-box'         => array('supplement-packaging-boxes', 'pharmaceutical-packaging-boxes', 'beauty-skincare-packaging'),
         'custom-kraft-paper-bag-for-supplement-packaging' => array('supplement-packaging-boxes'),
         'custom-tablet-packaging-box'                    => array('supplement-packaging-boxes'),
 
@@ -140,7 +140,7 @@ function custom_box_category_migration_explicit_product_map() {
         'custom-paper-tube-food-packaging-box'           => array('premium-food-beverage-packaging'),
         'custom-printed-corrugated-pet-food-box'         => array('premium-food-beverage-packaging'),
         'custom-paper-tube-packaging-box'                => array('premium-food-beverage-packaging'),
-        'custom-mug-packaging-box-with-window'           => array('premium-food-beverage-packaging', 'home-lifestyle-packaging'),
+        'custom-mug-packaging-box-with-window'           => array('premium-food-beverage-packaging', 'home-lifestyle-packaging', 'wine-premium-drink-packaging'),
 
         'custom-phone-accessories-packaging-boxes'       => array('electronics-accessories-packaging'),
         'custom-phone-packaging-box-with-paper-bag'      => array('electronics-accessories-packaging'),
@@ -152,13 +152,13 @@ function custom_box_category_migration_explicit_product_map() {
         'custom-wine-premium-beverage-packaging-boxes'   => array('wine-premium-drink-packaging'),
         'custom-wine-bottle-packaging-box'               => array('wine-premium-drink-packaging'),
         'custom-wine-bottle-gift-box-with-paper-bag'     => array('wine-premium-drink-packaging'),
-        'custom-double-wine-bottle-gift-box'             => array('wine-premium-drink-packaging'),
-        'custom-single-wine-bottle-gift-box'             => array('wine-premium-drink-packaging'),
+        'custom-double-wine-bottle-gift-box'             => array('wine-premium-drink-packaging', 'premium-food-beverage-packaging'),
+        'custom-single-wine-bottle-gift-box'             => array('wine-premium-drink-packaging', 'premium-food-beverage-packaging'),
 
-        'custom-luxury-gift-box-with-paper-bag'          => array('corporate-gift-packaging'),
+        'custom-luxury-gift-box-with-paper-bag'          => array('corporate-gift-packaging', 'wine-premium-drink-packaging'),
         'custom-magnetic-gift-box'                       => array('corporate-gift-packaging'),
-        'custom-rigid-gift-box'                          => array('corporate-gift-packaging'),
-        'custom-drawer-gift-box'                         => array('corporate-gift-packaging'),
+        'custom-rigid-gift-box'                          => array('corporate-gift-packaging', 'home-lifestyle-packaging'),
+        'custom-drawer-gift-box'                         => array('corporate-gift-packaging', 'back-to-school-stationery-packaging'),
         'custom-teal-rigid-gift-box'                     => array('corporate-gift-packaging'),
 
         'custom-home-lifestyle-product-packaging-boxes'  => array('home-lifestyle-packaging'),
@@ -170,6 +170,7 @@ function custom_box_category_migration_explicit_product_map() {
         'custom-stationery-school-supplies-packaging-boxes' => array('back-to-school-stationery-packaging'),
         'custom-colored-pencil-packaging-box'            => array('back-to-school-stationery-packaging'),
         'custom-crayon-packaging-box'                    => array('back-to-school-stationery-packaging'),
+        'custom-fountain-pen-gift-box'                   => array('back-to-school-stationery-packaging', 'corporate-gift-packaging'),
 
         'custom-red-paper-shopping-bag'                  => array('paper-bags-with-logo'),
     );
