@@ -50,7 +50,7 @@ if (!$hero_image_url && $current_term && !is_wp_error($current_term) && 'product
 }
 
 if (!$hero_image_url) {
-    $hero_image_url = content_url('/uploads/2026/05/watch-box.jpg');
+    $hero_image_url = get_template_directory_uri() . '/assets/images/product-banner1.png';
 }
 ?>
 
