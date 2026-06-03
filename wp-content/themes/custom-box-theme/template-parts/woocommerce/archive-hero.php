@@ -9,9 +9,11 @@ $current_term = isset($args['current_term']) ? $args['current_term'] : null;
 $archive_title = isset($args['archive_title']) ? $args['archive_title'] : '';
 $archive_description = isset($args['archive_description']) ? $args['archive_description'] : '';
 $products_url = function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
-$hero_image_url = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
+$hero_image_url = $current_term && !is_wp_error($current_term) && function_exists('custom_box_get_product_category_asset_image_url')
+    ? custom_box_get_product_category_asset_image_url($current_term)
+    : '';
 
-if ($current_term && !is_wp_error($current_term) && 'product_cat' === $current_term->taxonomy) {
+if (!$hero_image_url && $current_term && !is_wp_error($current_term) && 'product_cat' === $current_term->taxonomy) {
     $image_id = (int) get_term_meta($current_term->term_id, 'thumbnail_id', true);
 
     if (!$image_id) {
@@ -26,7 +28,7 @@ if ($current_term && !is_wp_error($current_term) && 'product_cat' === $current_t
         }
     }
 
-    if (!$image_id && function_exists('wc_get_products')) {
+    if (!$hero_image_url && function_exists('wc_get_products')) {
         $category_products = wc_get_products(array(
             'status'   => 'publish',
             'limit'    => 1,
@@ -45,6 +47,10 @@ if ($current_term && !is_wp_error($current_term) && 'product_cat' === $current_t
             }
         }
     }
+}
+
+if (!$hero_image_url) {
+    $hero_image_url = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
 }
 ?>
 

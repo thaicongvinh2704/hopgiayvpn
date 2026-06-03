@@ -42,13 +42,20 @@ $is_all_categories = $current_term && $parent_term && !is_wp_error($current_term
                     continue;
                 }
 
-                $thumbnail_id = (int) get_term_meta($category->term_id, 'thumbnail_id', true);
+                $thumbnail_id = 0;
+                $image_url = function_exists('custom_box_get_product_category_asset_image_url')
+                    ? custom_box_get_product_category_asset_image_url($category)
+                    : '';
 
-                if (!$thumbnail_id) {
-                    $thumbnail_id = (int) get_term_meta($category->term_id, 'custom_box_category_image_id', true);
+                if (!$image_url) {
+                    $thumbnail_id = (int) get_term_meta($category->term_id, 'thumbnail_id', true);
+
+                    if (!$thumbnail_id) {
+                        $thumbnail_id = (int) get_term_meta($category->term_id, 'custom_box_category_image_id', true);
+                    }
+
+                    $image_url = $thumbnail_id ? wp_get_attachment_image_url($thumbnail_id, 'medium_large') : '';
                 }
-
-                $image_url = $thumbnail_id ? wp_get_attachment_image_url($thumbnail_id, 'medium_large') : '';
 
                 if (!$image_url && function_exists('wc_get_products')) {
                     $category_products = wc_get_products(array(

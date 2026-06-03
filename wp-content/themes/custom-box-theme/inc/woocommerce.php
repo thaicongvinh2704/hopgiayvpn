@@ -55,6 +55,34 @@ function custom_box_loop_shop_per_page($per_page) {
 }
 add_filter('loop_shop_per_page', 'custom_box_loop_shop_per_page', 20);
 
+function custom_box_get_product_category_asset_image_url($term_or_slug) {
+    $slug = is_object($term_or_slug) && isset($term_or_slug->slug) ? $term_or_slug->slug : (string) $term_or_slug;
+    $slug = sanitize_title($slug);
+
+    if (!$slug) {
+        return '';
+    }
+
+    $asset_images = array(
+        'pharmaceutical-packaging-boxes'      => 'custom-pharmaceutical-medicine-packaging-boxes.webp',
+        'supplement-packaging-boxes'          => 'custom-supplement-vitamin-packaging-boxes.webp',
+        'beauty-skincare-packaging'           => 'custom-cosmetic-skincare-packaging-boxes.webp',
+        'premium-food-beverage-packaging'     => 'premium-tea-coffee-chocolate-packaging-boxes.webp',
+        'electronics-accessories-packaging'   => 'custom-phone-accessories-packaging-boxes.webp',
+        'fashion-sportswear-packaging'        => 'custom-fashion-sportswear-packaging-boxes.webp',
+        'wine-premium-drink-packaging'        => 'custom-wine-premium-beverage-packaging-boxes.webp',
+        'corporate-gift-packaging'            => 'custom-corporate-gift-set-packaging-boxes.webp',
+        'home-lifestyle-packaging'            => 'custom-home-lifestyle-product-packaging-boxes.webp',
+        'back-to-school-stationery-packaging' => 'custom-stationery-school-supplies-packaging-boxes.webp',
+    );
+
+    if (empty($asset_images[$slug])) {
+        return '';
+    }
+
+    return get_template_directory_uri() . '/assets/images/' . $asset_images[$slug];
+}
+
 function custom_box_get_flat_product_category_url($term) {
     if (!$term || is_wp_error($term)) {
         return '';
