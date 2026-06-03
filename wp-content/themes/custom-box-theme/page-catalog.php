@@ -144,7 +144,7 @@ $fallback_gallery = array(
         'url' => home_url('/packaging/rigid-sliding-drawer-boxes/'),
     ),
     array(
-        'image' => $theme_uri . '/assets/images/innerwear-Feature.webp',
+        'image' => $theme_uri . '/assets/images/custom-fashion-sportswear-packaging-boxes.webp',
         'alt' => 'custom cosmetic paper box manufacturer',
         'title' => 'Cosmetic Paper Box Packaging',
         'meta' => 'Cosmetic packaging',
