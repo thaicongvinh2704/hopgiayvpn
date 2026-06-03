@@ -211,7 +211,7 @@ function custom_box_packaging_money_page_og_type($type) {
 add_filter('rank_math/opengraph/type', 'custom_box_packaging_money_page_og_type', 20);
 
 function custom_box_low_value_page_slugs() {
-    return array('cart', 'checkout', 'my-account', 'trang-mau', 'home-2', 'packaging-landing-two');
+    return array('cart', 'checkout', 'my-account', 'trang-mau', 'home-2');
 }
 
 function custom_box_is_low_value_page() {

@@ -43,7 +43,6 @@ function custom_box_enqueue_assets() {
     $contact_css_path = get_template_directory() . '/assets/css/contact.css';
     $catalog_css_path = get_template_directory() . '/assets/css/catalog.css';
     $landing_css_path = get_template_directory() . '/assets/css/landing.css';
-    $landing_two_css_path = get_template_directory() . '/assets/css/landing-two.css';
     $responsive_css_path = get_template_directory() . '/assets/css/responsive.css';
     $main_js_path = get_template_directory() . '/assets/js/main.js';
 
@@ -110,15 +109,6 @@ function custom_box_enqueue_assets() {
         );
     }
 
-    if (is_page_template('page-landing-packaging-two.php') || is_page('packaging-landing-two')) {
-        wp_enqueue_style(
-            'landing-two-style',
-            get_template_directory_uri() . '/assets/css/landing-two.css',
-            array('main-style', 'responsive-style'),
-            file_exists($landing_two_css_path) ? filemtime($landing_two_css_path) : '1.0'
-        );
-    }
-
     wp_enqueue_script(
         'main-js',
         get_template_directory_uri() . '/assets/js/main.js',
@@ -161,7 +151,7 @@ function custom_box_dequeue_non_critical_assets() {
         wp_dequeue_script('wc-order-attribution');
     }
 
-    if (is_front_page() || is_page(array('about', 'contact', 'catalog', 'packaging-landing', 'packaging-landing-two', 'products'))) {
+    if (is_front_page() || is_page(array('about', 'contact', 'catalog', 'packaging-landing', 'products'))) {
         wp_dequeue_style('wp-block-library');
         wp_dequeue_style('classic-theme-styles');
         wp_dequeue_style('global-styles');
