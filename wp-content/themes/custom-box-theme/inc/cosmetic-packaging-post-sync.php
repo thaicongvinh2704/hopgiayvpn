@@ -21,6 +21,7 @@ function custom_box_sync_cosmetic_packaging_post()
 
     $sync_version = 'types-of-cosmetic-packaging-20260604-v1';
     $post = get_page_by_path('types-of-cosmetic-packaging', OBJECT, 'post');
+    $post_data = custom_box_cosmetic_packaging_post_map();
 
     if ($post && 'trash' === $post->post_status) {
         return;
@@ -28,10 +29,11 @@ function custom_box_sync_cosmetic_packaging_post()
 
     if (!$post) {
         $post_id = wp_insert_post(array(
-            'post_title' => 'Types of Cosmetic Packaging: Practical Guide for Beauty Brands',
-            'post_name' => 'types-of-cosmetic-packaging',
+            'post_title' => $post_data['title'],
+            'post_name' => $post_data['slug'],
             'post_type' => 'post',
             'post_status' => 'draft',
+            'post_excerpt' => $post_data['excerpt'],
             'post_content' => custom_box_cosmetic_packaging_post_content(),
         ));
 
@@ -40,13 +42,13 @@ function custom_box_sync_cosmetic_packaging_post()
         }
 
         $post = get_post($post_id);
-    } elseif (get_post_meta($post->ID, '_custom_box_cosmetic_packaging_sync_version', true) !== $sync_version) {
-        wp_update_post(array(
-            'ID' => $post->ID,
-            'post_content' => custom_box_cosmetic_packaging_post_content(),
-        ));
-        $post = get_post($post->ID);
     }
+
+    custom_box_update_cosmetic_packaging_post_details($post->ID, $sync_version);
+    $post = get_post($post->ID);
+
+    custom_box_update_cosmetic_packaging_post_seo($post->ID);
+    custom_box_update_cosmetic_packaging_post_terms($post->ID);
 
     $images = custom_box_cosmetic_packaging_image_map();
     $found = array();
@@ -98,6 +100,107 @@ function custom_box_sync_cosmetic_packaging_post()
     }
 
     update_post_meta($post->ID, '_custom_box_cosmetic_packaging_sync_version', $sync_version);
+}
+
+function custom_box_cosmetic_packaging_post_map()
+{
+    return array(
+        'title' => 'Types of Cosmetic Packaging: Practical Guide for Beauty Brands',
+        'slug' => 'types-of-cosmetic-packaging',
+        'excerpt' => 'A practical guide to cosmetic packaging types, materials and paper-based box options for beauty and skincare brands.',
+        'categories' => array(
+            array(
+                'name' => 'Packaging Guides',
+                'slug' => 'packaging-guides',
+            ),
+            array(
+                'name' => 'Cosmetic Packaging',
+                'slug' => 'cosmetic-packaging',
+            ),
+        ),
+        'tags' => array(
+            'types of cosmetic packaging',
+            'cosmetic packaging',
+            'cosmetic packaging types',
+            'beauty packaging',
+            'skincare packaging',
+            'paper cosmetic boxes',
+        ),
+    );
+}
+
+function custom_box_update_cosmetic_packaging_post_details($post_id, $sync_version)
+{
+    $post = get_post($post_id);
+    $post_data = custom_box_cosmetic_packaging_post_map();
+
+    if (!$post) {
+        return;
+    }
+
+    $post_update = array(
+        'ID' => $post_id,
+        'post_title' => $post_data['title'],
+        'post_name' => $post_data['slug'],
+        'post_excerpt' => $post_data['excerpt'],
+    );
+
+    if (get_post_meta($post_id, '_custom_box_cosmetic_packaging_sync_version', true) !== $sync_version) {
+        $post_update['post_content'] = custom_box_cosmetic_packaging_post_content();
+    }
+
+    if (!in_array($post->post_status, array('publish', 'private'), true)) {
+        $post_update['post_status'] = 'draft';
+    }
+
+    wp_update_post($post_update);
+}
+
+function custom_box_update_cosmetic_packaging_post_seo($post_id)
+{
+    $seo = custom_box_cosmetic_packaging_seo_map();
+
+    update_post_meta($post_id, 'rank_math_title', $seo['title']);
+    update_post_meta($post_id, 'rank_math_description', $seo['description']);
+    update_post_meta($post_id, 'rank_math_focus_keyword', $seo['focus_keyword']);
+}
+
+function custom_box_cosmetic_packaging_seo_map()
+{
+    return array(
+        'title' => 'Types of Cosmetic Packaging: Guide for Beauty Brands',
+        'description' => 'Explore the main types of cosmetic packaging, from bottles and jars to folding cartons, rigid boxes, inserts, paper bags and materials for beauty brands.',
+        'focus_keyword' => 'types of cosmetic packaging, cosmetic packaging types, cosmetic packaging',
+    );
+}
+
+function custom_box_update_cosmetic_packaging_post_terms($post_id)
+{
+    $post_data = custom_box_cosmetic_packaging_post_map();
+    $category_ids = array();
+
+    foreach ($post_data['categories'] as $category) {
+        $term = get_term_by('slug', $category['slug'], 'category');
+
+        if (!$term) {
+            $created = wp_insert_term($category['name'], 'category', array('slug' => $category['slug']));
+
+            if (is_wp_error($created)) {
+                continue;
+            }
+
+            $category_ids[] = (int) $created['term_id'];
+            continue;
+        }
+
+        $category_ids[] = (int) $term->term_id;
+    }
+
+    if (!empty($category_ids)) {
+        wp_set_post_categories($post_id, $category_ids, false);
+    }
+
+    wp_set_post_terms($post_id, $post_data['tags'], 'post_tag', false);
 }
 
 /**
