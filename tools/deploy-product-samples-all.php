@@ -140,6 +140,16 @@ $batches = array(
 			'tools/verify-product-samples-batch-4-remaining.php',
 		),
 	),
+	array(
+		'name'     => 'Fashion and Sportswear product samples',
+		'marker'   => 'product-samples-fashion-sportswear',
+		'expected' => 6,
+		'min_words' => 900,
+		'scripts'  => array(
+			'tools/import-fashion-sportswear-products.php',
+			'tools/verify-fashion-sportswear-products.php',
+		),
+	),
 );
 
 foreach ( $batches as $batch ) {

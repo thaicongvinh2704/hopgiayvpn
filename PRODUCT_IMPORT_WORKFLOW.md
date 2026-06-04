@@ -478,6 +478,38 @@ Some remaining filename groups are separate angles of one product and should be 
 - `custom-red-paper-shopping-bag`, `custom-red-paper-shopping-bag-inside`, `custom-red-paper-shopping-bag-open`
 - `custom-teal-rigid-gift-box`, `custom-teal-rigid-gift-box-detail`, `custom-teal-rigid-gift-box-inside`, `custom-teal-rigid-gift-box-open`
 
+## Fashion and Sportswear Batch
+
+Local WooCommerce batch marker:
+
+- `_vpn_sample_import = product-samples-fashion-sportswear`
+
+Temporary source image folder:
+
+- `wp-content/themes/fasion`
+
+Important:
+
+- The `fasion` folder is only a temporary grouping/reference folder.
+- It shows which images belong to which product.
+- The import script must copy those images into the WordPress uploads folder and create Media Library attachment records.
+- Product featured images, galleries, and inline content images must use Media Library attachments, not direct theme-folder image paths.
+- Keep the `fasion` folder in Git only until hosting has pulled and run the import. After hosting import is complete and verified, the temporary folder can be removed if it is no longer needed.
+
+Products:
+
+1. Custom Shoe Packaging Box
+2. Custom Belt Packaging Box
+3. Custom Men Underwear Packaging Box
+4. Custom Sportswear Packaging Box
+5. Custom T-Shirt Packaging Box
+6. Custom Wallet Packaging Box
+
+Main scripts:
+
+- `tools/import-fashion-sportswear-products.php`
+- `tools/verify-fashion-sportswear-products.php`
+
 ## Deploying Product Samples From Git
 
 Important:
