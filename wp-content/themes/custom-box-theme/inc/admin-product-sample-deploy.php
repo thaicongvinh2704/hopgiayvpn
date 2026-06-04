@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-03-category-balance-5' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-04-fashion-sportswear-images' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -540,6 +540,17 @@ function custom_box_product_sample_deploy_batches(): array {
 				'tools/verify-product-samples-batch-4-remaining.php',
 			),
 		),
+		array(
+			'name'      => 'Fashion and Sportswear product samples',
+			'marker'    => 'product-samples-fashion-sportswear',
+			'expected'  => 6,
+			'min_words' => 900,
+			'always'    => true,
+			'scripts'   => array(
+				'tools/import-fashion-sportswear-products.php',
+				'tools/verify-fashion-sportswear-products.php',
+			),
+		),
 	);
 }
 
@@ -569,7 +580,7 @@ function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
 			echo PHP_EOL . '== ' . $batch['name'] . ' ==' . PHP_EOL;
 			$min_words = $batch['min_words'] ?? 1500;
 
-			if ( custom_box_product_sample_deploy_batch_complete( $batch['marker'], $batch['expected'], $min_words ) ) {
+			if ( empty( $batch['always'] ) && custom_box_product_sample_deploy_batch_complete( $batch['marker'], $batch['expected'], $min_words ) ) {
 				echo 'Already complete, skipped.' . PHP_EOL;
 				++$state['batch_index'];
 				$state['script_index'] = 0;
@@ -626,7 +637,7 @@ function custom_box_product_sample_deploy_run_batches(): void {
 		echo PHP_EOL . '== ' . $batch['name'] . ' ==' . PHP_EOL;
 		$min_words = $batch['min_words'] ?? 1500;
 
-		if ( custom_box_product_sample_deploy_batch_complete( $batch['marker'], $batch['expected'], $min_words ) ) {
+		if ( empty( $batch['always'] ) && custom_box_product_sample_deploy_batch_complete( $batch['marker'], $batch['expected'], $min_words ) ) {
 			echo 'Already complete, skipped.' . PHP_EOL;
 			continue;
 		}
@@ -852,13 +863,13 @@ function custom_box_product_sample_deploy_page() {
 			<p>
 				<label>
 					<input type="radio" name="deploy_scope" value="latest" checked>
-					Latest batch only (Batch 4, 17 remaining products)
+					Latest batch only (Fashion/Sportswear image refresh)
 				</label>
 			</p>
 			<p>
 				<label>
 					<input type="radio" name="deploy_scope" value="all">
-					All batches (42 sample products)
+					All batches (42 sample products + Fashion/Sportswear refresh)
 				</label>
 			</p>
 			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>

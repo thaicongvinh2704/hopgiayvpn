@@ -26,6 +26,7 @@ Work local first. Do not commit, push, or deploy product/media changes until the
 6. Use related numbered images as gallery images.
 7. Insert 3-4 product images inside the long description when gallery has enough images.
 8. If a product has fewer than 3 images, do not repeat the same image unnaturally just to reach a count.
+9. Do not treat different filenames as enough by themselves. Images in one product must show clear visual variety, such as closed box, open box, insert/detail, side angle, retail display, or different structure. If several images are the same composition with only small color, garment, logo, or crop changes, mark the product as image-duplicate risk and replace or reduce those images before import.
 
 ## Product Fields To Keep
 
@@ -265,6 +266,7 @@ Rules:
 - Use featured image plus gallery images.
 - Place images naturally between sections.
 - Do not duplicate the same image repeatedly if the product only has one image.
+- Do not insert multiple near-identical images just because they have different filenames. Prefer 2 strong, distinct images over 4 images that look like the same generated mockup.
 - Product content images should not be too large.
 - Current CSS class used for inline content images:
   - `product-inline-figure`

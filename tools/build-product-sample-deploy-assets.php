@@ -13,6 +13,8 @@ $source_files = array(
 	$root . '/tools/import-product-samples-batch-2-five.php',
 	$root . '/tools/import-product-samples-batch-3-ten.php',
 	$root . '/tools/import-product-samples-batch-4-remaining.php',
+	$root . '/tools/import-fashion-sportswear-products.php',
+	$root . '/tools/verify-fashion-sportswear-products.php',
 );
 
 $asset_root    = $root . '/wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/root';
