@@ -154,7 +154,7 @@ function vpn_fashion_content( array $p, array $image_ids ): string {
 		)
 	);
 
-	$html .= vpn_fashion_inline_images( $p, $image_ids );
+	$html .= vpn_fashion_inline_images( $p, array_slice( $image_ids, 0, 1 ) );
 	$html .= vpn_fashion_section(
 		$p['structure_heading'],
 		array(
@@ -169,7 +169,7 @@ function vpn_fashion_content( array $p, array $image_ids ): string {
 			'The surface finish should match the brand position. Matte lamination can make the package feel calm and premium, gloss lamination can make darker colors stronger, foil stamping can highlight a logo, and spot UV can emphasize a pattern or product name. For export orders, the finish should also resist rubbing during packing and shipping.',
 		)
 	);
-	$html .= vpn_fashion_inline_images( array_merge( $p, array( 'captions' => array_slice( $p['captions'], 1 ) ) ), array_slice( $image_ids, 1 ) );
+	$html .= vpn_fashion_inline_images( array_merge( $p, array( 'captions' => array_slice( $p['captions'], 1 ) ) ), array_slice( $image_ids, 1, 1 ) );
 	$html .= vpn_fashion_section(
 		$p['application_heading'],
 		array(
@@ -198,7 +198,7 @@ function vpn_fashion_content( array $p, array $image_ids ): string {
 			'The goal is to help international buyers describe what they need before asking for a quote. A specific product page makes it easier to discuss box type, insert style, artwork layout, sample cost, production quantity, and shipping requirements without starting from a generic paper box description.',
 		)
 	);
-	$html .= vpn_fashion_inline_images( array_merge( $p, array( 'captions' => array_slice( $p['captions'], 2 ) ) ), array_slice( $image_ids, 2 ) );
+	$html .= vpn_fashion_inline_images( array_merge( $p, array( 'captions' => array_slice( $p['captions'], 2 ) ) ), array_slice( $image_ids, 2, 2 ) );
 	$html .= '<h3>' . esc_html( $p['cta_heading'] ) . '</h3>';
 	$html .= '<p>Share the product size, target quantity, image reference, artwork file, and preferred material to ' . $quote_link . '. We can help prepare a custom ' . esc_html( strtolower( $p['keyword'] ) ) . ' structure for sampling and bulk production.</p>';
 

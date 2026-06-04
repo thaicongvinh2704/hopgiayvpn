@@ -145,6 +145,7 @@ $batches = array(
 		'marker'   => 'product-samples-fashion-sportswear',
 		'expected' => 6,
 		'min_words' => 900,
+		'always'   => true,
 		'scripts'  => array(
 			'tools/import-fashion-sportswear-products.php',
 			'tools/verify-fashion-sportswear-products.php',
@@ -156,7 +157,7 @@ foreach ( $batches as $batch ) {
 	echo PHP_EOL . '== ' . $batch['name'] . ' ==' . PHP_EOL;
 	$min_words = $batch['min_words'] ?? 1500;
 
-	if ( vpn_deploy_batch_complete( $batch['marker'], $batch['expected'], $min_words ) ) {
+	if ( empty( $batch['always'] ) && vpn_deploy_batch_complete( $batch['marker'], $batch['expected'], $min_words ) ) {
 		echo 'Already complete, skipped.' . PHP_EOL;
 		continue;
 	}
