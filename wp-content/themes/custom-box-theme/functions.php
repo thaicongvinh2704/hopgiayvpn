@@ -12,6 +12,7 @@ $custom_box_inc_files = array(
     'inc/seo.php',
     'inc/breadcrumbs.php',
     'inc/admin-editor.php',
+    'inc/admin-unused-page-cleanup.php',
     'inc/cosmetic-packaging-post-sync.php',
     'inc/supplier-audit-post-sync.php',
     'inc/admin-category-fields.php',
