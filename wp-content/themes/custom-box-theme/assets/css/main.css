@@ -1176,9 +1176,13 @@ html {
 }
 
 .home-packaging-category-image {
-    background: #dfe8f0;
-    display: block;
+    align-items: center;
+    aspect-ratio: 1 / 1;
+    background: #eef2f5;
+    display: flex;
+    justify-content: center;
     overflow: hidden;
+    padding: 10px;
 }
 
 .home-packaging-category-image.is-empty {
@@ -1187,9 +1191,9 @@ html {
 }
 
 .home-packaging-category-image img {
-    aspect-ratio: 1 / 1;
     display: block;
-    object-fit: cover;
+    height: 100%;
+    object-fit: contain;
     transition: transform 0.25s ease;
     width: 100%;
 }

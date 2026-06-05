@@ -64,16 +64,16 @@ function custom_box_get_product_category_asset_image_url($term_or_slug) {
     }
 
     $asset_images = array(
-        'pharmaceutical-packaging-boxes'      => 'custom-pharmaceutical-medicine-packaging-boxes.webp',
-        'supplement-packaging-boxes'          => 'custom-supplement-vitamin-packaging-boxes.webp',
-        'beauty-skincare-packaging'           => 'custom-cosmetic-skincare-packaging-boxes.webp',
-        'premium-food-beverage-packaging'     => 'premium-tea-coffee-chocolate-packaging-boxes.webp',
-        'electronics-accessories-packaging'   => 'custom-phone-accessories-packaging-boxes.webp',
-        'fashion-sportswear-packaging'        => 'custom-fashion-sportswear-packaging-boxes.webp',
-        'wine-premium-drink-packaging'        => 'custom-wine-premium-beverage-packaging-boxes.webp',
-        'corporate-gift-packaging'            => 'custom-corporate-gift-set-packaging-boxes.webp',
-        'home-lifestyle-packaging'            => 'custom-home-lifestyle-product-packaging-boxes.webp',
-        'back-to-school-stationery-packaging' => 'custom-stationery-school-supplies-packaging-boxes.webp',
+        'pharmaceutical-packaging-boxes'      => 'custom-pharmaceutical-medicine-packaging-boxes-gray-background.webp',
+        'supplement-packaging-boxes'          => 'custom-supplement-vitamin-packaging-boxes-gray-background.webp',
+        'beauty-skincare-packaging'           => 'custom-cosmetic-skincare-packaging-boxes-gray-background.webp',
+        'premium-food-beverage-packaging'     => 'premium-tea-coffee-chocolate-packaging-boxes-gray-background.webp',
+        'electronics-accessories-packaging'   => 'custom-phone-accessories-packaging-boxes-gray-background.webp',
+        'fashion-sportswear-packaging'        => 'custom-apparel-packaging-boxes-gray-background.webp',
+        'wine-premium-drink-packaging'        => 'custom-wine-premium-beverage-packaging-boxes-gray-background.webp',
+        'corporate-gift-packaging'            => 'custom-corporate-gift-set-packaging-boxes-gray-background.webp',
+        'home-lifestyle-packaging'            => 'custom-home-lifestyle-product-packaging-boxes-gray-background.webp',
+        'back-to-school-stationery-packaging' => 'custom-stationery-school-supplies-packaging-boxes-gray-background.webp',
     );
 
     if (empty($asset_images[$slug])) {
