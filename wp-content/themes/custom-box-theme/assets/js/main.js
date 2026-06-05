@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let index = 0;
         const getVisibleCards = () => {
-            if (window.matchMedia("(max-width: 560px)").matches) return 1;
+            if (window.matchMedia("(max-width: 560px)").matches) return 3;
             if (window.matchMedia("(max-width: 900px)").matches) return 3;
             return 5;
         };
