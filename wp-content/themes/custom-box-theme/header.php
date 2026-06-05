@@ -29,7 +29,7 @@
                 <i class="far fa-envelope"></i>
                 <a href="mailto:paperbox@hopgiayvpn.com">paperbox@hopgiayvpn.com</a>
                 /
-                <a href="mailto:sale02.vpn@hopgiayvpn.com">sale02.vpn@hopgiayvpn.com</a>
+                <a href="mailto:sales.vpn@hopgiayvpn.com">sales.vpn@hopgiayvpn.com</a>
             </span>
         </div>
 
