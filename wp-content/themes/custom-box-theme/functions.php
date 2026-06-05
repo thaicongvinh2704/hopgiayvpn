@@ -13,6 +13,7 @@ $custom_box_inc_files = array(
     'inc/breadcrumbs.php',
     'inc/admin-editor.php',
     'inc/cosmetic-packaging-post-sync.php',
+    'inc/supplier-audit-post-sync.php',
     'inc/admin-category-fields.php',
     'inc/product-specifications.php',
     'inc/product-category-migration.php',
