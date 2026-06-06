@@ -130,39 +130,41 @@
 
             <?php
             $all_categories_columns = function_exists('custom_box_get_all_categories_menu_columns') ? custom_box_get_all_categories_menu_columns() : array();
-            $product_group_links = function_exists('custom_box_get_product_group_link') ? array(
-                'Custom Boxes'    => $custom_boxes_link,
-                'Hang Tags'       => custom_box_get_product_group_link('Hang Tags', $custom_boxes_link),
-                'Wrapping Paper'  => custom_box_get_product_group_link('Wrapping Paper', $custom_boxes_link),
-                'Business Cards'  => custom_box_get_product_group_link('Business Cards', $custom_boxes_link),
-                'Canvas Bags'     => custom_box_get_product_group_link('Canvas Bags', $custom_boxes_link),
-            ) : array();
+            $product_group_links = function_exists('custom_box_get_all_categories_sidebar_links') ? custom_box_get_all_categories_sidebar_links($custom_boxes_link) : array();
             ?>
             <?php if (!empty($all_categories_columns)) : ?>
                 <div class="all-categories-dropdown all-categories-mega">
                     <aside class="all-categories-sidebar">
                         <h3><?php esc_html_e('Product Categories', 'custom-box-theme'); ?></h3>
+                        <?php $group_index = 0; ?>
                         <?php foreach ($product_group_links as $label => $link) : ?>
-                            <a class="<?php echo 'Custom Boxes' === $label ? 'is-active' : ''; ?>" href="<?php echo esc_url($link); ?>">
+                            <a class="<?php echo 0 === $group_index ? 'is-active' : ''; ?>" href="<?php echo esc_url($link); ?>">
                                 <span><?php echo esc_html($label); ?></span>
                                 <i class="fas fa-chevron-right"></i>
                             </a>
+                            <?php $group_index++; ?>
                         <?php endforeach; ?>
                     </aside>
 
                     <div class="all-categories-mega-grid">
                         <?php foreach ($all_categories_columns as $column) : ?>
-                            <section class="all-categories-column">
+                            <?php
+                            $column_terms = !empty($column['terms']) && is_array($column['terms']) ? $column['terms'] : array();
+                            $column_class = count($column_terms) > 6 ? ' all-categories-column-wide' : '';
+                            ?>
+                            <section class="all-categories-column<?php echo esc_attr($column_class); ?>">
                                 <h4><?php echo esc_html($column['title']); ?></h4>
-                                <?php foreach ($column['terms'] as $category) : ?>
-                                    <?php
-                                    $category_link = get_term_link($category);
-                                    if (is_wp_error($category_link)) {
-                                        continue;
-                                    }
-                                    ?>
-                                    <a href="<?php echo esc_url($category_link); ?>"><?php echo esc_html($category->name); ?></a>
-                                <?php endforeach; ?>
+                                <div class="all-categories-link-list">
+                                    <?php foreach ($column_terms as $category) : ?>
+                                        <?php
+                                        $category_link = get_term_link($category);
+                                        if (is_wp_error($category_link)) {
+                                            continue;
+                                        }
+                                        ?>
+                                        <a href="<?php echo esc_url($category_link); ?>"><?php echo esc_html($category->name); ?></a>
+                                    <?php endforeach; ?>
+                                </div>
                             </section>
                         <?php endforeach; ?>
                     </div>

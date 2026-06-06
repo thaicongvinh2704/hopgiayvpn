@@ -70,6 +70,118 @@ function custom_box_get_product_group_link($name, $fallback = '#') {
     return is_wp_error($link) ? $fallback : $link;
 }
 
+function custom_box_product_category_has_products($term) {
+    if (!$term || is_wp_error($term) || !taxonomy_exists('product_cat')) {
+        return false;
+    }
+
+    if ((int) $term->count > 0) {
+        return true;
+    }
+
+    $children = get_terms(array(
+        'taxonomy'   => 'product_cat',
+        'child_of'   => (int) $term->term_id,
+        'hide_empty' => true,
+        'fields'     => 'ids',
+        'number'     => 1,
+    ));
+
+    return !is_wp_error($children) && !empty($children);
+}
+
+function custom_box_get_packaging_parent_category() {
+    if (!taxonomy_exists('product_cat')) {
+        return null;
+    }
+
+    $parent = get_term_by('name', 'Custom Packaging Boxes', 'product_cat');
+
+    if (!$parent || is_wp_error($parent)) {
+        $parent = get_term_by('slug', 'custom-packaging-boxes', 'product_cat');
+    }
+
+    return ($parent && !is_wp_error($parent)) ? $parent : null;
+}
+
+function custom_box_get_packaging_menu_groups() {
+    return array(
+        array(
+            'title' => __('Paper Box Types', 'custom-box-theme'),
+            'slugs' => array(
+                'custom-paper-boxes',
+                'custom-printed-paper-boxes',
+                'rigid-boxes',
+                'folding-carton-boxes',
+                'magnetic-closure-boxes',
+                'drawer-boxes',
+                'lid-and-base-boxes',
+                'paper-tube-packaging',
+                'corrugated-mailer-boxes',
+            ),
+        ),
+        array(
+            'title' => __('Packaging by Industry', 'custom-box-theme'),
+            'slugs' => array(
+                'cosmetic-paper-boxes',
+                'perfume-packaging-boxes',
+                'skincare-packaging-boxes',
+                'jewelry-paper-boxes',
+                'gift-paper-boxes',
+                'chocolate-gift-boxes',
+                'food-paper-boxes',
+                'bakery-packaging-boxes',
+                'candle-packaging-boxes',
+            ),
+        ),
+        array(
+            'title' => __('Paper Bags & Packaging Add-ons', 'custom-box-theme'),
+            'slugs' => array(
+                'paper-bags-with-logo',
+                'packaging-accessories',
+            ),
+        ),
+        array(
+            'title' => __('Specialty Industry Packaging', 'custom-box-theme'),
+            'slugs' => array(
+                'pharmaceutical-packaging-boxes',
+                'supplement-packaging-boxes',
+                'beauty-skincare-packaging',
+                'premium-food-beverage-packaging',
+                'electronics-accessories-packaging',
+                'fashion-sportswear-packaging',
+                'wine-premium-drink-packaging',
+                'corporate-gift-packaging',
+                'home-lifestyle-packaging',
+                'back-to-school-stationery-packaging',
+            ),
+        ),
+    );
+}
+
+function custom_box_get_all_categories_sidebar_links($fallback = '#') {
+    $links = array();
+
+    foreach (custom_box_get_all_categories_menu_columns() as $column) {
+        if (empty($column['terms'])) {
+            continue;
+        }
+
+        $first_term = reset($column['terms']);
+        $group_link = get_term_link($first_term);
+
+        if (!is_wp_error($group_link)) {
+            $links[$column['title']] = $group_link;
+        }
+    }
+
+    if (empty($links) && $fallback) {
+        $links[__('Product Categories', 'custom-box-theme')] = $fallback;
+    }
+
+    return $links;
+}
+
 function custom_box_get_product_category_by_slug($slug) {
     if (!taxonomy_exists('product_cat')) {
         return null;
@@ -81,80 +193,32 @@ function custom_box_get_product_category_by_slug($slug) {
 }
 
 function custom_box_get_all_categories_menu_columns() {
-    $columns = array(
-        array(
-            'title' => __('Custom Paper Tube Packaging Boxes', 'custom-box-theme'),
-            'slugs' => array(
-                'custom-paper-tube-packaging-boxes',
-                'luxury-rigid-gift-boxes',
-                'custom-cake-packaging-boxes',
-                'luxury-drawer-gift-boxes',
-                'luxury-wine-bottle-packaging-boxes',
-                'printed-paper-shopping-bags',
-            ),
-        ),
-        array(
-            'title' => __('Custom Cosmetic Packaging Boxes', 'custom-box-theme'),
-            'slugs' => array(
-                'cosmetic-mailer-packaging-boxes',
-                'cosmetic-set-packaging-boxes',
-                'luxury-perfume-packaging-boxes',
-                'custom-soap-packaging-boxes',
-                'custom-chocolate-gift-boxes',
-            ),
-        ),
-        array(
-            'title' => __('Jewelry Gift Packaging Boxes', 'custom-box-theme'),
-            'slugs' => array(
-                'rigid-sliding-drawer-boxes',
-                'premium-ribbon-gift-boxes',
-                'kraft-round-gift-boxes',
-                'candle-gift-packaging-boxes',
-                'candle-jar-packaging-boxes',
-            ),
-        ),
-        array(
-            'title' => __('Food Gift Packaging Boxes', 'custom-box-theme'),
-            'slugs' => array(
-                'bakery-food-packaging-boxes',
-                'dessert-gift-packaging-boxes',
-                'dessert-packaging-boxes-with-inserts',
-                'custom-chocolate-display-boxes',
-                'pizza-packaging-boxes',
-                'luxury-retail-paper-bags',
-            ),
-        ),
-        array(
-            'title' => __('Mooncake Gift Packaging Boxes', 'custom-box-theme'),
-            'slugs' => array(
-                'mooncake-gift-packaging-boxes',
-                'mooncake-chocolate-gift-boxes',
-                'custom-red-paper-bags',
-                'luxury-teal-paper-bags',
-                'luxury-watch-packaging-boxes',
-                'watch-packaging-boxes',
-                'pink-ribbon-gift-boxes',
-            ),
-        ),
-    );
+    if (!taxonomy_exists('product_cat')) {
+        return array();
+    }
 
-    foreach ($columns as $column_index => $column) {
+    $columns = array();
+
+    foreach (custom_box_get_packaging_menu_groups() as $group) {
         $terms = array();
 
-        foreach ($column['slugs'] as $slug) {
+        foreach ($group['slugs'] as $slug) {
             $term = custom_box_get_product_category_by_slug($slug);
 
-            if ($term) {
+            if ($term && custom_box_product_category_has_products($term)) {
                 $terms[] = $term;
             }
         }
 
-        $columns[$column_index]['terms'] = $terms;
+        if (!empty($terms)) {
+            $columns[] = array(
+                'title' => $group['title'],
+                'terms' => $terms,
+            );
+        }
     }
 
-    return array_values(array_filter($columns, function ($column) {
-        return !empty($column['terms']);
-    }));
+    return $columns;
 }
 
 function custom_box_build_blog_article_content($raw_content) {
