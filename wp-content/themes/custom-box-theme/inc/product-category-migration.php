@@ -322,6 +322,80 @@ function custom_box_category_migration_apply_products_to_targets() {
     return $updated;
 }
 
+function custom_box_category_migration_sync_hierarchy() {
+    $parent_id = custom_box_category_migration_parent_term_id();
+
+    if (!$parent_id) {
+        return new WP_Error('missing_parent', __('Missing Custom Packaging Boxes parent category.', 'custom-box-theme'));
+    }
+
+    $active_slugs = function_exists('custom_box_get_packaging_category_slugs')
+        ? custom_box_get_packaging_category_slugs()
+        : array_keys(custom_box_category_migration_targets());
+    $active_ids = array();
+    $attached = 0;
+    $detached = 0;
+    $missing = array();
+
+    foreach ($active_slugs as $slug) {
+        $term = get_term_by('slug', $slug, 'product_cat');
+
+        if (!$term || is_wp_error($term)) {
+            $missing[] = $slug;
+            continue;
+        }
+
+        $term_id = (int) $term->term_id;
+        $active_ids[] = $term_id;
+
+        if ($term_id === $parent_id || (int) $term->parent === $parent_id) {
+            continue;
+        }
+
+        $updated = wp_update_term($term_id, 'product_cat', array(
+            'parent' => $parent_id,
+        ));
+
+        if (!is_wp_error($updated)) {
+            $attached++;
+        }
+    }
+
+    $old_children = get_terms(array(
+        'taxonomy'   => 'product_cat',
+        'parent'     => $parent_id,
+        'hide_empty' => false,
+    ));
+
+    if (is_wp_error($old_children)) {
+        return $old_children;
+    }
+
+    foreach ($old_children as $child) {
+        $child_id = (int) $child->term_id;
+
+        if (in_array($child_id, $active_ids, true)) {
+            continue;
+        }
+
+        $updated = wp_update_term($child_id, 'product_cat', array(
+            'parent' => 0,
+        ));
+
+        if (!is_wp_error($updated)) {
+            $detached++;
+        }
+    }
+
+    flush_rewrite_rules(false);
+
+    return array(
+        'attached' => $attached,
+        'detached' => $detached,
+        'missing'  => $missing,
+    );
+}
+
 function custom_box_category_migration_apply() {
     check_admin_referer('custom_box_category_migration_apply');
 
@@ -338,6 +412,29 @@ function custom_box_category_migration_apply() {
     exit;
 }
 add_action('admin_post_custom_box_category_migration_apply', 'custom_box_category_migration_apply');
+
+function custom_box_category_migration_sync_hierarchy_action() {
+    check_admin_referer('custom_box_category_migration_sync_hierarchy');
+
+    if (!custom_box_category_migration_can_run()) {
+        wp_die(esc_html__('You do not have permission to run this sync.', 'custom-box-theme'));
+    }
+
+    $result = custom_box_category_migration_sync_hierarchy();
+    $args = array('page' => 'custom-box-category-migration');
+
+    if (is_wp_error($result)) {
+        $args['hierarchy_error'] = rawurlencode($result->get_error_message());
+    } else {
+        $args['hierarchy_attached'] = (int) $result['attached'];
+        $args['hierarchy_detached'] = (int) $result['detached'];
+        $args['hierarchy_missing'] = count($result['missing']);
+    }
+
+    wp_safe_redirect(add_query_arg($args, admin_url('tools.php')));
+    exit;
+}
+add_action('admin_post_custom_box_category_migration_sync_hierarchy', 'custom_box_category_migration_sync_hierarchy_action');
 
 function custom_box_category_migration_page() {
     if (!custom_box_category_migration_can_run()) {
@@ -356,7 +453,31 @@ function custom_box_category_migration_page() {
             </div>
         <?php endif; ?>
 
+        <?php if (isset($_GET['hierarchy_attached'], $_GET['hierarchy_detached'])) : ?>
+            <div class="notice notice-success is-dismissible">
+                <p><?php echo esc_html(sprintf(
+                    'Synced category hierarchy. Attached %d active categories and detached %d inactive old children.',
+                    absint($_GET['hierarchy_attached']),
+                    absint($_GET['hierarchy_detached'])
+                )); ?></p>
+            </div>
+        <?php endif; ?>
+
+        <?php if (isset($_GET['hierarchy_error'])) : ?>
+            <div class="notice notice-error is-dismissible">
+                <p><?php echo esc_html(rawurldecode(wp_unslash($_GET['hierarchy_error']))); ?></p>
+            </div>
+        <?php endif; ?>
+
         <p>This tool moves all WooCommerce products into the 20 homepage product categories. It does not delete old categories.</p>
+
+        <h2>Category Hierarchy Sync</h2>
+        <p>This sync only updates the children shown under Custom Packaging Boxes. It attaches the active categories and detaches inactive old child categories without deleting terms or moving products.</p>
+        <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin: 16px 0 24px;">
+            <?php wp_nonce_field('custom_box_category_migration_sync_hierarchy'); ?>
+            <input type="hidden" name="action" value="custom_box_category_migration_sync_hierarchy">
+            <?php submit_button('Sync Packaging Category Hierarchy', 'secondary', 'submit', false); ?>
+        </form>
 
         <h2>Target Categories</h2>
         <ul>
