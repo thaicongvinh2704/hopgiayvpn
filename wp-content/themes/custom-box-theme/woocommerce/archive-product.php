@@ -13,23 +13,11 @@ $archive_description = $current_term && !is_wp_error($current_term) && !empty($c
     ? $current_term->description
     : __('Explore custom packaging products built for branded presentation, product protection, and flexible production requirements.', 'custom-box-theme');
 
-$parent_term = taxonomy_exists('product_cat') ? get_term_by('name', 'Custom Packaging Boxes', 'product_cat') : false;
+$parent_term = function_exists('custom_box_get_packaging_parent_category') ? custom_box_get_packaging_parent_category() : false;
 $sidebar_categories = array();
 $child_categories = array();
 $landing_categories = array();
 $landing_root_link = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/');
-$homepage_category_slugs = array(
-    'pharmaceutical-packaging-boxes',
-    'supplement-packaging-boxes',
-    'beauty-skincare-packaging',
-    'premium-food-beverage-packaging',
-    'electronics-accessories-packaging',
-    'fashion-sportswear-packaging',
-    'wine-premium-drink-packaging',
-    'corporate-gift-packaging',
-    'home-lifestyle-packaging',
-    'back-to-school-stationery-packaging',
-);
 
 if ($parent_term && !is_wp_error($parent_term)) {
     $parent_term_link = get_term_link($parent_term);
@@ -38,33 +26,36 @@ if ($parent_term && !is_wp_error($parent_term)) {
     }
 }
 
-foreach ($homepage_category_slugs as $category_slug) {
-    $category = get_term_by('slug', $category_slug, 'product_cat');
-    if ($category && !is_wp_error($category)) {
-        $sidebar_categories[] = $category;
-    }
+if (function_exists('custom_box_get_packaging_categories')) {
+    $sidebar_categories = custom_box_get_packaging_categories(48);
 }
 
 if ($current_term && !is_wp_error($current_term)) {
-    $child_categories = get_terms(array(
-        'taxonomy'   => 'product_cat',
-        'parent'     => $current_term->term_id,
-        'hide_empty' => false,
-        'orderby'    => 'term_id',
-        'order'      => 'ASC',
-    ));
+    $is_packaging_parent = $parent_term && !is_wp_error($parent_term) && (int) $current_term->term_id === (int) $parent_term->term_id;
 
-    if (is_wp_error($child_categories)) {
-        $child_categories = array();
+    if ($is_packaging_parent) {
+        $landing_categories = $sidebar_categories;
+    } else {
+        $child_categories = get_terms(array(
+            'taxonomy'   => 'product_cat',
+            'parent'     => $current_term->term_id,
+            'hide_empty' => false,
+            'orderby'    => 'term_id',
+            'order'      => 'ASC',
+        ));
+
+        if (is_wp_error($child_categories)) {
+            $child_categories = array();
+        }
+
+        $landing_categories = $child_categories;
     }
-
-    $landing_categories = $child_categories;
 }
 
 if (is_shop() && $parent_term && !is_wp_error($parent_term)) {
     $archive_title = __('Custom Packaging Boxes Manufacturer', 'custom-box-theme');
     $archive_description = __('Explore all custom packaging products available for branded presentation, product protection, and flexible production requirements.', 'custom-box-theme');
-    $child_categories = $sidebar_categories;
+    $landing_categories = $sidebar_categories;
 }
 
 $show_category_landing = !is_shop() && !empty($landing_categories) && $current_term && !is_wp_error($current_term);

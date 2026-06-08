@@ -35,23 +35,48 @@ function custom_box_primary_menu_fallback() {
     custom_box_primary_menu();
 }
 
-function custom_box_get_packaging_categories($limit = 48) {
-    $custom_boxes_parent = taxonomy_exists('product_cat') ? get_term_by('name', 'Custom Packaging Boxes', 'product_cat') : false;
+function custom_box_get_packaging_category_slugs() {
+    $slugs = array();
 
-    if (!$custom_boxes_parent || is_wp_error($custom_boxes_parent)) {
+    foreach (custom_box_get_packaging_menu_groups() as $group) {
+        if (empty($group['slugs']) || !is_array($group['slugs'])) {
+            continue;
+        }
+
+        foreach ($group['slugs'] as $slug) {
+            $slugs[] = $slug;
+        }
+    }
+
+    return array_values(array_unique($slugs));
+}
+
+function custom_box_get_packaging_categories($limit = 48, $require_products = true) {
+    if (!taxonomy_exists('product_cat')) {
         return array();
     }
 
-    $categories = get_terms(array(
-        'taxonomy'   => 'product_cat',
-        'parent'     => $custom_boxes_parent->term_id,
-        'hide_empty' => false,
-        'orderby'    => 'term_id',
-        'order'      => 'ASC',
-        'number'     => $limit,
-    ));
+    $categories = array();
 
-    return is_wp_error($categories) ? array() : $categories;
+    foreach (custom_box_get_packaging_category_slugs() as $slug) {
+        $category = custom_box_get_product_category_by_slug($slug);
+
+        if (!$category) {
+            continue;
+        }
+
+        if ($require_products && !custom_box_product_category_has_products($category)) {
+            continue;
+        }
+
+        $categories[] = $category;
+
+        if ($limit > 0 && count($categories) >= $limit) {
+            break;
+        }
+    }
+
+    return $categories;
 }
 
 function custom_box_get_product_group_link($name, $fallback = '#') {

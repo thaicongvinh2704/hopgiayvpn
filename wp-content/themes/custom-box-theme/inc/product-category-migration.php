@@ -181,6 +181,16 @@ function custom_box_category_migration_can_run() {
     return current_user_can('manage_woocommerce') || current_user_can('manage_options');
 }
 
+function custom_box_category_migration_parent_term_id() {
+    if (function_exists('custom_box_get_packaging_parent_category')) {
+        $parent = custom_box_get_packaging_parent_category();
+    } else {
+        $parent = get_term_by('slug', 'custom-packaging-boxes', 'product_cat');
+    }
+
+    return ($parent && !is_wp_error($parent)) ? (int) $parent->term_id : 0;
+}
+
 function custom_box_category_migration_admin_menu() {
     add_management_page(
         'Product Category Migration',
@@ -192,10 +202,16 @@ function custom_box_category_migration_admin_menu() {
 }
 add_action('admin_menu', 'custom_box_category_migration_admin_menu');
 
-function custom_box_category_migration_get_or_create_term($slug, $name, $create) {
+function custom_box_category_migration_get_or_create_term($slug, $name, $create, $parent_id = 0) {
     $term = get_term_by('slug', $slug, 'product_cat');
 
     if ($term && !is_wp_error($term)) {
+        if ($parent_id > 0 && (int) $term->term_id !== $parent_id && (int) $term->parent !== $parent_id) {
+            wp_update_term((int) $term->term_id, 'product_cat', array(
+                'parent' => $parent_id,
+            ));
+        }
+
         return (int) $term->term_id;
     }
 
@@ -203,7 +219,13 @@ function custom_box_category_migration_get_or_create_term($slug, $name, $create)
         return 0;
     }
 
-    $created = wp_insert_term($name, 'product_cat', array('slug' => $slug));
+    $args = array('slug' => $slug);
+
+    if ($parent_id > 0) {
+        $args['parent'] = $parent_id;
+    }
+
+    $created = wp_insert_term($name, 'product_cat', $args);
 
     if (is_wp_error($created) || empty($created['term_id'])) {
         return 0;
@@ -269,9 +291,10 @@ function custom_box_category_migration_products() {
 function custom_box_category_migration_apply_products_to_targets() {
     $targets = custom_box_category_migration_targets();
     $target_ids = array();
+    $parent_id = custom_box_category_migration_parent_term_id();
 
     foreach ($targets as $slug => $name) {
-        $target_ids[$slug] = custom_box_category_migration_get_or_create_term($slug, $name, true);
+        $target_ids[$slug] = custom_box_category_migration_get_or_create_term($slug, $name, true, $parent_id);
     }
 
     $updated = 0;
