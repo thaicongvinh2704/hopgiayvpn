@@ -1,4 +1,118 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const searchForms = document.querySelectorAll("[data-search-suggestions]");
+
+    searchForms.forEach((form) => {
+        const input = form.querySelector("[data-search-input]");
+        const results = form.querySelector("[data-search-results]");
+
+        if (!input || !results || typeof customBoxSearch === "undefined" || !customBoxSearch.endpoint) {
+            return;
+        }
+
+        const cache = new Map();
+        const minLength = Number(customBoxSearch.minLength || 2);
+        const debounceDelay = Number(customBoxSearch.debounce || 150);
+        let controller = null;
+        let timer = null;
+
+        const hideResults = () => {
+            results.hidden = true;
+            results.innerHTML = "";
+            form.classList.remove("has-suggestions");
+        };
+
+        const escapeHtml = (value) => String(value || "").replace(/[&<>"']/g, (char) => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#039;"
+        }[char]));
+
+        const renderResults = (items, query) => {
+            const safeQuery = encodeURIComponent(query);
+            const searchUrl = `${customBoxSearch.searchUrl}?s=${safeQuery}`;
+
+            if (!items.length) {
+                results.innerHTML = `<div class="header-search-empty">No matching results</div><a class="header-search-all" href="${searchUrl}">Search for "${escapeHtml(query)}"</a>`;
+                results.hidden = false;
+                form.classList.add("has-suggestions");
+                return;
+            }
+
+            const itemsHtml = items.map((item) => {
+                const title = escapeHtml(item.title);
+                const type = escapeHtml(item.type);
+                const url = escapeHtml(item.url || "#");
+
+                return `
+                    <a class="header-search-suggestion" href="${url}">
+                        <span>${title}</span>
+                        <small>${type}</small>
+                    </a>
+                `;
+            }).join("");
+
+            results.innerHTML = `${itemsHtml}<a class="header-search-all" href="${searchUrl}">View all results for "${escapeHtml(query)}"</a>`;
+            results.hidden = false;
+            form.classList.add("has-suggestions");
+        };
+
+        const requestResults = (query) => {
+            if (cache.has(query)) {
+                renderResults(cache.get(query), query);
+                return;
+            }
+
+            if (controller) {
+                controller.abort();
+            }
+
+            controller = new AbortController();
+
+            fetch(`${customBoxSearch.endpoint}?q=${encodeURIComponent(query)}`, {
+                signal: controller.signal,
+                credentials: "same-origin"
+            })
+                .then((response) => response.ok ? response.json() : [])
+                .then((items) => {
+                    const limitedItems = Array.isArray(items) ? items.slice(0, 6) : [];
+                    cache.set(query, limitedItems);
+                    renderResults(limitedItems, query);
+                })
+                .catch((error) => {
+                    if (error.name !== "AbortError") {
+                        hideResults();
+                    }
+                });
+        };
+
+        input.addEventListener("input", () => {
+            const query = input.value.trim();
+
+            window.clearTimeout(timer);
+
+            if (query.length < minLength) {
+                hideResults();
+                return;
+            }
+
+            timer = window.setTimeout(() => requestResults(query), debounceDelay);
+        });
+
+        input.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                hideResults();
+                input.blur();
+            }
+        });
+
+        document.addEventListener("click", (event) => {
+            if (!form.contains(event.target)) {
+                hideResults();
+            }
+        });
+    });
 
     const productGallery = document.querySelector("[data-product-gallery]");
 

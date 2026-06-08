@@ -13,6 +13,7 @@ $custom_box_inc_files = array(
     'inc/breadcrumbs.php',
     'inc/admin-editor.php',
     'inc/admin-unused-page-cleanup.php',
+    'inc/search-suggestions.php',
     'inc/cosmetic-packaging-post-sync.php',
     'inc/how-paper-boxes-post-sync.php',
     'inc/supplier-audit-post-sync.php',

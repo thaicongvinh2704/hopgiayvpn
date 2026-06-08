@@ -116,6 +116,16 @@ function custom_box_enqueue_assets() {
         file_exists($main_js_path) ? filemtime($main_js_path) : '1.2',
         true
     );
+    wp_localize_script(
+        'main-js',
+        'customBoxSearch',
+        array(
+            'endpoint'  => esc_url_raw(rest_url('custom-box/v1/search-suggestions')),
+            'searchUrl' => esc_url_raw(home_url('/')),
+            'minLength' => 2,
+            'debounce'  => 150,
+        )
+    );
     wp_script_add_data('main-js', 'defer', true);
 }
 add_action('wp_enqueue_scripts', 'custom_box_enqueue_assets');
