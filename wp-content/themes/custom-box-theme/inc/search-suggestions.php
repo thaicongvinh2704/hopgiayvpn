@@ -92,7 +92,7 @@ function custom_box_search_suggestions(WP_REST_Request $request) {
         }
     }
 
-    set_transient($cache_key, $results, 10 * MINUTE_IN_SECONDS);
+    set_transient($cache_key, $results, 6 * HOUR_IN_SECONDS);
 
     return rest_ensure_response($results);
 }

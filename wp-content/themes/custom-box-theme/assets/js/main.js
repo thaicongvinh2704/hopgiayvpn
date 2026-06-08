@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const debounceDelay = Number(customBoxSearch.debounce || 150);
         let controller = null;
         let timer = null;
+        let previousQuery = "";
 
         const hideResults = () => {
             results.hidden = true;
@@ -89,11 +90,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
         input.addEventListener("input", () => {
             const query = input.value.trim();
+            const shouldRequestImmediately = query.length <= 3 || previousQuery.length < minLength;
+            previousQuery = query;
 
             window.clearTimeout(timer);
 
             if (query.length < minLength) {
                 hideResults();
+                return;
+            }
+
+            if (shouldRequestImmediately) {
+                requestResults(query);
                 return;
             }
 

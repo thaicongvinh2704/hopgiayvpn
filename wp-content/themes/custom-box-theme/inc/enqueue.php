@@ -123,7 +123,7 @@ function custom_box_enqueue_assets() {
             'endpoint'  => esc_url_raw(rest_url('custom-box/v1/search-suggestions')),
             'searchUrl' => esc_url_raw(home_url('/')),
             'minLength' => 2,
-            'debounce'  => 150,
+            'debounce'  => 50,
         )
     );
     wp_script_add_data('main-js', 'defer', true);
