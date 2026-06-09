@@ -17,6 +17,7 @@ $custom_box_inc_files = array(
     'inc/cosmetic-packaging-post-sync.php',
     'inc/how-paper-boxes-post-sync.php',
     'inc/paper-box-manufacturing-process-post-sync.php',
+    'inc/paper-material-selection-post-sync.php',
     'inc/supplier-audit-post-sync.php',
     'inc/admin-category-fields.php',
     'inc/product-specifications.php',
