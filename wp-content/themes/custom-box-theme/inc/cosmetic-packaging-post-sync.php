@@ -44,6 +44,14 @@ function custom_box_sync_cosmetic_packaging_post()
         $post = get_post($post_id);
     }
 
+    $missing_option = get_option('custom_box_cosmetic_packaging_missing_images', array());
+    if (
+        get_post_meta($post->ID, '_custom_box_cosmetic_packaging_sync_version', true) === $sync_version
+        && empty($missing_option)
+    ) {
+        return;
+    }
+
     custom_box_update_cosmetic_packaging_post_details($post->ID, $sync_version);
     $post = get_post($post->ID);
 

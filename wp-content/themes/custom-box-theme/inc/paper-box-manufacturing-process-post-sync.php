@@ -15,9 +15,18 @@ function custom_box_sync_paper_box_manufacturing_process_post()
 
     $post_data = custom_box_paper_box_manufacturing_process_post_map();
     $post = get_page_by_path($post_data['slug'], OBJECT, 'post');
+    $sync_version = 'paper-box-manufacturing-process-20260608-v1';
 
     if (!$post || 'trash' === $post->post_status) {
         update_option('custom_box_paper_box_manufacturing_process_missing_images', array(), false);
+        return;
+    }
+
+    $missing_option = get_option('custom_box_paper_box_manufacturing_process_missing_images', array());
+    if (
+        get_post_meta($post->ID, '_custom_box_paper_box_manufacturing_process_sync_version', true) === $sync_version
+        && empty($missing_option)
+    ) {
         return;
     }
 
@@ -65,6 +74,10 @@ function custom_box_sync_paper_box_manufacturing_process_post()
             'ID'           => $post->ID,
             'post_content' => $updated_content,
         ));
+    }
+
+    if (empty($missing)) {
+        update_post_meta($post->ID, '_custom_box_paper_box_manufacturing_process_sync_version', $sync_version);
     }
 }
 

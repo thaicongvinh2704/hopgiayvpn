@@ -49,6 +49,14 @@ function custom_box_sync_how_paper_boxes_post()
         $post = get_post($post_id);
     }
 
+    $missing_option = get_option('custom_box_how_paper_boxes_missing_images', array());
+    if (
+        get_post_meta($post->ID, '_custom_box_how_paper_boxes_sync_version', true) === $sync_version
+        && empty($missing_option)
+    ) {
+        return;
+    }
+
     custom_box_update_how_paper_boxes_post_details($post->ID, $sync_version);
     custom_box_update_how_paper_boxes_post_seo($post->ID);
     custom_box_update_how_paper_boxes_post_terms($post->ID);

@@ -23,11 +23,25 @@ function custom_box_sync_supplier_audit_post()
     }
 
     $post_id = (int) $post->ID;
+    $sync_version = 'supplier-audit-checklist-20260605-v1';
+    $missing_option = get_option('custom_box_supplier_audit_missing_images', array());
+
+    if (
+        get_post_meta($post_id, '_custom_box_supplier_audit_sync_version', true) === $sync_version
+        && empty($missing_option)
+    ) {
+        return;
+    }
 
     custom_box_update_supplier_audit_post_details($post_id);
     custom_box_update_supplier_audit_post_terms($post_id);
     custom_box_update_supplier_audit_post_seo($post_id);
     custom_box_update_supplier_audit_images($post_id);
+
+    $missing_option = get_option('custom_box_supplier_audit_missing_images', array());
+    if (empty($missing_option)) {
+        update_post_meta($post_id, '_custom_box_supplier_audit_sync_version', $sync_version);
+    }
 }
 
 function custom_box_find_supplier_audit_post_by_slug($slug)
