@@ -174,7 +174,6 @@ foreach ( $batches as $batch ) {
 }
 
 vpn_deploy_run_script( 'tools/import-final-category-products.php' );
-vpn_deploy_run_script( 'tools/create-local-packaging-materials-guide.php' );
 
 if ( function_exists( 'custom_box_category_migration_apply_products_to_targets' ) ) {
 	$published = function_exists( 'custom_box_product_sample_publish_category_balance_products' )
