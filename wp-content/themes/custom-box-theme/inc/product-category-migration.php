@@ -18,7 +18,7 @@ function custom_box_category_migration_targets() {
         'corrugated-mailer-boxes'     => 'Corrugated Mailer Boxes',
         'cosmetic-paper-boxes'        => 'Cosmetic Paper Boxes',
         'perfume-packaging-boxes'     => 'Perfume Packaging Boxes',
-        'skincare-packaging-boxes'    => 'Skincare Packaging Boxes',
+        'medicine-packaging-boxes'    => 'Medicine Packaging Boxes',
         'jewelry-paper-boxes'         => 'Jewelry Paper Boxes',
         'gift-paper-boxes'            => 'Gift Paper Boxes',
         'chocolate-gift-boxes'        => 'Chocolate Gift Boxes',
@@ -31,26 +31,26 @@ function custom_box_category_migration_targets() {
         'supplement-packaging-boxes'            => 'Supplement Packaging Boxes',
         'beauty-skincare-packaging'             => 'Beauty and Skincare Packaging',
         'premium-food-beverage-packaging'       => 'Premium Food and Beverage Packaging',
-        'electronics-accessories-packaging'     => 'Electronics Accessories Packaging',
+        'hardware-accessories-packaging'        => 'Hardware Accessories Packaging',
         'fashion-sportswear-packaging'          => 'Fashion and Sportswear Packaging',
         'wine-premium-drink-packaging'          => 'Wine and Premium Drink Packaging',
-        'corporate-gift-packaging'              => 'Corporate Gift Packaging',
-        'home-lifestyle-packaging'              => 'Home and Lifestyle Packaging',
-        'back-to-school-stationery-packaging'   => 'Back-to-School and Stationery Packaging',
+        'capsule-oil-packaging'                 => 'Capsule Oil Packaging',
+        'mouse-display-packaging'               => 'Mouse and Display Packaging',
+        'kraft-school-stationery-packaging'     => 'Kraft School and Stationery Packaging',
     );
 }
 
 function custom_box_category_migration_old_slug_map() {
     return array(
         'cosmetic-packaging-boxes'               => 'beauty-skincare-packaging',
-        'electronics-packaging-boxes'            => 'electronics-accessories-packaging',
+        'electronics-packaging-boxes'            => 'hardware-accessories-packaging',
         'food-packaging-boxes'                   => 'premium-food-beverage-packaging',
-        'gift-packaging-boxes'                   => 'corporate-gift-packaging',
+        'gift-packaging-boxes'                   => 'gift-paper-boxes',
         'health-supplement-packaging-boxes'      => 'supplement-packaging-boxes',
-        'healthcare-packaging-boxes'             => 'pharmaceutical-packaging-boxes',
+        'healthcare-packaging-boxes'             => 'medicine-packaging-boxes',
         'paper-bags'                             => 'beauty-skincare-packaging',
-        'retail-packaging-boxes'                 => 'home-lifestyle-packaging',
-        'stationery-packaging-boxes'             => 'back-to-school-stationery-packaging',
+        'retail-packaging-boxes'                 => 'packaging-accessories',
+        'stationery-packaging-boxes'             => 'kraft-school-stationery-packaging',
         'wine-packaging-boxes'                   => 'wine-premium-drink-packaging',
         'custom-paper-tube-packaging-boxes'      => 'paper-tube-packaging',
         'luxury-rigid-gift-boxes'                => 'rigid-boxes',
@@ -68,7 +68,7 @@ function custom_box_category_migration_old_slug_map() {
         'luxury-perfume-packaging-boxes'         => 'perfume-packaging-boxes',
         'premium-ribbon-gift-boxes'              => 'gift-paper-boxes',
         'kraft-round-gift-boxes'                 => 'gift-paper-boxes',
-        'custom-soap-packaging-boxes'            => 'skincare-packaging-boxes',
+        'custom-soap-packaging-boxes'            => 'beauty-skincare-packaging',
         'dessert-gift-packaging-boxes'           => 'bakery-packaging-boxes',
         'bakery-food-packaging-boxes'            => 'bakery-packaging-boxes',
         'dessert-packaging-boxes-with-inserts'   => 'bakery-packaging-boxes',
@@ -88,16 +88,17 @@ function custom_box_category_migration_old_slug_map() {
 
 function custom_box_category_migration_keyword_map() {
     return array(
-        'pharmaceutical-packaging-boxes'        => array('pharmaceutical', 'medicine', 'medical', 'pill', 'tablet', 'vial'),
+        'medicine-packaging-boxes'              => array('medicine', 'medical', 'pill', 'tablet', 'vial'),
+        'pharmaceutical-packaging-boxes'        => array('pharmaceutical', 'ampoule'),
         'supplement-packaging-boxes'            => array('supplement', 'vitamin', 'wellness', 'collagen', 'probiotic'),
         'beauty-skincare-packaging'             => array('beauty', 'skincare', 'cosmetic', 'ampoule', 'serum', 'makeup', 'perfume'),
         'premium-food-beverage-packaging'       => array('food', 'beverage', 'coffee', 'tea', 'chocolate', 'mug', 'paper tube', 'pet food'),
-        'electronics-accessories-packaging'     => array('electronics', 'phone', 'charging cable', 'cable', 'adapter'),
+        'hardware-accessories-packaging'        => array('hardware', 'electronics', 'phone', 'charging cable', 'cable', 'adapter'),
         'fashion-sportswear-packaging'          => array('fashion', 'sportswear', 'apparel', 'clothing', 'shoe'),
         'wine-premium-drink-packaging'          => array('wine', 'drink bottle', 'beverage bottle'),
-        'corporate-gift-packaging'              => array('corporate', 'gift', 'rigid gift', 'magnetic gift', 'drawer gift'),
-        'home-lifestyle-packaging'              => array('home', 'lifestyle', 'dinnerware', 'thermos', 'knife', 'homeware'),
-        'back-to-school-stationery-packaging'   => array('stationery', 'school', 'pencil', 'crayon', 'pen'),
+        'capsule-oil-packaging'                 => array('capsule', 'oil', 'essential oil'),
+        'mouse-display-packaging'               => array('mouse', 'display'),
+        'kraft-school-stationery-packaging'     => array('kraft', 'stationery', 'school', 'pencil', 'crayon', 'pen'),
         'paper-tube-packaging'     => array('tube', 'cylindrical'),
         'corrugated-mailer-boxes'  => array('corrugated', 'mailer', 'ecommerce', 'pet food'),
         'magnetic-closure-boxes'   => array('magnetic'),
@@ -105,7 +106,6 @@ function custom_box_category_migration_keyword_map() {
         'lid-and-base-boxes'       => array('lid and base', 'lid-base'),
         'folding-carton-boxes'     => array('folding carton', 'carton'),
         'cosmetic-paper-boxes'     => array('cosmetic', 'essential oil', 'soap'),
-        'skincare-packaging-boxes' => array('skincare', 'skin care'),
         'perfume-packaging-boxes'  => array('perfume'),
         'jewelry-paper-boxes'      => array('jewelry', 'watch'),
         'chocolate-gift-boxes'     => array('chocolate'),
@@ -121,9 +121,9 @@ function custom_box_category_migration_keyword_map() {
 function custom_box_category_migration_explicit_product_map() {
     return array(
         'custom-pharmaceutical-medicine-packaging-boxes' => array('custom-paper-boxes'),
-        'custom-medical-kit-packaging-box'               => array('pharmaceutical-packaging-boxes'),
-        'custom-pill-packaging-box'                      => array('pharmaceutical-packaging-boxes'),
-        'custom-vial-packaging-box'                      => array('pharmaceutical-packaging-boxes'),
+        'custom-medical-kit-packaging-box'               => array('medicine-packaging-boxes'),
+        'custom-pill-packaging-box'                      => array('medicine-packaging-boxes'),
+        'custom-vial-packaging-box'                      => array('medicine-packaging-boxes'),
         'custom-ampoule-packaging-box'                   => array('pharmaceutical-packaging-boxes', 'supplement-packaging-boxes'),
 
         'custom-supplement-vitamin-packaging-boxes'      => array('custom-paper-boxes'),
@@ -141,13 +141,13 @@ function custom_box_category_migration_explicit_product_map() {
         'custom-paper-tube-food-packaging-box'           => array('premium-food-beverage-packaging'),
         'custom-printed-corrugated-pet-food-box'         => array('premium-food-beverage-packaging'),
         'custom-paper-tube-packaging-box'                => array('premium-food-beverage-packaging'),
-        'custom-mug-packaging-box-with-window'           => array('premium-food-beverage-packaging', 'home-lifestyle-packaging'),
+        'custom-mug-packaging-box-with-window'           => array('premium-food-beverage-packaging'),
 
         'custom-phone-accessories-packaging-boxes'       => array('custom-paper-boxes'),
-        'custom-phone-packaging-box-with-paper-bag'      => array('electronics-accessories-packaging'),
-        'custom-phone-packaging-box'                     => array('electronics-accessories-packaging'),
-        'custom-charging-cable-packaging-box'            => array('electronics-accessories-packaging'),
-        'custom-phone-case-packaging-box'                => array('electronics-accessories-packaging'),
+        'custom-phone-packaging-box-with-paper-bag'      => array('hardware-accessories-packaging'),
+        'custom-phone-packaging-box'                     => array('hardware-accessories-packaging'),
+        'custom-charging-cable-packaging-box'            => array('hardware-accessories-packaging'),
+        'custom-phone-case-packaging-box'                => array('hardware-accessories-packaging'),
         'custom-corporate-gift-set-packaging-boxes'      => array('custom-paper-boxes'),
 
         'custom-wine-premium-beverage-packaging-boxes'   => array('custom-paper-boxes'),
@@ -156,22 +156,22 @@ function custom_box_category_migration_explicit_product_map() {
         'custom-double-wine-bottle-gift-box'             => array('premium-food-beverage-packaging', 'wine-premium-drink-packaging'),
         'custom-single-wine-bottle-gift-box'             => array('wine-premium-drink-packaging'),
 
-        'custom-luxury-gift-box-with-paper-bag'          => array('corporate-gift-packaging'),
-        'custom-magnetic-gift-box'                       => array('corporate-gift-packaging'),
-        'custom-rigid-gift-box'                          => array('corporate-gift-packaging'),
-        'custom-drawer-gift-box'                         => array('corporate-gift-packaging'),
+        'custom-luxury-gift-box-with-paper-bag'          => array('gift-paper-boxes'),
+        'custom-magnetic-gift-box'                       => array('gift-paper-boxes'),
+        'custom-rigid-gift-box'                          => array('gift-paper-boxes'),
+        'custom-drawer-gift-box'                         => array('gift-paper-boxes'),
         'custom-teal-rigid-gift-box'                     => array('custom-paper-boxes'),
 
         'custom-home-lifestyle-product-packaging-boxes'  => array('custom-paper-boxes'),
-        'custom-thermos-bottle-packaging-box'            => array('home-lifestyle-packaging'),
-        'custom-dinnerware-packaging-box'                => array('home-lifestyle-packaging'),
-        'custom-knife-set-packaging-box'                 => array('home-lifestyle-packaging'),
+        'custom-thermos-bottle-packaging-box'            => array('premium-food-beverage-packaging'),
+        'custom-dinnerware-packaging-box'                => array('premium-food-beverage-packaging'),
+        'custom-knife-set-packaging-box'                 => array('packaging-accessories'),
 
-        'custom-stationery-packaging-box'                => array('back-to-school-stationery-packaging'),
+        'custom-stationery-packaging-box'                => array('kraft-school-stationery-packaging'),
         'custom-stationery-school-supplies-packaging-boxes' => array('custom-paper-boxes'),
-        'custom-colored-pencil-packaging-box'            => array('back-to-school-stationery-packaging'),
-        'custom-crayon-packaging-box'                    => array('back-to-school-stationery-packaging'),
-        'custom-fountain-pen-gift-box'                   => array('back-to-school-stationery-packaging'),
+        'custom-colored-pencil-packaging-box'            => array('kraft-school-stationery-packaging'),
+        'custom-crayon-packaging-box'                    => array('kraft-school-stationery-packaging'),
+        'custom-fountain-pen-gift-box'                   => array('kraft-school-stationery-packaging'),
 
         'custom-red-paper-shopping-bag'                  => array('paper-bags-with-logo'),
     );
@@ -329,9 +329,10 @@ function custom_box_category_migration_sync_hierarchy() {
         return new WP_Error('missing_parent', __('Missing Custom Packaging Boxes parent category.', 'custom-box-theme'));
     }
 
+    $targets = custom_box_category_migration_targets();
     $active_slugs = function_exists('custom_box_get_packaging_category_slugs')
         ? custom_box_get_packaging_category_slugs()
-        : array_keys(custom_box_category_migration_targets());
+        : array_keys($targets);
     $active_ids = array();
     $attached = 0;
     $detached = 0;
@@ -341,7 +342,20 @@ function custom_box_category_migration_sync_hierarchy() {
         $term = get_term_by('slug', $slug, 'product_cat');
 
         if (!$term || is_wp_error($term)) {
-            $missing[] = $slug;
+            $term_id = custom_box_category_migration_get_or_create_term(
+                $slug,
+                isset($targets[$slug]) ? $targets[$slug] : ucwords(str_replace('-', ' ', $slug)),
+                true,
+                $parent_id
+            );
+
+            if (!$term_id) {
+                $missing[] = $slug;
+                continue;
+            }
+
+            $active_ids[] = (int) $term_id;
+            $attached++;
             continue;
         }
 
