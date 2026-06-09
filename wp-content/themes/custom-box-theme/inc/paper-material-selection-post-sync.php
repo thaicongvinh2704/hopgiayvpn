@@ -19,7 +19,7 @@ function custom_box_sync_paper_material_selection_post()
 function custom_box_upsert_paper_material_selection_post()
 {
     $post_data = custom_box_paper_material_selection_post_map();
-    $sync_version = 'paper-material-selection-20260609-v1';
+    $sync_version = 'paper-material-selection-20260609-v2';
     $post = get_page_by_path($post_data['slug'], OBJECT, 'post');
 
     if ($post && 'trash' === $post->post_status) {
@@ -64,13 +64,142 @@ function custom_box_upsert_paper_material_selection_post()
     }
 
     custom_box_update_paper_material_selection_terms($post->ID);
+    $missing_images = custom_box_sync_paper_material_selection_images($post->ID);
 
     update_post_meta($post->ID, 'rank_math_title', $post_data['seo_title']);
     update_post_meta($post->ID, 'rank_math_description', $post_data['seo_description']);
     update_post_meta($post->ID, 'rank_math_focus_keyword', $post_data['focus_keyword']);
-    update_post_meta($post->ID, '_custom_box_paper_material_selection_sync_version', $sync_version);
+
+    update_option('custom_box_paper_material_selection_missing_images', $missing_images, false);
+
+    if (empty($missing_images)) {
+        update_post_meta($post->ID, '_custom_box_paper_material_selection_sync_version', $sync_version);
+    }
 
     return (int) $post->ID;
+}
+
+function custom_box_paper_material_selection_image_map()
+{
+    return array(
+        'how-to-choose-paper-material-for-product-packaging-hero.webp' => array(
+            'alt'      => 'paper material for packaging selection for custom paper boxes',
+            'caption'  => 'Paper material selection for custom product packaging projects.',
+            'featured' => true,
+        ),
+        'common-paper-materials-for-custom-product-packaging.webp' => array(
+            'alt'      => 'common paper materials for custom product packaging',
+            'caption'  => 'Common paper materials used for custom paper boxes and product packaging.',
+            'featured' => false,
+        ),
+        'kraft-paper-packaging-for-natural-minimalist-brands.webp' => array(
+            'alt'      => 'kraft paper packaging for natural and minimalist brands',
+            'caption'  => 'Kraft paper packaging is often used for natural, simple and minimalist brand presentation.',
+            'featured' => false,
+        ),
+        'corrugated-paper-packaging-for-shipping-protection.webp' => array(
+            'alt'      => 'corrugated paper packaging for shipping protection',
+            'caption'  => 'Corrugated paper packaging helps improve product protection during shipping and handling.',
+            'featured' => false,
+        ),
+        'rigid-greyboard-packaging-for-premium-gift-boxes.webp' => array(
+            'alt'      => 'rigid greyboard packaging for premium gift boxes',
+            'caption'  => 'Rigid greyboard is commonly used for premium gift boxes and luxury product packaging.',
+            'featured' => false,
+        ),
+        'custom-paper-packaging-material-consultation-b2b-buyers.webp' => array(
+            'alt'      => 'custom paper packaging material consultation for B2B buyers',
+            'caption'  => 'Packaging material review for B2B custom paper box projects.',
+            'featured' => false,
+        ),
+    );
+}
+
+function custom_box_sync_paper_material_selection_images($post_id)
+{
+    $post = get_post($post_id);
+
+    if (!$post) {
+        return array();
+    }
+
+    $content = $post->post_content;
+    $missing = array();
+
+    foreach (custom_box_paper_material_selection_image_map() as $filename => $image) {
+        $attachment_id = custom_box_find_paper_material_selection_attachment($filename);
+        $token = '<p>[Thiếu ảnh: ' . $filename . ']</p>';
+
+        if (!$attachment_id) {
+            $missing[] = $filename;
+            continue;
+        }
+
+        update_post_meta($attachment_id, '_wp_attachment_image_alt', $image['alt']);
+        wp_update_post(array(
+            'ID'           => $attachment_id,
+            'post_excerpt' => $image['caption'],
+        ));
+
+        if (!empty($image['featured'])) {
+            set_post_thumbnail($post_id, $attachment_id);
+        }
+
+        $figure = custom_box_paper_material_selection_figure($attachment_id, $image);
+        $content = str_replace($token, $figure, $content);
+    }
+
+    if ($content !== $post->post_content) {
+        wp_update_post(array(
+            'ID'           => $post_id,
+            'post_content' => $content,
+        ));
+    }
+
+    return $missing;
+}
+
+function custom_box_find_paper_material_selection_attachment($filename)
+{
+    $base = pathinfo($filename, PATHINFO_FILENAME);
+    $attachment = get_page_by_path(sanitize_title($base), OBJECT, 'attachment');
+
+    if ($attachment) {
+        return (int) $attachment->ID;
+    }
+
+    global $wpdb;
+
+    return (int) $wpdb->get_var(
+        $wpdb->prepare(
+            "SELECT post_id FROM {$wpdb->postmeta}
+             WHERE meta_key = '_wp_attached_file'
+             AND (meta_value LIKE %s OR meta_value LIKE %s)
+             ORDER BY post_id DESC LIMIT 1",
+            '%/' . $wpdb->esc_like($filename),
+            '%/' . $wpdb->esc_like($base) . '.%'
+        )
+    );
+}
+
+function custom_box_paper_material_selection_figure($attachment_id, $image)
+{
+    $size = !empty($image['featured']) ? 'large' : 'large';
+    $image_html = wp_get_attachment_image($attachment_id, $size, false, array(
+        'class'    => 'wp-image-' . $attachment_id,
+        'alt'      => $image['alt'],
+        'loading'  => !empty($image['featured']) ? 'eager' : 'lazy',
+        'decoding' => 'async',
+    ));
+
+    if (!$image_html) {
+        return '';
+    }
+
+    return '<figure class="wp-block-image aligncenter size-large">'
+        . $image_html
+        . '<figcaption class="wp-element-caption">' . esc_html($image['caption']) . '</figcaption>'
+        . '</figure>';
 }
 
 function custom_box_paper_material_selection_post_map()
@@ -131,10 +260,7 @@ function custom_box_paper_material_selection_post_content()
 
 <p>This guide is written for brands, importers, distributors, sourcing managers and procurement teams preparing custom paper packaging projects. It explains how to connect product requirements with realistic material, printing, structural and shipping decisions before requesting a quotation.</p>
 
-<div class="vpn-image-placeholder">
-<p><strong>[Image suggestion: Hero image showing different paper materials, sample swatches and finished custom paper boxes on a clean bright background]</strong></p>
-<p>[Alt text: paper material for packaging selection for custom paper boxes]</p>
-</div>
+<p>[Thiếu ảnh: how-to-choose-paper-material-for-product-packaging-hero.webp]</p>
 
 <h2>Start With the Product Before Choosing the Paper</h2>
 
@@ -148,10 +274,7 @@ function custom_box_paper_material_selection_post_content()
 
 <p>Rigid greyboard is a dense, non-folding board usually wrapped with printed or specialty paper to create premium boxes. Specialty papers add texture, color, metallic effects or distinctive tactile qualities. Recycled paper and board options are also available, although buyers should verify appearance, strength, print behavior and any environmental claims with the supplier for the specific grade being quoted.</p>
 
-<div class="vpn-image-placeholder">
-<p><strong>[Image suggestion: Comparison image showing paperboard, kraft paper, corrugated paper, greyboard, specialty paper and recycled paper samples]</strong></p>
-<p>[Alt text: common paper materials for custom product packaging]</p>
-</div>
+<p>[Thiếu ảnh: common-paper-materials-for-custom-product-packaging.webp]</p>
 
 <h2>Paperboard Packaging for Retail and Consumer Products</h2>
 
@@ -165,10 +288,7 @@ function custom_box_paper_material_selection_post_content()
 
 <p>The natural surface can also be a limitation. It changes printed color, reduces brightness and may make subtle shades less predictable. Kraft is not always the best choice for brands that need highly accurate CMYK reproduction, bright white backgrounds, photographic graphics or a polished luxury finish. A printed proof on the actual stock is more useful than judging the result from a digital mockup.</p>
 
-<div class="vpn-image-placeholder">
-<p><strong>[Image suggestion: Minimal kraft paper box with simple black logo and natural product branding]</strong></p>
-<p>[Alt text: kraft paper packaging for natural and minimalist brands]</p>
-</div>
+<p>[Thiếu ảnh: kraft-paper-packaging-for-natural-minimalist-brands.webp]</p>
 
 <h2>Corrugated Paper Packaging for Protection and Shipping</h2>
 
@@ -176,10 +296,7 @@ function custom_box_paper_material_selection_post_content()
 
 <p>Corrugated packaging can look less refined if the flute, edges and printing method are not planned carefully. Premium presentation may require a better liner, lithographic lamination, cleaner structural design or a separate retail box inside the shipper. The correct solution depends on whether the corrugated component is customer-facing or primarily protective.</p>
 
-<div class="vpn-image-placeholder">
-<p><strong>[Image suggestion: Corrugated mailer box protecting a product during shipping with clean branded design]</strong></p>
-<p>[Alt text: corrugated paper packaging for shipping protection]</p>
-</div>
+<p>[Thiếu ảnh: corrugated-paper-packaging-for-shipping-protection.webp]</p>
 
 <h2>Rigid Greyboard for Premium Gift and Luxury Packaging</h2>
 
@@ -187,10 +304,7 @@ function custom_box_paper_material_selection_post_content()
 
 <p>Rigid boxes cost more, occupy more storage volume and generally require longer production than simple folding cartons. They may also increase export freight because they are often delivered assembled. For cost-sensitive or very high-volume programs, a well-engineered folding carton can sometimes provide a more appropriate balance. Rigid greyboard should be selected because the product and brand experience justify it, not simply because it appears premium.</p>
 
-<div class="vpn-image-placeholder">
-<p><strong>[Image suggestion: Premium rigid greyboard gift box with printed paper wrap, foil logo and insert]</strong></p>
-<p>[Alt text: rigid greyboard packaging for premium gift boxes]</p>
-</div>
+<p>[Thiếu ảnh: rigid-greyboard-packaging-for-premium-gift-boxes.webp]</p>
 
 <h2>Specialty Paper for Premium Brand Experience</h2>
 
@@ -278,10 +392,7 @@ function custom_box_paper_material_selection_post_content()
 
 <p>The goal is not to specify the most expensive board. It is to choose a paper material for packaging that performs consistently through printing, packing, storage, shipping and final presentation.</p>
 
-<div class="vpn-image-placeholder">
-<p><strong>[Image suggestion: B2B packaging material consultation scene with paper samples, dieline, printed box sample and finished packaging]</strong></p>
-<p>[Alt text: custom paper packaging material consultation for B2B buyers]</p>
-</div>
+<p>[Thiếu ảnh: custom-paper-packaging-material-consultation-b2b-buyers.webp]</p>
 
 <h2>Frequently Asked Questions</h2>
 
