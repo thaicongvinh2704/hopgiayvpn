@@ -23,6 +23,7 @@ $custom_box_inc_files = array(
     'inc/admin-category-fields.php',
     'inc/product-specifications.php',
     'inc/product-category-migration.php',
+    'inc/sports-packaging-category-sync.php',
     'inc/admin-unused-product-category-cleanup.php',
     'inc/admin-product-sample-deploy.php',
     'inc/quote-form-handler.php',

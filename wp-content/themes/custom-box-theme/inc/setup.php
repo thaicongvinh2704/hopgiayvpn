@@ -175,6 +175,7 @@ function custom_box_get_packaging_menu_groups() {
                 'premium-food-beverage-packaging',
                 'electronics-accessories-packaging',
                 'fashion-sportswear-packaging',
+                'sports-packaging-boxes',
                 'wine-premium-drink-packaging',
                 'corporate-gift-packaging',
                 'home-lifestyle-packaging',

@@ -70,6 +70,7 @@ function custom_box_get_product_category_asset_image_url($term_or_slug) {
         'premium-food-beverage-packaging'     => 'premium-tea-coffee-chocolate-packaging-boxes-gray-background.webp',
         'electronics-accessories-packaging'   => 'custom-phone-accessories-packaging-boxes-gray-background.webp',
         'fashion-sportswear-packaging'        => 'custom-apparel-packaging-boxes-gray-background.webp',
+        'sports-packaging-boxes'              => 'custom-apparel-packaging-boxes-gray-background.webp',
         'wine-premium-drink-packaging'        => 'custom-wine-premium-beverage-packaging-boxes-gray-background.webp',
         'corporate-gift-packaging'            => 'custom-corporate-gift-set-packaging-boxes-gray-background.webp',
         'home-lifestyle-packaging'            => 'custom-home-lifestyle-product-packaging-boxes-gray-background.webp',
