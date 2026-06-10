@@ -63,36 +63,34 @@ function custom_box_get_product_category_asset_image_url($term_or_slug) {
         return '';
     }
 
-    if ('sports-packaging-boxes' === $slug) {
-        $sports_term = get_term_by('slug', $slug, 'product_cat');
+    $term = is_object($term_or_slug) && isset($term_or_slug->term_id) ? $term_or_slug : get_term_by('slug', $slug, 'product_cat');
 
-        if ($sports_term && !is_wp_error($sports_term)) {
-            $sports_products = get_posts(array(
-                'post_type'              => 'product',
-                'post_status'            => 'publish',
-                'posts_per_page'         => 1,
-                'fields'                 => 'ids',
-                'orderby'                => 'ID',
-                'order'                  => 'ASC',
-                'no_found_rows'          => true,
-                'update_post_meta_cache' => true,
-                'update_post_term_cache' => false,
-                'tax_query'              => array(
-                    array(
-                        'taxonomy' => 'product_cat',
-                        'field'    => 'term_id',
-                        'terms'    => (int) $sports_term->term_id,
-                    ),
+    if ($term && !is_wp_error($term) && isset($term->term_id)) {
+        $product_ids = get_posts(array(
+            'post_type'              => 'product',
+            'post_status'            => 'publish',
+            'posts_per_page'         => 8,
+            'fields'                 => 'ids',
+            'orderby'                => 'menu_order ID',
+            'order'                  => 'ASC',
+            'no_found_rows'          => true,
+            'update_post_meta_cache' => true,
+            'update_post_term_cache' => false,
+            'tax_query'              => array(
+                array(
+                    'taxonomy' => 'product_cat',
+                    'field'    => 'term_id',
+                    'terms'    => (int) $term->term_id,
                 ),
-            ));
+            ),
+        ));
 
-            if ($sports_products) {
-                $sports_image_id = get_post_thumbnail_id((int) $sports_products[0]);
-                $sports_image_url = $sports_image_id ? wp_get_attachment_image_url($sports_image_id, 'medium_large') : '';
+        foreach ($product_ids as $product_id) {
+            $product_image_id = get_post_thumbnail_id((int) $product_id);
+            $product_image_url = $product_image_id ? wp_get_attachment_image_url($product_image_id, 'medium_large') : '';
 
-                if ($sports_image_url) {
-                    return $sports_image_url;
-                }
+            if ($product_image_url) {
+                return $product_image_url;
             }
         }
     }
