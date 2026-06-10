@@ -3,32 +3,17 @@
     <div class="container">
 
         <?php
-        $parent_category = get_term_by('name', 'Custom Packaging Boxes', 'product_cat');
         $slider_categories = array();
 
-        if ($parent_category && !is_wp_error($parent_category)) {
-            $slider_categories = get_terms(array(
-                'taxonomy'   => 'product_cat',
-                'parent'     => $parent_category->term_id,
-                'hide_empty' => false,
-                'orderby'    => 'term_id',
-                'order'      => 'ASC',
-                'number'     => 55,
-            ));
+        if (function_exists('custom_box_get_all_categories_menu_columns')) {
+            foreach (custom_box_get_all_categories_menu_columns() as $column) {
+                if (empty($column['terms']) || !is_array($column['terms'])) {
+                    continue;
+                }
 
-            if (!empty($slider_categories) && !is_wp_error($slider_categories)) {
-                usort($slider_categories, function ($a, $b) {
-                    $a_featured = (int) get_term_meta($a->term_id, 'custom_box_category_featured', true);
-                    $b_featured = (int) get_term_meta($b->term_id, 'custom_box_category_featured', true);
-
-                    if ($a_featured !== $b_featured) {
-                        return $b_featured <=> $a_featured;
-                    }
-
-                    return $a->term_id <=> $b->term_id;
-                });
-
-                $slider_categories = array_slice($slider_categories, 0, 12);
+                foreach ($column['terms'] as $category) {
+                    $slider_categories[] = $category;
+                }
             }
         }
         ?>
