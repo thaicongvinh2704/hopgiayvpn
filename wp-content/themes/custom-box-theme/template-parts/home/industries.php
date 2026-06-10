@@ -39,11 +39,16 @@
 
                 <?php foreach ($slider_categories as $category) : ?>
                     <?php
-                    $image_id = (int) get_term_meta($category->term_id, 'thumbnail_id', true);
-                    if (!$image_id) {
-                        $image_id = (int) get_term_meta($category->term_id, 'custom_box_category_image_id', true);
+                    $image_url = function_exists('custom_box_get_product_category_asset_image_url') ? custom_box_get_product_category_asset_image_url($category) : '';
+
+                    if (!$image_url) {
+                        $image_id = (int) get_term_meta($category->term_id, 'thumbnail_id', true);
+                        if (!$image_id) {
+                            $image_id = (int) get_term_meta($category->term_id, 'custom_box_category_image_id', true);
+                        }
+                        $image_url = $image_id ? wp_get_attachment_image_url($image_id, 'medium') : get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
                     }
-                    $image_url = $image_id ? wp_get_attachment_image_url($image_id, 'medium') : get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
+
                     $category_link = get_term_link($category);
 
                     if (is_wp_error($category_link)) {
