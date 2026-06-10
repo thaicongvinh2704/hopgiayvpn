@@ -63,6 +63,40 @@ function custom_box_get_product_category_asset_image_url($term_or_slug) {
         return '';
     }
 
+    if ('sports-packaging-boxes' === $slug) {
+        $sports_term = get_term_by('slug', $slug, 'product_cat');
+
+        if ($sports_term && !is_wp_error($sports_term)) {
+            $sports_products = get_posts(array(
+                'post_type'              => 'product',
+                'post_status'            => 'publish',
+                'posts_per_page'         => 1,
+                'fields'                 => 'ids',
+                'orderby'                => 'ID',
+                'order'                  => 'ASC',
+                'no_found_rows'          => true,
+                'update_post_meta_cache' => true,
+                'update_post_term_cache' => false,
+                'tax_query'              => array(
+                    array(
+                        'taxonomy' => 'product_cat',
+                        'field'    => 'term_id',
+                        'terms'    => (int) $sports_term->term_id,
+                    ),
+                ),
+            ));
+
+            if ($sports_products) {
+                $sports_image_id = get_post_thumbnail_id((int) $sports_products[0]);
+                $sports_image_url = $sports_image_id ? wp_get_attachment_image_url($sports_image_id, 'medium_large') : '';
+
+                if ($sports_image_url) {
+                    return $sports_image_url;
+                }
+            }
+        }
+    }
+
     $asset_images = array(
         'pharmaceutical-packaging-boxes'      => 'custom-pharmaceutical-medicine-packaging-boxes-gray-background.webp',
         'supplement-packaging-boxes'          => 'custom-supplement-vitamin-packaging-boxes-gray-background.webp',
@@ -70,7 +104,6 @@ function custom_box_get_product_category_asset_image_url($term_or_slug) {
         'premium-food-beverage-packaging'     => 'premium-tea-coffee-chocolate-packaging-boxes-gray-background.webp',
         'electronics-accessories-packaging'   => 'custom-phone-accessories-packaging-boxes-gray-background.webp',
         'fashion-sportswear-packaging'        => 'custom-apparel-packaging-boxes-gray-background.webp',
-        'sports-packaging-boxes'              => 'custom-apparel-packaging-boxes-gray-background.webp',
         'wine-premium-drink-packaging'        => 'custom-wine-premium-beverage-packaging-boxes-gray-background.webp',
         'corporate-gift-packaging'            => 'custom-corporate-gift-set-packaging-boxes-gray-background.webp',
         'home-lifestyle-packaging'            => 'custom-home-lifestyle-product-packaging-boxes-gray-background.webp',
