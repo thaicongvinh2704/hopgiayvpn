@@ -63,65 +63,14 @@ function custom_box_get_product_category_asset_image_url($term_or_slug) {
         return '';
     }
 
-    $term = is_object($term_or_slug) && isset($term_or_slug->term_id) ? $term_or_slug : get_term_by('slug', $slug, 'product_cat');
-
-    if ($term && !is_wp_error($term) && isset($term->term_id)) {
-        $product_ids = get_posts(array(
-            'post_type'              => 'product',
-            'post_status'            => 'publish',
-            'posts_per_page'         => 8,
-            'fields'                 => 'ids',
-            'orderby'                => 'menu_order ID',
-            'order'                  => 'ASC',
-            'no_found_rows'          => true,
-            'update_post_meta_cache' => true,
-            'update_post_term_cache' => false,
-            'tax_query'              => array(
-                array(
-                    'taxonomy' => 'product_cat',
-                    'field'    => 'term_id',
-                    'terms'    => (int) $term->term_id,
-                ),
-            ),
-        ));
-
-        foreach ($product_ids as $product_id) {
-            $product_image_id = get_post_thumbnail_id((int) $product_id);
-            $product_image_url = $product_image_id ? wp_get_attachment_image_url($product_image_id, 'medium_large') : '';
-
-            if ($product_image_url) {
-                return $product_image_url;
-            }
-        }
-    }
-
     $asset_images = array(
-        'custom-paper-boxes'                    => 'Cardboard-Packaging.webp',
-        'custom-printed-paper-boxes'            => 'SBS-Paperboard-Packaging.webp',
-        'rigid-boxes'                           => 'Rigid-Packaging.webp',
-        'folding-carton-boxes'                  => 'Tuck-Top-Boxes_1758880242.webp',
-        'magnetic-closure-boxes'                => 'gift-box.webp',
-        'drawer-boxes'                          => 'Perforated-Boxes.webp',
-        'lid-and-base-boxes'                    => 'RETT-Boxes.webp',
-        'paper-tube-packaging'                  => 'Pyramid-Boxes.webp',
-        'corrugated-mailer-boxes'               => 'Corrugated-Packaging.webp',
-        'cosmetic-paper-boxes'                  => 'custom-cosmetic-skincare-packaging-boxes-gray-background.webp',
-        'perfume-packaging-boxes'               => 'custom-cosmetic-skincare-packaging-boxes-gray-background.webp',
-        'skincare-packaging-boxes'              => 'custom-cosmetic-skincare-packaging-boxes-gray-background.webp',
-        'jewelry-paper-boxes'                   => 'Rigid-Packaging.webp',
-        'gift-paper-boxes'                      => 'gift-box2.webp',
-        'chocolate-gift-boxes'                  => 'premium-tea-coffee-chocolate-packaging-boxes-gray-background.webp',
-        'food-paper-boxes'                      => 'premium-tea-coffee-chocolate-packaging-boxes-gray-background.webp',
-        'bakery-packaging-boxes'                => 'Takeout-Boxes_1758880241.webp',
-        'candle-packaging-boxes'                => 'custom-home-lifestyle-product-packaging-boxes-gray-background.webp',
-        'paper-bags-with-logo'                  => 'Kraft-Packaging.webp',
-        'packaging-accessories'                 => 'Dispenser-Boxes.webp',
         'pharmaceutical-packaging-boxes'      => 'custom-pharmaceutical-medicine-packaging-boxes-gray-background.webp',
         'supplement-packaging-boxes'          => 'custom-supplement-vitamin-packaging-boxes-gray-background.webp',
         'beauty-skincare-packaging'           => 'custom-cosmetic-skincare-packaging-boxes-gray-background.webp',
         'premium-food-beverage-packaging'     => 'premium-tea-coffee-chocolate-packaging-boxes-gray-background.webp',
         'electronics-accessories-packaging'   => 'custom-phone-accessories-packaging-boxes-gray-background.webp',
         'fashion-sportswear-packaging'        => 'custom-apparel-packaging-boxes-gray-background.webp',
+        'sports-packaging-boxes'              => 'custom-apparel-packaging-boxes-gray-background.webp',
         'wine-premium-drink-packaging'        => 'custom-wine-premium-beverage-packaging-boxes-gray-background.webp',
         'corporate-gift-packaging'            => 'custom-corporate-gift-set-packaging-boxes-gray-background.webp',
         'home-lifestyle-packaging'            => 'custom-home-lifestyle-product-packaging-boxes-gray-background.webp',
