@@ -353,7 +353,7 @@ function custom_box_get_business_schema() {
         'image'       => get_template_directory_uri() . '/assets/images/anh-nha-may-2.webp',
         'description' => 'Vietnam-based paper box and packaging manufacturer specializing in custom paper boxes, rigid boxes, paper bags, and export-ready packaging for brands, importers, distributors, and agencies.',
         'telephone'   => '+84933102653',
-        'email'       => 'paperbox@hopgiayvpn.com',
+        'email'       => 'sales.vpn@hopgiayvpn.com',
         'priceRange'  => '$$',
         'address'     => array(
             '@type'           => 'PostalAddress',
@@ -392,7 +392,7 @@ function custom_box_get_business_schema() {
             array(
                 '@type'       => 'ContactPoint',
                 'telephone'   => '+84933102653',
-                'email'       => 'paperbox@hopgiayvpn.com',
+                'email'       => 'sales.vpn@hopgiayvpn.com',
                 'contactType' => 'sales',
                 'areaServed'  => 'Worldwide',
                 'availableLanguage' => array('English', 'Vietnamese'),

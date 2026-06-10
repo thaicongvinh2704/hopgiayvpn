@@ -27,9 +27,9 @@
         <div class="top-left">
             <span>
                 <i class="far fa-envelope"></i>
-                <a href="mailto:paperbox@hopgiayvpn.com">paperbox@hopgiayvpn.com</a>
-                /
                 <a href="mailto:sales.vpn@hopgiayvpn.com">sales.vpn@hopgiayvpn.com</a>
+                /
+                <a href="mailto:huy.pq@hopgiayvpn.com">huy.pq@hopgiayvpn.com</a>
             </span>
         </div>
 

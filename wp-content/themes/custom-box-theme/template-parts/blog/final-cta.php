@@ -14,6 +14,6 @@ defined('ABSPATH') || exit;
     </div>
     <div class="blog-final-actions">
         <a class="btn-primary" href="<?php echo esc_url(home_url('/contact/#quote')); ?>"><?php esc_html_e('Get a Custom Quote', 'custom-box-theme'); ?></a>
-        <a class="btn-outline" href="mailto:paperbox@hopgiayvpn.com"><?php esc_html_e('Email Factory Team', 'custom-box-theme'); ?></a>
+        <a class="btn-outline" href="mailto:sales.vpn@hopgiayvpn.com"><?php esc_html_e('Email Factory Team', 'custom-box-theme'); ?></a>
     </div>
 </section>
