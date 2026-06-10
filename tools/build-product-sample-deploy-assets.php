@@ -15,10 +15,14 @@ $source_files = array(
 	$root . '/tools/import-product-samples-batch-4-remaining.php',
 	$root . '/tools/import-fashion-sportswear-products.php',
 	$root . '/tools/verify-fashion-sportswear-products.php',
+	$root . '/tools/import-sports-packaging-products.php',
+	$root . '/tools/verify-sports-packaging-products.php',
 );
 
 $asset_root    = $root . '/wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/root';
 $asset_uploads = $root . '/wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/uploads/2026/05';
+$sports_uploads = $root . '/wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/uploads/2026/06';
+$tool_bundle     = $root . '/wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools';
 
 if ( ! is_dir( $asset_root ) && ! mkdir( $asset_root, 0777, true ) ) {
 	fwrite( STDERR, "Unable to create asset root: {$asset_root}\n" );
@@ -27,6 +31,16 @@ if ( ! is_dir( $asset_root ) && ! mkdir( $asset_root, 0777, true ) ) {
 
 if ( ! is_dir( $asset_uploads ) && ! mkdir( $asset_uploads, 0777, true ) ) {
 	fwrite( STDERR, "Unable to create upload asset directory: {$asset_uploads}\n" );
+	exit( 1 );
+}
+
+if ( ! is_dir( $sports_uploads ) && ! mkdir( $sports_uploads, 0777, true ) ) {
+	fwrite( STDERR, "Unable to create sports upload asset directory: {$sports_uploads}\n" );
+	exit( 1 );
+}
+
+if ( ! is_dir( $tool_bundle ) && ! mkdir( $tool_bundle, 0777, true ) ) {
+	fwrite( STDERR, "Unable to create tool bundle directory: {$tool_bundle}\n" );
 	exit( 1 );
 }
 
@@ -93,5 +107,54 @@ foreach ( array_keys( $paths ) as $relative_path ) {
 	++$copied;
 }
 
+$sports_filenames = array(
+	'custom-sports-shoe-packaging-box-01-hero.webp',
+	'custom-sports-shoe-packaging-box-02-angle-view.webp',
+	'custom-sports-shoe-packaging-box-03-open-box.webp',
+	'custom-sports-shoe-packaging-box-04-detail-closeup.webp',
+	'premium-pickleball-set-rigid-paper-box-01-hero.webp',
+	'premium-pickleball-set-rigid-paper-box-02-angle-view.webp',
+	'premium-pickleball-set-rigid-paper-box-03-open-box-with-foam-insert.webp',
+	'premium-pickleball-set-rigid-paper-box-04-detail-closeup.webp',
+	'custom-knee-support-packaging-box-front.webp',
+	'custom-knee-support-packaging-box-front-1.webp',
+	'custom-knee-support-packaging-box-front-3.webp',
+	'custom-knee-support-packaging-box-front-4.webp',
+	'custom-sports-underwear-packaging-box-front.webp',
+	'custom-sports-underwear-packaging-box-front-2.webp',
+	'custom-sports-underwear-packaging-box-front-3.webp',
+	'custom-sports-underwear-packaging-box-front-4.webp',
+	'custom-sports-underwear-packaging-box-front-5.webp',
+	'custom-sports-underwear-packaging-box-front-6.webp',
+);
+
+$sports_copied = 0;
+foreach ( $sports_filenames as $filename ) {
+	$source = $root . '/wp-content/uploads/2026/06/' . $filename;
+	$target = $sports_uploads . '/' . $filename;
+
+	if ( ! file_exists( $source ) || ! copy( $source, $target ) ) {
+		fwrite( STDERR, "Unable to bundle sports image: {$filename}\n" );
+		exit( 1 );
+	}
+
+	++$sports_copied;
+}
+
+$tool_files = array(
+	$root . '/tools/import-sports-packaging-products.php',
+	$root . '/tools/verify-sports-packaging-products.php',
+	$root . '/tools/deploy-product-samples-all.php',
+);
+
+foreach ( $tool_files as $tool_file ) {
+	if ( ! copy( $tool_file, $tool_bundle . '/' . basename( $tool_file ) ) ) {
+		fwrite( STDERR, 'Unable to bundle tool: ' . basename( $tool_file ) . "\n" );
+		exit( 1 );
+	}
+}
+
 echo "Root assets: product-samples-10.md\n";
 echo "Upload assets copied: {$copied}\n";
+echo "Sports upload assets copied: {$sports_copied}\n";
+echo 'Sports deploy tools bundled: ' . count( $tool_files ) . "\n";

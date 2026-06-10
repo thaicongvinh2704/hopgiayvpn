@@ -141,14 +141,25 @@ $batches = array(
 		),
 	),
 	array(
-		'name'      => 'Fashion and Sportswear product samples',
-		'marker'    => 'product-samples-fashion-sportswear',
-		'expected'  => 6,
+		'name'     => 'Fashion and Sportswear product samples',
+		'marker'   => 'product-samples-fashion-sportswear',
+		'expected' => 6,
+		'min_words' => 900,
+		'always'   => true,
+		'scripts'  => array(
+			'tools/import-fashion-sportswear-products.php',
+			'tools/verify-fashion-sportswear-products.php',
+		),
+	),
+	array(
+		'name'      => 'Sports Packaging product samples',
+		'marker'    => 'product-samples-sports-packaging',
+		'expected'  => 4,
 		'min_words' => 900,
 		'always'    => true,
 		'scripts'   => array(
-			'tools/import-fashion-sportswear-products.php',
-			'tools/verify-fashion-sportswear-products.php',
+			'tools/import-sports-packaging-products.php',
+			'tools/verify-sports-packaging-products.php',
 		),
 	),
 );

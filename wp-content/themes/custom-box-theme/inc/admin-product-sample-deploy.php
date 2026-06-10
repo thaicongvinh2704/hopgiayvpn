@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-04-fashion-sportswear-images' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-10-sports-packaging' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -549,6 +549,17 @@ function custom_box_product_sample_deploy_batches(): array {
 			'scripts'   => array(
 				'tools/import-fashion-sportswear-products.php',
 				'tools/verify-fashion-sportswear-products.php',
+			),
+		),
+		array(
+			'name'      => 'Sports Packaging product samples',
+			'marker'    => 'product-samples-sports-packaging',
+			'expected'  => 4,
+			'min_words' => 900,
+			'always'    => true,
+			'scripts'   => array(
+				'tools/import-sports-packaging-products.php',
+				'tools/verify-sports-packaging-products.php',
 			),
 		),
 	);

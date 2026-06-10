@@ -151,6 +151,17 @@ $batches = array(
 			'tools/verify-fashion-sportswear-products.php',
 		),
 	),
+	array(
+		'name'      => 'Sports Packaging product samples',
+		'marker'    => 'product-samples-sports-packaging',
+		'expected'  => 4,
+		'min_words' => 900,
+		'always'    => true,
+		'scripts'   => array(
+			'tools/import-sports-packaging-products.php',
+			'tools/verify-sports-packaging-products.php',
+		),
+	),
 );
 
 foreach ( $batches as $batch ) {

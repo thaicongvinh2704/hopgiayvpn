@@ -538,6 +538,27 @@ Recommended hosting deploy order:
 2. `php tools/deploy-product-samples-all.php`
 3. clear cache if the hosting has page/object cache
 
+### Sports Packaging batch (June 2026)
+
+The sports batch imports four products from 18 bundled images:
+
+- `CUSTOM SPORTS SHOE PACKAGING BOX`
+- `PREMIUM PICKLEBALL SET RIGID PAPER BOX`
+- `CUSTOM KNEE SUPPORT PACKAGING BOX`
+- `CUSTOM SPORTS UNDERWEAR PACKAGING BOX`
+
+Files used:
+
+- `tools/import-sports-packaging-products.php`
+- `tools/verify-sports-packaging-products.php`
+- `wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/uploads/2026/06/`
+
+After `git pull` on hosting, either run:
+
+- `php tools/deploy-product-samples-all.php`
+
+or open **Tools > Product Sample Deploy** and run the latest batch. The importer creates missing WordPress media attachments from the bundled theme images before publishing the products.
+
 Do not manually create these products in WooCommerce admin unless the deploy script fails and the issue has been diagnosed.
 
 Current batch 1 local verification after rewrite:
