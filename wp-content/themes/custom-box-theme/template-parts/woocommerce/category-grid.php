@@ -28,7 +28,7 @@ $is_all_categories = $current_term && $parent_term && !is_wp_error($current_term
                     <span><?php echo esc_html($category->name); ?></span>
                 </a>
             <?php endforeach; ?>
-            <a class="product-category-more" href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/products/')); ?>">
+            <a class="product-category-more" href="<?php echo esc_url(function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/')); ?>">
                 <i class="fas fa-plus-circle"></i>
                 <span><?php esc_html_e('More Categories', 'custom-box-theme'); ?></span>
             </a>

@@ -10,7 +10,7 @@ $footer_office_address = '20 Street No. 2, Binh Tri Dong B Ward, Binh Tan Distri
 $footer_factory_address = '1032 An Phu Tay, Hamlet 4, Hung Long Commune, Binh Chanh District, Ho Chi Minh City, Vietnam';
 $footer_office_map_url = 'https://www.google.com/maps/search/?api=1&query=20%20Street%20No.%202%2C%20Binh%20Tri%20Dong%20B%20Ward%2C%20Binh%20Tan%20District%2C%20Ho%20Chi%20Minh%20City%2C%20Vietnam';
 $footer_factory_map_url = 'https://maps.app.goo.gl/Z68geWnrTmx6kaCg6';
-$footer_shop_url = function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : (function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/products/'));
+$footer_shop_url = function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
 $footer_blog_page_id = (int) get_option('page_for_posts');
 $footer_blog_url = $footer_blog_page_id ? get_permalink($footer_blog_page_id) : home_url('/blog/');
 $footer_categories = function_exists('custom_box_get_packaging_categories') ? custom_box_get_packaging_categories(7) : array();

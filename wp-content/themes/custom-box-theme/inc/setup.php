@@ -58,7 +58,7 @@ function custom_box_get_packaging_category_slugs() {
 }
 
 function custom_box_get_products_url() {
-    return function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/products/');
+    return home_url('/products/');
 }
 
 function custom_box_get_home_packaging_category_groups() {
@@ -660,7 +660,7 @@ function custom_box_primary_menu() {
         <li><a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'custom-box-theme'); ?></a></li>
         <li><a href="<?php echo esc_url(home_url('/about/')); ?>"><?php esc_html_e('About Us', 'custom-box-theme'); ?></a></li>
         <li class="product-menu-item">
-            <a href="<?php echo esc_url(function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/')); ?>">
+            <a href="<?php echo esc_url(custom_box_get_products_url()); ?>">
                 <?php esc_html_e('Products', 'custom-box-theme'); ?>
             </a>
         </li>
@@ -700,6 +700,28 @@ function custom_box_add_packaging_money_page_to_primary_menu($items, $args) {
     return $items . $menu_item;
 }
 add_filter('wp_nav_menu_items', 'custom_box_add_packaging_money_page_to_primary_menu', 20, 2);
+
+function custom_box_normalize_products_menu_url($atts) {
+    if (empty($atts['href'])) {
+        return $atts;
+    }
+
+    $path = wp_parse_url($atts['href'], PHP_URL_PATH);
+
+    if (!$path) {
+        return $atts;
+    }
+
+    $home_path = wp_parse_url(home_url('/'), PHP_URL_PATH);
+    $relative_path = trim(preg_replace('#^' . preg_quote($home_path, '#') . '#', '', $path), '/');
+
+    if (in_array($relative_path, array('p/products', 'custom-packaging-product-categories'), true)) {
+        $atts['href'] = custom_box_get_products_url();
+    }
+
+    return $atts;
+}
+add_filter('nav_menu_link_attributes', 'custom_box_normalize_products_menu_url', 20);
 
 function custom_box_widgets_init() {
     register_sidebar(array(

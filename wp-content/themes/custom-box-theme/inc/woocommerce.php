@@ -182,7 +182,7 @@ function custom_box_redirect_legacy_shop_slug() {
         return;
     }
 
-    $products_url = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/products/');
+    $products_url = custom_box_get_products_url();
 
     if ($products_url && !is_wp_error($products_url)) {
         wp_safe_redirect($products_url, 301);
@@ -190,6 +190,26 @@ function custom_box_redirect_legacy_shop_slug() {
     }
 }
 add_action('template_redirect', 'custom_box_redirect_legacy_shop_slug', 1);
+
+function custom_box_redirect_legacy_products_hub_urls() {
+    if (is_admin() || wp_doing_ajax()) {
+        return;
+    }
+
+    $relative_path = custom_box_get_relative_request_path();
+
+    if (!in_array($relative_path, array('p/products', 'custom-packaging-product-categories'), true)) {
+        return;
+    }
+
+    $query_string = isset($_SERVER['QUERY_STRING']) && '' !== $_SERVER['QUERY_STRING']
+        ? '?' . wp_unslash($_SERVER['QUERY_STRING'])
+        : '';
+
+    wp_safe_redirect(custom_box_get_products_url() . $query_string, 301);
+    exit;
+}
+add_action('template_redirect', 'custom_box_redirect_legacy_products_hub_urls', 1);
 
 function custom_box_redirect_numeric_shop_pagination() {
     if (is_admin() || wp_doing_ajax()) {

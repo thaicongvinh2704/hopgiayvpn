@@ -18,7 +18,7 @@ $sidebar_categories = array();
 $child_categories = array();
 $landing_categories = array();
 $hub_groups = function_exists('custom_box_get_packaging_hub_groups') ? custom_box_get_packaging_hub_groups(false) : array();
-$landing_root_link = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/');
+$landing_root_link = function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
 
 if ($parent_term && !is_wp_error($parent_term)) {
     $parent_term_link = get_term_link($parent_term);

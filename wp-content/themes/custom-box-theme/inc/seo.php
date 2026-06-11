@@ -237,7 +237,7 @@ function custom_box_public_canonical($canonical) {
         return custom_box_get_packaging_money_page_url();
     }
 
-    if (function_exists('is_shop') && is_shop()) {
+    if ((function_exists('is_shop') && is_shop()) || is_page('products')) {
         return function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
     }
 
@@ -256,6 +256,7 @@ function custom_box_public_canonical($canonical) {
     return $canonical;
 }
 add_filter('rank_math/frontend/canonical', 'custom_box_public_canonical', 20);
+add_filter('get_canonical_url', 'custom_box_public_canonical', 20);
 
 function custom_box_packaging_money_page_og_type($type) {
     if (!custom_box_is_packaging_money_page()) {
