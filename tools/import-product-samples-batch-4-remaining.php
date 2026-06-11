@@ -136,7 +136,7 @@ function vpn_b4_section( string $heading, array $paragraphs ): string {
 }
 
 function vpn_b4_content( array $p, array $image_ids ): string {
-	$category_link = vpn_b4_link( '/packaging/' . $p['category_slug'] . '/', strtolower( $p['category_name'] ) );
+	$category_link = vpn_b4_link( '/products/' . $p['category_slug'] . '/', strtolower( $p['category_name'] ) );
 	$quote_link    = vpn_b4_link( '/contact/#quote', 'request a custom packaging quotation' );
 	$material_link = vpn_b4_link( '/paper-materials-for-custom-paper-boxes/', 'paper material options for custom paper boxes' );
 

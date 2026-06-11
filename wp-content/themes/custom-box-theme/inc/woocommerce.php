@@ -98,6 +98,75 @@ function custom_box_get_flat_product_category_url($term) {
     return home_url(user_trailingslashit('products/' . $term->slug));
 }
 
+function custom_box_get_legacy_product_category_slug_map() {
+    return array(
+        'bakery-food-packaging-boxes'             => 'bakery-packaging-boxes',
+        'candle-gift-packaging-boxes'             => 'candle-packaging-boxes',
+        'candle-jar-packaging-boxes'              => 'candle-packaging-boxes',
+        'cosmetic-mailer-packaging-boxes'         => 'cosmetic-paper-boxes',
+        'cosmetic-packaging-boxes'                => 'cosmetic-paper-boxes',
+        'cosmetic-set-packaging-boxes'            => 'cosmetic-paper-boxes',
+        'custom-cake-packaging-boxes'             => 'bakery-packaging-boxes',
+        'custom-chocolate-display-boxes'          => 'chocolate-gift-boxes',
+        'custom-chocolate-gift-boxes'             => 'chocolate-gift-boxes',
+        'custom-paper-tube-packaging-boxes'       => 'paper-tube-packaging',
+        'custom-red-paper-bags'                   => 'paper-bags-with-logo',
+        'custom-soap-packaging-boxes'             => 'beauty-skincare-packaging',
+        'dessert-gift-packaging-boxes'            => 'food-paper-boxes',
+        'dessert-packaging-boxes-with-inserts'    => 'food-paper-boxes',
+        'electronics-packaging-boxes'             => 'electronics-accessories-packaging',
+        'food-packaging-boxes'                    => 'food-paper-boxes',
+        'gift-packaging-boxes'                    => 'gift-paper-boxes',
+        'health-supplement-packaging-boxes'       => 'supplement-packaging-boxes',
+        'healthcare-packaging-boxes'              => 'pharmaceutical-packaging-boxes',
+        'kraft-round-gift-boxes'                  => 'gift-paper-boxes',
+        'luxury-drawer-gift-boxes'                => 'drawer-boxes',
+        'luxury-perfume-packaging-boxes'          => 'perfume-packaging-boxes',
+        'luxury-retail-paper-bags'                => 'paper-bags-with-logo',
+        'luxury-rigid-gift-boxes'                 => 'rigid-boxes',
+        'luxury-teal-paper-bags'                  => 'paper-bags-with-logo',
+        'luxury-watch-packaging-boxes'            => 'jewelry-paper-boxes',
+        'luxury-wine-bottle-packaging-boxes'      => 'wine-premium-drink-packaging',
+        'mooncake-chocolate-gift-boxes'           => 'chocolate-gift-boxes',
+        'mooncake-gift-packaging-boxes'           => 'gift-paper-boxes',
+        'paper-bags'                              => 'paper-bags-with-logo',
+        'pink-ribbon-gift-boxes'                  => 'gift-paper-boxes',
+        'pizza-packaging-boxes'                   => 'food-paper-boxes',
+        'premium-ribbon-gift-boxes'               => 'gift-paper-boxes',
+        'printed-paper-shopping-bags'             => 'paper-bags-with-logo',
+        'retail-packaging-boxes'                  => 'custom-printed-paper-boxes',
+        'rigid-sliding-drawer-boxes'              => 'drawer-boxes',
+        'stationery-packaging-boxes'              => 'back-to-school-stationery-packaging',
+        'watch-packaging-boxes'                   => 'jewelry-paper-boxes',
+        'wine-bottle-gift-boxes'                  => 'wine-premium-drink-packaging',
+        'wine-packaging-boxes'                    => 'wine-premium-drink-packaging',
+    );
+}
+
+function custom_box_get_product_category_by_current_or_legacy_slug($slug) {
+    $slug = sanitize_title($slug);
+
+    if (!$slug) {
+        return null;
+    }
+
+    $term = get_term_by('slug', $slug, 'product_cat');
+
+    if ($term && !is_wp_error($term)) {
+        return $term;
+    }
+
+    $legacy_map = custom_box_get_legacy_product_category_slug_map();
+
+    if (empty($legacy_map[$slug])) {
+        return null;
+    }
+
+    $term = get_term_by('slug', $legacy_map[$slug], 'product_cat');
+
+    return ($term && !is_wp_error($term)) ? $term : null;
+}
+
 function custom_box_flat_product_category_link($termlink, $term, $taxonomy) {
     if ('product_cat' !== $taxonomy) {
         return $termlink;
@@ -143,7 +212,7 @@ function custom_box_add_flat_product_category_rewrite_rules() {
 add_action('init', 'custom_box_add_flat_product_category_rewrite_rules', 20);
 
 function custom_box_maybe_flush_product_category_rewrites() {
-    $rewrite_version = 'products-category-base-v2';
+    $rewrite_version = 'products-category-base-v3';
 
     if (get_option('custom_box_product_category_rewrite_version') === $rewrite_version) {
         return;
@@ -198,15 +267,31 @@ function custom_box_redirect_legacy_products_hub_urls() {
 
     $relative_path = custom_box_get_relative_request_path();
 
-    if (!in_array($relative_path, array('p/products', 'custom-packaging-product-categories'), true)) {
+    if (!preg_match('#^(p/products|custom-packaging-product-categories)(?:/(.*))?$#', $relative_path, $matches)) {
         return;
+    }
+
+    $legacy_tail = isset($matches[2]) ? trim($matches[2], '/') : '';
+
+    if ('' === $legacy_tail) {
+        $target_url = custom_box_get_products_url();
+    } elseif (preg_match('#^page/([0-9]+)$#', $legacy_tail, $page_matches)) {
+        $target_url = home_url(user_trailingslashit('products/page/' . absint($page_matches[1])));
+    } elseif (preg_match('#^([^/]+)/page/([0-9]+)$#', $legacy_tail, $category_page_matches)) {
+        $target_url = home_url(user_trailingslashit('products/' . sanitize_title($category_page_matches[1]) . '/page/' . absint($category_page_matches[2])));
+    } else {
+        $slug = custom_box_get_product_category_slug_from_path($legacy_tail);
+        $term = $slug ? custom_box_get_product_category_by_current_or_legacy_slug($slug) : null;
+        $target_url = $term && !is_wp_error($term)
+            ? custom_box_get_flat_product_category_url($term) . custom_box_get_product_category_paged_path($legacy_tail)
+            : home_url(user_trailingslashit('products/' . $legacy_tail));
     }
 
     $query_string = isset($_SERVER['QUERY_STRING']) && '' !== $_SERVER['QUERY_STRING']
         ? '?' . wp_unslash($_SERVER['QUERY_STRING'])
         : '';
 
-    wp_safe_redirect(custom_box_get_products_url() . $query_string, 301);
+    wp_safe_redirect($target_url . $query_string, 301);
     exit;
 }
 add_action('template_redirect', 'custom_box_redirect_legacy_products_hub_urls', 1);
@@ -266,7 +351,7 @@ function custom_box_redirect_legacy_product_category_base() {
     }
 
     $slug = custom_box_get_product_category_slug_from_path($relative_path);
-    $term = get_term_by('slug', $slug, 'product_cat');
+    $term = custom_box_get_product_category_by_current_or_legacy_slug($slug);
     $target_url = $term && !is_wp_error($term)
         ? custom_box_get_flat_product_category_url($term) . custom_box_get_product_category_paged_path($relative_path)
         : home_url('/' . preg_replace('#^product-category/#', 'products/', $relative_path) . '/');
@@ -275,6 +360,40 @@ function custom_box_redirect_legacy_product_category_base() {
     exit;
 }
 add_action('template_redirect', 'custom_box_redirect_legacy_product_category_base', 2);
+
+function custom_box_redirect_legacy_packaging_category_urls() {
+    if (is_admin() || wp_doing_ajax()) {
+        return;
+    }
+
+    $relative_path = custom_box_get_relative_request_path();
+
+    if (!preg_match('#^packaging/(.+)$#', $relative_path, $matches)) {
+        return;
+    }
+
+    $legacy_tail = trim($matches[1], '/');
+    $slug = custom_box_get_product_category_slug_from_path($legacy_tail);
+    $term = $slug ? custom_box_get_product_category_by_current_or_legacy_slug($slug) : null;
+
+    if (!$term || is_wp_error($term)) {
+        return;
+    }
+
+    $target_url = custom_box_get_flat_product_category_url($term) . custom_box_get_product_category_paged_path($legacy_tail);
+
+    if (!$target_url) {
+        return;
+    }
+
+    $query_string = isset($_SERVER['QUERY_STRING']) && $_SERVER['QUERY_STRING']
+        ? '?' . wp_unslash($_SERVER['QUERY_STRING'])
+        : '';
+
+    wp_safe_redirect($target_url . $query_string, 301);
+    exit;
+}
+add_action('template_redirect', 'custom_box_redirect_legacy_packaging_category_urls', 2);
 
 function custom_box_redirect_hierarchical_product_category_urls() {
     if (is_admin() || wp_doing_ajax()) {
@@ -288,7 +407,7 @@ function custom_box_redirect_hierarchical_product_category_urls() {
     }
 
     $slug = custom_box_get_product_category_slug_from_path($relative_path);
-    $term = get_term_by('slug', $slug, 'product_cat');
+    $term = custom_box_get_product_category_by_current_or_legacy_slug($slug);
 
     if (!$term || is_wp_error($term)) {
         return;

@@ -139,7 +139,7 @@ function vpn_fashion_inline_images( array $p, array $image_ids ): string {
 }
 
 function vpn_fashion_content( array $p, array $image_ids ): string {
-	$category_link = vpn_fashion_link( '/packaging/fashion-sportswear-packaging/', 'fashion and sportswear packaging' );
+	$category_link = vpn_fashion_link( '/products/fashion-sportswear-packaging/', 'fashion and sportswear packaging' );
 	$quote_link    = vpn_fashion_link( '/contact/#quote', 'request a fashion packaging quotation' );
 	$material_link = vpn_fashion_link( '/paper-materials-for-custom-paper-boxes/', 'paper material options for custom boxes' );
 	$related_link  = vpn_fashion_link( $p['related_url'], $p['related_anchor'] );
