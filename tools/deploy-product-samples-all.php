@@ -162,6 +162,15 @@ $batches = array(
 			'tools/verify-sports-packaging-products.php',
 		),
 	),
+	array(
+		'name'      => 'Paper Egg Packaging product',
+		'marker'    => 'paper-egg-packaging-product',
+		'expected'  => 1,
+		'min_words' => 1500,
+		'scripts'   => array(
+			'tools/import-paper-egg-packaging-product.php',
+		),
+	),
 );
 
 foreach ( $batches as $batch ) {

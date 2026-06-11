@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-10-sports-packaging' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-12-paper-egg-packaging' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -562,6 +562,15 @@ function custom_box_product_sample_deploy_batches(): array {
 				'tools/verify-sports-packaging-products.php',
 			),
 		),
+		array(
+			'name'      => 'Paper Egg Packaging product',
+			'marker'    => 'paper-egg-packaging-product',
+			'expected'  => 1,
+			'min_words' => 1500,
+			'scripts'   => array(
+				'tools/import-paper-egg-packaging-product.php',
+			),
+		),
 	);
 }
 
@@ -874,13 +883,13 @@ function custom_box_product_sample_deploy_page() {
 			<p>
 				<label>
 					<input type="radio" name="deploy_scope" value="latest" checked>
-					Latest batch only (Fashion/Sportswear image refresh)
+					Latest batch only (Paper Egg Packaging)
 				</label>
 			</p>
 			<p>
 				<label>
 					<input type="radio" name="deploy_scope" value="all">
-					All batches (42 sample products + Fashion/Sportswear refresh)
+					All registered product batches
 				</label>
 			</p>
 			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
