@@ -7,6 +7,7 @@ defined('ABSPATH') || exit;
 
 function custom_box_category_migration_targets() {
     return array(
+        'custom-packaging-boxes'       => 'Custom Packaging Boxes',
         'custom-paper-boxes'          => 'Custom Paper Boxes',
         'custom-printed-paper-boxes'  => 'Custom Printed Paper Boxes',
         'rigid-boxes'                 => 'Rigid Boxes',
@@ -82,7 +83,6 @@ function custom_box_category_migration_old_slug_map() {
         'cosmetic-set-packaging-boxes'           => 'cosmetic-paper-boxes',
         'luxury-watch-packaging-boxes'           => 'jewelry-paper-boxes',
         'watch-packaging-boxes'                  => 'jewelry-paper-boxes',
-        'custom-packaging-boxes'                 => 'custom-paper-boxes',
         'uncategorized'                          => 'custom-paper-boxes',
     );
 }
@@ -184,13 +184,7 @@ function custom_box_category_migration_can_run() {
 }
 
 function custom_box_category_migration_parent_term_id() {
-    if (function_exists('custom_box_get_packaging_parent_category')) {
-        $parent = custom_box_get_packaging_parent_category();
-    } else {
-        $parent = get_term_by('slug', 'custom-packaging-boxes', 'product_cat');
-    }
-
-    return ($parent && !is_wp_error($parent)) ? (int) $parent->term_id : 0;
+    return 0;
 }
 
 function custom_box_category_migration_admin_menu() {
@@ -327,10 +321,6 @@ function custom_box_category_migration_apply_products_to_targets() {
 function custom_box_category_migration_sync_hierarchy() {
     $parent_id = custom_box_category_migration_parent_term_id();
 
-    if (!$parent_id) {
-        return new WP_Error('missing_parent', __('Missing Custom Packaging Boxes parent category.', 'custom-box-theme'));
-    }
-
     $targets = custom_box_category_migration_targets();
     $active_slugs = function_exists('custom_box_get_packaging_category_slugs')
         ? custom_box_get_packaging_category_slugs()
@@ -348,7 +338,7 @@ function custom_box_category_migration_sync_hierarchy() {
                 $slug,
                 isset($targets[$slug]) ? $targets[$slug] : ucwords(str_replace('-', ' ', $slug)),
                 true,
-                $parent_id
+                0
             );
 
             if (!$term_id) {
@@ -364,12 +354,12 @@ function custom_box_category_migration_sync_hierarchy() {
         $term_id = (int) $term->term_id;
         $active_ids[] = $term_id;
 
-        if ($term_id === $parent_id || (int) $term->parent === $parent_id) {
+        if (0 === (int) $term->parent) {
             continue;
         }
 
         $updated = wp_update_term($term_id, 'product_cat', array(
-            'parent' => $parent_id,
+            'parent' => 0,
         ));
 
         if (!is_wp_error($updated)) {
@@ -377,11 +367,12 @@ function custom_box_category_migration_sync_hierarchy() {
         }
     }
 
-    $old_children = get_terms(array(
+    $legacy_parent = get_term_by('slug', 'custom-packaging-boxes', 'product_cat');
+    $old_children = $legacy_parent && !is_wp_error($legacy_parent) ? get_terms(array(
         'taxonomy'   => 'product_cat',
-        'parent'     => $parent_id,
+        'parent'     => (int) $legacy_parent->term_id,
         'hide_empty' => false,
-    ));
+    )) : array();
 
     if (is_wp_error($old_children)) {
         return $old_children;
@@ -485,10 +476,10 @@ function custom_box_category_migration_page() {
             </div>
         <?php endif; ?>
 
-        <p>This tool moves all WooCommerce products into the 20 homepage product categories. It does not delete old categories.</p>
+        <p>This tool moves WooCommerce products into the final SEO product category set. It does not delete old categories.</p>
 
         <h2>Category Hierarchy Sync</h2>
-        <p>This sync only updates the children shown under Custom Packaging Boxes. It attaches the active categories and detaches inactive old child categories without deleting terms or moving products.</p>
+        <p>This sync keeps product category URLs flat and prevents Custom Packaging Boxes from acting as an all-categories parent. It creates missing active terms and detaches old child category relationships without deleting terms or moving products.</p>
         <form method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" style="margin: 16px 0 24px;">
             <?php wp_nonce_field('custom_box_category_migration_sync_hierarchy'); ?>
             <input type="hidden" name="action" value="custom_box_category_migration_sync_hierarchy">

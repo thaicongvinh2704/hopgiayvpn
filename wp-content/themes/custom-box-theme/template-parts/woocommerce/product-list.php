@@ -7,7 +7,7 @@ defined('ABSPATH') || exit;
 
 $current_term = isset($args['current_term']) ? $args['current_term'] : null;
 $sidebar_categories = isset($args['sidebar_categories']) && is_array($args['sidebar_categories']) ? $args['sidebar_categories'] : array();
-$landing_root_link = isset($args['landing_root_link']) ? $args['landing_root_link'] : home_url('/shop/');
+$landing_root_link = isset($args['landing_root_link']) ? $args['landing_root_link'] : (function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/'));
 
 $paged = max(1, (int) get_query_var('paged'), (int) get_query_var('page'));
 $product_query_args = array(

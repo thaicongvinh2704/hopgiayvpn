@@ -142,6 +142,33 @@ function custom_box_get_home_seo_description() {
     return 'VPN Paper Box Manufacturer in Vietnam for custom rigid boxes, gift boxes, cosmetic packaging, paper bags, and factory-direct export packaging solutions.';
 }
 
+function custom_box_get_products_hub_title() {
+    return 'Custom Packaging Product Categories | Paper Boxes, Rigid Boxes & Paper Bags';
+}
+
+function custom_box_get_products_hub_description() {
+    return 'Explore custom packaging product categories including paper boxes, rigid boxes, drawer boxes, food paper boxes, cosmetic packaging boxes, gift boxes, paper bags, and specialty packaging solutions from VPN Paper Box Manufacturer.';
+}
+
+function custom_box_get_product_category_seo_title($term) {
+    if (!$term || is_wp_error($term) || empty($term->name)) {
+        return '';
+    }
+
+    return sprintf('%s | Custom Packaging Category | VPN Paper Box', wp_strip_all_tags($term->name));
+}
+
+function custom_box_get_product_category_seo_description($term) {
+    if (!$term || is_wp_error($term) || empty($term->name)) {
+        return '';
+    }
+
+    return sprintf(
+        'Explore %s from VPN Paper Box Manufacturer in Vietnam, with custom size, material, printing, finishing, sampling, and export-ready packaging support.',
+        wp_strip_all_tags($term->name)
+    );
+}
+
 function custom_box_is_public_home() {
     return !is_admin() && is_front_page();
 }
@@ -149,6 +176,18 @@ function custom_box_is_public_home() {
 function custom_box_home_document_title($title) {
     if (custom_box_is_packaging_money_page()) {
         return custom_box_get_packaging_money_page_title();
+    }
+
+    if (function_exists('is_shop') && is_shop()) {
+        return custom_box_get_products_hub_title();
+    }
+
+    if (function_exists('is_product_category') && is_product_category()) {
+        $term_title = custom_box_get_product_category_seo_title(get_queried_object());
+
+        if ($term_title) {
+            return $term_title;
+        }
     }
 
     if (!custom_box_is_public_home()) {
@@ -173,14 +212,15 @@ function custom_box_home_rank_math_description($description) {
         return 'Explore VPN Paper Box Manufacturer catalog for custom paper boxes, rigid boxes, folding cartons, paper bags, materials, printing, finishing, and export-ready packaging options.';
     }
 
-    if (function_exists('is_product_category') && is_product_category()) {
-        $term = get_queried_object();
+    if (function_exists('is_shop') && is_shop()) {
+        return custom_box_get_products_hub_description();
+    }
 
-        if ($term && !is_wp_error($term) && !empty($term->name)) {
-            return sprintf(
-                'Explore %s from VPN Paper Box Manufacturer in Vietnam, with custom size, material, printing, finishing, sampling, and export-ready packaging support.',
-                wp_strip_all_tags($term->name)
-            );
+    if (function_exists('is_product_category') && is_product_category()) {
+        $term_description = custom_box_get_product_category_seo_description(get_queried_object());
+
+        if ($term_description) {
+            return $term_description;
         }
     }
 
@@ -192,14 +232,30 @@ function custom_box_home_rank_math_description($description) {
 }
 add_filter('rank_math/frontend/description', 'custom_box_home_rank_math_description', 20);
 
-function custom_box_packaging_money_page_canonical($canonical) {
-    if (!custom_box_is_packaging_money_page()) {
-        return $canonical;
+function custom_box_public_canonical($canonical) {
+    if (custom_box_is_packaging_money_page()) {
+        return custom_box_get_packaging_money_page_url();
     }
 
-    return custom_box_get_packaging_money_page_url();
+    if (function_exists('is_shop') && is_shop()) {
+        return function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
+    }
+
+    if (function_exists('is_product_category') && is_product_category()) {
+        $term = get_queried_object();
+
+        if ($term && !is_wp_error($term)) {
+            $term_link = get_term_link($term);
+
+            if (!is_wp_error($term_link)) {
+                return $term_link;
+            }
+        }
+    }
+
+    return $canonical;
 }
-add_filter('rank_math/frontend/canonical', 'custom_box_packaging_money_page_canonical', 20);
+add_filter('rank_math/frontend/canonical', 'custom_box_public_canonical', 20);
 
 function custom_box_packaging_money_page_og_type($type) {
     if (!custom_box_is_packaging_money_page()) {

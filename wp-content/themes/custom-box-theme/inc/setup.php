@@ -51,6 +51,38 @@ function custom_box_get_packaging_category_slugs() {
     return array_values(array_unique($slugs));
 }
 
+function custom_box_get_products_url() {
+    return function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/products/');
+}
+
+function custom_box_get_packaging_group_anchor($title) {
+    return sanitize_title($title);
+}
+
+function custom_box_get_packaging_group_url($title) {
+    return custom_box_get_products_url() . '#' . custom_box_get_packaging_group_anchor($title);
+}
+
+function custom_box_get_packaging_group_for_slug($slug) {
+    $slug = sanitize_title($slug);
+
+    foreach (custom_box_get_packaging_menu_groups() as $group) {
+        if (!empty($group['slugs']) && in_array($slug, $group['slugs'], true)) {
+            return $group;
+        }
+    }
+
+    return null;
+}
+
+function custom_box_get_packaging_group_for_term($term) {
+    if (!$term || is_wp_error($term) || empty($term->slug)) {
+        return null;
+    }
+
+    return custom_box_get_packaging_group_for_slug($term->slug);
+}
+
 function custom_box_get_packaging_categories($limit = 48, $require_products = true) {
     if (!taxonomy_exists('product_cat')) {
         return array();
@@ -116,17 +148,7 @@ function custom_box_product_category_has_products($term) {
 }
 
 function custom_box_get_packaging_parent_category() {
-    if (!taxonomy_exists('product_cat')) {
-        return null;
-    }
-
-    $parent = get_term_by('name', 'Custom Packaging Boxes', 'product_cat');
-
-    if (!$parent || is_wp_error($parent)) {
-        $parent = get_term_by('slug', 'custom-packaging-boxes', 'product_cat');
-    }
-
-    return ($parent && !is_wp_error($parent)) ? $parent : null;
+    return null;
 }
 
 function custom_box_get_packaging_menu_groups() {
@@ -134,6 +156,7 @@ function custom_box_get_packaging_menu_groups() {
         array(
             'title' => __('Paper Box Types', 'custom-box-theme'),
             'slugs' => array(
+                'custom-packaging-boxes',
                 'custom-paper-boxes',
                 'custom-printed-paper-boxes',
                 'rigid-boxes',
@@ -189,16 +212,11 @@ function custom_box_get_all_categories_sidebar_links($fallback = '#') {
     $links = array();
 
     foreach (custom_box_get_all_categories_menu_columns() as $column) {
-        if (empty($column['terms'])) {
+        if (empty($column['terms']) || empty($column['title'])) {
             continue;
         }
 
-        $first_term = reset($column['terms']);
-        $group_link = get_term_link($first_term);
-
-        if (!is_wp_error($group_link)) {
-            $links[$column['title']] = $group_link;
-        }
+        $links[$column['title']] = custom_box_get_packaging_group_url($column['title']);
     }
 
     if (empty($links) && $fallback) {
@@ -245,6 +263,40 @@ function custom_box_get_all_categories_menu_columns() {
     }
 
     return $columns;
+}
+
+function custom_box_get_packaging_hub_groups($require_products = false) {
+    if (!taxonomy_exists('product_cat')) {
+        return array();
+    }
+
+    $groups = array();
+
+    foreach (custom_box_get_packaging_menu_groups() as $group) {
+        $terms = array();
+
+        foreach ($group['slugs'] as $slug) {
+            $term = custom_box_get_product_category_by_slug($slug);
+
+            if (!$term) {
+                continue;
+            }
+
+            if ($require_products && !custom_box_product_category_has_products($term)) {
+                continue;
+            }
+
+            $terms[] = $term;
+        }
+
+        $groups[] = array(
+            'title'  => $group['title'],
+            'anchor' => custom_box_get_packaging_group_anchor($group['title']),
+            'terms'  => $terms,
+        );
+    }
+
+    return $groups;
 }
 
 function custom_box_build_blog_article_content($raw_content) {

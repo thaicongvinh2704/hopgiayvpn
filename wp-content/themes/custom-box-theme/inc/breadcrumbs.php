@@ -5,10 +5,6 @@
 
 defined('ABSPATH') || exit;
 
-function custom_box_get_products_url() {
-    return function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/products/');
-}
-
 function custom_box_get_primary_product_category($product_id) {
     $product_categories = get_the_terms($product_id, 'product_cat');
     if (empty($product_categories) || is_wp_error($product_categories)) {
@@ -61,6 +57,15 @@ function custom_box_get_breadcrumb_schema_items() {
         );
 
         if ($term && !is_wp_error($term)) {
+            $group = function_exists('custom_box_get_packaging_group_for_term') ? custom_box_get_packaging_group_for_term($term) : null;
+
+            if (!empty($group['title'])) {
+                $items[] = array(
+                    'name' => $group['title'],
+                    'url'  => function_exists('custom_box_get_packaging_group_url') ? custom_box_get_packaging_group_url($group['title']) : $shop_url,
+                );
+            }
+
             $items[] = array(
                 'name' => $term->name,
                 'url'  => get_term_link($term),

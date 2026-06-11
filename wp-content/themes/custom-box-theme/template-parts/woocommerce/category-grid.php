@@ -8,7 +8,7 @@ defined('ABSPATH') || exit;
 $current_term = isset($args['current_term']) ? $args['current_term'] : null;
 $parent_term = isset($args['parent_term']) ? $args['parent_term'] : null;
 $landing_categories = isset($args['landing_categories']) && is_array($args['landing_categories']) ? $args['landing_categories'] : array();
-$landing_root_link = isset($args['landing_root_link']) ? $args['landing_root_link'] : home_url('/shop/');
+$landing_root_link = isset($args['landing_root_link']) ? $args['landing_root_link'] : (function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/'));
 $is_all_categories = $current_term && $parent_term && !is_wp_error($current_term) && !is_wp_error($parent_term) && (int) $current_term->term_id === (int) $parent_term->term_id;
 ?>
 

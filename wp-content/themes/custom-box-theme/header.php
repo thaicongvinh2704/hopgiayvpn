@@ -120,11 +120,9 @@
 
         <div class="all-categories-wrap">
             <?php
-            $custom_boxes_parent = taxonomy_exists('product_cat') ? get_term_by('name', 'Custom Packaging Boxes', 'product_cat') : false;
-            $custom_boxes_link = ($custom_boxes_parent && !is_wp_error($custom_boxes_parent)) ? get_term_link($custom_boxes_parent) : '';
-            $custom_boxes_link = is_wp_error($custom_boxes_link) || !$custom_boxes_link ? (function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/')) : $custom_boxes_link;
+            $products_link = function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
             ?>
-            <a class="all-categories" href="<?php echo esc_url($custom_boxes_link); ?>">
+            <a class="all-categories" href="<?php echo esc_url($products_link); ?>">
                 <i class="fas fa-table-cells-large"></i>
                 <span><?php esc_html_e('All Categories', 'custom-box-theme'); ?></span>
                 <i class="fas fa-chevron-down"></i>
@@ -132,7 +130,7 @@
 
             <?php
             $all_categories_columns = function_exists('custom_box_get_all_categories_menu_columns') ? custom_box_get_all_categories_menu_columns() : array();
-            $product_group_links = function_exists('custom_box_get_all_categories_sidebar_links') ? custom_box_get_all_categories_sidebar_links($custom_boxes_link) : array();
+            $product_group_links = function_exists('custom_box_get_all_categories_sidebar_links') ? custom_box_get_all_categories_sidebar_links($products_link) : array();
             ?>
             <?php if (!empty($all_categories_columns)) : ?>
                 <div class="all-categories-dropdown all-categories-mega">
