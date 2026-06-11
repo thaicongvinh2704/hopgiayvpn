@@ -110,7 +110,7 @@ function custom_box_get_home_packaging_category_groups() {
                 array('Premium Food and Beverage Packaging', 'premium-food-beverage-packaging', $theme_image_uri . 'premium-tea-coffee-chocolate-packaging-boxes-gray-background.webp'),
                 array('Electronics Accessories Packaging', 'electronics-accessories-packaging', $theme_image_uri . 'custom-phone-accessories-packaging-boxes-gray-background.webp'),
                 array('Fashion and Sportswear Packaging', 'fashion-sportswear-packaging', $theme_image_uri . 'custom-apparel-packaging-boxes-gray-background.webp'),
-                array('Sports Packaging Boxes', 'sports-packaging-boxes', $theme_image_uri . 'custom-apparel-packaging-boxes-gray-background.webp'),
+                array('Sports Packaging Boxes', 'sports-packaging-boxes', $theme_image_uri . 'sport-packaging-box-thumbnail.webp'),
                 array('Wine and Premium Drink Packaging', 'wine-premium-drink-packaging', $theme_image_uri . 'custom-wine-premium-beverage-packaging-boxes-gray-background.webp'),
                 array('Corporate Gift Packaging', 'corporate-gift-packaging', $theme_image_uri . 'custom-corporate-gift-set-packaging-boxes-gray-background.webp'),
                 array('Home and Lifestyle Packaging', 'home-lifestyle-packaging', $theme_image_uri . 'custom-home-lifestyle-product-packaging-boxes-gray-background.webp'),
