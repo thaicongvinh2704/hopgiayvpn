@@ -1,8 +1,4 @@
 <?php
-$uploads_2026_05_uri = content_url('/uploads/2026/05/');
-$old_category_image_uri = $uploads_2026_05_uri;
-$theme_image_uri = get_template_directory_uri() . '/assets/images/';
-
 $resolve_category_url = function ($slug) {
     $term = get_term_by('slug', $slug, 'product_cat');
     if ($term && !is_wp_error($term)) {
@@ -21,59 +17,9 @@ $resolve_category_url = function ($slug) {
     return home_url('/products/');
 };
 
-$category_groups = array(
-    array(
-        'title' => 'Paper Box Types',
-        'items' => array(
-            array('Custom Paper Boxes', 'custom-paper-boxes', $old_category_image_uri . '29.jpg'),
-            array('Custom Printed Paper Boxes', 'custom-printed-paper-boxes', $old_category_image_uri . '20.jpg'),
-            array('Rigid Boxes', 'rigid-boxes', $old_category_image_uri . '13.jpg'),
-            array('Folding Carton Boxes', 'folding-carton-boxes', $old_category_image_uri . 'folding-carton-boxes.webp'),
-            array('Magnetic Closure Boxes', 'magnetic-closure-boxes', $old_category_image_uri . 'red-floral-mooncake-gift-packaging-box.jpeg'),
-            array('Drawer Boxes', 'drawer-boxes', $old_category_image_uri . '15.jpg'),
-            array('Lid and Base Boxes', 'lid-and-base-boxes', $old_category_image_uri . 'lid-and-base-boxes.webp'),
-            array('Paper Tube Packaging', 'paper-tube-packaging', $old_category_image_uri . '12.jpg'),
-            array('Corrugated Mailer Boxes', 'corrugated-mailer-boxes', $old_category_image_uri . 'orange-corrugated-mailer-box-768x768.jpeg'),
-        ),
-    ),
-    array(
-        'title' => 'Packaging by Industry',
-        'items' => array(
-            array('Cosmetic Paper Boxes', 'cosmetic-paper-boxes', $old_category_image_uri . 'blue-cosmetic-set-packaging-box-open-1024x930.png'),
-            array('Perfume Packaging Boxes', 'perfume-packaging-boxes', $old_category_image_uri . '26.jpg'),
-            array('Skincare Packaging Boxes', 'skincare-packaging-boxes', $old_category_image_uri . '40.jpg'),
-            array('Jewelry Paper Boxes', 'jewelry-paper-boxes', $old_category_image_uri . 'watch-box.jpg'),
-            array('Gift Paper Boxes', 'gift-paper-boxes', $old_category_image_uri . '27.jpg'),
-            array('Chocolate Gift Boxes', 'chocolate-gift-boxes', $old_category_image_uri . '19.jpg'),
-            array('Food Paper Boxes', 'food-paper-boxes', $old_category_image_uri . '32.jpg'),
-            array('Bakery Packaging Boxes', 'bakery-packaging-boxes', $old_category_image_uri . '31.jpg'),
-            array('Candle Packaging Boxes', 'candle-packaging-boxes', $old_category_image_uri . '17.jpg'),
-        ),
-    ),
-    array(
-        'title' => 'Paper Bags & Packaging Add-ons',
-        'items' => array(
-            array('Paper Bags with Logo', 'paper-bags-with-logo', $old_category_image_uri . '35.jpg'),
-            array('Packaging Accessories', 'packaging-accessories', $old_category_image_uri . '33.jpg'),
-        ),
-    ),
-    array(
-        'title' => 'Packaging by Industry',
-        'items' => array(
-            array('Pharmaceutical Packaging Boxes', 'pharmaceutical-packaging-boxes', $theme_image_uri . 'custom-pharmaceutical-medicine-packaging-boxes-gray-background.webp'),
-            array('Supplement Packaging Boxes', 'supplement-packaging-boxes', $theme_image_uri . 'custom-supplement-vitamin-packaging-boxes-gray-background.webp'),
-            array('Beauty and Skincare Packaging', 'beauty-skincare-packaging', $theme_image_uri . 'custom-cosmetic-skincare-packaging-boxes-gray-background.webp'),
-            array('Premium Food and Beverage Packaging', 'premium-food-beverage-packaging', $theme_image_uri . 'premium-tea-coffee-chocolate-packaging-boxes-gray-background.webp'),
-            array('Electronics Accessories Packaging', 'electronics-accessories-packaging', $theme_image_uri . 'custom-phone-accessories-packaging-boxes-gray-background.webp'),
-            array('Fashion and Sportswear Packaging', 'fashion-sportswear-packaging', $theme_image_uri . 'custom-apparel-packaging-boxes-gray-background.webp'),
-            array('Sports Packaging Boxes', 'sports-packaging-boxes', $theme_image_uri . 'custom-apparel-packaging-boxes-gray-background.webp'),
-            array('Wine and Premium Drink Packaging', 'wine-premium-drink-packaging', $theme_image_uri . 'custom-wine-premium-beverage-packaging-boxes-gray-background.webp'),
-            array('Corporate Gift Packaging', 'corporate-gift-packaging', $theme_image_uri . 'custom-corporate-gift-set-packaging-boxes-gray-background.webp'),
-            array('Home and Lifestyle Packaging', 'home-lifestyle-packaging', $theme_image_uri . 'custom-home-lifestyle-product-packaging-boxes-gray-background.webp'),
-            array('Back-to-School and Stationery Packaging', 'back-to-school-stationery-packaging', $theme_image_uri . 'custom-stationery-school-supplies-packaging-boxes-gray-background.webp'),
-        ),
-    ),
-);
+$category_groups = function_exists('custom_box_get_home_packaging_category_groups')
+    ? custom_box_get_home_packaging_category_groups()
+    : array();
 ?>
 
 <section class="home-packaging-category-section" id="packaging-categories">

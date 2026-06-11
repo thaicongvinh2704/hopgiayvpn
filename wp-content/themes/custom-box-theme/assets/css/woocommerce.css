@@ -245,8 +245,7 @@
 }
 
 .popular-categories-section,
-.product-category-hub-section,
-.featured-packaging-examples-section {
+.product-category-hub-section {
     padding: 56px 0;
     background: #f7faf8;
 }
@@ -255,8 +254,7 @@
     padding-top: 24px;
 }
 
-.popular-categories-section,
-.featured-packaging-examples-section {
+.popular-categories-section {
     background: #fff;
 }
 
@@ -280,17 +278,13 @@
     line-height: 1.65;
 }
 
-.popular-category-grid,
-.product-category-hub-card-grid,
-.featured-packaging-examples-grid {
+.product-category-hub-card-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 22px;
 }
 
-.popular-category-card,
-.product-category-hub-card,
-.featured-packaging-example-card {
+.product-category-hub-card {
     display: block;
     overflow: hidden;
     border: 1px solid #e3ece8;
@@ -302,25 +296,19 @@
     transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
 }
 
-.popular-category-card:hover,
-.product-category-hub-card:hover,
-.featured-packaging-example-card:hover {
+.product-category-hub-card:hover {
     transform: translateY(-4px);
     border-color: var(--color-primary, #2A6A92);
     box-shadow: 0 18px 42px rgba(18, 60, 67, 0.14);
 }
 
-.popular-category-image,
-.product-category-hub-card-image,
-.featured-packaging-example-image {
+.product-category-hub-card-image {
     display: block;
     aspect-ratio: 4 / 3;
     background: #eef4f1;
 }
 
-.popular-category-image img,
-.product-category-hub-card-image img,
-.featured-packaging-example-image img {
+.product-category-hub-card-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -328,40 +316,15 @@
     transition: transform 220ms ease;
 }
 
-.popular-category-card:hover img,
-.product-category-hub-card:hover img,
-.featured-packaging-example-card:hover img {
+.product-category-hub-card:hover img {
     transform: scale(1.04);
 }
 
-.popular-category-body,
-.product-category-hub-card-body {
-    display: grid;
-    gap: 9px;
-    padding: 18px;
-}
-
-.popular-category-title,
-.product-category-hub-card h3,
-.featured-packaging-example-title {
+.product-category-hub-card h3 {
     margin: 0;
     color: #123c43;
     font-size: 19px;
     line-height: 1.3;
-    font-weight: 850;
-}
-
-.popular-category-summary,
-.product-category-hub-card-summary {
-    color: #637474;
-    font-size: 14px;
-    line-height: 1.55;
-}
-
-.popular-category-cta,
-.product-category-hub-card-cta {
-    color: var(--color-primary, #2A6A92);
-    font-size: 14px;
     font-weight: 850;
 }
 
@@ -372,11 +335,6 @@
 
 .product-category-hub-group {
     scroll-margin-top: 96px;
-}
-
-.featured-packaging-example-title {
-    display: block;
-    padding: 16px;
 }
 
 .related-packaging-categories-section {
@@ -420,10 +378,38 @@
     color: #c46a2b;
 }
 
+.product-category-hub-card-grid {
+    gap: 14px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.product-category-hub-card {
+    border-radius: 6px;
+    box-shadow: 0 10px 22px rgba(18, 50, 67, 0.07);
+}
+
+.product-category-hub-card:hover {
+    transform: translateY(-2px);
+}
+
+.product-category-hub-card-image {
+    aspect-ratio: 1 / 1;
+    background: #eef2f5;
+    padding: 10px;
+}
+
+.product-category-hub-card-image img {
+    object-fit: contain;
+}
+
+.product-category-hub-card-title {
+    font-size: 14px;
+    min-height: 54px;
+    padding: 10px 12px;
+}
+
 @media (max-width: 991px) {
-    .popular-category-grid,
-    .product-category-hub-card-grid,
-    .featured-packaging-examples-grid {
+    .product-category-hub-card-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
@@ -433,15 +419,12 @@
         position: static;
     }
 
-    .popular-category-grid,
-    .product-category-hub-card-grid,
-    .featured-packaging-examples-grid {
-        grid-template-columns: 1fr;
+    .product-category-hub-card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .popular-categories-section,
-    .product-category-hub-section,
-    .featured-packaging-examples-section {
+    .product-category-hub-section {
         padding: 38px 0;
     }
 
@@ -456,6 +439,18 @@
 
     .related-packaging-parent-links {
         margin-top: 12px;
+    }
+}
+
+@media (max-width: 380px) {
+    .product-category-hub-card-grid {
+        gap: 12px;
+    }
+
+    .product-category-hub-card-title {
+        font-size: 15px;
+        min-height: 64px;
+        padding: 11px 8px;
     }
 }
 
