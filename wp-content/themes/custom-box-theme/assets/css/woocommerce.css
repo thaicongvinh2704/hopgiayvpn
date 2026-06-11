@@ -168,23 +168,27 @@
 }
 
 .product-category-card-image {
+    align-items: center;
+    aspect-ratio: 450 / 570;
     background: var(--color-primary-soft, #eaf3f8);
     border-radius: 6px;
-    display: block;
+    display: flex;
+    justify-content: center;
     overflow: hidden;
+    padding: 0;
 }
 
 .product-category-card-image img {
-    aspect-ratio: 1 / 1.18;
+    aspect-ratio: auto;
     display: block;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.24s ease;
+    transition: none;
     width: 100%;
 }
 
 .product-category-card:hover img {
-    transform: scale(1.04);
+    transform: none;
 }
 
 .product-category-card-title {
@@ -303,9 +307,13 @@
 }
 
 .product-category-hub-card-image {
-    display: block;
-    aspect-ratio: 4 / 3;
+    align-items: center;
+    aspect-ratio: 450 / 570;
     background: #eef4f1;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0;
 }
 
 .product-category-hub-card-image img {
@@ -313,11 +321,11 @@
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 220ms ease;
+    transition: none;
 }
 
 .product-category-hub-card:hover img {
-    transform: scale(1.04);
+    transform: none;
 }
 
 .product-category-hub-card h3 {
@@ -393,13 +401,13 @@
 }
 
 .product-category-hub-card-image {
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 450 / 570;
     background: #eef2f5;
-    padding: 10px;
+    padding: 0;
 }
 
 .product-category-hub-card-image img {
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .product-category-hub-card-title {

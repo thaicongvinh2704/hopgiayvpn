@@ -1131,10 +1131,11 @@ body {
 }
 
 .categories-section .card-img {
-    aspect-ratio: 1 / 1.24;
+    aspect-ratio: 450 / 570;
     background: #eef1f2;
     border: 0;
-    display: block;
+    display: grid;
+    place-items: center;
     overflow: hidden;
     padding: 0;
     position: relative;
@@ -1151,7 +1152,7 @@ body {
     object-fit: cover;
     object-position: center;
     transform: none;
-    transition: transform 0.28s ease;
+    transition: none;
     width: 100%;
 }
 
@@ -1178,7 +1179,7 @@ body {
 }
 
 .categories-section .category-card:hover .card-img img {
-    transform: scale(1.025);
+    transform: none;
 }
 
 .categories-section .category-card:focus-visible {
@@ -1238,7 +1239,7 @@ body {
     }
 
     .categories-section .card-img {
-        aspect-ratio: 1 / 1.12;
+        aspect-ratio: 450 / 570;
         height: auto;
     }
 
