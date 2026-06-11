@@ -95,7 +95,7 @@ function custom_box_get_flat_product_category_url($term) {
         return '';
     }
 
-    return home_url(user_trailingslashit('packaging/' . $term->slug));
+    return home_url(user_trailingslashit('products/' . $term->slug));
 }
 
 function custom_box_flat_product_category_link($termlink, $term, $taxonomy) {
@@ -117,6 +117,18 @@ function custom_box_add_flat_product_category_rewrite_rules() {
     );
 
     add_rewrite_rule(
+        '^products/([^/]+)/page/([0-9]+)/?$',
+        'index.php?product_cat=$matches[1]&paged=$matches[2]',
+        'top'
+    );
+
+    add_rewrite_rule(
+        '^products/([^/]+)/?$',
+        'index.php?product_cat=$matches[1]',
+        'top'
+    );
+
+    add_rewrite_rule(
         '^packaging/([^/]+)/page/([0-9]+)/?$',
         'index.php?product_cat=$matches[1]&paged=$matches[2]',
         'top'
@@ -129,6 +141,19 @@ function custom_box_add_flat_product_category_rewrite_rules() {
     );
 }
 add_action('init', 'custom_box_add_flat_product_category_rewrite_rules', 20);
+
+function custom_box_maybe_flush_product_category_rewrites() {
+    $rewrite_version = 'products-category-base-v2';
+
+    if (get_option('custom_box_product_category_rewrite_version') === $rewrite_version) {
+        return;
+    }
+
+    custom_box_add_flat_product_category_rewrite_rules();
+    flush_rewrite_rules(false);
+    update_option('custom_box_product_category_rewrite_version', $rewrite_version, false);
+}
+add_action('init', 'custom_box_maybe_flush_product_category_rewrites', 30);
 
 function custom_box_flush_rewrite_rules_on_theme_switch() {
     custom_box_add_flat_product_category_rewrite_rules();
@@ -224,7 +249,7 @@ function custom_box_redirect_legacy_product_category_base() {
     $term = get_term_by('slug', $slug, 'product_cat');
     $target_url = $term && !is_wp_error($term)
         ? custom_box_get_flat_product_category_url($term) . custom_box_get_product_category_paged_path($relative_path)
-        : home_url('/' . preg_replace('#^product-category/#', 'packaging/', $relative_path) . '/');
+        : home_url('/' . preg_replace('#^product-category/#', 'products/', $relative_path) . '/');
 
     wp_safe_redirect($target_url, 301);
     exit;

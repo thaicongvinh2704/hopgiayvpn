@@ -8,7 +8,7 @@ $resolve_category_url = function ($slug) {
         }
     }
 
-    $url = home_url('/packaging/' . trim($slug, '/') . '/');
+    $url = home_url('/products/' . trim($slug, '/') . '/');
 
     if (url_to_postid($url)) {
         return $url;
