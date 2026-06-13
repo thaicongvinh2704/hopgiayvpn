@@ -19,6 +19,7 @@ $custom_box_inc_files = array(
     'inc/paper-box-manufacturing-process-post-sync.php',
     'inc/paper-material-selection-post-sync.php',
     'inc/paper-thickness-post-sync.php',
+    'inc/paper-box-durability-post-sync.php',
     'inc/obsolete-packaging-materials-page.php',
     'inc/supplier-audit-post-sync.php',
     'inc/admin-category-fields.php',
