@@ -22,11 +22,8 @@ function custom_box_upsert_paper_box_durability_post()
     $post = get_page_by_path($data['slug'], OBJECT, 'post');
 
     if (!$post || 'trash' === $post->post_status) {
-        update_option('custom_box_paper_box_durability_missing_post', true, false);
         return 0;
     }
-
-    delete_option('custom_box_paper_box_durability_missing_post');
 
     $updated = wp_update_post(array(
         'ID'           => $post->ID,
@@ -231,14 +228,6 @@ add_action('admin_notices', 'custom_box_paper_box_durability_sync_notice');
 function custom_box_paper_box_durability_sync_notice()
 {
     if (!current_user_can('manage_options')) {
-        return;
-    }
-
-    if (get_option('custom_box_paper_box_durability_missing_post', false)) {
-        echo '<div class="notice notice-error"><p>';
-        echo esc_html__('Paper box durability sync cannot run because the draft post is missing. Create or import a draft with this slug:', 'custom-box-theme') . ' ';
-        echo '<code>how-to-improve-paper-box-durability</code>';
-        echo '</p></div>';
         return;
     }
 
