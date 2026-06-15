@@ -171,6 +171,26 @@ $batches = array(
 			'tools/import-paper-egg-packaging-product.php',
 		),
 	),
+	array(
+		'name'      => 'Bird Nest Packaging products',
+		'marker'    => 'product-samples-bird-nest-packaging',
+		'expected'  => 4,
+		'min_words' => 900,
+		'scripts'   => array(
+			'tools/import-bird-nest-packaging-products.php',
+			'tools/verify-bird-nest-packaging-products.php',
+		),
+	),
+	array(
+		'name'      => 'Kraft Corrugated Mailer product',
+		'marker'    => 'product-samples-kraft-corrugated-mailer',
+		'expected'  => 1,
+		'min_words' => 900,
+		'scripts'   => array(
+			'tools/import-kraft-corrugated-mailer-product.php',
+			'tools/verify-kraft-corrugated-mailer-product.php',
+		),
+	),
 );
 
 foreach ( $batches as $batch ) {
