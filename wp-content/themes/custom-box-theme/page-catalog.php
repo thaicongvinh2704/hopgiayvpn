@@ -7,17 +7,29 @@
 
 $catalog_title = 'Custom Paper Box Catalog | VPN Packaging Factory';
 $catalog_description = 'Explore VPN Packaging Factory\'s custom paper box catalog, including rigid boxes, folding cartons, cosmetic boxes, gift boxes, food packaging boxes, materials, printing finishes, and OEM/ODM paper packaging solutions for global B2B customers.';
+$catalog_page_url = home_url('/catalog/');
+$catalog_social_image = get_template_directory_uri() . '/assets/images/product-banner.png';
 
 add_filter('pre_get_document_title', function () use ($catalog_title) {
     return $catalog_title;
 });
 
-add_action('wp_head', function () use ($catalog_description) {
+add_action('wp_head', function () use ($catalog_title, $catalog_description, $catalog_page_url, $catalog_social_image) {
     if (defined('RANK_MATH_VERSION')) {
         return;
     }
 
     printf('<meta name="description" content="%s">' . "\n", esc_attr($catalog_description));
+    printf('<meta property="og:type" content="website">' . "\n");
+    printf('<meta property="og:title" content="%s">' . "\n", esc_attr($catalog_title));
+    printf('<meta property="og:description" content="%s">' . "\n", esc_attr($catalog_description));
+    printf('<meta property="og:url" content="%s">' . "\n", esc_url($catalog_page_url));
+    printf('<meta property="og:image" content="%s">' . "\n", esc_url($catalog_social_image));
+    printf('<meta property="og:image:secure_url" content="%s">' . "\n", esc_url($catalog_social_image));
+    printf('<meta name="twitter:card" content="summary_large_image">' . "\n");
+    printf('<meta name="twitter:title" content="%s">' . "\n", esc_attr($catalog_title));
+    printf('<meta name="twitter:description" content="%s">' . "\n", esc_attr($catalog_description));
+    printf('<meta name="twitter:image" content="%s">' . "\n", esc_url($catalog_social_image));
 }, 1);
 
 get_header();
