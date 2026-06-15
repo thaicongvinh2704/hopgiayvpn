@@ -14,6 +14,14 @@ add_filter('pre_get_document_title', function () use ($catalog_title) {
     return $catalog_title;
 });
 
+add_filter('rank_math/opengraph/facebook/image', function () use ($catalog_social_image) {
+    return $catalog_social_image;
+});
+
+add_filter('rank_math/opengraph/twitter/image', function () use ($catalog_social_image) {
+    return $catalog_social_image;
+});
+
 add_action('wp_head', function () use ($catalog_title, $catalog_description, $catalog_page_url, $catalog_social_image) {
     if (defined('RANK_MATH_VERSION')) {
         return;
