@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-12-paper-egg-packaging' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-15-bird-nest-mailer-packaging' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -571,6 +571,26 @@ function custom_box_product_sample_deploy_batches(): array {
 				'tools/import-paper-egg-packaging-product.php',
 			),
 		),
+		array(
+			'name'      => 'Bird Nest Packaging products',
+			'marker'    => 'product-samples-bird-nest-packaging',
+			'expected'  => 4,
+			'min_words' => 900,
+			'scripts'   => array(
+				'tools/import-bird-nest-packaging-products.php',
+				'tools/verify-bird-nest-packaging-products.php',
+			),
+		),
+		array(
+			'name'      => 'Kraft Corrugated Mailer product',
+			'marker'    => 'product-samples-kraft-corrugated-mailer',
+			'expected'  => 1,
+			'min_words' => 900,
+			'scripts'   => array(
+				'tools/import-kraft-corrugated-mailer-product.php',
+				'tools/verify-kraft-corrugated-mailer-product.php',
+			),
+		),
 	);
 }
 
@@ -581,7 +601,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 		return $batches;
 	}
 
-	return array_slice( $batches, -1 );
+	return array_slice( $batches, -2 );
 }
 
 function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
@@ -883,7 +903,7 @@ function custom_box_product_sample_deploy_page() {
 			<p>
 				<label>
 					<input type="radio" name="deploy_scope" value="latest" checked>
-					Latest batch only (Paper Egg Packaging)
+					Latest batch only (Bird Nest + Kraft Mailer)
 				</label>
 			</p>
 			<p>
