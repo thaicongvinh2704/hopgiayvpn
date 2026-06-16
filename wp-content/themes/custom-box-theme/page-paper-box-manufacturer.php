@@ -23,6 +23,88 @@ $trust_items = array(
     array('fa-solid fa-globe', 'International buyer support'),
 );
 
+$box_types = array(
+    'Rigid Boxes',
+    'Carton Boxes',
+    'Magnetic Boxes',
+    'Drawer Boxes',
+    'Logo Paper Bags',
+    'Cosmetic Packaging',
+    'Other Custom Packaging',
+);
+
+$quote_status = isset($_GET['quote_status']) ? sanitize_text_field(wp_unslash($_GET['quote_status'])) : '';
+$quote_messages = array(
+    'success' => 'Thank you. Your quote request has been sent successfully.',
+    'failed'  => 'Sorry, we could not send your request right now. Please try again later.',
+    'missing' => 'Please fill in your name, email, and product information.',
+    'invalid' => 'The form session expired. Please refresh the page and try again.',
+    'file'    => 'Please upload a valid artwork file under 10MB.',
+);
+
+$render_paper_box_quote_form = function ($form_id, $title) use ($box_types, $quote_status, $quote_messages) {
+    ?>
+    <form class="pbm-quote-form" id="<?php echo esc_attr($form_id); ?>" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
+        <input type="hidden" name="action" value="custom_box_quote_form">
+        <input type="hidden" name="product_name" value="Paper Box Manufacturer Landing Page">
+        <input type="hidden" name="width" value="">
+        <input type="hidden" name="depth" value="">
+        <input type="hidden" name="unit" value="mm">
+        <input type="hidden" name="printing_option" value="To be advised">
+        <input type="hidden" name="finishing_option" value="To be advised">
+        <input type="hidden" name="country" value="">
+        <input type="hidden" name="phone" value="">
+        <input type="hidden" name="custom_box_quote_nonce" value="<?php echo esc_attr(wp_create_nonce('custom_box_quote_form')); ?>">
+
+        <div class="pbm-form-head">
+            <span>Factory quotation</span>
+            <h2><?php echo esc_html($title); ?></h2>
+        </div>
+
+        <?php if ($quote_status && isset($quote_messages[$quote_status])) : ?>
+            <p class="pbm-form-message pbm-form-message-<?php echo esc_attr($quote_status); ?>"><?php echo esc_html($quote_messages[$quote_status]); ?></p>
+        <?php endif; ?>
+
+        <div class="pbm-form-grid">
+            <label>
+                <span>Full Name</span>
+                <input type="text" name="full_name" autocomplete="name" required>
+            </label>
+            <label>
+                <span>Email</span>
+                <input type="email" name="email" autocomplete="email" required>
+            </label>
+            <label>
+                <span>Company</span>
+                <input type="text" name="company" autocomplete="organization">
+            </label>
+            <label>
+                <span>Box Type</span>
+                <select name="stock_option" required>
+                    <option value="">Select box type</option>
+                    <?php foreach ($box_types as $box_type) : ?>
+                        <option value="<?php echo esc_attr($box_type); ?>"><?php echo esc_html($box_type); ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </label>
+            <label>
+                <span>Size (L x W x H)</span>
+                <input type="text" name="length" placeholder="Example: 220 x 160 x 70 mm">
+            </label>
+            <label>
+                <span>Estimated Quantity</span>
+                <input type="text" name="quantity" placeholder="Example: 5,000 pcs">
+            </label>
+        </div>
+        <label>
+            <span>Notes</span>
+            <textarea name="message" rows="4" placeholder="Material, paper thickness, printing, finishing, delivery country, deadline..."></textarea>
+        </label>
+        <button class="pbm-submit" type="submit">Get Quote Now</button>
+    </form>
+    <?php
+};
+
 $benefits = array(
     array('fa-solid fa-building', 'Direct factory production with clearer cost and lead-time control.'),
     array('fa-solid fa-swatchbook', 'Structure, paper, insert, and finishing advice based on your product.'),
@@ -72,13 +154,19 @@ $factory_images = array(
     .pbm-hero-copy p { color: #e8f2fb; font-size: 18px; max-width: 680px; }
     .pbm-keywords { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
     .pbm-keywords span { border: 1px solid rgba(255,255,255,.35); color: #fff; border-radius: 999px; padding: 9px 13px; font-size: 14px; }
-    .pbm-hero-form-sync .quote-section { padding: 0; background: transparent; }
-    .pbm-hero-form-sync .quote-wrapper { width: 100%; max-width: none; margin: 0; display: block; }
-    .pbm-hero-form-sync .quote-left { display: none; }
-    .pbm-hero-form-sync .quote-form-box { width: 100%; margin: 0; box-shadow: 0 18px 50px rgba(12, 42, 77, .18); }
-    .pbm-final-quote .quote-section { padding: 0; background: transparent; }
-    .pbm-final-quote .quote-wrapper { width: 100%; max-width: none; }
-    .pbm-final-quote .quote-left h2, .pbm-final-quote .quote-left strong, .pbm-final-quote .quote-left p { color: #fff; }
+    .pbm-quote-form { background: #fff; border: 1px solid var(--pbm-line); border-radius: 8px; box-shadow: 0 18px 50px rgba(12, 42, 77, .16); padding: 24px; }
+    .pbm-form-head span { color: var(--pbm-blue); display: block; font-size: 13px; font-weight: 800; margin-bottom: 6px; text-transform: uppercase; }
+    .pbm-form-head h2 { color: var(--pbm-ink); font-size: 24px; margin-bottom: 18px; }
+    .pbm-form-grid { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+    .pbm-quote-form label { display: block; margin-bottom: 14px; }
+    .pbm-quote-form label span { color: #26384d; display: block; font-size: 13px; font-weight: 800; margin-bottom: 7px; }
+    .pbm-quote-form input, .pbm-quote-form select, .pbm-quote-form textarea { background: #fff; border: 1px solid #cfd9e3; border-radius: 6px; color: var(--pbm-ink); font: inherit; min-height: 46px; padding: 12px 13px; width: 100%; }
+    .pbm-quote-form textarea { resize: vertical; }
+    .pbm-submit { align-items: center; background: var(--pbm-blue); border: 0; border-radius: 6px; color: #fff; cursor: pointer; display: inline-flex; font-size: 16px; font-weight: 850; justify-content: center; min-height: 48px; padding: 13px 20px; transition: background .2s ease, transform .2s ease; width: 100%; }
+    .pbm-submit:hover { background: var(--pbm-blue-hover); transform: translateY(-1px); }
+    .pbm-form-message { border-radius: 6px; font-weight: 750; margin-bottom: 16px; padding: 10px 12px; }
+    .pbm-form-message-success { background: #e8f7ef; color: #126136; }
+    .pbm-form-message-failed, .pbm-form-message-missing, .pbm-form-message-invalid, .pbm-form-message-file { background: #fff0e8; color: #9a3b10; }
     .pbm-trust { padding: 24px 0; border-bottom: 1px solid var(--pbm-line); background: #fff; }
     .pbm-trust-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
     .pbm-trust-item { display: flex; align-items: center; gap: 11px; padding: 14px 10px; border: 1px solid var(--pbm-line); border-radius: 8px; min-height: 76px; }
@@ -121,6 +209,8 @@ $factory_images = array(
         .pbm-section { padding: 50px 0; }
         .pbm-hero { padding: 56px 0 36px; }
         .pbm-hero-grid, .pbm-trust-grid, .pbm-process, .pbm-material-grid { grid-template-columns: 1fr; }
+        .pbm-form-grid { grid-template-columns: 1fr; }
+        .pbm-quote-form { padding: 18px; }
     }
 </style>
 
@@ -138,8 +228,8 @@ $factory_images = array(
                     <span>Global export support</span>
                 </div>
             </div>
-            <div class="pbm-hero-form-sync">
-                <?php get_template_part('template-parts/home/quote-form', null, array('section_id' => 'paper-box-quote')); ?>
+            <div>
+                <?php $render_paper_box_quote_form('paper-box-quote', 'Get Your Paper Box Quote'); ?>
             </div>
         </div>
     </section>
@@ -265,7 +355,7 @@ $factory_images = array(
                 <span>Email: <a href="mailto:sales.vpn@hopgiayvpn.com">sales.vpn@hopgiayvpn.com</a></span>
             </div>
             <div class="pbm-final-quote">
-                <?php get_template_part('template-parts/home/quote-form', null, array('section_id' => 'paper-box-quote-bottom')); ?>
+                <?php $render_paper_box_quote_form('paper-box-quote-bottom', 'Request a Factory Quote'); ?>
             </div>
         </div>
     </section>
