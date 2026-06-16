@@ -313,7 +313,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
     .vpn-lp-page h2 { font-size: clamp(28px, 3vw, 42px); letter-spacing: 0; line-height: 1.12; margin-bottom: 16px; }
     .vpn-lp-page h3 { font-size: 20px; line-height: 1.25; margin-bottom: 8px; }
     .vpn-lp-page p { color: var(--vpn-lp-muted); line-height: 1.7; }
-    .vpn-lp-hero { background-image: radial-gradient(circle at 26% 38%, rgba(39,137,203,.34), transparent 32%), linear-gradient(90deg, rgba(5,35,71,.96) 0%, rgba(6,63,122,.9) 43%, rgba(8,75,131,.52) 67%, rgba(255,255,255,.13) 100%), linear-gradient(180deg, rgba(3,26,55,.2), rgba(3,26,55,.18)), url("<?php echo esc_url($image_url('paper-box-manufacturer-vietnam-factory-hero.webp')); ?>"); background-position: center; background-size: cover; padding: 72px 0 42px; }
+    .vpn-lp-hero { background-image: radial-gradient(circle at 26% 38%, rgba(39,137,203,.34), transparent 32%), linear-gradient(90deg, rgba(5,35,71,.96) 0%, rgba(6,63,122,.9) 43%, rgba(8,75,131,.52) 67%, rgba(255,255,255,.13) 100%), linear-gradient(180deg, rgba(3,26,55,.2), rgba(3,26,55,.18)), url("<?php echo esc_url($image_url('anh-nha-may-2-16x9-100kb.webp')); ?>"); background-position: center; background-size: cover; padding: 72px 0 42px; }
     .vpn-lp-hero-grid { align-items: start; display: grid; gap: 48px; grid-template-areas: "copy form"; grid-template-columns: minmax(0, 1fr) minmax(390px, 440px); }
     .vpn-lp-hero-copy { grid-area: copy; }
     .vpn-lp-hero-form { grid-area: form; min-width: 0; width: 100%; }
@@ -394,7 +394,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
         .vpn-lp-hero-offer strong { font-size: 36px; }
     }
     @media (max-width: 980px) {
-        .vpn-lp-hero { background-image: linear-gradient(180deg, rgba(5,35,71,.94) 0%, rgba(6,63,122,.86) 58%, rgba(6,63,122,.78) 100%), url("<?php echo esc_url($image_url('paper-box-manufacturer-vietnam-factory-hero.webp')); ?>"); background-position: center top; padding: 56px 0 40px; }
+        .vpn-lp-hero { background-image: linear-gradient(180deg, rgba(5,35,71,.94) 0%, rgba(6,63,122,.86) 58%, rgba(6,63,122,.78) 100%), url("<?php echo esc_url($image_url('anh-nha-may-2-16x9-100kb.webp')); ?>"); background-position: center top; padding: 56px 0 40px; }
         .vpn-lp-hero-grid, .vpn-lp-split { grid-template-columns: 1fr; }
         .vpn-lp-hero-grid { gap: 24px; grid-template-areas: "copy" "form"; }
         .vpn-lp-hero-copy, .vpn-lp-hero-trust { max-width: 760px; }
