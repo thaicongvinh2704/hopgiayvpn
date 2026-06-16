@@ -290,7 +290,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
         </label>
         <label>
             <span>Message / Project Details</span>
-            <textarea name="message" rows="<?php echo $is_footer ? '4' : '3'; ?>" placeholder="Material, printing, finishing, deadline, artwork status..."></textarea>
+            <textarea name="message" rows="<?php echo $is_footer ? '4' : '2'; ?>" placeholder="Material, printing, finishing, deadline, artwork status..."></textarea>
             <em class="vpn-lp-field-error"></em>
         </label>
 
@@ -333,22 +333,23 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
     .vpn-lp-btn { align-items: center; border-radius: 6px; display: inline-flex; font-weight: 850; justify-content: center; min-height: 48px; padding: 13px 18px; text-decoration: none; }
     .vpn-lp-btn-primary { background: #fff; box-shadow: 0 14px 30px rgba(0,31,70,.2); color: var(--vpn-lp-blue); }
     .vpn-lp-btn-secondary { color: #ddecf7; min-height: auto; padding: 0; text-decoration: underline; text-underline-offset: 4px; }
-    .vpn-lp-quote-form { background: #fff; border: 1px solid rgba(223,231,239,.96); border-radius: 16px; box-shadow: 0 24px 70px rgba(4,33,71,.28); max-width: 100%; padding: 20px; width: 100%; }
-    .vpn-lp-form-head span { color: var(--vpn-lp-blue); display: block; font-size: 13px; font-weight: 850; margin-bottom: 6px; text-transform: uppercase; }
-    .vpn-lp-form-head h2 { color: var(--vpn-lp-ink); font-size: 24px; margin-bottom: 6px; }
-    .vpn-lp-form-head p { font-size: 14px; margin-bottom: 14px; }
-    .vpn-lp-form-trust { display: flex; flex-wrap: wrap; gap: 8px; margin: -4px 0 12px; }
-    .vpn-lp-form-trust span { background: #f1f7fc; border: 1px solid #d8e8f4; border-radius: 999px; color: #17466f; font-size: 12px; font-weight: 800; padding: 6px 9px; }
-    .vpn-lp-form-grid { display: grid; gap: 10px; grid-template-columns: 1fr 1fr; }
-    .vpn-lp-quote-form label { display: block; margin-bottom: 10px; }
-    .vpn-lp-quote-form label span { color: #1e3148; display: block; font-size: 13px; font-weight: 850; margin-bottom: 5px; }
-    .vpn-lp-quote-form input, .vpn-lp-quote-form select, .vpn-lp-quote-form textarea { background: #fff; border: 1px solid #c6d3e1; border-radius: 8px; color: var(--vpn-lp-ink); font: inherit; font-size: 15px; min-height: 44px; padding: 10px 11px; width: 100%; }
-    .vpn-lp-quote-form textarea { resize: vertical; }
+    .vpn-lp-quote-form { background: #fff; border: 1px solid rgba(223,231,239,.96); border-radius: 16px; box-shadow: 0 24px 70px rgba(4,33,71,.28); max-width: 100%; padding: 18px; width: 100%; }
+    .vpn-lp-form-head span { color: var(--vpn-lp-blue); display: block; font-size: 12px; font-weight: 850; margin-bottom: 4px; text-transform: uppercase; }
+    .vpn-lp-form-head h2 { color: var(--vpn-lp-ink); font-size: 22px; margin-bottom: 4px; }
+    .vpn-lp-form-head p { font-size: 13px; line-height: 1.45; margin-bottom: 10px; }
+    .vpn-lp-form-trust { display: flex; flex-wrap: wrap; gap: 6px; margin: -2px 0 10px; }
+    .vpn-lp-form-trust span { background: #f1f7fc; border: 1px solid #d8e8f4; border-radius: 999px; color: #17466f; font-size: 11px; font-weight: 800; padding: 5px 8px; }
+    .vpn-lp-form-grid { display: grid; gap: 8px; grid-template-columns: 1fr 1fr; }
+    .vpn-lp-quote-form label { display: block; margin-bottom: 8px; }
+    .vpn-lp-quote-form label span { color: #1e3148; display: block; font-size: 12px; font-weight: 850; margin-bottom: 4px; }
+    .vpn-lp-quote-form input, .vpn-lp-quote-form select, .vpn-lp-quote-form textarea { background: #fff; border: 1px solid #c6d3e1; border-radius: 8px; color: var(--vpn-lp-ink); font: inherit; font-size: 14px; min-height: 40px; padding: 8px 10px; width: 100%; }
+    .vpn-lp-quote-form textarea { min-height: 72px; resize: vertical; }
+    .vpn-lp-quote-form input[type="file"] { background: #f9fbfd; font-size: 13px; min-height: 34px; padding: 6px 8px; }
     .vpn-lp-quote-form .vpn-lp-hp { height: 1px; left: -9999px; opacity: 0; position: absolute; width: 1px; }
-    .vpn-lp-submit { align-items: center; background: var(--vpn-lp-blue); border: 0; border-radius: 8px; color: #fff; cursor: pointer; display: inline-flex; font-size: 16px; font-weight: 850; justify-content: center; min-height: 46px; padding: 11px 18px; width: 100%; }
+    .vpn-lp-submit { align-items: center; background: var(--vpn-lp-blue); border: 0; border-radius: 8px; color: #fff; cursor: pointer; display: inline-flex; font-size: 15px; font-weight: 850; justify-content: center; min-height: 42px; padding: 9px 16px; width: 100%; }
     .vpn-lp-submit:hover { background: var(--vpn-lp-blue-2); }
     .vpn-lp-submit[disabled] { cursor: wait; opacity: .72; }
-    .vpn-lp-privacy-note { font-size: 13px; margin: 10px 0 0; text-align: center; }
+    .vpn-lp-privacy-note { font-size: 12px; line-height: 1.35; margin: 8px 0 0; text-align: center; }
     .vpn-lp-form-message { border-radius: 6px; font-weight: 750; margin-bottom: 16px; padding: 10px 12px; }
     .vpn-lp-form-message-success { background: #e8f7ef; color: #126136; }
     .vpn-lp-form-message-failed, .vpn-lp-form-message-missing, .vpn-lp-form-message-invalid, .vpn-lp-form-message-file { background: #fff0e8; color: #9a3b10; }
@@ -411,7 +412,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
         .vpn-lp-hero { padding: 40px 0 34px; }
         .vpn-lp-hero-grid { gap: 20px; }
         .vpn-lp-trust-grid, .vpn-lp-after-grid, .vpn-lp-home-category-grid, .vpn-lp-factory-grid, .vpn-lp-material-grid, .vpn-lp-form-grid { grid-template-columns: 1fr; }
-        .vpn-lp-quote-form { padding: 16px; }
+        .vpn-lp-quote-form { padding: 14px; }
         .vpn-lp-page h1 { font-size: 36px; line-height: 1.08; margin-bottom: 14px; }
         .vpn-lp-hero-copy .vpn-lp-eyebrow { font-size: 11px; line-height: 1.25; padding: 7px 10px; }
         .vpn-lp-hero-copy p { font-size: 16px; }
@@ -423,7 +424,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
         .vpn-lp-btn { width: 100%; }
         .vpn-lp-btn-secondary { justify-content: center; min-height: 44px; }
         .vpn-lp-trust-list { gap: 7px; }
-        .vpn-lp-form-head h2 { font-size: 22px; }
+        .vpn-lp-form-head h2 { font-size: 21px; }
         .vpn-lp-form-trust span { flex: 1 1 130px; text-align: center; }
         .vpn-lp-sticky-cta { background: #fff; border-top: 1px solid var(--vpn-lp-line); bottom: 0; display: block; left: 0; padding: 10px 12px; position: fixed; right: 0; z-index: 50; }
         .vpn-lp-sticky-cta a { background: var(--vpn-lp-blue); border-radius: 6px; color: #fff; display: flex; font-weight: 850; justify-content: center; min-height: 48px; padding: 13px 18px; text-decoration: none; }
@@ -438,8 +439,10 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
         .vpn-lp-hero-offer strong { font-size: 28px; }
         .vpn-lp-hero-offer em { font-size: 13px; }
         .vpn-lp-trust-list li { font-size: 12px; min-height: 36px; padding: 7px 10px; }
-        .vpn-lp-quote-form { border-radius: 12px; padding: 14px; }
-        .vpn-lp-quote-form input, .vpn-lp-quote-form select, .vpn-lp-quote-form textarea { font-size: 16px; min-height: 44px; }
+        .vpn-lp-quote-form { border-radius: 12px; padding: 12px; }
+        .vpn-lp-quote-form input, .vpn-lp-quote-form select, .vpn-lp-quote-form textarea { font-size: 15px; min-height: 40px; }
+        .vpn-lp-quote-form textarea { min-height: 68px; }
+        .vpn-lp-quote-form input[type="file"] { min-height: 32px; }
     }
 </style>
 
