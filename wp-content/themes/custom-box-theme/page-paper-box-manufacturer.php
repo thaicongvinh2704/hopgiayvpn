@@ -131,6 +131,13 @@ $factory_images = array(
 
 $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_types, $quantity_options, $quote_status, $quote_messages, $page_url) {
     $is_footer = 'footer' === $location;
+    $form_subtitle = 'hero' === $location
+        ? 'Send your box type, quantity, and delivery country. Our team will suggest structure, material, printing, and finishing.'
+        : 'Send your box type, quantity, and delivery country. Our team will help suggest materials, structure, printing, and finishing.';
+    $submit_text = 'hero' === $location ? 'Get Free Design & Factory Quote' : 'Get Factory Quote in 24h';
+    $privacy_text = 'hero' === $location
+        ? 'Your information is confidential. We only use it to prepare your packaging quote.'
+        : 'Your information is confidential. We only use it to prepare your packaging quotation.';
     ?>
     <form class="vpn-lp-quote-form" id="<?php echo esc_attr($form_id); ?>" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" enctype="multipart/form-data" data-event="quote_form_submit" data-form-location="<?php echo esc_attr($location); ?>" novalidate>
         <input type="hidden" name="action" value="custom_box_quote_form">
@@ -157,8 +164,16 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
         <div class="vpn-lp-form-head">
             <span>Factory quotation</span>
             <h2><?php echo esc_html($title); ?></h2>
-            <p>Send your box type, quantity, and delivery country. Our team will help suggest materials, structure, printing, and finishing.</p>
+            <p><?php echo esc_html($form_subtitle); ?></p>
         </div>
+
+        <?php if ('hero' === $location) : ?>
+            <div class="vpn-lp-form-trust" aria-label="Quote trust points">
+                <span>Factory-direct pricing</span>
+                <span>Free design support</span>
+                <span>Quote within 24h</span>
+            </div>
+        <?php endif; ?>
 
         <div class="vpn-lp-form-message-wrap" aria-live="polite">
             <?php if ($quote_status && isset($quote_messages[$quote_status])) : ?>
@@ -226,12 +241,12 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
         </label>
         <label>
             <span>Message / Project Details</span>
-            <textarea name="message" rows="<?php echo $is_footer ? '4' : '3'; ?>" placeholder="Material preference, printing, finishing, delivery deadline, artwork status..."></textarea>
+            <textarea name="message" rows="<?php echo $is_footer ? '4' : '3'; ?>" placeholder="Material, printing, finishing, deadline, artwork status..."></textarea>
             <em class="vpn-lp-field-error"></em>
         </label>
 
-        <button class="vpn-lp-submit" type="submit">Get Factory Quote in 24h</button>
-        <p class="vpn-lp-privacy-note">Your information is confidential. We only use it to prepare your packaging quotation.</p>
+        <button class="vpn-lp-submit" type="submit"><?php echo esc_html($submit_text); ?></button>
+        <p class="vpn-lp-privacy-note"><?php echo esc_html($privacy_text); ?></p>
     </form>
     <?php
 };
@@ -249,32 +264,39 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
     .vpn-lp-page h2 { font-size: clamp(28px, 3vw, 42px); letter-spacing: 0; line-height: 1.12; margin-bottom: 16px; }
     .vpn-lp-page h3 { font-size: 20px; line-height: 1.25; margin-bottom: 8px; }
     .vpn-lp-page p { color: var(--vpn-lp-muted); line-height: 1.7; }
-    .vpn-lp-hero { background: linear-gradient(120deg, rgba(6,63,122,.93), rgba(7,47,89,.86)), url("<?php echo esc_url($image_url('paper-box-manufacturer-vietnam-factory-hero.webp')); ?>") center/cover; padding: 76px 0 46px; }
-    .vpn-lp-hero-grid { align-items: center; display: grid; gap: 42px; grid-template-columns: minmax(0, 1.02fr) minmax(400px, .82fr); }
-    .vpn-lp-hero-copy .vpn-lp-eyebrow, .vpn-lp-hero-copy p { color: #e8f2fb; }
-    .vpn-lp-hero-copy p { font-size: 18px; max-width: 720px; }
-    .vpn-lp-hero-offer { align-items: center; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.34); border-radius: 8px; display: flex; gap: 16px; margin: 24px 0 22px; max-width: 680px; padding: 16px 18px; }
-    .vpn-lp-hero-offer strong { color: #fff; display: block; font-size: clamp(30px, 4vw, 46px); font-weight: 950; letter-spacing: 0; line-height: 1; white-space: nowrap; }
-    .vpn-lp-hero-offer span { color: #fff; display: block; font-size: 18px; font-weight: 850; line-height: 1.35; }
-    .vpn-lp-hero-offer small { color: #d9ebf8; display: block; font-size: 13px; line-height: 1.45; margin-top: 4px; }
-    .vpn-lp-trust-list { display: grid; gap: 10px; list-style: none; margin: 24px 0 28px; padding: 0; }
+    .vpn-lp-hero { background-image: radial-gradient(circle at 26% 38%, rgba(39,137,203,.34), transparent 32%), linear-gradient(90deg, rgba(5,35,71,.96) 0%, rgba(6,63,122,.9) 43%, rgba(8,75,131,.52) 67%, rgba(255,255,255,.13) 100%), linear-gradient(180deg, rgba(3,26,55,.2), rgba(3,26,55,.18)), url("<?php echo esc_url($image_url('paper-box-manufacturer-vietnam-factory-hero.webp')); ?>"); background-position: center; background-size: cover; padding: 72px 0 42px; }
+    .vpn-lp-hero-grid { align-items: center; display: grid; gap: 54px; grid-template-areas: "copy form" "trust form"; grid-template-columns: minmax(0, .52fr) minmax(420px, .42fr); }
+    .vpn-lp-hero-copy { grid-area: copy; }
+    .vpn-lp-hero-form { grid-area: form; }
+    .vpn-lp-hero-trust { grid-area: trust; }
+    .vpn-lp-hero-copy .vpn-lp-eyebrow { background: rgba(255,255,255,.11); border: 1px solid rgba(255,255,255,.22); border-radius: 999px; color: #d8efff; padding: 8px 12px; }
+    .vpn-lp-hero-copy p { color: #eaf4fc; font-size: 18px; line-height: 1.62; max-width: 680px; }
+    .vpn-lp-hero-offer { align-items: center; background: linear-gradient(135deg, rgba(255,255,255,.18), rgba(64,154,214,.12)); border: 1px solid rgba(210,237,255,.42); border-radius: 14px; box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 18px 44px rgba(0,28,62,.18); display: grid; gap: 14px; grid-template-columns: auto minmax(0, 1fr); margin: 22px 0 18px; max-width: 660px; padding: 15px 17px; }
+    .vpn-lp-hero-offer-icon { align-items: center; background: #fff; border-radius: 12px; color: var(--vpn-lp-blue); display: inline-flex; font-size: 20px; height: 46px; justify-content: center; width: 46px; }
+    .vpn-lp-hero-offer strong { color: #fff; display: block; font-size: clamp(30px, 3.5vw, 42px); font-weight: 950; letter-spacing: 0; line-height: 1; margin-bottom: 4px; }
+    .vpn-lp-hero-offer span { color: #fff; display: block; font-size: 17px; font-weight: 850; line-height: 1.35; }
+    .vpn-lp-hero-offer em { color: #e8f6ff; display: block; font-size: 14px; font-style: normal; font-weight: 750; margin-top: 6px; }
+    .vpn-lp-hero-offer small { color: #cfe4f4; display: block; font-size: 12px; line-height: 1.45; margin-top: 6px; }
+    .vpn-lp-trust-list { display: grid; gap: 10px; list-style: none; margin: 0; padding: 0; }
     .vpn-lp-trust-list li { align-items: flex-start; color: #fff; display: flex; font-weight: 750; gap: 10px; line-height: 1.45; }
     .vpn-lp-trust-list i { color: #9ee2b8; margin-top: 4px; }
-    .vpn-lp-hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .vpn-lp-hero-actions { align-items: center; display: flex; flex-wrap: wrap; gap: 14px; }
     .vpn-lp-btn { align-items: center; border-radius: 6px; display: inline-flex; font-weight: 850; justify-content: center; min-height: 48px; padding: 13px 18px; text-decoration: none; }
-    .vpn-lp-btn-primary { background: #fff; color: var(--vpn-lp-blue); }
-    .vpn-lp-btn-secondary { border: 1px solid rgba(255,255,255,.5); color: #fff; }
-    .vpn-lp-quote-form { background: #fff; border: 1px solid var(--vpn-lp-line); border-radius: 8px; box-shadow: 0 18px 50px rgba(12,42,77,.16); padding: 24px; }
+    .vpn-lp-btn-primary { background: #fff; box-shadow: 0 14px 30px rgba(0,31,70,.2); color: var(--vpn-lp-blue); }
+    .vpn-lp-btn-secondary { color: #ddecf7; min-height: auto; padding: 0; text-decoration: underline; text-underline-offset: 4px; }
+    .vpn-lp-quote-form { background: #fff; border: 1px solid rgba(223,231,239,.96); border-radius: 16px; box-shadow: 0 24px 70px rgba(4,33,71,.28); padding: 24px; }
     .vpn-lp-form-head span { color: var(--vpn-lp-blue); display: block; font-size: 13px; font-weight: 850; margin-bottom: 6px; text-transform: uppercase; }
     .vpn-lp-form-head h2 { color: var(--vpn-lp-ink); font-size: 24px; margin-bottom: 8px; }
     .vpn-lp-form-head p { font-size: 14px; margin-bottom: 18px; }
-    .vpn-lp-form-grid { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
-    .vpn-lp-quote-form label { display: block; margin-bottom: 14px; }
-    .vpn-lp-quote-form label span { color: #26384d; display: block; font-size: 13px; font-weight: 850; margin-bottom: 7px; }
-    .vpn-lp-quote-form input, .vpn-lp-quote-form select, .vpn-lp-quote-form textarea { background: #fff; border: 1px solid #cfd9e3; border-radius: 6px; color: var(--vpn-lp-ink); font: inherit; font-size: 15px; min-height: 46px; padding: 12px 13px; width: 100%; }
+    .vpn-lp-form-trust { display: flex; flex-wrap: wrap; gap: 8px; margin: -6px 0 16px; }
+    .vpn-lp-form-trust span { background: #f1f7fc; border: 1px solid #d8e8f4; border-radius: 999px; color: #17466f; font-size: 12px; font-weight: 800; padding: 7px 9px; }
+    .vpn-lp-form-grid { display: grid; gap: 12px; grid-template-columns: 1fr 1fr; }
+    .vpn-lp-quote-form label { display: block; margin-bottom: 12px; }
+    .vpn-lp-quote-form label span { color: #1e3148; display: block; font-size: 13px; font-weight: 850; margin-bottom: 6px; }
+    .vpn-lp-quote-form input, .vpn-lp-quote-form select, .vpn-lp-quote-form textarea { background: #fff; border: 1px solid #c6d3e1; border-radius: 8px; color: var(--vpn-lp-ink); font: inherit; font-size: 15px; min-height: 46px; padding: 11px 12px; width: 100%; }
     .vpn-lp-quote-form textarea { resize: vertical; }
     .vpn-lp-quote-form .vpn-lp-hp { height: 1px; left: -9999px; opacity: 0; position: absolute; width: 1px; }
-    .vpn-lp-submit { align-items: center; background: var(--vpn-lp-blue); border: 0; border-radius: 6px; color: #fff; cursor: pointer; display: inline-flex; font-size: 16px; font-weight: 850; justify-content: center; min-height: 50px; padding: 13px 20px; width: 100%; }
+    .vpn-lp-submit { align-items: center; background: var(--vpn-lp-blue); border: 0; border-radius: 8px; color: #fff; cursor: pointer; display: inline-flex; font-size: 16px; font-weight: 850; justify-content: center; min-height: 50px; padding: 13px 20px; width: 100%; }
     .vpn-lp-submit:hover { background: var(--vpn-lp-blue-2); }
     .vpn-lp-submit[disabled] { cursor: wait; opacity: .72; }
     .vpn-lp-privacy-note { font-size: 13px; margin: 10px 0 0; text-align: center; }
@@ -322,6 +344,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
     .vpn-lp-sticky-cta { display: none; }
     @media (max-width: 980px) {
         .vpn-lp-hero-grid, .vpn-lp-split { grid-template-columns: 1fr; }
+        .vpn-lp-hero-grid { gap: 24px; grid-template-areas: "copy" "form" "trust"; }
         .vpn-lp-trust-grid, .vpn-lp-after-grid, .vpn-lp-factory-grid, .vpn-lp-material-grid { grid-template-columns: repeat(2, 1fr); }
         .vpn-lp-category-grid, .vpn-lp-more-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -332,8 +355,12 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
         .vpn-lp-trust-grid, .vpn-lp-after-grid, .vpn-lp-category-grid, .vpn-lp-more-grid, .vpn-lp-factory-grid, .vpn-lp-material-grid, .vpn-lp-form-grid { grid-template-columns: 1fr; }
         .vpn-lp-quote-form { padding: 18px; }
         .vpn-lp-page h1 { font-size: 38px; }
-        .vpn-lp-hero-offer { align-items: flex-start; flex-direction: column; gap: 8px; }
+        .vpn-lp-hero-copy p { font-size: 16px; }
+        .vpn-lp-hero-offer { align-items: flex-start; grid-template-columns: 1fr; gap: 10px; margin: 18px 0 16px; }
+        .vpn-lp-hero-offer-icon { height: 40px; width: 40px; }
         .vpn-lp-hero-offer strong { white-space: normal; }
+        .vpn-lp-hero-actions { margin-bottom: 0; }
+        .vpn-lp-btn-primary { width: 100%; }
         .vpn-lp-sticky-cta { background: #fff; border-top: 1px solid var(--vpn-lp-line); bottom: 0; display: block; left: 0; padding: 10px 12px; position: fixed; right: 0; z-index: 50; }
         .vpn-lp-sticky-cta a { background: var(--vpn-lp-blue); border-radius: 6px; color: #fff; display: flex; font-weight: 850; justify-content: center; min-height: 48px; padding: 13px 18px; text-decoration: none; }
         body { padding-bottom: 70px; }
@@ -346,25 +373,29 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
             <div class="vpn-lp-hero-copy">
                 <span class="vpn-lp-eyebrow">Paper Box Manufacturer in Vietnam</span>
                 <h1>Paper Box Manufacturer in Vietnam</h1>
-                <p>Factory-direct custom paper boxes, carton boxes, rigid boxes, magnetic boxes, drawer boxes, and printed paper bags for global B2B buyers.</p>
+                <p>Factory-direct custom paper boxes, rigid boxes, carton boxes, gift boxes, and printed paper bags for global B2B bulk orders.</p>
                 <div class="vpn-lp-hero-offer" aria-label="Bulk order savings">
-                    <strong>Save up to 40%</strong>
-                    <span>on large-volume packaging orders <small>Get a free factory quote now. Savings depend on size, material, printing, finishing, and quantity.</small></span>
+                    <span class="vpn-lp-hero-offer-icon"><i class="fa-solid fa-tags" aria-hidden="true"></i></span>
+                    <span>
+                        <strong>Save up to 40%</strong>
+                        on large-volume packaging orders
+                        <em>Free design support and factory quote before production.</em>
+                        <small>Savings depend on size, material, printing, finishing, and quantity.</small>
+                    </span>
                 </div>
-                <ul class="vpn-lp-trust-list">
-                    <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Factory-direct production in Vietnam</span></li>
-                    <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>OEM/ODM custom packaging</span></li>
-                    <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Bulk order and export packing support</span></li>
-                    <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Material, dieline, printing, and finishing consultation</span></li>
-                </ul>
                 <div class="vpn-lp-hero-actions">
-                    <a class="vpn-lp-btn vpn-lp-btn-primary vpn-lp-js-quote-cta" href="#paper-box-quote" data-event="quote_cta_click">Get a Free Quote Now</a>
+                    <a class="vpn-lp-btn vpn-lp-btn-primary vpn-lp-js-quote-cta" href="#paper-box-quote" data-event="quote_cta_click">Get Free Design & Quote</a>
                     <a class="vpn-lp-btn vpn-lp-btn-secondary vpn-lp-js-scroll" href="#packaging-options" data-event="quote_cta_click">View Packaging Options</a>
                 </div>
             </div>
-            <div>
-                <?php $render_paper_box_quote_form('paper-box-quote', 'Get Your Paper Box Quote', 'hero'); ?>
+            <div class="vpn-lp-hero-form">
+                <?php $render_paper_box_quote_form('paper-box-quote', 'Get Your Free Packaging Quote', 'hero'); ?>
             </div>
+            <ul class="vpn-lp-trust-list vpn-lp-hero-trust">
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Free design & dieline support</span></li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Free factory quotation in 24h</span></li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Bulk order & export packing support</span></li>
+            </ul>
         </div>
     </section>
 
@@ -657,7 +688,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
 
             if (button) {
                 button.disabled = false;
-                button.textContent = button.dataset.originalText || 'Get Factory Quote in 24h';
+                button.textContent = button.dataset.originalText || 'Get Free Design & Factory Quote';
             }
         });
     });
