@@ -78,7 +78,7 @@ $quantity_options = array(
 
 $quote_status = isset($_GET['quote_status']) ? sanitize_text_field(wp_unslash($_GET['quote_status'])) : '';
 $quote_messages = array(
-    'success' => 'Thank you. Your quote request has been sent. Our team will contact you within 24 hours.',
+    'success' => 'Thank you. Your quote request has been sent. Our team will contact you shortly.',
     'failed'  => 'Sorry, we could not send your request right now. Please try again or contact sales.vpn@hopgiayvpn.com.',
     'missing' => 'Please fill in full name, business email, box type, estimated quantity, and delivery country.',
     'invalid' => 'The form session expired. Please refresh the page and try again.',
@@ -183,7 +183,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
     $form_subtitle = 'hero' === $location
         ? 'Send your box type, quantity, and delivery country. Our team will suggest structure, material, printing, and finishing.'
         : 'Send your box type, quantity, and delivery country. Our team will help suggest materials, structure, printing, and finishing.';
-    $submit_text = 'hero' === $location ? 'Get Free Design & Factory Quote' : 'Get Factory Quote in 24h';
+    $submit_text = 'hero' === $location ? 'Get Free Design & Factory Quote' : 'Get Direct Factory Quote';
     $privacy_text = 'hero' === $location
         ? 'Your information is confidential. We only use it to prepare your packaging quote.'
         : 'Your information is confidential. We only use it to prepare your packaging quotation.';
@@ -220,7 +220,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
             <div class="vpn-lp-form-trust" aria-label="Quote trust points">
                 <span>Factory-direct pricing</span>
                 <span>Free design support</span>
-                <span>Quote within 24h</span>
+                <span>Direct factory quote</span>
             </div>
         <?php endif; ?>
 
@@ -468,7 +468,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
                 </div>
                 <ul class="vpn-lp-trust-list vpn-lp-hero-trust">
                     <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Free design & dieline support</span></li>
-                    <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Free factory quotation in 24h</span></li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Direct factory quotation</span></li>
                     <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Bulk order & export packing support</span></li>
                 </ul>
             </div>
@@ -498,7 +498,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
             <div class="vpn-lp-after-grid">
                 <article class="vpn-lp-step"><strong>1</strong><p>We review your box type, size, quantity, and delivery country.</p></article>
                 <article class="vpn-lp-step"><strong>2</strong><p>We suggest suitable paper, structure, printing, and finishing.</p></article>
-                <article class="vpn-lp-step"><strong>3</strong><p>We send a factory quotation or sample plan within 24 hours.</p></article>
+                <article class="vpn-lp-step"><strong>3</strong><p>We send a direct factory quotation or sample plan quickly.</p></article>
             </div>
         </div>
     </section>
@@ -748,7 +748,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
 
             if (messageWrap) {
                 if ('success' === status) {
-                    messageWrap.innerHTML = '<p class="vpn-lp-form-message vpn-lp-form-message-success">Thank you. Your quote request has been sent. Our team will contact you within 24 hours.</p>';
+                    messageWrap.innerHTML = '<p class="vpn-lp-form-message vpn-lp-form-message-success">Thank you. Your quote request has been sent. Our team will contact you shortly.</p>';
                     form.reset();
                     pushEvent('quote_form_submit_success', { form_location: form.dataset.formLocation || '' });
                 } else {
