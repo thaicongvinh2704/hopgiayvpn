@@ -314,7 +314,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
     .vpn-lp-page h3 { font-size: 20px; line-height: 1.25; margin-bottom: 8px; }
     .vpn-lp-page p { color: var(--vpn-lp-muted); line-height: 1.7; }
     .vpn-lp-hero { background: transparent; overflow: hidden; padding: 72px 0 42px; position: relative; }
-    .vpn-lp-hero::before { background-image: url("<?php echo esc_url($image_url('paper-box-materials-and-finishing-options.webp')); ?>"); background-position: center; background-repeat: no-repeat; background-size: cover; content: ""; inset: 0; position: absolute; transform: scaleX(-1); transform-origin: center; z-index: 0; }
+    .vpn-lp-hero::before { background-image: url("<?php echo esc_url($image_url('anh-nha-may-2-16x9-100kb.webp')); ?>"); background-position: center; background-repeat: no-repeat; background-size: cover; content: ""; inset: 0; position: absolute; transform: scaleX(-1); transform-origin: center; z-index: 0; }
     .vpn-lp-hero::after { background-image: radial-gradient(circle at 26% 38%, rgba(39,137,203,.34), transparent 32%), linear-gradient(90deg, rgba(5,35,71,.96) 0%, rgba(6,63,122,.9) 43%, rgba(8,75,131,.52) 67%, rgba(255,255,255,.13) 100%), linear-gradient(180deg, rgba(3,26,55,.2), rgba(3,26,55,.18)); content: ""; inset: 0; position: absolute; z-index: 0; }
     .vpn-lp-hero > .vpn-lp-wrap { position: relative; z-index: 1; }
     .vpn-lp-hero-grid { align-items: start; display: grid; gap: 48px; grid-template-areas: "copy form"; grid-template-columns: minmax(0, 1fr) minmax(390px, 440px); }
