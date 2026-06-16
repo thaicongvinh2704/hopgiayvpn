@@ -173,9 +173,9 @@ if (function_exists('custom_box_get_home_packaging_category_groups')) {
 }
 
 $factory_images = array(
-    array('paper-box-factory-production-workflow.webp', 'Paper box factory production workflow for custom B2B packaging orders.'),
-    array('custom-packaging-quote-consultation.webp', 'Packaging consultation for box structure, dieline, material, printing, and finishing.'),
-    array('export-ready-paper-packaging-pallets.webp', 'Export-ready paper packaging cartons prepared for bulk international delivery.'),
+    array('z7943073083537_80fea858574510eb5c28efb6511b2bc8.jpg', 'Hands-on production line for rigid boxes and paper packaging assembly.'),
+    array('z7943074700018_440d8bf9d030453c89c4b18677406ef1.jpg', 'Factory coordination, planning, and quotation support for international clients.'),
+    array('z7943075414782_8e03cb237c0383fe81f3c5d2819b4932.jpg', 'Packaging sample library showing structures, finishes, and brand references.'),
 );
 
 $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_types, $quantity_options, $quote_status, $quote_messages, $page_url) {
