@@ -535,17 +535,17 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
             <div>
                 <span class="vpn-lp-eyebrow">Why Choose Us</span>
                 <h2>More than 9 years of B2B paper packaging production experience</h2>
-                <p>VPN Paper Box works as a direct manufacturer, so buyers can discuss structure, material, sampling, printing, finishing, pricing, and lead time closer to the actual production team.</p>
+                <p>VPN Paper Box works as a direct manufacturer trusted by multinational buyers and export-focused brands, so every project is handled with clear communication, consistent quality, and production support from quote to shipment.</p>
                 <ul class="vpn-lp-list">
-                    <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Direct production without unnecessary middleman markup.</span></li>
-                    <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Free design support, dieline checking, and structure consultation before production.</span></li>
-                    <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Competitive factory pricing based on size, paper, printing, finishing, and quantity.</span></li>
-                    <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Common production lead time of 3-7 days for many standard paper box projects.</span></li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Proven experience supporting multinational cooperation and export packaging workflows.</span></li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Direct factory communication for faster decisions on structure, sampling, and print details.</span></li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Consistent quality control for repeat orders, brand standards, and international delivery needs.</span></li>
+                    <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Flexible production support for bulk orders, private labels, and coordinated global shipments.</span></li>
                 </ul>
             </div>
             <figure class="vpn-lp-image-card">
-                <img src="<?php echo esc_url($image_url('anh-nha-may-1-16x9-100kb.webp')); ?>" alt="Paper box factory production environment" width="1600" height="900" loading="lazy" decoding="async">
-                <figcaption>Our sales and production team helps confirm structure, material, printing, finishing, quantity, and packing details before quotation.</figcaption>
+                <img src="<?php echo esc_url($image_url('vietnam-day-packaging-event-vpn-logo.webp')); ?>" alt="Vietnam Day Packaging Event with VPN branding and international partnership context" width="1600" height="900" loading="lazy" decoding="async">
+                <figcaption>VPN Paper Box participates in international industry events and works with multinational partners on custom packaging, export requirements, and brand-driven projects.</figcaption>
             </figure>
         </div>
     </section>
