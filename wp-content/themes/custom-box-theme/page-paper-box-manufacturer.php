@@ -260,21 +260,21 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
     .vpn-lp-soft { background: var(--vpn-lp-soft); }
     .vpn-lp-eyebrow { color: var(--vpn-lp-blue); display: inline-flex; font-size: 13px; font-weight: 800; letter-spacing: 0; margin-bottom: 12px; text-transform: uppercase; }
     .vpn-lp-page h1, .vpn-lp-page h2, .vpn-lp-page h3, .vpn-lp-page p { margin-top: 0; }
-    .vpn-lp-page h1 { color: #fff; font-size: clamp(38px, 5vw, 64px); letter-spacing: 0; line-height: 1.02; margin-bottom: 18px; }
+    .vpn-lp-page h1 { color: #fff; font-size: 58px; letter-spacing: 0; line-height: 1.02; margin-bottom: 18px; }
     .vpn-lp-page h2 { font-size: clamp(28px, 3vw, 42px); letter-spacing: 0; line-height: 1.12; margin-bottom: 16px; }
     .vpn-lp-page h3 { font-size: 20px; line-height: 1.25; margin-bottom: 8px; }
     .vpn-lp-page p { color: var(--vpn-lp-muted); line-height: 1.7; }
     .vpn-lp-hero { background-image: radial-gradient(circle at 26% 38%, rgba(39,137,203,.34), transparent 32%), linear-gradient(90deg, rgba(5,35,71,.96) 0%, rgba(6,63,122,.9) 43%, rgba(8,75,131,.52) 67%, rgba(255,255,255,.13) 100%), linear-gradient(180deg, rgba(3,26,55,.2), rgba(3,26,55,.18)), url("<?php echo esc_url($image_url('paper-box-manufacturer-vietnam-factory-hero.webp')); ?>"); background-position: center; background-size: cover; padding: 72px 0 42px; }
-    .vpn-lp-hero-grid { align-items: center; display: grid; gap: 54px; grid-template-areas: "copy form" "trust form"; grid-template-columns: minmax(0, .52fr) minmax(420px, .42fr); }
+    .vpn-lp-hero-grid { align-items: center; display: grid; gap: 48px; grid-template-areas: "copy form" "trust form"; grid-template-columns: minmax(0, 1fr) minmax(390px, 440px); }
     .vpn-lp-hero-copy { grid-area: copy; }
-    .vpn-lp-hero-form { grid-area: form; }
+    .vpn-lp-hero-form { grid-area: form; min-width: 0; width: 100%; }
     .vpn-lp-hero-trust { grid-area: trust; }
     .vpn-lp-hero-copy .vpn-lp-eyebrow { background: rgba(255,255,255,.11); border: 1px solid rgba(255,255,255,.22); border-radius: 999px; color: #d8efff; padding: 8px 12px; }
     .vpn-lp-hero-copy p { color: #eaf4fc; font-size: 18px; line-height: 1.62; max-width: 680px; }
-    .vpn-lp-hero-offer { align-items: center; background: linear-gradient(135deg, rgba(255,255,255,.18), rgba(64,154,214,.12)); border: 1px solid rgba(210,237,255,.42); border-radius: 14px; box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 18px 44px rgba(0,28,62,.18); display: grid; gap: 14px; grid-template-columns: auto minmax(0, 1fr); margin: 22px 0 18px; max-width: 660px; padding: 15px 17px; }
-    .vpn-lp-hero-offer-icon { align-items: center; background: #fff; border-radius: 12px; color: var(--vpn-lp-blue); display: inline-flex; font-size: 20px; height: 46px; justify-content: center; width: 46px; }
-    .vpn-lp-hero-offer strong { color: #fff; display: block; font-size: clamp(30px, 3.5vw, 42px); font-weight: 950; letter-spacing: 0; line-height: 1; margin-bottom: 4px; }
-    .vpn-lp-hero-offer span { color: #fff; display: block; font-size: 17px; font-weight: 850; line-height: 1.35; }
+    .vpn-lp-hero-offer { background: linear-gradient(135deg, rgba(255,255,255,.18), rgba(64,154,214,.12)); border: 1px solid rgba(210,237,255,.42); border-radius: 14px; box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 18px 44px rgba(0,28,62,.18); margin: 22px 0 18px; max-width: 660px; padding: 17px 19px; }
+    .vpn-lp-hero-offer-badge { background: rgba(255,255,255,.16); border: 1px solid rgba(232,246,255,.32); border-radius: 999px; color: #dff4ff; display: inline-flex; font-size: 12px; font-weight: 850; line-height: 1; margin-bottom: 9px; padding: 7px 10px; text-transform: uppercase; }
+    .vpn-lp-hero-offer strong { color: #fff; display: block; font-size: 40px; font-weight: 950; letter-spacing: 0; line-height: 1; margin-bottom: 5px; }
+    .vpn-lp-hero-offer-text { color: #fff; display: block; font-size: 17px; font-weight: 850; line-height: 1.35; }
     .vpn-lp-hero-offer em { color: #e8f6ff; display: block; font-size: 14px; font-style: normal; font-weight: 750; margin-top: 6px; }
     .vpn-lp-hero-offer small { color: #cfe4f4; display: block; font-size: 12px; line-height: 1.45; margin-top: 6px; }
     .vpn-lp-trust-list { display: grid; gap: 10px; list-style: none; margin: 0; padding: 0; }
@@ -284,7 +284,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
     .vpn-lp-btn { align-items: center; border-radius: 6px; display: inline-flex; font-weight: 850; justify-content: center; min-height: 48px; padding: 13px 18px; text-decoration: none; }
     .vpn-lp-btn-primary { background: #fff; box-shadow: 0 14px 30px rgba(0,31,70,.2); color: var(--vpn-lp-blue); }
     .vpn-lp-btn-secondary { color: #ddecf7; min-height: auto; padding: 0; text-decoration: underline; text-underline-offset: 4px; }
-    .vpn-lp-quote-form { background: #fff; border: 1px solid rgba(223,231,239,.96); border-radius: 16px; box-shadow: 0 24px 70px rgba(4,33,71,.28); padding: 24px; }
+    .vpn-lp-quote-form { background: #fff; border: 1px solid rgba(223,231,239,.96); border-radius: 16px; box-shadow: 0 24px 70px rgba(4,33,71,.28); max-width: 100%; padding: 24px; width: 100%; }
     .vpn-lp-form-head span { color: var(--vpn-lp-blue); display: block; font-size: 13px; font-weight: 850; margin-bottom: 6px; text-transform: uppercase; }
     .vpn-lp-form-head h2 { color: var(--vpn-lp-ink); font-size: 24px; margin-bottom: 8px; }
     .vpn-lp-form-head p { font-size: 14px; margin-bottom: 18px; }
@@ -342,28 +342,57 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
     .vpn-lp-contact-lines { display: flex; flex-wrap: wrap; gap: 16px; margin: 18px 0 24px; }
     .vpn-lp-contact-lines a { color: #fff; font-weight: 850; text-decoration: none; }
     .vpn-lp-sticky-cta { display: none; }
+    @media (max-width: 1180px) {
+        .vpn-lp-page h1 { font-size: 50px; }
+        .vpn-lp-hero-grid { gap: 34px; grid-template-columns: minmax(0, 1fr) minmax(370px, 420px); }
+        .vpn-lp-hero-offer strong { font-size: 36px; }
+    }
     @media (max-width: 980px) {
+        .vpn-lp-hero { background-image: linear-gradient(180deg, rgba(5,35,71,.94) 0%, rgba(6,63,122,.86) 58%, rgba(6,63,122,.78) 100%), url("<?php echo esc_url($image_url('paper-box-manufacturer-vietnam-factory-hero.webp')); ?>"); background-position: center top; padding: 56px 0 40px; }
         .vpn-lp-hero-grid, .vpn-lp-split { grid-template-columns: 1fr; }
-        .vpn-lp-hero-grid { gap: 24px; grid-template-areas: "copy" "form" "trust"; }
+        .vpn-lp-hero-grid { gap: 24px; grid-template-areas: "copy" "trust" "form"; }
+        .vpn-lp-hero-copy, .vpn-lp-hero-trust { max-width: 760px; }
+        .vpn-lp-hero-form { max-width: 720px; }
+        .vpn-lp-page h1 { font-size: 44px; max-width: 760px; }
+        .vpn-lp-hero-copy p { max-width: 720px; }
+        .vpn-lp-hero-actions { margin-bottom: 0; }
         .vpn-lp-trust-grid, .vpn-lp-after-grid, .vpn-lp-factory-grid, .vpn-lp-material-grid { grid-template-columns: repeat(2, 1fr); }
         .vpn-lp-category-grid, .vpn-lp-more-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 640px) {
         .vpn-lp-wrap { width: min(100% - 24px, 1180px); }
         .vpn-lp-section { padding: 50px 0; }
-        .vpn-lp-hero { padding: 46px 0 36px; }
+        .vpn-lp-hero { padding: 40px 0 34px; }
+        .vpn-lp-hero-grid { gap: 20px; }
         .vpn-lp-trust-grid, .vpn-lp-after-grid, .vpn-lp-category-grid, .vpn-lp-more-grid, .vpn-lp-factory-grid, .vpn-lp-material-grid, .vpn-lp-form-grid { grid-template-columns: 1fr; }
         .vpn-lp-quote-form { padding: 18px; }
-        .vpn-lp-page h1 { font-size: 38px; }
+        .vpn-lp-page h1 { font-size: 36px; line-height: 1.08; margin-bottom: 14px; }
+        .vpn-lp-hero-copy .vpn-lp-eyebrow { font-size: 11px; line-height: 1.25; padding: 7px 10px; }
         .vpn-lp-hero-copy p { font-size: 16px; }
-        .vpn-lp-hero-offer { align-items: flex-start; grid-template-columns: 1fr; gap: 10px; margin: 18px 0 16px; }
-        .vpn-lp-hero-offer-icon { height: 40px; width: 40px; }
-        .vpn-lp-hero-offer strong { white-space: normal; }
-        .vpn-lp-hero-actions { margin-bottom: 0; }
-        .vpn-lp-btn-primary { width: 100%; }
+        .vpn-lp-hero-offer { margin: 18px 0 16px; padding: 15px; }
+        .vpn-lp-hero-offer-badge { font-size: 11px; }
+        .vpn-lp-hero-offer-text { font-size: 16px; }
+        .vpn-lp-hero-offer strong { font-size: 32px; line-height: 1.04; white-space: normal; }
+        .vpn-lp-hero-actions { align-items: stretch; flex-direction: column; gap: 12px; margin-bottom: 0; }
+        .vpn-lp-btn { width: 100%; }
+        .vpn-lp-btn-secondary { justify-content: center; min-height: 44px; }
+        .vpn-lp-trust-list { gap: 9px; }
+        .vpn-lp-form-head h2 { font-size: 22px; }
+        .vpn-lp-form-trust span { flex: 1 1 130px; text-align: center; }
         .vpn-lp-sticky-cta { background: #fff; border-top: 1px solid var(--vpn-lp-line); bottom: 0; display: block; left: 0; padding: 10px 12px; position: fixed; right: 0; z-index: 50; }
         .vpn-lp-sticky-cta a { background: var(--vpn-lp-blue); border-radius: 6px; color: #fff; display: flex; font-weight: 850; justify-content: center; min-height: 48px; padding: 13px 18px; text-decoration: none; }
         body { padding-bottom: 70px; }
+    }
+    @media (max-width: 420px) {
+        .vpn-lp-wrap { width: min(100% - 20px, 1180px); }
+        .vpn-lp-hero { padding-top: 32px; }
+        .vpn-lp-page h1 { font-size: 31px; }
+        .vpn-lp-hero-copy p { font-size: 15px; line-height: 1.55; }
+        .vpn-lp-hero-offer { padding: 14px; }
+        .vpn-lp-hero-offer strong { font-size: 28px; }
+        .vpn-lp-hero-offer em { font-size: 13px; }
+        .vpn-lp-quote-form { border-radius: 12px; padding: 14px; }
+        .vpn-lp-quote-form input, .vpn-lp-quote-form select, .vpn-lp-quote-form textarea { font-size: 16px; min-height: 46px; }
     }
 </style>
 
@@ -375,8 +404,8 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
                 <h1>Paper Box Manufacturer in Vietnam</h1>
                 <p>Factory-direct custom paper boxes, rigid boxes, carton boxes, gift boxes, and printed paper bags for global B2B bulk orders.</p>
                 <div class="vpn-lp-hero-offer" aria-label="Bulk order savings">
-                    <span class="vpn-lp-hero-offer-icon"><i class="fa-solid fa-tags" aria-hidden="true"></i></span>
-                    <span>
+                    <span class="vpn-lp-hero-offer-badge">Factory direct savings</span>
+                    <span class="vpn-lp-hero-offer-text">
                         <strong>Save up to 40%</strong>
                         on large-volume packaging orders
                         <em>Free design support and factory quote before production.</em>
