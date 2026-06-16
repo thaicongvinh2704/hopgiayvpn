@@ -33,6 +33,14 @@ function custom_box_get_packaging_money_page_url() {
     return home_url(custom_box_get_packaging_money_page_new_path());
 }
 
+function custom_box_get_paper_box_manufacturer_page_path() {
+    return '/paper-box-manufacturer/';
+}
+
+function custom_box_get_paper_box_manufacturer_page_url() {
+    return home_url(custom_box_get_paper_box_manufacturer_page_path());
+}
+
 function custom_box_packaging_money_page_permalink($link, $post_id) {
     $post = get_post($post_id);
     if (!$post || 'packaging-landing' !== $post->post_name) {
@@ -113,8 +121,37 @@ function custom_box_is_packaging_money_page() {
 }
 
 function custom_box_is_paper_box_manufacturer_page() {
-    return !is_admin() && is_page('paper-box-manufacturer');
+    if (is_admin()) {
+        return false;
+    }
+
+    return is_page('paper-box-manufacturer')
+        || custom_box_current_request_path() === custom_box_get_paper_box_manufacturer_page_path();
 }
+
+function custom_box_load_paper_box_manufacturer_template($template) {
+    if (!custom_box_is_paper_box_manufacturer_page()) {
+        return $template;
+    }
+
+    $landing_template = get_template_directory() . '/page-paper-box-manufacturer.php';
+
+    if (!file_exists($landing_template)) {
+        return $template;
+    }
+
+    global $wp_query;
+
+    if ($wp_query && $wp_query->is_404()) {
+        $wp_query->is_404 = false;
+        $wp_query->is_page = true;
+        status_header(200);
+        nocache_headers();
+    }
+
+    return $landing_template;
+}
+add_filter('template_include', 'custom_box_load_paper_box_manufacturer_template', 20);
 
 function custom_box_redirect_old_packaging_landing_url() {
     if (!custom_box_is_packaging_money_page()) {
@@ -258,7 +295,7 @@ function custom_box_public_canonical($canonical) {
     }
 
     if (custom_box_is_paper_box_manufacturer_page()) {
-        return home_url('/paper-box-manufacturer/');
+        return custom_box_get_paper_box_manufacturer_page_url();
     }
 
     if ((function_exists('is_shop') && is_shop()) || is_page('products')) {
