@@ -46,18 +46,6 @@ $image_url = function ($file) use ($theme_uri) {
     return $theme_uri . '/assets/images/' . ltrim($file, '/');
 };
 
-$resolve_category_url = function ($slug) {
-    $term = get_term_by('slug', $slug, 'product_cat');
-    if ($term && !is_wp_error($term)) {
-        $term_link = get_term_link($term);
-        if (!is_wp_error($term_link)) {
-            return $term_link;
-        }
-    }
-
-    return home_url('/products/' . trim($slug, '/') . '/');
-};
-
 $trust_items = array(
     array('fa-solid fa-tags', 'Factory-direct competitive pricing'),
     array('fa-solid fa-pen-ruler', 'Free design and dieline support'),
@@ -97,31 +85,92 @@ $quote_messages = array(
     'file'    => 'Please upload a valid artwork file under 10MB.',
 );
 
-$primary_categories = array(
-    array('Custom Paper Boxes', 'custom-paper-boxes', 'Printed retail and product packaging boxes customized by size, paper, structure, and finish.', 'Other Custom Packaging', 'paper-packaging-categories-manufacturer.webp'),
-    array('Rigid Boxes', 'rigid-boxes', 'Premium thick-board boxes for gifts, cosmetics, electronics, and luxury product sets.', 'Rigid Boxes', 'paper-box-manufacturer-vietnam-factory-hero.webp'),
-    array('Folding Carton Boxes', 'folding-carton-boxes', 'Lightweight folding cartons for retail packaging, cosmetics, food, and consumer products.', 'Folding Carton Boxes', 'paper-box-materials-and-finishing-options.webp'),
-    array('Magnetic Closure Boxes', 'magnetic-closure-boxes', 'Magnetic gift boxes with strong presentation value for premium brand packaging.', 'Magnetic Boxes', 'custom-packaging-quote-consultation.webp'),
-    array('Drawer Boxes', 'drawer-boxes', 'Sliding drawer boxes for gift sets, accessories, cosmetics, and promotional packaging.', 'Drawer Boxes', 'paper-box-factory-production-workflow.webp'),
-    array('Cosmetic Paper Boxes', 'cosmetic-paper-boxes', 'Custom skincare, perfume, and beauty packaging with printing and finishing support.', 'Cosmetic Packaging', 'paper-box-materials-and-finishing-options.webp'),
-    array('Paper Bags with Logo', 'paper-bags-with-logo', 'Branded paper bags for retail, events, gifting, and coordinated packaging sets.', 'Logo Paper Bags', 'export-ready-paper-packaging-pallets.webp'),
-    array('Food / Bakery Boxes', 'food-paper-boxes', 'Food, bakery, chocolate, and takeaway paper packaging with export-ready options.', 'Food / Bakery Packaging', 'paper-packaging-categories-manufacturer.webp'),
+$featured_category_slugs = array(
+    'custom-paper-boxes',
+    'custom-printed-paper-boxes',
+    'rigid-boxes',
+    'folding-carton-boxes',
+    'magnetic-closure-boxes',
+    'drawer-boxes',
+    'lid-and-base-boxes',
+    'cosmetic-paper-boxes',
+    'paper-bags-with-logo',
+    'food-paper-boxes',
 );
 
-$more_categories = array(
-    array('Custom Printed Paper Boxes', 'custom-printed-paper-boxes'),
-    array('Lid and Base Boxes', 'lid-and-base-boxes'),
-    array('Paper Tube Packaging', 'paper-tube-packaging'),
-    array('Corrugated Mailer Boxes', 'corrugated-mailer-boxes'),
-    array('Perfume Packaging Boxes', 'perfume-packaging-boxes'),
-    array('Skincare Packaging Boxes', 'skincare-packaging-boxes'),
-    array('Jewelry Paper Boxes', 'jewelry-paper-boxes'),
-    array('Gift Paper Boxes', 'gift-paper-boxes'),
-    array('Chocolate Gift Boxes', 'chocolate-gift-boxes'),
-    array('Bakery Packaging Boxes', 'bakery-packaging-boxes'),
-    array('Electronics Accessories Packaging', 'electronics-accessories-packaging'),
-    array('Sports Packaging Boxes', 'sports-packaging-boxes'),
-);
+$build_product_category_card = function ($category_item, $group_title = '') {
+    $label = isset($category_item[0]) ? (string) $category_item[0] : '';
+    $slug = isset($category_item[1]) ? sanitize_title($category_item[1]) : '';
+    $image = isset($category_item[2]) ? (string) $category_item[2] : '';
+
+    if (!$slug) {
+        return null;
+    }
+
+    $term = get_term_by('slug', $slug, 'product_cat');
+    if (!$term || is_wp_error($term)) {
+        return null;
+    }
+
+    $term_link = get_term_link($term);
+    if (is_wp_error($term_link)) {
+        return null;
+    }
+
+    if (!$image && function_exists('custom_box_get_product_category_card_image_url')) {
+        $image = custom_box_get_product_category_card_image_url($term, 'medium_large');
+    }
+
+    $description = trim(wp_strip_all_tags(term_description($term->term_id, 'product_cat')));
+    $description = $description ? wp_trim_words($description, 22, '...') : sprintf('Explore %s packaging options for custom B2B production.', strtolower($term->name));
+
+    return array(
+        'name' => $label ? $label : $term->name,
+        'slug' => $term->slug,
+        'url' => $term_link,
+        'image' => $image,
+        'description' => $description,
+        'quote_type' => $term->name,
+        'group' => $group_title,
+    );
+};
+
+$primary_categories = array();
+
+if (function_exists('custom_box_get_home_packaging_category_groups')) {
+    $home_category_items = array();
+
+    foreach (custom_box_get_home_packaging_category_groups() as $category_group) {
+        if (!empty($category_group['hidden']) || empty($category_group['items']) || !is_array($category_group['items'])) {
+            continue;
+        }
+
+        foreach ($category_group['items'] as $category_item) {
+            $slug = isset($category_item[1]) ? sanitize_title($category_item[1]) : '';
+
+            if ($slug) {
+                $home_category_items[$slug] = array(
+                    'item' => $category_item,
+                    'group' => $category_group['title'] ?? '',
+                );
+            }
+        }
+    }
+
+    foreach ($featured_category_slugs as $featured_slug) {
+        if (empty($home_category_items[$featured_slug])) {
+            continue;
+        }
+
+        $category_item = $home_category_items[$featured_slug]['item'];
+
+        $category_card = $build_product_category_card($category_item, $home_category_items[$featured_slug]['group']);
+
+        if ($category_card) {
+            $primary_categories[] = $category_card;
+        }
+    }
+}
 
 $factory_images = array(
     array('paper-box-factory-production-workflow.webp', 'Paper box factory production workflow for custom B2B packaging orders.'),
@@ -314,16 +363,12 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
     .vpn-lp-step { background: #fff; border: 1px solid var(--vpn-lp-line); border-radius: 8px; min-height: 150px; padding: 20px; }
     .vpn-lp-step strong { align-items: center; background: var(--vpn-lp-blue); border-radius: 50%; color: #fff; display: inline-flex; height: 42px; justify-content: center; margin-bottom: 14px; width: 42px; }
     .vpn-lp-head { max-width: 780px; margin-bottom: 32px; }
-    .vpn-lp-category-grid { display: grid; gap: 18px; grid-template-columns: repeat(4, 1fr); }
-    .vpn-lp-category-card { background: #fff; border: 1px solid var(--vpn-lp-line); border-radius: 8px; overflow: hidden; }
-    .vpn-lp-category-card img { aspect-ratio: 16 / 9; display: block; height: auto; object-fit: cover; width: 100%; }
-    .vpn-lp-category-body { padding: 16px; }
-    .vpn-lp-category-body p { font-size: 14px; margin-bottom: 14px; }
-    .vpn-lp-mini-btn { background: var(--vpn-lp-blue); border: 0; border-radius: 6px; color: #fff; cursor: pointer; font-weight: 850; min-height: 40px; padding: 9px 12px; }
-    .vpn-lp-more { margin-top: 24px; }
-    .vpn-lp-more summary { color: var(--vpn-lp-blue); cursor: pointer; font-weight: 850; }
-    .vpn-lp-more-grid { display: grid; gap: 10px; grid-template-columns: repeat(4, 1fr); margin-top: 16px; }
-    .vpn-lp-more-grid a { background: #fff; border: 1px solid var(--vpn-lp-line); border-radius: 6px; color: var(--vpn-lp-ink); font-weight: 750; padding: 10px 12px; text-decoration: none; }
+    .vpn-lp-home-category-grid { display: grid; gap: 14px; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .vpn-lp-home-category-card { background: #ffffff; border: 1px solid var(--vpn-lp-line); border-radius: 6px; color: #123243; display: block; overflow: hidden; text-decoration: none; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+    .vpn-lp-home-category-card:hover { border-color: rgba(42, 106, 146, 0.42); box-shadow: 0 14px 30px rgba(42, 106, 146, 0.14); transform: translateY(-2px); }
+    .vpn-lp-home-category-image { align-items: center; aspect-ratio: 450 / 570; background: #eef2f5; display: flex; justify-content: center; overflow: hidden; padding: 0; }
+    .vpn-lp-home-category-image img { display: block; height: 100%; object-fit: cover; width: 100%; }
+    .vpn-lp-home-category-title { align-items: center; color: #123243; display: flex; font-size: 14px; font-weight: 750; justify-content: center; line-height: 1.25; min-height: 54px; padding: 10px 12px; text-align: center; }
     .vpn-lp-split { align-items: start; display: grid; gap: 42px; grid-template-columns: minmax(0,.95fr) minmax(0,1fr); }
     .vpn-lp-image-card { background: #fff; border: 1px solid var(--vpn-lp-line); border-radius: 8px; overflow: hidden; }
     .vpn-lp-image-card img { aspect-ratio: 16 / 9; display: block; height: auto; object-fit: cover; width: 100%; }
@@ -357,14 +402,14 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
         .vpn-lp-hero-copy p { max-width: 720px; }
         .vpn-lp-hero-actions { margin-bottom: 0; }
         .vpn-lp-trust-grid, .vpn-lp-after-grid, .vpn-lp-factory-grid, .vpn-lp-material-grid { grid-template-columns: repeat(2, 1fr); }
-        .vpn-lp-category-grid, .vpn-lp-more-grid { grid-template-columns: repeat(2, 1fr); }
+        .vpn-lp-home-category-grid { grid-template-columns: repeat(2, 1fr); }
     }
     @media (max-width: 640px) {
         .vpn-lp-wrap { width: min(100% - 24px, 1180px); }
         .vpn-lp-section { padding: 50px 0; }
         .vpn-lp-hero { padding: 40px 0 34px; }
         .vpn-lp-hero-grid { gap: 20px; }
-        .vpn-lp-trust-grid, .vpn-lp-after-grid, .vpn-lp-category-grid, .vpn-lp-more-grid, .vpn-lp-factory-grid, .vpn-lp-material-grid, .vpn-lp-form-grid { grid-template-columns: 1fr; }
+        .vpn-lp-trust-grid, .vpn-lp-after-grid, .vpn-lp-home-category-grid, .vpn-lp-factory-grid, .vpn-lp-material-grid, .vpn-lp-form-grid { grid-template-columns: 1fr; }
         .vpn-lp-quote-form { padding: 18px; }
         .vpn-lp-page h1 { font-size: 36px; line-height: 1.08; margin-bottom: 14px; }
         .vpn-lp-hero-copy .vpn-lp-eyebrow { font-size: 11px; line-height: 1.25; padding: 7px 10px; }
@@ -458,28 +503,20 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
             <div class="vpn-lp-head">
                 <span class="vpn-lp-eyebrow">Manufacturing Range</span>
                 <h2>Paper packaging options for B2B bulk orders</h2>
-                <p>Choose a main packaging type, then request a quote with size, material, printing, finishing, inserts, and export packing details.</p>
+                <p>Choose a key packaging category, then open the category page or request a quote with size, material, printing, finishing, inserts, and export packing details.</p>
             </div>
-            <div class="vpn-lp-category-grid">
+            <div class="vpn-lp-home-category-grid">
                 <?php foreach ($primary_categories as $category) : ?>
-                    <article class="vpn-lp-category-card">
-                        <img src="<?php echo esc_url($image_url($category[4])); ?>" alt="<?php echo esc_attr($category[0]); ?>" width="1600" height="900" loading="lazy" decoding="async">
-                        <div class="vpn-lp-category-body">
-                            <h3><?php echo esc_html($category[0]); ?></h3>
-                            <p><?php echo esc_html($category[2]); ?></p>
-                            <button class="vpn-lp-mini-btn vpn-lp-js-quote-cta" type="button" data-event="quote_cta_click" data-box-type="<?php echo esc_attr($category[3]); ?>">Request Quote</button>
-                        </div>
-                    </article>
+                    <a class="vpn-lp-home-category-card" href="<?php echo esc_url($category['url']); ?>" aria-label="<?php echo esc_attr('View ' . $category['name']); ?>">
+                        <span class="vpn-lp-home-category-image<?php echo empty($category['image']) ? ' is-empty' : ''; ?>">
+                            <?php if ($category['image']) : ?>
+                                <img src="<?php echo esc_url($category['image']); ?>" alt="<?php echo esc_attr($category['name']); ?>" loading="lazy" decoding="async">
+                            <?php endif; ?>
+                        </span>
+                        <span class="vpn-lp-home-category-title"><?php echo esc_html($category['name']); ?></span>
+                    </a>
                 <?php endforeach; ?>
             </div>
-            <details class="vpn-lp-more">
-                <summary>More packaging options</summary>
-                <div class="vpn-lp-more-grid">
-                    <?php foreach ($more_categories as $category) : ?>
-                        <a href="<?php echo esc_url($resolve_category_url($category[1])); ?>"><?php echo esc_html($category[0]); ?></a>
-                    <?php endforeach; ?>
-                </div>
-            </details>
         </div>
     </section>
 
