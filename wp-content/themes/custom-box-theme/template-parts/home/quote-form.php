@@ -1,4 +1,8 @@
-<section class="quote-section" id="quote">
+<?php
+$quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['section_id']) : 'quote';
+?>
+
+<section class="quote-section" id="<?php echo esc_attr($quote_section_id); ?>">
 
     <div class="container quote-wrapper">
 

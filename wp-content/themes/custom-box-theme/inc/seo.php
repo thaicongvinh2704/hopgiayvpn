@@ -112,6 +112,10 @@ function custom_box_is_packaging_money_page() {
     return !is_admin() && is_page('packaging-landing');
 }
 
+function custom_box_is_paper_box_manufacturer_page() {
+    return !is_admin() && is_page('paper-box-manufacturer');
+}
+
 function custom_box_redirect_old_packaging_landing_url() {
     if (!custom_box_is_packaging_money_page()) {
         return;
@@ -132,6 +136,14 @@ function custom_box_get_packaging_money_page_title() {
 
 function custom_box_get_packaging_money_page_description() {
     return 'VPN Paper Box Manufacturer produces custom packaging boxes, rigid boxes, folding cartons, paper bags and printed paper packaging in Vietnam for B2B brands, importers and export buyers. Request a factory quote.';
+}
+
+function custom_box_get_paper_box_manufacturer_page_title() {
+    return 'Paper Box Manufacturer in Vietnam | Packaging Boxes Manufacturer';
+}
+
+function custom_box_get_paper_box_manufacturer_page_description() {
+    return 'Paper Box Manufacturer in Vietnam for custom paper boxes, factory-direct pricing, fast delivery, design support, and export-ready packaging.';
 }
 
 function custom_box_get_home_seo_title() {
@@ -178,6 +190,10 @@ function custom_box_home_document_title($title) {
         return custom_box_get_packaging_money_page_title();
     }
 
+    if (custom_box_is_paper_box_manufacturer_page()) {
+        return custom_box_get_paper_box_manufacturer_page_title();
+    }
+
     if (function_exists('is_shop') && is_shop()) {
         return custom_box_get_products_hub_title();
     }
@@ -202,6 +218,10 @@ add_filter('rank_math/frontend/title', 'custom_box_home_document_title', 20);
 function custom_box_home_rank_math_description($description) {
     if (custom_box_is_packaging_money_page()) {
         return custom_box_get_packaging_money_page_description();
+    }
+
+    if (custom_box_is_paper_box_manufacturer_page()) {
+        return custom_box_get_paper_box_manufacturer_page_description();
     }
 
     if (is_home() || is_page('blog')) {
@@ -237,6 +257,10 @@ function custom_box_public_canonical($canonical) {
         return custom_box_get_packaging_money_page_url();
     }
 
+    if (custom_box_is_paper_box_manufacturer_page()) {
+        return home_url('/paper-box-manufacturer/');
+    }
+
     if ((function_exists('is_shop') && is_shop()) || is_page('products')) {
         return function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
     }
@@ -259,7 +283,7 @@ add_filter('rank_math/frontend/canonical', 'custom_box_public_canonical', 20);
 add_filter('get_canonical_url', 'custom_box_public_canonical', 20);
 
 function custom_box_packaging_money_page_og_type($type) {
-    if (!custom_box_is_packaging_money_page()) {
+    if (!custom_box_is_packaging_money_page() && !custom_box_is_paper_box_manufacturer_page()) {
         return $type;
     }
 
