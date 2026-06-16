@@ -241,7 +241,6 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
     .vpn-lp-page { --vpn-lp-blue: #063f7a; --vpn-lp-blue-2: #0b62ad; --vpn-lp-ink: #102033; --vpn-lp-muted: #5b6675; --vpn-lp-line: #dfe7ef; --vpn-lp-soft: #f4f8fb; color: var(--vpn-lp-ink); font-family: inherit; }
     .vpn-lp-page * { box-sizing: border-box; }
     .vpn-lp-wrap { margin: 0 auto; width: min(1180px, calc(100% - 32px)); }
-    .vpn-lp-hero .vpn-lp-wrap { width: min(1400px, calc(100% - 32px)); }
     .vpn-lp-section { padding: 72px 0; }
     .vpn-lp-soft { background: var(--vpn-lp-soft); }
     .vpn-lp-eyebrow { color: var(--vpn-lp-blue); display: inline-flex; font-size: 13px; font-weight: 800; letter-spacing: 0; margin-bottom: 12px; text-transform: uppercase; }
@@ -251,22 +250,13 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
     .vpn-lp-page h3 { font-size: 20px; line-height: 1.25; margin-bottom: 8px; }
     .vpn-lp-page p { color: var(--vpn-lp-muted); line-height: 1.7; }
     .vpn-lp-hero { background: linear-gradient(120deg, rgba(6,63,122,.93), rgba(7,47,89,.86)), url("<?php echo esc_url($image_url('paper-box-manufacturer-vietnam-factory-hero.webp')); ?>") center/cover; padding: 76px 0 46px; }
-    .vpn-lp-hero-grid { align-items: center; display: grid; gap: 38px; grid-template-columns: minmax(390px, .9fr) minmax(640px, 1.18fr); }
+    .vpn-lp-hero-grid { align-items: center; display: grid; gap: 42px; grid-template-columns: minmax(0, 1.02fr) minmax(400px, .82fr); }
     .vpn-lp-hero-copy .vpn-lp-eyebrow, .vpn-lp-hero-copy p { color: #e8f2fb; }
     .vpn-lp-hero-copy p { font-size: 18px; max-width: 720px; }
-    .vpn-lp-hero-conversion { align-items: stretch; display: grid; gap: 16px; grid-template-columns: minmax(390px, 1fr) minmax(220px, .58fr); }
-    .vpn-lp-savings-card { align-self: center; background: rgba(255,255,255,.94); border: 1px solid rgba(255,255,255,.7); border-radius: 8px; box-shadow: 0 18px 50px rgba(12,42,77,.2); color: var(--vpn-lp-ink); overflow: hidden; }
-    .vpn-lp-savings-media { background: #eaf3fb; display: block; }
-    .vpn-lp-savings-media img { aspect-ratio: 16 / 11; display: block; height: auto; object-fit: cover; width: 100%; }
-    .vpn-lp-savings-body { padding: 18px; }
-    .vpn-lp-savings-kicker { color: var(--vpn-lp-blue); display: block; font-size: 12px; font-weight: 850; margin-bottom: 8px; text-transform: uppercase; }
-    .vpn-lp-savings-value { color: var(--vpn-lp-blue); display: block; font-size: 42px; font-weight: 900; letter-spacing: 0; line-height: 1; margin-bottom: 8px; }
-    .vpn-lp-savings-body h2 { color: var(--vpn-lp-ink); font-size: 20px; line-height: 1.2; margin-bottom: 8px; }
-    .vpn-lp-savings-body p { color: var(--vpn-lp-muted); font-size: 14px; line-height: 1.6; margin-bottom: 12px; }
-    .vpn-lp-savings-list { display: grid; gap: 8px; list-style: none; margin: 0; padding: 0; }
-    .vpn-lp-savings-list li { align-items: flex-start; color: #26384d; display: flex; font-size: 13px; font-weight: 750; gap: 8px; line-height: 1.35; }
-    .vpn-lp-savings-list i { color: #0f8a4b; margin-top: 3px; }
-    .vpn-lp-savings-note { border-top: 1px solid var(--vpn-lp-line); color: #6a7480; display: block; font-size: 12px; line-height: 1.45; margin-top: 14px; padding-top: 12px; }
+    .vpn-lp-hero-offer { align-items: center; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.34); border-radius: 8px; display: flex; gap: 16px; margin: 24px 0 22px; max-width: 680px; padding: 16px 18px; }
+    .vpn-lp-hero-offer strong { color: #fff; display: block; font-size: clamp(30px, 4vw, 46px); font-weight: 950; letter-spacing: 0; line-height: 1; white-space: nowrap; }
+    .vpn-lp-hero-offer span { color: #fff; display: block; font-size: 18px; font-weight: 850; line-height: 1.35; }
+    .vpn-lp-hero-offer small { color: #d9ebf8; display: block; font-size: 13px; line-height: 1.45; margin-top: 4px; }
     .vpn-lp-trust-list { display: grid; gap: 10px; list-style: none; margin: 24px 0 28px; padding: 0; }
     .vpn-lp-trust-list li { align-items: flex-start; color: #fff; display: flex; font-weight: 750; gap: 10px; line-height: 1.45; }
     .vpn-lp-trust-list i { color: #9ee2b8; margin-top: 4px; }
@@ -330,12 +320,6 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
     .vpn-lp-contact-lines { display: flex; flex-wrap: wrap; gap: 16px; margin: 18px 0 24px; }
     .vpn-lp-contact-lines a { color: #fff; font-weight: 850; text-decoration: none; }
     .vpn-lp-sticky-cta { display: none; }
-    @media (max-width: 1120px) {
-        .vpn-lp-hero-grid { grid-template-columns: 1fr; }
-        .vpn-lp-hero-conversion { grid-template-columns: minmax(0, 1fr); }
-        .vpn-lp-savings-card { align-self: stretch; }
-        .vpn-lp-savings-media { display: none; }
-    }
     @media (max-width: 980px) {
         .vpn-lp-hero-grid, .vpn-lp-split { grid-template-columns: 1fr; }
         .vpn-lp-trust-grid, .vpn-lp-after-grid, .vpn-lp-factory-grid, .vpn-lp-material-grid { grid-template-columns: repeat(2, 1fr); }
@@ -348,6 +332,8 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
         .vpn-lp-trust-grid, .vpn-lp-after-grid, .vpn-lp-category-grid, .vpn-lp-more-grid, .vpn-lp-factory-grid, .vpn-lp-material-grid, .vpn-lp-form-grid { grid-template-columns: 1fr; }
         .vpn-lp-quote-form { padding: 18px; }
         .vpn-lp-page h1 { font-size: 38px; }
+        .vpn-lp-hero-offer { align-items: flex-start; flex-direction: column; gap: 8px; }
+        .vpn-lp-hero-offer strong { white-space: normal; }
         .vpn-lp-sticky-cta { background: #fff; border-top: 1px solid var(--vpn-lp-line); bottom: 0; display: block; left: 0; padding: 10px 12px; position: fixed; right: 0; z-index: 50; }
         .vpn-lp-sticky-cta a { background: var(--vpn-lp-blue); border-radius: 6px; color: #fff; display: flex; font-weight: 850; justify-content: center; min-height: 48px; padding: 13px 18px; text-decoration: none; }
         body { padding-bottom: 70px; }
@@ -361,6 +347,10 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
                 <span class="vpn-lp-eyebrow">Paper Box Manufacturer in Vietnam</span>
                 <h1>Paper Box Manufacturer in Vietnam</h1>
                 <p>Factory-direct custom paper boxes, carton boxes, rigid boxes, magnetic boxes, drawer boxes, and printed paper bags for global B2B buyers.</p>
+                <div class="vpn-lp-hero-offer" aria-label="Bulk order savings">
+                    <strong>Save up to 40%</strong>
+                    <span>on large-volume packaging orders <small>Get a free factory quote now. Savings depend on size, material, printing, finishing, and quantity.</small></span>
+                </div>
                 <ul class="vpn-lp-trust-list">
                     <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Factory-direct production in Vietnam</span></li>
                     <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>OEM/ODM custom packaging</span></li>
@@ -368,29 +358,12 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
                     <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Material, dieline, printing, and finishing consultation</span></li>
                 </ul>
                 <div class="vpn-lp-hero-actions">
-                    <a class="vpn-lp-btn vpn-lp-btn-primary vpn-lp-js-quote-cta" href="#paper-box-quote" data-event="quote_cta_click">Get Factory Quote</a>
+                    <a class="vpn-lp-btn vpn-lp-btn-primary vpn-lp-js-quote-cta" href="#paper-box-quote" data-event="quote_cta_click">Get a Free Quote Now</a>
                     <a class="vpn-lp-btn vpn-lp-btn-secondary vpn-lp-js-scroll" href="#packaging-options" data-event="quote_cta_click">View Packaging Options</a>
                 </div>
             </div>
-            <div class="vpn-lp-hero-conversion">
+            <div>
                 <?php $render_paper_box_quote_form('paper-box-quote', 'Get Your Paper Box Quote', 'hero'); ?>
-                <aside class="vpn-lp-savings-card" aria-label="Bulk order savings">
-                    <picture class="vpn-lp-savings-media">
-                        <img src="<?php echo esc_url($image_url('export-ready-paper-packaging-pallets.webp')); ?>" alt="Bulk paper packaging orders prepared for export packing" width="1600" height="900" loading="eager" decoding="async">
-                    </picture>
-                    <div class="vpn-lp-savings-body">
-                        <span class="vpn-lp-savings-kicker">Bulk order advantage</span>
-                        <span class="vpn-lp-savings-value">Up to 40%</span>
-                        <h2>Lower unit cost for larger paper box orders</h2>
-                        <p>For qualified bulk orders, optimized paper buying, printing setup, and export packing can help reduce unit cost compared with small runs.</p>
-                        <ul class="vpn-lp-savings-list">
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Best for repeat orders and container shipments</span></li>
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Factory quote based on quantity, size, and finish</span></li>
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>Cost-saving options suggested within 24 hours</span></li>
-                        </ul>
-                        <small class="vpn-lp-savings-note">Savings depend on structure, material, printing, finishing, and order quantity.</small>
-                    </div>
-                </aside>
             </div>
         </div>
     </section>
