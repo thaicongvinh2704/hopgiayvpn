@@ -544,7 +544,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
                 </ul>
             </div>
             <figure class="vpn-lp-image-card">
-                <img src="<?php echo esc_url($image_url('custom-packaging-quote-consultation.webp')); ?>" alt="Custom packaging quote consultation for international B2B buyers" width="1600" height="900" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($image_url('anh-nha-may-1-16x9-100kb.webp')); ?>" alt="Paper box factory production environment" width="1600" height="900" loading="lazy" decoding="async">
                 <figcaption>Our sales and production team helps confirm structure, material, printing, finishing, quantity, and packing details before quotation.</figcaption>
             </figure>
         </div>
