@@ -180,7 +180,7 @@ function custom_box_get_paper_box_manufacturer_page_title() {
 }
 
 function custom_box_get_paper_box_manufacturer_page_description() {
-    return 'Paper Box Manufacturer in Vietnam for custom paper boxes, factory-direct pricing, fast delivery, design support, and export-ready packaging.';
+    return 'Vietnam paper box manufacturer for custom paper boxes, rigid boxes, carton boxes, gift boxes, cosmetic packaging and bulk B2B packaging orders.';
 }
 
 function custom_box_get_home_seo_title() {
@@ -545,6 +545,7 @@ function custom_box_rank_math_json_ld($data) {
 
     $remove_article_schema = custom_box_is_low_value_page();
     $is_packaging_money_page = custom_box_is_packaging_money_page();
+    $is_paper_box_manufacturer_page = custom_box_is_paper_box_manufacturer_page();
     $is_product_page = function_exists('is_product') && is_product();
     $is_non_article_page = (is_page() || is_front_page() || is_home() || (function_exists('is_product_taxonomy') && is_product_taxonomy())) && !is_singular('post') && !$is_product_page;
     $product = $is_product_page && function_exists('wc_get_product') ? wc_get_product(get_queried_object_id()) : null;
@@ -558,7 +559,7 @@ function custom_box_rank_math_json_ld($data) {
         $types = isset($entity['@type']) ? (array) $entity['@type'] : array();
         $is_product_schema = array_intersect($types, array('Product', 'WooCommerceProduct', 'ProductGroup'));
 
-        if ($is_packaging_money_page) {
+        if ($is_packaging_money_page || $is_paper_box_manufacturer_page) {
             $data[$key]['inLanguage'] = 'en-US';
         }
 
@@ -575,7 +576,14 @@ function custom_box_rank_math_json_ld($data) {
             $data[$key]['description'] = custom_box_get_packaging_money_page_description();
         }
 
-        if (($remove_article_schema || $is_packaging_money_page || $is_non_article_page) && array_intersect($types, array('Article', 'BlogPosting'))) {
+        if ($is_paper_box_manufacturer_page && in_array('WebPage', $types, true)) {
+            $data[$key]['@id'] = custom_box_get_paper_box_manufacturer_page_url() . '#webpage';
+            $data[$key]['url'] = custom_box_get_paper_box_manufacturer_page_url();
+            $data[$key]['name'] = custom_box_get_paper_box_manufacturer_page_title();
+            $data[$key]['description'] = custom_box_get_paper_box_manufacturer_page_description();
+        }
+
+        if (($remove_article_schema || $is_packaging_money_page || $is_paper_box_manufacturer_page || $is_non_article_page) && array_intersect($types, array('Article', 'BlogPosting'))) {
             unset($data[$key]);
             continue;
         }
@@ -615,7 +623,7 @@ function custom_box_rank_math_json_ld($data) {
 
     $data['schema-customBoxOrganization'] = custom_box_get_business_schema();
 
-    if ($is_packaging_money_page) {
+    if ($is_packaging_money_page || $is_paper_box_manufacturer_page) {
         $data['schema-customBoxOrganization']['inLanguage'] = 'en-US';
     }
 

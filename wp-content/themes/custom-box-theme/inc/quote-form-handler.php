@@ -16,11 +16,16 @@ function custom_box_quote_form_redirect($status) {
         $redirect_to = home_url('/contact/');
     }
 
+    $anchor = 'quote';
+    if (!empty($_POST['form_anchor'])) {
+        $anchor = sanitize_html_class(wp_unslash($_POST['form_anchor']));
+    }
+
     $redirect_to = strtok($redirect_to, '#');
     $redirect_to = remove_query_arg('quote_status', $redirect_to);
     $redirect_to = add_query_arg('quote_status', $status, $redirect_to);
 
-    wp_safe_redirect($redirect_to . '#quote');
+    wp_safe_redirect($redirect_to . '#' . $anchor);
     exit;
 }
 
@@ -55,16 +60,53 @@ function custom_box_register_quote_request_post_type() {
 add_action('init', 'custom_box_register_quote_request_post_type');
 
 function custom_box_build_quote_email($quote_data) {
+    $quote_data = wp_parse_args(
+        $quote_data,
+        array(
+            'product_name'     => '',
+            'length'           => '',
+            'width'            => '',
+            'depth'            => '',
+            'unit'             => '',
+            'stock_option'     => '',
+            'printing_option'  => '',
+            'finishing_option' => '',
+            'quantity'         => '',
+            'company'          => '',
+            'country'          => '',
+            'full_name'        => '',
+            'phone'            => '',
+            'email'            => '',
+            'message'          => '',
+            'quote_source'     => '',
+            'form_location'    => '',
+            'email_subject'    => '',
+            'current_page_url' => '',
+            'referrer_url'     => '',
+            'utm_source'       => '',
+            'utm_medium'       => '',
+            'utm_campaign'     => '',
+            'utm_term'         => '',
+            'utm_content'      => '',
+            'referer'          => '',
+        )
+    );
+
     $site_name = wp_specialchars_decode(get_bloginfo('name'), ENT_QUOTES);
     $full_name = isset($quote_data['full_name']) ? $quote_data['full_name'] : '';
     $email = isset($quote_data['email']) ? $quote_data['email'] : '';
+    $subject = !empty($quote_data['email_subject'])
+        ? $quote_data['email_subject']
+        : sprintf('[%s] New quote request from %s', $site_name, $full_name);
 
     $body = array(
         'New quote request',
         '',
         'Product Name: ' . $quote_data['product_name'],
+        'Form Location: ' . $quote_data['form_location'],
+        'Quote Source: ' . $quote_data['quote_source'],
         'Size: ' . trim($quote_data['length'] . ' x ' . $quote_data['width'] . ' x ' . $quote_data['depth'] . ' ' . $quote_data['unit']),
-        'Stock Option: ' . $quote_data['stock_option'],
+        'Box Type / Stock Option: ' . $quote_data['stock_option'],
         'Printing Option: ' . $quote_data['printing_option'],
         'Finishing Option: ' . $quote_data['finishing_option'],
         'Quantity: ' . $quote_data['quantity'],
@@ -79,11 +121,19 @@ function custom_box_build_quote_email($quote_data) {
         'Message:',
         $quote_data['message'],
         '',
-        'Page: ' . $quote_data['referer'],
+        'Tracking',
+        'Current Page URL: ' . $quote_data['current_page_url'],
+        'Referrer URL: ' . $quote_data['referrer_url'],
+        'WordPress Referer: ' . $quote_data['referer'],
+        'UTM Source: ' . $quote_data['utm_source'],
+        'UTM Medium: ' . $quote_data['utm_medium'],
+        'UTM Campaign: ' . $quote_data['utm_campaign'],
+        'UTM Term: ' . $quote_data['utm_term'],
+        'UTM Content: ' . $quote_data['utm_content'],
     );
 
     return array(
-        'subject' => sprintf('[%s] New quote request from %s', $site_name, $full_name),
+        'subject' => $subject,
         'body'    => implode("\n", $body),
         'headers' => array(
             'Content-Type: text/plain; charset=UTF-8',
@@ -151,7 +201,13 @@ function custom_box_send_queued_quote_email($quote_id) {
     }
 
     $email = custom_box_build_quote_email($quote_data);
-    $sent = wp_mail(custom_box_quote_form_recipient(), $email['subject'], $email['body'], $email['headers'], $attachments);
+    $recipient = custom_box_quote_form_recipient();
+
+    if (!empty($quote_data['quote_source']) && 'paper_box_manufacturer' === $quote_data['quote_source']) {
+        $recipient = 'sales.vpn@hopgiayvpn.com';
+    }
+
+    $sent = wp_mail($recipient, $email['subject'], $email['body'], $email['headers'], $attachments);
 
     update_post_meta($quote_id, '_custom_box_quote_mail_status', $sent ? 'sent' : 'failed');
     update_post_meta($quote_id, '_custom_box_quote_mail_attempted_at', current_time('mysql'));
@@ -164,6 +220,11 @@ function custom_box_handle_quote_form() {
         !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['custom_box_quote_nonce'])), 'custom_box_quote_form')
     ) {
         custom_box_quote_form_redirect('invalid');
+    }
+
+    $honeypot = isset($_POST['website_url']) ? trim((string) wp_unslash($_POST['website_url'])) : '';
+    if ($honeypot) {
+        custom_box_quote_form_redirect('success');
     }
 
     $product_name = isset($_POST['product_name']) ? sanitize_text_field(wp_unslash($_POST['product_name'])) : '';
@@ -181,9 +242,26 @@ function custom_box_handle_quote_form() {
     $phone = isset($_POST['phone']) ? sanitize_text_field(wp_unslash($_POST['phone'])) : '';
     $email = isset($_POST['email']) ? sanitize_email(wp_unslash($_POST['email'])) : '';
     $message = isset($_POST['message']) ? sanitize_textarea_field(wp_unslash($_POST['message'])) : '';
+    $quote_source = isset($_POST['quote_source']) ? sanitize_key(wp_unslash($_POST['quote_source'])) : '';
+    $form_location = isset($_POST['form_location']) ? sanitize_text_field(wp_unslash($_POST['form_location'])) : '';
+    $current_page_url = isset($_POST['current_page_url']) ? esc_url_raw(wp_unslash($_POST['current_page_url'])) : '';
+    $referrer_url = isset($_POST['referrer_url']) ? esc_url_raw(wp_unslash($_POST['referrer_url'])) : '';
+    $utm_source = isset($_POST['utm_source']) ? sanitize_text_field(wp_unslash($_POST['utm_source'])) : '';
+    $utm_medium = isset($_POST['utm_medium']) ? sanitize_text_field(wp_unslash($_POST['utm_medium'])) : '';
+    $utm_campaign = isset($_POST['utm_campaign']) ? sanitize_text_field(wp_unslash($_POST['utm_campaign'])) : '';
+    $utm_term = isset($_POST['utm_term']) ? sanitize_text_field(wp_unslash($_POST['utm_term'])) : '';
+    $utm_content = isset($_POST['utm_content']) ? sanitize_text_field(wp_unslash($_POST['utm_content'])) : '';
+    $email_subject = isset($_POST['email_subject']) ? sanitize_text_field(wp_unslash($_POST['email_subject'])) : '';
     $attachments = array();
 
     if (!$product_name || !$full_name || !$email || !is_email($email)) {
+        custom_box_quote_form_redirect('missing');
+    }
+
+    if (
+        'paper_box_manufacturer' === $quote_source
+        && (!$stock_option || !$quantity || !$country)
+    ) {
         custom_box_quote_form_redirect('missing');
     }
 
@@ -244,6 +322,16 @@ function custom_box_handle_quote_form() {
         'phone'            => $phone,
         'email'            => $email,
         'message'          => $message,
+        'quote_source'     => $quote_source,
+        'form_location'    => $form_location,
+        'email_subject'    => $email_subject,
+        'current_page_url' => $current_page_url,
+        'referrer_url'     => $referrer_url,
+        'utm_source'       => $utm_source,
+        'utm_medium'       => $utm_medium,
+        'utm_campaign'     => $utm_campaign,
+        'utm_term'         => $utm_term,
+        'utm_content'      => $utm_content,
         'referer'          => wp_get_referer(),
     );
 
