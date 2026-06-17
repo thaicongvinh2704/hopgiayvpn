@@ -78,7 +78,7 @@ $quantity_options = array(
 
 $quote_status = isset($_GET['quote_status']) ? sanitize_text_field(wp_unslash($_GET['quote_status'])) : '';
 $quote_messages = array(
-    'success' => 'Thank you. Your quote request has been sent. Our team will contact you shortly.',
+    'success' => 'Đã gửi. Yêu cầu của bạn đã được ghi nhận và đội ngũ của chúng tôi sẽ liên hệ sớm.',
     'failed'  => 'Sorry, we could not send your request right now. Please try again or contact sales.vpn@hopgiayvpn.com.',
     'missing' => 'Please fill in full name, business email, box type, estimated quantity, and delivery country.',
     'invalid' => 'The form session expired. Please refresh the page and try again.',
@@ -729,10 +729,10 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
             if (button) {
                 button.disabled = true;
                 button.dataset.originalText = button.textContent;
-                button.textContent = 'Sending...';
+                button.textContent = 'Đã gửi';
             }
             if (messageWrap) {
-                messageWrap.innerHTML = '<p class="vpn-lp-form-message vpn-lp-form-message-success">Sending your quote request...</p>';
+                messageWrap.innerHTML = '<p class="vpn-lp-form-message vpn-lp-form-message-success">Đã gửi. Yêu cầu của bạn đã được ghi nhận và đang được xử lý.</p>';
             }
         });
 
@@ -753,7 +753,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
 
             if (messageWrap) {
                 if ('success' === status) {
-                    messageWrap.innerHTML = '<p class="vpn-lp-form-message vpn-lp-form-message-success">Thank you. Your quote request has been sent. Our team will contact you shortly.</p>';
+                    messageWrap.innerHTML = '<p class="vpn-lp-form-message vpn-lp-form-message-success">Đã gửi. Yêu cầu của bạn đã được ghi nhận và đội ngũ của chúng tôi sẽ liên hệ sớm.</p>';
                     form.reset();
                     pushEvent('quote_form_submit_success', { form_location: form.dataset.formLocation || '' });
                 } else {
