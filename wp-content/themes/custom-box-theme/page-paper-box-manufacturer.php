@@ -740,9 +740,16 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
             var button = form.querySelector('button[type="submit"]');
             var messageWrap = form.querySelector('.vpn-lp-form-message-wrap');
             var status = '';
+            var iframeUrl = '';
 
             try {
-                status = new URL(iframe.contentWindow.location.href).searchParams.get('quote_status') || '';
+                iframeUrl = iframe.contentWindow.location.href;
+                if (iframeUrl.indexOf('/thank-you-packaging-quote/') !== -1) {
+                    window.location.href = iframeUrl;
+                    return;
+                }
+
+                status = new URL(iframeUrl).searchParams.get('quote_status') || '';
             } catch (error) {
                 status = '';
             }

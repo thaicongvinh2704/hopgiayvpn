@@ -41,6 +41,14 @@ function custom_box_get_paper_box_manufacturer_page_url() {
     return home_url(custom_box_get_paper_box_manufacturer_page_path());
 }
 
+function custom_box_get_packaging_quote_thank_you_page_path() {
+    return '/thank-you-packaging-quote/';
+}
+
+function custom_box_get_packaging_quote_thank_you_page_url() {
+    return home_url(custom_box_get_packaging_quote_thank_you_page_path());
+}
+
 function custom_box_packaging_money_page_permalink($link, $post_id) {
     $post = get_post($post_id);
     if (!$post || 'packaging-landing' !== $post->post_name) {
@@ -129,6 +137,15 @@ function custom_box_is_paper_box_manufacturer_page() {
         || custom_box_current_request_path() === custom_box_get_paper_box_manufacturer_page_path();
 }
 
+function custom_box_is_packaging_quote_thank_you_page() {
+    if (is_admin()) {
+        return false;
+    }
+
+    return is_page('thank-you-packaging-quote')
+        || custom_box_current_request_path() === custom_box_get_packaging_quote_thank_you_page_path();
+}
+
 function custom_box_load_paper_box_manufacturer_template($template) {
     if (!custom_box_is_paper_box_manufacturer_page()) {
         return $template;
@@ -152,6 +169,30 @@ function custom_box_load_paper_box_manufacturer_template($template) {
     return $landing_template;
 }
 add_filter('template_include', 'custom_box_load_paper_box_manufacturer_template', 20);
+
+function custom_box_load_packaging_quote_thank_you_template($template) {
+    if (!custom_box_is_packaging_quote_thank_you_page()) {
+        return $template;
+    }
+
+    $thank_you_template = get_template_directory() . '/page-thank-you-packaging-quote.php';
+
+    if (!file_exists($thank_you_template)) {
+        return $template;
+    }
+
+    global $wp_query;
+
+    if ($wp_query && $wp_query->is_404()) {
+        $wp_query->is_404 = false;
+        $wp_query->is_page = true;
+        status_header(200);
+        nocache_headers();
+    }
+
+    return $thank_you_template;
+}
+add_filter('template_include', 'custom_box_load_packaging_quote_thank_you_template', 20);
 
 function custom_box_redirect_old_packaging_landing_url() {
     if (!custom_box_is_packaging_money_page()) {
@@ -181,6 +222,14 @@ function custom_box_get_paper_box_manufacturer_page_title() {
 
 function custom_box_get_paper_box_manufacturer_page_description() {
     return 'Vietnam paper box manufacturer for custom paper boxes, rigid boxes, carton boxes, gift boxes, cosmetic packaging and bulk B2B packaging orders.';
+}
+
+function custom_box_get_packaging_quote_thank_you_page_title() {
+    return 'Thank You for Your Packaging Quote Request | VPN Paper Box';
+}
+
+function custom_box_get_packaging_quote_thank_you_page_description() {
+    return 'Your custom packaging quote request has been received by VPN Paper Box Manufacturer.';
 }
 
 function custom_box_get_home_seo_title() {
@@ -231,6 +280,10 @@ function custom_box_home_document_title($title) {
         return custom_box_get_paper_box_manufacturer_page_title();
     }
 
+    if (custom_box_is_packaging_quote_thank_you_page()) {
+        return custom_box_get_packaging_quote_thank_you_page_title();
+    }
+
     if (function_exists('is_shop') && is_shop()) {
         return custom_box_get_products_hub_title();
     }
@@ -259,6 +312,10 @@ function custom_box_home_rank_math_description($description) {
 
     if (custom_box_is_paper_box_manufacturer_page()) {
         return custom_box_get_paper_box_manufacturer_page_description();
+    }
+
+    if (custom_box_is_packaging_quote_thank_you_page()) {
+        return custom_box_get_packaging_quote_thank_you_page_description();
     }
 
     if (is_home() || is_page('blog')) {
@@ -296,6 +353,10 @@ function custom_box_public_canonical($canonical) {
 
     if (custom_box_is_paper_box_manufacturer_page()) {
         return custom_box_get_paper_box_manufacturer_page_url();
+    }
+
+    if (custom_box_is_packaging_quote_thank_you_page()) {
+        return custom_box_get_packaging_quote_thank_you_page_url();
     }
 
     if ((function_exists('is_shop') && is_shop()) || is_page('products')) {
@@ -341,6 +402,13 @@ function custom_box_is_low_value_page() {
 }
 
 function custom_box_rank_math_robots($robots) {
+    if (custom_box_is_packaging_quote_thank_you_page()) {
+        $robots['index'] = 'noindex';
+        $robots['follow'] = 'nofollow';
+
+        return $robots;
+    }
+
     if (!custom_box_is_low_value_page()) {
         return $robots;
     }
@@ -352,10 +420,19 @@ function custom_box_rank_math_robots($robots) {
 }
 add_filter('rank_math/frontend/robots', 'custom_box_rank_math_robots');
 
+function custom_box_packaging_quote_thank_you_meta_robots() {
+    if (defined('RANK_MATH_VERSION') || !custom_box_is_packaging_quote_thank_you_page()) {
+        return;
+    }
+
+    echo '<meta name="robots" content="noindex,nofollow">' . "\n";
+}
+add_action('wp_head', 'custom_box_packaging_quote_thank_you_meta_robots', 1);
+
 function custom_box_rank_math_sitemap_excluded_posts($post_ids) {
     $post_ids = wp_parse_id_list($post_ids);
 
-    foreach (custom_box_low_value_page_slugs() as $slug) {
+    foreach (array_merge(custom_box_low_value_page_slugs(), array('thank-you-packaging-quote')) as $slug) {
         $page = get_page_by_path($slug);
         if ($page && 'page' === $page->post_type) {
             $post_ids[] = (int) $page->ID;
@@ -380,7 +457,7 @@ function custom_box_rank_math_sitemap_exclude_low_value_page_slugs($where, $post
 
     global $wpdb;
 
-    $slugs = array_map('sanitize_title', custom_box_low_value_page_slugs());
+    $slugs = array_map('sanitize_title', array_merge(custom_box_low_value_page_slugs(), array('thank-you-packaging-quote')));
     $slugs = array_filter($slugs);
 
     if (empty($slugs)) {
