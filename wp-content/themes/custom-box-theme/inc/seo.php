@@ -31,7 +31,7 @@ function custom_box_output_packaging_quote_ads_conversion() {
       function gtag(){dataLayer.push(arguments);}
       gtag('config', 'AW-18190901085');
       gtag('event', 'conversion', {
-        'send_to': 'AW-18190901085/9le8CJThyMAcEM2G2-FD'
+        'send_to': 'AW-18190901085/9le8CJTHyMAcEM2G2-FD'
       });
     </script>
     <?php
@@ -210,6 +210,22 @@ function custom_box_load_packaging_quote_thank_you_template($template) {
     return $thank_you_template;
 }
 add_filter('template_include', 'custom_box_load_packaging_quote_thank_you_template', 20);
+
+function custom_box_prevent_packaging_quote_thank_you_404($preempt, $wp_query) {
+    if (!custom_box_is_packaging_quote_thank_you_page()) {
+        return $preempt;
+    }
+
+    if ($wp_query) {
+        $wp_query->is_404 = false;
+        $wp_query->is_page = true;
+    }
+
+    status_header(200);
+
+    return true;
+}
+add_filter('pre_handle_404', 'custom_box_prevent_packaging_quote_thank_you_404', 10, 2);
 
 function custom_box_redirect_old_packaging_landing_url() {
     if (!custom_box_is_packaging_money_page()) {
