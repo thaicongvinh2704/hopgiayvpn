@@ -549,3 +549,109 @@ function custom_box_category_migration_page() {
     </div>
     <?php
 }
+
+function custom_box_curated_category_product_assignments() {
+    return array(
+        'cosmetic-paper-boxes' => array(
+            'include' => array(
+                'custom-ampoule-packaging-box',
+                'custom-cosmetic-drawer-box-with-insert',
+                'custom-cosmetic-packaging-box',
+                'custom-cosmetic-paper-bag',
+                'custom-essential-oil-packaging-box-with-insert',
+                'custom-perfume-box-with-insert',
+                'custom-perfume-display-box-with-sleeve',
+                'custom-perfume-gift-set-box-with-insert',
+                'custom-round-jar-drawer-box',
+                'custom-skincare-gift-box-with-insert',
+                'custom-skincare-jar-packaging-box-with-insert',
+            ),
+            'exclude' => array(
+                'custom-cosmetic-tube-packaging-box-with-insert',
+            ),
+        ),
+        'magnetic-closure-boxes' => array(
+            'include' => array(
+                'custom-luxury-gift-box-with-paper-bag',
+                'custom-magnetic-closure-gift-box',
+                'custom-magnetic-gift-box',
+                'custom-magnetic-gift-box-with-insert-tray',
+                'custom-rigid-gift-box',
+            ),
+            'exclude' => array(),
+        ),
+    );
+}
+
+function custom_box_sync_curated_category_product_assignments() {
+    if (!taxonomy_exists('product_cat')) {
+        return new WP_Error('missing_product_cat', 'WooCommerce product_cat taxonomy is not available.');
+    }
+
+    $updated_terms = array();
+
+    foreach (custom_box_curated_category_product_assignments() as $category_slug => $assignment) {
+        $term = get_term_by('slug', $category_slug, 'product_cat');
+
+        if (!$term || is_wp_error($term)) {
+            continue;
+        }
+
+        $term_id = (int) $term->term_id;
+        $updated_terms[] = (int) $term->term_taxonomy_id;
+
+        foreach ($assignment['include'] as $product_slug) {
+            $product = get_page_by_path($product_slug, OBJECT, 'product');
+
+            if (!$product) {
+                continue;
+            }
+
+            wp_set_object_terms((int) $product->ID, array($term_id), 'product_cat', true);
+        }
+
+        foreach ($assignment['exclude'] as $product_slug) {
+            $product = get_page_by_path($product_slug, OBJECT, 'product');
+
+            if (!$product) {
+                continue;
+            }
+
+            $current_terms = wp_get_object_terms((int) $product->ID, 'product_cat', array('fields' => 'ids'));
+
+            if (is_wp_error($current_terms)) {
+                continue;
+            }
+
+            $current_terms = array_values(array_diff(array_map('intval', $current_terms), array($term_id)));
+            wp_set_object_terms((int) $product->ID, $current_terms, 'product_cat', false);
+        }
+    }
+
+    if ($updated_terms) {
+        wp_update_term_count_now(array_values(array_unique($updated_terms)), 'product_cat');
+    }
+
+    if (function_exists('wc_delete_product_transients')) {
+        wc_delete_product_transients();
+    }
+
+    return true;
+}
+
+function custom_box_maybe_sync_curated_category_product_assignments() {
+    $sync_version = 'curated-category-products-v1';
+
+    if (get_option('custom_box_curated_category_products_version') === $sync_version) {
+        return;
+    }
+
+    $result = custom_box_sync_curated_category_product_assignments();
+
+    if (is_wp_error($result)) {
+        return;
+    }
+
+    update_option('custom_box_curated_category_products_version', $sync_version, false);
+}
+add_action('init', 'custom_box_maybe_sync_curated_category_product_assignments', 100);
