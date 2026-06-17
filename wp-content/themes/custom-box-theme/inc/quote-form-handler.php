@@ -29,33 +29,12 @@ function custom_box_quote_form_redirect($status) {
     exit;
 }
 
-function custom_box_get_quote_thank_you_url($quote_id) {
-    $token = wp_generate_uuid4();
-    $transient_key = 'custom_box_quote_thank_you_' . md5($token);
-
-    set_transient($transient_key, absint($quote_id), 30 * MINUTE_IN_SECONDS);
-
+function custom_box_quote_form_redirect_to_thank_you() {
     $thank_you_url = function_exists('custom_box_get_packaging_quote_thank_you_page_url')
         ? custom_box_get_packaging_quote_thank_you_page_url()
         : home_url('/thank-you-packaging-quote/');
 
-    return add_query_arg('quote_token', rawurlencode($token), $thank_you_url);
-}
-
-function custom_box_is_valid_quote_thank_you_token($token) {
-    $token = sanitize_text_field((string) $token);
-
-    if (!$token) {
-        return false;
-    }
-
-    $quote_id = get_transient('custom_box_quote_thank_you_' . md5($token));
-
-    return $quote_id && 'custom_box_quote' === get_post_type((int) $quote_id);
-}
-
-function custom_box_quote_form_redirect_to_thank_you($quote_id) {
-    wp_safe_redirect(custom_box_get_quote_thank_you_url($quote_id));
+    wp_safe_redirect($thank_you_url);
     exit;
 }
 
@@ -375,7 +354,7 @@ function custom_box_handle_quote_form() {
     }
 
     if ('paper_box_manufacturer' === $quote_source) {
-        custom_box_quote_form_redirect_to_thank_you($quote_id);
+        custom_box_quote_form_redirect_to_thank_you();
     }
 
     custom_box_quote_form_redirect('success');

@@ -21,6 +21,23 @@ function custom_box_output_google_tag() {
 }
 add_action('wp_head', 'custom_box_output_google_tag', 5);
 
+function custom_box_output_packaging_quote_ads_conversion() {
+    if (!custom_box_is_packaging_quote_thank_you_page()) {
+        return;
+    }
+    ?>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('config', 'AW-18190901085');
+      gtag('event', 'conversion', {
+        'send_to': 'AW-18190901085/9le8CJThyMAcEM2G2-FD'
+      });
+    </script>
+    <?php
+}
+add_action('wp_head', 'custom_box_output_packaging_quote_ads_conversion', 20);
+
 function custom_box_get_packaging_money_page_old_path() {
     return '/packaging-landing/';
 }
