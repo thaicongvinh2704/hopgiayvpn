@@ -580,6 +580,70 @@ function custom_box_curated_category_product_assignments() {
             ),
             'exclude' => array(),
         ),
+        'lid-and-base-boxes' => array(
+            'include' => explode(',', 'custom-belt-packaging-box,custom-double-wine-bottle-gift-box,custom-flat-rigid-gift-box-with-ribbon,custom-fountain-pen-gift-box,custom-gift-box-with-ribbon-bow,custom-knife-set-packaging-box,custom-nested-kraft-gift-boxes-with-ribbon,custom-perfume-box-with-insert,custom-rigid-gift-box,custom-rigid-square-gift-box-with-foil-logo,custom-shoe-packaging-box,custom-skincare-gift-box-with-insert,custom-sports-shoe-packaging-box,custom-t-shirt-packaging-box,custom-wallet-packaging-box,custom-watch-box-with-pillow-insert,custom-wine-bottle-packaging-box,luxury-wine-bottle-packaging-boxes'),
+            'exclude' => array(),
+        ),
+        'drawer-boxes' => array(
+            'include' => explode(',', 'custom-apparel-drawer-box-with-ribbon-pull,custom-cosmetic-drawer-box-with-insert,custom-drawer-gift-box,custom-kraft-pastry-drawer-box-with-insert,custom-luxury-watch-box-with-drawer,custom-mooncake-cabinet-gift-box-with-drawers,custom-pastry-display-box-with-drawer,custom-pastry-sleeve-box-with-insert,custom-round-jar-drawer-box,custom-supplement-drawer-packaging-box,custom-wallet-drawer-box,custom-watch-box-with-drawer,custom-wine-drawer-box-with-insert'),
+            'exclude' => array(),
+        ),
+        'folding-carton-boxes' => array(
+            'include' => explode(',', 'custom-ampoule-packaging-box,custom-candle-jar-box-with-insert,custom-charging-cable-packaging-box,custom-colored-pencil-packaging-box,custom-cosmetic-packaging-box,custom-cosmetic-tube-packaging-box-with-insert,custom-crayon-packaging-box,custom-essential-oil-packaging-box-with-insert,custom-gift-box-with-shredded-paper-filler,custom-incense-packaging-box-with-window,custom-knee-support-packaging-box,custom-medical-kit-packaging-box,custom-men-underwear-packaging-box,custom-mug-packaging-box-with-window,custom-perfume-display-box-with-sleeve,custom-phone-case-packaging-box,custom-pill-packaging-box,custom-pizza-packaging-box,custom-sports-underwear-packaging-box,custom-tablet-packaging-box,custom-vial-packaging-box'),
+            'exclude' => array(),
+        ),
+        'gift-paper-boxes' => array(
+            'include' => explode(',', 'custom-double-wine-bottle-gift-box,custom-drawer-gift-box,custom-flat-rigid-gift-box-with-ribbon,custom-fountain-pen-gift-box,custom-gift-box-with-ribbon-bow,custom-gift-box-with-shredded-paper-filler,custom-luxury-gift-box-with-paper-bag,custom-luxury-wine-bottle-packaging-box,custom-magnetic-closure-gift-box,custom-magnetic-gift-box,custom-magnetic-gift-box-with-insert-tray,custom-mooncake-handbag-gift-box-with-insert,custom-nested-kraft-gift-boxes-with-ribbon,custom-rigid-gift-box,custom-rigid-gift-box-with-matching-paper-bag,custom-rigid-gift-box-with-ribbon-closure,custom-rigid-square-gift-box-with-foil-logo,custom-single-wine-bottle-gift-box,custom-tea-gift-box-with-window,custom-wine-bottle-gift-box-with-paper-bag,custom-wine-bottle-packaging-box,custom-wine-drawer-box-with-insert,custom-wine-gift-box-with-accessories,luxury-wine-bottle-packaging-boxes'),
+            'exclude' => array(),
+        ),
+        'food-paper-boxes' => array(
+            'include' => explode(',', 'custom-kraft-bakery-box-with-window,custom-kraft-pastry-drawer-box-with-insert,custom-luxury-mooncake-gift-box-with-insert,custom-mooncake-cabinet-gift-box-with-drawers,custom-mooncake-gift-box-set-with-paper-bag,custom-mooncake-handbag-gift-box-with-insert,custom-mooncake-packaging-box,custom-mug-packaging-box-with-window,custom-paper-egg-packaging-boxes,custom-paper-tube-food-packaging-box,custom-pastry-box-with-clear-window,custom-pastry-display-box-with-drawer,custom-pastry-gift-box-with-insert,custom-pastry-sleeve-box-with-insert,custom-pizza-packaging-box,custom-printed-corrugated-pet-food-box,custom-tea-gift-box-with-window'),
+            'exclude' => array(),
+        ),
+        'bakery-packaging-boxes' => array(
+            'include' => explode(',', 'custom-kraft-bakery-box-with-window,custom-kraft-pastry-drawer-box-with-insert,custom-luxury-mooncake-gift-box-with-insert,custom-mooncake-cabinet-gift-box-with-drawers,custom-mooncake-gift-box-set-with-paper-bag,custom-mooncake-packaging-box,custom-pastry-box-with-clear-window,custom-pastry-display-box-with-drawer,custom-pastry-gift-box-with-insert,custom-pastry-sleeve-box-with-insert'),
+            'exclude' => array(),
+        ),
+        'custom-printed-paper-boxes' => array(
+            'include' => explode(',', 'custom-colored-pencil-packaging-box,custom-crayon-packaging-box,custom-essential-oil-packaging-box-with-insert,custom-incense-packaging-box-with-window,custom-mooncake-packaging-box,custom-paper-shopping-bag-with-handles,custom-perfume-display-box-with-sleeve,custom-pizza-packaging-box,custom-printed-corrugated-ecommerce-box,custom-printed-corrugated-pet-food-box,custom-rigid-square-gift-box-with-foil-logo,custom-stationery-packaging-box,custom-watch-box-with-drawer'),
+            'exclude' => array(),
+        ),
+        'paper-bags-with-logo' => array(
+            'include' => explode(',', 'custom-cosmetic-paper-bag,custom-kraft-paper-bag-for-supplement-packaging,custom-luxury-gift-box-with-paper-bag,custom-luxury-paper-gift-bag-with-ribbon-handles,custom-mooncake-gift-box-set-with-paper-bag,custom-paper-shopping-bag-with-handles,custom-phone-packaging-box-with-paper-bag,custom-red-paper-shopping-bag,custom-rigid-gift-box-with-matching-paper-bag,custom-wine-bottle-gift-box-with-paper-bag'),
+            'exclude' => array(),
+        ),
+        'corrugated-mailer-boxes' => array(
+            'include' => explode(',', 'custom-corrugated-mailer-box,custom-printed-corrugated-ecommerce-box,custom-printed-corrugated-pet-food-box'),
+            'exclude' => array(),
+        ),
+        'paper-tube-packaging' => array(
+            'include' => explode(',', 'custom-cylindrical-paper-tube-box,custom-paper-tube-food-packaging-box'),
+            'exclude' => array(),
+        ),
+        'jewelry-paper-boxes' => array(
+            'include' => explode(',', 'custom-luxury-watch-box-with-drawer,custom-watch-box-with-drawer,custom-watch-box-with-pillow-insert'),
+            'exclude' => array(),
+        ),
+        'perfume-packaging-boxes' => array(
+            'include' => explode(',', 'custom-perfume-box-with-insert,custom-perfume-display-box-with-sleeve,custom-perfume-gift-set-box-with-insert'),
+            'exclude' => array(),
+        ),
+        'skincare-packaging-boxes' => array(
+            'include' => explode(',', 'custom-round-jar-drawer-box,custom-skincare-gift-box-with-insert,custom-skincare-jar-packaging-box-with-insert'),
+            'exclude' => array(),
+        ),
+        'chocolate-gift-boxes' => array(
+            'include' => explode(',', 'custom-luxury-mooncake-gift-box-with-insert,custom-mooncake-cabinet-gift-box-with-drawers,custom-mooncake-gift-box-set-with-paper-bag,custom-mooncake-handbag-gift-box-with-insert,custom-mooncake-packaging-box'),
+            'exclude' => array(),
+        ),
+        'packaging-accessories' => array(
+            'include' => explode(',', 'custom-gift-box-with-shredded-paper-filler,custom-luxury-gift-box-with-paper-bag,custom-mooncake-gift-box-set-with-paper-bag,custom-phone-packaging-box-with-paper-bag,custom-rigid-gift-box-with-matching-paper-bag,custom-wine-bottle-gift-box-with-paper-bag,custom-wine-gift-box-with-accessories'),
+            'exclude' => array(),
+        ),
+        'candle-packaging-boxes' => array(
+            'include' => array('custom-candle-jar-box-with-insert'),
+            'exclude' => array(),
+        ),
     );
 }
 
@@ -640,7 +704,7 @@ function custom_box_sync_curated_category_product_assignments() {
 }
 
 function custom_box_maybe_sync_curated_category_product_assignments() {
-    $sync_version = 'curated-category-products-v1';
+    $sync_version = 'curated-category-products-v2';
 
     if (get_option('custom_box_curated_category_products_version') === $sync_version) {
         return;
