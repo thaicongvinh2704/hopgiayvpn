@@ -7,17 +7,6 @@
 
 defined('ABSPATH') || exit;
 
-$quote_token = isset($_GET['quote_token']) ? sanitize_text_field(wp_unslash($_GET['quote_token'])) : '';
-
-if (!function_exists('custom_box_is_valid_quote_thank_you_token') || !custom_box_is_valid_quote_thank_you_token($quote_token)) {
-    $fallback_url = function_exists('custom_box_get_paper_box_manufacturer_page_url')
-        ? custom_box_get_paper_box_manufacturer_page_url()
-        : home_url('/paper-box-manufacturer/');
-
-    wp_safe_redirect($fallback_url);
-    exit;
-}
-
 add_filter('language_attributes', function () {
     return 'lang="en-US"';
 });
