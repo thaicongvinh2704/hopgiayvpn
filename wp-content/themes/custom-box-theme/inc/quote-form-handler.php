@@ -180,6 +180,10 @@ function custom_box_save_quote_request($quote_data, $attachments) {
 }
 
 function custom_box_schedule_quote_email($quote_id) {
+    if ('sent' === get_post_meta((int) $quote_id, '_custom_box_quote_mail_status', true)) {
+        return true;
+    }
+
     if (function_exists('as_enqueue_async_action')) {
         as_enqueue_async_action('custom_box_send_queued_quote_email', array($quote_id), 'custom-box-theme');
         return true;
@@ -195,6 +199,10 @@ function custom_box_schedule_quote_email($quote_id) {
 function custom_box_send_queued_quote_email($quote_id) {
     $quote_id = absint($quote_id);
     if (!$quote_id || 'custom_box_quote' !== get_post_type($quote_id)) {
+        return;
+    }
+
+    if ('sent' === get_post_meta($quote_id, '_custom_box_quote_mail_status', true)) {
         return;
     }
 
@@ -349,7 +357,9 @@ function custom_box_handle_quote_form() {
         custom_box_quote_form_redirect('failed');
     }
 
-    if (!custom_box_schedule_quote_email($quote_id)) {
+    custom_box_send_queued_quote_email($quote_id);
+
+    if ('sent' !== get_post_meta($quote_id, '_custom_box_quote_mail_status', true) && !custom_box_schedule_quote_email($quote_id)) {
         update_post_meta($quote_id, '_custom_box_quote_mail_status', 'schedule_failed');
     }
 
