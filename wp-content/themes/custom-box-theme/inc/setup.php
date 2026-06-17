@@ -74,7 +74,7 @@ function custom_box_get_home_packaging_category_groups() {
                 array('Rigid Boxes', 'rigid-boxes', $uploads_2026_05_uri . '13.jpg'),
                 array('Folding Carton Boxes', 'folding-carton-boxes', $uploads_2026_05_uri . 'folding-carton-boxes.webp'),
                 array('Magnetic Closure Boxes', 'magnetic-closure-boxes', $uploads_2026_05_uri . 'red-floral-mooncake-gift-packaging-box.jpeg'),
-                array('Drawer Boxes', 'drawer-boxes', $uploads_2026_05_uri . '15.jpg'),
+                array('Drawer Boxes', 'drawer-boxes', $uploads_2026_05_uri . 'black-drawer-watch-packaging-box.jpeg'),
                 array('Lid and Base Boxes', 'lid-and-base-boxes', $uploads_2026_05_uri . 'lid-and-base-boxes.webp'),
                 array('Paper Tube Packaging', 'paper-tube-packaging', $uploads_2026_05_uri . '12.jpg'),
                 array('Corrugated Mailer Boxes', 'corrugated-mailer-boxes', $uploads_2026_05_uri . 'orange-corrugated-mailer-box-768x768.jpeg'),
