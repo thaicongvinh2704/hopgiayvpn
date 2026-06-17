@@ -435,9 +435,14 @@ function custom_box_redirect_noncanonical_product_category_url() {
 
     $term = get_queried_object();
     $target_url = custom_box_get_flat_product_category_url($term);
+    $paged = max(1, (int) get_query_var('paged'));
 
     if (!$target_url) {
         return;
+    }
+
+    if ($paged > 1) {
+        $target_url .= user_trailingslashit('page/' . $paged);
     }
 
     $request_path = isset($_SERVER['REQUEST_URI']) ? wp_parse_url(wp_unslash($_SERVER['REQUEST_URI']), PHP_URL_PATH) : '';
