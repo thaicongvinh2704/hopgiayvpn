@@ -14,7 +14,6 @@ $custom_box_inc_files = array(
     'inc/admin-editor.php',
     'inc/admin-unused-page-cleanup.php',
     'inc/search-suggestions.php',
-    'inc/search-query.php',
     'inc/cosmetic-packaging-post-sync.php',
     'inc/how-paper-boxes-post-sync.php',
     'inc/paper-box-manufacturing-process-post-sync.php',
