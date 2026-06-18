@@ -3383,18 +3383,20 @@ body {
 
 @media (max-width: 768px) {
     .header-contact-actions {
-        display: flex;
+        display: grid;
         gap: 6px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         width: 100%;
     }
 
     .header-phone-btn {
-        flex: 1 1 auto;
+        grid-column: 1 / -1;
         font-size: 12px;
-        height: 36px;
-        min-height: 36px;
+        height: 42px;
+        min-height: 42px;
         min-width: 0;
-        padding: 0 8px 0 5px;
+        padding: 0 16px 0 10px;
+        width: 100%;
     }
 
     .header-phone-icon {
@@ -3413,12 +3415,11 @@ body {
     }
 
     .header-chat-btn {
-        flex: 0 0 36px;
         gap: 0;
-        height: 36px;
-        min-height: 36px;
+        height: 42px;
+        min-height: 42px;
         padding: 0;
-        width: 36px;
+        width: 100%;
     }
 
     .header-chat-btn span {
@@ -3464,9 +3465,9 @@ body {
 
     .header-phone-btn {
         font-size: 11px;
-        height: 34px;
-        min-height: 34px;
-        padding: 0 7px 0 4px;
+        height: 42px;
+        min-height: 42px;
+        padding: 0 14px 0 8px;
     }
 
     .header-phone-icon {
@@ -3475,10 +3476,9 @@ body {
     }
 
     .header-chat-btn {
-        flex-basis: 34px;
-        height: 34px;
-        min-height: 34px;
-        width: 34px;
+        height: 42px;
+        min-height: 42px;
+        width: 100%;
     }
 
     .header-chat-btn i {
@@ -3502,10 +3502,9 @@ body {
     }
 
     .header-chat-btn {
-        flex-basis: 32px;
-        height: 32px;
-        min-height: 32px;
-        width: 32px;
+        height: 42px;
+        min-height: 42px;
+        width: 100%;
     }
 
     .header-chat-btn i {
@@ -3536,8 +3535,8 @@ body {
 
     .header-phone-btn {
         font-size: 9px;
-        height: 31px;
-        min-height: 31px;
+        height: 42px;
+        min-height: 42px;
         padding-left: 4px;
         padding-right: 5px;
     }
@@ -3548,10 +3547,9 @@ body {
     }
 
     .header-chat-btn {
-        flex-basis: 30px;
-        height: 31px;
-        min-height: 31px;
-        width: 30px;
+        height: 42px;
+        min-height: 42px;
+        width: 100%;
     }
 
     .header-chat-btn i {
