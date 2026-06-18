@@ -29,7 +29,7 @@
                 <i class="far fa-envelope"></i>
                 <a href="mailto:sales.vpn@hopgiayvpn.com">sales.vpn@hopgiayvpn.com</a>
                 /
-                <a href="mailto:huy.pq@hopgiayvpn.com">huy.pq@hopgiayvpn.com</a>
+                <a href="mailto:paperbox@hopgiayvpn.com">paperbox@hopgiayvpn.com</a>
             </span>
         </div>
 
@@ -97,12 +97,56 @@
                 <span>Custom Quote</span>
             </a>
 
-            <a href="tel:933102653" class="btn-phone">
-                <span class="icon-circle">
-                    <i class="fas fa-phone"></i>
-                </span>
-                <span>(+84) 933 102 653</span>
-            </a>
+            <div class="header-contact-actions" aria-label="<?php esc_attr_e('Contact options', 'custom-box-theme'); ?>">
+                <a href="tel:+84933102653" class="header-phone-btn" aria-label="<?php esc_attr_e('Call us at +84 933 102 653', 'custom-box-theme'); ?>">
+                    <span class="header-phone-icon" aria-hidden="true">
+                        <i class="fas fa-phone"></i>
+                    </span>
+                    <span class="header-phone-number">(+84) 933 102 653</span>
+                </a>
+                <a href="https://wa.me/84933102653" class="header-chat-btn whatsapp" target="_blank" rel="noopener noreferrer" aria-label="<?php esc_attr_e('Contact us on WhatsApp', 'custom-box-theme'); ?>">
+                    <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                    <span>WhatsApp</span>
+                </a>
+                <button type="button" class="header-chat-btn viber header-viber-trigger" aria-label="<?php esc_attr_e('Open Viber contact information', 'custom-box-theme'); ?>" aria-expanded="false" aria-controls="header-viber-popover" data-viber-trigger>
+                    <i class="fab fa-viber" aria-hidden="true"></i>
+                    <span>Viber</span>
+                </button>
+                <button type="button" class="header-chat-btn wechat header-wechat-trigger" aria-label="<?php esc_attr_e('Open WeChat contact information', 'custom-box-theme'); ?>" aria-expanded="false" aria-controls="header-wechat-popover" data-wechat-trigger>
+                    <i class="fab fa-weixin" aria-hidden="true"></i>
+                    <span>WeChat</span>
+                </button>
+                <div class="header-wechat-popover" id="header-viber-popover" role="dialog" aria-modal="false" aria-labelledby="header-viber-title" hidden data-viber-popover>
+                    <button type="button" class="header-wechat-close" aria-label="<?php esc_attr_e('Close Viber contact information', 'custom-box-theme'); ?>" data-viber-close>
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                    <div class="header-wechat-popover-head">
+                        <span class="header-wechat-badge" aria-hidden="true"><i class="fab fa-viber"></i></span>
+                        <h3 id="header-viber-title"><?php esc_html_e('Contact us on Viber', 'custom-box-theme'); ?></h3>
+                    </div>
+                    <p class="header-wechat-text"><?php esc_html_e('Search this phone number in Viber:', 'custom-box-theme'); ?></p>
+                    <div class="header-wechat-phone">+84 933 102 653</div>
+                    <p class="header-wechat-helper"><?php esc_html_e('You can add us by searching this phone number in Viber.', 'custom-box-theme'); ?></p>
+                    <button type="button" class="header-wechat-copy" data-viber-copy-phone aria-label="<?php esc_attr_e('Copy Viber phone number', 'custom-box-theme'); ?>"><?php esc_html_e('Copy Phone Number', 'custom-box-theme'); ?></button>
+                    <span class="header-wechat-copy-status" aria-live="polite" data-viber-copy-status></span>
+                </div>
+                <div class="header-wechat-popover" id="header-wechat-popover" role="dialog" aria-modal="false" aria-labelledby="header-wechat-title" hidden data-wechat-popover>
+                    <button type="button" class="header-wechat-close" aria-label="<?php esc_attr_e('Close WeChat contact information', 'custom-box-theme'); ?>" data-wechat-close>
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </button>
+                    <div class="header-wechat-popover-head">
+                        <span class="header-wechat-badge" aria-hidden="true"><i class="fab fa-weixin"></i></span>
+                        <h3 id="header-wechat-title"><?php esc_html_e('Contact us on WeChat', 'custom-box-theme'); ?></h3>
+                    </div>
+                    <p class="header-wechat-text"><?php esc_html_e('Search this phone number in WeChat:', 'custom-box-theme'); ?></p>
+                    <div class="header-wechat-phone">+84 933 102 653</div>
+                    <p class="header-wechat-helper"><?php esc_html_e('You can add us by searching this phone number in WeChat.', 'custom-box-theme'); ?></p>
+                    <button type="button" class="header-wechat-copy" data-copy-phone aria-label="<?php esc_attr_e('Copy WeChat phone number', 'custom-box-theme'); ?>"><?php esc_html_e('Copy Phone Number', 'custom-box-theme'); ?></button>
+                    <span class="header-wechat-copy-status" aria-live="polite" data-copy-status></span>
+                </div>
+                <div class="header-wechat-backdrop" hidden data-viber-backdrop></div>
+                <div class="header-wechat-backdrop" hidden data-wechat-backdrop></div>
+            </div>
 
         </div>
 
@@ -185,3 +229,168 @@
 
     </div>
 </nav>
+
+<script>
+(function() {
+    var phoneNumber = '+84 933 102 653';
+    var phoneNumberCompact = '+84933102653';
+    var activeContact = null;
+
+    function fallbackCopyText(text) {
+        var input = document.createElement('input');
+        input.value = text;
+        input.setAttribute('readonly', '');
+        input.style.position = 'fixed';
+        input.style.opacity = '0';
+        input.style.pointerEvents = 'none';
+        input.style.left = '-9999px';
+        document.body.appendChild(input);
+        input.select();
+
+        try {
+            document.execCommand('copy');
+        } finally {
+            document.body.removeChild(input);
+        }
+    }
+
+    function setupContactPopover(config) {
+        var trigger = document.querySelector(config.trigger);
+        var popover = document.querySelector(config.popover);
+        var backdrop = document.querySelector(config.backdrop);
+        var closeButton = document.querySelector(config.close);
+        var copyButton = document.querySelector(config.copy);
+        var copyStatus = document.querySelector(config.status);
+        var copyTimer = null;
+
+        if (!trigger || !popover || !backdrop) {
+            return null;
+        }
+
+        function setOpen(isOpen) {
+            popover.hidden = !isOpen;
+            backdrop.hidden = !isOpen;
+            trigger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            trigger.classList.toggle('is-open', isOpen);
+
+            if (!isOpen && copyStatus) {
+                copyStatus.textContent = '';
+            }
+
+            if (!isOpen && copyTimer) {
+                window.clearTimeout(copyTimer);
+                copyTimer = null;
+            }
+        }
+
+        function closePopover(shouldFocus) {
+            setOpen(false);
+            if (shouldFocus) {
+                trigger.focus({ preventScroll: true });
+            }
+            if (activeContact === contact) {
+                activeContact = null;
+            }
+        }
+
+        function openPopover() {
+            if (activeContact && activeContact !== contact) {
+                activeContact.close(false);
+            }
+            setOpen(true);
+            activeContact = contact;
+        }
+
+        var contact = {
+            close: closePopover,
+            isOpen: function() {
+                return !popover.hidden;
+            }
+        };
+
+        trigger.addEventListener('click', function() {
+            if (contact.isOpen()) {
+                closePopover(true);
+            } else {
+                openPopover();
+            }
+        });
+
+        backdrop.addEventListener('click', function() {
+            closePopover(true);
+        });
+
+        if (closeButton) {
+            closeButton.addEventListener('click', function() {
+                closePopover(true);
+            });
+        }
+
+        if (copyButton) {
+            function showCopied() {
+                if (!copyStatus) {
+                    return;
+                }
+
+                copyStatus.textContent = 'Copied.';
+                if (copyTimer) {
+                    window.clearTimeout(copyTimer);
+                }
+                copyTimer = window.setTimeout(function() {
+                    if (copyStatus) {
+                        copyStatus.textContent = '';
+                    }
+                    copyTimer = null;
+                }, 1500);
+            }
+
+            copyButton.addEventListener('click', function() {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(phoneNumberCompact).then(showCopied).catch(function() {
+                        try {
+                            fallbackCopyText(phoneNumberCompact);
+                            showCopied();
+                        } catch (error) {
+                            window.prompt('Copy the phone number:', phoneNumber);
+                        }
+                    });
+                    return;
+                }
+
+                try {
+                    fallbackCopyText(phoneNumberCompact);
+                    showCopied();
+                } catch (error) {
+                    window.prompt('Copy the phone number:', phoneNumber);
+                }
+            });
+        }
+
+        return contact;
+    }
+
+    setupContactPopover({
+        trigger: '[data-viber-trigger]',
+        popover: '[data-viber-popover]',
+        backdrop: '[data-viber-backdrop]',
+        close: '[data-viber-close]',
+        copy: '[data-viber-copy-phone]',
+        status: '[data-viber-copy-status]'
+    });
+
+    setupContactPopover({
+        trigger: '[data-wechat-trigger]',
+        popover: '[data-wechat-popover]',
+        backdrop: '[data-wechat-backdrop]',
+        close: '[data-wechat-close]',
+        copy: '[data-copy-phone]',
+        status: '[data-copy-status]'
+    });
+
+    document.addEventListener('keydown', function(event) {
+        if ('Escape' === event.key && activeContact) {
+            activeContact.close(true);
+        }
+    });
+})();
+</script>

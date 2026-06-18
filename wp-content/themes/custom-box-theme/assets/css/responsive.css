@@ -113,6 +113,31 @@ iframe {
     }
 }
 
+@media (max-width: 1280px) {
+    .header-row {
+        gap: 18px;
+    }
+
+    .header-right {
+        gap: 10px;
+    }
+
+    .header-contact-actions {
+        gap: 7px;
+    }
+
+    .header-chat-btn {
+        flex: 0 0 42px;
+        gap: 0;
+        padding: 0;
+        width: 42px;
+    }
+
+    .header-chat-btn span {
+        display: none;
+    }
+}
+
 @media (max-width: 900px) {
     .top-inner {
         gap: 12px;
@@ -1880,7 +1905,8 @@ body {
     .btn-outline,
     .btn-catalog,
     .btn-quote,
-    .btn-phone,
+    .header-phone-btn,
+    .header-chat-btn,
     .custom-product-actions a,
     .product-category-hero-actions a,
     .product-detail-actions a,
@@ -3149,7 +3175,7 @@ body {
         justify-self: auto;
         max-width: none;
         position: static;
-        width: 170px;
+        width: min(210px, 58vw);
     }
 
     .main-header .btn-catalog,
@@ -3176,12 +3202,16 @@ body {
         background: #fff;
         border-color: #2A6A92;
         color: #2A6A92;
+        height: 42px;
+        min-height: 42px;
     }
 
     .main-header .btn-phone {
         background: #2A6A92;
         border-color: #2A6A92;
         color: #fff;
+        height: 42px;
+        min-height: 42px;
     }
 
     .main-header .btn-catalog .icon-circle,
@@ -3342,20 +3372,190 @@ body {
     }
 
     .main-header .btn-catalog,
-    .main-header .btn-quote,
-    .main-header .btn-phone {
+    .main-header .btn-quote {
         font-size: 9px;
+        height: 42px;
+        min-height: 42px;
         padding-left: 8px;
         padding-right: 8px;
     }
 }
 
 @media (max-width: 768px) {
+    .header-contact-actions {
+        display: flex;
+        gap: 6px;
+        width: 100%;
+    }
+
+    .header-phone-btn {
+        flex: 1 1 auto;
+        font-size: 12px;
+        height: 36px;
+        min-height: 36px;
+        min-width: 0;
+        padding: 0 8px 0 5px;
+    }
+
+    .header-phone-icon {
+        height: 24px;
+        width: 24px;
+    }
+
+    .header-phone-icon i {
+        font-size: 11px;
+    }
+
+    .header-phone-number {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .header-chat-btn {
+        flex: 0 0 36px;
+        gap: 0;
+        height: 36px;
+        min-height: 36px;
+        padding: 0;
+        width: 36px;
+    }
+
+    .header-chat-btn span {
+        display: none;
+    }
+
+    .header-chat-btn i {
+        font-size: 18px;
+    }
+
+    .header-wechat-popover {
+        left: 50%;
+        max-width: calc(100vw - 24px);
+        position: fixed;
+        right: auto;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: 308px;
+        z-index: 130;
+    }
+
+    .header-wechat-backdrop {
+        z-index: 120;
+    }
+
+    .header-wechat-popover-head {
+        padding-right: 26px;
+    }
+
     .product-listing-category-section .custom-product-grid,
     .product-archive-page .custom-product-grid,
     .woocommerce-page .custom-product-grid,
     .custom-product-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+}
+
+@media (max-width: 480px) {
+    .header-contact-actions {
+        gap: 5px;
+    }
+
+    .header-phone-btn {
+        font-size: 11px;
+        height: 34px;
+        min-height: 34px;
+        padding: 0 7px 0 4px;
+    }
+
+    .header-phone-icon {
+        height: 22px;
+        width: 22px;
+    }
+
+    .header-chat-btn {
+        flex-basis: 34px;
+        height: 34px;
+        min-height: 34px;
+        width: 34px;
+    }
+
+    .header-chat-btn i {
+        font-size: 17px;
+    }
+
+    .header-wechat-popover {
+        width: min(308px, calc(100vw - 20px));
+    }
+
+}
+
+@media (max-width: 380px) {
+    .main-header .header-right {
+        width: min(194px, 60vw);
+    }
+
+    .header-phone-btn {
+        font-size: 10px;
+        padding-right: 6px;
+    }
+
+    .header-chat-btn {
+        flex-basis: 32px;
+        height: 32px;
+        min-height: 32px;
+        width: 32px;
+    }
+
+    .header-chat-btn i {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 340px) {
+    .main-header .header-row {
+        column-gap: 8px;
+        grid-template-columns: minmax(62px, 1fr) minmax(174px, auto);
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .main-header .logo img,
+    .main-header .custom-logo {
+        max-width: 96px;
+    }
+
+    .main-header .header-right {
+        width: 174px;
+    }
+
+    .header-contact-actions {
+        gap: 4px;
+    }
+
+    .header-phone-btn {
+        font-size: 9px;
+        height: 31px;
+        min-height: 31px;
+        padding-left: 4px;
+        padding-right: 5px;
+    }
+
+    .header-phone-icon {
+        height: 21px;
+        width: 21px;
+    }
+
+    .header-chat-btn {
+        flex-basis: 30px;
+        height: 31px;
+        min-height: 31px;
+        width: 30px;
+    }
+
+    .header-chat-btn i {
+        font-size: 15px;
     }
 }
 
