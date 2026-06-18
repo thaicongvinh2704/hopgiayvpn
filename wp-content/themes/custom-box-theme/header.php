@@ -70,6 +70,8 @@
         <form class="header-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>" data-search-suggestions>
             <label class="screen-reader-text" for="header-search-field"><?php esc_html_e('Search for:', 'custom-box-theme'); ?></label>
             <input id="header-search-field" type="search" name="s" value="<?php echo esc_attr(get_search_query()); ?>" placeholder="<?php esc_attr_e('Search', 'custom-box-theme'); ?>" autocomplete="off" data-search-input>
+            <input type="hidden" name="post_type" value="product">
+            <input type="hidden" name="vpn_search_scope" value="header_product">
             <button type="submit" aria-label="<?php esc_attr_e('Search', 'custom-box-theme'); ?>">
                 <i class="fas fa-search"></i>
             </button>
@@ -78,6 +80,10 @@
 
         <button class="mobile-menu-icon" type="button" aria-controls="primary-menu" aria-expanded="false" aria-label="<?php esc_attr_e('Open navigation menu', 'custom-box-theme'); ?>">
             <i class="fas fa-bars"></i>
+        </button>
+
+        <button class="mobile-search-toggle" type="button" aria-controls="header-search-field" aria-expanded="false" aria-label="<?php esc_attr_e('Open product search', 'custom-box-theme'); ?>" data-mobile-search-toggle>
+            <i class="fas fa-search"></i>
         </button>
 
         <!-- RIGHT -->

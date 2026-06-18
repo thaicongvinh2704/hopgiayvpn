@@ -30,9 +30,30 @@ document.addEventListener("DOMContentLoaded", function () {
             "'": "&#039;"
         }[char]));
 
+        const buildSearchUrl = (query) => {
+            const searchUrl = new URL(customBoxSearch.searchUrl, window.location.origin);
+            searchUrl.searchParams.set("s", query);
+            searchUrl.searchParams.set("post_type", "product");
+            searchUrl.searchParams.set("vpn_search_scope", "header_product");
+
+            if (searchUrl.origin === window.location.origin) {
+                return `${searchUrl.pathname}${searchUrl.search}`;
+            }
+
+            return searchUrl.toString();
+        };
+
+        const buildEndpointUrl = (query) => {
+            const endpointUrl = new URL(customBoxSearch.endpoint, window.location.origin);
+            endpointUrl.searchParams.set("q", query);
+            endpointUrl.searchParams.set("post_type", "product");
+            endpointUrl.searchParams.set("vpn_search_scope", "header_product");
+
+            return endpointUrl.toString();
+        };
+
         const renderResults = (items, query) => {
-            const safeQuery = encodeURIComponent(query);
-            const searchUrl = `${customBoxSearch.searchUrl}?s=${safeQuery}`;
+            const searchUrl = buildSearchUrl(query);
 
             if (!items.length) {
                 results.innerHTML = `<div class="header-search-empty">No matching results</div><a class="header-search-all" href="${searchUrl}">Search for "${escapeHtml(query)}"</a>`;
@@ -71,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             controller = new AbortController();
 
-            fetch(`${customBoxSearch.endpoint}?q=${encodeURIComponent(query)}`, {
+            fetch(buildEndpointUrl(query), {
                 signal: controller.signal,
                 credentials: "same-origin"
             })
@@ -109,6 +130,25 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         input.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                const query = input.value.trim();
+
+                hideResults();
+
+                if (!query) {
+                    event.preventDefault();
+                    return;
+                }
+
+                event.preventDefault();
+
+                if (typeof form.requestSubmit === "function") {
+                    form.requestSubmit();
+                } else {
+                    form.submit();
+                }
+            }
+
             if (event.key === "Escape") {
                 hideResults();
                 input.blur();
@@ -121,6 +161,41 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+
+    const mobileSearchToggle = document.querySelector("[data-mobile-search-toggle]");
+    const headerSearchForm = document.querySelector(".header-search[data-search-suggestions]");
+
+    if (mobileSearchToggle && headerSearchForm) {
+        const headerSearchInput = headerSearchForm.querySelector("[data-search-input]");
+
+        const setMobileSearchState = (isOpen) => {
+            headerSearchForm.classList.toggle("is-mobile-open", isOpen);
+            mobileSearchToggle.classList.toggle("is-open", isOpen);
+            mobileSearchToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+            mobileSearchToggle.setAttribute("aria-label", isOpen ? "Close product search" : "Open product search");
+
+            if (isOpen && headerSearchInput) {
+                window.setTimeout(() => headerSearchInput.focus(), 80);
+            }
+        };
+
+        mobileSearchToggle.addEventListener("click", () => {
+            setMobileSearchState(!headerSearchForm.classList.contains("is-mobile-open"));
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape" && headerSearchForm.classList.contains("is-mobile-open")) {
+                setMobileSearchState(false);
+                mobileSearchToggle.focus();
+            }
+        });
+
+        window.addEventListener("resize", () => {
+            if (window.matchMedia("(min-width: 768px)").matches) {
+                setMobileSearchState(false);
+            }
+        });
+    }
 
     const productGallery = document.querySelector("[data-product-gallery]");
 

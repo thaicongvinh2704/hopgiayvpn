@@ -3636,3 +3636,449 @@ body {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
+
+/* Compact mobile header: keep desktop untouched and reduce first-screen header height. */
+.mobile-search-toggle {
+    display: none;
+}
+
+@media (max-width: 767px) {
+    :root {
+        --vpn-primary: #2A6A92;
+        --vpn-primary-dark: #123f5c;
+        --vpn-border: #d6e5ec;
+        --vpn-surface: #ffffff;
+        --vpn-soft: #f4f8fb;
+    }
+
+    .top-bar {
+        align-items: center;
+        display: flex;
+        min-height: 36px;
+        overflow: hidden;
+        padding: 0;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+    }
+
+    .top-inner {
+        align-items: center;
+        display: flex;
+        justify-content: flex-start;
+        min-height: 36px;
+        padding: 0 16px;
+        width: 100%;
+    }
+
+    .top-left {
+        display: block;
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow-x: auto;
+        scrollbar-width: none;
+        white-space: nowrap;
+    }
+
+    .top-left::-webkit-scrollbar {
+        display: none;
+    }
+
+    .top-left span {
+        align-items: center;
+        display: inline-flex;
+        gap: 8px;
+        min-height: 36px;
+    }
+
+    .top-left,
+    .top-left a {
+        color: #fff;
+        font-size: 12px;
+        font-weight: 800;
+        line-height: 1;
+    }
+
+    .top-left i {
+        flex: 0 0 auto;
+        font-size: 13px;
+    }
+
+    .top-right {
+        display: none;
+    }
+
+    .main-header {
+        background: var(--vpn-surface);
+        border-bottom: 1px solid var(--vpn-border);
+        box-shadow: 0 6px 20px rgba(15, 50, 70, 0.08);
+        overflow: hidden;
+        padding: 0;
+        position: sticky;
+        top: 36px;
+        z-index: 998;
+    }
+
+    .main-header .header-row {
+        align-items: center;
+        column-gap: 4px;
+        display: grid;
+        grid-template-areas:
+            "logo catalog quote search menu"
+            "contact contact contact contact contact"
+            "searchform searchform searchform searchform searchform";
+        grid-template-columns: 56px minmax(58px, 1fr) minmax(64px, 1fr) 40px 40px;
+        margin: 0 auto;
+        min-height: 0;
+        overflow: hidden;
+        padding: 10px 12px 12px;
+        row-gap: 8px;
+        width: 100%;
+    }
+
+    .main-header .logo {
+        align-items: center;
+        display: flex;
+        grid-area: logo;
+        justify-content: flex-start;
+        width: auto;
+    }
+
+    .main-header .logo a {
+        align-items: center;
+        display: inline-flex;
+        justify-content: flex-start;
+        width: auto;
+    }
+
+    .main-header .logo img,
+    .main-header .custom-logo {
+        display: block;
+        height: auto;
+        max-height: 54px;
+        max-width: 58px;
+        object-fit: contain;
+    }
+
+    .main-header .header-right {
+        display: contents;
+    }
+
+    .main-header .btn-catalog,
+    .main-header .btn-quote,
+    .main-header .mobile-search-toggle,
+    .main-header .mobile-menu-icon {
+        align-items: center;
+        border-radius: 999px;
+        box-sizing: border-box;
+        display: inline-flex;
+        flex: 0 1 auto !important;
+        font-size: 11px;
+        font-weight: 900;
+        height: 44px;
+        justify-content: center;
+        line-height: 1;
+        max-width: 100%;
+        min-height: 44px;
+        min-width: 0 !important;
+        overflow: hidden;
+        padding: 0 6px;
+        text-align: center;
+        text-decoration: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+    }
+
+    .main-header .btn-catalog {
+        background: #fff;
+        border: 1px solid var(--vpn-primary);
+        color: var(--vpn-primary);
+        grid-area: catalog;
+    }
+
+    .main-header .btn-quote {
+        background: var(--vpn-primary);
+        border: 1px solid var(--vpn-primary);
+        color: #fff;
+        grid-area: quote;
+    }
+
+    .main-header .btn-quote span:last-child {
+        font-size: 0;
+    }
+
+    .main-header .btn-quote span:last-child::after {
+        content: "Quote";
+        font-size: 11px;
+    }
+
+    .main-header .btn-catalog .icon-circle,
+    .main-header .btn-quote .icon-circle {
+        display: none;
+    }
+
+    .main-header .mobile-search-toggle,
+    .main-header .mobile-menu-icon {
+        background: #fff;
+        border: 1px solid var(--vpn-border);
+        box-shadow: 0 4px 12px rgba(15, 50, 70, 0.06);
+        color: var(--vpn-primary-dark);
+        cursor: pointer;
+        font-size: 17px;
+        padding: 0;
+    }
+
+    .main-header .mobile-search-toggle {
+        grid-area: search;
+    }
+
+    .main-header .mobile-search-toggle.is-open,
+    .main-header .mobile-menu-icon[aria-expanded="true"] {
+        background: var(--vpn-primary);
+        border-color: var(--vpn-primary);
+        color: #fff;
+    }
+
+    .main-header .mobile-menu-icon {
+        grid-area: menu;
+        position: static;
+    }
+
+    .main-header .header-contact-actions {
+        background: var(--vpn-soft);
+        border: 1px solid var(--vpn-border);
+        border-radius: 18px;
+        box-sizing: border-box;
+        display: grid;
+        gap: 6px;
+        grid-area: contact;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        padding: 6px;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .main-header .header-phone-btn,
+    .main-header .header-chat-btn {
+        border-radius: 999px;
+        box-sizing: border-box;
+        box-shadow: none;
+        flex: 0 1 auto !important;
+        font-size: 11px;
+        font-weight: 900;
+        gap: 6px;
+        height: 38px;
+        justify-content: center;
+        max-width: 100%;
+        min-height: 38px;
+        min-width: 0 !important;
+        overflow: hidden;
+        padding: 0 8px;
+        text-overflow: ellipsis;
+        width: 100%;
+    }
+
+    .main-header .header-phone-btn {
+        grid-column: auto;
+    }
+
+    .main-header .header-phone-number {
+        font-size: 0;
+    }
+
+    .main-header .header-phone-number::after {
+        content: "Call";
+        font-size: 11px;
+    }
+
+    .main-header .header-phone-icon,
+    .main-header .header-chat-btn i {
+        height: 22px;
+        width: 22px;
+    }
+
+    .main-header .header-phone-icon i {
+        font-size: 11px;
+    }
+
+    .main-header .header-chat-btn i {
+        font-size: 15px;
+    }
+
+    .main-header .header-chat-btn span {
+        display: inline;
+        flex: 0 1 auto;
+        font-size: 11px;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .main-header .header-chat-btn.viber {
+        display: none;
+    }
+
+    .main-header .header-search {
+        background: #fff;
+        border: 1px solid var(--vpn-border);
+        border-radius: 999px;
+        box-shadow: none;
+        display: grid;
+        grid-area: searchform;
+        grid-template-columns: minmax(0, 1fr) 44px;
+        margin: 0;
+        max-height: 0;
+        max-width: none;
+        opacity: 0;
+        overflow: hidden;
+        padding: 0 4px 0 16px;
+        pointer-events: none;
+        transform: translateY(-4px);
+        transition: max-height 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+        width: 100%;
+    }
+
+    .main-header .header-search.is-mobile-open {
+        max-height: 58px;
+        min-height: 48px;
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .main-header .header-search input {
+        font-size: 14px;
+        min-height: 46px;
+        min-width: 0;
+        padding: 0;
+    }
+
+    .main-header .header-search button {
+        align-items: center;
+        display: inline-flex;
+        height: 40px;
+        justify-content: center;
+        margin: 4px 0;
+        min-height: 40px;
+        min-width: 40px;
+        padding: 0;
+        position: static;
+        width: 40px;
+    }
+
+    .main-header .header-search-suggestions {
+        border-radius: 12px;
+        left: 0;
+        right: 0;
+        top: calc(100% + 6px);
+    }
+
+    .main-nav {
+        background: #fff;
+        border-bottom: 1px solid var(--vpn-border);
+        padding: 0;
+        position: relative;
+        z-index: 997;
+    }
+
+    .main-nav .nav-inner {
+        display: block;
+        padding: 0 16px 12px;
+    }
+
+    .main-nav .menu-toggle {
+        display: none;
+    }
+
+    .main-nav .all-categories-wrap,
+    .main-nav .nav-menu {
+        display: none;
+    }
+
+    .main-nav .nav-inner.is-open .all-categories-wrap,
+    .main-nav .nav-inner.is-open .nav-menu,
+    .main-nav .nav-menu.active {
+        display: grid;
+        gap: 8px;
+    }
+
+    .main-nav .nav-inner.is-open {
+        padding-top: 10px;
+    }
+
+    .hero,
+    .product-category-hero,
+    .product-detail-hero,
+    .blog-hero,
+    .contact-hero {
+        scroll-margin-top: 150px;
+    }
+}
+
+@media (max-width: 390px) {
+    .main-header .header-row {
+        grid-template-columns: 54px minmax(56px, 1fr) minmax(60px, 1fr) 40px 40px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .main-header .logo img,
+    .main-header .custom-logo {
+        max-width: 56px;
+    }
+
+    .main-header .btn-catalog,
+    .main-header .btn-quote {
+        font-size: 10px;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .main-header .btn-quote span:last-child::after {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 360px) {
+    .main-header .header-row {
+        column-gap: 4px;
+        grid-template-columns: 50px minmax(54px, 1fr) minmax(58px, 1fr) 38px 38px;
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .main-header .logo img,
+    .main-header .custom-logo {
+        max-width: 52px;
+    }
+
+    .main-header .btn-catalog,
+    .main-header .btn-quote,
+    .main-header .mobile-search-toggle,
+    .main-header .mobile-menu-icon {
+        font-size: 10px;
+        height: 40px;
+        min-height: 40px;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+
+    .main-header .header-contact-actions {
+        gap: 4px;
+        padding: 5px;
+    }
+
+    .main-header .header-phone-btn,
+    .main-header .header-chat-btn {
+        font-size: 10px;
+        gap: 4px;
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .main-header .header-phone-number::after,
+    .main-header .header-chat-btn span {
+        font-size: 10px;
+    }
+}
