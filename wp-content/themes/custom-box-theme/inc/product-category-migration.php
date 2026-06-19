@@ -313,6 +313,10 @@ function custom_box_category_migration_apply_products_to_targets() {
         $updated++;
     }
 
+    if (function_exists('custom_box_sync_curated_category_product_assignments')) {
+        custom_box_sync_curated_category_product_assignments();
+    }
+
     flush_rewrite_rules(false);
 
     return $updated;
@@ -580,6 +584,10 @@ function custom_box_curated_category_product_assignments() {
             ),
             'exclude' => array(),
         ),
+        'rigid-boxes' => array(
+            'include' => explode(',', 'custom-double-wine-bottle-gift-box,custom-flat-rigid-gift-box-with-ribbon,custom-fountain-pen-gift-box,custom-gift-box-with-ribbon-bow,custom-luxury-gift-box-with-paper-bag,custom-luxury-watch-box-with-drawer,custom-magnetic-closure-gift-box,custom-magnetic-gift-box,custom-magnetic-gift-box-with-insert-tray,custom-rigid-gift-box,custom-rigid-gift-box-with-matching-paper-bag,custom-rigid-gift-box-with-ribbon-closure,custom-rigid-square-gift-box-with-foil-logo,custom-single-wine-bottle-gift-box,custom-watch-box-with-drawer,custom-watch-box-with-pillow-insert,custom-wine-bottle-packaging-box,luxury-wine-bottle-packaging-boxes,premium-pickleball-set-rigid-paper-box'),
+            'exclude' => array(),
+        ),
         'lid-and-base-boxes' => array(
             'include' => explode(',', 'custom-belt-packaging-box,custom-double-wine-bottle-gift-box,custom-flat-rigid-gift-box-with-ribbon,custom-fountain-pen-gift-box,custom-gift-box-with-ribbon-bow,custom-knife-set-packaging-box,custom-nested-kraft-gift-boxes-with-ribbon,custom-perfume-box-with-insert,custom-rigid-gift-box,custom-rigid-square-gift-box-with-foil-logo,custom-shoe-packaging-box,custom-skincare-gift-box-with-insert,custom-sports-shoe-packaging-box,custom-t-shirt-packaging-box,custom-wallet-packaging-box,custom-watch-box-with-pillow-insert,custom-wine-bottle-packaging-box,luxury-wine-bottle-packaging-boxes'),
             'exclude' => array(),
@@ -644,6 +652,10 @@ function custom_box_curated_category_product_assignments() {
             'include' => array('custom-candle-jar-box-with-insert'),
             'exclude' => array(),
         ),
+        'bird-nest-packaging-boxes' => array(
+            'include' => explode(',', 'custom-blue-bird-nest-drawer-gift-box,custom-green-bird-nest-cabinet-gift-box,custom-green-bird-nest-compartment-gift-box,custom-green-bird-nest-gift-box-with-handle'),
+            'exclude' => array(),
+        ),
     );
 }
 
@@ -704,7 +716,7 @@ function custom_box_sync_curated_category_product_assignments() {
 }
 
 function custom_box_maybe_sync_curated_category_product_assignments() {
-    $sync_version = 'curated-category-products-v2';
+    $sync_version = 'curated-category-products-v3';
 
     if (get_option('custom_box_curated_category_products_version') === $sync_version) {
         return;
