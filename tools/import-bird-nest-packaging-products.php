@@ -46,9 +46,37 @@ function vpn_bird_find_attachment_by_base( string $filename_base ): int {
 }
 
 function vpn_bird_attachment_id( string $filename, string $alt, string $title, string $caption ): int {
-	$attachment_id = vpn_bird_find_attachment_by_base( vpn_bird_file_base( $filename ) );
+	$filename_base = vpn_bird_file_base( $filename );
+	$attachment_id = vpn_bird_find_attachment_by_base( $filename_base );
 	if ( ! $attachment_id ) {
-		return 0;
+		$attached_file = '2026/06/' . basename( $filename );
+		$uploads       = wp_get_upload_dir();
+		$target_path   = trailingslashit( $uploads['basedir'] ) . $attached_file;
+		$source_path   = get_template_directory() . '/inc/product-sample-deploy-assets/uploads/' . $attached_file;
+
+		if ( ! file_exists( $target_path ) ) {
+			if ( ! file_exists( $source_path ) || ! wp_mkdir_p( dirname( $target_path ) ) || ! copy( $source_path, $target_path ) ) {
+				return 0;
+			}
+		}
+
+		$attachment_id = wp_insert_attachment(
+			array(
+				'guid'           => trailingslashit( $uploads['baseurl'] ) . $attached_file,
+				'post_mime_type' => 'image/webp',
+				'post_title'     => $title,
+				'post_excerpt'   => $caption,
+				'post_status'    => 'inherit',
+			),
+			$target_path
+		);
+
+		if ( is_wp_error( $attachment_id ) || ! $attachment_id ) {
+			return 0;
+		}
+
+		update_post_meta( $attachment_id, '_wp_attached_file', $attached_file );
+		wp_update_attachment_metadata( $attachment_id, wp_generate_attachment_metadata( $attachment_id, $target_path ) );
 	}
 
 	update_post_meta( $attachment_id, '_wp_attachment_image_alt', $alt );
