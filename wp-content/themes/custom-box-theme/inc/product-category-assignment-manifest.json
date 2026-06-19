@@ -1,0 +1,982 @@
+{
+    "version": 1,
+    "generated_at": "2026-06-19T03:47:35+00:00",
+    "source_url": "http://localhost/website-backup/",
+    "taxonomy": "product_cat",
+    "mode": "strict_manifest_product_categories",
+    "categories": {
+        "back-to-school-stationery-packaging": {
+            "name": "Back-to-School and Stationery Packaging",
+            "slug": "back-to-school-stationery-packaging"
+        },
+        "bakery-packaging-boxes": {
+            "name": "Bakery Packaging Boxes",
+            "slug": "bakery-packaging-boxes"
+        },
+        "beauty-skincare-packaging": {
+            "name": "Beauty and Skincare Packaging",
+            "slug": "beauty-skincare-packaging"
+        },
+        "bird-nest-packaging-boxes": {
+            "name": "Bird Nest Packaging Boxes",
+            "slug": "bird-nest-packaging-boxes"
+        },
+        "candle-packaging-boxes": {
+            "name": "Candle Packaging Boxes",
+            "slug": "candle-packaging-boxes"
+        },
+        "chocolate-gift-boxes": {
+            "name": "Chocolate Gift Boxes",
+            "slug": "chocolate-gift-boxes"
+        },
+        "corporate-gift-packaging": {
+            "name": "Corporate Gift Packaging",
+            "slug": "corporate-gift-packaging"
+        },
+        "corrugated-mailer-boxes": {
+            "name": "Corrugated Mailer Boxes",
+            "slug": "corrugated-mailer-boxes"
+        },
+        "cosmetic-paper-boxes": {
+            "name": "Cosmetic Paper Boxes",
+            "slug": "cosmetic-paper-boxes"
+        },
+        "custom-paper-boxes": {
+            "name": "Custom Paper Boxes",
+            "slug": "custom-paper-boxes"
+        },
+        "custom-printed-paper-boxes": {
+            "name": "Custom Printed Paper Boxes",
+            "slug": "custom-printed-paper-boxes"
+        },
+        "drawer-boxes": {
+            "name": "Drawer Boxes",
+            "slug": "drawer-boxes"
+        },
+        "electronics-accessories-packaging": {
+            "name": "Electronics Accessories Packaging",
+            "slug": "electronics-accessories-packaging"
+        },
+        "fashion-sportswear-packaging": {
+            "name": "Fashion and Sportswear Packaging",
+            "slug": "fashion-sportswear-packaging"
+        },
+        "folding-carton-boxes": {
+            "name": "Folding Carton Boxes",
+            "slug": "folding-carton-boxes"
+        },
+        "food-paper-boxes": {
+            "name": "Food Paper Boxes",
+            "slug": "food-paper-boxes"
+        },
+        "gift-paper-boxes": {
+            "name": "Gift Paper Boxes",
+            "slug": "gift-paper-boxes"
+        },
+        "home-lifestyle-packaging": {
+            "name": "Home and Lifestyle Packaging",
+            "slug": "home-lifestyle-packaging"
+        },
+        "jewelry-paper-boxes": {
+            "name": "Jewelry Paper Boxes",
+            "slug": "jewelry-paper-boxes"
+        },
+        "lid-and-base-boxes": {
+            "name": "Lid and Base Boxes",
+            "slug": "lid-and-base-boxes"
+        },
+        "magnetic-closure-boxes": {
+            "name": "Magnetic Closure Boxes",
+            "slug": "magnetic-closure-boxes"
+        },
+        "packaging-accessories": {
+            "name": "Packaging Accessories",
+            "slug": "packaging-accessories"
+        },
+        "paper-bags-with-logo": {
+            "name": "Paper Bags with Logo",
+            "slug": "paper-bags-with-logo"
+        },
+        "paper-tube-packaging": {
+            "name": "Paper Tube Packaging",
+            "slug": "paper-tube-packaging"
+        },
+        "perfume-packaging-boxes": {
+            "name": "Perfume Packaging Boxes",
+            "slug": "perfume-packaging-boxes"
+        },
+        "pharmaceutical-packaging-boxes": {
+            "name": "Pharmaceutical Packaging Boxes",
+            "slug": "pharmaceutical-packaging-boxes"
+        },
+        "premium-food-beverage-packaging": {
+            "name": "Premium Food and Beverage Packaging",
+            "slug": "premium-food-beverage-packaging"
+        },
+        "rigid-boxes": {
+            "name": "Rigid Boxes",
+            "slug": "rigid-boxes"
+        },
+        "skincare-packaging-boxes": {
+            "name": "Skincare Packaging Boxes",
+            "slug": "skincare-packaging-boxes"
+        },
+        "sports-packaging-boxes": {
+            "name": "Sports Packaging Boxes",
+            "slug": "sports-packaging-boxes"
+        },
+        "supplement-packaging-boxes": {
+            "name": "Supplement Packaging Boxes",
+            "slug": "supplement-packaging-boxes"
+        },
+        "wine-premium-drink-packaging": {
+            "name": "Wine and Premium Drink Packaging",
+            "slug": "wine-premium-drink-packaging"
+        }
+    },
+    "products": {
+        "custom-ampoule-packaging-box": {
+            "title": "CUSTOM AMPOULE PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "cosmetic-paper-boxes",
+                "folding-carton-boxes",
+                "pharmaceutical-packaging-boxes",
+                "supplement-packaging-boxes"
+            ]
+        },
+        "custom-apparel-drawer-box-with-ribbon-pull": {
+            "title": "Custom Apparel Drawer Box with Ribbon Pull",
+            "status": "publish",
+            "categories": [
+                "drawer-boxes"
+            ]
+        },
+        "custom-belt-packaging-box": {
+            "title": "CUSTOM BELT PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "fashion-sportswear-packaging",
+                "lid-and-base-boxes"
+            ]
+        },
+        "custom-blue-bird-nest-drawer-gift-box": {
+            "title": "CUSTOM BLUE BIRD NEST DRAWER GIFT BOX",
+            "status": "draft",
+            "categories": [
+                "bird-nest-packaging-boxes",
+                "corporate-gift-packaging"
+            ]
+        },
+        "custom-bottle-carrier-box-with-handle": {
+            "title": "Custom Bottle Carrier Box with Handle",
+            "status": "publish",
+            "categories": [
+                "custom-paper-boxes"
+            ]
+        },
+        "custom-candle-jar-box-with-insert": {
+            "title": "Custom Candle Jar Box with Insert",
+            "status": "publish",
+            "categories": [
+                "candle-packaging-boxes",
+                "folding-carton-boxes"
+            ]
+        },
+        "custom-charging-cable-packaging-box": {
+            "title": "CUSTOM CHARGING CABLE PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "electronics-accessories-packaging",
+                "folding-carton-boxes"
+            ]
+        },
+        "custom-colored-pencil-packaging-box": {
+            "title": "CUSTOM COLORED PENCIL PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "back-to-school-stationery-packaging",
+                "custom-printed-paper-boxes",
+                "folding-carton-boxes"
+            ]
+        },
+        "custom-corrugated-mailer-box": {
+            "title": "Custom Corrugated Mailer Box",
+            "status": "publish",
+            "categories": [
+                "corrugated-mailer-boxes"
+            ]
+        },
+        "custom-cosmetic-drawer-box-with-insert": {
+            "title": "Custom Cosmetic Drawer Box with Insert",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "drawer-boxes"
+            ]
+        },
+        "custom-cosmetic-packaging-box": {
+            "title": "CUSTOM COSMETIC PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "folding-carton-boxes"
+            ]
+        },
+        "custom-cosmetic-paper-bag": {
+            "title": "CUSTOM COSMETIC PAPER BAG",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "paper-bags-with-logo"
+            ]
+        },
+        "custom-cosmetic-tube-packaging-box-with-insert": {
+            "title": "Custom Cosmetic Tube Packaging Box with Insert",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "folding-carton-boxes"
+            ]
+        },
+        "custom-crayon-packaging-box": {
+            "title": "CUSTOM CRAYON PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "back-to-school-stationery-packaging",
+                "custom-printed-paper-boxes",
+                "folding-carton-boxes"
+            ]
+        },
+        "custom-cylindrical-paper-tube-box": {
+            "title": "Custom Cylindrical Paper Tube Box",
+            "status": "publish",
+            "categories": [
+                "paper-tube-packaging"
+            ]
+        },
+        "custom-dinnerware-packaging-box": {
+            "title": "CUSTOM DINNERWARE PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "home-lifestyle-packaging"
+            ]
+        },
+        "custom-double-wine-bottle-gift-box": {
+            "title": "CUSTOM DOUBLE WINE BOTTLE GIFT BOX",
+            "status": "publish",
+            "categories": [
+                "gift-paper-boxes",
+                "lid-and-base-boxes",
+                "premium-food-beverage-packaging",
+                "rigid-boxes",
+                "wine-premium-drink-packaging"
+            ]
+        },
+        "custom-drawer-gift-box": {
+            "title": "CUSTOM DRAWER GIFT BOX",
+            "status": "publish",
+            "categories": [
+                "corporate-gift-packaging",
+                "drawer-boxes",
+                "gift-paper-boxes"
+            ]
+        },
+        "custom-essential-oil-packaging-box-with-insert": {
+            "title": "Custom Essential Oil Packaging Box with Insert",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "custom-printed-paper-boxes",
+                "folding-carton-boxes"
+            ]
+        },
+        "custom-flat-rigid-gift-box-with-ribbon": {
+            "title": "Custom Flat Rigid Gift Box with Ribbon",
+            "status": "publish",
+            "categories": [
+                "corporate-gift-packaging",
+                "gift-paper-boxes",
+                "lid-and-base-boxes",
+                "rigid-boxes"
+            ]
+        },
+        "custom-fountain-pen-gift-box": {
+            "title": "CUSTOM FOUNTAIN PEN GIFT BOX",
+            "status": "publish",
+            "categories": [
+                "back-to-school-stationery-packaging",
+                "gift-paper-boxes",
+                "lid-and-base-boxes",
+                "rigid-boxes"
+            ]
+        },
+        "custom-gift-box-with-ribbon-bow": {
+            "title": "Custom Gift Box with Ribbon Bow",
+            "status": "publish",
+            "categories": [
+                "corporate-gift-packaging",
+                "gift-paper-boxes",
+                "lid-and-base-boxes",
+                "rigid-boxes"
+            ]
+        },
+        "custom-gift-box-with-shredded-paper-filler": {
+            "title": "Custom Gift Box with Shredded Paper Filler",
+            "status": "publish",
+            "categories": [
+                "corporate-gift-packaging",
+                "folding-carton-boxes",
+                "gift-paper-boxes",
+                "packaging-accessories"
+            ]
+        },
+        "custom-green-bird-nest-cabinet-gift-box": {
+            "title": "CUSTOM GREEN BIRD NEST CABINET GIFT BOX",
+            "status": "draft",
+            "categories": [
+                "bird-nest-packaging-boxes",
+                "corporate-gift-packaging"
+            ]
+        },
+        "custom-green-bird-nest-compartment-gift-box": {
+            "title": "CUSTOM GREEN BIRD NEST COMPARTMENT GIFT BOX",
+            "status": "draft",
+            "categories": [
+                "bird-nest-packaging-boxes",
+                "corporate-gift-packaging"
+            ]
+        },
+        "custom-green-bird-nest-gift-box-with-handle": {
+            "title": "CUSTOM GREEN BIRD NEST GIFT BOX WITH HANDLE",
+            "status": "draft",
+            "categories": [
+                "bird-nest-packaging-boxes",
+                "corporate-gift-packaging"
+            ]
+        },
+        "custom-incense-packaging-box-with-window": {
+            "title": "Custom Incense Packaging Box with Window",
+            "status": "publish",
+            "categories": [
+                "custom-printed-paper-boxes",
+                "folding-carton-boxes"
+            ]
+        },
+        "custom-knee-support-packaging-box": {
+            "title": "CUSTOM KNEE SUPPORT PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "folding-carton-boxes",
+                "sports-packaging-boxes"
+            ]
+        },
+        "custom-knife-set-packaging-box": {
+            "title": "CUSTOM KNIFE SET PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "home-lifestyle-packaging",
+                "lid-and-base-boxes"
+            ]
+        },
+        "custom-kraft-bakery-box-with-window": {
+            "title": "Custom Kraft Bakery Box with Window",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "food-paper-boxes"
+            ]
+        },
+        "custom-kraft-paper-bag-for-supplement-packaging": {
+            "title": "CUSTOM KRAFT PAPER BAG FOR SUPPLEMENT PACKAGING",
+            "status": "publish",
+            "categories": [
+                "paper-bags-with-logo",
+                "supplement-packaging-boxes"
+            ]
+        },
+        "custom-kraft-pastry-drawer-box-with-insert": {
+            "title": "Custom Kraft Pastry Drawer Box with Insert",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "drawer-boxes",
+                "food-paper-boxes"
+            ]
+        },
+        "custom-luxury-gift-box-with-paper-bag": {
+            "title": "CUSTOM LUXURY GIFT BOX WITH PAPER BAG",
+            "status": "publish",
+            "categories": [
+                "corporate-gift-packaging",
+                "gift-paper-boxes",
+                "magnetic-closure-boxes",
+                "packaging-accessories",
+                "paper-bags-with-logo",
+                "rigid-boxes"
+            ]
+        },
+        "custom-luxury-mooncake-gift-box-with-insert": {
+            "title": "Custom Luxury Mooncake Gift Box with Insert",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "chocolate-gift-boxes",
+                "food-paper-boxes"
+            ]
+        },
+        "custom-luxury-paper-gift-bag-with-ribbon-handles": {
+            "title": "Custom Luxury Paper Gift Bag with Ribbon Handles",
+            "status": "publish",
+            "categories": [
+                "paper-bags-with-logo"
+            ]
+        },
+        "custom-luxury-watch-box-with-drawer": {
+            "title": "Custom Luxury Watch Box with Drawer",
+            "status": "publish",
+            "categories": [
+                "drawer-boxes",
+                "jewelry-paper-boxes",
+                "rigid-boxes"
+            ]
+        },
+        "custom-luxury-wine-bottle-packaging-box": {
+            "title": "Custom Luxury Wine Bottle Gift Box with Logo",
+            "status": "publish",
+            "categories": [
+                "gift-paper-boxes"
+            ]
+        },
+        "custom-magnetic-closure-gift-box": {
+            "title": "Custom Magnetic Closure Gift Box",
+            "status": "publish",
+            "categories": [
+                "corporate-gift-packaging",
+                "gift-paper-boxes",
+                "magnetic-closure-boxes",
+                "rigid-boxes"
+            ]
+        },
+        "custom-magnetic-gift-box": {
+            "title": "CUSTOM MAGNETIC GIFT BOX",
+            "status": "publish",
+            "categories": [
+                "corporate-gift-packaging",
+                "gift-paper-boxes",
+                "magnetic-closure-boxes",
+                "rigid-boxes"
+            ]
+        },
+        "custom-magnetic-gift-box-with-insert-tray": {
+            "title": "Custom Magnetic Gift Box with Insert Tray",
+            "status": "publish",
+            "categories": [
+                "corporate-gift-packaging",
+                "gift-paper-boxes",
+                "magnetic-closure-boxes",
+                "rigid-boxes"
+            ]
+        },
+        "custom-medical-kit-packaging-box": {
+            "title": "CUSTOM MEDICAL KIT PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "folding-carton-boxes",
+                "pharmaceutical-packaging-boxes"
+            ]
+        },
+        "custom-men-underwear-packaging-box": {
+            "title": "CUSTOM MEN UNDERWEAR PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "fashion-sportswear-packaging",
+                "folding-carton-boxes"
+            ]
+        },
+        "custom-mooncake-cabinet-gift-box-with-drawers": {
+            "title": "Custom Mooncake Cabinet Gift Box with Drawers",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "chocolate-gift-boxes",
+                "drawer-boxes",
+                "food-paper-boxes"
+            ]
+        },
+        "custom-mooncake-gift-box-set-with-paper-bag": {
+            "title": "Custom Mooncake Gift Box Set with Paper Bag",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "chocolate-gift-boxes",
+                "food-paper-boxes",
+                "packaging-accessories",
+                "paper-bags-with-logo"
+            ]
+        },
+        "custom-mooncake-handbag-gift-box-with-insert": {
+            "title": "Custom Mooncake Handbag Gift Box with Insert",
+            "status": "publish",
+            "categories": [
+                "chocolate-gift-boxes",
+                "food-paper-boxes",
+                "gift-paper-boxes"
+            ]
+        },
+        "custom-mooncake-packaging-box": {
+            "title": "Custom Mooncake Packaging Box",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "chocolate-gift-boxes",
+                "custom-printed-paper-boxes",
+                "food-paper-boxes"
+            ]
+        },
+        "custom-mug-packaging-box-with-window": {
+            "title": "CUSTOM MUG PACKAGING BOX WITH WINDOW",
+            "status": "publish",
+            "categories": [
+                "folding-carton-boxes",
+                "food-paper-boxes",
+                "home-lifestyle-packaging",
+                "premium-food-beverage-packaging"
+            ]
+        },
+        "custom-nested-kraft-gift-boxes-with-ribbon": {
+            "title": "Custom Nested Kraft Gift Boxes with Ribbon",
+            "status": "publish",
+            "categories": [
+                "corporate-gift-packaging",
+                "gift-paper-boxes",
+                "lid-and-base-boxes"
+            ]
+        },
+        "custom-paper-egg-packaging-boxes": {
+            "title": "CUSTOM PAPER EGG PACKAGING BOXES",
+            "status": "publish",
+            "categories": [
+                "food-paper-boxes"
+            ]
+        },
+        "custom-paper-shopping-bag-with-handles": {
+            "title": "Custom Paper Shopping Bag with Handles",
+            "status": "publish",
+            "categories": [
+                "custom-printed-paper-boxes",
+                "paper-bags-with-logo"
+            ]
+        },
+        "custom-paper-tube-food-packaging-box": {
+            "title": "CUSTOM PAPER TUBE FOOD PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "food-paper-boxes",
+                "paper-tube-packaging",
+                "premium-food-beverage-packaging"
+            ]
+        },
+        "custom-pastry-box-with-clear-window": {
+            "title": "Custom Pastry Box with Clear Window",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "food-paper-boxes"
+            ]
+        },
+        "custom-pastry-display-box-with-drawer": {
+            "title": "Custom Pastry Display Box with Drawer",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "drawer-boxes",
+                "food-paper-boxes"
+            ]
+        },
+        "custom-pastry-gift-box-with-insert": {
+            "title": "Custom Pastry Gift Box with Insert",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "food-paper-boxes"
+            ]
+        },
+        "custom-pastry-sleeve-box-with-insert": {
+            "title": "Custom Pastry Sleeve Box with Insert",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "drawer-boxes",
+                "food-paper-boxes"
+            ]
+        },
+        "custom-perfume-box-with-insert": {
+            "title": "Custom Perfume Box with Insert",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "lid-and-base-boxes",
+                "perfume-packaging-boxes"
+            ]
+        },
+        "custom-perfume-display-box-with-sleeve": {
+            "title": "Custom Perfume Display Box with Sleeve",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "custom-printed-paper-boxes",
+                "folding-carton-boxes",
+                "perfume-packaging-boxes"
+            ]
+        },
+        "custom-perfume-gift-set-box-with-insert": {
+            "title": "Custom Perfume Gift Set Box with Insert",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "perfume-packaging-boxes"
+            ]
+        },
+        "custom-phone-case-packaging-box": {
+            "title": "CUSTOM PHONE CASE PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "electronics-accessories-packaging",
+                "folding-carton-boxes"
+            ]
+        },
+        "custom-phone-packaging-box": {
+            "title": "CUSTOM PHONE PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "electronics-accessories-packaging"
+            ]
+        },
+        "custom-phone-packaging-box-with-paper-bag": {
+            "title": "CUSTOM PHONE PACKAGING BOX WITH PAPER BAG",
+            "status": "publish",
+            "categories": [
+                "electronics-accessories-packaging",
+                "packaging-accessories",
+                "paper-bags-with-logo"
+            ]
+        },
+        "custom-pill-packaging-box": {
+            "title": "CUSTOM PILL PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "folding-carton-boxes",
+                "pharmaceutical-packaging-boxes"
+            ]
+        },
+        "custom-pizza-packaging-box": {
+            "title": "Custom Pizza Packaging Box",
+            "status": "publish",
+            "categories": [
+                "custom-printed-paper-boxes",
+                "folding-carton-boxes",
+                "food-paper-boxes"
+            ]
+        },
+        "custom-printed-corrugated-ecommerce-box": {
+            "title": "Custom Printed Corrugated Ecommerce Box",
+            "status": "publish",
+            "categories": [
+                "corrugated-mailer-boxes",
+                "custom-printed-paper-boxes"
+            ]
+        },
+        "custom-printed-corrugated-pet-food-box": {
+            "title": "CUSTOM PRINTED CORRUGATED PET FOOD BOX",
+            "status": "publish",
+            "categories": [
+                "corrugated-mailer-boxes",
+                "custom-printed-paper-boxes",
+                "food-paper-boxes",
+                "premium-food-beverage-packaging"
+            ]
+        },
+        "custom-red-paper-shopping-bag": {
+            "title": "CUSTOM RED PAPER SHOPPING BAG",
+            "status": "publish",
+            "categories": [
+                "paper-bags-with-logo"
+            ]
+        },
+        "custom-rigid-gift-box": {
+            "title": "CUSTOM RIGID GIFT BOX",
+            "status": "publish",
+            "categories": [
+                "corporate-gift-packaging",
+                "gift-paper-boxes",
+                "lid-and-base-boxes",
+                "magnetic-closure-boxes",
+                "rigid-boxes"
+            ]
+        },
+        "custom-rigid-gift-box-with-matching-paper-bag": {
+            "title": "Custom Rigid Gift Box with Matching Paper Bag",
+            "status": "publish",
+            "categories": [
+                "corporate-gift-packaging",
+                "gift-paper-boxes",
+                "packaging-accessories",
+                "paper-bags-with-logo",
+                "rigid-boxes"
+            ]
+        },
+        "custom-rigid-gift-box-with-ribbon-closure": {
+            "title": "Custom Rigid Gift Box with Ribbon Closure",
+            "status": "publish",
+            "categories": [
+                "corporate-gift-packaging",
+                "gift-paper-boxes",
+                "rigid-boxes"
+            ]
+        },
+        "custom-rigid-square-gift-box-with-foil-logo": {
+            "title": "Custom Rigid Square Gift Box with Foil Logo",
+            "status": "publish",
+            "categories": [
+                "corporate-gift-packaging",
+                "custom-printed-paper-boxes",
+                "gift-paper-boxes",
+                "lid-and-base-boxes",
+                "rigid-boxes"
+            ]
+        },
+        "custom-round-jar-drawer-box": {
+            "title": "Custom Round Jar Drawer Box",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "drawer-boxes",
+                "skincare-packaging-boxes"
+            ]
+        },
+        "custom-shoe-packaging-box": {
+            "title": "CUSTOM SHOE PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "fashion-sportswear-packaging",
+                "lid-and-base-boxes"
+            ]
+        },
+        "custom-single-wine-bottle-gift-box": {
+            "title": "CUSTOM SINGLE WINE BOTTLE GIFT BOX",
+            "status": "publish",
+            "categories": [
+                "gift-paper-boxes",
+                "rigid-boxes",
+                "wine-premium-drink-packaging"
+            ]
+        },
+        "custom-skincare-gift-box-with-insert": {
+            "title": "CUSTOM SKINCARE GIFT BOX WITH INSERT",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "lid-and-base-boxes",
+                "skincare-packaging-boxes"
+            ]
+        },
+        "custom-skincare-jar-packaging-box-with-insert": {
+            "title": "Custom Skincare Jar Packaging Box with Insert",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "skincare-packaging-boxes"
+            ]
+        },
+        "custom-sports-shoe-packaging-box": {
+            "title": "CUSTOM SPORTS SHOE PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "lid-and-base-boxes",
+                "sports-packaging-boxes"
+            ]
+        },
+        "custom-sports-underwear-packaging-box": {
+            "title": "CUSTOM SPORTS UNDERWEAR PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "folding-carton-boxes",
+                "sports-packaging-boxes"
+            ]
+        },
+        "custom-sportswear-packaging-box": {
+            "title": "CUSTOM SPORTSWEAR PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "custom-paper-boxes"
+            ]
+        },
+        "custom-stationery-packaging-box": {
+            "title": "CUSTOM STATIONERY PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "back-to-school-stationery-packaging",
+                "custom-printed-paper-boxes"
+            ]
+        },
+        "custom-supplement-drawer-packaging-box": {
+            "title": "CUSTOM SUPPLEMENT DRAWER PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "drawer-boxes",
+                "supplement-packaging-boxes"
+            ]
+        },
+        "custom-t-shirt-packaging-box": {
+            "title": "CUSTOM T-SHIRT PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "fashion-sportswear-packaging",
+                "lid-and-base-boxes"
+            ]
+        },
+        "custom-tablet-packaging-box": {
+            "title": "CUSTOM TABLET PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "folding-carton-boxes",
+                "supplement-packaging-boxes"
+            ]
+        },
+        "custom-tea-gift-box-with-window": {
+            "title": "Custom Tea Gift Box with Window",
+            "status": "publish",
+            "categories": [
+                "food-paper-boxes",
+                "gift-paper-boxes"
+            ]
+        },
+        "custom-thermos-bottle-packaging-box": {
+            "title": "CUSTOM THERMOS BOTTLE PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "home-lifestyle-packaging"
+            ]
+        },
+        "custom-tumbler-packaging-box-with-insert": {
+            "title": "Custom Tumbler Packaging Box with Insert",
+            "status": "publish",
+            "categories": [
+                "custom-paper-boxes"
+            ]
+        },
+        "custom-vial-packaging-box": {
+            "title": "CUSTOM VIAL PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "folding-carton-boxes",
+                "pharmaceutical-packaging-boxes"
+            ]
+        },
+        "custom-wallet-drawer-box": {
+            "title": "Custom Wallet Drawer Box",
+            "status": "publish",
+            "categories": [
+                "drawer-boxes"
+            ]
+        },
+        "custom-wallet-packaging-box": {
+            "title": "CUSTOM WALLET PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "fashion-sportswear-packaging",
+                "lid-and-base-boxes"
+            ]
+        },
+        "custom-watch-box-with-drawer": {
+            "title": "Custom Watch Box with Drawer",
+            "status": "publish",
+            "categories": [
+                "custom-printed-paper-boxes",
+                "drawer-boxes",
+                "jewelry-paper-boxes",
+                "rigid-boxes"
+            ]
+        },
+        "custom-watch-box-with-pillow-insert": {
+            "title": "Custom Watch Box with Pillow Insert",
+            "status": "publish",
+            "categories": [
+                "jewelry-paper-boxes",
+                "lid-and-base-boxes",
+                "rigid-boxes"
+            ]
+        },
+        "custom-wine-bottle-gift-box-with-paper-bag": {
+            "title": "CUSTOM WINE BOTTLE GIFT BOX WITH PAPER BAG",
+            "status": "publish",
+            "categories": [
+                "gift-paper-boxes",
+                "packaging-accessories",
+                "paper-bags-with-logo",
+                "wine-premium-drink-packaging"
+            ]
+        },
+        "custom-wine-bottle-packaging-box": {
+            "title": "CUSTOM WINE BOTTLE PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "gift-paper-boxes",
+                "lid-and-base-boxes",
+                "rigid-boxes",
+                "wine-premium-drink-packaging"
+            ]
+        },
+        "custom-wine-drawer-box-with-insert": {
+            "title": "Custom Wine Drawer Box with Insert",
+            "status": "publish",
+            "categories": [
+                "drawer-boxes",
+                "gift-paper-boxes"
+            ]
+        },
+        "custom-wine-gift-box-with-accessories": {
+            "title": "Custom Wine Gift Box with Accessories",
+            "status": "publish",
+            "categories": [
+                "gift-paper-boxes",
+                "packaging-accessories"
+            ]
+        },
+        "kraft-corrugated-mailer-box": {
+            "title": "KRAFT CORRUGATED MAILER BOX",
+            "status": "draft",
+            "categories": [
+                "corrugated-mailer-boxes"
+            ]
+        },
+        "luxury-wine-bottle-packaging-boxes": {
+            "title": "Luxury Wine Bottle Packaging Boxes",
+            "status": "publish",
+            "categories": [
+                "gift-paper-boxes",
+                "lid-and-base-boxes",
+                "rigid-boxes"
+            ]
+        },
+        "premium-pickleball-set-rigid-paper-box": {
+            "title": "PREMIUM PICKLEBALL SET RIGID PAPER BOX",
+            "status": "publish",
+            "categories": [
+                "rigid-boxes",
+                "sports-packaging-boxes"
+            ]
+        }
+    }
+}
