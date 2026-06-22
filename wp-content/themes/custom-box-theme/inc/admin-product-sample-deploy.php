@@ -907,13 +907,22 @@ function custom_box_product_sample_deploy_page() {
 
 		<hr>
 
+		<?php
+		$latest_batch_names = array_map(
+			static function ( $batch ) {
+				return isset( $batch['name'] ) ? $batch['name'] : '';
+			},
+			custom_box_product_sample_deploy_selected_batches( 'latest' )
+		);
+		$latest_batch_names = array_filter( $latest_batch_names );
+		?>
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 			<input type="hidden" name="action" value="custom_box_product_sample_deploy">
 			<input type="hidden" name="reset" value="1">
 			<p>
 				<label>
 					<input type="radio" name="deploy_scope" value="latest" checked>
-					Latest batch only (Bird Nest + Kraft Mailer)
+					Latest batch only<?php echo $latest_batch_names ? ' (' . esc_html( implode( ' + ', $latest_batch_names ) ) . ')' : ''; ?>
 				</label>
 			</p>
 			<p>
