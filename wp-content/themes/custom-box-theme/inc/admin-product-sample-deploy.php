@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-15-bird-nest-mailer-packaging' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-22-candle-packaging' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -589,6 +589,16 @@ function custom_box_product_sample_deploy_batches(): array {
 			'scripts'   => array(
 				'tools/import-kraft-corrugated-mailer-product.php',
 				'tools/verify-kraft-corrugated-mailer-product.php',
+			),
+		),
+		array(
+			'name'      => 'Candle Packaging products',
+			'marker'    => 'product-samples-candle-packaging',
+			'expected'  => 3,
+			'min_words' => 1500,
+			'scripts'   => array(
+				'tools/import-candle-packaging-products.php',
+				'tools/verify-candle-packaging-products.php',
 			),
 		),
 	);

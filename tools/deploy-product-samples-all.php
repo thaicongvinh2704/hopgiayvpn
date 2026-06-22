@@ -191,6 +191,16 @@ $batches = array(
 			'tools/verify-kraft-corrugated-mailer-product.php',
 		),
 	),
+	array(
+		'name'      => 'Candle Packaging products',
+		'marker'    => 'product-samples-candle-packaging',
+		'expected'  => 3,
+		'min_words' => 1500,
+		'scripts'   => array(
+			'tools/import-candle-packaging-products.php',
+			'tools/verify-candle-packaging-products.php',
+		),
+	),
 );
 
 foreach ( $batches as $batch ) {

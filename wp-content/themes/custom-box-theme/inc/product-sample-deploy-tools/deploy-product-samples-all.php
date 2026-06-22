@@ -162,6 +162,45 @@ $batches = array(
 			'tools/verify-sports-packaging-products.php',
 		),
 	),
+	array(
+		'name'      => 'Paper Egg Packaging product',
+		'marker'    => 'paper-egg-packaging-product',
+		'expected'  => 1,
+		'min_words' => 1500,
+		'scripts'   => array(
+			'tools/import-paper-egg-packaging-product.php',
+		),
+	),
+	array(
+		'name'      => 'Bird Nest Packaging products',
+		'marker'    => 'product-samples-bird-nest-packaging',
+		'expected'  => 4,
+		'min_words' => 900,
+		'scripts'   => array(
+			'tools/import-bird-nest-packaging-products.php',
+			'tools/verify-bird-nest-packaging-products.php',
+		),
+	),
+	array(
+		'name'      => 'Kraft Corrugated Mailer product',
+		'marker'    => 'product-samples-kraft-corrugated-mailer',
+		'expected'  => 1,
+		'min_words' => 900,
+		'scripts'   => array(
+			'tools/import-kraft-corrugated-mailer-product.php',
+			'tools/verify-kraft-corrugated-mailer-product.php',
+		),
+	),
+	array(
+		'name'      => 'Candle Packaging products',
+		'marker'    => 'product-samples-candle-packaging',
+		'expected'  => 3,
+		'min_words' => 1500,
+		'scripts'   => array(
+			'tools/import-candle-packaging-products.php',
+			'tools/verify-candle-packaging-products.php',
+		),
+	),
 );
 
 foreach ( $batches as $batch ) {

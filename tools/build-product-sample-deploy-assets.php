@@ -17,6 +17,8 @@ $source_files = array(
 	$root . '/tools/verify-fashion-sportswear-products.php',
 	$root . '/tools/import-sports-packaging-products.php',
 	$root . '/tools/verify-sports-packaging-products.php',
+	$root . '/tools/import-candle-packaging-products.php',
+	$root . '/tools/verify-candle-packaging-products.php',
 );
 
 $asset_root    = $root . '/wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/root';
@@ -145,6 +147,8 @@ $tool_files = array(
 	$root . '/tools/import-sports-packaging-products.php',
 	$root . '/tools/verify-sports-packaging-products.php',
 	$root . '/tools/deploy-product-samples-all.php',
+	$root . '/tools/import-candle-packaging-products.php',
+	$root . '/tools/verify-candle-packaging-products.php',
 );
 
 foreach ( $tool_files as $tool_file ) {
