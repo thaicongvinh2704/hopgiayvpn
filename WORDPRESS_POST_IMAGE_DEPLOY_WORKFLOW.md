@@ -37,6 +37,25 @@ The theme migration code should:
 - Keep the post as draft.
 - Show an admin notice if any image is missing.
 
+## Required Implementation Pattern
+
+The deployable sync must live in the active theme, not only in a CLI tool.
+
+For each new post import:
+
+- Add a post sync file under `wp-content/themes/custom-box-theme/inc/`.
+- Hook the sync with `admin_init`, guarded by `current_user_can('manage_options')`.
+- Add an admin notice with `admin_notices` for missing images, missing slots, or missing draft post.
+- Include the new `inc/...-post-sync.php` file in `wp-content/themes/custom-box-theme/functions.php`.
+- Keep the sync idempotent by using stable markers before inserted figures.
+- Find the post by slug, with title fallback when useful.
+- Find attachments by filename base, not attachment ID.
+- Preserve `publish` and `private` statuses; only force `draft` for unpublished drafts/pending posts.
+- Update Rank Math fields, excerpt, category, tags, featured image, and inline figures.
+- Commit and push the theme sync file plus the `functions.php` include.
+
+CLI scripts in `tools/` are optional helpers only. They can be used for local verification or one-off manual repair, but they do not run on hosting after a normal pull deploy unless the hosting process explicitly calls them. A post import is not complete if the only new code is under `tools/`.
+
 ## Filename Rule
 
 The uploaded image extension can be different, such as `.png` locally and `.webp` on hosting, but the filename base should stay the same.
@@ -96,9 +115,20 @@ Images inserted into post content should use this format:
 ```text
 Local draft/content ready
 -> Upload images to live Media Library
--> Deploy theme code
+-> Add theme post-sync file and include it in functions.php
+-> Deploy or pull theme code on hosting
 -> Open live WP admin once
 -> Code syncs images + metadata + post content
 -> Review draft
 -> Publish manually
 ```
+
+## Pre-Push Checklist
+
+Before pushing a post/image import:
+
+- `php -l` passes for the new theme sync file.
+- `php -l` passes for `wp-content/themes/custom-box-theme/functions.php`.
+- `git diff --cached --name-only` includes the theme sync file and `functions.php` include.
+- Local verification confirms featured image, inline figure count, zero remaining `IMAGE_SLOT_*`, Rank Math metadata, category, and tags.
+- The commit does not rely on a `tools/` script as the only deploy mechanism.
