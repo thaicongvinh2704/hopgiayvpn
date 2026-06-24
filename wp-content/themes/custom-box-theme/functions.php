@@ -27,6 +27,7 @@ $custom_box_inc_files = array(
     'inc/paper-box-durability-post-sync.php',
     'inc/logo-printing-post-sync.php',
     'inc/cardboard-wine-cartons-materials-uses-post-sync.php',
+    'inc/artwork-printed-paper-boxes-post-sync.php',
     'inc/obsolete-packaging-materials-page.php',
     'inc/supplier-audit-post-sync.php',
     'inc/admin-category-fields.php',
