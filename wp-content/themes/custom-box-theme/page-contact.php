@@ -14,7 +14,7 @@ $email = 'sales.vpn@hopgiayvpn.com';
 $sales_email = 'huy.pq@hopgiayvpn.com';
 $factory_name = 'VPN Paper Box Factory';
 $factory_address = '1032 An Phu Tay, Hamlet 4, Hung Long Commune, Binh Chanh District, Ho Chi Minh City, Vietnam';
-$office_address = '20 Street No. 2, Binh Tri Dong B Ward, Binh Tan District, Ho Chi Minh City, Vietnam';
+$office_address = $factory_address;
 $factory_map_url = 'https://maps.app.goo.gl/Z68geWnrTmx6kaCg6';
 $map_embed_url = 'https://maps.google.com/maps?cid=6310512854642764978&z=17&output=embed';
 ?>
@@ -63,7 +63,7 @@ $map_embed_url = 'https://maps.google.com/maps?cid=6310512854642764978&z=17&outp
 
             <a class="contact-quick-card" href="<?php echo esc_url($factory_map_url); ?>" target="_blank" rel="noopener">
                 <i class="fas fa-location-dot"></i>
-                <span>Factory Office</span>
+                <span>Office &amp; Factory</span>
                 <strong><?php echo esc_html($factory_name); ?></strong>
                 <em>Open in Google Maps</em>
             </a>
@@ -111,13 +111,9 @@ $map_embed_url = 'https://maps.google.com/maps?cid=6310512854642764978&z=17&outp
                 <h3><?php echo esc_html($factory_name); ?></h3>
                 <div class="contact-address-list">
                     <div class="contact-address-item">
-                        <strong>Factory</strong>
+                        <strong>Office &amp; Factory</strong>
                         <p><?php echo esc_html($factory_address); ?></p>
-                        <a class="btn-outline" href="<?php echo esc_url($factory_map_url); ?>" target="_blank" rel="noopener">Open Factory Map</a>
-                    </div>
-                    <div class="contact-address-item">
-                        <strong>Office</strong>
-                        <p><?php echo esc_html($office_address); ?></p>
+                        <a class="btn-outline" href="<?php echo esc_url($factory_map_url); ?>" target="_blank" rel="noopener">Open Google Map</a>
                     </div>
                 </div>
             </div>
