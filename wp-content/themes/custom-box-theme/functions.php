@@ -21,6 +21,7 @@ $custom_box_inc_files = array(
     'inc/cmyk-vs-pantone-paper-box-printing-post-sync.php',
     'inc/matte-vs-gloss-lamination-post-sync.php',
     'inc/foil-stamping-embossing-post-sync.php',
+    'inc/paper-box-dieline-post-sync.php',
     'inc/paper-material-selection-post-sync.php',
     'inc/paper-thickness-post-sync.php',
     'inc/paper-box-durability-post-sync.php',
