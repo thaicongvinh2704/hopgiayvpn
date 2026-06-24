@@ -11,6 +11,10 @@ $fallback_image = get_template_directory_uri() . '/assets/images/Cardboard-Packa
 $is_blog_page_template = is_page();
 $blog_paged = max(1, (int) get_query_var('paged'), (int) get_query_var('page'));
 $blog_query = $GLOBALS['wp_query'];
+$blog_hero_label = __('VPN Packaging Insights', 'custom-box-theme');
+$blog_hero_title = __('Packaging Insights & Custom Box Guides', 'custom-box-theme');
+$blog_hero_description = __('Explore practical guides on custom packaging, paper boxes, printing methods, materials, finishing options, and brand-ready production for international buyers.', 'custom-box-theme');
+$blog_breadcrumb_current = __('Blog', 'custom-box-theme');
 
 if ($is_blog_page_template) {
     $blog_query = new WP_Query(array(
@@ -20,6 +24,23 @@ if ($is_blog_page_template) {
         'ignore_sticky_posts' => false,
     ));
 }
+
+if (is_category()) {
+    $current_category = get_queried_object();
+
+    if ($current_category instanceof WP_Term) {
+        $blog_hero_label = __('Packaging Topic', 'custom-box-theme');
+        $blog_hero_title = $current_category->name;
+        $blog_breadcrumb_current = $current_category->name;
+        $blog_hero_description = $current_category->description
+            ? $current_category->description
+            : sprintf(
+                /* translators: %s: category name. */
+                __('Explore VPN Packaging guides filed under %s, including practical notes on materials, structure, printing, finishing, and production-ready custom paper boxes.', 'custom-box-theme'),
+                $current_category->name
+            );
+    }
+}
 ?>
 
 <main class="blog-page">
@@ -27,13 +48,16 @@ if ($is_blog_page_template) {
         <div class="container">
             <div class="blog-breadcrumb">
                 <a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'custom-box-theme'); ?></a>
-                <span><?php esc_html_e('Blog', 'custom-box-theme'); ?></span>
+                <?php if (!is_home() && !is_page()) : ?>
+                    <a href="<?php echo esc_url($blog_url); ?>"><?php esc_html_e('Blog', 'custom-box-theme'); ?></a>
+                <?php endif; ?>
+                <span><?php echo esc_html($blog_breadcrumb_current); ?></span>
             </div>
 
             <div class="blog-hero-content">
-                <span class="blog-eyebrow"><?php esc_html_e('VPN Packaging Insights', 'custom-box-theme'); ?></span>
-                <h1><?php esc_html_e('Packaging Insights & Custom Box Guides', 'custom-box-theme'); ?></h1>
-                <p><?php esc_html_e('Explore practical guides on custom packaging, paper boxes, printing methods, materials, finishing options, and brand-ready production for international buyers.', 'custom-box-theme'); ?></p>
+                <span class="blog-eyebrow"><?php echo esc_html($blog_hero_label); ?></span>
+                <h1><?php echo esc_html($blog_hero_title); ?></h1>
+                <p><?php echo esc_html($blog_hero_description); ?></p>
             </div>
         </div>
     </section>
