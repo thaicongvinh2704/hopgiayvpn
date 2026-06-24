@@ -601,6 +601,16 @@ function custom_box_product_sample_deploy_batches(): array {
 				'tools/verify-candle-packaging-products.php',
 			),
 		),
+		array(
+			'name'      => 'Latest June 2026 product image samples',
+			'marker'    => 'product-samples-latest-20260624',
+			'expected'  => 7,
+			'min_words' => 1500,
+			'scripts'   => array(
+				'tools/import-latest-product-images.php',
+				'tools/verify-latest-product-images.php',
+			),
+		),
 	);
 }
 
