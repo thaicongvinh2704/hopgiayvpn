@@ -19,6 +19,8 @@ $source_files = array(
 	$root . '/tools/verify-sports-packaging-products.php',
 	$root . '/tools/import-candle-packaging-products.php',
 	$root . '/tools/verify-candle-packaging-products.php',
+	$root . '/tools/import-jewelry-paper-box-products.php',
+	$root . '/tools/verify-jewelry-paper-box-products.php',
 );
 
 $asset_root    = $root . '/wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/root';
@@ -130,6 +132,25 @@ $sports_filenames = array(
 	'custom-sports-underwear-packaging-box-front-6.webp',
 );
 
+$jewelry_filenames = array(
+	'custom-bracelet-packaging-box-pillow-insert-closed-front-angle.webp',
+	'custom-bracelet-packaging-box-pillow-insert-close-up-detail.webp',
+	'custom-bracelet-packaging-box-pillow-insert-open-display.webp',
+	'custom-bracelet-packaging-box-pillow-insert-side-angle.webp',
+	'custom-earring-box-foam-insert-closed-front-angle.webp',
+	'custom-earring-box-foam-insert-close-up-detail.webp',
+	'custom-earring-box-foam-insert-open-top-front.webp',
+	'custom-earring-box-foam-insert-three-quarter-side-angle.webp',
+	'custom-necklace-paper-box-logo-closed-front-angle.webp',
+	'custom-necklace-paper-box-logo-close-up-detail.webp',
+	'custom-necklace-paper-box-logo-open-necklace-display.webp',
+	'custom-necklace-paper-box-logo-three-quarter-angle.webp',
+	'custom-ring-box-velvet-insert-closed-front-angle.webp',
+	'custom-ring-box-velvet-insert-close-up-detail.webp',
+	'custom-ring-box-velvet-insert-open-ring-display.webp',
+	'custom-ring-box-velvet-insert-side-perspective.webp',
+);
+
 $sports_copied = 0;
 foreach ( $sports_filenames as $filename ) {
 	$source = $root . '/wp-content/uploads/2026/06/' . $filename;
@@ -143,12 +164,27 @@ foreach ( $sports_filenames as $filename ) {
 	++$sports_copied;
 }
 
+$jewelry_copied = 0;
+foreach ( $jewelry_filenames as $filename ) {
+	$source = $root . '/wp-content/uploads/2026/06/' . $filename;
+	$target = $sports_uploads . '/' . $filename;
+
+	if ( ! file_exists( $source ) || ! copy( $source, $target ) ) {
+		fwrite( STDERR, "Unable to bundle jewelry image: {$filename}\n" );
+		exit( 1 );
+	}
+
+	++$jewelry_copied;
+}
+
 $tool_files = array(
 	$root . '/tools/import-sports-packaging-products.php',
 	$root . '/tools/verify-sports-packaging-products.php',
 	$root . '/tools/deploy-product-samples-all.php',
 	$root . '/tools/import-candle-packaging-products.php',
 	$root . '/tools/verify-candle-packaging-products.php',
+	$root . '/tools/import-jewelry-paper-box-products.php',
+	$root . '/tools/verify-jewelry-paper-box-products.php',
 );
 
 foreach ( $tool_files as $tool_file ) {
@@ -161,4 +197,5 @@ foreach ( $tool_files as $tool_file ) {
 echo "Root assets: product-samples-10.md\n";
 echo "Upload assets copied: {$copied}\n";
 echo "Sports upload assets copied: {$sports_copied}\n";
+echo "Jewelry upload assets copied: {$jewelry_copied}\n";
 echo 'Sports deploy tools bundled: ' . count( $tool_files ) . "\n";

@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-22-candle-packaging' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-26-jewelry-paper-boxes' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -611,6 +611,16 @@ function custom_box_product_sample_deploy_batches(): array {
 				'tools/verify-latest-product-images.php',
 			),
 		),
+		array(
+			'name'      => 'Jewelry Paper Box products',
+			'marker'    => 'product-samples-jewelry-paper-boxes',
+			'expected'  => 4,
+			'min_words' => 1500,
+			'scripts'   => array(
+				'tools/import-jewelry-paper-box-products.php',
+				'tools/verify-jewelry-paper-box-products.php',
+			),
+		),
 	);
 }
 
@@ -621,7 +631,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 		return $batches;
 	}
 
-	return array_slice( $batches, -2 );
+	return array_slice( $batches, -1 );
 }
 
 function custom_box_product_sample_deploy_run_next_step( array &$state ): void {

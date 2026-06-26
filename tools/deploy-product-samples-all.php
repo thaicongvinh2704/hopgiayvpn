@@ -211,6 +211,16 @@ $batches = array(
 			'tools/verify-latest-product-images.php',
 		),
 	),
+	array(
+		'name'      => 'Jewelry Paper Box products',
+		'marker'    => 'product-samples-jewelry-paper-boxes',
+		'expected'  => 4,
+		'min_words' => 1500,
+		'scripts'   => array(
+			'tools/import-jewelry-paper-box-products.php',
+			'tools/verify-jewelry-paper-box-products.php',
+		),
+	),
 );
 
 foreach ( $batches as $batch ) {
