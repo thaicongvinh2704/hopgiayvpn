@@ -16,6 +16,9 @@ $blog_hero_title = __('Packaging Insights & Custom Box Guides', 'custom-box-them
 $blog_hero_description = __('Explore practical guides on custom packaging, paper boxes, printing methods, materials, finishing options, and brand-ready production for international buyers.', 'custom-box-theme');
 $blog_breadcrumb_current = __('Blog', 'custom-box-theme');
 
+$custom_box_author_fallback_name = __('VPN Packaging Editorial Team', 'custom-box-theme');
+$custom_box_author_fallback_bio = __('VPN Packaging Editorial Team shares practical insights about custom paper boxes, rigid boxes, folding cartons, paper bags, printing finishes, materials, and B2B packaging solutions. Our content is developed based on real production experience and customer packaging projects from VPN Packaging Factory in Vietnam.', 'custom-box-theme');
+
 if ($is_blog_page_template) {
     $blog_query = new WP_Query(array(
         'post_type'           => 'post',
@@ -40,6 +43,26 @@ if (is_category()) {
                 $current_category->name
             );
     }
+}
+
+if (is_author()) {
+    $author = get_queried_object();
+    $author_name = $author instanceof WP_User ? trim((string) $author->display_name) : '';
+    $author_bio = $author instanceof WP_User ? trim((string) get_the_author_meta('description', $author->ID)) : '';
+    $generic_author_names = array('', 'admin', 'administrator');
+
+    if (in_array(strtolower($author_name), $generic_author_names, true)) {
+        $author_name = $custom_box_author_fallback_name;
+    }
+
+    if ('' === $author_bio) {
+        $author_bio = $custom_box_author_fallback_bio;
+    }
+
+    $blog_hero_label = __('Packaging Author', 'custom-box-theme');
+    $blog_hero_title = $author_name;
+    $blog_breadcrumb_current = $author_name;
+    $blog_hero_description = $author_bio;
 }
 ?>
 
