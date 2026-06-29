@@ -27,6 +27,7 @@ $custom_box_inc_files = array(
     'inc/paper-box-durability-post-sync.php',
     'inc/paper-box-structure-selection-post-sync.php',
     'inc/paper-box-quality-control-checklist-post-sync.php',
+    'inc/common-paper-box-defects-post-sync.php',
     'inc/how-inserts-protect-products-paper-boxes-post-sync.php',
     'inc/reduce-paper-box-damage-shipping-post-sync.php',
     'inc/logo-printing-post-sync.php',
