@@ -221,6 +221,16 @@ $batches = array(
 			'tools/verify-jewelry-paper-box-products.php',
 		),
 	),
+	array(
+		'name'      => 'Skincare Packaging products',
+		'marker'    => 'product-samples-skincare-packaging',
+		'expected'  => 10,
+		'min_words' => 1500,
+		'scripts'   => array(
+			'tools/import-skincare-packaging-products.php',
+			'tools/verify-skincare-packaging-products.php',
+		),
+	),
 );
 
 foreach ( $batches as $batch ) {

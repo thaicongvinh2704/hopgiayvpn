@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-06-26-jewelry-paper-boxes' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-07-01-skincare-packaging' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -619,6 +619,16 @@ function custom_box_product_sample_deploy_batches(): array {
 			'scripts'   => array(
 				'tools/import-jewelry-paper-box-products.php',
 				'tools/verify-jewelry-paper-box-products.php',
+			),
+		),
+		array(
+			'name'      => 'Skincare Packaging products',
+			'marker'    => 'product-samples-skincare-packaging',
+			'expected'  => 10,
+			'min_words' => 1500,
+			'scripts'   => array(
+				'tools/import-skincare-packaging-products.php',
+				'tools/verify-skincare-packaging-products.php',
 			),
 		),
 	);
