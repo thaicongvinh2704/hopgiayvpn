@@ -34,6 +34,7 @@ $custom_box_inc_files = array(
     'inc/cardboard-wine-cartons-materials-uses-post-sync.php',
     'inc/artwork-printed-paper-boxes-post-sync.php',
     'inc/printed-packaging-sample-check-post-sync.php',
+    'inc/what-affects-paper-packaging-lead-time-post-sync.php',
     'inc/obsolete-packaging-materials-page.php',
     'inc/supplier-audit-post-sync.php',
     'inc/admin-category-fields.php',
