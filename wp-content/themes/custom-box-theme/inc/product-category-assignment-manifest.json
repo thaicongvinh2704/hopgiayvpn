@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "generated_at": "2026-06-19T03:47:35+00:00",
+    "generated_at": "2026-07-02T01:35:18+00:00",
     "source_url": "http://localhost/website-backup/",
     "taxonomy": "product_cat",
     "mode": "strict_manifest_product_categories",
@@ -175,6 +175,13 @@
                 "custom-paper-boxes"
             ]
         },
+        "custom-bracelet-packaging-box-with-pillow-insert": {
+            "title": "CUSTOM BRACELET PACKAGING BOX WITH PILLOW INSERT",
+            "status": "publish",
+            "categories": [
+                "jewelry-paper-boxes"
+            ]
+        },
         "custom-candle-jar-box-with-insert": {
             "title": "Custom Candle Jar Box with Insert",
             "status": "publish",
@@ -183,12 +190,43 @@
                 "folding-carton-boxes"
             ]
         },
+        "custom-candle-paper-tube-box": {
+            "title": "CUSTOM CANDLE PAPER TUBE BOX",
+            "status": "publish",
+            "categories": [
+                "paper-tube-packaging"
+            ]
+        },
+        "custom-candle-shipping-mailer-box-with-corrugated-insert": {
+            "title": "CUSTOM CANDLE SHIPPING MAILER BOX WITH CORRUGATED INSERT",
+            "status": "publish",
+            "categories": [
+                "candle-packaging-boxes",
+                "corrugated-mailer-boxes"
+            ]
+        },
         "custom-charging-cable-packaging-box": {
             "title": "CUSTOM CHARGING CABLE PACKAGING BOX",
             "status": "publish",
             "categories": [
                 "electronics-accessories-packaging",
                 "folding-carton-boxes"
+            ]
+        },
+        "custom-cleanser-packaging-box": {
+            "title": "CUSTOM CLEANSER PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "skincare-packaging-boxes"
+            ]
+        },
+        "custom-coffee-paper-tube-packaging": {
+            "title": "CUSTOM COFFEE PAPER TUBE PACKAGING",
+            "status": "publish",
+            "categories": [
+                "paper-tube-packaging"
             ]
         },
         "custom-colored-pencil-packaging-box": {
@@ -251,6 +289,15 @@
                 "folding-carton-boxes"
             ]
         },
+        "custom-cream-jar-packaging-box": {
+            "title": "CUSTOM CREAM JAR PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "skincare-packaging-boxes"
+            ]
+        },
         "custom-cylindrical-paper-tube-box": {
             "title": "Custom Cylindrical Paper Tube Box",
             "status": "publish",
@@ -285,6 +332,13 @@
                 "gift-paper-boxes"
             ]
         },
+        "custom-earring-box-with-foam-insert": {
+            "title": "CUSTOM EARRING BOX WITH FOAM INSERT",
+            "status": "publish",
+            "categories": [
+                "jewelry-paper-boxes"
+            ]
+        },
         "custom-essential-oil-packaging-box-with-insert": {
             "title": "Custom Essential Oil Packaging Box with Insert",
             "status": "publish",
@@ -293,6 +347,31 @@
                 "cosmetic-paper-boxes",
                 "custom-printed-paper-boxes",
                 "folding-carton-boxes"
+            ]
+        },
+        "custom-eye-cream-packaging-box": {
+            "title": "CUSTOM EYE CREAM PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "skincare-packaging-boxes"
+            ]
+        },
+        "custom-facial-mask-packaging-box": {
+            "title": "CUSTOM FACIAL MASK PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "skincare-packaging-boxes"
+            ]
+        },
+        "custom-fitness-accessory-gift-box": {
+            "title": "CUSTOM FITNESS ACCESSORY GIFT BOX",
+            "status": "publish",
+            "categories": [
+                "sports-packaging-boxes"
             ]
         },
         "custom-flat-rigid-gift-box-with-ribbon": {
@@ -333,6 +412,13 @@
                 "folding-carton-boxes",
                 "gift-paper-boxes",
                 "packaging-accessories"
+            ]
+        },
+        "custom-golf-ball-packaging-box": {
+            "title": "CUSTOM GOLF BALL PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "sports-packaging-boxes"
             ]
         },
         "custom-green-bird-nest-cabinet-gift-box": {
@@ -406,6 +492,24 @@
                 "bakery-packaging-boxes",
                 "drawer-boxes",
                 "food-paper-boxes"
+            ]
+        },
+        "custom-lip-balm-packaging-box": {
+            "title": "CUSTOM LIP BALM PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "skincare-packaging-boxes"
+            ]
+        },
+        "custom-lotion-bottle-packaging-box": {
+            "title": "CUSTOM LOTION BOTTLE PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "skincare-packaging-boxes"
             ]
         },
         "custom-luxury-gift-box-with-paper-bag": {
@@ -546,6 +650,13 @@
                 "food-paper-boxes",
                 "home-lifestyle-packaging",
                 "premium-food-beverage-packaging"
+            ]
+        },
+        "custom-necklace-paper-box-with-logo": {
+            "title": "CUSTOM NECKLACE PAPER BOX WITH LOGO",
+            "status": "publish",
+            "categories": [
+                "jewelry-paper-boxes"
             ]
         },
         "custom-nested-kraft-gift-boxes-with-ribbon": {
@@ -711,6 +822,13 @@
                 "paper-bags-with-logo"
             ]
         },
+        "custom-resistance-band-packaging-box": {
+            "title": "CUSTOM RESISTANCE BAND PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "sports-packaging-boxes"
+            ]
+        },
         "custom-rigid-gift-box": {
             "title": "CUSTOM RIGID GIFT BOX",
             "status": "publish",
@@ -753,6 +871,13 @@
                 "rigid-boxes"
             ]
         },
+        "custom-ring-box-with-velvet-insert": {
+            "title": "CUSTOM RING BOX WITH VELVET INSERT",
+            "status": "publish",
+            "categories": [
+                "jewelry-paper-boxes"
+            ]
+        },
         "custom-round-jar-drawer-box": {
             "title": "Custom Round Jar Drawer Box",
             "status": "publish",
@@ -760,6 +885,15 @@
                 "beauty-skincare-packaging",
                 "cosmetic-paper-boxes",
                 "drawer-boxes",
+                "skincare-packaging-boxes"
+            ]
+        },
+        "custom-serum-packaging-box": {
+            "title": "CUSTOM SERUM PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
                 "skincare-packaging-boxes"
             ]
         },
@@ -799,6 +933,15 @@
                 "skincare-packaging-boxes"
             ]
         },
+        "custom-skincare-set-packaging-box": {
+            "title": "CUSTOM SKINCARE SET PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "skincare-packaging-boxes"
+            ]
+        },
         "custom-sports-shoe-packaging-box": {
             "title": "CUSTOM SPORTS SHOE PACKAGING BOX",
             "status": "publish",
@@ -828,6 +971,15 @@
             "categories": [
                 "back-to-school-stationery-packaging",
                 "custom-printed-paper-boxes"
+            ]
+        },
+        "custom-sunscreen-packaging-box": {
+            "title": "CUSTOM SUNSCREEN PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "skincare-packaging-boxes"
             ]
         },
         "custom-supplement-drawer-packaging-box": {
@@ -862,6 +1014,13 @@
                 "gift-paper-boxes"
             ]
         },
+        "custom-tea-paper-tube-packaging": {
+            "title": "CUSTOM TEA PAPER TUBE PACKAGING",
+            "status": "publish",
+            "categories": [
+                "paper-tube-packaging"
+            ]
+        },
         "custom-thermos-bottle-packaging-box": {
             "title": "CUSTOM THERMOS BOTTLE PACKAGING BOX",
             "status": "publish",
@@ -869,11 +1028,27 @@
                 "home-lifestyle-packaging"
             ]
         },
+        "custom-toner-packaging-box": {
+            "title": "CUSTOM TONER PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "skincare-packaging-boxes"
+            ]
+        },
         "custom-tumbler-packaging-box-with-insert": {
             "title": "Custom Tumbler Packaging Box with Insert",
             "status": "publish",
             "categories": [
                 "custom-paper-boxes"
+            ]
+        },
+        "custom-two-piece-candle-gift-box-with-lid-and-base": {
+            "title": "CUSTOM TWO-PIECE CANDLE GIFT BOX WITH LID AND BASE",
+            "status": "publish",
+            "categories": [
+                "candle-packaging-boxes"
             ]
         },
         "custom-vial-packaging-box": {
@@ -918,6 +1093,13 @@
                 "rigid-boxes"
             ]
         },
+        "custom-window-candle-box-for-tumbler-candles": {
+            "title": "CUSTOM WINDOW CANDLE BOX FOR TUMBLER CANDLES",
+            "status": "publish",
+            "categories": [
+                "candle-packaging-boxes"
+            ]
+        },
         "custom-wine-bottle-gift-box-with-paper-bag": {
             "title": "CUSTOM WINE BOTTLE GIFT BOX WITH PAPER BAG",
             "status": "publish",
@@ -952,6 +1134,13 @@
             "categories": [
                 "gift-paper-boxes",
                 "packaging-accessories"
+            ]
+        },
+        "custom-yoga-mat-packaging-box": {
+            "title": "CUSTOM YOGA MAT PACKAGING BOX",
+            "status": "publish",
+            "categories": [
+                "sports-packaging-boxes"
             ]
         },
         "kraft-corrugated-mailer-box": {
