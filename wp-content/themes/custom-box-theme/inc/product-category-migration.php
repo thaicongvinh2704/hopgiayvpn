@@ -196,7 +196,6 @@ function custom_box_category_migration_admin_menu() {
         'custom_box_category_migration_page'
     );
 }
-add_action('admin_menu', 'custom_box_category_migration_admin_menu');
 
 function custom_box_category_migration_get_or_create_term($slug, $name, $create, $parent_id = 0) {
     $term = get_term_by('slug', $slug, 'product_cat');
@@ -422,7 +421,6 @@ function custom_box_category_migration_apply() {
     ), admin_url('tools.php')));
     exit;
 }
-add_action('admin_post_custom_box_category_migration_apply', 'custom_box_category_migration_apply');
 
 function custom_box_category_migration_sync_hierarchy_action() {
     check_admin_referer('custom_box_category_migration_sync_hierarchy');
@@ -445,7 +443,6 @@ function custom_box_category_migration_sync_hierarchy_action() {
     wp_safe_redirect(add_query_arg($args, admin_url('tools.php')));
     exit;
 }
-add_action('admin_post_custom_box_category_migration_sync_hierarchy', 'custom_box_category_migration_sync_hierarchy_action');
 
 function custom_box_category_migration_page() {
     if (!custom_box_category_migration_can_run()) {
@@ -730,4 +727,3 @@ function custom_box_maybe_sync_curated_category_product_assignments() {
 
     update_option('custom_box_curated_category_products_version', $sync_version, false);
 }
-add_action('init', 'custom_box_maybe_sync_curated_category_product_assignments', 100);
