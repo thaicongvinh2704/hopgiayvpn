@@ -231,6 +231,16 @@ $batches = array(
 			'tools/verify-skincare-packaging-products.php',
 		),
 	),
+	array(
+		'name'      => 'Magnetic Closure Box products',
+		'marker'    => 'product-samples-magnetic-closure-boxes',
+		'expected'  => 10,
+		'min_words' => 1500,
+		'scripts'   => array(
+			'tools/import-magnetic-closure-products.php',
+			'tools/verify-magnetic-closure-products.php',
+		),
+	),
 );
 
 foreach ( $batches as $batch ) {

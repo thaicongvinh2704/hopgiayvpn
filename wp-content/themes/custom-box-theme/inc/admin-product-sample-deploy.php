@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-07-01-skincare-packaging' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-07-02-magnetic-closure-boxes' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -631,6 +631,16 @@ function custom_box_product_sample_deploy_batches(): array {
 				'tools/verify-skincare-packaging-products.php',
 			),
 		),
+		array(
+			'name'      => 'Magnetic Closure Box products',
+			'marker'    => 'product-samples-magnetic-closure-boxes',
+			'expected'  => 10,
+			'min_words' => 1500,
+			'scripts'   => array(
+				'tools/import-magnetic-closure-products.php',
+				'tools/verify-magnetic-closure-products.php',
+			),
+		),
 	);
 }
 
@@ -802,14 +812,14 @@ function custom_box_product_sample_deploy_restore_tools() {
 }
 
 function custom_box_product_sample_deploy_restore_assets() {
-	$source_root    = get_template_directory() . '/inc/product-sample-deploy-assets/root';
-	$source_uploads = get_template_directory() . '/inc/product-sample-deploy-assets/uploads/2026/05';
-	$target_uploads = ABSPATH . 'wp-content/uploads/2026/05';
-	$log            = array();
+	$source_root         = get_template_directory() . '/inc/product-sample-deploy-assets/root';
+	$source_uploads_root = get_template_directory() . '/inc/product-sample-deploy-assets/uploads';
+	$target_uploads_root = ABSPATH . 'wp-content/uploads';
+	$log                 = array();
 
 	$log[] = 'Asset restore source root: ' . $source_root;
-	$log[] = 'Asset restore source uploads: ' . $source_uploads;
-	$log[] = 'Asset restore target uploads: ' . $target_uploads;
+	$log[] = 'Asset restore source uploads root: ' . $source_uploads_root;
+	$log[] = 'Asset restore target uploads root: ' . $target_uploads_root;
 
 	if ( is_dir( $source_root ) ) {
 		$root_files = glob( $source_root . '/*' );
@@ -829,31 +839,54 @@ function custom_box_product_sample_deploy_restore_assets() {
 		$log[] = 'Root asset source missing.';
 	}
 
-	if ( is_dir( $source_uploads ) ) {
-		if ( ! is_dir( $target_uploads ) ) {
-			wp_mkdir_p( $target_uploads );
-		}
+	if ( is_dir( $source_uploads_root ) ) {
+		$image_count = 0;
+		$copied      = 0;
+		$failed      = array();
+		$year_dirs   = glob( $source_uploads_root . '/*', GLOB_ONLYDIR );
 
-		$image_files = glob( $source_uploads . '/*' );
-		$log[]       = 'Upload asset count: ' . ( $image_files ? count( $image_files ) : 0 );
-		$log[]       = 'Upload target writable: ' . ( is_dir( $target_uploads ) && wp_is_writable( $target_uploads ) ? 'yes' : 'no' );
+		foreach ( $year_dirs ? $year_dirs : array() as $year_dir ) {
+			$year       = basename( $year_dir );
+			$month_dirs = glob( $year_dir . '/*', GLOB_ONLYDIR );
 
-		if ( $image_files ) {
-			foreach ( $image_files as $file ) {
-				$target = trailingslashit( $target_uploads ) . basename( $file );
-				if ( copy( $file, $target ) ) {
-					$log[] = 'Copied upload asset: ' . basename( $file );
-				} else {
-					$log[] = 'Copy upload asset failed: ' . basename( $file );
+			foreach ( $month_dirs ? $month_dirs : array() as $month_dir ) {
+				$month  = basename( $month_dir );
+				$target = trailingslashit( $target_uploads_root ) . $year . '/' . $month;
+
+				if ( ! is_dir( $target ) ) {
+					wp_mkdir_p( $target );
+				}
+
+				$image_files = glob( $month_dir . '/*' );
+				foreach ( $image_files ? $image_files : array() as $file ) {
+					if ( ! is_file( $file ) ) {
+						continue;
+					}
+
+					++$image_count;
+					$target_file = trailingslashit( $target ) . basename( $file );
+					if ( copy( $file, $target_file ) ) {
+						++$copied;
+					} else {
+						$failed[] = $year . '/' . $month . '/' . basename( $file );
+					}
 				}
 			}
 		}
+
+		$log[] = 'Upload asset count: ' . $image_count;
+		$log[] = 'Upload assets copied: ' . $copied;
+		$log[] = 'Upload target root writable: ' . ( is_dir( $target_uploads_root ) && wp_is_writable( $target_uploads_root ) ? 'yes' : 'no' );
+		if ( $failed ) {
+			$log[] = 'Upload copy failures: ' . implode( ', ', array_slice( $failed, 0, 20 ) );
+		}
 	} else {
-		$log[] = 'Upload asset source missing.';
+		$log[] = 'Upload asset root source missing.';
 	}
 
 	$log[] = 'Required sample data exists after restore: ' . ( file_exists( ABSPATH . 'product-samples-10.md' ) ? 'yes' : 'no' );
 	$log[] = 'Required sample image exists after restore: ' . ( file_exists( ABSPATH . 'wp-content/uploads/2026/05/custom-ampoule-packaging-box-1.webp' ) ? 'yes' : 'no' );
+	$log[] = 'Required magnetic image exists after restore: ' . ( file_exists( ABSPATH . 'wp-content/uploads/2026/07/custom-perfume-magnetic-closure-box-main.webp' ) ? 'yes' : 'no' );
 	$log[] = '';
 
 	return implode( PHP_EOL, $log ) . PHP_EOL;

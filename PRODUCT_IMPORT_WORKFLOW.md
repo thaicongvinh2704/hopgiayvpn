@@ -518,7 +518,7 @@ Important:
 
 - WooCommerce products are database records, so Git cannot deploy products by committing the local database rows.
 - The safe workflow is to commit:
-  - original product images in `wp-content/uploads/2026/05`
+  - original product images in `wp-content/uploads/YYYY/MM` or bundled deploy assets under `wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/uploads/YYYY/MM`
   - product import/migration scripts in `tools/`
   - theme code and workflow files
 - After `git pull` on hosting, run one deploy command:
@@ -537,6 +537,10 @@ Recommended hosting deploy order:
 1. `git pull`
 2. `php tools/deploy-product-samples-all.php`
 3. clear cache if the hosting has page/object cache
+
+For a single latest batch, a dedicated wrapper can be used when available, for example:
+
+- `php tools/deploy-magnetic-closure-products.php`
 
 ### Sports Packaging batch (June 2026)
 
@@ -560,6 +564,38 @@ After `git pull` on hosting, either run:
 or open **Tools > Product Sample Deploy** and run the latest batch. The importer creates missing WordPress media attachments from the bundled theme images before publishing the products.
 
 Do not manually create these products in WooCommerce admin unless the deploy script fails and the issue has been diagnosed.
+
+### Magnetic Closure Boxes batch (July 2026)
+
+The magnetic closure batch imports ten products from 39 bundled original images:
+
+1. Custom Perfume Magnetic Closure Box
+2. Custom Skincare Magnetic Closure Box
+3. Custom Jewelry Magnetic Closure Box
+4. Custom Watch Magnetic Presentation Box
+5. Custom Electronics Magnetic Closure Box
+6. Custom Candle Magnetic Gift Box
+7. Custom Chocolate Magnetic Closure Box
+8. Custom Apparel Magnetic Gift Box
+9. Custom Corporate PR Kit Magnetic Box
+10. Custom Wine Magnetic Gift Box
+
+Files used:
+
+- `tools/import-magnetic-closure-products.php`
+- `tools/verify-magnetic-closure-products.php`
+- `tools/deploy-magnetic-closure-products.php`
+- `wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/uploads/2026/07/`
+
+After `git pull` on hosting, either run:
+
+- `php tools/deploy-magnetic-closure-products.php`
+
+or run the master deploy:
+
+- `php tools/deploy-product-samples-all.php`
+
+or open **Tools > Product Sample Deploy** and run the latest batch. The importer creates missing WordPress media attachments from the bundled theme images before publishing the products. `Custom Skincare Magnetic Closure Box` intentionally uses 3 source images because the source batch does not include a `main` image.
 
 Current batch 1 local verification after rewrite:
 

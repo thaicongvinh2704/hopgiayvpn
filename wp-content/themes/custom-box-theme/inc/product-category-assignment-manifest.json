@@ -1,6 +1,6 @@
 {
     "version": 1,
-    "generated_at": "2026-07-02T01:35:18+00:00",
+    "generated_at": "2026-07-02T04:11:04+00:00",
     "source_url": "http://localhost/website-backup/",
     "taxonomy": "product_cat",
     "mode": "strict_manifest_product_categories",
@@ -152,6 +152,16 @@
                 "drawer-boxes"
             ]
         },
+        "custom-apparel-magnetic-gift-box": {
+            "title": "Custom Apparel Magnetic Gift Box",
+            "status": "publish",
+            "categories": [
+                "fashion-sportswear-packaging",
+                "gift-paper-boxes",
+                "magnetic-closure-boxes",
+                "rigid-boxes"
+            ]
+        },
         "custom-belt-packaging-box": {
             "title": "CUSTOM BELT PACKAGING BOX",
             "status": "publish",
@@ -190,6 +200,16 @@
                 "folding-carton-boxes"
             ]
         },
+        "custom-candle-magnetic-gift-box": {
+            "title": "Custom Candle Magnetic Gift Box",
+            "status": "publish",
+            "categories": [
+                "candle-packaging-boxes",
+                "gift-paper-boxes",
+                "magnetic-closure-boxes",
+                "rigid-boxes"
+            ]
+        },
         "custom-candle-paper-tube-box": {
             "title": "CUSTOM CANDLE PAPER TUBE BOX",
             "status": "publish",
@@ -211,6 +231,18 @@
             "categories": [
                 "electronics-accessories-packaging",
                 "folding-carton-boxes"
+            ]
+        },
+        "custom-chocolate-magnetic-closure-box": {
+            "title": "Custom Chocolate Magnetic Closure Box",
+            "status": "publish",
+            "categories": [
+                "chocolate-gift-boxes",
+                "food-paper-boxes",
+                "gift-paper-boxes",
+                "magnetic-closure-boxes",
+                "premium-food-beverage-packaging",
+                "rigid-boxes"
             ]
         },
         "custom-cleanser-packaging-box": {
@@ -236,6 +268,16 @@
                 "back-to-school-stationery-packaging",
                 "custom-printed-paper-boxes",
                 "folding-carton-boxes"
+            ]
+        },
+        "custom-corporate-pr-kit-magnetic-box": {
+            "title": "Custom Corporate PR Kit Magnetic Box",
+            "status": "publish",
+            "categories": [
+                "corporate-gift-packaging",
+                "gift-paper-boxes",
+                "magnetic-closure-boxes",
+                "rigid-boxes"
             ]
         },
         "custom-corrugated-mailer-box": {
@@ -337,6 +379,15 @@
             "status": "publish",
             "categories": [
                 "jewelry-paper-boxes"
+            ]
+        },
+        "custom-electronics-magnetic-closure-box": {
+            "title": "Custom Electronics Magnetic Closure Box",
+            "status": "publish",
+            "categories": [
+                "electronics-accessories-packaging",
+                "magnetic-closure-boxes",
+                "rigid-boxes"
             ]
         },
         "custom-essential-oil-packaging-box-with-insert": {
@@ -451,6 +502,16 @@
             "categories": [
                 "custom-printed-paper-boxes",
                 "folding-carton-boxes"
+            ]
+        },
+        "custom-jewelry-magnetic-closure-box": {
+            "title": "Custom Jewelry Magnetic Closure Box",
+            "status": "publish",
+            "categories": [
+                "gift-paper-boxes",
+                "jewelry-paper-boxes",
+                "magnetic-closure-boxes",
+                "rigid-boxes"
             ]
         },
         "custom-knee-support-packaging-box": {
@@ -756,6 +817,17 @@
                 "perfume-packaging-boxes"
             ]
         },
+        "custom-perfume-magnetic-closure-box": {
+            "title": "Custom Perfume Magnetic Closure Box",
+            "status": "publish",
+            "categories": [
+                "cosmetic-paper-boxes",
+                "gift-paper-boxes",
+                "magnetic-closure-boxes",
+                "perfume-packaging-boxes",
+                "rigid-boxes"
+            ]
+        },
         "custom-phone-case-packaging-box": {
             "title": "CUSTOM PHONE CASE PACKAGING BOX",
             "status": "publish",
@@ -933,6 +1005,17 @@
                 "skincare-packaging-boxes"
             ]
         },
+        "custom-skincare-magnetic-closure-box": {
+            "title": "Custom Skincare Magnetic Closure Box",
+            "status": "publish",
+            "categories": [
+                "beauty-skincare-packaging",
+                "cosmetic-paper-boxes",
+                "magnetic-closure-boxes",
+                "rigid-boxes",
+                "skincare-packaging-boxes"
+            ]
+        },
         "custom-skincare-set-packaging-box": {
             "title": "CUSTOM SKINCARE SET PACKAGING BOX",
             "status": "publish",
@@ -1093,6 +1176,16 @@
                 "rigid-boxes"
             ]
         },
+        "custom-watch-magnetic-presentation-box": {
+            "title": "Custom Watch Magnetic Presentation Box",
+            "status": "publish",
+            "categories": [
+                "gift-paper-boxes",
+                "jewelry-paper-boxes",
+                "magnetic-closure-boxes",
+                "rigid-boxes"
+            ]
+        },
         "custom-window-candle-box-for-tumbler-candles": {
             "title": "CUSTOM WINDOW CANDLE BOX FOR TUMBLER CANDLES",
             "status": "publish",
@@ -1134,6 +1227,17 @@
             "categories": [
                 "gift-paper-boxes",
                 "packaging-accessories"
+            ]
+        },
+        "custom-wine-magnetic-gift-box": {
+            "title": "Custom Wine Magnetic Gift Box",
+            "status": "publish",
+            "categories": [
+                "gift-paper-boxes",
+                "magnetic-closure-boxes",
+                "premium-food-beverage-packaging",
+                "rigid-boxes",
+                "wine-premium-drink-packaging"
             ]
         },
         "custom-yoga-mat-packaging-box": {
