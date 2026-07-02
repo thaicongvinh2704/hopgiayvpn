@@ -43,6 +43,7 @@ $custom_box_inc_files = array(
     'inc/product-category-migration.php',
     'inc/admin-reviewed-category-sync.php',
     'inc/admin-local-product-category-sync.php',
+    'inc/admin-product-category-local-prune.php',
     'inc/sports-packaging-category-sync.php',
     'inc/admin-unused-product-category-cleanup.php',
     'inc/admin-product-sample-deploy.php',
