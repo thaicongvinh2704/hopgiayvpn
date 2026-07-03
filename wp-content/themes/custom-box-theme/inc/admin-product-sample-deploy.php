@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-07-02-magnetic-closure-boxes' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-07-03-custom-vial-boxes' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -274,6 +274,60 @@ function custom_box_product_sample_category_balance_admin_post() {
 	exit;
 }
 add_action( 'admin_post_custom_box_product_sample_category_balance', 'custom_box_product_sample_category_balance_admin_post' );
+
+function custom_box_product_sample_custom_vial_sync_admin_post() {
+	if ( ! custom_box_product_sample_deploy_can_run() ) {
+		wp_die( esc_html__( 'You do not have permission to sync this product.', 'custom-box-theme' ) );
+	}
+
+	check_admin_referer( 'custom_box_product_sample_custom_vial_sync' );
+
+	if ( function_exists( 'set_time_limit' ) ) {
+		@set_time_limit( 120 );
+	}
+
+	$output = '';
+	$error  = '';
+
+	delete_transient( 'custom_box_product_sample_deploy_state_' . get_current_user_id() );
+
+	if ( ! function_exists( 'custom_box_sync_custom_vial_boxes_product' ) ) {
+		$error = 'Custom vial boxes sync helper is not available.';
+	} else {
+		$product_id = custom_box_sync_custom_vial_boxes_product( true );
+
+		if ( is_wp_error( $product_id ) ) {
+			$error = $product_id->get_error_message();
+		} elseif ( function_exists( 'custom_box_custom_vial_boxes_sync_report' ) ) {
+			$output = custom_box_custom_vial_boxes_sync_report( (int) $product_id );
+		} else {
+			$output = 'Custom Vial Boxes product synced. Product ID: ' . (int) $product_id . PHP_EOL;
+		}
+	}
+
+	set_transient(
+		'custom_box_product_sample_deploy_result_' . get_current_user_id(),
+		array(
+			'output' => $output,
+			'error'  => $error,
+			'status' => $error ? 'error' : 'complete',
+			'time'   => current_time( 'mysql' ),
+		),
+		10 * MINUTE_IN_SECONDS
+	);
+
+	wp_safe_redirect(
+		add_query_arg(
+			array(
+				'page'                  => 'custom-box-product-sample-deploy',
+				'custom_vial_sync_done' => '1',
+			),
+			admin_url( 'tools.php' )
+		)
+	);
+	exit;
+}
+add_action( 'admin_post_custom_box_product_sample_custom_vial_sync', 'custom_box_product_sample_custom_vial_sync_admin_post' );
 
 function custom_box_product_sample_category_balance_product_slugs(): array {
 	if ( ! function_exists( 'custom_box_category_migration_explicit_product_map' ) ) {
@@ -928,6 +982,16 @@ function custom_box_product_sample_deploy_page() {
 			<h2>Deploy Log</h2>
 			<textarea readonly rows="22" style="width:100%;font-family:Consolas,Monaco,monospace;"><?php echo esc_textarea( $result['output'] ); ?></textarea>
 		<?php endif; ?>
+
+		<h2>Custom Vial Boxes Sync</h2>
+		<p>Use this after a Git deploy to update the Custom Vial Boxes product content, SEO meta, FAQ, schema, image alt text, and product page display settings without terminal access.</p>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-bottom:24px;">
+			<input type="hidden" name="action" value="custom_box_product_sample_custom_vial_sync">
+			<?php wp_nonce_field( 'custom_box_product_sample_custom_vial_sync' ); ?>
+			<?php submit_button( 'Sync Custom Vial Boxes Product', 'primary large', 'submit', false ); ?>
+		</form>
+
+		<hr>
 
 		<?php $category_counts = custom_box_product_sample_category_balance_counts(); ?>
 		<?php if ( $category_counts ) : ?>

@@ -70,6 +70,37 @@ function custom_box_sync_custom_vial_boxes_product(bool $force = false)
     return $product_id;
 }
 
+function custom_box_custom_vial_boxes_sync_report(int $product_id): string
+{
+    $product = get_post($product_id);
+
+    if (!$product || 'product' !== $product->post_type) {
+        return "Synced product could not be loaded.\n";
+    }
+
+    $content = (string) $product->post_content;
+    $faq = (string) get_post_meta($product->ID, '_custom_box_product_faq_html', true);
+
+    $lines = array(
+        'Product ID: ' . (int) $product->ID,
+        'Status: ' . get_post_status($product->ID),
+        'Title: ' . $product->post_title,
+        'Slug: ' . $product->post_name,
+        'URL: ' . get_permalink($product->ID),
+        'Rank Math title: ' . get_post_meta($product->ID, 'rank_math_title', true),
+        'Rank Math description: ' . get_post_meta($product->ID, 'rank_math_description', true),
+        'Focus keyword: ' . get_post_meta($product->ID, 'rank_math_focus_keyword', true),
+        'Long description words: ' . str_word_count(wp_strip_all_tags($content)),
+        'Content H1 count: ' . preg_match_all('/<h1\b/i', $content),
+        'Image grids/cards: ' . substr_count($content, 'product-content-image-grid') . '/' . substr_count($content, 'product-content-image-card'),
+        'FAQ items: ' . substr_count($faq, 'faq-item'),
+        'Featured image ID: ' . (int) get_post_thumbnail_id($product->ID),
+        'Old all-caps phrase in content: ' . substr_count($content . ' ' . $product->post_excerpt . ' ' . $faq, 'CUSTOM VIAL PACKAGING BOX'),
+    );
+
+    return implode(PHP_EOL, $lines) . PHP_EOL;
+}
+
 function custom_box_custom_vial_boxes_short_description(): string
 {
     return 'Custom vial boxes are designed to protect and present small glass vials, ampoules, lab samples, cosmetic vials, medicine samples, essential oil vials and healthcare sample kits. VPN Paper Box Manufacturer produces custom vial packaging boxes with paperboard, SBS board, rigid board, EVA inserts, foam inserts, paper trays, custom logo printing and bulk production from 1000 boxes.';
