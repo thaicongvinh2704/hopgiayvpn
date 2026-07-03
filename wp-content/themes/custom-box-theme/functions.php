@@ -21,6 +21,7 @@ $custom_box_inc_files = array(
     'inc/admin-product-category-local-prune.php',
     'inc/admin-unused-product-category-cleanup.php',
     'inc/admin-product-sample-deploy.php',
+    'inc/custom-vial-box-product-sync.php',
     'inc/cosmetic-paper-packaging-design-post-sync.php',
     'inc/quote-form-handler.php',
     'inc/woocommerce.php',

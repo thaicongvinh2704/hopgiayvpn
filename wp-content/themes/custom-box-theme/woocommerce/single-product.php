@@ -23,6 +23,18 @@ while (have_posts()) :
     $product_specs = function_exists('custom_box_get_product_specifications') ? custom_box_get_product_specifications($product_id) : array();
     $product_long_content = get_the_content();
     $product_long_content_html = $product_long_content ? apply_filters('the_content', $product_long_content) : '';
+    $product_hero_bullets = get_post_meta($product_id, '_custom_box_product_hero_bullets', true);
+    $product_faq_html = get_post_meta($product_id, '_custom_box_product_faq_html', true);
+    $hide_auto_description_heading = (bool) get_post_meta($product_id, '_custom_box_hide_auto_description_heading', true);
+
+    if (!is_array($product_hero_bullets) || empty($product_hero_bullets)) {
+        $product_hero_bullets = array(
+            'Luxury-grade durability',
+            'Custom size and structure',
+            'Premium printing finishes',
+            'Eco-friendly material options',
+        );
+    }
 
     if ($product_long_content_html && function_exists('custom_box_enhance_blog_article_images')) {
         $product_long_content_html = custom_box_enhance_blog_article_images($product_long_content_html);
@@ -54,7 +66,11 @@ while (have_posts()) :
                         <?php foreach ($product_gallery_ids as $gallery_index => $gallery_id) : ?>
                             <?php $gallery_url = wp_get_attachment_image_url($gallery_id, 'large'); ?>
                             <?php if ($gallery_url) : ?>
-                                <img class="product-gallery-slide <?php echo 0 === $gallery_index ? 'is-active' : ''; ?>" src="<?php echo esc_url($gallery_url); ?>" alt="<?php echo esc_attr(get_the_title()); ?> image <?php echo esc_attr($gallery_index + 1); ?>" decoding="async">
+                                <?php
+                                $gallery_alt = trim((string) get_post_meta($gallery_id, '_wp_attachment_image_alt', true));
+                                $gallery_alt = $gallery_alt ? $gallery_alt : get_the_title() . ' image ' . ($gallery_index + 1);
+                                ?>
+                                <img class="product-gallery-slide <?php echo 0 === $gallery_index ? 'is-active' : ''; ?>" src="<?php echo esc_url($gallery_url); ?>" alt="<?php echo esc_attr($gallery_alt); ?>" decoding="async">
                             <?php endif; ?>
                         <?php endforeach; ?>
                     <?php else : ?>
@@ -76,8 +92,12 @@ while (have_posts()) :
                         <?php foreach ($product_gallery_ids as $gallery_index => $gallery_id) : ?>
                             <?php $gallery_thumb = wp_get_attachment_image_url($gallery_id, 'thumbnail'); ?>
                             <?php if ($gallery_thumb) : ?>
+                                <?php
+                                $gallery_thumb_alt = trim((string) get_post_meta($gallery_id, '_wp_attachment_image_alt', true));
+                                $gallery_thumb_alt = $gallery_thumb_alt ? $gallery_thumb_alt . ' thumbnail' : get_the_title() . ' thumbnail ' . ($gallery_index + 1);
+                                ?>
                                 <button class="product-gallery-thumb <?php echo 0 === $gallery_index ? 'is-active' : ''; ?>" type="button" data-gallery-index="<?php echo esc_attr($gallery_index); ?>" aria-label="View product image <?php echo esc_attr($gallery_index + 1); ?>">
-                                    <img src="<?php echo esc_url($gallery_thumb); ?>" alt="<?php echo esc_attr(get_the_title()); ?> thumbnail <?php echo esc_attr($gallery_index + 1); ?>" loading="lazy" decoding="async">
+                                    <img src="<?php echo esc_url($gallery_thumb); ?>" alt="<?php echo esc_attr($gallery_thumb_alt); ?>" loading="lazy" decoding="async">
                                 </button>
                             <?php endif; ?>
                         <?php endforeach; ?>
@@ -111,10 +131,11 @@ while (have_posts()) :
                 </div>
 
                 <ul class="product-benefit-list">
-                    <li><i class="fas fa-check-circle"></i> Luxury-grade durability</li>
-                    <li><i class="fas fa-check-circle"></i> Custom size and structure</li>
-                    <li><i class="fas fa-check-circle"></i> Premium printing finishes</li>
-                    <li><i class="fas fa-check-circle"></i> Eco-friendly material options</li>
+                    <?php foreach ($product_hero_bullets as $product_hero_bullet) : ?>
+                        <?php if (trim((string) $product_hero_bullet)) : ?>
+                            <li><i class="fas fa-check-circle"></i> <?php echo esc_html($product_hero_bullet); ?></li>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
                 </ul>
 
                 <div class="product-detail-actions">
@@ -144,7 +165,9 @@ while (have_posts()) :
     <section class="product-detail-overview product-story-section">
         <div class="container">
             <div class="product-detail-description product-content-body blog-content blog-article-content">
-                <h2><?php echo esc_html(get_the_title()); ?> That Balance Presentation and Function</h2>
+                <?php if (!$hide_auto_description_heading) : ?>
+                    <h2><?php echo esc_html(get_the_title()); ?> That Balance Presentation and Function</h2>
+                <?php endif; ?>
                 <?php if ($product_long_content_html) : ?>
                     <?php echo wp_kses_post($product_long_content_html); ?>
                 <?php else : ?>
@@ -230,6 +253,10 @@ while (have_posts()) :
             </div>
         </div>
     </section>
+
+    <?php if ($product_faq_html) : ?>
+        <?php echo wp_kses_post($product_faq_html); ?>
+    <?php endif; ?>
 
     <?php get_template_part('template-parts/home/faq'); ?>
 
