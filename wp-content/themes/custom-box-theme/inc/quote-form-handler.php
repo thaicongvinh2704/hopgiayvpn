@@ -49,6 +49,96 @@ function custom_box_quote_form_allowed_mimes() {
     );
 }
 
+function custom_box_quote_form_config_value($name, $fallback = '') {
+    $value = defined($name) ? constant($name) : getenv($name);
+
+    if (false === $value || '' === trim((string) $value)) {
+        return $fallback;
+    }
+
+    return trim((string) $value);
+}
+
+function custom_box_quote_form_recaptcha_site_key() {
+    return apply_filters(
+        'custom_box_quote_form_recaptcha_site_key',
+        custom_box_quote_form_config_value('CUSTOM_BOX_RECAPTCHA_SITE_KEY', '6Lfw5EMtAAAAADVk0EfDYCCLCZSZrxLF84eJFlVp')
+    );
+}
+
+function custom_box_quote_form_recaptcha_secret_key() {
+    return apply_filters(
+        'custom_box_quote_form_recaptcha_secret_key',
+        custom_box_quote_form_config_value('CUSTOM_BOX_RECAPTCHA_SECRET_KEY')
+    );
+}
+
+function custom_box_quote_form_recaptcha_enabled() {
+    return '' !== custom_box_quote_form_recaptcha_site_key();
+}
+
+function custom_box_quote_form_recaptcha_fields() {
+    if (!custom_box_quote_form_recaptcha_enabled()) {
+        return;
+    }
+    ?>
+    <div class="custom-box-recaptcha">
+        <div class="g-recaptcha" data-sitekey="<?php echo esc_attr(custom_box_quote_form_recaptcha_site_key()); ?>"></div>
+    </div>
+    <?php
+}
+
+function custom_box_quote_form_should_enqueue_recaptcha() {
+    if (is_front_page() || is_page(array('contact', 'paper-box-manufacturer', 'packaging-landing'))) {
+        return true;
+    }
+
+    return is_page_template('page-paper-box-manufacturer.php') || is_page_template('page-landing-packaging.php');
+}
+
+function custom_box_enqueue_quote_form_recaptcha() {
+    $site_key = custom_box_quote_form_recaptcha_site_key();
+
+    if ('' === $site_key || !custom_box_quote_form_should_enqueue_recaptcha()) {
+        return;
+    }
+
+    wp_enqueue_script(
+        'custom-box-google-recaptcha',
+        add_query_arg(
+            array(
+                'onload' => 'customBoxRecaptchaOnload',
+                'render' => 'explicit',
+            ),
+            'https://www.google.com/recaptcha/api.js'
+        ),
+        array(),
+        null,
+        true
+    );
+
+    wp_add_inline_script(
+        'custom-box-google-recaptcha',
+        <<<'JS'
+window.customBoxRecaptchaOnload = function() {
+    var widgets = document.querySelectorAll('.g-recaptcha[data-sitekey]:not([data-widget-id])');
+
+    widgets.forEach(function(widget) {
+        if (!window.grecaptcha || !window.grecaptcha.render) {
+            return;
+        }
+
+        widget.dataset.widgetId = window.grecaptcha.render(widget, {
+            sitekey: widget.getAttribute('data-sitekey')
+        });
+    });
+};
+JS,
+        'before'
+    );
+}
+add_action('wp_enqueue_scripts', 'custom_box_enqueue_quote_form_recaptcha');
+
 function custom_box_quote_form_captcha_lifetime() {
     return (int) apply_filters('custom_box_quote_form_captcha_lifetime', DAY_IN_SECONDS);
 }
@@ -133,6 +223,47 @@ function custom_box_quote_form_verify_captcha() {
     $submitted_hash = hash_hmac('sha256', $answer, wp_salt('secure_auth'));
 
     return hash_equals($answer_hash, $submitted_hash);
+}
+
+function custom_box_quote_form_verify_recaptcha() {
+    if (!custom_box_quote_form_recaptcha_enabled()) {
+        return true;
+    }
+
+    $secret_key = custom_box_quote_form_recaptcha_secret_key();
+    if ('' === $secret_key) {
+        return true;
+    }
+
+    $token = isset($_POST['g-recaptcha-response']) ? trim((string) wp_unslash($_POST['g-recaptcha-response'])) : '';
+    if ('' === $token) {
+        return false;
+    }
+
+    $body = array(
+        'secret'   => $secret_key,
+        'response' => $token,
+    );
+
+    if (!empty($_SERVER['REMOTE_ADDR'])) {
+        $body['remoteip'] = sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR']));
+    }
+
+    $response = wp_remote_post(
+        'https://www.google.com/recaptcha/api/siteverify',
+        array(
+            'timeout' => 8,
+            'body'    => $body,
+        )
+    );
+
+    if (is_wp_error($response)) {
+        return false;
+    }
+
+    $payload = json_decode((string) wp_remote_retrieve_body($response), true);
+
+    return is_array($payload) && !empty($payload['success']);
 }
 
 function custom_box_register_quote_request_post_type() {
@@ -337,7 +468,11 @@ function custom_box_handle_quote_form() {
         custom_box_quote_form_redirect('success');
     }
 
-    if (!custom_box_quote_form_verify_captcha()) {
+    if (!custom_box_quote_form_verify_recaptcha()) {
+        custom_box_quote_form_redirect('captcha');
+    }
+
+    if (!custom_box_quote_form_recaptcha_enabled() && !custom_box_quote_form_verify_captcha()) {
         custom_box_quote_form_redirect('captcha');
     }
 

@@ -1288,6 +1288,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
             <input type="hidden" name="utm_content" value="">
             <input class="pbm-hp" type="text" name="website_url" tabindex="-1" autocomplete="off" aria-hidden="true">
             <input type="hidden" name="custom_box_quote_nonce" value="<?php echo esc_attr(wp_create_nonce('custom_box_quote_form')); ?>">
+            <?php custom_box_quote_form_recaptcha_fields(); ?>
 
             <div class="pbm-form-head">
                 <span>Factory quotation</span>
@@ -1405,32 +1406,6 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
                         </label>
                     <?php endif; ?>
                 </div>
-            </fieldset>
-
-            <?php
-            $pbm_captcha = custom_box_quote_form_create_captcha();
-            $pbm_captcha_id = 'pbm-captcha-' . wp_rand(1000, 999999);
-            $pbm_captcha_help_id = $pbm_captcha_id . '-help';
-            ?>
-            <fieldset class="pbm-form-step pbm-captcha-step">
-                <legend>Security Check</legend>
-                <label class="pbm-captcha-label" for="<?php echo esc_attr($pbm_captcha_id); ?>">
-                    <span>What is <?php echo esc_html($pbm_captcha['question']); ?>? *</span>
-                    <input
-                        id="<?php echo esc_attr($pbm_captcha_id); ?>"
-                        type="number"
-                        name="custom_box_captcha_answer"
-                        min="0"
-                        step="1"
-                        inputmode="numeric"
-                        autocomplete="off"
-                        aria-describedby="<?php echo esc_attr($pbm_captcha_help_id); ?>"
-                        required
-                    >
-                    <em class="pbm-field-error"></em>
-                </label>
-                <input type="hidden" name="custom_box_captcha_token" value="<?php echo esc_attr($pbm_captcha['token']); ?>">
-                <p class="pbm-captcha-help" id="<?php echo esc_attr($pbm_captcha_help_id); ?>">This quick check helps keep automated spam out of the quote inbox.</p>
             </fieldset>
 
             <button class="pbm-submit" type="submit">Get My Factory Quote</button>

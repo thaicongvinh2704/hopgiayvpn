@@ -106,6 +106,7 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                 <input type="hidden" name="action" value="custom_box_quote_form">
                 <input type="hidden" name="product_type" value="boxes">
                 <?php wp_nonce_field('custom_box_quote_form', 'custom_box_quote_nonce'); ?>
+                <?php custom_box_quote_form_recaptcha_fields(); ?>
                 <input class="quote-hp" type="text" name="website_url" tabindex="-1" autocomplete="off" aria-hidden="true">
 
                 <label>Product Name:</label>
@@ -191,32 +192,6 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                 </div>
 
                 <textarea name="message" placeholder="Additional Message"></textarea>
-
-                <?php
-                $quote_captcha = custom_box_quote_form_create_captcha();
-                $quote_captcha_id = 'custom-box-captcha-' . wp_rand(1000, 999999);
-                $quote_captcha_help_id = $quote_captcha_id . '-help';
-                ?>
-                <div class="quote-captcha">
-                    <label for="<?php echo esc_attr($quote_captcha_id); ?>">Security Check:</label>
-                    <div class="quote-captcha-row">
-                        <span class="quote-captcha-question"><?php echo esc_html($quote_captcha['question']); ?> =</span>
-                        <input
-                            id="<?php echo esc_attr($quote_captcha_id); ?>"
-                            type="number"
-                            name="custom_box_captcha_answer"
-                            min="0"
-                            step="1"
-                            inputmode="numeric"
-                            autocomplete="off"
-                            placeholder="Answer"
-                            aria-describedby="<?php echo esc_attr($quote_captcha_help_id); ?>"
-                            required
-                        >
-                    </div>
-                    <p class="quote-captcha-help" id="<?php echo esc_attr($quote_captcha_help_id); ?>">Please solve this quick check to prevent spam.</p>
-                    <input type="hidden" name="custom_box_captcha_token" value="<?php echo esc_attr($quote_captcha['token']); ?>">
-                </div>
 
                 <button type="submit" class="btn-primary">Submit Quote</button>
 
