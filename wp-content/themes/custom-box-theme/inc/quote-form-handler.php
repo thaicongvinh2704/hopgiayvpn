@@ -4,7 +4,7 @@
  */
 
 function custom_box_quote_form_recipient() {
-    $recipient = get_option('admin_email');
+    $recipient = 'sales.vpn@hopgiayvpn.com';
 
     return apply_filters('custom_box_quote_form_recipient', $recipient);
 }
