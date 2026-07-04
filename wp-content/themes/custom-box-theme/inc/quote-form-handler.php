@@ -9,6 +9,70 @@ function custom_box_quote_form_recipient() {
     return apply_filters('custom_box_quote_form_recipient', $recipient);
 }
 
+function custom_box_quote_form_client_ip() {
+    $candidates = array('HTTP_CF_CONNECTING_IP', 'REMOTE_ADDR');
+
+    foreach ($candidates as $key) {
+        if (empty($_SERVER[$key])) {
+            continue;
+        }
+
+        $ip = trim((string) wp_unslash($_SERVER[$key]));
+        if (filter_var($ip, FILTER_VALIDATE_IP)) {
+            return $ip;
+        }
+    }
+
+    return '0.0.0.0';
+}
+
+function custom_box_quote_form_ip_hash() {
+    return hash_hmac('sha256', custom_box_quote_form_client_ip(), wp_salt('nonce'));
+}
+
+function custom_box_quote_form_log($event, $context = array()) {
+    if (!apply_filters('custom_box_quote_form_logging_enabled', true)) {
+        return;
+    }
+
+    unset($context['secret'], $context['secret_key'], $context['g-recaptcha-response'], $context['token']);
+
+    $payload = array_merge(
+        array(
+            'event'     => sanitize_key($event),
+            'timestamp' => current_time('mysql'),
+            'ip_hash'   => substr(custom_box_quote_form_ip_hash(), 0, 16),
+        ),
+        $context
+    );
+
+    error_log('[custom_box_quote_form] ' . wp_json_encode($payload));
+}
+
+function custom_box_quote_form_reject($status, $http_status = 400, $context = array()) {
+    custom_box_quote_form_log(
+        'reject_' . $status,
+        array_merge(
+            array(
+                'http_status' => (int) $http_status,
+            ),
+            $context
+        )
+    );
+
+    if (429 === (int) $http_status) {
+        status_header(429);
+        nocache_headers();
+        wp_die(
+            esc_html__('Too many quote requests. Please wait a few minutes and try again.', 'custom-box-theme'),
+            esc_html__('Too Many Requests', 'custom-box-theme'),
+            array('response' => 429)
+        );
+    }
+
+    custom_box_quote_form_redirect($status);
+}
+
 function custom_box_quote_form_redirect($status) {
     $redirect_to = wp_get_referer();
 
@@ -59,6 +123,77 @@ function custom_box_quote_form_config_value($name, $fallback = '') {
     return trim((string) $value);
 }
 
+function custom_box_quote_form_post_text($name, $max_length = 255) {
+    $raw = isset($_POST[$name]) ? wp_unslash($_POST[$name]) : '';
+    $value = is_array($raw) ? '' : sanitize_text_field($raw);
+
+    return substr($value, 0, max(1, (int) $max_length));
+}
+
+function custom_box_quote_form_post_textarea($name, $max_length = 3000) {
+    $raw = isset($_POST[$name]) ? wp_unslash($_POST[$name]) : '';
+    $value = is_array($raw) ? '' : sanitize_textarea_field($raw);
+
+    return substr($value, 0, max(1, (int) $max_length));
+}
+
+function custom_box_quote_form_post_key($name, $max_length = 100) {
+    $raw = isset($_POST[$name]) ? wp_unslash($_POST[$name]) : '';
+    $value = is_array($raw) ? '' : sanitize_key($raw);
+
+    return substr($value, 0, max(1, (int) $max_length));
+}
+
+function custom_box_quote_form_post_url($name, $max_length = 500) {
+    $raw = isset($_POST[$name]) ? wp_unslash($_POST[$name]) : '';
+    $value = is_array($raw) ? '' : esc_url_raw($raw);
+
+    return substr($value, 0, max(1, (int) $max_length));
+}
+
+function custom_box_quote_form_post_email($name) {
+    $raw = isset($_POST[$name]) ? wp_unslash($_POST[$name]) : '';
+
+    return is_array($raw) ? '' : sanitize_email($raw);
+}
+
+function custom_box_quote_form_rate_limit_check() {
+    $limit = (int) apply_filters('custom_box_quote_form_rate_limit_max', 3);
+    $window = (int) apply_filters('custom_box_quote_form_rate_limit_window', 10 * MINUTE_IN_SECONDS);
+    $key = 'custom_box_quote_rate_' . substr(custom_box_quote_form_ip_hash(), 0, 32);
+    $state = get_transient($key);
+
+    if (!is_array($state)) {
+        $state = array(
+            'count' => 0,
+            'first' => time(),
+        );
+    }
+
+    $state['count'] = isset($state['count']) ? (int) $state['count'] + 1 : 1;
+    $state['first'] = isset($state['first']) ? (int) $state['first'] : time();
+
+    set_transient($key, $state, $window);
+
+    $allowed = $state['count'] <= $limit;
+    custom_box_quote_form_log(
+        'rate_limit_check',
+        array(
+            'rate_limit_allowed' => $allowed,
+            'rate_limit_count'   => $state['count'],
+            'rate_limit_limit'   => $limit,
+            'rate_limit_window'  => $window,
+        )
+    );
+
+    return array(
+        'allowed' => $allowed,
+        'count'   => $state['count'],
+        'limit'   => $limit,
+        'window'  => $window,
+    );
+}
+
 function custom_box_quote_form_recaptcha_site_key() {
     return apply_filters(
         'custom_box_quote_form_recaptcha_site_key',
@@ -89,11 +224,17 @@ function custom_box_quote_form_recaptcha_fields() {
 }
 
 function custom_box_quote_form_should_enqueue_recaptcha() {
-    if (is_front_page() || is_page(array('contact', 'paper-box-manufacturer', 'packaging-landing'))) {
-        return true;
+    $should_enqueue = is_front_page()
+        || is_page(array('contact', 'paper-box-manufacturer', 'packaging-landing'))
+        || is_page_template('page-paper-box-manufacturer.php')
+        || is_page_template('page-landing-packaging.php')
+        || is_singular('product');
+
+    if (function_exists('is_product') && is_product()) {
+        $should_enqueue = true;
     }
 
-    return is_page_template('page-paper-box-manufacturer.php') || is_page_template('page-landing-packaging.php');
+    return (bool) apply_filters('custom_box_quote_form_should_enqueue_recaptcha', $should_enqueue);
 }
 
 function custom_box_enqueue_quote_form_recaptcha() {
@@ -227,17 +368,34 @@ function custom_box_quote_form_verify_captcha() {
 
 function custom_box_quote_form_verify_recaptcha() {
     if (!custom_box_quote_form_recaptcha_enabled()) {
-        return true;
+        return array(
+            'success' => false,
+            'reason'  => 'site_key_missing',
+        );
     }
 
     $secret_key = custom_box_quote_form_recaptcha_secret_key();
     if ('' === $secret_key) {
-        return true;
+        return array(
+            'success' => false,
+            'reason'  => 'secret_key_missing',
+        );
     }
 
     $token = isset($_POST['g-recaptcha-response']) ? trim((string) wp_unslash($_POST['g-recaptcha-response'])) : '';
     if ('' === $token) {
-        return false;
+        return array(
+            'success' => false,
+            'reason'  => 'token_missing',
+        );
+    }
+
+    $token_key = 'custom_box_recaptcha_token_' . substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 32);
+    if (get_transient($token_key)) {
+        return array(
+            'success' => false,
+            'reason'  => 'token_replay',
+        );
     }
 
     $body = array(
@@ -246,7 +404,7 @@ function custom_box_quote_form_verify_recaptcha() {
     );
 
     if (!empty($_SERVER['REMOTE_ADDR'])) {
-        $body['remoteip'] = sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR']));
+        $body['remoteip'] = custom_box_quote_form_client_ip();
     }
 
     $response = wp_remote_post(
@@ -258,12 +416,36 @@ function custom_box_quote_form_verify_recaptcha() {
     );
 
     if (is_wp_error($response)) {
-        return false;
+        return array(
+            'success' => false,
+            'reason'  => 'siteverify_request_error',
+        );
     }
 
     $payload = json_decode((string) wp_remote_retrieve_body($response), true);
+    if (!is_array($payload)) {
+        return array(
+            'success' => false,
+            'reason'  => 'siteverify_invalid_response',
+        );
+    }
 
-    return is_array($payload) && !empty($payload['success']);
+    if (empty($payload['success'])) {
+        return array(
+            'success'     => false,
+            'reason'      => 'siteverify_failed',
+            'error_codes' => isset($payload['error-codes']) && is_array($payload['error-codes'])
+                ? array_map('sanitize_text_field', $payload['error-codes'])
+                : array(),
+        );
+    }
+
+    set_transient($token_key, 1, 10 * MINUTE_IN_SECONDS);
+
+    return array(
+        'success' => true,
+        'reason'  => 'siteverify_success',
+    );
 }
 
 function custom_box_register_quote_request_post_type() {
@@ -450,58 +632,97 @@ function custom_box_send_queued_quote_email($quote_id) {
 
     $sent = wp_mail($recipient, $email['subject'], $email['body'], $email['headers'], $attachments);
 
+    custom_box_quote_form_log(
+        'mail_send_result',
+        array(
+            'quote_id'       => $quote_id,
+            'mail_transport' => function_exists('wp_mail_smtp') ? 'wp_mail_smtp' : 'wp_mail',
+            'recipient'      => $recipient,
+            'sent'           => (bool) $sent,
+        )
+    );
+
     update_post_meta($quote_id, '_custom_box_quote_mail_status', $sent ? 'sent' : 'failed');
     update_post_meta($quote_id, '_custom_box_quote_mail_attempted_at', current_time('mysql'));
 }
 add_action('custom_box_send_queued_quote_email', 'custom_box_send_queued_quote_email');
 
 function custom_box_handle_quote_form() {
+    custom_box_quote_form_log('request_received', array('method' => isset($_SERVER['REQUEST_METHOD']) ? sanitize_text_field(wp_unslash($_SERVER['REQUEST_METHOD'])) : ''));
+
     if (
         empty($_POST['custom_box_quote_nonce']) ||
         !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['custom_box_quote_nonce'])), 'custom_box_quote_form')
     ) {
-        custom_box_quote_form_redirect('invalid');
+        custom_box_quote_form_reject('invalid', 400, array('nonce_valid' => false));
     }
 
-    $honeypot = isset($_POST['website_url']) ? trim((string) wp_unslash($_POST['website_url'])) : '';
+    $honeypot = custom_box_quote_form_post_text('website_url', 255);
+    custom_box_quote_form_log('honeypot_check', array('honeypot_filled' => '' !== $honeypot));
     if ($honeypot) {
-        custom_box_quote_form_redirect('success');
+        custom_box_quote_form_reject('spam', 400, array('honeypot_filled' => true));
     }
 
-    if (!custom_box_quote_form_verify_recaptcha()) {
-        custom_box_quote_form_redirect('captcha');
+    $rate_limit = custom_box_quote_form_rate_limit_check();
+    if (empty($rate_limit['allowed'])) {
+        custom_box_quote_form_reject(
+            'rate_limited',
+            429,
+            array(
+                'rate_limit_count'  => $rate_limit['count'],
+                'rate_limit_limit'  => $rate_limit['limit'],
+                'rate_limit_window' => $rate_limit['window'],
+            )
+        );
     }
 
-    if (!custom_box_quote_form_recaptcha_enabled() && !custom_box_quote_form_verify_captcha()) {
-        custom_box_quote_form_redirect('captcha');
+    $recaptcha = custom_box_quote_form_verify_recaptcha();
+    custom_box_quote_form_log(
+        'captcha_check',
+        array(
+            'captcha_success'     => !empty($recaptcha['success']),
+            'captcha_reason'      => isset($recaptcha['reason']) ? $recaptcha['reason'] : '',
+            'captcha_error_codes' => isset($recaptcha['error_codes']) ? $recaptcha['error_codes'] : array(),
+        )
+    );
+    if (empty($recaptcha['success'])) {
+        custom_box_quote_form_reject(
+            'captcha',
+            400,
+            array(
+                'captcha_success'     => false,
+                'captcha_reason'      => isset($recaptcha['reason']) ? $recaptcha['reason'] : '',
+                'captcha_error_codes' => isset($recaptcha['error_codes']) ? $recaptcha['error_codes'] : array(),
+            )
+        );
     }
 
-    $product_name = isset($_POST['product_name']) ? sanitize_text_field(wp_unslash($_POST['product_name'])) : '';
-    $length = isset($_POST['length']) ? sanitize_text_field(wp_unslash($_POST['length'])) : '';
-    $width = isset($_POST['width']) ? sanitize_text_field(wp_unslash($_POST['width'])) : '';
-    $depth = isset($_POST['depth']) ? sanitize_text_field(wp_unslash($_POST['depth'])) : '';
-    $unit = isset($_POST['unit']) ? sanitize_text_field(wp_unslash($_POST['unit'])) : '';
-    $stock_option = isset($_POST['stock_option']) ? sanitize_text_field(wp_unslash($_POST['stock_option'])) : '';
-    $material_preference = isset($_POST['material_preference']) ? sanitize_text_field(wp_unslash($_POST['material_preference'])) : '';
-    $printing_option = isset($_POST['printing_option']) ? sanitize_text_field(wp_unslash($_POST['printing_option'])) : '';
-    $finishing_option = isset($_POST['finishing_option']) ? sanitize_text_field(wp_unslash($_POST['finishing_option'])) : '';
-    $quantity = isset($_POST['quantity']) ? sanitize_text_field(wp_unslash($_POST['quantity'])) : '';
-    $company = isset($_POST['company']) ? sanitize_text_field(wp_unslash($_POST['company'])) : '';
-    $country = isset($_POST['country']) ? sanitize_text_field(wp_unslash($_POST['country'])) : '';
-    $full_name = isset($_POST['full_name']) ? sanitize_text_field(wp_unslash($_POST['full_name'])) : '';
-    $phone = isset($_POST['phone']) ? sanitize_text_field(wp_unslash($_POST['phone'])) : '';
-    $email = isset($_POST['email']) ? sanitize_email(wp_unslash($_POST['email'])) : '';
-    $message = isset($_POST['message']) ? sanitize_textarea_field(wp_unslash($_POST['message'])) : '';
-    $quote_source = isset($_POST['quote_source']) ? sanitize_key(wp_unslash($_POST['quote_source'])) : '';
-    $form_location = isset($_POST['form_location']) ? sanitize_text_field(wp_unslash($_POST['form_location'])) : '';
-    $current_page_url = isset($_POST['current_page_url']) ? esc_url_raw(wp_unslash($_POST['current_page_url'])) : '';
-    $referrer_url = isset($_POST['referrer_url']) ? esc_url_raw(wp_unslash($_POST['referrer_url'])) : '';
-    $utm_source = isset($_POST['utm_source']) ? sanitize_text_field(wp_unslash($_POST['utm_source'])) : '';
-    $utm_medium = isset($_POST['utm_medium']) ? sanitize_text_field(wp_unslash($_POST['utm_medium'])) : '';
-    $utm_campaign = isset($_POST['utm_campaign']) ? sanitize_text_field(wp_unslash($_POST['utm_campaign'])) : '';
-    $utm_term = isset($_POST['utm_term']) ? sanitize_text_field(wp_unslash($_POST['utm_term'])) : '';
-    $utm_content = isset($_POST['utm_content']) ? sanitize_text_field(wp_unslash($_POST['utm_content'])) : '';
-    $email_subject = isset($_POST['email_subject']) ? sanitize_text_field(wp_unslash($_POST['email_subject'])) : '';
+    $product_name = custom_box_quote_form_post_text('product_name', 200);
+    $length = custom_box_quote_form_post_text('length', 120);
+    $width = custom_box_quote_form_post_text('width', 80);
+    $depth = custom_box_quote_form_post_text('depth', 80);
+    $unit = custom_box_quote_form_post_text('unit', 20);
+    $stock_option = custom_box_quote_form_post_text('stock_option', 200);
+    $material_preference = custom_box_quote_form_post_text('material_preference', 200);
+    $printing_option = custom_box_quote_form_post_text('printing_option', 200);
+    $finishing_option = custom_box_quote_form_post_text('finishing_option', 200);
+    $quantity = custom_box_quote_form_post_text('quantity', 120);
+    $company = custom_box_quote_form_post_text('company', 200);
+    $country = custom_box_quote_form_post_text('country', 120);
+    $full_name = custom_box_quote_form_post_text('full_name', 200);
+    $phone = custom_box_quote_form_post_text('phone', 80);
+    $email = custom_box_quote_form_post_email('email');
+    $message = custom_box_quote_form_post_textarea('message', 3000);
+    $quote_source = custom_box_quote_form_post_key('quote_source', 100);
+    $form_location = custom_box_quote_form_post_text('form_location', 100);
+    $current_page_url = custom_box_quote_form_post_url('current_page_url', 500);
+    $referrer_url = custom_box_quote_form_post_url('referrer_url', 500);
+    $utm_source = custom_box_quote_form_post_text('utm_source', 150);
+    $utm_medium = custom_box_quote_form_post_text('utm_medium', 150);
+    $utm_campaign = custom_box_quote_form_post_text('utm_campaign', 150);
+    $utm_term = custom_box_quote_form_post_text('utm_term', 150);
+    $utm_content = custom_box_quote_form_post_text('utm_content', 150);
+    $email_subject = custom_box_quote_form_post_text('email_subject', 200);
     $attachments = array();
 
     if ('paper_box_manufacturer' === $quote_source) {
@@ -520,10 +741,10 @@ function custom_box_handle_quote_form() {
             || (!$has_valid_email && !$has_phone)
             || ($email && !$has_valid_email)
         ) {
-            custom_box_quote_form_redirect('missing');
+            custom_box_quote_form_reject('missing', 400, array('validation' => 'paper_box_manufacturer_required_fields'));
         }
     } elseif (!$product_name || !$full_name || !$email || !is_email($email)) {
-        custom_box_quote_form_redirect('missing');
+        custom_box_quote_form_reject('missing', 400, array('validation' => 'quote_required_fields'));
     }
 
     if (!empty($_FILES['artwork']['name'])) {
@@ -533,7 +754,7 @@ function custom_box_handle_quote_form() {
         $file_extension = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 
         if ($file_size > 10 * MB_IN_BYTES || !in_array($file_extension, $allowed_extensions, true)) {
-            custom_box_quote_form_redirect('file');
+            custom_box_quote_form_reject('file', 400, array('file_error' => 'invalid_extension_or_size'));
         }
 
         require_once ABSPATH . 'wp-admin/includes/file.php';
@@ -559,7 +780,7 @@ function custom_box_handle_quote_form() {
         );
 
         if (isset($uploaded_file['error'])) {
-            custom_box_quote_form_redirect('file');
+            custom_box_quote_form_reject('file', 400, array('file_error' => 'upload_failed'));
         }
 
         if (!empty($uploaded_file['file'])) {
@@ -597,10 +818,23 @@ function custom_box_handle_quote_form() {
         'referer'             => wp_get_referer(),
     );
 
+    custom_box_quote_form_log(
+        'validation_success',
+        array(
+            'quote_source'  => $quote_source,
+            'form_location' => $form_location,
+            'has_email'     => '' !== $email,
+            'has_phone'     => '' !== trim($phone),
+            'has_file'      => !empty($attachments),
+        )
+    );
+
     $quote_id = custom_box_save_quote_request($quote_data, $attachments);
     if (is_wp_error($quote_id)) {
-        custom_box_quote_form_redirect('failed');
+        custom_box_quote_form_reject('failed', 500, array('save_error' => $quote_id->get_error_code()));
     }
+
+    custom_box_quote_form_log('quote_saved', array('quote_id' => $quote_id));
 
     custom_box_send_queued_quote_email($quote_id);
 

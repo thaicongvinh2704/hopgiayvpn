@@ -206,6 +206,8 @@ $quote_messages = array(
     'invalid' => 'The form session expired. Please refresh the page and try again.',
     'file'    => 'Please upload a valid artwork file under 10MB.',
     'captcha' => 'Please complete the security check correctly.',
+    'spam'    => 'Sorry, this request could not be accepted.',
+    'rate_limited' => 'Too many quote requests. Please wait a few minutes and try again.',
 );
 
 add_action('wp_head', function () use ($page_url, $image_url, $faq_items) {
@@ -703,7 +705,9 @@ add_action('wp_head', function () use ($page_url, $image_url, $faq_items) {
         .pbm-message-missing,
         .pbm-message-invalid,
         .pbm-message-file,
-        .pbm-message-captcha {
+        .pbm-message-captcha,
+        .pbm-message-spam,
+        .pbm-message-rate_limited {
             background: #fff0e8;
             color: #9a3b10;
         }
@@ -1694,14 +1698,16 @@ get_header();
         missing: 'Please fill in the required quote fields.',
         invalid: 'The form session expired. Please refresh the page and try again.',
         file: 'Please upload a valid artwork file under 10MB.',
-        captcha: 'Please complete the security check correctly.'
+        captcha: 'Please complete the security check correctly.',
+        spam: 'Sorry, this request could not be accepted.',
+        rate_limited: 'Too many quote requests. Please wait a few minutes and try again.'
     };
 
     function isRecaptchaComplete(form) {
         var recaptcha = form.querySelector('.custom-box-recaptcha');
         var response = form.querySelector('[name="g-recaptcha-response"]');
 
-        return !recaptcha || !response || response.value.trim() !== '';
+        return !recaptcha || (response && response.value.trim() !== '');
     }
 
     function resetRecaptcha(form) {
@@ -1897,6 +1903,7 @@ get_header();
 
         var iframeName = 'pbm_quote_submit_' + index + '_' + Date.now();
         var iframe = document.createElement('iframe');
+        var submitted = false;
         iframe.name = iframeName;
         iframe.title = 'Quote form submission';
         iframe.hidden = true;
@@ -1929,6 +1936,7 @@ get_header();
             }
 
             form.target = iframeName;
+            submitted = true;
             if (button) {
                 button.disabled = true;
                 button.dataset.originalText = button.textContent;
@@ -1951,6 +1959,10 @@ get_header();
             var status = '';
             var iframeUrl = '';
 
+            if (!submitted) {
+                return;
+            }
+
             try {
                 iframeUrl = iframe.contentWindow.location.href;
                 if (iframeUrl.indexOf('/thank-you-packaging-quote/') !== -1) {
@@ -1959,12 +1971,15 @@ get_header();
                 }
 
                 status = new URL(iframeUrl).searchParams.get('quote_status') || '';
+                if (!status && iframe.contentWindow.document.body && iframe.contentWindow.document.body.textContent.indexOf('Too many quote requests') !== -1) {
+                    status = 'rate_limited';
+                }
             } catch (error) {
                 status = '';
             }
 
             if (!status) {
-                return;
+                status = 'failed';
             }
 
             if (messageWrap) {
@@ -1987,6 +2002,7 @@ get_header();
                 }
             }
 
+            submitted = false;
             if (button) {
                 button.disabled = false;
                 button.textContent = button.dataset.originalText || 'Get My Factory Quote';

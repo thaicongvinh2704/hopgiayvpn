@@ -1736,7 +1736,9 @@ html {
 .quote-form-message-missing,
 .quote-form-message-invalid,
 .quote-form-message-file,
-.quote-form-message-captcha {
+.quote-form-message-captcha,
+.quote-form-message-spam,
+.quote-form-message-rate_limited {
     background: #fdecec;
     color: #9d1c1c;
 }

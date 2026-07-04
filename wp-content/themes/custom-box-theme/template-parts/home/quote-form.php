@@ -93,6 +93,8 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                     'invalid' => 'The form session expired. Please refresh the page and try again.',
                     'file'    => 'Please upload a valid artwork file under 10MB.',
                     'captcha' => 'Please complete the security check correctly.',
+                    'spam'    => 'Sorry, this request could not be accepted.',
+                    'rate_limited' => 'Too many quote requests. Please wait a few minutes and try again.',
                 );
                 ?>
                 <?php if (isset($quote_messages[$quote_status])) : ?>
@@ -207,14 +209,16 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                         missing: 'Please fill in your name, email, and product name.',
                         invalid: 'The form session expired. Please refresh the page and try again.',
                         file: 'Please upload a valid artwork file under 10MB.',
-                        captcha: 'Please complete the security check correctly.'
+                        captcha: 'Please complete the security check correctly.',
+                        spam: 'Sorry, this request could not be accepted.',
+                        rate_limited: 'Too many quote requests. Please wait a few minutes and try again.'
                     };
 
                     function isRecaptchaComplete(form) {
                         var recaptcha = form.querySelector('.custom-box-recaptcha');
                         var response = form.querySelector('[name="g-recaptcha-response"]');
 
-                        return !recaptcha || !response || response.value.trim() !== '';
+                        return !recaptcha || (response && response.value.trim() !== '');
                     }
 
                     function resetRecaptcha(form) {
@@ -231,6 +235,7 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                         }
 
                         form.dataset.quoteIframeReady = '1';
+                        var submitted = false;
 
                         var iframeName = 'custom_box_quote_submit_' + index + '_' + Date.now();
                         var iframe = document.createElement('iframe');
@@ -257,6 +262,7 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                             }
 
                             form.target = iframeName;
+                            submitted = true;
 
                             message.className = 'quote-form-message quote-form-message-pending';
                             message.textContent = 'Sending your request...';
@@ -272,14 +278,21 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                             var message = form.parentNode.querySelector('.quote-form-message');
                             var status = '';
 
+                            if (!submitted) {
+                                return;
+                            }
+
                             try {
                                 status = new URL(iframe.contentWindow.location.href).searchParams.get('quote_status') || '';
+                                if (!status && iframe.contentWindow.document.body && iframe.contentWindow.document.body.textContent.indexOf('Too many quote requests') !== -1) {
+                                    status = 'rate_limited';
+                                }
                             } catch (error) {
                                 status = '';
                             }
 
                             if (!status) {
-                                return;
+                                status = 'failed';
                             }
 
                             if ('success' === status) {
@@ -297,6 +310,7 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                                 }
                             }
 
+                            submitted = false;
                             if (button) {
                                 button.disabled = false;
                                 button.textContent = 'Submit Quote';
