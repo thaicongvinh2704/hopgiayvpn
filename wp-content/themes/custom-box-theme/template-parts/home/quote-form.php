@@ -92,6 +92,7 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                     'missing' => 'Please fill in your name, email, and product name.',
                     'invalid' => 'The form session expired. Please refresh the page and try again.',
                     'file'    => 'Please upload a valid artwork file under 10MB.',
+                    'captcha' => 'Please complete the security check correctly.',
                 );
                 ?>
                 <?php if (isset($quote_messages[$quote_status])) : ?>
@@ -105,6 +106,7 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                 <input type="hidden" name="action" value="custom_box_quote_form">
                 <input type="hidden" name="product_type" value="boxes">
                 <?php wp_nonce_field('custom_box_quote_form', 'custom_box_quote_nonce'); ?>
+                <input class="quote-hp" type="text" name="website_url" tabindex="-1" autocomplete="off" aria-hidden="true">
 
                 <label>Product Name:</label>
                 <input type="text" name="product_name" placeholder="Boxes" value="<?php echo esc_attr(function_exists('custom_box_quote_product_name') ? custom_box_quote_product_name() : ''); ?>" required>
@@ -190,6 +192,32 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
 
                 <textarea name="message" placeholder="Additional Message"></textarea>
 
+                <?php
+                $quote_captcha = custom_box_quote_form_create_captcha();
+                $quote_captcha_id = 'custom-box-captcha-' . wp_rand(1000, 999999);
+                $quote_captcha_help_id = $quote_captcha_id . '-help';
+                ?>
+                <div class="quote-captcha">
+                    <label for="<?php echo esc_attr($quote_captcha_id); ?>">Security Check:</label>
+                    <div class="quote-captcha-row">
+                        <span class="quote-captcha-question"><?php echo esc_html($quote_captcha['question']); ?> =</span>
+                        <input
+                            id="<?php echo esc_attr($quote_captcha_id); ?>"
+                            type="number"
+                            name="custom_box_captcha_answer"
+                            min="0"
+                            step="1"
+                            inputmode="numeric"
+                            autocomplete="off"
+                            placeholder="Answer"
+                            aria-describedby="<?php echo esc_attr($quote_captcha_help_id); ?>"
+                            required
+                        >
+                    </div>
+                    <p class="quote-captcha-help" id="<?php echo esc_attr($quote_captcha_help_id); ?>">Please solve this quick check to prevent spam.</p>
+                    <input type="hidden" name="custom_box_captcha_token" value="<?php echo esc_attr($quote_captcha['token']); ?>">
+                </div>
+
                 <button type="submit" class="btn-primary">Submit Quote</button>
 
             </form>
@@ -197,6 +225,14 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
             <script>
                 (function() {
                     var forms = document.querySelectorAll('.quote-form');
+                    var statusMessages = {
+                        success: 'Thank you. Your quote request has been sent successfully.',
+                        failed: 'Sorry, we could not send your request right now. Please try again later.',
+                        missing: 'Please fill in your name, email, and product name.',
+                        invalid: 'The form session expired. Please refresh the page and try again.',
+                        file: 'Please upload a valid artwork file under 10MB.',
+                        captcha: 'Please complete the security check correctly.'
+                    };
 
                     forms.forEach(function(form, index) {
                         if (form.dataset.quoteIframeReady) {
@@ -224,12 +260,12 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                                 form.parentNode.insertBefore(message, form);
                             }
 
-                            message.className = 'quote-form-message quote-form-message-success';
-                            message.textContent = 'Thank you. Your quote request has been sent successfully.';
+                            message.className = 'quote-form-message quote-form-message-pending';
+                            message.textContent = 'Sending your request...';
 
                             if (button) {
                                 button.disabled = true;
-                                button.textContent = 'Submitted';
+                                button.textContent = 'Sending...';
                             }
                         });
 
@@ -249,10 +285,14 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                             }
 
                             if ('success' === status) {
+                                if (message) {
+                                    message.className = 'quote-form-message quote-form-message-success';
+                                    message.textContent = statusMessages.success;
+                                }
                                 form.reset();
                             } else if (message) {
                                 message.className = 'quote-form-message quote-form-message-' + status;
-                                message.textContent = 'Sorry, we could not send your request right now. Please try again later.';
+                                message.textContent = statusMessages[status] || statusMessages.failed;
                             }
 
                             if (button) {

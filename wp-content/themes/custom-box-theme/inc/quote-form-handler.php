@@ -49,6 +49,92 @@ function custom_box_quote_form_allowed_mimes() {
     );
 }
 
+function custom_box_quote_form_captcha_lifetime() {
+    return (int) apply_filters('custom_box_quote_form_captcha_lifetime', DAY_IN_SECONDS);
+}
+
+function custom_box_quote_form_base64url_encode($value) {
+    return rtrim(strtr(base64_encode($value), '+/', '-_'), '=');
+}
+
+function custom_box_quote_form_base64url_decode($value) {
+    $value = strtr($value, '-_', '+/');
+    $padding = strlen($value) % 4;
+
+    if ($padding) {
+        $value .= str_repeat('=', 4 - $padding);
+    }
+
+    return base64_decode($value, true);
+}
+
+function custom_box_quote_form_captcha_signature($question, $expires, $answer_hash) {
+    return hash_hmac(
+        'sha256',
+        $question . '|' . $expires . '|' . $answer_hash,
+        wp_salt('auth')
+    );
+}
+
+function custom_box_quote_form_create_captcha() {
+    $left = wp_rand(2, 9);
+    $right = wp_rand(1, 9);
+    $answer = (string) ($left + $right);
+    $question = sprintf('%d + %d', $left, $right);
+    $expires = time() + custom_box_quote_form_captcha_lifetime();
+    $answer_hash = hash_hmac('sha256', $answer, wp_salt('secure_auth'));
+
+    $payload = array(
+        'question'    => $question,
+        'expires'     => $expires,
+        'answer_hash' => $answer_hash,
+        'signature'   => custom_box_quote_form_captcha_signature($question, $expires, $answer_hash),
+    );
+
+    return array(
+        'question' => $question,
+        'token'    => custom_box_quote_form_base64url_encode(wp_json_encode($payload)),
+    );
+}
+
+function custom_box_quote_form_verify_captcha() {
+    $token = isset($_POST['custom_box_captcha_token']) ? trim((string) wp_unslash($_POST['custom_box_captcha_token'])) : '';
+    $answer = isset($_POST['custom_box_captcha_answer']) ? trim((string) wp_unslash($_POST['custom_box_captcha_answer'])) : '';
+
+    if ('' === $token || '' === $answer || !preg_match('/^\d+$/', $answer)) {
+        return false;
+    }
+    $answer = (string) absint($answer);
+
+    $payload = custom_box_quote_form_base64url_decode($token);
+    if (false === $payload) {
+        return false;
+    }
+
+    $payload = json_decode($payload, true);
+    if (!is_array($payload)) {
+        return false;
+    }
+
+    $question = isset($payload['question']) ? (string) $payload['question'] : '';
+    $expires = isset($payload['expires']) ? (int) $payload['expires'] : 0;
+    $answer_hash = isset($payload['answer_hash']) ? (string) $payload['answer_hash'] : '';
+    $signature = isset($payload['signature']) ? (string) $payload['signature'] : '';
+
+    if (!$question || !$expires || !$answer_hash || !$signature || time() > $expires) {
+        return false;
+    }
+
+    $expected_signature = custom_box_quote_form_captcha_signature($question, $expires, $answer_hash);
+    if (!hash_equals($expected_signature, $signature)) {
+        return false;
+    }
+
+    $submitted_hash = hash_hmac('sha256', $answer, wp_salt('secure_auth'));
+
+    return hash_equals($answer_hash, $submitted_hash);
+}
+
 function custom_box_register_quote_request_post_type() {
     register_post_type(
         'custom_box_quote',
@@ -77,27 +163,28 @@ function custom_box_build_quote_email($quote_data) {
             'width'            => '',
             'depth'            => '',
             'unit'             => '',
-            'stock_option'     => '',
-            'printing_option'  => '',
-            'finishing_option' => '',
-            'quantity'         => '',
-            'company'          => '',
-            'country'          => '',
-            'full_name'        => '',
-            'phone'            => '',
-            'email'            => '',
-            'message'          => '',
-            'quote_source'     => '',
-            'form_location'    => '',
-            'email_subject'    => '',
-            'current_page_url' => '',
-            'referrer_url'     => '',
-            'utm_source'       => '',
-            'utm_medium'       => '',
-            'utm_campaign'     => '',
-            'utm_term'         => '',
-            'utm_content'      => '',
-            'referer'          => '',
+            'stock_option'        => '',
+            'material_preference' => '',
+            'printing_option'     => '',
+            'finishing_option'    => '',
+            'quantity'            => '',
+            'company'             => '',
+            'country'             => '',
+            'full_name'           => '',
+            'phone'               => '',
+            'email'               => '',
+            'message'             => '',
+            'quote_source'        => '',
+            'form_location'       => '',
+            'email_subject'       => '',
+            'current_page_url'    => '',
+            'referrer_url'        => '',
+            'utm_source'          => '',
+            'utm_medium'          => '',
+            'utm_campaign'        => '',
+            'utm_term'            => '',
+            'utm_content'         => '',
+            'referer'             => '',
         )
     );
 
@@ -116,6 +203,7 @@ function custom_box_build_quote_email($quote_data) {
         'Quote Source: ' . $quote_data['quote_source'],
         'Size: ' . trim($quote_data['length'] . ' x ' . $quote_data['width'] . ' x ' . $quote_data['depth'] . ' ' . $quote_data['unit']),
         'Box Type / Stock Option: ' . $quote_data['stock_option'],
+        'Material Preference: ' . $quote_data['material_preference'],
         'Printing Option: ' . $quote_data['printing_option'],
         'Finishing Option: ' . $quote_data['finishing_option'],
         'Quantity: ' . $quote_data['quantity'],
@@ -141,13 +229,18 @@ function custom_box_build_quote_email($quote_data) {
         'UTM Content: ' . $quote_data['utm_content'],
     );
 
+    $headers = array(
+        'Content-Type: text/plain; charset=UTF-8',
+    );
+
+    if ($email && is_email($email)) {
+        $headers[] = 'Reply-To: ' . $full_name . ' <' . $email . '>';
+    }
+
     return array(
         'subject' => $subject,
         'body'    => implode("\n", $body),
-        'headers' => array(
-            'Content-Type: text/plain; charset=UTF-8',
-            'Reply-To: ' . $full_name . ' <' . $email . '>',
-        ),
+        'headers' => $headers,
     );
 }
 
@@ -244,12 +337,17 @@ function custom_box_handle_quote_form() {
         custom_box_quote_form_redirect('success');
     }
 
+    if (!custom_box_quote_form_verify_captcha()) {
+        custom_box_quote_form_redirect('captcha');
+    }
+
     $product_name = isset($_POST['product_name']) ? sanitize_text_field(wp_unslash($_POST['product_name'])) : '';
     $length = isset($_POST['length']) ? sanitize_text_field(wp_unslash($_POST['length'])) : '';
     $width = isset($_POST['width']) ? sanitize_text_field(wp_unslash($_POST['width'])) : '';
     $depth = isset($_POST['depth']) ? sanitize_text_field(wp_unslash($_POST['depth'])) : '';
     $unit = isset($_POST['unit']) ? sanitize_text_field(wp_unslash($_POST['unit'])) : '';
     $stock_option = isset($_POST['stock_option']) ? sanitize_text_field(wp_unslash($_POST['stock_option'])) : '';
+    $material_preference = isset($_POST['material_preference']) ? sanitize_text_field(wp_unslash($_POST['material_preference'])) : '';
     $printing_option = isset($_POST['printing_option']) ? sanitize_text_field(wp_unslash($_POST['printing_option'])) : '';
     $finishing_option = isset($_POST['finishing_option']) ? sanitize_text_field(wp_unslash($_POST['finishing_option'])) : '';
     $quantity = isset($_POST['quantity']) ? sanitize_text_field(wp_unslash($_POST['quantity'])) : '';
@@ -271,14 +369,25 @@ function custom_box_handle_quote_form() {
     $email_subject = isset($_POST['email_subject']) ? sanitize_text_field(wp_unslash($_POST['email_subject'])) : '';
     $attachments = array();
 
-    if (!$product_name || !$full_name || !$email || !is_email($email)) {
-        custom_box_quote_form_redirect('missing');
-    }
+    if ('paper_box_manufacturer' === $quote_source) {
+        if (!$full_name) {
+            $full_name = $company ? $company : 'Paper box quote lead';
+        }
 
-    if (
-        'paper_box_manufacturer' === $quote_source
-        && (!$stock_option || !$quantity || !$country)
-    ) {
+        $has_valid_email = $email && is_email($email);
+        $has_phone = '' !== trim($phone);
+
+        if (
+            !$product_name
+            || !$stock_option
+            || !$quantity
+            || !$country
+            || (!$has_valid_email && !$has_phone)
+            || ($email && !$has_valid_email)
+        ) {
+            custom_box_quote_form_redirect('missing');
+        }
+    } elseif (!$product_name || !$full_name || !$email || !is_email($email)) {
         custom_box_quote_form_redirect('missing');
     }
 
@@ -324,32 +433,33 @@ function custom_box_handle_quote_form() {
     }
 
     $quote_data = array(
-        'product_name'     => $product_name,
-        'length'           => $length,
-        'width'            => $width,
-        'depth'            => $depth,
-        'unit'             => $unit,
-        'stock_option'     => $stock_option,
-        'printing_option'  => $printing_option,
-        'finishing_option' => $finishing_option,
-        'quantity'         => $quantity,
-        'company'          => $company,
-        'country'          => $country,
-        'full_name'        => $full_name,
-        'phone'            => $phone,
-        'email'            => $email,
-        'message'          => $message,
-        'quote_source'     => $quote_source,
-        'form_location'    => $form_location,
-        'email_subject'    => $email_subject,
-        'current_page_url' => $current_page_url,
-        'referrer_url'     => $referrer_url,
-        'utm_source'       => $utm_source,
-        'utm_medium'       => $utm_medium,
-        'utm_campaign'     => $utm_campaign,
-        'utm_term'         => $utm_term,
-        'utm_content'      => $utm_content,
-        'referer'          => wp_get_referer(),
+        'product_name'        => $product_name,
+        'length'              => $length,
+        'width'               => $width,
+        'depth'               => $depth,
+        'unit'                => $unit,
+        'stock_option'        => $stock_option,
+        'material_preference' => $material_preference,
+        'printing_option'     => $printing_option,
+        'finishing_option'    => $finishing_option,
+        'quantity'            => $quantity,
+        'company'             => $company,
+        'country'             => $country,
+        'full_name'           => $full_name,
+        'phone'               => $phone,
+        'email'               => $email,
+        'message'             => $message,
+        'quote_source'        => $quote_source,
+        'form_location'       => $form_location,
+        'email_subject'       => $email_subject,
+        'current_page_url'    => $current_page_url,
+        'referrer_url'        => $referrer_url,
+        'utm_source'          => $utm_source,
+        'utm_medium'          => $utm_medium,
+        'utm_campaign'        => $utm_campaign,
+        'utm_term'            => $utm_term,
+        'utm_content'         => $utm_content,
+        'referer'             => wp_get_referer(),
     );
 
     $quote_id = custom_box_save_quote_request($quote_data, $attachments);
