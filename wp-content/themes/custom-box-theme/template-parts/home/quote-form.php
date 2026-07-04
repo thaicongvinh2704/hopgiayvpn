@@ -106,7 +106,6 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                 <input type="hidden" name="action" value="custom_box_quote_form">
                 <input type="hidden" name="product_type" value="boxes">
                 <?php wp_nonce_field('custom_box_quote_form', 'custom_box_quote_nonce'); ?>
-                <?php custom_box_quote_form_recaptcha_fields(); ?>
                 <input class="quote-hp" type="text" name="website_url" tabindex="-1" autocomplete="off" aria-hidden="true">
 
                 <label>Product Name:</label>
@@ -193,6 +192,8 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
 
                 <textarea name="message" placeholder="Additional Message"></textarea>
 
+                <?php custom_box_quote_form_recaptcha_fields(); ?>
+
                 <button type="submit" class="btn-primary">Submit Quote</button>
 
             </form>
@@ -209,6 +210,21 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                         captcha: 'Please complete the security check correctly.'
                     };
 
+                    function isRecaptchaComplete(form) {
+                        var recaptcha = form.querySelector('.custom-box-recaptcha');
+                        var response = form.querySelector('[name="g-recaptcha-response"]');
+
+                        return !recaptcha || !response || response.value.trim() !== '';
+                    }
+
+                    function resetRecaptcha(form) {
+                        var widget = form.querySelector('.g-recaptcha[data-widget-id]');
+
+                        if (widget && window.grecaptcha && window.grecaptcha.reset) {
+                            window.grecaptcha.reset(widget.dataset.widgetId);
+                        }
+                    }
+
                     forms.forEach(function(form, index) {
                         if (form.dataset.quoteIframeReady) {
                             return;
@@ -224,16 +240,23 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                         iframe.style.display = 'none';
                         form.parentNode.appendChild(iframe);
 
-                        form.addEventListener('submit', function() {
+                        form.addEventListener('submit', function(event) {
                             var button = form.querySelector('button[type="submit"]');
                             var message = form.parentNode.querySelector('.quote-form-message');
-
-                            form.target = iframeName;
 
                             if (!message) {
                                 message = document.createElement('div');
                                 form.parentNode.insertBefore(message, form);
                             }
+
+                            if (!isRecaptchaComplete(form)) {
+                                event.preventDefault();
+                                message.className = 'quote-form-message quote-form-message-captcha';
+                                message.textContent = statusMessages.captcha;
+                                return;
+                            }
+
+                            form.target = iframeName;
 
                             message.className = 'quote-form-message quote-form-message-pending';
                             message.textContent = 'Sending your request...';
@@ -265,9 +288,13 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                                     message.textContent = statusMessages.success;
                                 }
                                 form.reset();
+                                resetRecaptcha(form);
                             } else if (message) {
                                 message.className = 'quote-form-message quote-form-message-' + status;
                                 message.textContent = statusMessages[status] || statusMessages.failed;
+                                if ('captcha' === status) {
+                                    resetRecaptcha(form);
+                                }
                             }
 
                             if (button) {

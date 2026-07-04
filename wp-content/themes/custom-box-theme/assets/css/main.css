@@ -1695,6 +1695,10 @@ html {
     margin: 6px 0 10px;
 }
 
+.quote-form .custom-box-recaptcha {
+    margin: 2px 0 14px;
+}
+
 .quote-file-help {
     color: #3c4a54;
     font-size: 12px;

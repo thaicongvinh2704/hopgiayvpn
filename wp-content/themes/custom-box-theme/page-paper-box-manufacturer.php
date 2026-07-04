@@ -671,6 +671,10 @@ add_action('wp_head', function () use ($page_url, $image_url, $faq_items) {
             opacity: .72;
         }
 
+        .pbm-quote-form .custom-box-recaptcha {
+            margin: 14px 0 0;
+        }
+
         .pbm-privacy-note {
             font-size: 12px;
             line-height: 1.45;
@@ -1288,7 +1292,6 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
             <input type="hidden" name="utm_content" value="">
             <input class="pbm-hp" type="text" name="website_url" tabindex="-1" autocomplete="off" aria-hidden="true">
             <input type="hidden" name="custom_box_quote_nonce" value="<?php echo esc_attr(wp_create_nonce('custom_box_quote_form')); ?>">
-            <?php custom_box_quote_form_recaptcha_fields(); ?>
 
             <div class="pbm-form-head">
                 <span>Factory quotation</span>
@@ -1407,6 +1410,8 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
                     <?php endif; ?>
                 </div>
             </fieldset>
+
+            <?php custom_box_quote_form_recaptcha_fields(); ?>
 
             <button class="pbm-submit" type="submit">Get My Factory Quote</button>
             <p class="pbm-privacy-note">Your project details are confidential. We only use them to prepare your packaging quotation.</p>
@@ -1692,6 +1697,21 @@ get_header();
         captcha: 'Please complete the security check correctly.'
     };
 
+    function isRecaptchaComplete(form) {
+        var recaptcha = form.querySelector('.custom-box-recaptcha');
+        var response = form.querySelector('[name="g-recaptcha-response"]');
+
+        return !recaptcha || !response || response.value.trim() !== '';
+    }
+
+    function resetRecaptcha(form) {
+        var widget = form.querySelector('.g-recaptcha[data-widget-id]');
+
+        if (widget && window.grecaptcha && window.grecaptcha.reset) {
+            window.grecaptcha.reset(widget.dataset.widgetId);
+        }
+    }
+
     function setFieldError(field, message) {
         var label = field.closest('label');
         if (!label) {
@@ -1896,6 +1916,18 @@ get_header();
                 return;
             }
 
+            if (!isRecaptchaComplete(form)) {
+                event.preventDefault();
+                if (messageWrap) {
+                    messageWrap.innerHTML = '<p class="pbm-message pbm-message-captcha">' + statusMessages.captcha + '</p>';
+                }
+                pushEvent('quote_form_submit_error', {
+                    reason: 'captcha',
+                    form_location: form.getAttribute('data-form-location') || ''
+                });
+                return;
+            }
+
             form.target = iframeName;
             if (button) {
                 button.disabled = true;
@@ -1939,11 +1971,15 @@ get_header();
                 if ('success' === status) {
                     messageWrap.innerHTML = '<p class="pbm-message pbm-message-success">' + statusMessages.success + '</p>';
                     form.reset();
+                    resetRecaptcha(form);
                     pushEvent('quote_form_submit_success', {
                         form_location: form.getAttribute('data-form-location') || ''
                     });
                 } else {
                     messageWrap.innerHTML = '<p class="pbm-message pbm-message-' + status + '">' + (statusMessages[status] || statusMessages.failed) + '</p>';
+                    if ('captcha' === status) {
+                        resetRecaptcha(form);
+                    }
                     pushEvent('quote_form_submit_error', {
                         reason: status,
                         form_location: form.getAttribute('data-form-location') || ''
