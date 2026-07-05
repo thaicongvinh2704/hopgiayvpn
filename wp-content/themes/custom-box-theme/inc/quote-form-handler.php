@@ -258,27 +258,40 @@ function custom_box_enqueue_quote_form_recaptcha() {
         true
     );
 
-    wp_add_inline_script(
-        'custom-box-google-recaptcha',
-        <<<'JS'
-window.customBoxRecaptchaOnload = function() {
-    var widgets = document.querySelectorAll('.g-recaptcha[data-sitekey]');
-
-    widgets.forEach(function(widget) {
-        if (!window.grecaptcha || !window.grecaptcha.render || widget.dataset.widgetId) {
-            return;
-        }
-
-        widget.dataset.widgetId = String(window.grecaptcha.render(widget, {
-            sitekey: widget.getAttribute('data-sitekey')
-        }));
-    });
-};
-JS,
-        'before'
-    );
 }
 add_action('wp_enqueue_scripts', 'custom_box_enqueue_quote_form_recaptcha');
+
+function custom_box_print_recaptcha_onload_callback() {
+    $site_key = custom_box_quote_form_recaptcha_site_key();
+
+    if ('' === $site_key || !custom_box_quote_form_should_enqueue_recaptcha()) {
+        return;
+    }
+    ?>
+    <script id="custom-box-recaptcha-onload-callback" data-cfasync="false" data-no-optimize="1">
+    window.customBoxRecaptchaRender = function() {
+        var widgets = document.querySelectorAll('.g-recaptcha[data-sitekey]');
+
+        widgets.forEach(function(widget) {
+            if (!window.grecaptcha || !window.grecaptcha.render || widget.dataset.widgetId) {
+                return;
+            }
+
+            widget.dataset.widgetId = String(window.grecaptcha.render(widget, {
+                sitekey: widget.getAttribute('data-sitekey')
+            }));
+        });
+    };
+
+    window.customBoxRecaptchaOnload = window.customBoxRecaptchaRender;
+
+    if (window.grecaptcha && window.grecaptcha.render) {
+        window.customBoxRecaptchaRender();
+    }
+    </script>
+    <?php
+}
+add_action('wp_footer', 'custom_box_print_recaptcha_onload_callback', 5);
 
 function custom_box_recaptcha_script_tag($tag, $handle, $src) {
     if ('custom-box-google-recaptcha' !== $handle) {
