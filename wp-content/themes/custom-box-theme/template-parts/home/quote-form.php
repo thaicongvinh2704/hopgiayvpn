@@ -214,11 +214,40 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                         rate_limited: 'Too many quote requests. Please wait a few minutes and try again.'
                     };
 
-                    function isRecaptchaComplete(form) {
-                        var recaptcha = form.querySelector('.custom-box-recaptcha');
+                    function getRecaptchaResponse(form) {
+                        var widget = form.querySelector('.g-recaptcha[data-widget-id]');
                         var response = form.querySelector('[name="g-recaptcha-response"]');
 
-                        return !recaptcha || (response && response.value.trim() !== '');
+                        if (widget && window.grecaptcha && window.grecaptcha.getResponse) {
+                            return window.grecaptcha.getResponse(widget.dataset.widgetId).trim();
+                        }
+
+                        return response ? response.value.trim() : '';
+                    }
+
+                    function syncRecaptchaResponse(form) {
+                        var token = getRecaptchaResponse(form);
+                        var response = form.querySelector('[name="g-recaptcha-response"]');
+
+                        if (token && !response) {
+                            response = document.createElement('input');
+                            response.type = 'hidden';
+                            response.name = 'g-recaptcha-response';
+                            response.className = 'custom-box-recaptcha-response';
+                            form.appendChild(response);
+                        }
+
+                        if (response) {
+                            response.value = token;
+                        }
+
+                        return token;
+                    }
+
+                    function isRecaptchaComplete(form) {
+                        var recaptcha = form.querySelector('.custom-box-recaptcha');
+
+                        return !recaptcha || syncRecaptchaResponse(form) !== '';
                     }
 
                     function resetRecaptcha(form) {
@@ -227,6 +256,15 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                         if (widget && window.grecaptcha && window.grecaptcha.reset) {
                             window.grecaptcha.reset(widget.dataset.widgetId);
                         }
+
+                        form.querySelectorAll('[name="g-recaptcha-response"]').forEach(function(response) {
+                            if (response.classList.contains('custom-box-recaptcha-response')) {
+                                response.remove();
+                                return;
+                            }
+
+                            response.value = '';
+                        });
                     }
 
                     forms.forEach(function(form, index) {
@@ -301,15 +339,12 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                                     message.textContent = statusMessages.success;
                                 }
                                 form.reset();
-                                resetRecaptcha(form);
                             } else if (message) {
                                 message.className = 'quote-form-message quote-form-message-' + status;
                                 message.textContent = statusMessages[status] || statusMessages.failed;
-                                if ('captcha' === status) {
-                                    resetRecaptcha(form);
-                                }
                             }
 
+                            resetRecaptcha(form);
                             submitted = false;
                             if (button) {
                                 button.disabled = false;

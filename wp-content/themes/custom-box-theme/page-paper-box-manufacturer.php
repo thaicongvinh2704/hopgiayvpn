@@ -1703,11 +1703,40 @@ get_header();
         rate_limited: 'Too many quote requests. Please wait a few minutes and try again.'
     };
 
-    function isRecaptchaComplete(form) {
-        var recaptcha = form.querySelector('.custom-box-recaptcha');
+    function getRecaptchaResponse(form) {
+        var widget = form.querySelector('.g-recaptcha[data-widget-id]');
         var response = form.querySelector('[name="g-recaptcha-response"]');
 
-        return !recaptcha || (response && response.value.trim() !== '');
+        if (widget && window.grecaptcha && window.grecaptcha.getResponse) {
+            return window.grecaptcha.getResponse(widget.dataset.widgetId).trim();
+        }
+
+        return response ? response.value.trim() : '';
+    }
+
+    function syncRecaptchaResponse(form) {
+        var token = getRecaptchaResponse(form);
+        var response = form.querySelector('[name="g-recaptcha-response"]');
+
+        if (token && !response) {
+            response = document.createElement('input');
+            response.type = 'hidden';
+            response.name = 'g-recaptcha-response';
+            response.className = 'custom-box-recaptcha-response';
+            form.appendChild(response);
+        }
+
+        if (response) {
+            response.value = token;
+        }
+
+        return token;
+    }
+
+    function isRecaptchaComplete(form) {
+        var recaptcha = form.querySelector('.custom-box-recaptcha');
+
+        return !recaptcha || syncRecaptchaResponse(form) !== '';
     }
 
     function resetRecaptcha(form) {
@@ -1716,6 +1745,15 @@ get_header();
         if (widget && window.grecaptcha && window.grecaptcha.reset) {
             window.grecaptcha.reset(widget.dataset.widgetId);
         }
+
+        form.querySelectorAll('[name="g-recaptcha-response"]').forEach(function(response) {
+            if (response.classList.contains('custom-box-recaptcha-response')) {
+                response.remove();
+                return;
+            }
+
+            response.value = '';
+        });
     }
 
     function setFieldError(field, message) {
@@ -1986,15 +2024,11 @@ get_header();
                 if ('success' === status) {
                     messageWrap.innerHTML = '<p class="pbm-message pbm-message-success">' + statusMessages.success + '</p>';
                     form.reset();
-                    resetRecaptcha(form);
                     pushEvent('quote_form_submit_success', {
                         form_location: form.getAttribute('data-form-location') || ''
                     });
                 } else {
                     messageWrap.innerHTML = '<p class="pbm-message pbm-message-' + status + '">' + (statusMessages[status] || statusMessages.failed) + '</p>';
-                    if ('captcha' === status) {
-                        resetRecaptcha(form);
-                    }
                     pushEvent('quote_form_submit_error', {
                         reason: status,
                         form_location: form.getAttribute('data-form-location') || ''
@@ -2002,6 +2036,7 @@ get_header();
                 }
             }
 
+            resetRecaptcha(form);
             submitted = false;
             if (button) {
                 button.disabled = false;
