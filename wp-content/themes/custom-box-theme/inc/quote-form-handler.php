@@ -197,7 +197,7 @@ function custom_box_quote_form_rate_limit_check() {
 function custom_box_quote_form_recaptcha_site_key() {
     return apply_filters(
         'custom_box_quote_form_recaptcha_site_key',
-        custom_box_quote_form_config_value('CUSTOM_BOX_RECAPTCHA_SITE_KEY', '6Lfw5EMtAAAAADVk0EfDYCCLCZSZrxLF84eJFlVp')
+        custom_box_quote_form_config_value('CUSTOM_BOX_RECAPTCHA_SITE_KEY')
     );
 }
 
@@ -246,39 +246,22 @@ function custom_box_enqueue_quote_form_recaptcha() {
 
     wp_enqueue_script(
         'custom-box-google-recaptcha',
-        add_query_arg(
-            array(
-                'onload' => 'customBoxRecaptchaOnload',
-                'render' => 'explicit',
-            ),
-            'https://www.google.com/recaptcha/api.js'
-        ),
+        'https://www.google.com/recaptcha/api.js',
         array(),
         null,
         true
     );
-
-    wp_add_inline_script(
-        'custom-box-google-recaptcha',
-        <<<'JS'
-window.customBoxRecaptchaOnload = function() {
-    var widgets = document.querySelectorAll('.g-recaptcha[data-sitekey]:not([data-widget-id])');
-
-    widgets.forEach(function(widget) {
-        if (!window.grecaptcha || !window.grecaptcha.render) {
-            return;
-        }
-
-        widget.dataset.widgetId = window.grecaptcha.render(widget, {
-            sitekey: widget.getAttribute('data-sitekey')
-        });
-    });
-};
-JS,
-        'before'
-    );
 }
 add_action('wp_enqueue_scripts', 'custom_box_enqueue_quote_form_recaptcha');
+
+function custom_box_recaptcha_script_tag($tag, $handle, $src) {
+    if ('custom-box-google-recaptcha' !== $handle) {
+        return $tag;
+    }
+
+    return '<script src="' . esc_url($src) . '" id="custom-box-google-recaptcha-js" data-cfasync="false" data-no-optimize="1"></script>' . "\n";
+}
+add_filter('script_loader_tag', 'custom_box_recaptcha_script_tag', 9, 3);
 
 function custom_box_quote_form_captcha_lifetime() {
     return (int) apply_filters('custom_box_quote_form_captcha_lifetime', DAY_IN_SECONDS);
@@ -384,6 +367,8 @@ function custom_box_quote_form_verify_recaptcha() {
 
     $token = isset($_POST['g-recaptcha-response']) ? trim((string) wp_unslash($_POST['g-recaptcha-response'])) : '';
     if ('' === $token) {
+        custom_box_quote_form_log('token_missing');
+
         return array(
             'success' => false,
             'reason'  => 'token_missing',
@@ -403,10 +388,6 @@ function custom_box_quote_form_verify_recaptcha() {
         'response' => $token,
     );
 
-    if (!empty($_SERVER['REMOTE_ADDR'])) {
-        $body['remoteip'] = custom_box_quote_form_client_ip();
-    }
-
     $response = wp_remote_post(
         'https://www.google.com/recaptcha/api/siteverify',
         array(
@@ -416,6 +397,15 @@ function custom_box_quote_form_verify_recaptcha() {
     );
 
     if (is_wp_error($response)) {
+        custom_box_quote_form_log(
+            'verification_request_failed',
+            array(
+                'error_code'    => $response->get_error_code(),
+                'error_message' => $response->get_error_message(),
+                'token_hash'    => substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 12),
+            )
+        );
+
         return array(
             'success' => false,
             'reason'  => 'siteverify_request_error',
@@ -431,16 +421,32 @@ function custom_box_quote_form_verify_recaptcha() {
     }
 
     if (empty($payload['success'])) {
+        $error_codes = isset($payload['error-codes']) && is_array($payload['error-codes'])
+            ? array_map('sanitize_text_field', $payload['error-codes'])
+            : array();
+
+        custom_box_quote_form_log(
+            'google_response_error_codes',
+            array(
+                'error_codes' => $error_codes,
+                'token_hash'  => substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 12),
+            )
+        );
+
         return array(
             'success'     => false,
             'reason'      => 'siteverify_failed',
-            'error_codes' => isset($payload['error-codes']) && is_array($payload['error-codes'])
-                ? array_map('sanitize_text_field', $payload['error-codes'])
-                : array(),
+            'error_codes' => $error_codes,
         );
     }
 
     set_transient($token_key, 1, 10 * MINUTE_IN_SECONDS);
+    custom_box_quote_form_log(
+        'verification_success',
+        array(
+            'token_hash' => substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 12),
+        )
+    );
 
     return array(
         'success' => true,

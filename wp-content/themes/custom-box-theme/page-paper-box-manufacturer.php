@@ -1704,14 +1704,45 @@ get_header();
     };
 
     function getRecaptchaResponse(form) {
-        var widget = form.querySelector('.g-recaptcha[data-widget-id]');
+        var widgetId = getRecaptchaWidgetId(form);
         var response = form.querySelector('[name="g-recaptcha-response"]');
 
-        if (widget && window.grecaptcha && window.grecaptcha.getResponse) {
-            return window.grecaptcha.getResponse(widget.dataset.widgetId).trim();
+        if (widgetId !== '' && window.grecaptcha && window.grecaptcha.getResponse) {
+            try {
+                return window.grecaptcha.getResponse(widgetId).trim();
+            } catch (error) {
+                return response ? response.value.trim() : '';
+            }
         }
 
         return response ? response.value.trim() : '';
+    }
+
+    function getRecaptchaWidgetId(form) {
+        var widget = form.querySelector('.g-recaptcha');
+
+        if (!widget) {
+            return '';
+        }
+
+        if (widget.dataset.widgetId) {
+            return widget.dataset.widgetId;
+        }
+
+        if (!window.grecaptcha || !widget.querySelector('iframe')) {
+            return '';
+        }
+
+        var widgets = Array.prototype.slice.call(document.querySelectorAll('.g-recaptcha'));
+        var widgetIndex = widgets.indexOf(widget);
+
+        if (widgetIndex < 0) {
+            return '';
+        }
+
+        widget.dataset.widgetId = String(widgetIndex);
+
+        return widget.dataset.widgetId;
     }
 
     function syncRecaptchaResponse(form) {
@@ -1740,10 +1771,18 @@ get_header();
     }
 
     function resetRecaptcha(form) {
-        var widget = form.querySelector('.g-recaptcha[data-widget-id]');
+        var widgetId = getRecaptchaWidgetId(form);
 
-        if (widget && window.grecaptcha && window.grecaptcha.reset) {
-            window.grecaptcha.reset(widget.dataset.widgetId);
+        if (window.grecaptcha && window.grecaptcha.reset) {
+            try {
+                if (widgetId !== '') {
+                    window.grecaptcha.reset(widgetId);
+                } else if (document.querySelectorAll('.g-recaptcha').length === 1) {
+                    window.grecaptcha.reset();
+                }
+            } catch (error) {
+                // Keep the form usable if the widget was already reset by Google.
+            }
         }
 
         form.querySelectorAll('[name="g-recaptcha-response"]').forEach(function(response) {
