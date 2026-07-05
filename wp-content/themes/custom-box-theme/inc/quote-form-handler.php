@@ -197,7 +197,7 @@ function custom_box_quote_form_rate_limit_check() {
 function custom_box_quote_form_recaptcha_site_key() {
     return apply_filters(
         'custom_box_quote_form_recaptcha_site_key',
-        custom_box_quote_form_config_value('CUSTOM_BOX_RECAPTCHA_SITE_KEY')
+        custom_box_quote_form_config_value('CUSTOM_BOX_RECAPTCHA_SITE_KEY', '6Lfw5EMtAAAAADVk0EfDYCCLCZSZrxLF84eJFlVp')
     );
 }
 
@@ -246,10 +246,36 @@ function custom_box_enqueue_quote_form_recaptcha() {
 
     wp_enqueue_script(
         'custom-box-google-recaptcha',
-        'https://www.google.com/recaptcha/api.js',
+        add_query_arg(
+            array(
+                'onload' => 'customBoxRecaptchaOnload',
+                'render' => 'explicit',
+            ),
+            'https://www.google.com/recaptcha/api.js'
+        ),
         array(),
         null,
         true
+    );
+
+    wp_add_inline_script(
+        'custom-box-google-recaptcha',
+        <<<'JS'
+window.customBoxRecaptchaOnload = function() {
+    var widgets = document.querySelectorAll('.g-recaptcha[data-sitekey]');
+
+    widgets.forEach(function(widget) {
+        if (!window.grecaptcha || !window.grecaptcha.render || widget.dataset.widgetId) {
+            return;
+        }
+
+        widget.dataset.widgetId = String(window.grecaptcha.render(widget, {
+            sitekey: widget.getAttribute('data-sitekey')
+        }));
+    });
+};
+JS,
+        'before'
     );
 }
 add_action('wp_enqueue_scripts', 'custom_box_enqueue_quote_form_recaptcha');
@@ -259,7 +285,7 @@ function custom_box_recaptcha_script_tag($tag, $handle, $src) {
         return $tag;
     }
 
-    return '<script src="' . esc_url($src) . '" id="custom-box-google-recaptcha-js" data-cfasync="false" data-no-optimize="1"></script>' . "\n";
+    return '<script src="' . esc_url($src) . '" id="custom-box-google-recaptcha-js" data-cfasync="false" data-no-optimize="1" async defer></script>' . "\n";
 }
 add_filter('script_loader_tag', 'custom_box_recaptcha_script_tag', 9, 3);
 
