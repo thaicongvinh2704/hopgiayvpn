@@ -92,7 +92,7 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                     'missing' => 'Please fill in your name, email, and product name.',
                     'invalid' => 'The form session expired. Please refresh the page and try again.',
                     'file'    => 'Please upload a valid artwork file under 10MB.',
-                    'captcha' => 'Please complete the security check correctly.',
+                    'captcha' => 'Please complete the simple security question correctly.',
                     'spam'    => 'Sorry, this request could not be accepted.',
                     'rate_limited' => 'Too many quote requests. Please wait a few minutes and try again.',
                 );
@@ -194,7 +194,7 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
 
                 <textarea name="message" placeholder="Additional Message"></textarea>
 
-                <?php custom_box_quote_form_recaptcha_fields(); ?>
+                <?php custom_box_quote_form_math_challenge_fields('home_quote_form'); ?>
 
                 <button type="submit" class="btn-primary">Submit Quote</button>
 
@@ -209,102 +209,10 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                         missing: 'Please fill in your name, email, and product name.',
                         invalid: 'The form session expired. Please refresh the page and try again.',
                         file: 'Please upload a valid artwork file under 10MB.',
-                        captcha: 'Please complete the security check correctly.',
+                        captcha: 'Please complete the simple security question correctly.',
                         spam: 'Sorry, this request could not be accepted.',
                         rate_limited: 'Too many quote requests. Please wait a few minutes and try again.'
                     };
-
-                    function getRecaptchaResponse(form) {
-                        var widgetId = getRecaptchaWidgetId(form);
-                        var response = form.querySelector('[name="g-recaptcha-response"]');
-
-                        if (widgetId !== '' && window.grecaptcha && window.grecaptcha.getResponse) {
-                            try {
-                                return window.grecaptcha.getResponse(widgetId).trim();
-                            } catch (error) {
-                                return response ? response.value.trim() : '';
-                            }
-                        }
-
-                        return response ? response.value.trim() : '';
-                    }
-
-                    function getRecaptchaWidgetId(form) {
-                        var widget = form.querySelector('.g-recaptcha');
-
-                        if (!widget) {
-                            return '';
-                        }
-
-                        if (widget.dataset.widgetId) {
-                            return widget.dataset.widgetId;
-                        }
-
-                        if (!window.grecaptcha || !widget.querySelector('iframe')) {
-                            return '';
-                        }
-
-                        var widgets = Array.prototype.slice.call(document.querySelectorAll('.g-recaptcha'));
-                        var widgetIndex = widgets.indexOf(widget);
-
-                        if (widgetIndex < 0) {
-                            return '';
-                        }
-
-                        widget.dataset.widgetId = String(widgetIndex);
-
-                        return widget.dataset.widgetId;
-                    }
-
-                    function syncRecaptchaResponse(form) {
-                        var token = getRecaptchaResponse(form);
-                        var response = form.querySelector('[name="g-recaptcha-response"]');
-
-                        if (token && !response) {
-                            response = document.createElement('input');
-                            response.type = 'hidden';
-                            response.name = 'g-recaptcha-response';
-                            response.className = 'custom-box-recaptcha-response';
-                            form.appendChild(response);
-                        }
-
-                        if (response) {
-                            response.value = token;
-                        }
-
-                        return token;
-                    }
-
-                    function isRecaptchaComplete(form) {
-                        var recaptcha = form.querySelector('.custom-box-recaptcha');
-
-                        return !recaptcha || syncRecaptchaResponse(form) !== '';
-                    }
-
-                    function resetRecaptcha(form) {
-                        var widgetId = getRecaptchaWidgetId(form);
-
-                        if (window.grecaptcha && window.grecaptcha.reset) {
-                            try {
-                                if (widgetId !== '') {
-                                    window.grecaptcha.reset(widgetId);
-                                } else if (document.querySelectorAll('.g-recaptcha').length === 1) {
-                                    window.grecaptcha.reset();
-                                }
-                            } catch (error) {
-                                // Keep the form usable if the widget was already reset by Google.
-                            }
-                        }
-
-                        form.querySelectorAll('[name="g-recaptcha-response"]').forEach(function(response) {
-                            if (response.classList.contains('custom-box-recaptcha-response')) {
-                                response.remove();
-                                return;
-                            }
-
-                            response.value = '';
-                        });
-                    }
 
                     forms.forEach(function(form, index) {
                         if (form.dataset.quoteIframeReady) {
@@ -329,13 +237,6 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                             if (!message) {
                                 message = document.createElement('div');
                                 form.parentNode.insertBefore(message, form);
-                            }
-
-                            if (!isRecaptchaComplete(form)) {
-                                event.preventDefault();
-                                message.className = 'quote-form-message quote-form-message-captcha';
-                                message.textContent = statusMessages.captcha;
-                                return;
                             }
 
                             form.target = iframeName;
@@ -383,7 +284,6 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                                 message.textContent = statusMessages[status] || statusMessages.failed;
                             }
 
-                            resetRecaptcha(form);
                             submitted = false;
                             if (button) {
                                 button.disabled = false;

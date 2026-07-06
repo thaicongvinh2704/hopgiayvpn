@@ -205,7 +205,7 @@ $quote_messages = array(
     'missing' => 'Please fill in the required quote fields.',
     'invalid' => 'The form session expired. Please refresh the page and try again.',
     'file'    => 'Please upload a valid artwork file under 10MB.',
-    'captcha' => 'Please complete the security check correctly.',
+    'captcha' => 'Please complete the simple security question correctly.',
     'spam'    => 'Sorry, this request could not be accepted.',
     'rate_limited' => 'Too many quote requests. Please wait a few minutes and try again.',
 );
@@ -673,8 +673,23 @@ add_action('wp_head', function () use ($page_url, $image_url, $faq_items) {
             opacity: .72;
         }
 
-        .pbm-quote-form .custom-box-recaptcha {
+        .pbm-quote-form .custom-box-human-check {
             margin: 14px 0 0;
+        }
+
+        .pbm-quote-form .custom-box-human-check-label {
+            display: grid;
+            gap: 7px;
+            max-width: 260px;
+        }
+
+        .pbm-quote-form .custom-box-human-check-label span {
+            color: var(--pbm-ink);
+            font-weight: 780;
+        }
+
+        .pbm-quote-form .custom-box-human-check-label input {
+            max-width: 160px;
         }
 
         .pbm-privacy-note {
@@ -1415,7 +1430,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
                 </div>
             </fieldset>
 
-            <?php custom_box_quote_form_recaptcha_fields(); ?>
+            <?php custom_box_quote_form_math_challenge_fields('paper_box_manufacturer_' . $location); ?>
 
             <button class="pbm-submit" type="submit">Get My Factory Quote</button>
             <p class="pbm-privacy-note">Your project details are confidential. We only use them to prepare your packaging quotation.</p>
@@ -1698,102 +1713,10 @@ get_header();
         missing: 'Please fill in the required quote fields.',
         invalid: 'The form session expired. Please refresh the page and try again.',
         file: 'Please upload a valid artwork file under 10MB.',
-        captcha: 'Please complete the security check correctly.',
+        captcha: 'Please complete the simple security question correctly.',
         spam: 'Sorry, this request could not be accepted.',
         rate_limited: 'Too many quote requests. Please wait a few minutes and try again.'
     };
-
-    function getRecaptchaResponse(form) {
-        var widgetId = getRecaptchaWidgetId(form);
-        var response = form.querySelector('[name="g-recaptcha-response"]');
-
-        if (widgetId !== '' && window.grecaptcha && window.grecaptcha.getResponse) {
-            try {
-                return window.grecaptcha.getResponse(widgetId).trim();
-            } catch (error) {
-                return response ? response.value.trim() : '';
-            }
-        }
-
-        return response ? response.value.trim() : '';
-    }
-
-    function getRecaptchaWidgetId(form) {
-        var widget = form.querySelector('.g-recaptcha');
-
-        if (!widget) {
-            return '';
-        }
-
-        if (widget.dataset.widgetId) {
-            return widget.dataset.widgetId;
-        }
-
-        if (!window.grecaptcha || !widget.querySelector('iframe')) {
-            return '';
-        }
-
-        var widgets = Array.prototype.slice.call(document.querySelectorAll('.g-recaptcha'));
-        var widgetIndex = widgets.indexOf(widget);
-
-        if (widgetIndex < 0) {
-            return '';
-        }
-
-        widget.dataset.widgetId = String(widgetIndex);
-
-        return widget.dataset.widgetId;
-    }
-
-    function syncRecaptchaResponse(form) {
-        var token = getRecaptchaResponse(form);
-        var response = form.querySelector('[name="g-recaptcha-response"]');
-
-        if (token && !response) {
-            response = document.createElement('input');
-            response.type = 'hidden';
-            response.name = 'g-recaptcha-response';
-            response.className = 'custom-box-recaptcha-response';
-            form.appendChild(response);
-        }
-
-        if (response) {
-            response.value = token;
-        }
-
-        return token;
-    }
-
-    function isRecaptchaComplete(form) {
-        var recaptcha = form.querySelector('.custom-box-recaptcha');
-
-        return !recaptcha || syncRecaptchaResponse(form) !== '';
-    }
-
-    function resetRecaptcha(form) {
-        var widgetId = getRecaptchaWidgetId(form);
-
-        if (window.grecaptcha && window.grecaptcha.reset) {
-            try {
-                if (widgetId !== '') {
-                    window.grecaptcha.reset(widgetId);
-                } else if (document.querySelectorAll('.g-recaptcha').length === 1) {
-                    window.grecaptcha.reset();
-                }
-            } catch (error) {
-                // Keep the form usable if the widget was already reset by Google.
-            }
-        }
-
-        form.querySelectorAll('[name="g-recaptcha-response"]').forEach(function(response) {
-            if (response.classList.contains('custom-box-recaptcha-response')) {
-                response.remove();
-                return;
-            }
-
-            response.value = '';
-        });
-    }
 
     function setFieldError(field, message) {
         var label = field.closest('label');
@@ -2000,18 +1923,6 @@ get_header();
                 return;
             }
 
-            if (!isRecaptchaComplete(form)) {
-                event.preventDefault();
-                if (messageWrap) {
-                    messageWrap.innerHTML = '<p class="pbm-message pbm-message-captcha">' + statusMessages.captcha + '</p>';
-                }
-                pushEvent('quote_form_submit_error', {
-                    reason: 'captcha',
-                    form_location: form.getAttribute('data-form-location') || ''
-                });
-                return;
-            }
-
             form.target = iframeName;
             submitted = true;
             if (button) {
@@ -2075,7 +1986,6 @@ get_header();
                 }
             }
 
-            resetRecaptcha(form);
             submitted = false;
             if (button) {
                 button.disabled = false;

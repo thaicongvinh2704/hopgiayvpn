@@ -35,7 +35,14 @@ function custom_box_quote_form_log($event, $context = array()) {
         return;
     }
 
-    unset($context['secret'], $context['secret_key'], $context['g-recaptcha-response'], $context['token']);
+    unset(
+        $context['secret'],
+        $context['secret_key'],
+        $context['token'],
+        $context['custom_box_math_answer'],
+        $context['custom_box_math_payload'],
+        $context['custom_box_math_signature']
+    );
 
     $payload = array_merge(
         array(
@@ -212,7 +219,15 @@ function custom_box_quote_form_recaptcha_enabled() {
     return '' !== custom_box_quote_form_recaptcha_site_key();
 }
 
+function custom_box_quote_form_recaptcha_temporarily_disabled() {
+    return (bool) apply_filters('custom_box_quote_form_recaptcha_temporarily_disabled', true);
+}
+
 function custom_box_quote_form_recaptcha_fields() {
+    if (custom_box_quote_form_recaptcha_temporarily_disabled()) {
+        return;
+    }
+
     if (!custom_box_quote_form_recaptcha_enabled()) {
         return;
     }
@@ -224,6 +239,10 @@ function custom_box_quote_form_recaptcha_fields() {
 }
 
 function custom_box_quote_form_should_enqueue_recaptcha() {
+    if (custom_box_quote_form_recaptcha_temporarily_disabled()) {
+        return false;
+    }
+
     $should_enqueue = is_front_page()
         || is_page(array('contact', 'paper-box-manufacturer', 'packaging-landing'))
         || is_page_template('page-paper-box-manufacturer.php')
@@ -321,6 +340,148 @@ function custom_box_quote_form_base64url_decode($value) {
     return base64_decode($value, true);
 }
 
+function custom_box_quote_form_math_challenge_lifetime() {
+    return max(60, (int) apply_filters('custom_box_quote_form_math_challenge_lifetime', custom_box_quote_form_captcha_lifetime()));
+}
+
+function custom_box_quote_form_math_challenge_min_age() {
+    return max(0, (int) apply_filters('custom_box_quote_form_math_challenge_min_age', 2));
+}
+
+function custom_box_quote_form_math_challenge_signature($payload) {
+    return hash_hmac('sha256', $payload, wp_salt('auth'));
+}
+
+function custom_box_quote_form_create_math_challenge($context = 'quote') {
+    $context = sanitize_key($context);
+    if ('' === $context) {
+        $context = 'quote';
+    }
+
+    $left = wp_rand(2, 9);
+    $right = wp_rand(1, 9);
+    $now = time();
+
+    $payload = custom_box_quote_form_base64url_encode(
+        wp_json_encode(
+            array(
+                'a'          => $left,
+                'b'          => $right,
+                'op'         => '+',
+                'created_at' => $now,
+                'expires_at' => $now + custom_box_quote_form_math_challenge_lifetime(),
+                'context'    => $context,
+            )
+        )
+    );
+
+    return array(
+        'question'  => sprintf('Security check: %d + %d = ?', $left, $right),
+        'payload'   => $payload,
+        'signature' => custom_box_quote_form_math_challenge_signature($payload),
+    );
+}
+
+function custom_box_quote_form_math_challenge_fields($context = 'quote') {
+    $challenge = custom_box_quote_form_create_math_challenge($context);
+    ?>
+    <div class="custom-box-human-check">
+        <label class="custom-box-human-check-label">
+            <span><?php echo esc_html($challenge['question']); ?></span>
+            <input type="text" name="custom_box_math_answer" inputmode="numeric" pattern="[0-9]*" autocomplete="off">
+        </label>
+        <input type="hidden" name="custom_box_math_payload" value="<?php echo esc_attr($challenge['payload']); ?>">
+        <input type="hidden" name="custom_box_math_signature" value="<?php echo esc_attr($challenge['signature']); ?>">
+        <label class="custom-box-human-check-hp" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;" aria-hidden="true">
+            Leave this field empty
+            <input type="text" name="custom_box_website" tabindex="-1" autocomplete="off">
+        </label>
+    </div>
+    <?php
+}
+
+function custom_box_quote_form_log_human_check_fail($reason) {
+    $reason = sanitize_key($reason);
+
+    error_log('[Quote Human Check] reason=' . $reason);
+    custom_box_quote_form_log('human_check_fail', array('reason' => $reason));
+}
+
+function custom_box_quote_form_math_challenge_fail($reason) {
+    custom_box_quote_form_log_human_check_fail($reason);
+
+    return array(
+        'success' => false,
+        'reason'  => $reason,
+    );
+}
+
+function custom_box_quote_form_verify_math_challenge() {
+    $honeypot = custom_box_quote_form_post_text('custom_box_website', 255);
+    if ('' !== $honeypot) {
+        return custom_box_quote_form_math_challenge_fail('honeypot_filled');
+    }
+
+    $answer = custom_box_quote_form_post_text('custom_box_math_answer', 20);
+    $payload = custom_box_quote_form_post_text('custom_box_math_payload', 1000);
+    $signature = custom_box_quote_form_post_text('custom_box_math_signature', 128);
+
+    if ('' === $answer || '' === $payload || '' === $signature) {
+        return custom_box_quote_form_math_challenge_fail('math_missing');
+    }
+
+    if (!preg_match('/^[a-f0-9]{64}$/', $signature)) {
+        return custom_box_quote_form_math_challenge_fail('math_bad_signature');
+    }
+
+    $expected_signature = custom_box_quote_form_math_challenge_signature($payload);
+    if (!hash_equals($expected_signature, $signature)) {
+        return custom_box_quote_form_math_challenge_fail('math_bad_signature');
+    }
+
+    $decoded = custom_box_quote_form_base64url_decode($payload);
+    if (false === $decoded) {
+        return custom_box_quote_form_math_challenge_fail('math_bad_signature');
+    }
+
+    $data = json_decode($decoded, true);
+    if (!is_array($data)) {
+        return custom_box_quote_form_math_challenge_fail('math_bad_signature');
+    }
+
+    $left = isset($data['a']) ? (int) $data['a'] : 0;
+    $right = isset($data['b']) ? (int) $data['b'] : 0;
+    $operator = isset($data['op']) ? (string) $data['op'] : '';
+    $created_at = isset($data['created_at']) ? (int) $data['created_at'] : 0;
+    $expires_at = isset($data['expires_at']) ? (int) $data['expires_at'] : 0;
+
+    if ($left < 2 || $left > 9 || $right < 1 || $right > 9 || '+' !== $operator || $created_at <= 0 || $expires_at <= 0 || $created_at >= $expires_at) {
+        return custom_box_quote_form_math_challenge_fail('math_bad_signature');
+    }
+
+    $now = time();
+    if ($now > $expires_at) {
+        return custom_box_quote_form_math_challenge_fail('math_expired');
+    }
+
+    if ($created_at > ($now - custom_box_quote_form_math_challenge_min_age())) {
+        return custom_box_quote_form_math_challenge_fail('math_too_fast');
+    }
+
+    if (!preg_match('/^\d+$/', $answer)) {
+        return custom_box_quote_form_math_challenge_fail('math_wrong_answer');
+    }
+
+    if ((int) $answer !== ($left + $right)) {
+        return custom_box_quote_form_math_challenge_fail('math_wrong_answer');
+    }
+
+    return array(
+        'success' => true,
+        'reason'  => 'math_success',
+    );
+}
+
 function custom_box_quote_form_captcha_signature($question, $expires, $answer_hash) {
     return hash_hmac(
         'sha256',
@@ -389,173 +550,10 @@ function custom_box_quote_form_verify_captcha() {
 }
 
 function custom_box_quote_form_verify_recaptcha() {
-    if (!custom_box_quote_form_recaptcha_enabled()) {
-        custom_box_quote_form_log(
-            'recaptcha_verify_fail_debug',
-            array(
-                'captcha_reason' => 'site_key_missing',
-                'token_present'  => isset($_POST['g-recaptcha-response']) && '' !== trim((string) wp_unslash($_POST['g-recaptcha-response'])) ? 'yes' : 'no',
-            )
-        );
-
-        return array(
-            'success' => false,
-            'reason'  => 'site_key_missing',
-        );
-    }
-
-    $secret_key = custom_box_quote_form_recaptcha_secret_key();
-    if ('' === $secret_key) {
-        custom_box_quote_form_log(
-            'recaptcha_verify_fail_debug',
-            array(
-                'captcha_reason' => 'secret_key_missing',
-                'token_present'  => isset($_POST['g-recaptcha-response']) && '' !== trim((string) wp_unslash($_POST['g-recaptcha-response'])) ? 'yes' : 'no',
-            )
-        );
-
-        return array(
-            'success' => false,
-            'reason'  => 'secret_key_missing',
-        );
-    }
-
-    $token = isset($_POST['g-recaptcha-response']) ? trim((string) wp_unslash($_POST['g-recaptcha-response'])) : '';
-    if ('' === $token) {
-        custom_box_quote_form_log('token_missing');
-        custom_box_quote_form_log(
-            'recaptcha_verify_fail_debug',
-            array(
-                'captcha_reason' => 'token_missing',
-                'token_present'  => 'no',
-            )
-        );
-
-        return array(
-            'success' => false,
-            'reason'  => 'token_missing',
-        );
-    }
-
-    $token_key = 'custom_box_recaptcha_token_' . substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 32);
-    if (get_transient($token_key)) {
-        custom_box_quote_form_log(
-            'recaptcha_verify_fail_debug',
-            array(
-                'captcha_reason' => 'token_replay',
-                'token_present'  => 'yes',
-                'token_hash'     => substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 12),
-            )
-        );
-
-        return array(
-            'success' => false,
-            'reason'  => 'token_replay',
-        );
-    }
-
-    $body = array(
-        'secret'   => $secret_key,
-        'response' => $token,
-    );
-
-    $response = wp_remote_post(
-        'https://www.google.com/recaptcha/api/siteverify',
-        array(
-            'timeout' => 8,
-            'body'    => $body,
-        )
-    );
-
-    if (is_wp_error($response)) {
-        custom_box_quote_form_log(
-            'verification_request_failed',
-            array(
-                'error_code'    => $response->get_error_code(),
-                'error_message' => $response->get_error_message(),
-                'token_hash'    => substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 12),
-            )
-        );
-        custom_box_quote_form_log(
-            'recaptcha_verify_fail_debug',
-            array(
-                'captcha_reason'  => 'siteverify_request_error',
-                'token_present'   => 'yes',
-                'wp_error_code'   => $response->get_error_code(),
-                'wp_error_message'=> $response->get_error_message(),
-                'token_hash'      => substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 12),
-            )
-        );
-
-        return array(
-            'success' => false,
-            'reason'  => 'siteverify_request_error',
-        );
-    }
-
-    $raw_body = (string) wp_remote_retrieve_body($response);
-    $payload = json_decode($raw_body, true);
-    if (!is_array($payload)) {
-        custom_box_quote_form_log(
-            'recaptcha_verify_fail_debug',
-            array(
-                'captcha_reason'              => 'siteverify_invalid_response',
-                'token_present'               => 'yes',
-                'google_siteverify_raw_body'  => $raw_body,
-                'google_siteverify_payload'   => null,
-                'token_hash'                  => substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 12),
-            )
-        );
-
-        return array(
-            'success' => false,
-            'reason'  => 'siteverify_invalid_response',
-        );
-    }
-
-    if (empty($payload['success'])) {
-        $error_codes = isset($payload['error-codes']) && is_array($payload['error-codes'])
-            ? array_map('sanitize_text_field', $payload['error-codes'])
-            : array();
-
-        custom_box_quote_form_log(
-            'google_response_error_codes',
-            array(
-                'error_codes' => $error_codes,
-                'token_hash'  => substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 12),
-            )
-        );
-        custom_box_quote_form_log(
-            'recaptcha_verify_fail_debug',
-            array(
-                'captcha_reason'              => 'siteverify_failed',
-                'token_present'               => 'yes',
-                'google_siteverify_raw_body'  => $raw_body,
-                'google_siteverify_payload'   => $payload,
-                'hostname'                    => isset($payload['hostname']) ? sanitize_text_field((string) $payload['hostname']) : '',
-                'error_codes'                 => $error_codes,
-                'token_hash'                  => substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 12),
-            )
-        );
-
-        return array(
-            'success'     => false,
-            'reason'      => 'siteverify_failed',
-            'error_codes' => $error_codes,
-        );
-    }
-
-    set_transient($token_key, 1, 10 * MINUTE_IN_SECONDS);
-    custom_box_quote_form_log(
-        'verification_success',
-        array(
-            'token_hash' => substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 12),
-        )
-    );
-
+    // Temporarily bypassed while the signed math challenge protects quote submissions.
     return array(
         'success' => true,
-        'reason'  => 'siteverify_success',
+        'reason'  => 'recaptcha_temporarily_disabled',
     );
 }
 
@@ -787,23 +785,21 @@ function custom_box_handle_quote_form() {
         );
     }
 
-    $recaptcha = custom_box_quote_form_verify_recaptcha();
+    $human_check = custom_box_quote_form_verify_math_challenge();
     custom_box_quote_form_log(
-        'captcha_check',
+        'human_check',
         array(
-            'captcha_success'     => !empty($recaptcha['success']),
-            'captcha_reason'      => isset($recaptcha['reason']) ? $recaptcha['reason'] : '',
-            'captcha_error_codes' => isset($recaptcha['error_codes']) ? $recaptcha['error_codes'] : array(),
+            'success' => !empty($human_check['success']),
+            'reason'  => isset($human_check['reason']) ? $human_check['reason'] : '',
         )
     );
-    if (empty($recaptcha['success'])) {
+    if (empty($human_check['success'])) {
         custom_box_quote_form_reject(
             'captcha',
             400,
             array(
-                'captcha_success'     => false,
-                'captcha_reason'      => isset($recaptcha['reason']) ? $recaptcha['reason'] : '',
-                'captcha_error_codes' => isset($recaptcha['error_codes']) ? $recaptcha['error_codes'] : array(),
+                'human_check_success' => false,
+                'human_check_reason'  => isset($human_check['reason']) ? $human_check['reason'] : '',
             )
         );
     }
