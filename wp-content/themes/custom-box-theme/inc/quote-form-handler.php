@@ -390,6 +390,14 @@ function custom_box_quote_form_verify_captcha() {
 
 function custom_box_quote_form_verify_recaptcha() {
     if (!custom_box_quote_form_recaptcha_enabled()) {
+        custom_box_quote_form_log(
+            'recaptcha_verify_fail_debug',
+            array(
+                'captcha_reason' => 'site_key_missing',
+                'token_present'  => isset($_POST['g-recaptcha-response']) && '' !== trim((string) wp_unslash($_POST['g-recaptcha-response'])) ? 'yes' : 'no',
+            )
+        );
+
         return array(
             'success' => false,
             'reason'  => 'site_key_missing',
@@ -398,6 +406,14 @@ function custom_box_quote_form_verify_recaptcha() {
 
     $secret_key = custom_box_quote_form_recaptcha_secret_key();
     if ('' === $secret_key) {
+        custom_box_quote_form_log(
+            'recaptcha_verify_fail_debug',
+            array(
+                'captcha_reason' => 'secret_key_missing',
+                'token_present'  => isset($_POST['g-recaptcha-response']) && '' !== trim((string) wp_unslash($_POST['g-recaptcha-response'])) ? 'yes' : 'no',
+            )
+        );
+
         return array(
             'success' => false,
             'reason'  => 'secret_key_missing',
@@ -407,6 +423,13 @@ function custom_box_quote_form_verify_recaptcha() {
     $token = isset($_POST['g-recaptcha-response']) ? trim((string) wp_unslash($_POST['g-recaptcha-response'])) : '';
     if ('' === $token) {
         custom_box_quote_form_log('token_missing');
+        custom_box_quote_form_log(
+            'recaptcha_verify_fail_debug',
+            array(
+                'captcha_reason' => 'token_missing',
+                'token_present'  => 'no',
+            )
+        );
 
         return array(
             'success' => false,
@@ -416,6 +439,15 @@ function custom_box_quote_form_verify_recaptcha() {
 
     $token_key = 'custom_box_recaptcha_token_' . substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 32);
     if (get_transient($token_key)) {
+        custom_box_quote_form_log(
+            'recaptcha_verify_fail_debug',
+            array(
+                'captcha_reason' => 'token_replay',
+                'token_present'  => 'yes',
+                'token_hash'     => substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 12),
+            )
+        );
+
         return array(
             'success' => false,
             'reason'  => 'token_replay',
@@ -444,6 +476,16 @@ function custom_box_quote_form_verify_recaptcha() {
                 'token_hash'    => substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 12),
             )
         );
+        custom_box_quote_form_log(
+            'recaptcha_verify_fail_debug',
+            array(
+                'captcha_reason'  => 'siteverify_request_error',
+                'token_present'   => 'yes',
+                'wp_error_code'   => $response->get_error_code(),
+                'wp_error_message'=> $response->get_error_message(),
+                'token_hash'      => substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 12),
+            )
+        );
 
         return array(
             'success' => false,
@@ -451,8 +493,20 @@ function custom_box_quote_form_verify_recaptcha() {
         );
     }
 
-    $payload = json_decode((string) wp_remote_retrieve_body($response), true);
+    $raw_body = (string) wp_remote_retrieve_body($response);
+    $payload = json_decode($raw_body, true);
     if (!is_array($payload)) {
+        custom_box_quote_form_log(
+            'recaptcha_verify_fail_debug',
+            array(
+                'captcha_reason'              => 'siteverify_invalid_response',
+                'token_present'               => 'yes',
+                'google_siteverify_raw_body'  => $raw_body,
+                'google_siteverify_payload'   => null,
+                'token_hash'                  => substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 12),
+            )
+        );
+
         return array(
             'success' => false,
             'reason'  => 'siteverify_invalid_response',
@@ -469,6 +523,18 @@ function custom_box_quote_form_verify_recaptcha() {
             array(
                 'error_codes' => $error_codes,
                 'token_hash'  => substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 12),
+            )
+        );
+        custom_box_quote_form_log(
+            'recaptcha_verify_fail_debug',
+            array(
+                'captcha_reason'              => 'siteverify_failed',
+                'token_present'               => 'yes',
+                'google_siteverify_raw_body'  => $raw_body,
+                'google_siteverify_payload'   => $payload,
+                'hostname'                    => isset($payload['hostname']) ? sanitize_text_field((string) $payload['hostname']) : '',
+                'error_codes'                 => $error_codes,
+                'token_hash'                  => substr(hash_hmac('sha256', $token, wp_salt('secure_auth')), 0, 12),
             )
         );
 
