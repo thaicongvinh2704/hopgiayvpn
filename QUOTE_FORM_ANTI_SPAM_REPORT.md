@@ -42,6 +42,7 @@ Added scoring function:
 
 Implemented rules:
 
+- Full Name or Product Name matching `RobertZet`, `Robert Zet`, `robertzet`, or `ROBERTZET`: hard-block with reason `known_hard_block_spam_name`
 - Honeypot filled: `+10`
 - Timestamp missing/bad/expired: `+5`
 - Submitted under 5 seconds: `+5`
@@ -74,6 +75,12 @@ Blocked spam:
 - Does not trigger marketing/Brevo style lead handling
 - Saves a private spam log entry in WordPress option `custom_box_quote_spam_log`
 - Redirects as success or thank-you so bots cannot tell they were blocked
+
+Hard-block conditions:
+
+- Honeypot filled
+- Reason `known_hard_block_spam_name`
+- Spam score `>= 6`
 
 Suspicious leads:
 
@@ -232,3 +239,22 @@ Results:
 - Same IP scoring should mark suspicious: `PASS`, score `4`, blocked `no`
 - Transient rate limiter increments to 4th submit: `PASS`, count `4`, allowed `no`
 - Cyrillic/unusual character rule: `PASS`, score `3`, reason `message_unusual_characters`
+
+## Hard-Block Retest Results
+
+Retest method:
+
+- Bootstrapped WordPress through `wp-load.php`
+- Called `vpn_calculate_quote_spam_score()` and `custom_box_quote_form_is_blocked_spam()` directly
+- Did not call the full submit handler, so no real quote post or email was created during this retest
+- Because the handler checks `custom_box_quote_form_is_blocked_spam()` before save/email/sync, a passing hard-block test means admin email and quote post creation are skipped for that submission path
+
+Results:
+
+- Full Name `RobertZet`: `PASS`, blocked `yes`, reason `known_hard_block_spam_name`
+- Product Name `RobertZet`: `PASS`, blocked `yes`, reason `known_hard_block_spam_name`
+- Full Name `robertzet`: `PASS`, blocked `yes`, reason `known_hard_block_spam_name`
+- Full Name `ROBERTZET`: `PASS`, blocked `yes`, reason `known_hard_block_spam_name`
+- Full Name `Robert Zet`: `PASS`, blocked `yes`, reason `known_hard_block_spam_name`
+- Product Name `Robert Zet`: `PASS`, blocked `yes`, reason `known_hard_block_spam_name`
+- Real lead with normal name/company/country/quantity/message: `PASS`, score `0`, blocked `no`

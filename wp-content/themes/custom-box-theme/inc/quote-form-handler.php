@@ -396,10 +396,21 @@ function custom_box_quote_form_email_is_suspicious($email) {
     return (bool) preg_match('/^(?:spam|test|asdf|qwerty|noreply|no-reply|robertzet)(?:[._+-]?\d*)?$/i', $local);
 }
 
+function custom_box_quote_form_normalize_hard_block_name($value) {
+    $value = strtolower(trim((string) $value));
+
+    return preg_replace('/\s+/', '', $value);
+}
+
+function custom_box_quote_form_is_known_hard_block_spam_name($value) {
+    return 'robertzet' === custom_box_quote_form_normalize_hard_block_name($value);
+}
+
 function vpn_calculate_quote_spam_score($data) {
     $data = wp_parse_args(
         is_array($data) ? $data : array(),
         array(
+            'product_name'        => '',
             'full_name'          => '',
             'company'            => '',
             'country'            => '',
@@ -420,6 +431,13 @@ function vpn_calculate_quote_spam_score($data) {
 
     if ('' !== trim((string) $data['honeypot']) || '' !== trim((string) $data['secondary_honeypot'])) {
         custom_box_quote_form_add_spam_reason($score, $reasons, 10, 'honeypot_filled');
+    }
+
+    if (
+        custom_box_quote_form_is_known_hard_block_spam_name($data['full_name'])
+        || custom_box_quote_form_is_known_hard_block_spam_name($data['product_name'])
+    ) {
+        custom_box_quote_form_add_spam_reason($score, $reasons, 4, 'known_hard_block_spam_name');
     }
 
     $timestamp_check = custom_box_quote_form_timestamp_check(
@@ -504,6 +522,14 @@ function custom_box_quote_form_spam_suspicious_threshold() {
 function custom_box_quote_form_is_blocked_spam($spam_result) {
     $score = isset($spam_result['score']) ? (int) $spam_result['score'] : 0;
     $reason_keys = isset($spam_result['reason_keys']) ? (array) $spam_result['reason_keys'] : array();
+
+    if (in_array('honeypot_filled', $reason_keys, true)) {
+        return true;
+    }
+
+    if (in_array('known_hard_block_spam_name', $reason_keys, true)) {
+        return true;
+    }
 
     if ($score >= custom_box_quote_form_spam_block_threshold()) {
         return true;
