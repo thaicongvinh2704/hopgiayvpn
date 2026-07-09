@@ -25,6 +25,7 @@ $custom_box_inc_files = array(
     'inc/cosmetic-paper-packaging-design-post-sync.php',
     'inc/skincare-paper-packaging-selection-post-sync.php',
     'inc/food-paper-packaging-selection-post-sync.php',
+    'inc/bakery-paper-packaging-material-selection-post-sync.php',
     'inc/cosmetic-brand-perception-post-sync.php',
     'inc/perfume-paper-box-structure-post-sync.php',
     'inc/jewelry-paper-box-packaging-post-sync.php',
