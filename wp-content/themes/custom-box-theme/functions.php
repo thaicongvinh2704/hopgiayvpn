@@ -29,6 +29,7 @@ $custom_box_inc_files = array(
     'inc/cosmetic-brand-perception-post-sync.php',
     'inc/perfume-paper-box-structure-post-sync.php',
     'inc/jewelry-paper-box-packaging-post-sync.php',
+    'inc/how-to-package-chocolate-gift-sets-post-sync.php',
     'inc/quote-form-handler.php',
     'inc/woocommerce.php',
 );
