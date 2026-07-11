@@ -241,6 +241,26 @@ $batches = array(
 			'tools/verify-magnetic-closure-products.php',
 		),
 	),
+	array(
+		'name'      => 'Perfume Packaging products July 2026',
+		'marker'    => 'product-samples-perfume-packaging-202607',
+		'expected'  => 10,
+		'min_words' => 1500,
+		'scripts'   => array(
+			'tools/import-perfume-packaging-products.php',
+			'tools/verify-perfume-packaging-products.php',
+		),
+	),
+	array(
+		'name'      => 'Corrugated Mailer products July 2026',
+		'marker'    => 'product-samples-corrugated-mailers-202607',
+		'expected'  => 10,
+		'min_words' => 1500,
+		'scripts'   => array(
+			'tools/import-corrugated-mailer-products.php',
+			'tools/verify-corrugated-mailer-products.php',
+		),
+	),
 );
 
 foreach ( $batches as $batch ) {

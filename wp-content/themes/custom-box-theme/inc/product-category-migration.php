@@ -138,6 +138,26 @@ function custom_box_category_migration_explicit_product_map() {
         'custom-pink-cosmetic-gift-box-with-satin-lining' => array('beauty-skincare-packaging'),
         'custom-cosmetic-packaging-box'                  => array('beauty-skincare-packaging'),
         'custom-cosmetic-paper-bag'                      => array('beauty-skincare-packaging'),
+        'custom-folding-carton-perfume-box'              => array('perfume-packaging-boxes', 'cosmetic-paper-boxes', 'beauty-skincare-packaging', 'folding-carton-boxes', 'custom-paper-boxes'),
+        'custom-luxury-perfume-box-with-magnetic-closure' => array('perfume-packaging-boxes', 'magnetic-closure-boxes', 'rigid-boxes', 'cosmetic-paper-boxes', 'beauty-skincare-packaging', 'gift-paper-boxes'),
+        'custom-mini-perfume-bottle-packaging-box'       => array('perfume-packaging-boxes', 'cosmetic-paper-boxes', 'beauty-skincare-packaging', 'folding-carton-boxes', 'custom-paper-boxes'),
+        'custom-perfume-and-lotion-gift-set-box'         => array('perfume-packaging-boxes', 'cosmetic-paper-boxes', 'beauty-skincare-packaging', 'gift-paper-boxes', 'rigid-boxes'),
+        'custom-perfume-box-with-eva-foam-insert'        => array('perfume-packaging-boxes', 'cosmetic-paper-boxes', 'beauty-skincare-packaging', 'rigid-boxes', 'packaging-accessories'),
+        'custom-perfume-box-with-lid-and-base'           => array('perfume-packaging-boxes', 'cosmetic-paper-boxes', 'beauty-skincare-packaging', 'lid-and-base-boxes', 'rigid-boxes', 'gift-paper-boxes'),
+        'custom-perfume-box-with-paper-insert'           => array('perfume-packaging-boxes', 'cosmetic-paper-boxes', 'beauty-skincare-packaging', 'folding-carton-boxes', 'custom-paper-boxes'),
+        'custom-perfume-drawer-box-with-insert'          => array('perfume-packaging-boxes', 'drawer-boxes', 'rigid-boxes', 'cosmetic-paper-boxes', 'beauty-skincare-packaging', 'gift-paper-boxes'),
+        'custom-perfume-sample-set-box'                  => array('perfume-packaging-boxes', 'cosmetic-paper-boxes', 'beauty-skincare-packaging', 'gift-paper-boxes', 'rigid-boxes'),
+        'custom-refillable-perfume-packaging-box'        => array('perfume-packaging-boxes', 'cosmetic-paper-boxes', 'beauty-skincare-packaging', 'folding-carton-boxes', 'custom-paper-boxes'),
+        'custom-corrugated-apparel-mailer-box'           => array('corrugated-mailer-boxes', 'fashion-sportswear-packaging', 'custom-paper-boxes'),
+        'custom-corrugated-book-mailer-box'              => array('corrugated-mailer-boxes', 'back-to-school-stationery-packaging', 'custom-paper-boxes'),
+        'custom-corrugated-bottle-shipping-box-with-dividers' => array('corrugated-mailer-boxes', 'wine-premium-drink-packaging', 'premium-food-beverage-packaging', 'packaging-accessories'),
+        'custom-corrugated-candle-shipping-box'          => array('corrugated-mailer-boxes', 'candle-packaging-boxes', 'home-lifestyle-packaging'),
+        'custom-corrugated-cosmetic-mailer-box'          => array('corrugated-mailer-boxes', 'beauty-skincare-packaging', 'cosmetic-paper-boxes'),
+        'custom-corrugated-electronics-mailer-box'       => array('corrugated-mailer-boxes', 'electronics-accessories-packaging', 'custom-paper-boxes'),
+        'custom-corrugated-food-delivery-box'            => array('corrugated-mailer-boxes', 'premium-food-beverage-packaging', 'food-paper-boxes'),
+        'custom-corrugated-gift-set-mailer-box'          => array('corrugated-mailer-boxes', 'corporate-gift-packaging', 'gift-paper-boxes'),
+        'custom-corrugated-shoe-mailer-box'              => array('corrugated-mailer-boxes', 'fashion-sportswear-packaging', 'custom-paper-boxes'),
+        'custom-corrugated-subscription-box'             => array('corrugated-mailer-boxes', 'corporate-gift-packaging', 'home-lifestyle-packaging', 'custom-paper-boxes'),
 
         'premium-tea-coffee-chocolate-packaging-boxes'   => array('premium-food-beverage-packaging'),
         'custom-paper-tube-food-packaging-box'           => array('premium-food-beverage-packaging'),
@@ -598,11 +618,11 @@ function custom_box_curated_category_product_assignments() {
             'exclude' => array(),
         ),
         'gift-paper-boxes' => array(
-            'include' => explode(',', 'custom-double-wine-bottle-gift-box,custom-drawer-gift-box,custom-flat-rigid-gift-box-with-ribbon,custom-fountain-pen-gift-box,custom-gift-box-with-ribbon-bow,custom-gift-box-with-shredded-paper-filler,custom-luxury-gift-box-with-paper-bag,custom-luxury-wine-bottle-packaging-box,custom-magnetic-closure-gift-box,custom-magnetic-gift-box,custom-magnetic-gift-box-with-insert-tray,custom-mooncake-handbag-gift-box-with-insert,custom-nested-kraft-gift-boxes-with-ribbon,custom-rigid-gift-box,custom-rigid-gift-box-with-matching-paper-bag,custom-rigid-gift-box-with-ribbon-closure,custom-rigid-square-gift-box-with-foil-logo,custom-single-wine-bottle-gift-box,custom-tea-gift-box-with-window,custom-wine-bottle-gift-box-with-paper-bag,custom-wine-bottle-packaging-box,custom-wine-drawer-box-with-insert,custom-wine-gift-box-with-accessories,luxury-wine-bottle-packaging-boxes'),
+            'include' => explode(',', 'custom-corrugated-gift-set-mailer-box,custom-double-wine-bottle-gift-box,custom-drawer-gift-box,custom-flat-rigid-gift-box-with-ribbon,custom-fountain-pen-gift-box,custom-gift-box-with-ribbon-bow,custom-gift-box-with-shredded-paper-filler,custom-luxury-gift-box-with-paper-bag,custom-luxury-wine-bottle-packaging-box,custom-magnetic-closure-gift-box,custom-magnetic-gift-box,custom-magnetic-gift-box-with-insert-tray,custom-mooncake-handbag-gift-box-with-insert,custom-nested-kraft-gift-boxes-with-ribbon,custom-rigid-gift-box,custom-rigid-gift-box-with-matching-paper-bag,custom-rigid-gift-box-with-ribbon-closure,custom-rigid-square-gift-box-with-foil-logo,custom-single-wine-bottle-gift-box,custom-tea-gift-box-with-window,custom-wine-bottle-gift-box-with-paper-bag,custom-wine-bottle-packaging-box,custom-wine-drawer-box-with-insert,custom-wine-gift-box-with-accessories,luxury-wine-bottle-packaging-boxes'),
             'exclude' => array(),
         ),
         'food-paper-boxes' => array(
-            'include' => explode(',', 'custom-kraft-bakery-box-with-window,custom-kraft-pastry-drawer-box-with-insert,custom-luxury-mooncake-gift-box-with-insert,custom-mooncake-cabinet-gift-box-with-drawers,custom-mooncake-gift-box-set-with-paper-bag,custom-mooncake-handbag-gift-box-with-insert,custom-mooncake-packaging-box,custom-mug-packaging-box-with-window,custom-paper-egg-packaging-boxes,custom-paper-tube-food-packaging-box,custom-pastry-box-with-clear-window,custom-pastry-display-box-with-drawer,custom-pastry-gift-box-with-insert,custom-pastry-sleeve-box-with-insert,custom-pizza-packaging-box,custom-printed-corrugated-pet-food-box,custom-tea-gift-box-with-window'),
+            'include' => explode(',', 'custom-corrugated-food-delivery-box,custom-kraft-bakery-box-with-window,custom-kraft-pastry-drawer-box-with-insert,custom-luxury-mooncake-gift-box-with-insert,custom-mooncake-cabinet-gift-box-with-drawers,custom-mooncake-gift-box-set-with-paper-bag,custom-mooncake-handbag-gift-box-with-insert,custom-mooncake-packaging-box,custom-mug-packaging-box-with-window,custom-paper-egg-packaging-boxes,custom-paper-tube-food-packaging-box,custom-pastry-box-with-clear-window,custom-pastry-display-box-with-drawer,custom-pastry-gift-box-with-insert,custom-pastry-sleeve-box-with-insert,custom-pizza-packaging-box,custom-printed-corrugated-pet-food-box,custom-tea-gift-box-with-window'),
             'exclude' => array(),
         ),
         'bakery-packaging-boxes' => array(
@@ -618,7 +638,7 @@ function custom_box_curated_category_product_assignments() {
             'exclude' => array(),
         ),
         'corrugated-mailer-boxes' => array(
-            'include' => explode(',', 'custom-corrugated-mailer-box,custom-printed-corrugated-ecommerce-box,custom-printed-corrugated-pet-food-box'),
+            'include' => explode(',', 'custom-corrugated-apparel-mailer-box,custom-corrugated-book-mailer-box,custom-corrugated-bottle-shipping-box-with-dividers,custom-corrugated-candle-shipping-box,custom-corrugated-cosmetic-mailer-box,custom-corrugated-electronics-mailer-box,custom-corrugated-food-delivery-box,custom-corrugated-gift-set-mailer-box,custom-corrugated-mailer-box,custom-corrugated-shoe-mailer-box,custom-corrugated-subscription-box,custom-printed-corrugated-ecommerce-box,custom-printed-corrugated-pet-food-box'),
             'exclude' => array(),
         ),
         'paper-tube-packaging' => array(
@@ -642,11 +662,11 @@ function custom_box_curated_category_product_assignments() {
             'exclude' => array(),
         ),
         'packaging-accessories' => array(
-            'include' => explode(',', 'custom-gift-box-with-shredded-paper-filler,custom-luxury-gift-box-with-paper-bag,custom-mooncake-gift-box-set-with-paper-bag,custom-phone-packaging-box-with-paper-bag,custom-rigid-gift-box-with-matching-paper-bag,custom-wine-bottle-gift-box-with-paper-bag,custom-wine-gift-box-with-accessories'),
+            'include' => explode(',', 'custom-corrugated-bottle-shipping-box-with-dividers,custom-gift-box-with-shredded-paper-filler,custom-luxury-gift-box-with-paper-bag,custom-mooncake-gift-box-set-with-paper-bag,custom-phone-packaging-box-with-paper-bag,custom-rigid-gift-box-with-matching-paper-bag,custom-wine-bottle-gift-box-with-paper-bag,custom-wine-gift-box-with-accessories'),
             'exclude' => array(),
         ),
         'candle-packaging-boxes' => array(
-            'include' => array('custom-candle-jar-box-with-insert'),
+            'include' => array('custom-candle-jar-box-with-insert', 'custom-corrugated-candle-shipping-box'),
             'exclude' => array(),
         ),
         'bird-nest-packaging-boxes' => array(

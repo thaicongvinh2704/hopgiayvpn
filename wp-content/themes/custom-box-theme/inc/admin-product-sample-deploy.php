@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-07-03-custom-vial-boxes' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-07-11-corrugated-mailer-products' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -45,7 +45,7 @@ function custom_box_product_sample_deploy_admin_post() {
 	$state = get_transient( $state_key );
 	if ( ! is_array( $state ) ) {
 		$scope = isset( $_POST['deploy_scope'] ) ? sanitize_key( wp_unslash( $_POST['deploy_scope'] ) ) : 'latest';
-		if ( 'all' !== $scope ) {
+		if ( ! in_array( $scope, custom_box_product_sample_deploy_allowed_scopes(), true ) ) {
 			$scope = 'latest';
 		}
 
@@ -695,6 +695,26 @@ function custom_box_product_sample_deploy_batches(): array {
 				'tools/verify-magnetic-closure-products.php',
 			),
 		),
+		array(
+			'name'      => 'Perfume Packaging products July 2026',
+			'marker'    => 'product-samples-perfume-packaging-202607',
+			'expected'  => 10,
+			'min_words' => 1500,
+			'scripts'   => array(
+				'tools/import-perfume-packaging-products.php',
+				'tools/verify-perfume-packaging-products.php',
+			),
+		),
+		array(
+			'name'      => 'Corrugated Mailer products July 2026',
+			'marker'    => 'product-samples-corrugated-mailers-202607',
+			'expected'  => 10,
+			'min_words' => 1500,
+			'scripts'   => array(
+				'tools/import-corrugated-mailer-products.php',
+				'tools/verify-corrugated-mailer-products.php',
+			),
+		),
 	);
 }
 
@@ -705,11 +725,40 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 		return $batches;
 	}
 
+	if ( 'perfume_202607' === $scope ) {
+		return array_values(
+			array_filter(
+				$batches,
+				static function ( $batch ) {
+					return isset( $batch['marker'] ) && 'product-samples-perfume-packaging-202607' === $batch['marker'];
+				}
+			)
+		);
+	}
+
+	if ( 'corrugated_202607' === $scope ) {
+		return array_values(
+			array_filter(
+				$batches,
+				static function ( $batch ) {
+					return isset( $batch['marker'] ) && 'product-samples-corrugated-mailers-202607' === $batch['marker'];
+				}
+			)
+		);
+	}
+
 	return array_slice( $batches, -1 );
 }
 
+function custom_box_product_sample_deploy_allowed_scopes(): array {
+	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607' );
+}
+
 function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
-	$scope  = isset( $state['scope'] ) && 'all' === $state['scope'] ? 'all' : 'latest';
+	$scope = isset( $state['scope'] ) ? sanitize_key( (string) $state['scope'] ) : 'latest';
+	if ( ! in_array( $scope, custom_box_product_sample_deploy_allowed_scopes(), true ) ) {
+		$scope = 'latest';
+	}
 	$batches = custom_box_product_sample_deploy_selected_batches( $scope );
 
 	if ( empty( $state['scope_logged'] ) ) {
@@ -989,6 +1038,26 @@ function custom_box_product_sample_deploy_page() {
 			<input type="hidden" name="action" value="custom_box_product_sample_custom_vial_sync">
 			<?php wp_nonce_field( 'custom_box_product_sample_custom_vial_sync' ); ?>
 			<?php submit_button( 'Sync Custom Vial Boxes Product', 'primary large', 'submit', false ); ?>
+		</form>
+
+		<h2>Perfume Packaging Sync</h2>
+		<p>Use this after a Git deploy to import or update the 10 July 2026 perfume packaging products from the 40 uploaded source images.</p>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-bottom:24px;">
+			<input type="hidden" name="action" value="custom_box_product_sample_deploy">
+			<input type="hidden" name="reset" value="1">
+			<input type="hidden" name="deploy_scope" value="perfume_202607">
+			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
+			<?php submit_button( 'Sync Perfume Packaging Products', 'primary large', 'submit', false ); ?>
+		</form>
+
+		<h2>Corrugated Mailer Sync</h2>
+		<p>Use this after a Git deploy to import or update the 10 July 2026 corrugated mailer and shipping box products from the 40 uploaded source images.</p>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-bottom:24px;">
+			<input type="hidden" name="action" value="custom_box_product_sample_deploy">
+			<input type="hidden" name="reset" value="1">
+			<input type="hidden" name="deploy_scope" value="corrugated_202607">
+			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
+			<?php submit_button( 'Sync Corrugated Mailer Products', 'primary large', 'submit', false ); ?>
 		</form>
 
 		<hr>

@@ -607,3 +607,67 @@ Current batch 1 local verification after rewrite:
 - Duplicate audit exists
 
 Do not assume batch 1 is approved for Git/deploy until user explicitly approves.
+
+### Perfume Packaging batch (July 2026)
+
+Local WooCommerce batch marker:
+
+- `_vpn_sample_import = product-samples-perfume-packaging-202607`
+
+This batch imports 10 products from 40 uploaded original images in `wp-content/uploads/2026/07/`. The 40 files are grouped as 10 products with four images per product, following the numbered image grouping rule:
+
+1. Custom Folding Carton Perfume Box
+2. Custom Luxury Perfume Box With Magnetic Closure
+3. Custom Mini Perfume Bottle Packaging Box
+4. Custom Perfume and Lotion Gift Set Box
+5. Custom Perfume Box With EVA Foam Insert
+6. Custom Perfume Box With Lid and Base
+7. Custom Perfume Box With Paper Insert
+8. Custom Perfume Drawer Box With Insert
+9. Custom Perfume Sample Set Box
+10. Custom Refillable Perfume Packaging Box
+
+Files used:
+
+- `tools/import-perfume-packaging-products.php`
+- `tools/verify-perfume-packaging-products.php`
+- `product-samples-perfume-packaging-202607-audit.md`
+- `product-samples-perfume-packaging-202607-descriptions-text-only.md`
+
+After `git pull` on hosting, either run:
+
+- `php tools/deploy-product-samples-all.php`
+
+or open **Tools > Product Sample Deploy** and click **Sync Perfume Packaging Products**. The importer creates missing WordPress media attachments from the uploaded images before publishing the products.
+
+### Corrugated Mailer batch (July 2026)
+
+Local WooCommerce batch marker:
+
+- `_vpn_sample_import = product-samples-corrugated-mailers-202607`
+
+This batch imports 10 products from 40 uploaded original images in `wp-content/uploads/2026/07/`. The 40 files are grouped as 10 products with four images per product, following the numbered image grouping rule:
+
+1. Custom Corrugated Apparel Mailer Box
+2. Custom Corrugated Book Mailer Box
+3. Custom Corrugated Bottle Shipping Box With Dividers
+4. Custom Corrugated Candle Shipping Box
+5. Custom Corrugated Cosmetic Mailer Box
+6. Custom Corrugated Electronics Mailer Box
+7. Custom Corrugated Food Delivery Box
+8. Custom Corrugated Gift Set Mailer Box
+9. Custom Corrugated Shoe Mailer Box
+10. Custom Corrugated Subscription Box
+
+Files used:
+
+- `tools/import-corrugated-mailer-products.php`
+- `tools/verify-corrugated-mailer-products.php`
+- `product-samples-corrugated-mailers-202607-audit.md`
+- `product-samples-corrugated-mailers-202607-descriptions-text-only.md`
+
+After `git pull` on hosting, either run:
+
+- `php tools/deploy-product-samples-all.php`
+
+or open **Tools > Product Sample Deploy** and click **Sync Corrugated Mailer Products**. The importer creates missing WordPress media attachments from the uploaded images or bundled deploy assets before publishing the products.
