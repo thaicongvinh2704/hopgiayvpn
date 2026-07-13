@@ -166,9 +166,17 @@ $faqs = array(
                             <span>Email</span>
                             <input type="email" name="email" autocomplete="email" required>
                         </label>
-                        <label class="vpn-packaging-quick-field-wide">
+                        <label>
                             <span>Phone / WhatsApp <small>Optional</small></span>
                             <input type="tel" name="phone" autocomplete="tel">
+                        </label>
+                        <label>
+                            <span>Quantity</span>
+                            <input type="number" name="quantity" min="1" inputmode="numeric" required>
+                        </label>
+                        <label class="vpn-packaging-quick-field-wide">
+                            <span>Packaging type</span>
+                            <input type="text" name="stock_option" required>
                         </label>
                     </div>
 
