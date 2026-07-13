@@ -139,6 +139,7 @@ $faqs = array(
             <aside class="vpn-packaging-quick-card" id="hero-quick-quote" aria-labelledby="hero-quick-quote-title">
                 <div class="vpn-packaging-quick-card-head">
                     <h2 id="hero-quick-quote-title">Get a Quick Quote</h2>
+                    <p>Tell us what you need — we'll reply within 24 hours.</p>
                 </div>
 
                 <?php if ($quick_quote_status && isset($quick_quote_messages[$quick_quote_status])) : ?>
@@ -160,34 +161,63 @@ $faqs = array(
                     <div class="vpn-packaging-quick-fields">
                         <label>
                             <span>Your name</span>
-                            <input type="text" name="full_name" autocomplete="name" required>
+                            <input type="text" name="full_name" autocomplete="name" placeholder="Full name" required>
                         </label>
                         <label>
-                            <span>Email</span>
-                            <input type="email" name="email" autocomplete="email" required>
-                        </label>
-                        <label>
-                            <span>Phone / WhatsApp <small>Optional</small></span>
-                            <input type="tel" name="phone" autocomplete="tel">
-                        </label>
-                        <label>
-                            <span>Quantity</span>
-                            <input type="number" name="quantity" min="1" inputmode="numeric" required>
+                            <span>Work email</span>
+                            <input type="email" name="email" autocomplete="email" placeholder="name@company.com" required>
                         </label>
                         <label>
                             <span>Packaging type</span>
-                            <input type="text" name="stock_option" required>
+                            <select name="stock_option" required>
+                                <option value="" selected disabled>Select type</option>
+                                <option value="Folding carton">Folding carton</option>
+                                <option value="Rigid box">Rigid box</option>
+                                <option value="Corrugated box">Corrugated box</option>
+                                <option value="Paper bag">Paper bag</option>
+                                <option value="Paper tube">Paper tube</option>
+                                <option value="Other / Not sure">Other / Not sure</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>Quantity</span>
+                            <input type="text" name="quantity" inputmode="numeric" placeholder="e.g. 1,000 pcs" required>
                         </label>
                         <label>
                             <span>Delivery country</span>
-                            <input type="text" name="country" autocomplete="country-name" required>
+                            <select name="country" autocomplete="country-name" required>
+                                <option value="" selected disabled>Select country</option>
+                                <option value="United States">United States</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="Australia">Australia</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Germany">Germany</option>
+                                <option value="France">France</option>
+                                <option value="Netherlands">Netherlands</option>
+                                <option value="United Arab Emirates">United Arab Emirates</option>
+                                <option value="Saudi Arabia">Saudi Arabia</option>
+                                <option value="India">India</option>
+                                <option value="Japan">Japan</option>
+                                <option value="South Korea">South Korea</option>
+                                <option value="Singapore">Singapore</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>Phone / WhatsApp <small>Optional</small></span>
+                            <input type="tel" name="phone" autocomplete="tel" placeholder="+84 123 456 789">
                         </label>
                     </div>
 
                     <button type="submit">
-                        Send Request
+                        Get My Quote
                         <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                     </button>
+                    <p class="vpn-packaging-quick-foot">
+                        <span>Free quotation</span>
+                        <i aria-hidden="true">•</i>
+                        <span>No obligation</span>
+                    </p>
                 </form>
             </aside>
             <figure class="vpn-packaging-hero-media">

@@ -19,7 +19,14 @@
     color: var(--vpn-landing-primary-dark);
     font-size: 20px;
     line-height: 1.15;
-    margin: 0 0 10px;
+    margin: 0 0 4px;
+}
+
+.vpn-packaging-quick-card-head p {
+    color: #445f72;
+    font-size: 11px;
+    line-height: 1.4;
+    margin: 0 0 11px;
 }
 
 .vpn-packaging-quick-fields {
@@ -51,6 +58,7 @@
 }
 
 .vpn-packaging-quick-fields input,
+.vpn-packaging-quick-fields select,
 .vpn-packaging-quick-fields textarea {
     appearance: none;
     background: #f8fbfd;
@@ -68,7 +76,20 @@
     width: 100%;
 }
 
+.vpn-packaging-quick-fields select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5l5-5' fill='none' stroke='%230b3954' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-position: right 10px center;
+    background-repeat: no-repeat;
+    padding-right: 30px;
+}
+
+.vpn-packaging-quick-fields input::placeholder {
+    color: #84919c;
+    opacity: 1;
+}
+
 .vpn-packaging-quick-fields input:focus,
+.vpn-packaging-quick-fields select:focus,
 .vpn-packaging-quick-fields textarea:focus {
     background: #ffffff;
     border-color: var(--vpn-landing-primary);
@@ -93,6 +114,22 @@
     padding: 8px 14px;
     transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
     width: 100%;
+}
+
+.vpn-packaging-quick-form .vpn-packaging-quick-foot {
+    align-items: center;
+    color: #445f72;
+    display: flex;
+    font-size: 10px;
+    gap: 8px;
+    justify-content: center;
+    line-height: 1.3;
+    margin: 7px 0 0;
+}
+
+.vpn-packaging-quick-form .vpn-packaging-quick-foot i {
+    color: var(--vpn-landing-primary-dark);
+    font-style: normal;
 }
 
 .vpn-packaging-quick-form button:hover {
