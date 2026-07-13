@@ -1309,6 +1309,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
             <input type="hidden" name="utm_campaign" value="">
             <input type="hidden" name="utm_term" value="">
             <input type="hidden" name="utm_content" value="">
+            <?php custom_box_quote_form_anti_spam_fields('quote'); ?>
             <input type="hidden" name="custom_box_quote_nonce" value="<?php echo esc_attr(wp_create_nonce('custom_box_quote_form')); ?>">
 
             <div class="pbm-form-head">

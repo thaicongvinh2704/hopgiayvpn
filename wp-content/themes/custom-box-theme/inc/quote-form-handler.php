@@ -169,11 +169,11 @@ function custom_box_quote_form_anti_spam_context($context) {
 }
 
 function custom_box_quote_form_timestamp_min_age() {
-    return max(1, (int) apply_filters('custom_box_quote_form_timestamp_min_age', 5));
+    return max(1, (int) apply_filters('custom_box_quote_form_timestamp_min_age', 1));
 }
 
 function custom_box_quote_form_timestamp_max_age() {
-    return max(custom_box_quote_form_timestamp_min_age(), (int) apply_filters('custom_box_quote_form_timestamp_max_age', DAY_IN_SECONDS));
+    return max(custom_box_quote_form_timestamp_min_age(), (int) apply_filters('custom_box_quote_form_timestamp_max_age', 7 * DAY_IN_SECONDS));
 }
 
 function custom_box_quote_form_timestamp_signature($timestamp, $context) {
@@ -248,10 +248,12 @@ function custom_box_quote_form_timestamp_check($started_at, $context, $signature
     );
 }
 
-function custom_box_quote_form_rate_limit_check() {
-    $limit = (int) apply_filters('custom_box_quote_form_rate_limit_max', 3);
-    $window = (int) apply_filters('custom_box_quote_form_rate_limit_window', 10 * MINUTE_IN_SECONDS);
-    $key = 'custom_box_quote_rate_' . substr(custom_box_quote_form_ip_hash(), 0, 32);
+function custom_box_quote_form_rate_limit_check($context = 'quote') {
+    $context = custom_box_quote_form_anti_spam_context($context);
+    $default_limit = 'comment' === $context ? 5 : 10;
+    $limit = max(1, (int) apply_filters('custom_box_quote_form_rate_limit_max', $default_limit, $context));
+    $window = max(MINUTE_IN_SECONDS, (int) apply_filters('custom_box_quote_form_rate_limit_window', 10 * MINUTE_IN_SECONDS, $context));
+    $key = 'custom_box_form_rate_' . md5($context . '|' . custom_box_quote_form_ip_hash());
     $state = get_transient($key);
 
     if (!is_array($state)) {
@@ -284,6 +286,104 @@ function custom_box_quote_form_rate_limit_check() {
         'window'  => $window,
     );
 }
+
+function custom_box_public_form_antispam_check($context = 'quote') {
+    $context = custom_box_quote_form_anti_spam_context($context);
+    $honeypot = custom_box_quote_form_post_text('website_url', 255);
+
+    if ('' !== $honeypot) {
+        return array(
+            'success' => false,
+            'status'  => 'spam',
+            'reason'  => 'honeypot_filled',
+        );
+    }
+
+    $posted_context = custom_box_quote_form_post_key('custom_box_form_context', 100);
+    if ($context !== $posted_context) {
+        return array(
+            'success' => false,
+            'status'  => 'invalid',
+            'reason'  => 'context_mismatch',
+        );
+    }
+
+    $timestamp_check = custom_box_quote_form_timestamp_check(
+        isset($_POST['custom_box_form_started_at']) ? absint(wp_unslash($_POST['custom_box_form_started_at'])) : 0,
+        $posted_context,
+        custom_box_quote_form_post_text('custom_box_form_signature', 128)
+    );
+
+    if (empty($timestamp_check['valid'])) {
+        return array(
+            'success' => false,
+            'status'  => 'invalid',
+            'reason'  => isset($timestamp_check['reason']) ? $timestamp_check['reason'] : 'timestamp_invalid',
+        );
+    }
+
+    if ('submitted_under_5_seconds' === $timestamp_check['reason']) {
+        return array(
+            'success' => false,
+            'status'  => 'spam',
+            'reason'  => 'submitted_too_fast',
+        );
+    }
+
+    $rate_limit = custom_box_quote_form_rate_limit_check($context);
+    if (empty($rate_limit['allowed'])) {
+        return array(
+            'success'    => false,
+            'status'     => 'rate_limited',
+            'reason'     => 'rate_limit_exceeded',
+            'rate_limit' => $rate_limit,
+        );
+    }
+
+    return array(
+        'success'    => true,
+        'status'     => 'clean',
+        'reason'     => 'checks_passed',
+        'rate_limit' => $rate_limit,
+    );
+}
+
+function custom_box_comment_antispam_fields() {
+    custom_box_quote_form_anti_spam_fields('comment');
+}
+add_action('comment_form_after_fields', 'custom_box_comment_antispam_fields');
+
+function custom_box_validate_public_comment_antispam($comment_data) {
+    if (
+        is_admin()
+        || is_user_logged_in()
+        || (defined('REST_REQUEST') && REST_REQUEST)
+        || (defined('XMLRPC_REQUEST') && XMLRPC_REQUEST)
+    ) {
+        return $comment_data;
+    }
+
+    $comment_type = isset($comment_data['comment_type']) ? (string) $comment_data['comment_type'] : '';
+    if (in_array($comment_type, array('pingback', 'trackback'), true)) {
+        return $comment_data;
+    }
+
+    $check = custom_box_public_form_antispam_check('comment');
+    if (empty($check['success'])) {
+        $message = 'rate_limited' === $check['status']
+            ? __('Too many submissions. Please wait a few minutes and try again.', 'custom-box-theme')
+            : __('Your submission could not be verified. Please refresh the page and try again.', 'custom-box-theme');
+
+        wp_die(
+            esc_html($message),
+            esc_html__('Submission Blocked', 'custom-box-theme'),
+            array('response' => 'rate_limited' === $check['status'] ? 429 : 403)
+        );
+    }
+
+    return $comment_data;
+}
+add_filter('preprocess_comment', 'custom_box_validate_public_comment_antispam');
 
 function custom_box_quote_form_add_spam_reason(&$score, &$reasons, $points, $reason) {
     $points = (int) $points;
@@ -1206,6 +1306,25 @@ function custom_box_handle_quote_form() {
         !wp_verify_nonce(sanitize_text_field(wp_unslash($_POST['custom_box_quote_nonce'])), 'custom_box_quote_form')
     ) {
         custom_box_quote_form_reject('invalid', 400, array('nonce_valid' => false));
+    }
+
+    $antispam_check = custom_box_public_form_antispam_check('quote');
+    custom_box_quote_form_log(
+        'antispam_check',
+        array(
+            'success' => !empty($antispam_check['success']),
+            'status'  => isset($antispam_check['status']) ? $antispam_check['status'] : '',
+            'reason'  => isset($antispam_check['reason']) ? $antispam_check['reason'] : '',
+        )
+    );
+
+    if (empty($antispam_check['success'])) {
+        $status = isset($antispam_check['status']) ? sanitize_key($antispam_check['status']) : 'spam';
+        custom_box_quote_form_reject(
+            $status,
+            'rate_limited' === $status ? 429 : 400,
+            array('antispam_reason' => isset($antispam_check['reason']) ? $antispam_check['reason'] : '')
+        );
     }
 
     $product_name = custom_box_quote_form_post_text('product_name', 200);
