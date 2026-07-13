@@ -174,9 +174,13 @@ $faqs = array(
                             <span>Quantity</span>
                             <input type="number" name="quantity" min="1" inputmode="numeric" required>
                         </label>
-                        <label class="vpn-packaging-quick-field-wide">
+                        <label>
                             <span>Packaging type</span>
                             <input type="text" name="stock_option" required>
+                        </label>
+                        <label>
+                            <span>Delivery country</span>
+                            <input type="text" name="country" autocomplete="country-name" required>
                         </label>
                     </div>
 
