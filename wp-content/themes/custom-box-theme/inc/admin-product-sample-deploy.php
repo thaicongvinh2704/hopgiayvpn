@@ -32,8 +32,9 @@ function custom_box_product_sample_deploy_admin_post() {
 	check_admin_referer( 'custom_box_product_sample_deploy' );
 
 	if ( function_exists( 'set_time_limit' ) ) {
-		@set_time_limit( 120 );
+		@set_time_limit( 300 );
 	}
+	@ignore_user_abort( true );
 
 	$result_key = 'custom_box_product_sample_deploy_result_' . get_current_user_id();
 	$state_key  = 'custom_box_product_sample_deploy_state_' . get_current_user_id();
@@ -910,6 +911,10 @@ function custom_box_product_sample_deploy_restore_tools() {
 
 	foreach ( $files as $file ) {
 		$target = trailingslashit( $target_dir ) . basename( $file );
+		if ( file_exists( $target ) ) {
+			$log[] = 'Already present: ' . basename( $file );
+			continue;
+		}
 		if ( copy( $file, $target ) ) {
 			$log[] = 'Copied: ' . basename( $file );
 		} else {
@@ -948,6 +953,10 @@ function custom_box_product_sample_deploy_restore_assets() {
 		if ( $root_files ) {
 			foreach ( $root_files as $file ) {
 				$target = ABSPATH . basename( $file );
+				if ( file_exists( $target ) ) {
+					$log[] = 'Root asset already present: ' . basename( $file );
+					continue;
+				}
 				if ( copy( $file, $target ) ) {
 					$log[] = 'Copied root asset: ' . basename( $file );
 				} else {
@@ -977,14 +986,17 @@ function custom_box_product_sample_deploy_restore_assets() {
 					wp_mkdir_p( $target );
 				}
 
-				$image_files = glob( $month_dir . '/*' );
-				foreach ( $image_files ? $image_files : array() as $file ) {
+					$image_files = glob( $month_dir . '/*' );
+					foreach ( $image_files ? $image_files : array() as $file ) {
 					if ( ! is_file( $file ) ) {
 						continue;
 					}
 
 					++$image_count;
 					$target_file = trailingslashit( $target ) . basename( $file );
+					if ( file_exists( $target_file ) ) {
+						continue;
+					}
 					if ( copy( $file, $target_file ) ) {
 						++$copied;
 					} else {
