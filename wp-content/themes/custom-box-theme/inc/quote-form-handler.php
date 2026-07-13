@@ -1173,21 +1173,6 @@ function custom_box_handle_quote_form() {
         custom_box_quote_form_reject('invalid', 400, array('nonce_valid' => false));
     }
 
-    $honeypot = custom_box_quote_form_post_text('website_url', 255);
-    $secondary_honeypot = custom_box_quote_form_post_text('custom_box_website', 255);
-    custom_box_quote_form_log('honeypot_check', array('honeypot_filled' => '' !== $honeypot || '' !== $secondary_honeypot));
-
-    $rate_limit = custom_box_quote_form_rate_limit_check();
-
-    $human_check = custom_box_quote_form_verify_math_challenge();
-    custom_box_quote_form_log(
-        'human_check',
-        array(
-            'success' => !empty($human_check['success']),
-            'reason'  => isset($human_check['reason']) ? $human_check['reason'] : '',
-        )
-    );
-
     $product_name = custom_box_quote_form_post_text('product_name', 200);
     $length = custom_box_quote_form_post_text('length', 120);
     $width = custom_box_quote_form_post_text('width', 80);
@@ -1214,9 +1199,6 @@ function custom_box_handle_quote_form() {
     $utm_term = custom_box_quote_form_post_text('utm_term', 150);
     $utm_content = custom_box_quote_form_post_text('utm_content', 150);
     $email_subject = custom_box_quote_form_post_text('email_subject', 200);
-    $form_started_at = isset($_POST['custom_box_form_started_at']) ? absint(wp_unslash($_POST['custom_box_form_started_at'])) : 0;
-    $form_context = custom_box_quote_form_post_key('custom_box_form_context', 100);
-    $form_signature = custom_box_quote_form_post_text('custom_box_form_signature', 128);
     $attachments = array();
 
     $quote_data = array(
@@ -1249,55 +1231,11 @@ function custom_box_handle_quote_form() {
         'referer'             => wp_get_referer(),
     );
 
-    $spam_result = vpn_calculate_quote_spam_score(
-        array_merge(
-            $quote_data,
-            array(
-                'honeypot'           => $honeypot,
-                'secondary_honeypot' => $secondary_honeypot,
-                'form_started_at'    => $form_started_at,
-                'form_context'       => $form_context,
-                'form_signature'     => $form_signature,
-                'rate_limit'         => $rate_limit,
-            )
-        )
-    );
-
-    $spam_status = ((int) $spam_result['score'] >= custom_box_quote_form_spam_suspicious_threshold()) ? 'suspicious' : 'clean';
-    $quote_data['spam_status'] = $spam_status;
-    $quote_data['spam_score'] = (int) $spam_result['score'];
-    $quote_data['spam_reasons'] = isset($spam_result['reasons']) && is_array($spam_result['reasons']) ? $spam_result['reasons'] : array();
-
-    custom_box_quote_form_log(
-        'spam_score',
-        array(
-            'spam_score'      => $quote_data['spam_score'],
-            'spam_status'     => $spam_status,
-            'spam_reasons'    => isset($spam_result['reason_keys']) ? $spam_result['reason_keys'] : array(),
-            'rate_limit_count' => isset($rate_limit['count']) ? (int) $rate_limit['count'] : 0,
-        )
-    );
-
-    if (custom_box_quote_form_is_blocked_spam($spam_result)) {
-        custom_box_quote_form_save_spam_log($quote_data, $spam_result);
-
-        if ('paper_box_manufacturer' === $quote_source) {
-            custom_box_quote_form_redirect_to_thank_you();
-        }
-
-        custom_box_quote_form_redirect('success');
-    }
-
-    if (empty($human_check['success'])) {
-        custom_box_quote_form_reject(
-            'captcha',
-            400,
-            array(
-                'human_check_success' => false,
-                'human_check_reason'  => isset($human_check['reason']) ? $human_check['reason'] : '',
-            )
-        );
-    }
+    // Anti-spam blocking is intentionally disabled. Keep the request data clean
+    // so legitimate leads always continue to validation and email delivery.
+    $quote_data['spam_status'] = 'clean';
+    $quote_data['spam_score'] = 0;
+    $quote_data['spam_reasons'] = array();
 
     if ('paper_box_manufacturer' === $quote_source) {
         if (!$full_name) {

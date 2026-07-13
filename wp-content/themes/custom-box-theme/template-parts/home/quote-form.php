@@ -108,7 +108,6 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                 <input type="hidden" name="action" value="custom_box_quote_form">
                 <input type="hidden" name="product_type" value="boxes">
                 <?php wp_nonce_field('custom_box_quote_form', 'custom_box_quote_nonce'); ?>
-                <?php custom_box_quote_form_anti_spam_fields('home_quote_form'); ?>
 
                 <label>Product Name:</label>
                 <input type="text" name="product_name" placeholder="Boxes" value="<?php echo esc_attr(function_exists('custom_box_quote_product_name') ? custom_box_quote_product_name() : ''); ?>" required>
@@ -197,8 +196,6 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                 </div>
 
                 <textarea name="message" placeholder="Additional Message"></textarea>
-
-                <?php custom_box_quote_form_math_challenge_fields('home_quote_form'); ?>
 
                 <button type="submit" class="btn-primary">Submit Quote</button>
 

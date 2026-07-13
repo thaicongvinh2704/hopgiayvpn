@@ -1309,7 +1309,6 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
             <input type="hidden" name="utm_campaign" value="">
             <input type="hidden" name="utm_term" value="">
             <input type="hidden" name="utm_content" value="">
-            <?php custom_box_quote_form_anti_spam_fields('paper_box_manufacturer_' . $location); ?>
             <input type="hidden" name="custom_box_quote_nonce" value="<?php echo esc_attr(wp_create_nonce('custom_box_quote_form')); ?>">
 
             <div class="pbm-form-head">
@@ -1429,8 +1428,6 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
                     <?php endif; ?>
                 </div>
             </fieldset>
-
-            <?php custom_box_quote_form_math_challenge_fields('paper_box_manufacturer_' . $location); ?>
 
             <button class="pbm-submit" type="submit">Get My Factory Quote</button>
             <p class="pbm-privacy-note">Your project details are confidential. We only use them to prepare your packaging quotation.</p>
