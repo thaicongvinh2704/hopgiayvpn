@@ -4,9 +4,7 @@
  */
 
 function custom_box_quote_form_recipient() {
-    $recipient = 'sales.vpn@hopgiayvpn.com';
-
-    return apply_filters('custom_box_quote_form_recipient', $recipient);
+    return 'sales.vpn@hopgiayvpn.com';
 }
 
 function custom_box_quote_form_client_ip() {
@@ -1107,8 +1105,7 @@ function custom_box_schedule_quote_email($quote_id) {
     }
 
     if (function_exists('as_enqueue_async_action')) {
-        as_enqueue_async_action('custom_box_send_queued_quote_email', array($quote_id), 'custom-box-theme');
-        return true;
+        return (bool) as_enqueue_async_action('custom_box_send_queued_quote_email', array($quote_id), 'custom-box-theme');
     }
 
     if (!wp_next_scheduled('custom_box_send_queued_quote_email', array($quote_id))) {
@@ -1121,17 +1118,17 @@ function custom_box_schedule_quote_email($quote_id) {
 function custom_box_send_queued_quote_email($quote_id) {
     $quote_id = absint($quote_id);
     if (!$quote_id || 'custom_box_quote' !== get_post_type($quote_id)) {
-        return;
+        return false;
     }
 
     if ('sent' === get_post_meta($quote_id, '_custom_box_quote_mail_status', true)) {
-        return;
+        return true;
     }
 
     $quote_data = get_post_meta($quote_id, '_custom_box_quote_data', true);
     if (!is_array($quote_data)) {
         update_post_meta($quote_id, '_custom_box_quote_mail_status', 'missing_data');
-        return;
+        return false;
     }
 
     $attachments = get_post_meta($quote_id, '_custom_box_quote_attachments', true);
@@ -1139,27 +1136,65 @@ function custom_box_send_queued_quote_email($quote_id) {
         $attachments = array();
     }
 
+    // A stale or unreadable upload makes PHPMailer reject the whole message.
+    $attachments = array_values(
+        array_filter(
+            $attachments,
+            static function ($attachment) {
+                return is_string($attachment) && is_file($attachment) && is_readable($attachment);
+            }
+        )
+    );
+
     $email = custom_box_build_quote_email($quote_data);
     $recipient = custom_box_quote_form_recipient();
 
-    if (!empty($quote_data['quote_source']) && 'paper_box_manufacturer' === $quote_data['quote_source']) {
-        $recipient = 'sales.vpn@hopgiayvpn.com';
+    if (!is_email($recipient)) {
+        update_post_meta($quote_id, '_custom_box_quote_mail_status', 'invalid_recipient');
+        update_post_meta($quote_id, '_custom_box_quote_mail_error', 'The configured quote recipient is invalid.');
+        return false;
     }
 
+    $mail_error = '';
+    $mail_failure_listener = static function ($error) use (&$mail_error) {
+        if (is_wp_error($error)) {
+            $mail_error = $error->get_error_message();
+        }
+    };
+
+    add_action('wp_mail_failed', $mail_failure_listener);
     $sent = wp_mail($recipient, $email['subject'], $email['body'], $email['headers'], $attachments);
+    remove_action('wp_mail_failed', $mail_failure_listener);
+
+    $attempts = (int) get_post_meta($quote_id, '_custom_box_quote_mail_attempts', true) + 1;
 
     custom_box_quote_form_log(
         'mail_send_result',
         array(
             'quote_id'       => $quote_id,
-            'mail_transport' => function_exists('wp_mail_smtp') ? 'wp_mail_smtp' : 'wp_mail',
             'recipient'      => $recipient,
             'sent'           => (bool) $sent,
+            'error'          => $mail_error,
+            'attempt'        => $attempts,
         )
     );
 
     update_post_meta($quote_id, '_custom_box_quote_mail_status', $sent ? 'sent' : 'failed');
     update_post_meta($quote_id, '_custom_box_quote_mail_attempted_at', current_time('mysql'));
+    update_post_meta($quote_id, '_custom_box_quote_mail_attempts', $attempts);
+    update_post_meta($quote_id, '_custom_box_quote_mail_recipient', $recipient);
+
+    if ($sent) {
+        delete_post_meta($quote_id, '_custom_box_quote_mail_error');
+    } else {
+        update_post_meta(
+            $quote_id,
+            '_custom_box_quote_mail_error',
+            $mail_error ? sanitize_text_field($mail_error) : 'wp_mail returned false without an error message.'
+        );
+    }
+
+    return (bool) $sent;
 }
 add_action('custom_box_send_queued_quote_email', 'custom_box_send_queued_quote_email');
 
@@ -1320,10 +1355,21 @@ function custom_box_handle_quote_form() {
 
     custom_box_quote_form_log('quote_saved', array('quote_id' => $quote_id));
 
-    custom_box_send_queued_quote_email($quote_id);
+    $sent = custom_box_send_queued_quote_email($quote_id);
 
-    if ('sent' !== get_post_meta($quote_id, '_custom_box_quote_mail_status', true) && !custom_box_schedule_quote_email($quote_id)) {
-        update_post_meta($quote_id, '_custom_box_quote_mail_status', 'schedule_failed');
+    if (!$sent) {
+        if (!custom_box_schedule_quote_email($quote_id)) {
+            update_post_meta($quote_id, '_custom_box_quote_mail_status', 'schedule_failed');
+        }
+
+        custom_box_quote_form_reject(
+            'failed',
+            500,
+            array(
+                'quote_id'    => $quote_id,
+                'mail_status' => get_post_meta($quote_id, '_custom_box_quote_mail_status', true),
+            )
+        );
     }
 
     if ('paper_box_manufacturer' === $quote_source) {
