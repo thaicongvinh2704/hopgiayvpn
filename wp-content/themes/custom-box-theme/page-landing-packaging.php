@@ -174,7 +174,7 @@ $faqs = array(
                         </label>
                         <label>
                             <span>Packaging need <small>Optional</small></span>
-                            <textarea name="message" rows="3" placeholder="Box type, quantity, size or delivery country"></textarea>
+                            <input type="text" name="message" placeholder="Box type or quantity">
                         </label>
                     </div>
 
