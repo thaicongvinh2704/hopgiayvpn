@@ -524,7 +524,13 @@ Important:
 - After `git pull` on hosting, run one deploy command:
   - `php tools/deploy-product-samples-all.php`
 
-The master deploy script:
+The Git-tracked root CLI entry point restores the bundled deploy tools from
+`wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/` before running.
+For the current July 2026 release, it synchronizes and verifies the Perfume
+Packaging and Corrugated Mailer batches. It is safe to run again because the
+importers use batch markers and update existing products instead of duplicating them.
+
+The deploy process:
 
 - checks each product batch by `_vpn_sample_import`
 - skips batches that already have the expected product count, 1500+ word content, 0 content H1, 21 specs rows, and MOQ `1000 boxes`
