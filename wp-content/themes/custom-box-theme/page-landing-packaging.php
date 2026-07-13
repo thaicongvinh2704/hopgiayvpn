@@ -138,9 +138,7 @@ $faqs = array(
             </div>
             <aside class="vpn-packaging-quick-card" id="hero-quick-quote" aria-labelledby="hero-quick-quote-title">
                 <div class="vpn-packaging-quick-card-head">
-                    <span>Fast factory response</span>
-                    <h2 id="hero-quick-quote-title">Tell us what you need</h2>
-                    <p>Leave your details and our packaging team will reply within 24 hours.</p>
+                    <h2 id="hero-quick-quote-title">Get a Quick Quote</h2>
                 </div>
 
                 <?php if ($quick_quote_status && isset($quick_quote_messages[$quick_quote_status])) : ?>
@@ -162,27 +160,22 @@ $faqs = array(
                     <div class="vpn-packaging-quick-fields">
                         <label>
                             <span>Your name</span>
-                            <input type="text" name="full_name" autocomplete="name" placeholder="Name or company contact" required>
+                            <input type="text" name="full_name" autocomplete="name" required>
                         </label>
                         <label>
-                            <span>Business email</span>
-                            <input type="email" name="email" autocomplete="email" placeholder="you@company.com" required>
+                            <span>Email</span>
+                            <input type="email" name="email" autocomplete="email" required>
                         </label>
-                        <label>
+                        <label class="vpn-packaging-quick-field-wide">
                             <span>Phone / WhatsApp <small>Optional</small></span>
-                            <input type="tel" name="phone" autocomplete="tel" placeholder="+1 234 567 890">
-                        </label>
-                        <label>
-                            <span>Packaging need <small>Optional</small></span>
-                            <input type="text" name="message" placeholder="Box type or quantity">
+                            <input type="tel" name="phone" autocomplete="tel">
                         </label>
                     </div>
 
                     <button type="submit">
-                        Get My Factory Quote
+                        Send Request
                         <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                     </button>
-                    <p class="vpn-packaging-quick-privacy"><i class="fa-solid fa-lock" aria-hidden="true"></i> Your project information stays confidential.</p>
                 </form>
             </aside>
             <figure class="vpn-packaging-hero-media">
