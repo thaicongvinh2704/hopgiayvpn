@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-07-11-corrugated-mailer-products' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-07-13-july-release-one-click' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -747,7 +747,24 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 		);
 	}
 
-	return array_slice( $batches, -1 );
+	// The default button must deploy the complete current release. Keep
+	// historical batches available through the explicit "all" scope, but do
+	// not make a new release depend on an incomplete legacy batch.
+	return array_values(
+		array_filter(
+			$batches,
+			static function ( $batch ) {
+				return isset( $batch['marker'] ) && in_array(
+					$batch['marker'],
+					array(
+						'product-samples-perfume-packaging-202607',
+						'product-samples-corrugated-mailers-202607',
+					),
+					true
+				);
+			}
+		)
+	);
 }
 
 function custom_box_product_sample_deploy_allowed_scopes(): array {

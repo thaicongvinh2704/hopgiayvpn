@@ -530,6 +530,12 @@ For the current July 2026 release, it synchronizes and verifies the Perfume
 Packaging and Corrugated Mailer batches. It is safe to run again because the
 importers use batch markers and update existing products instead of duplicating them.
 
+In WordPress admin, after the Git pull, open **Tools > Product Sample Deploy** and
+click **Run Product Sample Deploy** with **Latest batch only** selected. The default
+scope runs both current July batches in sequence, restores their Git-tracked tools
+and upload assets automatically, and verifies each batch. The separate Perfume and
+Corrugated buttons remain available for rerunning one batch only.
+
 The deploy process:
 
 - checks each product batch by `_vpn_sample_import`
