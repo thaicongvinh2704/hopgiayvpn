@@ -11,6 +11,9 @@ function custom_box_sync_jewelry_paper_box_packaging_post(): void
     if (!current_user_can('manage_options')) {
         return;
     }
+    if ('2026-07-13-v1' === get_option('custom_box_jewelry_paper_box_packaging_sync_version')) {
+        return;
+    }
 
     $post_id = custom_box_upsert_jewelry_paper_box_packaging_post();
 
@@ -20,6 +23,7 @@ function custom_box_sync_jewelry_paper_box_packaging_post(): void
     }
 
     update_option('custom_box_jewelry_paper_box_packaging_missing_post', '', false);
+    update_option('custom_box_jewelry_paper_box_packaging_sync_version', '2026-07-13-v1', false);
 }
 
 function custom_box_upsert_jewelry_paper_box_packaging_post()

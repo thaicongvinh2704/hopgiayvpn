@@ -6,8 +6,13 @@
 add_action( 'admin_init', 'custom_box_sync_premium_food_packaging_post' );
 add_action( 'admin_notices', 'custom_box_premium_food_packaging_post_notice' );
 
+const CUSTOM_BOX_PREMIUM_FOOD_PACKAGING_SYNC_VERSION = '2026-07-13-v2';
+
 function custom_box_sync_premium_food_packaging_post(): void {
 	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	if ( CUSTOM_BOX_PREMIUM_FOOD_PACKAGING_SYNC_VERSION === get_option( 'custom_box_premium_food_packaging_sync_version' ) ) {
 		return;
 	}
 
@@ -49,6 +54,7 @@ function custom_box_sync_premium_food_packaging_post(): void {
 	custom_box_sync_premium_food_packaging_images( $post_id );
 	update_post_meta( $post_id, '_custom_box_premium_food_packaging_synced', current_time( 'mysql' ) );
 	update_option( 'custom_box_premium_food_packaging_missing_post', '', false );
+	update_option( 'custom_box_premium_food_packaging_sync_version', CUSTOM_BOX_PREMIUM_FOOD_PACKAGING_SYNC_VERSION, false );
 }
 
 function custom_box_premium_food_packaging_post_data(): array {
