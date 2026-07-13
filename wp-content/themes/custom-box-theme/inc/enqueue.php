@@ -43,6 +43,7 @@ function custom_box_enqueue_assets() {
     $contact_css_path = get_template_directory() . '/assets/css/contact.css';
     $catalog_css_path = get_template_directory() . '/assets/css/catalog.css';
     $landing_css_path = get_template_directory() . '/assets/css/landing.css';
+    $landing_quick_form_css_path = get_template_directory() . '/assets/css/landing-quick-form.css';
     $responsive_css_path = get_template_directory() . '/assets/css/responsive.css';
     $main_js_path = get_template_directory() . '/assets/js/main.js';
 
@@ -106,6 +107,13 @@ function custom_box_enqueue_assets() {
             get_template_directory_uri() . '/assets/css/landing.css',
             array('main-style', 'responsive-style'),
             file_exists($landing_css_path) ? filemtime($landing_css_path) : '1.0'
+        );
+
+        wp_enqueue_style(
+            'landing-quick-form-style',
+            get_template_directory_uri() . '/assets/css/landing-quick-form.css',
+            array('landing-style'),
+            file_exists($landing_quick_form_css_path) ? filemtime($landing_quick_form_css_path) : '1.0'
         );
     }
 

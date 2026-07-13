@@ -20,6 +20,15 @@ $landing_url = function_exists('custom_box_get_packaging_money_page_url')
 
 $fallback_products_url = home_url('/products/');
 $contact_url = home_url('/contact/');
+$quick_quote_status = isset($_GET['quote_status']) ? sanitize_key(wp_unslash($_GET['quote_status'])) : '';
+$quick_quote_messages = array(
+    'success'      => 'Thank you. Your details were sent successfully. We will contact you within 24 hours.',
+    'failed'       => 'We could not send your request right now. Please try again or email sales.vpn@hopgiayvpn.com.',
+    'missing'      => 'Please enter your name and a valid business email.',
+    'invalid'      => 'Your form session expired. Please refresh the page and try again.',
+    'spam'         => 'Your request could not be verified. Please refresh the page and try again.',
+    'rate_limited' => 'Too many requests were sent. Please wait a few minutes and try again.',
+);
 
 $buyer_groups = array(
     'Cosmetic brands',
@@ -127,6 +136,55 @@ $faqs = array(
                     <a class="btn-outline" href="#packaging-categories">View Packaging Categories</a>
                 </div>
             </div>
+            <aside class="vpn-packaging-quick-card" id="hero-quick-quote" aria-labelledby="hero-quick-quote-title">
+                <div class="vpn-packaging-quick-card-head">
+                    <span>Fast factory response</span>
+                    <h2 id="hero-quick-quote-title">Tell us what you need</h2>
+                    <p>Leave your details and our packaging team will reply within 24 hours.</p>
+                </div>
+
+                <?php if ($quick_quote_status && isset($quick_quote_messages[$quick_quote_status])) : ?>
+                    <div class="vpn-packaging-quick-message vpn-packaging-quick-message-<?php echo esc_attr($quick_quote_status); ?>" role="status">
+                        <?php echo esc_html($quick_quote_messages[$quick_quote_status]); ?>
+                    </div>
+                <?php endif; ?>
+
+                <form class="vpn-packaging-quick-form" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
+                    <input type="hidden" name="action" value="custom_box_quote_form">
+                    <input type="hidden" name="quote_source" value="packaging_landing_quick_form">
+                    <input type="hidden" name="form_location" value="hero">
+                    <input type="hidden" name="form_anchor" value="hero-quick-quote">
+                    <input type="hidden" name="product_name" value="Custom packaging quick inquiry">
+                    <input type="hidden" name="current_page_url" value="<?php echo esc_url($landing_url); ?>">
+                    <?php wp_nonce_field('custom_box_quote_form', 'custom_box_quote_nonce'); ?>
+                    <?php custom_box_quote_form_anti_spam_fields('quote'); ?>
+
+                    <div class="vpn-packaging-quick-fields">
+                        <label>
+                            <span>Your name</span>
+                            <input type="text" name="full_name" autocomplete="name" placeholder="Name or company contact" required>
+                        </label>
+                        <label>
+                            <span>Business email</span>
+                            <input type="email" name="email" autocomplete="email" placeholder="you@company.com" required>
+                        </label>
+                        <label>
+                            <span>Phone / WhatsApp <small>Optional</small></span>
+                            <input type="tel" name="phone" autocomplete="tel" placeholder="+1 234 567 890">
+                        </label>
+                        <label>
+                            <span>Packaging need <small>Optional</small></span>
+                            <textarea name="message" rows="3" placeholder="Box type, quantity, size or delivery country"></textarea>
+                        </label>
+                    </div>
+
+                    <button type="submit">
+                        Get My Factory Quote
+                        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                    </button>
+                    <p class="vpn-packaging-quick-privacy"><i class="fa-solid fa-lock" aria-hidden="true"></i> Your project information stays confidential.</p>
+                </form>
+            </aside>
             <figure class="vpn-packaging-hero-media">
                 <a href="<?php echo esc_url($quote_url); ?>" aria-label="<?php esc_attr_e('Request a factory quote from VPN Paper Box', 'custom-box-theme'); ?>">
                     <img src="<?php echo esc_url($theme_uri . '/assets/images/banner-landing-page.webp'); ?>" alt="Custom packaging boxes produced by VPN Paper Box in Vietnam" decoding="async" fetchpriority="high">
