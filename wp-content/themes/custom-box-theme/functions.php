@@ -31,6 +31,7 @@ $custom_box_inc_files = array(
     'inc/jewelry-paper-box-packaging-post-sync.php',
     'inc/how-to-package-chocolate-gift-sets-post-sync.php',
     'inc/how-to-create-premium-food-packaging-with-paper-boxes-post-sync.php',
+    'inc/how-to-protect-bottles-in-paper-gift-packaging-post-sync.php',
     'inc/quote-form-handler.php',
     'inc/woocommerce.php',
 );
