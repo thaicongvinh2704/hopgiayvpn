@@ -14,15 +14,15 @@ Implemented a server-side anti-spam layer for the custom WordPress quote form fl
 
 The anti-spam layer applies to all public quote form instances that submit to `admin-post.php` with `action=custom_box_quote_form`.
 
-## reCAPTCHA v2 Update (2026-07-14)
+## reCAPTCHA v3 Update (2026-07-14)
 
-Enabled Google reCAPTCHA v2 checkbox protection for all three public quote forms:
+Enabled Google reCAPTCHA v3 protection for all three public quote forms:
 
 - Shared quote form on the homepage/contact and product pages
 - Paper Box Manufacturer landing page forms
 - Packaging landing quick quote form
 
-The site key and secret key are configured in `wp-config.php`. The server verifies `g-recaptcha-response` with Google's `siteverify` endpoint before accepting a quote submission. Missing, invalid, or failed verification returns the `captcha` status and prevents saving the lead or sending email.
+The site key and secret key are configured in `wp-config.php`. On submit, the browser obtains a short-lived token for the `quote_submit` action. The server verifies it with Google's `siteverify` endpoint, and requires a matching action, a score of at least `0.5`, and the current WordPress hostname before accepting a quote submission. Failed verification returns the `captcha` status and prevents saving the lead or sending email.
 
 ## What Changed
 
@@ -230,6 +230,12 @@ PHP syntax checks passed for:
 - `inc/quote-form-handler.php`
 - `template-parts/home/quote-form.php`
 - `page-paper-box-manufacturer.php`
+
+Local homepage rendering check passed:
+
+- Google reCAPTCHA script loads with the configured v3 site key and `render=<site-key>`.
+- The quote form contains the hidden `g-recaptcha-response` field.
+- The submit handler requests a `quote_submit` token before forwarding the form submission.
 
 ## Self-Test Results
 

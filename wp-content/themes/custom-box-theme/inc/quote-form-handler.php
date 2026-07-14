@@ -694,7 +694,7 @@ function custom_box_quote_form_save_spam_log($quote_data, $spam_result) {
 function custom_box_quote_form_recaptcha_site_key() {
     return apply_filters(
         'custom_box_quote_form_recaptcha_site_key',
-        custom_box_quote_form_config_value('CUSTOM_BOX_RECAPTCHA_SITE_KEY', '6LcSzlItAAAAAMxH4LphfH7Mfm_ju3Q3IAuYpml-')
+        custom_box_quote_form_config_value('CUSTOM_BOX_RECAPTCHA_SITE_KEY')
     );
 }
 
@@ -722,9 +722,7 @@ function custom_box_quote_form_recaptcha_fields() {
         return;
     }
     ?>
-    <div class="custom-box-recaptcha">
-        <div class="g-recaptcha" data-sitekey="<?php echo esc_attr(custom_box_quote_form_recaptcha_site_key()); ?>"></div>
-    </div>
+    <input type="hidden" name="g-recaptcha-response" value="">
     <?php
 }
 
@@ -757,8 +755,7 @@ function custom_box_enqueue_quote_form_recaptcha() {
         'custom-box-google-recaptcha',
         add_query_arg(
             array(
-                'onload' => 'customBoxRecaptchaOnload',
-                'render' => 'explicit',
+                'render' => $site_key,
             ),
             'https://www.google.com/recaptcha/api.js'
         ),
@@ -770,37 +767,82 @@ function custom_box_enqueue_quote_form_recaptcha() {
 }
 add_action('wp_enqueue_scripts', 'custom_box_enqueue_quote_form_recaptcha');
 
-function custom_box_print_recaptcha_onload_callback() {
+function custom_box_print_recaptcha_v3_submit_handler() {
     $site_key = custom_box_quote_form_recaptcha_site_key();
 
     if ('' === $site_key || !custom_box_quote_form_should_enqueue_recaptcha()) {
         return;
     }
     ?>
-    <script id="custom-box-recaptcha-onload-callback" data-cfasync="false" data-no-optimize="1">
-    window.customBoxRecaptchaRender = function() {
-        var widgets = document.querySelectorAll('.g-recaptcha[data-sitekey]');
+    <script id="custom-box-recaptcha-v3-submit-handler" data-cfasync="false" data-no-optimize="1">
+    (function() {
+        var siteKey = <?php echo wp_json_encode($site_key); ?>;
+        var selector = 'input[name="action"][value="custom_box_quote_form"]';
 
-        widgets.forEach(function(widget) {
-            if (!window.grecaptcha || !window.grecaptcha.render || widget.dataset.widgetId) {
+        function setSubmitting(form, isSubmitting) {
+            var button = form.querySelector('button[type="submit"], input[type="submit"]');
+            if (button) {
+                button.disabled = isSubmitting;
+            }
+        }
+
+        function notifyFailure(form) {
+            var message = form.parentNode && form.parentNode.querySelector('.quote-form-message, .pbm-quote-message, .vpn-packaging-quick-message');
+            if (message) {
+                message.className = message.className.replace(/\b(?:is-)?(?:success|error|pending|failed|captcha)\b/g, '').trim() + ' captcha';
+                message.textContent = 'Security verification could not be completed. Please reload the page and try again.';
+            }
+        }
+
+        document.addEventListener('submit', function(event) {
+            var form = event.target;
+            if (!form || !form.matches || !form.matches('form') || !form.querySelector(selector)) {
                 return;
             }
 
-            widget.dataset.widgetId = String(window.grecaptcha.render(widget, {
-                sitekey: widget.getAttribute('data-sitekey')
-            }));
-        });
-    };
+            if ('1' === form.dataset.recaptchaV3Ready) {
+                delete form.dataset.recaptchaV3Ready;
+                return;
+            }
 
-    window.customBoxRecaptchaOnload = window.customBoxRecaptchaRender;
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            setSubmitting(form, true);
 
-    if (window.grecaptcha && window.grecaptcha.render) {
-        window.customBoxRecaptchaRender();
-    }
+            if (!window.grecaptcha || !window.grecaptcha.ready || !window.grecaptcha.execute) {
+                setSubmitting(form, false);
+                notifyFailure(form);
+                return;
+            }
+
+            window.grecaptcha.ready(function() {
+                window.grecaptcha.execute(siteKey, {action: 'quote_submit'}).then(function(token) {
+                    var input = form.querySelector('input[name="g-recaptcha-response"]');
+                    if (!input) {
+                        input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'g-recaptcha-response';
+                        form.appendChild(input);
+                    }
+                    input.value = token;
+                    form.dataset.recaptchaV3Ready = '1';
+                    setSubmitting(form, false);
+                    if (form.requestSubmit) {
+                        form.requestSubmit();
+                    } else {
+                        form.dispatchEvent(new Event('submit', {bubbles: true, cancelable: true}));
+                    }
+                }).catch(function() {
+                    setSubmitting(form, false);
+                    notifyFailure(form);
+                });
+            });
+        }, true);
+    }());
     </script>
     <?php
 }
-add_action('wp_footer', 'custom_box_print_recaptcha_onload_callback', 5);
+add_action('wp_footer', 'custom_box_print_recaptcha_v3_submit_handler', 5);
 
 function custom_box_recaptcha_script_tag($tag, $handle, $src) {
     if ('custom-box-google-recaptcha' !== $handle) {
@@ -1081,7 +1123,28 @@ function custom_box_quote_form_verify_recaptcha() {
         );
     }
 
-    return array('success' => true, 'reason' => 'recaptcha_success');
+    $expected_action = 'quote_submit';
+    $action = isset($body['action']) ? sanitize_key($body['action']) : '';
+    if ($expected_action !== $action) {
+        custom_box_quote_form_log('recaptcha_action_mismatch', array('action' => $action));
+        return array('success' => false, 'reason' => 'recaptcha_action_mismatch');
+    }
+
+    $score = isset($body['score']) ? (float) $body['score'] : -1;
+    $minimum_score = min(1, max(0, (float) apply_filters('custom_box_quote_form_recaptcha_minimum_score', 0.5)));
+    if ($score < $minimum_score) {
+        custom_box_quote_form_log('recaptcha_low_score', array('score' => $score, 'minimum_score' => $minimum_score));
+        return array('success' => false, 'reason' => 'recaptcha_low_score');
+    }
+
+    $expected_hostname = strtolower((string) wp_parse_url(home_url('/'), PHP_URL_HOST));
+    $hostname = isset($body['hostname']) ? strtolower(sanitize_text_field($body['hostname'])) : '';
+    if ('' === $hostname || ('' !== $expected_hostname && $hostname !== $expected_hostname)) {
+        custom_box_quote_form_log('recaptcha_hostname_mismatch', array('hostname' => $hostname, 'expected_hostname' => $expected_hostname));
+        return array('success' => false, 'reason' => 'recaptcha_hostname_mismatch');
+    }
+
+    return array('success' => true, 'reason' => 'recaptcha_success', 'score' => $score);
 }
 
 function custom_box_register_quote_request_post_type() {

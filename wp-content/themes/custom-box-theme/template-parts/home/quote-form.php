@@ -92,7 +92,7 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                     'missing' => 'Please fill in your name, email, and product name.',
                     'invalid' => 'The form session expired. Please refresh the page and try again.',
                     'file'    => 'Please upload a valid artwork file under 10MB.',
-                    'captcha' => 'Please complete the reCAPTCHA verification.',
+                    'captcha' => 'Security verification could not be completed. Please reload the page and try again.',
                     'spam'    => 'Sorry, this request could not be accepted.',
                     'rate_limited' => 'Too many quote requests. Please wait a few minutes and try again.',
                 );
@@ -213,7 +213,7 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                         missing: 'Please fill in your name, email, and product name.',
                         invalid: 'The form session expired. Please refresh the page and try again.',
                         file: 'Please upload a valid artwork file under 10MB.',
-                        captcha: 'Please complete the reCAPTCHA verification.',
+                        captcha: 'Security verification could not be completed. Please reload the page and try again.',
                         spam: 'Sorry, this request could not be accepted.',
                         rate_limited: 'Too many quote requests. Please wait a few minutes and try again.'
                     };

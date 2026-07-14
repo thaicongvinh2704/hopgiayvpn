@@ -273,7 +273,7 @@ $faqs = array(
                                 message.textContent = 'success' === status
                                     ? 'Thank you. Your quote request has been sent successfully.'
                                     : ('captcha' === status
-                                        ? 'Please complete the reCAPTCHA verification.'
+                                        ? 'Security verification could not be completed. Please reload the page and try again.'
                                         : 'Sorry, we could not send your request right now. Please try again later.');
                             }
 
