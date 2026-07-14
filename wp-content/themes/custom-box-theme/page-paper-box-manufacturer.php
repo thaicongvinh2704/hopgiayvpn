@@ -205,7 +205,7 @@ $quote_messages = array(
     'missing' => 'Please fill in the required quote fields.',
     'invalid' => 'The form session expired. Please refresh the page and try again.',
     'file'    => 'Please upload a valid artwork file under 10MB.',
-    'captcha' => 'Please complete the simple security question correctly.',
+    'captcha' => 'Please complete the reCAPTCHA verification.',
     'spam'    => 'Sorry, this request could not be accepted.',
     'rate_limited' => 'Too many quote requests. Please wait a few minutes and try again.',
 );
@@ -1430,6 +1430,7 @@ $render_paper_box_quote_form = function ($form_id, $title, $location) use ($box_
                 </div>
             </fieldset>
 
+            <?php custom_box_quote_form_recaptcha_fields(); ?>
             <button class="pbm-submit" type="submit">Get My Factory Quote</button>
             <p class="pbm-privacy-note">Your project details are confidential. We only use them to prepare your packaging quotation.</p>
         </form>
@@ -1711,7 +1712,7 @@ get_header();
         missing: 'Please fill in the required quote fields.',
         invalid: 'The form session expired. Please refresh the page and try again.',
         file: 'Please upload a valid artwork file under 10MB.',
-        captcha: 'Please complete the simple security question correctly.',
+        captcha: 'Please complete the reCAPTCHA verification.',
         spam: 'Sorry, this request could not be accepted.',
         rate_limited: 'Too many quote requests. Please wait a few minutes and try again.'
     };

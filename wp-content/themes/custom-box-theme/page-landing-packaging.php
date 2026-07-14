@@ -209,6 +209,7 @@ $faqs = array(
                         </label>
                     </div>
 
+                    <?php custom_box_quote_form_recaptcha_fields(); ?>
                     <button type="submit">
                         Get My Quote
                         <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
