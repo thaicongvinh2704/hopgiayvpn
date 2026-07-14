@@ -1068,6 +1068,12 @@ function custom_box_quote_form_verify_recaptcha() {
 
     $body = json_decode(wp_remote_retrieve_body($verification), true);
     if (!is_array($body) || empty($body['success'])) {
+        custom_box_quote_form_log(
+            'recaptcha_verification_failed',
+            array(
+                'errors' => isset($body['error-codes']) && is_array($body['error-codes']) ? implode(',', $body['error-codes']) : 'invalid_response',
+            )
+        );
         return array(
             'success' => false,
             'reason'  => 'recaptcha_failed',

@@ -238,6 +238,8 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                             var button = form.querySelector('button[type="submit"]');
                             var message = form.parentNode.querySelector('.quote-form-message');
 
+                            event.preventDefault();
+
                             if (!message) {
                                 message = document.createElement('div');
                                 form.parentNode.insertBefore(message, form);
@@ -253,6 +255,8 @@ $quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['sect
                                 button.disabled = true;
                                 button.textContent = 'Sending...';
                             }
+
+                            HTMLFormElement.prototype.submit.call(form);
                         });
 
                         iframe.addEventListener('load', function() {

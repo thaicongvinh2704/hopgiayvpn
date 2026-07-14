@@ -1922,6 +1922,8 @@ get_header();
                 return;
             }
 
+            event.preventDefault();
+
             form.target = iframeName;
             submitted = true;
             if (button) {
@@ -1938,6 +1940,8 @@ get_header();
             pushEvent('quote_form_submit', {
                 form_location: form.getAttribute('data-form-location') || ''
             });
+
+            HTMLFormElement.prototype.submit.call(form);
         });
 
         iframe.addEventListener('load', function() {

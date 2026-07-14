@@ -220,6 +220,70 @@ $faqs = array(
                         <span>No obligation</span>
                     </p>
                 </form>
+                <script>
+                    (function() {
+                        var form = document.querySelector('.vpn-packaging-quick-form');
+                        if (!form || form.dataset.quickQuoteReady) {
+                            return;
+                        }
+
+                        form.dataset.quickQuoteReady = '1';
+                        var iframeName = 'vpn_packaging_quick_quote_' + Date.now();
+                        var iframe = document.createElement('iframe');
+                        var submitted = false;
+                        var button = form.querySelector('button[type="submit"]');
+                        var message = form.parentNode.querySelector('.vpn-packaging-quick-message');
+
+                        iframe.name = iframeName;
+                        iframe.hidden = true;
+                        iframe.style.display = 'none';
+                        iframe.title = 'Quick quote submission';
+                        form.parentNode.appendChild(iframe);
+
+                        form.addEventListener('submit', function(event) {
+                            event.preventDefault();
+                            form.target = iframeName;
+                            submitted = true;
+
+                            if (message) {
+                                message.className = 'vpn-packaging-quick-message vpn-packaging-quick-message-pending';
+                                message.textContent = 'Sending your request...';
+                            }
+                            if (button) {
+                                button.disabled = true;
+                            }
+
+                            HTMLFormElement.prototype.submit.call(form);
+                        });
+
+                        iframe.addEventListener('load', function() {
+                            var status = '';
+                            if (!submitted) {
+                                return;
+                            }
+
+                            try {
+                                status = new URL(iframe.contentWindow.location.href).searchParams.get('quote_status') || '';
+                            } catch (error) {
+                                status = '';
+                            }
+
+                            if (message) {
+                                message.className = 'vpn-packaging-quick-message vpn-packaging-quick-message-' + (status || 'failed');
+                                message.textContent = 'success' === status
+                                    ? 'Thank you. Your quote request has been sent successfully.'
+                                    : ('captcha' === status
+                                        ? 'Please complete the reCAPTCHA verification.'
+                                        : 'Sorry, we could not send your request right now. Please try again later.');
+                            }
+
+                            submitted = false;
+                            if (button) {
+                                button.disabled = false;
+                            }
+                        });
+                    })();
+                </script>
             </aside>
             <figure class="vpn-packaging-hero-media">
                 <a href="<?php echo esc_url($quote_url); ?>" aria-label="<?php esc_attr_e('Request a factory quote from VPN Paper Box', 'custom-box-theme'); ?>">
