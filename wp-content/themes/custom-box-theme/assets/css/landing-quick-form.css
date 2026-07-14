@@ -157,11 +157,23 @@
     color: #176735;
 }
 
+.vpn-packaging-quick-message-pending {
+    background: #eef7fc;
+    border: 1px solid #b8d9ed;
+    color: #135c84;
+}
+
 .vpn-packaging-quick-message-failed,
 .vpn-packaging-quick-message-invalid,
 .vpn-packaging-quick-message-missing,
 .vpn-packaging-quick-message-spam,
 .vpn-packaging-quick-message-rate_limited {
+    background: #fff4ef;
+    border: 1px solid #efc1ad;
+    color: #963e1b;
+}
+
+.vpn-packaging-quick-message-captcha {
     background: #fff4ef;
     border: 1px solid #efc1ad;
     color: #963e1b;

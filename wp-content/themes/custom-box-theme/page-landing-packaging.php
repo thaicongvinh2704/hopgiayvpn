@@ -142,11 +142,12 @@ $faqs = array(
                     <p>Tell us what you need — we'll reply within 24 hours.</p>
                 </div>
 
-                <?php if ($quick_quote_status && isset($quick_quote_messages[$quick_quote_status])) : ?>
-                    <div class="vpn-packaging-quick-message vpn-packaging-quick-message-<?php echo esc_attr($quick_quote_status); ?>" role="status">
-                        <?php echo esc_html($quick_quote_messages[$quick_quote_status]); ?>
-                    </div>
-                <?php endif; ?>
+                <div
+                    class="vpn-packaging-quick-message<?php echo $quick_quote_status && isset($quick_quote_messages[$quick_quote_status]) ? ' vpn-packaging-quick-message-' . esc_attr($quick_quote_status) : ''; ?>"
+                    role="status"
+                    aria-live="polite"
+                    <?php echo $quick_quote_status && isset($quick_quote_messages[$quick_quote_status]) ? '' : 'hidden'; ?>
+                ><?php echo $quick_quote_status && isset($quick_quote_messages[$quick_quote_status]) ? esc_html($quick_quote_messages[$quick_quote_status]) : ''; ?></div>
 
                 <form class="vpn-packaging-quick-form" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
                     <input type="hidden" name="action" value="custom_box_quote_form">
@@ -246,6 +247,7 @@ $faqs = array(
                             submitted = true;
 
                             if (message) {
+                                message.hidden = false;
                                 message.className = 'vpn-packaging-quick-message vpn-packaging-quick-message-pending';
                                 message.textContent = 'Sending your request...';
                             }
@@ -269,6 +271,7 @@ $faqs = array(
                             }
 
                             if (message) {
+                                message.hidden = false;
                                 message.className = 'vpn-packaging-quick-message vpn-packaging-quick-message-' + (status || 'failed');
                                 message.textContent = 'success' === status
                                     ? 'Thank you. Your quote request has been sent successfully.'

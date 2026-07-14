@@ -789,9 +789,27 @@ function custom_box_print_recaptcha_v3_submit_handler() {
         function notifyFailure(form) {
             var message = form.parentNode && form.parentNode.querySelector('.quote-form-message, .pbm-quote-message, .vpn-packaging-quick-message');
             if (message) {
-                message.className = message.className.replace(/\b(?:is-)?(?:success|error|pending|failed|captcha)\b/g, '').trim() + ' captcha';
+                message.hidden = false;
+                if (message.classList.contains('vpn-packaging-quick-message')) {
+                    message.className = 'vpn-packaging-quick-message vpn-packaging-quick-message-captcha';
+                } else {
+                    message.className = message.className.replace(/\b(?:is-)?(?:success|error|pending|failed|captcha)\b/g, '').trim() + ' captcha';
+                }
                 message.textContent = 'Security verification could not be completed. Please reload the page and try again.';
             }
+        }
+
+        function notifyPending(form) {
+            var message = form.parentNode && form.parentNode.querySelector('.quote-form-message, .pbm-quote-message, .vpn-packaging-quick-message');
+            if (!message) {
+                return;
+            }
+
+            message.hidden = false;
+            if (message.classList.contains('vpn-packaging-quick-message')) {
+                message.className = 'vpn-packaging-quick-message vpn-packaging-quick-message-pending';
+            }
+            message.textContent = 'Securing your request...';
         }
 
         document.addEventListener('submit', function(event) {
@@ -808,6 +826,7 @@ function custom_box_print_recaptcha_v3_submit_handler() {
             event.preventDefault();
             event.stopImmediatePropagation();
             setSubmitting(form, true);
+            notifyPending(form);
 
             if (!window.grecaptcha || !window.grecaptcha.ready || !window.grecaptcha.execute) {
                 setSubmitting(form, false);
