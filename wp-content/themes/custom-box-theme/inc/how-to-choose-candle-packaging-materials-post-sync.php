@@ -12,7 +12,7 @@ function custom_box_sync_candle_packaging_materials_post(): void
         return;
     }
 
-    if ('2026-07-15-v1' === get_option('custom_box_candle_packaging_materials_sync_version')) {
+    if ('2026-07-15-v2' === get_option('custom_box_candle_packaging_materials_sync_version')) {
         return;
     }
 
@@ -24,7 +24,13 @@ function custom_box_sync_candle_packaging_materials_post(): void
     }
 
     update_option('custom_box_candle_packaging_materials_missing_post', '', false);
-    update_option('custom_box_candle_packaging_materials_sync_version', '2026-07-15-v1', false);
+
+    $missing_images = (array) get_option('custom_box_candle_packaging_materials_missing_images', array());
+    $missing_slots = (array) get_option('custom_box_candle_packaging_materials_missing_slots', array());
+
+    if (empty($missing_images) && empty($missing_slots)) {
+        update_option('custom_box_candle_packaging_materials_sync_version', '2026-07-15-v2', false);
+    }
 }
 
 function custom_box_upsert_candle_packaging_materials_post()
