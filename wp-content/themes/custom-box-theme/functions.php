@@ -29,6 +29,7 @@ $custom_box_inc_files = array(
     'inc/cosmetic-brand-perception-post-sync.php',
     'inc/perfume-paper-box-structure-post-sync.php',
     'inc/jewelry-paper-box-packaging-post-sync.php',
+    'inc/how-to-choose-candle-packaging-materials-post-sync.php',
     'inc/how-to-package-chocolate-gift-sets-post-sync.php',
     'inc/how-to-create-premium-food-packaging-with-paper-boxes-post-sync.php',
     'inc/how-to-protect-bottles-in-paper-gift-packaging-post-sync.php',
