@@ -22,6 +22,7 @@ $custom_box_inc_files = array(
     'inc/admin-unused-product-category-cleanup.php',
     'inc/admin-product-sample-deploy.php',
     'inc/custom-vial-box-product-sync.php',
+    'inc/pharmaceutical-paper-packaging-information-post-sync.php',
     'inc/quote-form-handler.php',
     'inc/woocommerce.php',
 );
@@ -50,7 +51,6 @@ function custom_box_should_load_post_sync_files(): bool
 }
 
 $custom_box_post_sync_files = array(
-    'inc/pharmaceutical-paper-packaging-information-post-sync.php',
     'inc/cosmetic-paper-packaging-design-post-sync.php',
     'inc/skincare-paper-packaging-selection-post-sync.php',
     'inc/food-paper-packaging-selection-post-sync.php',
