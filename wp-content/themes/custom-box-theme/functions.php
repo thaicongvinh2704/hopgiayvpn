@@ -50,6 +50,7 @@ function custom_box_should_load_post_sync_files(): bool
 }
 
 $custom_box_post_sync_files = array(
+    'inc/pharmaceutical-paper-packaging-information-post-sync.php',
     'inc/cosmetic-paper-packaging-design-post-sync.php',
     'inc/skincare-paper-packaging-selection-post-sync.php',
     'inc/food-paper-packaging-selection-post-sync.php',
