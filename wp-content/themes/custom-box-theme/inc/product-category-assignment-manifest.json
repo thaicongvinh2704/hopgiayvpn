@@ -1,5 +1,5 @@
 {
-    "version": 2,
+    "version": 3,
     "generated_at": "2026-07-02T04:11:04+00:00",
     "source_url": "http://localhost/website-backup/",
     "taxonomy": "product_cat",
@@ -132,17 +132,20 @@
         "tea-and-coffee-packaging-boxes": {
             "name": "Tea and Coffee Packaging Boxes",
             "slug": "tea-and-coffee-packaging-boxes",
-            "group": "Specialty Industry Packaging"
+            "group": "Specialty Industry Packaging",
+            "thumbnail_asset": "assets/images/tea-coffee-packaging-boxes.webp"
         },
         "toy-and-game-packaging-boxes": {
             "name": "Toy and Game Packaging Boxes",
             "slug": "toy-and-game-packaging-boxes",
-            "group": "Specialty Industry Packaging"
+            "group": "Specialty Industry Packaging",
+            "thumbnail_asset": "assets/images/toy-game-packaging-boxes.webp"
         },
         "pet-product-packaging-boxes": {
             "name": "Pet Product Packaging Boxes",
             "slug": "pet-product-packaging-boxes",
-            "group": "Specialty Industry Packaging"
+            "group": "Specialty Industry Packaging",
+            "thumbnail_asset": "assets/images/pet-product-packaging-boxes.webp"
         },
         "wine-premium-drink-packaging": {
             "name": "Wine and Premium Drink Packaging",
