@@ -67,10 +67,21 @@ function custom_box_get_product_category_manifest_categories() {
             continue;
         }
 
+        $thumbnail_asset = '';
+
+        if (!empty($category['thumbnail_asset'])) {
+            $candidate = ltrim(wp_normalize_path((string) $category['thumbnail_asset']), '/');
+
+            if (false === strpos($candidate, '..')) {
+                $thumbnail_asset = $candidate;
+            }
+        }
+
         $categories[$slug] = array(
-            'name'  => $name,
-            'slug'  => $slug,
-            'group' => !empty($category['group']) ? sanitize_text_field($category['group']) : '',
+            'name'            => $name,
+            'slug'            => $slug,
+            'group'           => !empty($category['group']) ? sanitize_text_field($category['group']) : '',
+            'thumbnail_asset' => $thumbnail_asset,
         );
     }
 
@@ -178,13 +189,16 @@ function custom_box_get_home_packaging_category_groups() {
         }
 
         $target_group = $category['group'] ?: 'Specialty Industry Packaging';
+        $thumbnail_url = !empty($category['thumbnail_asset'])
+            ? get_template_directory_uri() . '/' . ltrim($category['thumbnail_asset'], '/')
+            : '';
 
         foreach ($groups as &$group) {
             if ($group['title'] !== $target_group) {
                 continue;
             }
 
-            $group['items'][] = array($category['name'], $category['slug'], '');
+            $group['items'][] = array($category['name'], $category['slug'], $thumbnail_url);
             $configured_slugs[] = $category['slug'];
             continue 2;
         }
@@ -193,7 +207,7 @@ function custom_box_get_home_packaging_category_groups() {
         $groups[] = array(
             'title' => $target_group,
             'items' => array(
-                array($category['name'], $category['slug'], ''),
+                array($category['name'], $category['slug'], $thumbnail_url),
             ),
         );
         $configured_slugs[] = $category['slug'];
