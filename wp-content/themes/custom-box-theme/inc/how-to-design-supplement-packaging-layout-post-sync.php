@@ -14,12 +14,14 @@ function custom_box_sync_supplement_packaging_layout_post(): void
     }
 
     $version = '2026-07-17-v1';
+    $post_data = custom_box_supplement_packaging_layout_post_data();
+    $post = custom_box_find_supplement_packaging_layout_post($post_data['slug'], $post_data['title']);
     $already_synced = $version === get_option('custom_box_supplement_packaging_layout_sync_version');
     $has_issues = '' !== (string) get_option('custom_box_supplement_packaging_layout_missing_post', '')
         || !empty((array) get_option('custom_box_supplement_packaging_layout_missing_images', array()))
         || !empty((array) get_option('custom_box_supplement_packaging_layout_missing_slots', array()));
 
-    if ($already_synced && !$has_issues) {
+    if ($already_synced && !$has_issues && $post) {
         return;
     }
 
