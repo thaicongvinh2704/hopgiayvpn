@@ -6,7 +6,7 @@
 defined('ABSPATH') || exit;
 
 function custom_box_category_migration_targets() {
-    return array(
+    $targets = array(
         'custom-packaging-boxes'       => 'Custom Packaging Boxes',
         'custom-paper-boxes'          => 'Custom Paper Boxes',
         'custom-printed-paper-boxes'  => 'Custom Printed Paper Boxes',
@@ -40,6 +40,14 @@ function custom_box_category_migration_targets() {
         'home-lifestyle-packaging'              => 'Home and Lifestyle Packaging',
         'back-to-school-stationery-packaging'   => 'Back-to-School and Stationery Packaging',
     );
+
+    if (function_exists('custom_box_get_product_category_manifest_categories')) {
+        foreach (custom_box_get_product_category_manifest_categories() as $category) {
+            $targets[$category['slug']] = $category['name'];
+        }
+    }
+
+    return $targets;
 }
 
 function custom_box_category_migration_old_slug_map() {

@@ -16,6 +16,7 @@ $custom_box_inc_files = array(
     'inc/search-suggestions.php',
     'inc/admin-category-fields.php',
     'inc/product-specifications.php',
+    'inc/product-category-manifest-sync.php',
     'inc/product-category-migration.php',
     'inc/admin-local-product-category-sync.php',
     'inc/admin-product-category-local-prune.php',

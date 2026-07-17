@@ -35,6 +35,48 @@ function custom_box_primary_menu_fallback() {
     custom_box_primary_menu();
 }
 
+function custom_box_get_product_category_manifest_categories() {
+    static $categories = null;
+
+    if (null !== $categories) {
+        return $categories;
+    }
+
+    $categories = array();
+    $manifest_path = get_template_directory() . '/inc/product-category-assignment-manifest.json';
+
+    if (!is_readable($manifest_path)) {
+        return $categories;
+    }
+
+    $manifest = json_decode((string) file_get_contents($manifest_path), true);
+
+    if (empty($manifest['categories']) || !is_array($manifest['categories'])) {
+        return $categories;
+    }
+
+    foreach ($manifest['categories'] as $key => $category) {
+        if (!is_array($category)) {
+            continue;
+        }
+
+        $slug = sanitize_title(!empty($category['slug']) ? $category['slug'] : $key);
+        $name = !empty($category['name']) ? sanitize_text_field($category['name']) : '';
+
+        if (!$slug || !$name) {
+            continue;
+        }
+
+        $categories[$slug] = array(
+            'name'  => $name,
+            'slug'  => $slug,
+            'group' => !empty($category['group']) ? sanitize_text_field($category['group']) : '',
+        );
+    }
+
+    return $categories;
+}
+
 function custom_box_get_packaging_category_slugs() {
     $official_slugs = custom_box_get_official_packaging_category_slugs();
 
@@ -65,7 +107,7 @@ function custom_box_get_home_packaging_category_groups() {
     $uploads_2026_05_uri = content_url('/uploads/2026/05/');
     $theme_image_uri = get_template_directory_uri() . '/assets/images/';
 
-    return array(
+    $groups = array(
         array(
             'title' => 'Paper Box Types',
             'items' => array(
@@ -119,6 +161,46 @@ function custom_box_get_home_packaging_category_groups() {
             ),
         ),
     );
+
+    $configured_slugs = array();
+
+    foreach ($groups as $group) {
+        foreach ($group['items'] as $item) {
+            if (!empty($item[1])) {
+                $configured_slugs[] = $item[1];
+            }
+        }
+    }
+
+    foreach (custom_box_get_product_category_manifest_categories() as $category) {
+        if (in_array($category['slug'], $configured_slugs, true)) {
+            continue;
+        }
+
+        $target_group = $category['group'] ?: 'Specialty Industry Packaging';
+
+        foreach ($groups as &$group) {
+            if ($group['title'] !== $target_group) {
+                continue;
+            }
+
+            $group['items'][] = array($category['name'], $category['slug'], '');
+            $configured_slugs[] = $category['slug'];
+            continue 2;
+        }
+        unset($group);
+
+        $groups[] = array(
+            'title' => $target_group,
+            'items' => array(
+                array($category['name'], $category['slug'], ''),
+            ),
+        );
+        $configured_slugs[] = $category['slug'];
+    }
+    unset($group);
+
+    return $groups;
 }
 
 function custom_box_get_home_packaging_category_image_url($term_or_slug) {
@@ -189,6 +271,12 @@ function custom_box_get_official_packaging_categories($limit = 0) {
 }
 
 function custom_box_get_official_packaging_category_slugs() {
+    $manifest_categories = custom_box_get_product_category_manifest_categories();
+
+    if (!empty($manifest_categories)) {
+        return array_keys($manifest_categories);
+    }
+
     $slugs = array();
 
     foreach (custom_box_get_home_packaging_category_groups() as $group) {
