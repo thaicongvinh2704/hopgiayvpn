@@ -29,9 +29,7 @@ foreach ( glob( $source_dir . '/*.php' ) ?: array() as $source_file ) {
 	}
 }
 
-require $target_dir . '/import-perfume-packaging-products.php';
-require $target_dir . '/verify-perfume-packaging-products.php';
-require $target_dir . '/import-corrugated-mailer-products.php';
-require $target_dir . '/verify-corrugated-mailer-products.php';
+require $target_dir . '/import-three-new-category-products.php';
+require $target_dir . '/verify-three-new-category-products.php';
 
 echo PHP_EOL . 'Current product sample deployment complete.' . PHP_EOL;

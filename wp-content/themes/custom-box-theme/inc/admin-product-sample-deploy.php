@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-07-13-july-release-one-click' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-07-17-three-category-products' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -491,7 +491,7 @@ function custom_box_product_sample_deploy_batch_products( string $marker ): arra
 
 function custom_box_product_sample_deploy_batch_complete( string $marker, int $expected_count, int $min_words = 1500 ): bool {
 	$products = custom_box_product_sample_deploy_batch_products( $marker );
-	if ( count( $products ) < $expected_count ) {
+	if ( count( $products ) !== $expected_count ) {
 		return false;
 	}
 
@@ -716,6 +716,16 @@ function custom_box_product_sample_deploy_batches(): array {
 				'tools/verify-corrugated-mailer-products.php',
 			),
 		),
+		array(
+			'name'      => 'Toy, Tea and Coffee, and Pet products July 2026',
+			'marker'    => 'product-samples-three-new-categories-202607',
+			'expected'  => 21,
+			'min_words' => 1500,
+			'scripts'   => array(
+				'tools/import-three-new-category-products.php',
+				'tools/verify-three-new-category-products.php',
+			),
+		),
 	);
 }
 
@@ -748,6 +758,17 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 		);
 	}
 
+	if ( 'three_categories_202607' === $scope ) {
+		return array_values(
+			array_filter(
+				$batches,
+				static function ( $batch ) {
+					return isset( $batch['marker'] ) && 'product-samples-three-new-categories-202607' === $batch['marker'];
+				}
+			)
+		);
+	}
+
 	// The default button must deploy the complete current release. Keep
 	// historical batches available through the explicit "all" scope, but do
 	// not make a new release depend on an incomplete legacy batch.
@@ -758,8 +779,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 				return isset( $batch['marker'] ) && in_array(
 					$batch['marker'],
 					array(
-						'product-samples-perfume-packaging-202607',
-						'product-samples-corrugated-mailers-202607',
+						'product-samples-three-new-categories-202607',
 					),
 					true
 				);
@@ -769,7 +789,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 }
 
 function custom_box_product_sample_deploy_allowed_scopes(): array {
-	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607' );
+	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607', 'three_categories_202607' );
 }
 
 function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
@@ -820,7 +840,7 @@ function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
 		return;
 	}
 
-	if ( empty( $state['category_migration_done'] ) && function_exists( 'custom_box_category_migration_apply_products_to_targets' ) ) {
+	if ( 'all' === $scope && empty( $state['category_migration_done'] ) && function_exists( 'custom_box_category_migration_apply_products_to_targets' ) ) {
 		$state['category_migration_done'] = true;
 		$published = custom_box_product_sample_publish_category_balance_products();
 		$updated = custom_box_category_migration_apply_products_to_targets();
@@ -830,7 +850,7 @@ function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
 		return;
 	}
 
-	if ( empty( $state['final_cleanup_done'] ) ) {
+	if ( 'all' === $scope && empty( $state['final_cleanup_done'] ) ) {
 		$state['final_cleanup_done'] = true;
 		custom_box_product_sample_deploy_run_script( 'tools/cleanup-final-category-products.php' );
 		echo 'Step complete. Continuing in the next request.' . PHP_EOL;
@@ -1019,6 +1039,7 @@ function custom_box_product_sample_deploy_restore_assets() {
 	$log[] = 'Required sample data exists after restore: ' . ( file_exists( ABSPATH . 'product-samples-10.md' ) ? 'yes' : 'no' );
 	$log[] = 'Required sample image exists after restore: ' . ( file_exists( ABSPATH . 'wp-content/uploads/2026/05/custom-ampoule-packaging-box-1.webp' ) ? 'yes' : 'no' );
 	$log[] = 'Required magnetic image exists after restore: ' . ( file_exists( ABSPATH . 'wp-content/uploads/2026/07/custom-perfume-magnetic-closure-box-main.webp' ) ? 'yes' : 'no' );
+	$log[] = 'Required three-category image exists after restore: ' . ( file_exists( ABSPATH . 'wp-content/uploads/2026/07/board-game-packaging-box-1.webp' ) ? 'yes' : 'no' );
 	$log[] = '';
 
 	return implode( PHP_EOL, $log ) . PHP_EOL;
@@ -1087,6 +1108,16 @@ function custom_box_product_sample_deploy_page() {
 			<input type="hidden" name="deploy_scope" value="corrugated_202607">
 			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
 			<?php submit_button( 'Sync Corrugated Mailer Products', 'primary large', 'submit', false ); ?>
+		</form>
+
+		<h2>Three New Product Categories Sync</h2>
+		<p>Imports or updates the 21 July 2026 products for Toy and Game, Tea and Coffee, and Pet Product Packaging from 84 bundled source images.</p>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-bottom:24px;">
+			<input type="hidden" name="action" value="custom_box_product_sample_deploy">
+			<input type="hidden" name="reset" value="1">
+			<input type="hidden" name="deploy_scope" value="three_categories_202607">
+			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
+			<?php submit_button( 'Sync 21 New Category Products', 'primary large', 'submit', false ); ?>
 		</form>
 
 		<hr>

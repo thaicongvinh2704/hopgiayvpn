@@ -526,15 +526,16 @@ Important:
 
 The Git-tracked root CLI entry point restores the bundled deploy tools from
 `wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/` before running.
-For the current July 2026 release, it synchronizes and verifies the Perfume
-Packaging and Corrugated Mailer batches. It is safe to run again because the
-importers use batch markers and update existing products instead of duplicating them.
+For the current July 2026 release, it synchronizes and verifies the 21 products
+for the Toy and Game, Tea and Coffee, and Pet Product Packaging categories. It is
+safe to run again because the importer uses a batch marker and updates existing
+products instead of duplicating them.
 
 In WordPress admin, after the Git pull, open **Tools > Product Sample Deploy** and
 click **Run Product Sample Deploy** with **Latest batch only** selected. The default
-scope runs both current July batches in sequence, restores their Git-tracked tools
-and upload assets automatically, and verifies each batch. The separate Perfume and
-Corrugated buttons remain available for rerunning one batch only.
+scope runs the current 21-product batch, restores its Git-tracked tools and 84
+original upload assets automatically, and verifies the result. Separate buttons
+remain available for rerunning the Perfume and Corrugated batches.
 
 The deploy process:
 
@@ -683,3 +684,28 @@ After `git pull` on hosting, either run:
 - `php tools/deploy-product-samples-all.php`
 
 or open **Tools > Product Sample Deploy** and click **Sync Corrugated Mailer Products**. The importer creates missing WordPress media attachments from the uploaded images or bundled deploy assets before publishing the products.
+
+### Three New Product Categories batch (July 2026)
+
+Local WooCommerce batch marker:
+
+- `_vpn_sample_import = product-samples-three-new-categories-202607`
+
+This batch imports 21 products from 84 original images, split evenly across:
+
+- Toy and Game Packaging Boxes
+- Tea and Coffee Packaging Boxes
+- Pet Product Packaging Boxes
+
+Files used:
+
+- `tools/import-three-new-category-products.php`
+- `tools/verify-three-new-category-products.php`
+- `wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/uploads/2026/07/`
+
+After `git pull` on hosting, open **Tools > Product Sample Deploy** and click
+**Run Product Sample Deploy** with **Latest batch only** selected. This is the
+default one-button scope for the batch. The dedicated **Sync 21 New Category
+Products** button runs the same batch by itself. Both paths restore the bundled
+images, create missing Media Library attachments, and import or update products
+without creating duplicate slugs.
