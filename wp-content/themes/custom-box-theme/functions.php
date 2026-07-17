@@ -62,6 +62,7 @@ $custom_box_post_sync_files = array(
     'inc/how-to-package-chocolate-gift-sets-post-sync.php',
     'inc/how-to-create-premium-food-packaging-with-paper-boxes-post-sync.php',
     'inc/how-to-protect-bottles-in-paper-gift-packaging-post-sync.php',
+    'inc/how-to-design-supplement-packaging-layout-post-sync.php',
 );
 
 if (custom_box_should_load_post_sync_files()) {
