@@ -4,6 +4,7 @@
  */
 
 add_action('admin_init', 'custom_box_sync_supplement_packaging_layout_post');
+add_action('admin_init', 'custom_box_supplement_packaging_layout_status_page', 1);
 add_action('admin_notices', 'custom_box_supplement_packaging_layout_admin_notice');
 
 function custom_box_sync_supplement_packaging_layout_post(): void
@@ -350,6 +351,61 @@ function custom_box_supplement_packaging_layout_admin_notice(): void
     }
 
     echo '</ul></div>';
+}
+
+function custom_box_supplement_packaging_layout_status_page(): void
+{
+    if (
+        !isset($_GET['custom_box_supplement_layout_status'])
+        || '1' !== sanitize_text_field(wp_unslash($_GET['custom_box_supplement_layout_status']))
+    ) {
+        return;
+    }
+
+    if (!current_user_can('manage_options')) {
+        wp_die('You do not have permission to run this supplement packaging layout sync check.');
+    }
+
+    $forced_result = custom_box_upsert_supplement_packaging_layout_post();
+    $post_data = custom_box_supplement_packaging_layout_post_data();
+    $post = custom_box_find_supplement_packaging_layout_post($post_data['slug'], $post_data['title']);
+    $content = $post ? (string) $post->post_content : '';
+    $missing_images = (array) get_option('custom_box_supplement_packaging_layout_missing_images', array());
+    $missing_slots = (array) get_option('custom_box_supplement_packaging_layout_missing_slots', array());
+    $image_bases = array();
+
+    foreach (custom_box_supplement_packaging_layout_images() as $image) {
+        $image_bases[] = $image['base'];
+    }
+
+    $lines = array(
+        'Supplement packaging layout sync status',
+        '',
+        'Theme: ' . wp_get_theme()->get('Name'),
+        'Template directory: ' . get_template_directory(),
+        'Sync file loaded: yes',
+        'Forced sync result: ' . (is_wp_error($forced_result) ? $forced_result->get_error_message() : 'post_id ' . (int) $forced_result),
+        'Post found: ' . ($post ? 'yes' : 'no'),
+        'Post ID: ' . ($post ? (string) $post->ID : 'missing'),
+        'Post status: ' . ($post ? $post->post_status : 'missing'),
+        'Post slug: ' . ($post ? $post->post_name : 'missing'),
+        'Featured image: ' . ($post && has_post_thumbnail($post->ID) ? 'yes' : 'no'),
+        'Inline image markers: ' . substr_count($content, 'vpn-supplement-packaging-layout-image:'),
+        'Remaining IMAGE_SLOT markers: ' . preg_match_all('/IMAGE_SLOT_\d+/', $content),
+        'Missing images: ' . (empty($missing_images) ? 'none' : implode(', ', $missing_images)),
+        'Missing slots: ' . (empty($missing_slots) ? 'none' : implode(', ', $missing_slots)),
+        'Sync version: ' . (string) get_option('custom_box_supplement_packaging_layout_sync_version', ''),
+        'Expected image filename bases: ' . implode(', ', $image_bases),
+        '',
+        'Draft search URL: ' . admin_url('edit.php?post_status=draft&post_type=post&s=Supplement+Products'),
+        'Edit URL: ' . ($post ? get_edit_post_link($post->ID, 'raw') : 'missing'),
+    );
+
+    wp_die(
+        '<pre style="white-space:pre-wrap;font:14px/1.5 monospace;">' . esc_html(implode("\n", $lines)) . '</pre>',
+        'Supplement Packaging Layout Sync Status',
+        array('response' => 200)
+    );
 }
 
 function custom_box_supplement_packaging_layout_content(): string
