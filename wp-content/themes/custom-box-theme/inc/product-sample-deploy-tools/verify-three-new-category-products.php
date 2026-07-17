@@ -43,6 +43,9 @@ foreach ($products as $product) {
         return str_starts_with($url, '/') || str_starts_with($url, home_url('/'));
     });
 
+    if ('publish' !== get_post_status($product->ID)) {
+        $failures[] = $product->post_name . ': expected publish status, found ' . get_post_status($product->ID) . '.';
+    }
     if ($words < 1500 || $words > 2000) {
         $failures[] = $product->post_name . ': long description words=' . $words . '.';
     }
@@ -151,4 +154,4 @@ if ($failures) {
 echo "PASS\n";
 echo 'Products: ' . count($products) . PHP_EOL;
 echo "Categories: 7 toy/game, 7 tea/coffee, 7 pet product\n";
-echo "Each product: HTTP 200, 1500-2000 words, 120-180 short words, 0 H1, 21 specs, 5 internal links, 4 attached images, 4 inline figures, 3 gallery images, featured image, Rank Math fields.\n";
+echo "Each product: published, HTTP 200, 1500-2000 words, 120-180 short words, 0 H1, 21 specs, 5 internal links, 4 attached images, 4 inline figures, 3 gallery images, featured image, Rank Math fields.\n";

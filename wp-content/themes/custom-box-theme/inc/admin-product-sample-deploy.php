@@ -510,7 +510,7 @@ function custom_box_product_sample_deploy_batch_complete( string $marker, int $e
 			}
 		}
 
-		if ( $words < $min_words || preg_match( '/<h1\b/i', $content ) || ! is_array( $specs ) || count( $specs ) < 21 || '1000 boxes' !== $moq || ! has_post_thumbnail( $product->ID ) ) {
+		if ( 'publish' !== get_post_status( $product->ID ) || $words < $min_words || preg_match( '/<h1\b/i', $content ) || ! is_array( $specs ) || count( $specs ) < 21 || '1000 boxes' !== $moq || ! has_post_thumbnail( $product->ID ) ) {
 			return false;
 		}
 	}
