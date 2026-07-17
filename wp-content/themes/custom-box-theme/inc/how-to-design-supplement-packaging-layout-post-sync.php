@@ -6,6 +6,7 @@
 add_action('admin_init', 'custom_box_sync_supplement_packaging_layout_post');
 add_action('admin_init', 'custom_box_supplement_packaging_layout_status_page', 1);
 add_action('admin_notices', 'custom_box_supplement_packaging_layout_admin_notice');
+add_action('init', 'custom_box_auto_seed_supplement_packaging_layout_post', 20);
 
 function custom_box_sync_supplement_packaging_layout_post(): void
 {
@@ -13,6 +14,20 @@ function custom_box_sync_supplement_packaging_layout_post(): void
         return;
     }
 
+    custom_box_run_supplement_packaging_layout_sync();
+}
+
+function custom_box_auto_seed_supplement_packaging_layout_post(): void
+{
+    if ((function_exists('wp_doing_ajax') && wp_doing_ajax()) || (defined('DOING_CRON') && DOING_CRON)) {
+        return;
+    }
+
+    custom_box_run_supplement_packaging_layout_sync();
+}
+
+function custom_box_run_supplement_packaging_layout_sync(): void
+{
     $version = '2026-07-17-v1';
     $post_data = custom_box_supplement_packaging_layout_post_data();
     $post = custom_box_find_supplement_packaging_layout_post($post_data['slug'], $post_data['title']);
