@@ -12,9 +12,15 @@ function custom_box_sync_electronics_accessories_packaging_post(): void
         return;
     }
 
-    $version = '2026-07-18-v3';
+    $version = '2026-07-18-v4';
+    $post_data = custom_box_electronics_accessories_packaging_post_data();
+    $existing_post = custom_box_find_electronics_accessories_packaging_post($post_data['slug'], $post_data['title']);
 
-    if ($version === get_option('custom_box_electronics_accessories_packaging_sync_version')) {
+    if (
+        $version === get_option('custom_box_electronics_accessories_packaging_sync_version')
+        && $existing_post
+        && custom_box_electronics_accessories_packaging_is_complete((int) $existing_post->ID)
+    ) {
         return;
     }
 
@@ -25,23 +31,12 @@ function custom_box_sync_electronics_accessories_packaging_post(): void
         return;
     }
 
-    $post = get_post((int) $post_id);
-    $content = $post ? (string) $post->post_content : '';
     $missing_images = (array) get_option('custom_box_electronics_accessories_packaging_missing_images', array());
     $missing_slots = (array) get_option('custom_box_electronics_accessories_packaging_missing_slots', array());
-    $tags = wp_get_post_terms((int) $post_id, 'post_tag', array('fields' => 'ids'));
     $sync_incomplete = (
-        !$post
-        || !empty($missing_images)
+        !empty($missing_images)
         || !empty($missing_slots)
-        || !get_post_thumbnail_id((int) $post_id)
-        || 4 !== substr_count($content, 'vpn-electronics-accessories-packaging-image:slot_')
-        || preg_match('/IMAGE_SLOT_\d+/', $content)
-        || is_wp_error($tags)
-        || count($tags) < 8
-        || '' === (string) get_post_meta((int) $post_id, 'rank_math_title', true)
-        || '' === (string) get_post_meta((int) $post_id, 'rank_math_description', true)
-        || '' === (string) get_post_meta((int) $post_id, 'rank_math_focus_keyword', true)
+        || !custom_box_electronics_accessories_packaging_is_complete((int) $post_id)
     );
 
     if ($sync_incomplete) {
@@ -59,7 +54,10 @@ function custom_box_sync_electronics_accessories_packaging_post(): void
     update_option('custom_box_electronics_accessories_packaging_sync_version', $version, false);
     update_option(
         'custom_box_electronics_accessories_packaging_success_notice',
-        'Draft, featured image, four inline images, category, tags, and Rank Math metadata are synchronized.',
+        sprintf(
+            'Post #%d verified: featured image set, 4 figure/image pairs inserted, Packaging Guides assigned, 8 tags assigned, and Rank Math focus keyword saved.',
+            (int) $post_id
+        ),
         false
     );
 }
@@ -166,6 +164,63 @@ function custom_box_electronics_accessories_packaging_images(): array
             'title'   => 'Retail and Shipping Readiness Check',
             'caption' => 'Retail artwork, hang-tab structure, insert fit, and master-carton arrangement should be reviewed as one packaging system.',
         ),
+    );
+}
+
+function custom_box_electronics_accessories_packaging_is_complete(int $post_id): bool
+{
+    $post = get_post($post_id);
+
+    if (!$post || 'post' !== $post->post_type) {
+        return false;
+    }
+
+    $post_data = custom_box_electronics_accessories_packaging_post_data();
+    $images = custom_box_electronics_accessories_packaging_images();
+    $content = (string) $post->post_content;
+    $thumbnail_id = (int) get_post_thumbnail_id($post_id);
+    $thumbnail_file = $thumbnail_id ? (string) get_post_meta($thumbnail_id, '_wp_attached_file', true) : '';
+
+    if (
+        $post_data['slug'] !== $post->post_name
+        || $post_data['excerpt'] !== $post->post_excerpt
+        || 4 !== substr_count($content, 'vpn-electronics-accessories-packaging-image:slot_')
+        || 4 !== substr_count($content, '<figure')
+        || 4 !== substr_count($content, '<img ')
+        || preg_match('/IMAGE_SLOT_\d+/', $content)
+        || $images['featured']['base'] !== pathinfo(basename($thumbnail_file), PATHINFO_FILENAME)
+    ) {
+        return false;
+    }
+
+    foreach (array('slot_1', 'slot_2', 'slot_3', 'slot_4') as $slot_key) {
+        if (false === strpos($content, '/' . $images[$slot_key]['base'] . '.')) {
+            return false;
+        }
+    }
+
+    $category_slugs = wp_get_post_terms($post_id, 'category', array('fields' => 'slugs'));
+    $tag_slugs = wp_get_post_terms($post_id, 'post_tag', array('fields' => 'slugs'));
+
+    if (is_wp_error($category_slugs) || !in_array($post_data['category']['slug'], $category_slugs, true)) {
+        return false;
+    }
+    if (is_wp_error($tag_slugs)) {
+        return false;
+    }
+
+    $expected_tag_slugs = array_map('sanitize_title', $post_data['tags']);
+    sort($expected_tag_slugs);
+    sort($tag_slugs);
+
+    if ($expected_tag_slugs !== $tag_slugs) {
+        return false;
+    }
+
+    return (
+        $post_data['seo_title'] === (string) get_post_meta($post_id, 'rank_math_title', true)
+        && $post_data['seo_description'] === (string) get_post_meta($post_id, 'rank_math_description', true)
+        && $post_data['focus_keyword'] === (string) get_post_meta($post_id, 'rank_math_focus_keyword', true)
     );
 }
 
