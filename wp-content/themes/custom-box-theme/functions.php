@@ -62,6 +62,7 @@ $custom_box_post_sync_files = array(
     'inc/jewelry-paper-box-packaging-post-sync.php',
     'inc/how-to-choose-candle-packaging-materials-post-sync.php',
     'inc/how-to-package-chocolate-gift-sets-post-sync.php',
+    'inc/how-to-package-electronics-accessories-safely-post-sync.php',
     'inc/how-to-create-premium-food-packaging-with-paper-boxes-post-sync.php',
     'inc/how-to-protect-bottles-in-paper-gift-packaging-post-sync.php',
 );
