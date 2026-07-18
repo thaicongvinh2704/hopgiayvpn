@@ -12,7 +12,7 @@ function custom_box_sync_electronics_accessories_packaging_post(): void
         return;
     }
 
-    $version = '2026-07-18-v1';
+    $version = '2026-07-18-v2';
 
     if ($version === get_option('custom_box_electronics_accessories_packaging_sync_version')) {
         return;
@@ -292,6 +292,13 @@ function custom_box_create_electronics_accessories_packaging_attachment(string $
     foreach ($extensions as $extension) {
         $candidate_relative = $relative_dir . '/' . $base . '.' . $extension;
         $candidate_path = trailingslashit($uploads['basedir']) . $candidate_relative;
+        $bundle_path = get_template_directory() . '/inc/product-sample-deploy-assets/uploads/' . $candidate_relative;
+
+        if (!file_exists($candidate_path) && file_exists($bundle_path)) {
+            if (!wp_mkdir_p(dirname($candidate_path)) || !copy($bundle_path, $candidate_path)) {
+                continue;
+            }
+        }
 
         if (file_exists($candidate_path)) {
             $file_path = $candidate_path;
