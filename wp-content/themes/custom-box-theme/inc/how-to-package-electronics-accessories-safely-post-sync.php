@@ -12,7 +12,7 @@ function custom_box_sync_electronics_accessories_packaging_post(): void
         return;
     }
 
-    $version = '2026-07-18-v2';
+    $version = '2026-07-18-v3';
 
     if ($version === get_option('custom_box_electronics_accessories_packaging_sync_version')) {
         return;
@@ -25,8 +25,43 @@ function custom_box_sync_electronics_accessories_packaging_post(): void
         return;
     }
 
+    $post = get_post((int) $post_id);
+    $content = $post ? (string) $post->post_content : '';
+    $missing_images = (array) get_option('custom_box_electronics_accessories_packaging_missing_images', array());
+    $missing_slots = (array) get_option('custom_box_electronics_accessories_packaging_missing_slots', array());
+    $tags = wp_get_post_terms((int) $post_id, 'post_tag', array('fields' => 'ids'));
+    $sync_incomplete = (
+        !$post
+        || !empty($missing_images)
+        || !empty($missing_slots)
+        || !get_post_thumbnail_id((int) $post_id)
+        || 4 !== substr_count($content, 'vpn-electronics-accessories-packaging-image:slot_')
+        || preg_match('/IMAGE_SLOT_\d+/', $content)
+        || is_wp_error($tags)
+        || count($tags) < 8
+        || '' === (string) get_post_meta((int) $post_id, 'rank_math_title', true)
+        || '' === (string) get_post_meta((int) $post_id, 'rank_math_description', true)
+        || '' === (string) get_post_meta((int) $post_id, 'rank_math_focus_keyword', true)
+    );
+
+    if ($sync_incomplete) {
+        delete_option('custom_box_electronics_accessories_packaging_sync_version');
+        delete_option('custom_box_electronics_accessories_packaging_success_notice');
+        update_option(
+            'custom_box_electronics_accessories_packaging_missing_post',
+            'Sync is incomplete and will retry on the next admin request.',
+            false
+        );
+        return;
+    }
+
     update_option('custom_box_electronics_accessories_packaging_missing_post', '', false);
     update_option('custom_box_electronics_accessories_packaging_sync_version', $version, false);
+    update_option(
+        'custom_box_electronics_accessories_packaging_success_notice',
+        'Draft, featured image, four inline images, category, tags, and Rank Math metadata are synchronized.',
+        false
+    );
 }
 
 function custom_box_upsert_electronics_accessories_packaging_post()
@@ -358,8 +393,15 @@ function custom_box_electronics_accessories_packaging_admin_notice(): void
     $missing_post = (string) get_option('custom_box_electronics_accessories_packaging_missing_post', '');
     $missing_images = (array) get_option('custom_box_electronics_accessories_packaging_missing_images', array());
     $missing_slots = (array) get_option('custom_box_electronics_accessories_packaging_missing_slots', array());
+    $success_notice = (string) get_option('custom_box_electronics_accessories_packaging_success_notice', '');
 
     if ('' === $missing_post && empty($missing_images) && empty($missing_slots)) {
+        if ('' !== $success_notice) {
+            echo '<div class="notice notice-success is-dismissible"><p><strong>Electronics accessories packaging post sync:</strong> ';
+            echo esc_html($success_notice);
+            echo '</p></div>';
+            delete_option('custom_box_electronics_accessories_packaging_success_notice');
+        }
         return;
     }
 
