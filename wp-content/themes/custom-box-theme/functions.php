@@ -26,6 +26,7 @@ $custom_box_inc_files = array(
     'inc/pharmaceutical-paper-packaging-information-post-sync.php',
     'inc/how-to-design-supplement-packaging-layout-post-sync.php',
     'inc/how-to-package-electronics-accessories-safely-post-sync.php',
+    'inc/packaging-inserts-protection-presentation-post-sync.php',
     'inc/quote-form-handler.php',
     'inc/woocommerce.php',
 );
