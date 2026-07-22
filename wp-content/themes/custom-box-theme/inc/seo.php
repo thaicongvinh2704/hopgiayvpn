@@ -5,6 +5,32 @@
 
 defined('ABSPATH') || exit;
 
+function custom_box_rank_math_outputs_gtag() {
+    global $wp_filter;
+
+    if (empty($wp_filter['wp_head']) || !isset($wp_filter['wp_head']->callbacks)) {
+        return false;
+    }
+
+    foreach ($wp_filter['wp_head']->callbacks as $callbacks) {
+        foreach ($callbacks as $callback) {
+            $function = isset($callback['function']) ? $callback['function'] : null;
+
+            if (
+                is_array($function)
+                && isset($function[0], $function[1])
+                && is_object($function[0])
+                && 'add_gtag_js' === $function[1]
+                && is_a($function[0], 'RankMath\\Analytics\\GTag')
+            ) {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
 function custom_box_output_google_tag() {
     if (
         defined('GOOGLESITEKIT_VERSION')
@@ -16,7 +42,9 @@ function custom_box_output_google_tag() {
 
     ?>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-8ELLLW3RQ6"></script>
+    <?php if (!custom_box_rank_math_outputs_gtag()) : ?>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-8ELLLW3RQ6"></script>
+    <?php endif; ?>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
