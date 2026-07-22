@@ -28,6 +28,7 @@ $custom_box_inc_files = array(
     'inc/how-to-package-electronics-accessories-safely-post-sync.php',
     'inc/packaging-inserts-protection-presentation-post-sync.php',
     'inc/how-paper-bags-support-retail-packaging-post-sync.php',
+    'inc/how-to-plan-fashion-product-packaging-post-sync.php',
     'inc/quote-form-handler.php',
     'inc/woocommerce.php',
 );
