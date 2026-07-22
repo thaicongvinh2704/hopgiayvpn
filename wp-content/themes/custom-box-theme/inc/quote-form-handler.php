@@ -744,29 +744,6 @@ function custom_box_quote_form_should_enqueue_recaptcha() {
     return (bool) apply_filters('custom_box_quote_form_should_enqueue_recaptcha', $should_enqueue);
 }
 
-function custom_box_enqueue_quote_form_recaptcha() {
-    $site_key = custom_box_quote_form_recaptcha_site_key();
-
-    if ('' === $site_key || !custom_box_quote_form_should_enqueue_recaptcha()) {
-        return;
-    }
-
-    wp_enqueue_script(
-        'custom-box-google-recaptcha',
-        add_query_arg(
-            array(
-                'render' => $site_key,
-            ),
-            'https://www.google.com/recaptcha/api.js'
-        ),
-        array(),
-        null,
-        true
-    );
-
-}
-add_action('wp_enqueue_scripts', 'custom_box_enqueue_quote_form_recaptcha');
-
 function custom_box_print_recaptcha_v3_submit_handler() {
     $site_key = custom_box_quote_form_recaptcha_site_key();
 
@@ -778,6 +755,63 @@ function custom_box_print_recaptcha_v3_submit_handler() {
     (function() {
         var siteKey = <?php echo wp_json_encode($site_key); ?>;
         var selector = 'input[name="action"][value="custom_box_quote_form"]';
+        var scriptUrl = <?php echo wp_json_encode(add_query_arg(array('render' => $site_key), 'https://www.google.com/recaptcha/api.js')); ?>;
+        var loadPromise = null;
+
+        function isQuoteForm(form) {
+            return form && form.matches && form.matches('form') && form.querySelector(selector);
+        }
+
+        function findQuoteForm(target) {
+            if (!target || !target.closest) {
+                return null;
+            }
+
+            var form = target.closest('form');
+            return isQuoteForm(form) ? form : null;
+        }
+
+        function loadRecaptcha() {
+            if (window.grecaptcha && window.grecaptcha.ready && window.grecaptcha.execute) {
+                return Promise.resolve(window.grecaptcha);
+            }
+
+            if (loadPromise) {
+                return loadPromise;
+            }
+
+            loadPromise = new Promise(function(resolve, reject) {
+                var existing = document.getElementById('custom-box-google-recaptcha-js');
+                var script = existing || document.createElement('script');
+
+                function handleLoad() {
+                    if (window.grecaptcha && window.grecaptcha.ready && window.grecaptcha.execute) {
+                        resolve(window.grecaptcha);
+                        return;
+                    }
+
+                    reject(new Error('reCAPTCHA did not initialize.'));
+                }
+
+                script.addEventListener('load', handleLoad, {once: true});
+                script.addEventListener('error', function() {
+                    loadPromise = null;
+                    reject(new Error('reCAPTCHA failed to load.'));
+                }, {once: true});
+
+                if (!existing) {
+                    script.id = 'custom-box-google-recaptcha-js';
+                    script.src = scriptUrl;
+                    script.async = true;
+                    script.defer = true;
+                    script.dataset.cfasync = 'false';
+                    script.dataset.noOptimize = '1';
+                    document.head.appendChild(script);
+                }
+            });
+
+            return loadPromise;
+        }
 
         function setSubmitting(form, isSubmitting) {
             var button = form.querySelector('button[type="submit"], input[type="submit"]');
@@ -812,9 +846,18 @@ function custom_box_print_recaptcha_v3_submit_handler() {
             message.textContent = 'Securing your request...';
         }
 
+        function warmRecaptcha(event) {
+            if (findQuoteForm(event.target)) {
+                loadRecaptcha().catch(function() {});
+            }
+        }
+
+        document.addEventListener('pointerdown', warmRecaptcha, {capture: true, passive: true});
+        document.addEventListener('focusin', warmRecaptcha, true);
+
         document.addEventListener('submit', function(event) {
             var form = event.target;
-            if (!form || !form.matches || !form.matches('form') || !form.querySelector(selector)) {
+            if (!isQuoteForm(form)) {
                 return;
             }
 
@@ -828,14 +871,9 @@ function custom_box_print_recaptcha_v3_submit_handler() {
             setSubmitting(form, true);
             notifyPending(form);
 
-            if (!window.grecaptcha || !window.grecaptcha.ready || !window.grecaptcha.execute) {
-                setSubmitting(form, false);
-                notifyFailure(form);
-                return;
-            }
-
-            window.grecaptcha.ready(function() {
-                window.grecaptcha.execute(siteKey, {action: 'quote_submit'}).then(function(token) {
+            loadRecaptcha().then(function(grecaptcha) {
+                grecaptcha.ready(function() {
+                    grecaptcha.execute(siteKey, {action: 'quote_submit'}).then(function(token) {
                     var input = form.querySelector('input[name="g-recaptcha-response"]');
                     if (!input) {
                         input = document.createElement('input');
@@ -851,10 +889,14 @@ function custom_box_print_recaptcha_v3_submit_handler() {
                     } else {
                         form.dispatchEvent(new Event('submit', {bubbles: true, cancelable: true}));
                     }
-                }).catch(function() {
-                    setSubmitting(form, false);
-                    notifyFailure(form);
+                    }).catch(function() {
+                        setSubmitting(form, false);
+                        notifyFailure(form);
+                    });
                 });
+            }).catch(function() {
+                setSubmitting(form, false);
+                notifyFailure(form);
             });
         }, true);
     }());
@@ -862,15 +904,6 @@ function custom_box_print_recaptcha_v3_submit_handler() {
     <?php
 }
 add_action('wp_footer', 'custom_box_print_recaptcha_v3_submit_handler', 5);
-
-function custom_box_recaptcha_script_tag($tag, $handle, $src) {
-    if ('custom-box-google-recaptcha' !== $handle) {
-        return $tag;
-    }
-
-    return '<script src="' . esc_url($src) . '" id="custom-box-google-recaptcha-js" data-cfasync="false" data-no-optimize="1" async defer></script>' . "\n";
-}
-add_filter('script_loader_tag', 'custom_box_recaptcha_script_tag', 9, 3);
 
 function custom_box_quote_form_captcha_lifetime() {
     return (int) apply_filters('custom_box_quote_form_captcha_lifetime', DAY_IN_SECONDS);

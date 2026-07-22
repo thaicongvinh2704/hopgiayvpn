@@ -6,6 +6,14 @@
 defined('ABSPATH') || exit;
 
 function custom_box_output_google_tag() {
+    if (
+        defined('GOOGLESITEKIT_VERSION')
+        || defined('GOOGLESITEKIT_PLUGIN_MAIN_FILE')
+        || class_exists('Google\\Site_Kit\\Plugin')
+    ) {
+        return;
+    }
+
     ?>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-8ELLLW3RQ6"></script>

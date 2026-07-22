@@ -35,6 +35,10 @@ function custom_box_is_packaging_landing_page() {
     return is_page_template('page-landing-packaging.php') || is_page('packaging-landing');
 }
 
+function custom_box_is_dflip_context() {
+    return is_page_template('page-catalog.php') || is_page('catalog');
+}
+
 function custom_box_enqueue_assets() {
     $is_catalog_page = is_page_template('page-catalog.php') || is_page('catalog');
     $main_css_path = get_template_directory() . '/assets/css/main.css';
@@ -175,7 +179,7 @@ function custom_box_dequeue_non_critical_assets() {
         wp_dequeue_style('global-styles');
     }
 
-    if (custom_box_is_packaging_landing_page()) {
+    if (!custom_box_is_dflip_context()) {
         custom_box_dequeue_dflip_assets();
     }
 }
@@ -225,6 +229,24 @@ add_action('wp_print_styles', 'custom_box_dequeue_non_critical_assets', 9999);
 add_action('wp_print_scripts', 'custom_box_dequeue_non_critical_assets', 100);
 add_action('wp_print_scripts', 'custom_box_dequeue_non_critical_assets', 9999);
 
+function custom_box_dequeue_late_non_commerce_assets() {
+    if (custom_box_is_commerce_context()) {
+        return;
+    }
+
+    foreach (array(
+        'wc-jquery-blockui',
+        'wc-js-cookie',
+        'woocommerce',
+        'googlesitekit-events-provider-woocommerce',
+    ) as $handle) {
+        wp_dequeue_script($handle);
+        wp_deregister_script($handle);
+    }
+}
+add_action('wp_footer', 'custom_box_dequeue_late_non_commerce_assets', 0);
+add_action('wp_print_footer_scripts', 'custom_box_dequeue_late_non_commerce_assets', 0);
+
 function custom_box_disable_emoji_assets() {
     remove_action('wp_head', 'print_emoji_detection_script', 7);
     remove_action('wp_print_styles', 'print_emoji_styles');
@@ -251,13 +273,13 @@ function custom_box_preload_hero_assets() {
 
     printf(
         '<link rel="preload" as="image" href="%s" fetchpriority="high">' . "\n",
-        esc_url(get_template_directory_uri() . '/assets/images/product-banner1.png')
+        esc_url(get_template_directory_uri() . '/assets/images/product-banner1.webp')
     );
 }
 add_action('wp_head', 'custom_box_preload_hero_assets', 1);
 
 function custom_box_non_blocking_styles($html, $handle, $href, $media) {
-    if (custom_box_is_packaging_landing_page() && custom_box_is_dflip_asset_url($href)) {
+    if (!custom_box_is_dflip_context() && custom_box_is_dflip_asset_url($href)) {
         return '';
     }
 
@@ -289,8 +311,19 @@ function custom_box_non_blocking_styles($html, $handle, $href, $media) {
 add_filter('style_loader_tag', 'custom_box_non_blocking_styles', 10, 4);
 
 function custom_box_remove_dflip_script_tag($tag, $handle, $src) {
-    if (custom_box_is_packaging_landing_page() && custom_box_is_dflip_asset_url($src)) {
+    if (!custom_box_is_dflip_context() && custom_box_is_dflip_asset_url($src)) {
         return '';
+    }
+
+    if (!custom_box_is_commerce_context()) {
+        $path = strtolower((string) wp_parse_url($src, PHP_URL_PATH));
+
+        if (
+            false !== strpos($path, '/woocommerce/assets/js/')
+            || (false !== strpos($path, '/google-site-kit/') && false !== strpos($path, 'events-provider-woocommerce'))
+        ) {
+            return '';
+        }
     }
 
     return $tag;

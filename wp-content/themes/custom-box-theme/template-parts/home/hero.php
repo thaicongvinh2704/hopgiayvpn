@@ -39,7 +39,7 @@
 
         <!-- RIGHT IMAGE -->
         <div class="hero-image">
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1.png'); ?>" alt="Custom luxury product packaging box" width="666" height="374" decoding="async" fetchpriority="high">
+            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1.webp'); ?>" alt="Custom luxury product packaging box" width="666" height="374" decoding="async" fetchpriority="high">
         </div>
 
     </div>
