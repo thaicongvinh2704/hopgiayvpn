@@ -30,6 +30,7 @@ $custom_box_inc_files = array(
     'inc/how-paper-bags-support-retail-packaging-post-sync.php',
     'inc/how-to-plan-fashion-product-packaging-post-sync.php',
     'inc/home-lifestyle-paper-packaging-selection-post-sync.php',
+    'inc/standard-box-dimensions-shipping-post-sync.php',
     'inc/quote-form-handler.php',
     'inc/woocommerce.php',
 );
