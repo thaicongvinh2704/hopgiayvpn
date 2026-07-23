@@ -56,8 +56,9 @@ For each post import:
 - Add a post-sync file under `wp-content/themes/custom-box-theme/inc/`.
 - Hook the sync with `admin_init`, guarded by `current_user_can('manage_options')`.
 - Hook notices with `admin_notices`.
-- Include the sync from `wp-content/themes/custom-box-theme/functions.php`.
-- Load a new pull-deploy sync on every normal WP Admin page, not only Dashboard or Tools, so visiting Posts/Edit Post also triggers it.
+- Register the sync file, version option, expected version and target slug in `custom_box_post_sync_registry()` inside `wp-content/themes/custom-box-theme/inc/post-sync-loader.php`.
+- Keep `post-sync-loader.php` included from `functions.php`; do not add individual post-sync files directly to the unconditional theme include list.
+- The loader must load a new or incomplete pull-deploy sync on every normal WP Admin page, load the matching sync while its target post is being edited, support the explicit force-run query, and rotate completed sync health checks without loading every historical sync on every request.
 - Find the target post by slug, with an exact-title fallback when useful.
 - Find attachments by exact filename base, never by attachment ID.
 - Copy a missing original from the Git-tracked bundle into uploads before creating its attachment.
@@ -69,6 +70,19 @@ For each post import:
 - Add a warning notice containing missing filenames, slots or validation failures.
 
 CLI scripts in `tools/` are optional verification or repair helpers. They are not the only deploy mechanism unless the hosting pull process explicitly runs them.
+
+## Runtime Loading and Admin Performance
+
+Completed historical syncs must not all be parsed and validated on every WordPress Admin request.
+
+The central post-sync loader provides four paths:
+
+1. A missing or mismatched version option loads that sync immediately on any normal authenticated Admin request.
+2. Editing a registered target post loads its matching sync so the validator can repair content or metadata.
+3. `?custom_box_run_post_syncs=1` loads all registered syncs for an explicit audit or repair.
+4. A rotating health audit loads at most one completed sync per interval.
+
+Frontend, AJAX, REST and cron requests must not load post-sync files through this loader. Every new post sync must be added to the registry with the exact file, version, option and slug. The registry version must be updated whenever the sync version changes.
 
 ## Version and Retry Rules
 
@@ -217,7 +231,7 @@ Before pushing a post/image import:
 - `php -l` passes for the post-sync file.
 - `php -l` passes for `wp-content/themes/custom-box-theme/functions.php`.
 - `git diff --cached --check` passes.
-- `git diff --cached --name-only` includes the post-sync file, `functions.php` when changed, and every original bundled image.
+- `git diff --cached --name-only` includes the post-sync file, the post-sync loader registry change, `functions.php` only when the loader bootstrap changes, and every original bundled image.
 - SHA-256 checks confirm bundled images match their intended local originals.
 - Normal local sync confirms the expected post ID, status, featured image, figure count and zero remaining `IMAGE_SLOT_*`.
 - Exact category, exact tag set and exact Rank Math fields are verified from the database.
