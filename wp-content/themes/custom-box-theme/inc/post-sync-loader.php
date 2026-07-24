@@ -71,6 +71,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_fashion_packaging_sync_version',
             'slug' => 'how-to-plan-fashion-product-packaging',
         ),
+        'inc/how-to-plan-corporate-gift-packaging-post-sync.php' => array(
+            'version' => '2026-07-24-v1',
+            'option' => 'custom_box_corporate_gift_packaging_sync_version',
+            'slug' => 'how-to-plan-corporate-gift-packaging',
+        ),
         'inc/how-to-protect-bottles-in-paper-gift-packaging-post-sync.php' => array(
             'version' => '2026-07-14-v1',
             'option' => 'custom_box_bottle_gift_packaging_protection_sync_version',
