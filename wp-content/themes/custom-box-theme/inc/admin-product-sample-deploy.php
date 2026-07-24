@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-07-17-three-category-products' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-07-24-paper-shopping-bags' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -726,6 +726,16 @@ function custom_box_product_sample_deploy_batches(): array {
 				'tools/verify-three-new-category-products.php',
 			),
 		),
+		array(
+			'name'      => 'Paper Shopping Bag products July 2026',
+			'marker'    => 'product-samples-paper-shopping-bags-202607',
+			'expected'  => 6,
+			'min_words' => 1500,
+			'scripts'   => array(
+				'tools/import-paper-shopping-bag-products-202607.php',
+				'tools/verify-paper-shopping-bag-products-202607.php',
+			),
+		),
 	);
 }
 
@@ -769,6 +779,17 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 		);
 	}
 
+	if ( 'paper_bags_202607' === $scope ) {
+		return array_values(
+			array_filter(
+				$batches,
+				static function ( $batch ) {
+					return isset( $batch['marker'] ) && 'product-samples-paper-shopping-bags-202607' === $batch['marker'];
+				}
+			)
+		);
+	}
+
 	// The default button must deploy the complete current release. Keep
 	// historical batches available through the explicit "all" scope, but do
 	// not make a new release depend on an incomplete legacy batch.
@@ -779,7 +800,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 				return isset( $batch['marker'] ) && in_array(
 					$batch['marker'],
 					array(
-						'product-samples-three-new-categories-202607',
+						'product-samples-paper-shopping-bags-202607',
 					),
 					true
 				);
@@ -789,7 +810,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 }
 
 function custom_box_product_sample_deploy_allowed_scopes(): array {
-	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607', 'three_categories_202607' );
+	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607', 'three_categories_202607', 'paper_bags_202607' );
 }
 
 function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
@@ -899,7 +920,9 @@ function custom_box_product_sample_deploy_restore_tools() {
 	$source_dir = get_template_directory() . '/inc/product-sample-deploy-tools';
 	$target_dir = ABSPATH . 'tools';
 	$source_required = $source_dir . '/import-product-samples-10.php';
+	$source_latest_required = $source_dir . '/import-paper-shopping-bag-products-202607.php';
 	$required   = $target_dir . '/import-product-samples-10.php';
+	$latest_required = $target_dir . '/import-paper-shopping-bag-products-202607.php';
 	$log        = array();
 
 	if ( ! is_dir( $source_dir ) ) {
@@ -928,6 +951,7 @@ function custom_box_product_sample_deploy_restore_tools() {
 	$log[] = 'Target writable: ' . ( wp_is_writable( $target_dir ) ? 'yes' : 'no' );
 	$log[] = 'Bundled tool count: ' . count( $files );
 	$log[] = 'Required source script exists: ' . ( file_exists( $source_required ) ? 'yes' : 'no' );
+	$log[] = 'Latest source script exists: ' . ( file_exists( $source_latest_required ) ? 'yes' : 'no' );
 
 	foreach ( $files as $file ) {
 		$target = trailingslashit( $target_dir ) . basename( $file );
@@ -951,6 +975,7 @@ function custom_box_product_sample_deploy_restore_tools() {
 	}
 
 	$log[] = 'Required script exists after restore: ' . ( file_exists( $required ) ? 'yes' : 'no' );
+	$log[] = 'Latest script exists after restore: ' . ( file_exists( $latest_required ) ? 'yes' : 'no' );
 	$log[] = '';
 
 	return implode( PHP_EOL, $log ) . PHP_EOL;
@@ -1040,6 +1065,7 @@ function custom_box_product_sample_deploy_restore_assets() {
 	$log[] = 'Required sample image exists after restore: ' . ( file_exists( ABSPATH . 'wp-content/uploads/2026/05/custom-ampoule-packaging-box-1.webp' ) ? 'yes' : 'no' );
 	$log[] = 'Required magnetic image exists after restore: ' . ( file_exists( ABSPATH . 'wp-content/uploads/2026/07/custom-perfume-magnetic-closure-box-main.webp' ) ? 'yes' : 'no' );
 	$log[] = 'Required three-category image exists after restore: ' . ( file_exists( ABSPATH . 'wp-content/uploads/2026/07/board-game-packaging-box-1.webp' ) ? 'yes' : 'no' );
+	$log[] = 'Required paper bag image exists after restore: ' . ( file_exists( ABSPATH . 'wp-content/uploads/2026/07/custom-white-paper-shopping-bag-brown-rope-vpn240724-a-01.webp' ) ? 'yes' : 'no' );
 	$log[] = '';
 
 	return implode( PHP_EOL, $log ) . PHP_EOL;
@@ -1118,6 +1144,16 @@ function custom_box_product_sample_deploy_page() {
 			<input type="hidden" name="deploy_scope" value="three_categories_202607">
 			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
 			<?php submit_button( 'Sync 21 New Category Products', 'primary large', 'submit', false ); ?>
+		</form>
+
+		<h2>Paper Shopping Bag Sync</h2>
+		<p>Imports or updates the 6 July 2026 paper shopping bag products from 27 bundled source images.</p>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-bottom:24px;">
+			<input type="hidden" name="action" value="custom_box_product_sample_deploy">
+			<input type="hidden" name="reset" value="1">
+			<input type="hidden" name="deploy_scope" value="paper_bags_202607">
+			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
+			<?php submit_button( 'Sync 6 Paper Shopping Bag Products', 'primary large', 'submit', false ); ?>
 		</form>
 
 		<hr>

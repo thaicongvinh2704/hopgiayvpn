@@ -526,16 +526,16 @@ Important:
 
 The Git-tracked root CLI entry point restores the bundled deploy tools from
 `wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/` before running.
-For the current July 2026 release, it synchronizes and verifies the 21 products
-for the Toy and Game, Tea and Coffee, and Pet Product Packaging categories. It is
-safe to run again because the importer uses a batch marker and updates existing
-products instead of duplicating them.
+For the current July 2026 release, it synchronizes and verifies six paper
+shopping bag products from 27 bundled original images. It is safe to run again
+because the importer uses a batch marker and updates existing products instead
+of duplicating them.
 
 In WordPress admin, after the Git pull, open **Tools > Product Sample Deploy** and
 click **Run Product Sample Deploy** with **Latest batch only** selected. The default
-scope runs the current 21-product batch, restores its Git-tracked tools and 84
-original upload assets automatically, and verifies the result. Separate buttons
-remain available for rerunning the Perfume and Corrugated batches.
+scope runs the current six-product paper shopping bag batch, restores its
+Git-tracked tools and 27 original upload assets automatically, and verifies the
+result. Separate buttons remain available for rerunning the earlier batches.
 
 The deploy process:
 
@@ -709,3 +709,36 @@ default one-button scope for the batch. The dedicated **Sync 21 New Category
 Products** button runs the same batch by itself. Both paths restore the bundled
 images, create missing Media Library attachments, and import or update products
 without creating duplicate slugs.
+
+### Paper Shopping Bag batch (July 2026)
+
+Local WooCommerce batch marker:
+
+- `_vpn_sample_import = product-samples-paper-shopping-bags-202607`
+
+This batch imports six products from 27 original images:
+
+1. Custom White Paper Shopping Bag With Brown Rope Handles
+2. Custom Rust Paper Shopping Bag With Rope Handles
+3. Custom Pink Paper Gift Bag With Twisted Handles
+4. Custom Lime Green Paper Shopping Bag With Rope Handles
+5. Custom Birthday Paper Gift Bag With Candle Print
+6. Custom Birthday Paper Gift Bag With Present Print
+
+Files used:
+
+- `tools/import-paper-shopping-bag-products-202607.php`
+- `tools/verify-paper-shopping-bag-products-202607.php`
+- `product-samples-paper-shopping-bags-202607-audit.md`
+- `product-samples-paper-shopping-bags-202607-descriptions-text-only.md`
+- `wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/uploads/2026/07/`
+
+After `git pull` on hosting, run:
+
+- `php tools/deploy-product-samples-all.php`
+
+or open **Tools > Product Sample Deploy**, keep **Latest batch only** selected,
+and click **Run Product Sample Deploy**. A dedicated **Sync 6 Paper Shopping Bag
+Products** button is also available. The deploy restores the 27 original images,
+creates or updates Media Library attachments, imports the six products, and
+verifies the result without creating duplicate product slugs or attachments.
