@@ -41,6 +41,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_retail_paper_bags_sync_version',
             'slug' => 'how-paper-bags-support-retail-packaging',
         ),
+        'inc/where-do-paper-bags-come-from-post-sync.php' => array(
+            'version' => '2026-07-25-v3',
+            'option' => 'custom_box_paper_bag_origin_sync_version',
+            'slug' => 'where-do-paper-bags-come-from',
+        ),
         'inc/how-to-choose-candle-packaging-materials-post-sync.php' => array(
             'version' => '2026-07-15-v2',
             'option' => 'custom_box_candle_packaging_materials_sync_version',
