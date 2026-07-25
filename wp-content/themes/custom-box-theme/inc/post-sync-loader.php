@@ -76,6 +76,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_fashion_packaging_sync_version',
             'slug' => 'how-to-plan-fashion-product-packaging',
         ),
+        'inc/how-to-package-stationery-sets-post-sync.php' => array(
+            'version' => '2026-07-25-v1',
+            'option' => 'custom_box_stationery_packaging_sync_version',
+            'slug' => 'how-to-package-stationery-sets-paper-boxes',
+        ),
         'inc/how-to-plan-corporate-gift-packaging-post-sync.php' => array(
             'version' => '2026-07-24-v1',
             'option' => 'custom_box_corporate_gift_packaging_sync_version',
