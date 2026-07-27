@@ -116,6 +116,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_pharmaceutical_packaging_information_sync_version',
             'slug' => 'what-information-pharmaceutical-paper-packaging',
         ),
+        'inc/rigid-box-vs-folding-carton-post-sync.php' => array(
+            'version' => '2026-07-27-v1',
+            'option' => 'custom_box_rigid_box_folding_carton_sync_version',
+            'slug' => 'rigid-box-vs-folding-carton',
+        ),
         'inc/skincare-paper-packaging-selection-post-sync.php' => array(
             'version' => '2026-07-13-v1',
             'option' => 'custom_box_skincare_paper_packaging_selection_sync_version',
