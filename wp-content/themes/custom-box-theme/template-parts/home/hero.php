@@ -73,20 +73,28 @@
             );
             ?>
 
-            <?php foreach ($brand_logos as $logo) : ?>
-                <?php $logo_class = sanitize_html_class(pathinfo($logo['file'], PATHINFO_FILENAME)); ?>
-                <span class="brand-logo-item" role="listitem">
-                    <img
-                        class="client-logo client-logo-<?php echo esc_attr($logo_class); ?>"
-                        src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/client-logos/' . $logo['file']); ?>"
-                        alt="<?php echo esc_attr($logo['name']); ?>"
-                        width="<?php echo esc_attr($logo['width']); ?>"
-                        height="<?php echo esc_attr($logo['height']); ?>"
-                        loading="lazy"
-                        decoding="async"
-                    >
-                </span>
-            <?php endforeach; ?>
+            <?php for ($logo_loop = 0; $logo_loop < 2; $logo_loop++) : ?>
+                <div
+                    class="brand-logo-group"
+                    role="presentation"
+                    <?php echo 0 === $logo_loop ? '' : 'aria-hidden="true"'; ?>
+                >
+                    <?php foreach ($brand_logos as $logo) : ?>
+                        <?php $logo_class = sanitize_html_class(pathinfo($logo['file'], PATHINFO_FILENAME)); ?>
+                        <span class="brand-logo-item" role="listitem">
+                            <img
+                                class="client-logo client-logo-<?php echo esc_attr($logo_class); ?>"
+                                src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/client-logos/' . $logo['file']); ?>"
+                                alt="<?php echo esc_attr($logo['name']); ?>"
+                                width="<?php echo esc_attr($logo['width']); ?>"
+                                height="<?php echo esc_attr($logo['height']); ?>"
+                                loading="lazy"
+                                decoding="async"
+                            >
+                        </span>
+                    <?php endforeach; ?>
+                </div>
+            <?php endfor; ?>
 
         </div>
     </div>

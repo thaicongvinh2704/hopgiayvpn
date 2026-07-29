@@ -4252,6 +4252,16 @@ html {
         scroll-behavior: auto !important;
         transition-duration: 0.01ms !important;
     }
+
+    [data-manual-logo-scroller] {
+        overflow-x: auto !important;
+        scrollbar-width: thin !important;
+    }
+
+    [data-manual-logo-scroller] .brand-track {
+        animation: none !important;
+        transform: none !important;
+    }
 }
 
 @media (max-width: 767px) {
@@ -5394,16 +5404,14 @@ html {
 }
 
 [data-manual-logo-scroller] {
-    overflow-x: auto;
+    overflow: hidden;
     overscroll-behavior-inline: contain;
-    scrollbar-width: thin;
+    scrollbar-width: none;
 }
 
 [data-manual-logo-scroller] .brand-track {
-    animation: none !important;
     display: flex;
     min-width: max-content;
-    transform: none !important;
     width: max-content;
 }
 
@@ -5630,14 +5638,6 @@ html {
         grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     }
 
-    [data-home-category-extra] {
-        display: none !important;
-    }
-
-    [data-home-packaging-categories].is-expanded [data-home-category-extra] {
-        display: flex !important;
-    }
-
     .home-packaging-category-card {
         border-radius: 12px !important;
         display: flex !important;
@@ -5645,14 +5645,6 @@ html {
         min-height: 0 !important;
         min-width: 0;
         overflow: hidden;
-    }
-
-    [data-home-category-extra].home-packaging-category-card {
-        display: none !important;
-    }
-
-    [data-home-packaging-categories].is-expanded [data-home-category-extra].home-packaging-category-card {
-        display: flex !important;
     }
 
     .home-packaging-category-image {
@@ -5677,19 +5669,6 @@ html {
         min-height: 58px;
         padding: 10px 8px !important;
         text-align: center;
-    }
-
-    .home-packaging-category-actions {
-        margin-top: 20px;
-        text-align: center;
-    }
-
-    .home-packaging-category-view-all {
-        align-items: center;
-        display: inline-flex;
-        justify-content: center;
-        min-height: 48px;
-        width: 100%;
     }
 
     .footer-payment {

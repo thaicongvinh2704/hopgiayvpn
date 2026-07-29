@@ -140,27 +140,46 @@ $quote_url = home_url('/contact/#quote');
             <div class="about-industry-grid">
                 <?php
                 $industries = array(
-                    array('Cosmetic Packaging', 'cosmetic-set-packaging-boxes', 'gift-box.webp'),
-                    array('Gift Boxes', 'luxury-rigid-gift-boxes', 'gift-box2.webp'),
-                    array('Jewelry & Watch Boxes', 'watch-packaging-boxes', 'Rigid-Packaging.webp'),
-                    array('Paper Tube Boxes', 'custom-paper-tube-packaging-boxes', 'Kraft-Packaging.webp'),
-                    array('Luxury Wine Bottle Packaging Boxes', 'luxury-wine-bottle-packaging-boxes', 'gift-box2.webp'),
-                    array('Pizza Packaging Boxes', 'pizza-packaging-boxes', 'Takeout-Boxes_1758880241.webp'),
-                    array('Chocolate Gift Boxes', 'custom-chocolate-gift-boxes', 'Cardboard-Packaging.webp'),
-                    array('Mooncake Gift Boxes', 'mooncake-gift-packaging-boxes', 'SBS-Paperboard-Packaging.webp'),
+                    array('Cosmetic Paper Boxes', 'cosmetic-paper-boxes', content_url('/uploads/2026/05/blue-cosmetic-set-packaging-box-open-1024x930.png'), WP_CONTENT_DIR . '/uploads/2026/05/blue-cosmetic-set-packaging-box-open-1024x930.png'),
+                    array('Rigid Boxes', 'rigid-boxes', content_url('/uploads/2026/05/13.jpg'), WP_CONTENT_DIR . '/uploads/2026/05/13.jpg'),
+                    array('Jewelry Paper Boxes', 'jewelry-paper-boxes', content_url('/uploads/2026/05/watch-box.jpg'), WP_CONTENT_DIR . '/uploads/2026/05/watch-box.jpg'),
+                    array('Paper Tube Packaging', 'paper-tube-packaging', content_url('/uploads/2026/05/12.jpg'), WP_CONTENT_DIR . '/uploads/2026/05/12.jpg'),
+                    array('Wine and Premium Drink Packaging', 'wine-premium-drink-packaging', $theme_uri . '/assets/images/custom-wine-premium-beverage-packaging-boxes-gray-background.webp', get_template_directory() . '/assets/images/custom-wine-premium-beverage-packaging-boxes-gray-background.webp'),
+                    array('Food Paper Boxes', 'food-paper-boxes', content_url('/uploads/2026/05/32.jpg'), WP_CONTENT_DIR . '/uploads/2026/05/32.jpg'),
+                    array('Chocolate Gift Boxes', 'chocolate-gift-boxes', content_url('/uploads/2026/05/19.jpg'), WP_CONTENT_DIR . '/uploads/2026/05/19.jpg'),
+                    array('Gift Paper Boxes', 'gift-paper-boxes', content_url('/uploads/2026/05/27.jpg'), WP_CONTENT_DIR . '/uploads/2026/05/27.jpg'),
                 );
                 foreach ($industries as $industry) :
                     $industry_term = get_term_by('slug', $industry[1], 'product_cat');
-                    $industry_image_id = $industry_term && !is_wp_error($industry_term) ? (int) get_term_meta($industry_term->term_id, 'thumbnail_id', true) : 0;
-                    $industry_image_url = $industry_image_id ? wp_get_attachment_image_url($industry_image_id, 'medium_large') : '';
-                    if (!$industry_image_url) {
-                        $industry_image_url = $theme_uri . '/assets/images/' . $industry[2];
+
+                    if (!$industry_term || is_wp_error($industry_term)) {
+                        continue;
                     }
+
+                    $industry_link = get_term_link($industry_term);
+
+                    if (is_wp_error($industry_link) || !is_file($industry[3])) {
+                        continue;
+                    }
+
+                    $industry_image_size = wp_getimagesize($industry[3]);
+
+                    if (!$industry_image_size) {
+                        continue;
+                    }
+
                     ?>
-                    <article class="about-industry-card">
-                        <img src="<?php echo esc_url($industry_image_url); ?>" alt="<?php echo esc_attr($industry[0]); ?>" loading="lazy" decoding="async">
+                    <a class="about-industry-card" href="<?php echo esc_url($industry_link); ?>">
+                        <img
+                            src="<?php echo esc_url($industry[2]); ?>"
+                            alt="<?php echo esc_attr($industry[0]); ?>"
+                            width="<?php echo esc_attr($industry_image_size[0]); ?>"
+                            height="<?php echo esc_attr($industry_image_size[1]); ?>"
+                            loading="lazy"
+                            decoding="async"
+                        >
                         <span><?php echo esc_html($industry[0]); ?></span>
-                    </article>
+                    </a>
                 <?php endforeach; ?>
             </div>
         </div>

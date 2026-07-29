@@ -5340,6 +5340,7 @@ textarea {
 .vpn-profile-plant-card img {
     aspect-ratio: 1.78 / 1;
     display: block;
+    height: auto;
     object-fit: cover;
     width: min(510px, 108%);
 }
@@ -5468,10 +5469,12 @@ textarea {
 }
 
 .vpn-profile-blue-panel {
+    align-content: start;
     background: linear-gradient(135deg, #2f7df6 0%, #155fd4 100%);
     color: #fff;
     display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: clamp(24px, 2.4vw, 34px);
+    grid-template-rows: auto auto auto;
     overflow: hidden;
     padding: 7.4% 6.4% 4.6% 14.5%;
     position: relative;
@@ -5522,7 +5525,7 @@ textarea {
     color: #fff;
     font-size: clamp(30px, 3.12vw, 43px);
     line-height: 1;
-    margin: 0 0 6.3%;
+    margin: 0;
     padding-left: 3%;
     text-align: center;
     text-transform: uppercase;
@@ -5569,7 +5572,7 @@ textarea {
 }
 
 .vpn-profile-bottom {
-    padding-top: 4.4%;
+    padding-top: 0;
     text-align: center;
 }
 
@@ -5850,7 +5853,19 @@ textarea {
 
 .brand-track {
     align-items: center;
+    gap: 0;
+}
+
+.brand-logo-group {
+    align-items: center;
+    display: flex;
+    flex: none;
     gap: 22px;
+    padding-right: 22px;
+}
+
+.brand-slider:focus-within .brand-track {
+    animation-play-state: paused;
 }
 
 .brand-track img {

@@ -667,29 +667,6 @@ document.addEventListener("DOMContentLoaded", function () {
         disclosureMedia.addEventListener("change", syncResponsiveDisclosures);
     }
 
-    const categoriesSection = document.querySelector(
-        "[data-home-packaging-categories], [data-packaging-categories], .categories-section"
-    );
-    const categoriesToggle = document.querySelector(
-        "[data-home-category-toggle], [data-categories-toggle], .categories-more"
-    );
-
-    if (categoriesSection && categoriesToggle && !categoriesToggle.dataset.mobileUxReady) {
-        categoriesToggle.dataset.mobileUxReady = "true";
-        categoriesToggle.dataset.collapsedLabel = categoriesToggle.textContent.trim();
-        categoriesToggle.setAttribute("aria-expanded", "false");
-        categoriesToggle.addEventListener("click", event => {
-            if (!window.matchMedia("(max-width: 767px)").matches) return;
-            if (!categoriesSection.querySelector("[data-home-category-extra]")) return;
-            event.preventDefault();
-            const isExpanded = categoriesSection.classList.toggle("is-expanded");
-            categoriesToggle.setAttribute("aria-expanded", isExpanded ? "true" : "false");
-            categoriesToggle.textContent = isExpanded
-                ? (categoriesToggle.dataset.expandedLabel || "Show priority categories")
-                : categoriesToggle.dataset.collapsedLabel;
-        });
-    }
-
     document.querySelectorAll("[data-manual-logo-scroller]").forEach(scroller => {
         scroller.addEventListener("keydown", event => {
             if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;

@@ -131,7 +131,6 @@ $resolve_local_image = static function ($image_url) use ($fallback_image_url, $f
                     data-packaging-category-card
                     data-category-slug="<?php echo esc_attr($category_slug); ?>"
                     data-category-priority="<?php echo $is_priority_category ? 'true' : 'false'; ?>"
-                    <?php if (!$is_priority_category) : ?>data-home-category-extra<?php endif; ?>
                 >
                     <span class="home-packaging-category-image">
                         <?php if ($category_image_id) : ?>
@@ -163,17 +162,6 @@ $resolve_local_image = static function ($image_url) use ($fallback_image_url, $f
                     <span class="home-packaging-category-title"><?php echo esc_html($category_item[0]); ?></span>
                 </a>
             <?php endforeach; ?>
-        </div>
-
-        <div class="home-packaging-category-actions">
-            <a
-                class="btn-outline home-packaging-category-view-all"
-                href="<?php echo esc_url(function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/')); ?>"
-                aria-controls="home-packaging-category-cards"
-                aria-expanded="false"
-                data-home-category-toggle
-                data-expanded-label="<?php esc_attr_e('Show Priority Packaging Categories', 'custom-box-theme'); ?>"
-            ><?php esc_html_e('View All Packaging Categories', 'custom-box-theme'); ?></a>
         </div>
     </div>
 </section>
