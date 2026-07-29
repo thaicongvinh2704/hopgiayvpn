@@ -290,7 +290,7 @@ $faqs = array(
             </aside>
             <figure class="vpn-packaging-hero-media">
                 <a href="<?php echo esc_url($quote_url); ?>" aria-label="<?php esc_attr_e('Request a factory quote from VPN Paper Box', 'custom-box-theme'); ?>">
-                    <img src="<?php echo esc_url($theme_uri . '/assets/images/banner-landing-page.webp'); ?>" alt="Custom packaging boxes produced by VPN Paper Box in Vietnam" decoding="async" fetchpriority="high">
+                    <img src="<?php echo esc_url($theme_uri . '/assets/images/banner-landing-page.webp'); ?>" alt="Custom packaging boxes produced by VPN Paper Box in Vietnam" width="1774" height="887" decoding="async" fetchpriority="high">
                 </a>
             </figure>
             <div class="vpn-packaging-proof" aria-label="Factory proof points">
@@ -368,9 +368,9 @@ $faqs = array(
                 </ul>
             </div>
             <div class="vpn-packaging-factory-gallery">
-                <img src="<?php echo esc_url($theme_uri . '/assets/images/factory-team-and-production.webp'); ?>" alt="VPN Packaging factory production team" loading="lazy" decoding="async">
-                <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-1.webp'); ?>" alt="Paper packaging production area in Vietnam" loading="lazy" decoding="async">
-                <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-fly.webp'); ?>" alt="Aerial view of VPN Paper Box factory" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($theme_uri . '/assets/images/factory-team-and-production.jpg'); ?>" alt="VPN Packaging factory production team" width="450" height="570" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-1.webp'); ?>" alt="Paper packaging production area in Vietnam" width="1280" height="720" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($theme_uri . '/assets/images/anh-nha-may-fly.webp'); ?>" alt="Aerial view of VPN Paper Box factory" width="998" height="561" loading="lazy" decoding="async">
             </div>
         </div>
     </section>

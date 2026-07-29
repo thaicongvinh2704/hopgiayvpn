@@ -4275,7 +4275,6 @@ html {
     .site-footer .container,
     .benefits-container,
     .values-inner,
-    .testi-wrapper,
     .partner-card {
         box-sizing: border-box;
         max-width: none;
@@ -5161,7 +5160,7 @@ html {
 
     .slider-dot,
     .testi-dot {
-        background: #b8cbd5;
+        background: transparent;
         border: 0;
         border-radius: 999px;
         height: 44px;
@@ -5196,7 +5195,6 @@ html {
     .site-footer .container,
     .benefits-container,
     .values-inner,
-    .testi-wrapper,
     .partner-card {
         padding-left: 20px;
         padding-right: 20px;
@@ -5658,13 +5656,14 @@ html {
     }
 
     .home-packaging-category-image {
-        aspect-ratio: 16 / 10;
+        aspect-ratio: 450 / 570;
         min-height: 0 !important;
     }
 
     .home-packaging-category-image img {
         height: 100% !important;
-        object-fit: cover;
+        object-fit: contain;
+        object-position: center;
         width: 100% !important;
     }
 
@@ -5691,6 +5690,23 @@ html {
         justify-content: center;
         min-height: 48px;
         width: 100%;
+    }
+
+    .footer-payment {
+        text-align: center;
+    }
+
+    .footer-payment .payment-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin: 10px auto 0;
+        max-width: 270px;
+        width: 100%;
+    }
+
+    .footer-payment .payment-item {
+        flex: 0 0 76px;
     }
 
     .faq-wrapper {

@@ -19,34 +19,21 @@ $get_card_image = function ($term, $size = 'medium_large') {
         return '';
     }
 
-    $asset_url = function_exists('custom_box_get_product_category_card_image_url')
-        ? custom_box_get_product_category_card_image_url($term, $size)
-        : get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
-    $image_id = (int) get_term_meta($term->term_id, 'thumbnail_id', true);
-
-    if (!$image_id) {
-        $image_id = (int) get_term_meta($term->term_id, 'custom_box_category_image_id', true);
-    }
-
-    if (!$image_id && $asset_url) {
-        $image_id = (int) attachment_url_to_postid($asset_url);
-    }
-
-    if ($image_id) {
-        return wp_get_attachment_image(
-            $image_id,
-            $size,
-            false,
-            array(
-                'alt'      => '',
-                'loading'  => 'lazy',
-                'decoding' => 'async',
-                'sizes'    => '(max-width: 379px) calc(100vw - 36px), (max-width: 767px) calc(50vw - 28px), (max-width: 1200px) 25vw, 320px',
-            )
+    $image_data = function_exists('custom_box_get_product_category_card_image_data')
+        ? custom_box_get_product_category_card_image_data($term)
+        : array(
+            'url'    => get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp',
+            'width'  => 640,
+            'height' => 480,
         );
-    }
 
-    return '<img src="' . esc_url($asset_url) . '" width="640" height="480" alt="" loading="lazy" decoding="async">';
+    return sprintf(
+        '<img src="%1$s" width="%2$d" height="%3$d" alt="" loading="lazy" decoding="async" sizes="%4$s">',
+        esc_url($image_data['url']),
+        (int) $image_data['width'],
+        (int) $image_data['height'],
+        esc_attr('(max-width: 379px) calc(100vw - 36px), (max-width: 767px) calc(50vw - 28px), (max-width: 1200px) 25vw, 320px')
+    );
 };
 
 ?>

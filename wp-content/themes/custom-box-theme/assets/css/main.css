@@ -1535,7 +1535,8 @@ html {
 .home-packaging-category-image img {
     display: block;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    object-position: center;
     transition: none;
     width: 100%;
 }
@@ -4171,27 +4172,30 @@ html {
 /* CARD */
 .testi-card {
     display: flex;
-    gap: 30px;
+    gap: 42px;
     align-items: center;
     background: #fff;
-    padding: 30px;
+    padding: 36px;
     border-radius: 10px;
     border: 1px solid #ddd;
 }
 
 /* IMAGE */
 .testi-img {
-    width: 45%;
+    width: 42%;
 }
 
 .testi-img img {
+    display: block;
+    height: auto;
     width: 100%;
     border-radius: 6px;
 }
 
 /* TEXT */
 .testi-text {
-    width: 55%;
+    min-width: 0;
+    width: 58%;
     text-align: left;
 }
 
@@ -4206,7 +4210,8 @@ html {
 
 .testi-text p {
     color: #555;
-    font-size: 14px;
+    font-size: 15px;
+    line-height: 1.7;
 }
 
 .testi-text p + p {
@@ -4225,6 +4230,10 @@ html {
 
 /* DOTS */
 .testi-dots {
+    align-items: center;
+    display: flex;
+    gap: 4px;
+    justify-content: center;
     margin-top: 20px;
 }
 
@@ -4240,6 +4249,40 @@ html {
 
 .testi-dots span.active {
     background: #2A6A92;
+}
+
+.testi-dot {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+    height: 32px;
+    padding: 0;
+    position: relative;
+    width: 32px;
+}
+
+.testi-dot::after {
+    background: #b8cbd5;
+    border-radius: 999px;
+    content: "";
+    height: 8px;
+    inset: 50% auto auto 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    transition: background-color 0.2s ease, width 0.2s ease;
+    width: 8px;
+}
+
+.testi-dot.active::after {
+    background: #2A6A92;
+    width: 22px;
+}
+
+.testi-dot:focus-visible {
+    outline: 2px solid #2A6A92;
+    outline-offset: 1px;
 }
 
 /* BUTTON */
@@ -4259,6 +4302,7 @@ html {
 
 /* GRID */
 .faq-wrapper {
+    align-items: center;
     display: flex;
     gap: 40px;
 }
@@ -4269,6 +4313,9 @@ html {
 }
 
 .faq-left img {
+    display: block;
+    height: auto;
+    object-fit: cover;
     width: 100%;
     border-radius: 10px;
 }
@@ -4276,6 +4323,12 @@ html {
 /* RIGHT */
 .faq-right {
     width: 55%;
+}
+
+.faq-right h2 {
+    font-size: 30px;
+    line-height: 1.2;
+    margin: 0 0 22px;
 }
 
 /* SCROLL BOX */
@@ -4313,9 +4366,16 @@ html {
 .faq-question {
     display: flex;
     align-items: center;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    font: inherit;
     gap: 15px;
+    min-height: 54px;
     padding: 15px;
     cursor: pointer;
+    text-align: left;
+    width: 100%;
 }
 
 /* NUMBER */
@@ -4331,9 +4391,18 @@ html {
     margin: 0;
 }
 
+.faq-question-text {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.45;
+    min-width: 0;
+}
+
 /* ICON */
 .faq-toggle {
     color: #2A6A92;
+    flex: 0 0 auto;
     font-size: 16px;
 }
 
@@ -4366,8 +4435,12 @@ html {
 }
 
 .faq-btn a {
+    align-items: center;
     background: #2A6A92;
     color: #fff;
+    display: inline-flex;
+    justify-content: center;
+    min-height: 46px;
     padding: 10px 25px;
     border-radius: 6px;
     text-decoration: none;

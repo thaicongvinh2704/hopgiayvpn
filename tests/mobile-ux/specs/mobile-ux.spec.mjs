@@ -297,6 +297,74 @@ test.describe("mobile navigation", () => {
 });
 
 test.describe("homepage contracts", () => {
+  test("keeps testimonial media proportional and FAQ controls full width", async ({
+    page,
+  }, testInfo) => {
+    await gotoFixture(page, fixtureByKey.get("home"));
+    await settleLazyMedia(page);
+
+    const testimonialImage = page.locator(".testi-img img").first();
+    await testimonialImage.scrollIntoViewIfNeeded();
+    await expect(testimonialImage).toBeVisible();
+
+    const testimonialGeometry = await testimonialImage.evaluate((image) => {
+      const rect = image.getBoundingClientRect();
+      return {
+        naturalRatio: image.naturalWidth / image.naturalHeight,
+        renderedRatio: rect.width / rect.height,
+      };
+    });
+    expect(
+      Math.abs(
+        testimonialGeometry.renderedRatio -
+          testimonialGeometry.naturalRatio,
+      ),
+      "The testimonial image must not stretch when intrinsic dimensions are present",
+    ).toBeLessThan(0.02);
+
+    const faqQuestion = page.locator("[data-home-faq] .faq-question").first();
+    const faqWidths = await faqQuestion.evaluate((button) => ({
+      button: button.getBoundingClientRect().width,
+      item: button.parentElement?.getBoundingClientRect().width || 0,
+    }));
+    expect(
+      Math.abs(faqWidths.button - faqWidths.item),
+      "Each FAQ question button should fill its card inside its border",
+    ).toBeLessThanOrEqual(2);
+
+    const testimonialDot = page.locator(".testi-dot").first();
+    await expect(testimonialDot).toBeVisible();
+    const dotControl = await testimonialDot.evaluate((button) => {
+      const rect = button.getBoundingClientRect();
+      return {
+        borderWidth: getComputedStyle(button).borderTopWidth,
+        height: rect.height,
+        width: rect.width,
+      };
+    });
+    expect(dotControl.borderWidth).toBe("0px");
+    expect(dotControl.height).toBeGreaterThanOrEqual(32);
+    expect(dotControl.width).toBeGreaterThanOrEqual(32);
+
+    if (isMobileProject(testInfo)) {
+      const carouselBounds = await page
+        .locator(".testi-wrapper")
+        .evaluate((wrapper) => {
+          const wrapperRect = wrapper.getBoundingClientRect();
+          const secondSlide = wrapper.querySelectorAll(".testi-slide")[1];
+          const secondSlideRect = secondSlide?.getBoundingClientRect();
+          return {
+            secondSlideLeft: secondSlideRect?.left || 0,
+            wrapperRight: wrapperRect.right,
+          };
+        });
+      expect(
+        carouselBounds.secondSlideLeft,
+        "The next testimonial must remain outside the mobile carousel viewport",
+      ).toBeGreaterThanOrEqual(carouselBounds.wrapperRight - 1);
+    }
+  });
+
   test("keeps one primary quote form and a mobile category View All", async ({
     page,
   }, testInfo) => {
@@ -356,6 +424,166 @@ test.describe("homepage contracts", () => {
       const disclosure = await namedDisclosure(footer, name);
       await exerciseDisclosure(page, disclosure);
     }
+  });
+});
+
+test.describe("packaging landing responsive media", () => {
+  test("shows complete category and factory images with centered payments", async ({
+    page,
+  }, testInfo) => {
+    test.skip(!isMobileProject(testInfo), "The reported layout issues are mobile-only");
+    await gotoFixture(page, fixtureByKey.get("landing"));
+    await settleLazyMedia(page);
+
+    const categoryCards = page.locator(
+      "[data-home-packaging-categories] .home-packaging-category-card:visible",
+    );
+    expect(await categoryCards.count()).toBeGreaterThanOrEqual(6);
+    const categoryMedia = await categoryCards
+      .locator(".home-packaging-category-image")
+      .evaluateAll((elements) =>
+        elements.slice(0, 6).map((element) => {
+          const image = element.querySelector("img");
+          const rect = element.getBoundingClientRect();
+          return {
+            imageFit: image ? getComputedStyle(image).objectFit : "",
+            ratio: rect.width / rect.height,
+          };
+        }),
+      );
+    expect(
+      categoryMedia.filter(
+        ({ imageFit, ratio }) =>
+          imageFit !== "contain" || Math.abs(ratio - 450 / 570) > 0.02,
+      ),
+      "Priority category media must preserve the common 450x570 source ratio",
+    ).toEqual([]);
+
+    const factoryImage = page
+      .locator(".vpn-packaging-factory-gallery img")
+      .first();
+    await factoryImage.scrollIntoViewIfNeeded();
+    const factoryGeometry = await factoryImage.evaluate((image) => {
+      const rect = image.getBoundingClientRect();
+      return {
+        naturalRatio: image.naturalWidth / image.naturalHeight,
+        objectFit: getComputedStyle(image).objectFit,
+        renderedRatio: rect.width / rect.height,
+      };
+    });
+    expect(factoryGeometry.objectFit).toBe("contain");
+    expect(
+      Math.abs(factoryGeometry.renderedRatio - factoryGeometry.naturalRatio),
+      "The mobile factory image must retain its complete natural frame",
+    ).toBeLessThan(0.02);
+
+    const payment = page.locator(".footer-payment");
+    const paymentGrid = payment.locator(".payment-grid");
+    await paymentGrid.scrollIntoViewIfNeeded();
+    const paymentGeometry = await payment.evaluate((element) => {
+      const grid = element.querySelector(".payment-grid");
+      const items = Array.from(grid?.querySelectorAll(".payment-item") || []);
+      const elementRect = element.getBoundingClientRect();
+      const gridRect = grid?.getBoundingClientRect();
+      const rows = new Map();
+
+      for (const item of items) {
+        const rect = item.getBoundingClientRect();
+        const key = Math.round(rect.top);
+        const row = rows.get(key) || [];
+        row.push(rect);
+        rows.set(key, row);
+      }
+
+      const rowCenters = Array.from(rows.values()).map((row) => {
+        const left = Math.min(...row.map((rect) => rect.left));
+        const right = Math.max(...row.map((rect) => rect.right));
+        return (left + right) / 2;
+      });
+      const paymentCenter = elementRect.left + elementRect.width / 2;
+
+      return {
+        gridCenterDelta: gridRect
+          ? Math.abs(gridRect.left + gridRect.width / 2 - paymentCenter)
+          : Number.POSITIVE_INFINITY,
+        rowCenterDeltas: rowCenters.map((center) =>
+          Math.abs(center - paymentCenter),
+        ),
+      };
+    });
+    expect(paymentGeometry.gridCenterDelta).toBeLessThanOrEqual(2);
+    expect(
+      paymentGeometry.rowCenterDeltas.filter((delta) => delta > 2),
+      "Every payment row, including the final two-item row, must be centered",
+    ).toEqual([]);
+  });
+});
+
+test.describe("products hub category thumbnails", () => {
+  test("uses healthy, distinct images instead of a shared corrugated fallback", async ({
+    page,
+  }) => {
+    await gotoFixture(page, {
+      key: "products-hub",
+      path: "/products/",
+    });
+    await settleLazyMedia(page);
+
+    const cards = page.locator(".product-category-hub-card");
+    expect(await cards.count()).toBeGreaterThanOrEqual(30);
+
+    const imageAudit = await cards.evaluateAll((elements) =>
+      elements.map((card) => {
+        const image = card.querySelector("img");
+        return {
+          name: (card.textContent || "").trim().replace(/\s+/g, " "),
+          ok: Boolean(
+            image &&
+              image.complete &&
+              image.naturalWidth > 0 &&
+              image.naturalHeight > 0,
+          ),
+          src: image?.currentSrc || image?.src || "",
+        };
+      }),
+    );
+
+    expect(imageAudit.filter(({ ok }) => !ok), "Every category thumbnail must load").toEqual([]);
+    expect(
+      new Set(imageAudit.map(({ src }) => src)).size,
+      "Each Products hub category should have its own thumbnail",
+    ).toBe(imageAudit.length);
+    expect(
+      imageAudit.filter(({ src }) =>
+        /cardboard-packaging\.webp(?:\?|$)/i.test(src),
+      ),
+      "Products hub categories must not use the generic corrugated fallback",
+    ).toEqual([]);
+
+    const industryNames = new Set([
+      "Bakery Packaging Boxes",
+      "Candle Packaging Boxes",
+      "Chocolate Gift Boxes",
+      "Cosmetic Paper Boxes",
+      "Food Paper Boxes",
+      "Gift Paper Boxes",
+      "Jewelry Paper Boxes",
+      "Perfume Packaging Boxes",
+      "Skincare Packaging Boxes",
+    ]);
+    const industryImages = imageAudit.filter(({ name }) =>
+      industryNames.has(name),
+    );
+    expect(industryImages).toHaveLength(industryNames.size);
+    expect(new Set(industryImages.map(({ src }) => src)).size).toBe(
+      industryNames.size,
+    );
+    expect(
+      industryImages.filter(({ src }) =>
+        /cardboard-packaging\.webp(?:\?|$)/i.test(src),
+      ),
+      "Industry categories must not share the generic corrugated fallback",
+    ).toEqual([]);
   });
 });
 

@@ -22,18 +22,13 @@ $is_all_categories = $current_term && $parent_term && !is_wp_error($current_term
                     continue;
                 }
 
-                $image_url = function_exists('custom_box_get_product_category_card_image_url')
-                    ? custom_box_get_product_category_card_image_url($category, 'medium_large')
-                    : get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
-                $image_id = (int) get_term_meta($category->term_id, 'thumbnail_id', true);
-
-                if (!$image_id) {
-                    $image_id = (int) get_term_meta($category->term_id, 'custom_box_category_image_id', true);
-                }
-
-                if (!$image_id && $image_url) {
-                    $image_id = (int) attachment_url_to_postid($image_url);
-                }
+                $image_data = function_exists('custom_box_get_product_category_card_image_data')
+                    ? custom_box_get_product_category_card_image_data($category)
+                    : array(
+                        'url'    => get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp',
+                        'width'  => 640,
+                        'height' => 480,
+                    );
 
                 $is_current_category = $current_term && !is_wp_error($current_term) && (int) $current_term->term_id === (int) $category->term_id;
                 $category_title_id = 'product-category-card-title-' . (int) $category->term_id;
@@ -46,30 +41,15 @@ $is_all_categories = $current_term && $parent_term && !is_wp_error($current_term
                     <?php echo $is_current_category ? 'aria-current="page"' : ''; ?>
                 >
                     <span class="product-category-card-image">
-                        <?php if ($image_id) : ?>
-                            <?php
-                            echo wp_get_attachment_image(
-                                $image_id,
-                                'medium_large',
-                                false,
-                                array(
-                                    'alt'      => '',
-                                    'loading'  => 'lazy',
-                                    'decoding' => 'async',
-                                    'sizes'    => '(max-width: 379px) calc(100vw - 36px), (max-width: 767px) calc(50vw - 28px), (max-width: 1200px) 33vw, 360px',
-                                )
-                            );
-                            ?>
-                        <?php else : ?>
-                            <img
-                                src="<?php echo esc_url($image_url); ?>"
-                                width="640"
-                                height="480"
-                                alt=""
-                                loading="lazy"
-                                decoding="async"
-                            >
-                        <?php endif; ?>
+                        <img
+                            src="<?php echo esc_url($image_data['url']); ?>"
+                            width="<?php echo esc_attr((string) $image_data['width']); ?>"
+                            height="<?php echo esc_attr((string) $image_data['height']); ?>"
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                            sizes="(max-width: 379px) calc(100vw - 36px), (max-width: 767px) calc(50vw - 28px), (max-width: 1200px) 33vw, 360px"
+                        >
                     </span>
                     <h2 id="<?php echo esc_attr($category_title_id); ?>" class="product-category-card-title"><?php echo esc_html($category->name); ?></h2>
                 </a>

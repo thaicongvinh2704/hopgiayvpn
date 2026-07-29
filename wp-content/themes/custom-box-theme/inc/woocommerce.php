@@ -84,6 +84,82 @@ function custom_box_get_product_category_asset_image_url($term_or_slug) {
     return get_template_directory_uri() . '/assets/images/' . $asset_images[$slug];
 }
 
+function custom_box_get_product_category_card_image_url($term_or_slug, $size = 'medium_large') {
+    $term = is_object($term_or_slug) && isset($term_or_slug->term_id)
+        ? $term_or_slug
+        : null;
+
+    if (!$term && taxonomy_exists('product_cat')) {
+        $slug = sanitize_title((string) $term_or_slug);
+        $term = $slug ? get_term_by('slug', $slug, 'product_cat') : null;
+    }
+
+    if (!$term || is_wp_error($term)) {
+        return get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
+    }
+
+    $image_url = function_exists('custom_box_get_home_packaging_category_image_url')
+        ? custom_box_get_home_packaging_category_image_url($term)
+        : '';
+
+    if (!$image_url) {
+        $image_url = custom_box_get_product_category_asset_image_url($term);
+    }
+
+    if (!$image_url) {
+        $image_id = (int) get_term_meta($term->term_id, 'thumbnail_id', true);
+
+        if (!$image_id) {
+            $image_id = (int) get_term_meta($term->term_id, 'custom_box_category_image_id', true);
+        }
+
+        $image_url = $image_id ? wp_get_attachment_image_url($image_id, $size) : '';
+    }
+
+    if (!$image_url && function_exists('wc_get_products')) {
+        $category_products = wc_get_products(array(
+            'status'   => 'publish',
+            'limit'    => 1,
+            'orderby'  => 'date',
+            'order'    => 'DESC',
+            'category' => array($term->slug),
+            'return'   => 'ids',
+        ));
+
+        if (!empty($category_products[0])) {
+            $product_image_id = get_post_thumbnail_id((int) $category_products[0]);
+            $image_url = $product_image_id ? wp_get_attachment_image_url($product_image_id, $size) : '';
+        }
+    }
+
+    return $image_url ? $image_url : get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
+}
+
+/**
+ * Resolve a category card image to a real local file and intrinsic dimensions.
+ *
+ * Category card assets are intentionally rendered from their verified source
+ * file. Asking WordPress for an intermediate attachment size can return a
+ * generated filename that no longer exists after a media/database sync.
+ *
+ * @param WP_Term|string $term_or_slug Product category term or slug.
+ * @return array{url:string,path:string,width:int,height:int}
+ */
+function custom_box_get_product_category_card_image_data($term_or_slug) {
+    $image_url = custom_box_get_product_category_card_image_url($term_or_slug, 'full');
+
+    if (function_exists('custom_box_get_local_image_data')) {
+        return custom_box_get_local_image_data($image_url, 'Cardboard-Packaging.webp');
+    }
+
+    return array(
+        'url'    => $image_url,
+        'path'   => '',
+        'width'  => 640,
+        'height' => 480,
+    );
+}
+
 function custom_box_get_flat_product_category_url($term) {
     if (!$term || is_wp_error($term)) {
         return '';

@@ -16,6 +16,10 @@ export const chromeExecutable =
 export const representativePages = [
   { key: "home", path: "/" },
   {
+    key: "landing",
+    path: "/custom-packaging-boxes-manufacturer/",
+  },
+  {
     key: "category",
     path: "/products/home-lifestyle-packaging/",
   },

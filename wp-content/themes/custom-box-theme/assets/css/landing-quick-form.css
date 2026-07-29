@@ -226,8 +226,38 @@
         font-size: 20px;
     }
 
+    .vpn-packaging-quick-card-head p {
+        font-size: 13px;
+    }
+
     .vpn-packaging-quick-fields {
         grid-template-columns: 1fr;
+    }
+
+    .vpn-packaging-quick-fields label > span {
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+
+    .vpn-packaging-quick-fields small {
+        font-size: 11px;
+    }
+
+    .vpn-packaging-quick-fields input,
+    .vpn-packaging-quick-fields select,
+    .vpn-packaging-quick-fields textarea {
+        font-size: 16px;
+        min-height: 48px;
+        padding: 11px 12px;
+    }
+
+    .vpn-packaging-quick-form button {
+        font-size: 14px;
+        min-height: 48px;
+    }
+
+    .vpn-packaging-quick-form .vpn-packaging-quick-foot {
+        font-size: 11px;
     }
 
     .vpn-packaging-quick-field-wide {
