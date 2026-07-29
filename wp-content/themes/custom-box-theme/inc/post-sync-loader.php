@@ -31,6 +31,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_cosmetic_paper_packaging_design_sync_version',
             'slug' => 'how-to-design-paper-packaging-cosmetic-products',
         ),
+        'inc/elegant-paper-box-material-selection-post-sync.php' => array(
+            'version' => '2026-07-29-v1',
+            'option' => 'custom_box_elegant_paper_box_sync_version',
+            'slug' => 'what-type-of-paper-for-elegant-packaging-boxes',
+        ),
         'inc/food-paper-packaging-selection-post-sync.php' => array(
             'version' => '2026-07-13-v1',
             'option' => 'custom_box_food_paper_packaging_selection_sync_version',
