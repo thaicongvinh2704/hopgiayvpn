@@ -20,14 +20,14 @@ $footer_social_links = array(
     array('class' => 'social-tiktok', 'url' => 'https://www.tiktok.com/@paperbox84', 'label' => 'TikTok', 'icon' => 'fab fa-tiktok'),
     array('class' => 'social-pinterest', 'url' => 'https://www.pinterest.com/VPNPaperBox', 'label' => 'Pinterest', 'icon' => 'fab fa-pinterest-p'),
     array('class' => 'social-linkedin', 'url' => 'https://www.linkedin.com/company/vpn-advertising-co/', 'label' => 'LinkedIn', 'icon' => 'fab fa-linkedin-in'),
-    array('class' => 'social-alibaba', 'url' => 'https://vpnadvertising.trustpass.alibaba.com/', 'label' => 'Alibaba TrustPass', 'image' => 'https://cdn.simpleicons.org/alibabadotcom/FFFFFF'),
+    array('class' => 'social-alibaba', 'url' => 'https://vpnadvertising.trustpass.alibaba.com/', 'label' => 'Alibaba TrustPass', 'icon' => 'fas fa-store'),
 );
 ?>
 
 <footer class="site-footer">
     <div class="container">
         <div class="footer-logo">
-            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/logo-hop-giay-vpn-hcm.png'); ?>" alt="<?php echo esc_attr($footer_site_name); ?>">
+            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/logo-hop-giay-vpn-hcm.png'); ?>" alt="<?php echo esc_attr($footer_site_name); ?>" width="711" height="567" loading="lazy" decoding="async">
         </div>
 
         <div class="footer-contact">
@@ -80,7 +80,7 @@ $footer_social_links = array(
                     <?php foreach ($footer_social_links as $social_link) : ?>
                         <a class="<?php echo esc_attr($social_link['class']); ?>" href="<?php echo esc_url($social_link['url']); ?>" aria-label="<?php echo esc_attr($social_link['label']); ?>" target="_blank" rel="noopener">
                             <?php if (!empty($social_link['image'])) : ?>
-                                <img class="social-icon-img" src="<?php echo esc_url($social_link['image']); ?>" alt="" loading="lazy" decoding="async">
+                                <img class="social-icon-img" src="<?php echo esc_url($social_link['image']); ?>" alt="" width="24" height="24" loading="lazy" decoding="async">
                             <?php else : ?>
                                 <i class="<?php echo esc_attr($social_link['icon']); ?>"></i>
                             <?php endif; ?>
@@ -92,26 +92,26 @@ $footer_social_links = array(
                     <h5><?php esc_html_e('Payment System:', 'custom-box-theme'); ?></h5>
                     <div class="payment-grid">
                         <div class="payment-item">
-                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/paypal.png'); ?>" alt="PayPal" loading="lazy" decoding="async">
+                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/paypal.png'); ?>" alt="PayPal" width="56" height="17" loading="lazy" decoding="async">
                         </div>
                         <div class="payment-item">
-                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/master-card.png'); ?>" alt="Mastercard" loading="lazy" decoding="async">
+                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/master-card.png'); ?>" alt="Mastercard" width="38" height="25" loading="lazy" decoding="async">
                         </div>
                         <div class="payment-item">
-                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/visa.png'); ?>" alt="Visa" loading="lazy" decoding="async">
+                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/visa.png'); ?>" alt="Visa" width="46" height="15" loading="lazy" decoding="async">
                         </div>
                         <div class="payment-item">
-                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/maestro.png'); ?>" alt="Maestro" loading="lazy" decoding="async">
+                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/maestro.png'); ?>" alt="Maestro" width="38" height="25" loading="lazy" decoding="async">
                         </div>
                         <div class="payment-item">
-                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/bank.png'); ?>" alt="<?php esc_attr_e('Bank transfer', 'custom-box-theme'); ?>" loading="lazy" decoding="async">
+                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/bank.png'); ?>" alt="<?php esc_attr_e('Bank transfer', 'custom-box-theme'); ?>" width="60" height="21" loading="lazy" decoding="async">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="footer-col">
-                <h4><?php esc_html_e('Quick Links', 'custom-box-theme'); ?></h4>
+            <details class="footer-col footer-disclosure" open data-responsive-disclosure>
+                <summary><span class="footer-disclosure-title" role="heading" aria-level="4"><?php esc_html_e('Quick Links', 'custom-box-theme'); ?></span></summary>
                 <ul>
                     <li><a href="<?php echo esc_url(home_url('/about/')); ?>"><?php esc_html_e('About Us', 'custom-box-theme'); ?></a></li>
                     <li><a href="<?php echo esc_url($footer_shop_url); ?>"><?php esc_html_e('Products', 'custom-box-theme'); ?></a></li>
@@ -120,10 +120,10 @@ $footer_social_links = array(
                     <li><a href="<?php echo esc_url(home_url('/contact/#quote')); ?>"><?php esc_html_e('Request a Quote', 'custom-box-theme'); ?></a></li>
                     <li><a href="<?php echo esc_url(home_url('/#faq')); ?>"><?php esc_html_e('Read FAQs', 'custom-box-theme'); ?></a></li>
                 </ul>
-            </div>
+            </details>
 
-            <div class="footer-col">
-                <h4><?php esc_html_e('Packaging Categories', 'custom-box-theme'); ?></h4>
+            <details class="footer-col footer-disclosure" open data-responsive-disclosure>
+                <summary><span class="footer-disclosure-title" role="heading" aria-level="4"><?php esc_html_e('Packaging Categories', 'custom-box-theme'); ?></span></summary>
                 <ul>
                     <?php if (!empty($footer_categories)) : ?>
                         <?php foreach ($footer_categories as $footer_category) : ?>
@@ -136,10 +136,10 @@ $footer_social_links = array(
                         <li><a href="<?php echo esc_url($footer_shop_url); ?>"><?php esc_html_e('Custom Packaging Products', 'custom-box-theme'); ?></a></li>
                     <?php endif; ?>
                 </ul>
-            </div>
+            </details>
 
-            <div class="footer-col">
-                <h4><?php esc_html_e('Factory Capabilities', 'custom-box-theme'); ?></h4>
+            <details class="footer-col footer-disclosure" open data-responsive-disclosure>
+                <summary><span class="footer-disclosure-title" role="heading" aria-level="4"><?php esc_html_e('Factory Capabilities', 'custom-box-theme'); ?></span></summary>
                 <ul>
                     <li><?php esc_html_e('Direct factory production in Vietnam', 'custom-box-theme'); ?></li>
                     <li><?php esc_html_e('Custom size, structure, dieline, and inserts', 'custom-box-theme'); ?></li>
@@ -148,7 +148,7 @@ $footer_social_links = array(
                     <li><?php esc_html_e('Sampling before mass production', 'custom-box-theme'); ?></li>
                     <li><?php esc_html_e('Export-ready packing for international buyers', 'custom-box-theme'); ?></li>
                 </ul>
-            </div>
+            </details>
         </div>
 
         <div class="footer-bottom">
@@ -156,6 +156,19 @@ $footer_social_links = array(
         </div>
     </div>
 </footer>
+
+<?php if (!is_page_template('page-contact.php') && !is_page('contact')) : ?>
+    <nav class="mobile-conversion-bar" aria-label="<?php esc_attr_e('Quick contact actions', 'custom-box-theme'); ?>" data-mobile-conversion-bar>
+        <a class="mobile-conversion-bar__quote" href="<?php echo esc_url(home_url('/contact/#quote')); ?>">
+            <i class="far fa-comment" aria-hidden="true"></i>
+            <span><?php esc_html_e('Request Quote', 'custom-box-theme'); ?></span>
+        </a>
+        <a class="mobile-conversion-bar__whatsapp" href="https://wa.me/84933102653" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+            <span>WhatsApp</span>
+        </a>
+    </nav>
+<?php endif; ?>
 
 <?php wp_footer(); ?>
 </body>

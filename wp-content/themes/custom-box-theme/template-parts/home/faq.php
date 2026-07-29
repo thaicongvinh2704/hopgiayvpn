@@ -1,16 +1,24 @@
-<section class="faq-section" id="faq">
+<section class="faq-section" id="faq" aria-labelledby="home-faq-title" data-home-faq>
 
     <div class="container faq-wrapper">
 
         <!-- LEFT IMAGE -->
         <div class="faq-left">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/Faq-Section-Image.webp" alt="Packaging support team reviewing custom box questions" loading="lazy" decoding="async">
+            <img
+                src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/Faq-Section-Image.jpg'); ?>"
+                alt="Packaging support team reviewing custom box questions"
+                width="512"
+                height="512"
+                loading="lazy"
+                decoding="async"
+            >
         </div>
 
         <!-- RIGHT FAQ -->
         <div class="faq-right">
+            <h2 id="home-faq-title">Frequently Asked Questions</h2>
 
-            <div class="faq-scroll">
+            <div class="faq-scroll" data-faq-list>
 
                 <!-- ITEM -->
                 <?php 
@@ -26,19 +34,34 @@
                     ["09","Can I order a sample before placing a bulk order?","Yes, we provide pre-production samples including digital proofs and physical prototypes. This allows you to test the structure, print quality, and finish before committing to larger runs, ensuring 100% satisfaction."]
                 ];
 
-                foreach($faqs as $index => $faq):
+                foreach ($faqs as $index => $faq) :
+                    $question_id = 'home-faq-question-' . ($index + 1);
+                    $answer_id = 'home-faq-answer-' . ($index + 1);
+                    $is_open = 0 === $index;
                 ?>
 
-                <div class="faq-item <?php echo $index == 0 ? 'active' : ''; ?>">
+                <div class="faq-item<?php echo $is_open ? ' active' : ''; ?>" data-faq-item>
                     
-                    <div class="faq-question">
-                        <span class="faq-num"><?php echo $faq[0]; ?></span>
-                        <h4><?php echo $faq[1]; ?></h4>
-                        <span class="faq-toggle">⌃</span>
-                    </div>
+                    <button
+                        class="faq-question"
+                        id="<?php echo esc_attr($question_id); ?>"
+                        type="button"
+                        aria-expanded="<?php echo $is_open ? 'true' : 'false'; ?>"
+                        aria-controls="<?php echo esc_attr($answer_id); ?>"
+                    >
+                        <span class="faq-num" aria-hidden="true"><?php echo esc_html($faq[0]); ?></span>
+                        <span class="faq-question-text"><?php echo esc_html($faq[1]); ?></span>
+                        <span class="faq-toggle" aria-hidden="true">&#8963;</span>
+                    </button>
 
-                    <div class="faq-answer">
-                        <p><?php echo $faq[2]; ?></p>
+                    <div
+                        class="faq-answer"
+                        id="<?php echo esc_attr($answer_id); ?>"
+                        role="region"
+                        aria-labelledby="<?php echo esc_attr($question_id); ?>"
+                        <?php if (!$is_open) : ?>hidden<?php endif; ?>
+                    >
+                        <p><?php echo esc_html($faq[2]); ?></p>
                     </div>
 
                 </div>

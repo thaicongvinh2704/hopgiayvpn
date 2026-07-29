@@ -19,16 +19,17 @@ $get_card_image = function ($term, $size = 'medium_large') {
         return '';
     }
 
-    $asset_url = function_exists('custom_box_get_home_packaging_category_image_url') ? custom_box_get_home_packaging_category_image_url($term) : '';
-
-    if ($asset_url) {
-        return '<img src="' . esc_url($asset_url) . '" width="640" height="480" alt="' . esc_attr($term->name) . '" loading="lazy" decoding="async">';
-    }
-
+    $asset_url = function_exists('custom_box_get_product_category_card_image_url')
+        ? custom_box_get_product_category_card_image_url($term, $size)
+        : get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
     $image_id = (int) get_term_meta($term->term_id, 'thumbnail_id', true);
 
     if (!$image_id) {
         $image_id = (int) get_term_meta($term->term_id, 'custom_box_category_image_id', true);
+    }
+
+    if (!$image_id && $asset_url) {
+        $image_id = (int) attachment_url_to_postid($asset_url);
     }
 
     if ($image_id) {
@@ -37,36 +38,15 @@ $get_card_image = function ($term, $size = 'medium_large') {
             $size,
             false,
             array(
-                'alt'      => $term->name,
+                'alt'      => '',
                 'loading'  => 'lazy',
                 'decoding' => 'async',
+                'sizes'    => '(max-width: 379px) calc(100vw - 36px), (max-width: 767px) calc(50vw - 28px), (max-width: 1200px) 25vw, 320px',
             )
         );
     }
 
-    $asset_url = function_exists('custom_box_get_product_category_asset_image_url') ? custom_box_get_product_category_asset_image_url($term) : '';
-
-    if (!$asset_url && function_exists('wc_get_products')) {
-        $category_products = wc_get_products(array(
-            'status'   => 'publish',
-            'limit'    => 1,
-            'orderby'  => 'date',
-            'order'    => 'DESC',
-            'category' => array($term->slug),
-            'return'   => 'ids',
-        ));
-
-        if (!empty($category_products[0])) {
-            $product_image_id = get_post_thumbnail_id((int) $category_products[0]);
-            $asset_url = $product_image_id ? wp_get_attachment_image_url($product_image_id, $size) : '';
-        }
-    }
-
-    if (!$asset_url) {
-        $asset_url = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
-    }
-
-    return '<img src="' . esc_url($asset_url) . '" width="640" height="480" alt="' . esc_attr($term->name) . '" loading="lazy" decoding="async">';
+    return '<img src="' . esc_url($asset_url) . '" width="640" height="480" alt="" loading="lazy" decoding="async">';
 };
 
 ?>
@@ -107,8 +87,8 @@ $get_card_image = function ($term, $size = 'medium_large') {
                                 continue;
                             }
                             ?>
-                            <a class="home-packaging-category-card product-category-hub-card" href="<?php echo esc_url($category_link); ?>">
-                                <span class="home-packaging-category-image product-category-hub-card-image"><?php echo wp_kses_post($get_card_image($category, 'medium_large')); ?></span>
+                            <a class="home-packaging-category-card product-category-hub-card" href="<?php echo esc_url($category_link); ?>" data-product-card>
+                                <span class="home-packaging-category-image product-category-hub-card-image"><?php echo $get_card_image($category, 'medium_large'); ?></span>
                                 <h3 class="home-packaging-category-title product-category-hub-card-title"><?php echo esc_html($category->name); ?></h3>
                             </a>
                         <?php endforeach; ?>

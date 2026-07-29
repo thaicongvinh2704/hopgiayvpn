@@ -40,19 +40,40 @@ if ($custom_logo_id) {
     $custom_logo_url = wp_get_attachment_image_url($custom_logo_id, 'full');
     if ($custom_logo_url) {
         $author_logo_url = $custom_logo_url;
+    } else {
+        $custom_logo_id = 0;
     }
 }
 ?>
 
 <aside class="vpn-author-box" aria-labelledby="vpn-author-box-title">
     <div class="vpn-author-avatar">
-        <img
-            class="vpn-author-avatar-img"
-            src="<?php echo esc_url($author_logo_url); ?>"
-            alt="<?php echo esc_attr($author_name); ?>"
-            loading="lazy"
-            decoding="async"
-        >
+        <?php if ($custom_logo_id) : ?>
+            <?php
+            echo wp_get_attachment_image(
+                $custom_logo_id,
+                'thumbnail',
+                false,
+                array(
+                    'class'    => 'vpn-author-avatar-img',
+                    'alt'      => $author_name,
+                    'loading'  => 'lazy',
+                    'decoding' => 'async',
+                    'sizes'    => '96px',
+                )
+            );
+            ?>
+        <?php else : ?>
+            <img
+                class="vpn-author-avatar-img"
+                src="<?php echo esc_url($author_logo_url); ?>"
+                alt="<?php echo esc_attr($author_name); ?>"
+                width="711"
+                height="567"
+                loading="lazy"
+                decoding="async"
+            >
+        <?php endif; ?>
     </div>
 
     <div class="vpn-author-content">

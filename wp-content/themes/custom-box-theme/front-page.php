@@ -1,6 +1,6 @@
 <?php get_header(); ?>
 
-<main>
+<main id="main-content" class="home-page" data-home-page>
 
     <?php get_template_part('template-parts/home/hero'); ?>
 

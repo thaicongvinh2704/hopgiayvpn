@@ -66,20 +66,20 @@ if (is_author()) {
 }
 ?>
 
-<main class="blog-page">
-    <section class="blog-hero">
+<main id="main-content" class="blog-page" data-blog-archive>
+    <section class="blog-hero" aria-labelledby="blog-archive-title" data-blog-archive-hero>
         <div class="container">
-            <div class="blog-breadcrumb">
+            <nav class="blog-breadcrumb" aria-label="<?php esc_attr_e('Breadcrumb', 'custom-box-theme'); ?>" data-blog-breadcrumb>
                 <a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'custom-box-theme'); ?></a>
                 <?php if (!is_home() && !is_page()) : ?>
                     <a href="<?php echo esc_url($blog_url); ?>"><?php esc_html_e('Blog', 'custom-box-theme'); ?></a>
                 <?php endif; ?>
-                <span><?php echo esc_html($blog_breadcrumb_current); ?></span>
-            </div>
+                <span aria-current="page"><?php echo esc_html($blog_breadcrumb_current); ?></span>
+            </nav>
 
             <div class="blog-hero-content">
                 <span class="blog-eyebrow"><?php echo esc_html($blog_hero_label); ?></span>
-                <h1><?php echo esc_html($blog_hero_title); ?></h1>
+                <h1 id="blog-archive-title"><?php echo esc_html($blog_hero_title); ?></h1>
                 <p><?php echo esc_html($blog_hero_description); ?></p>
             </div>
         </div>
@@ -89,34 +89,69 @@ if (is_author()) {
         <div class="container blog-layout">
             <div class="blog-main">
                 <?php if ($blog_query->have_posts()) : ?>
-                    <div class="blog-card-grid">
+                    <div class="blog-card-grid" data-blog-card-grid>
                         <?php while ($blog_query->have_posts()) : $blog_query->the_post(); ?>
                             <?php
-                            $post_image = get_the_post_thumbnail_url(get_the_ID(), 'medium_large');
-                            if (!$post_image) {
-                                $post_image = $fallback_image;
+                            $post_id = get_the_ID();
+                            $post_thumbnail_id = get_post_thumbnail_id($post_id);
+                            $post_thumbnail_path = $post_thumbnail_id ? get_attached_file($post_thumbnail_id) : '';
+
+                            if ($post_thumbnail_id && (!$post_thumbnail_path || !is_file($post_thumbnail_path))) {
+                                $post_thumbnail_id = 0;
                             }
+
+                            $card_title_id = 'blog-card-title-' . $post_id;
                             ?>
-                            <article id="post-<?php the_ID(); ?>" <?php post_class('blog-card'); ?>>
-                                <a class="blog-card-image" href="<?php the_permalink(); ?>">
-                                    <img src="<?php echo esc_url($post_image); ?>" alt="<?php echo esc_attr(get_the_title()); ?>" loading="lazy" decoding="async">
-                                </a>
+                            <article
+                                id="post-<?php the_ID(); ?>"
+                                <?php post_class('blog-card'); ?>
+                                aria-labelledby="<?php echo esc_attr($card_title_id); ?>"
+                                data-blog-card
+                            >
+                                <figure class="blog-card-image" aria-hidden="true" data-blog-card-media>
+                                    <?php if ($post_thumbnail_id) : ?>
+                                        <?php
+                                        echo get_the_post_thumbnail(
+                                            $post_id,
+                                            'medium_large',
+                                            array(
+                                                'alt'      => '',
+                                                'loading'  => 'lazy',
+                                                'decoding' => 'async',
+                                                'sizes'    => '(max-width: 767px) 100vw, (max-width: 1024px) 50vw, 520px',
+                                            )
+                                        );
+                                        ?>
+                                    <?php else : ?>
+                                        <img
+                                            src="<?php echo esc_url($fallback_image); ?>"
+                                            alt=""
+                                            width="506"
+                                            height="277"
+                                            loading="lazy"
+                                            decoding="async"
+                                            sizes="(max-width: 767px) 100vw, (max-width: 1024px) 50vw, 520px"
+                                        >
+                                    <?php endif; ?>
+                                </figure>
 
                                 <div class="blog-card-body">
                                     <div class="blog-card-meta">
-                                        <span><?php echo esc_html(get_the_date('M j, Y')); ?></span>
+                                        <time datetime="<?php echo esc_attr(get_the_date('c')); ?>"><?php echo esc_html(get_the_date('M j, Y')); ?></time>
                                         <?php $primary_category = get_the_category(); ?>
                                         <?php if (!empty($primary_category)) : ?>
                                             <a href="<?php echo esc_url(get_category_link($primary_category[0])); ?>"><?php echo esc_html($primary_category[0]->name); ?></a>
                                         <?php endif; ?>
                                     </div>
 
-                                    <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-                                    <p><?php echo esc_html(wp_trim_words(get_the_excerpt(), 24)); ?></p>
-                                    <a class="blog-read-more" href="<?php the_permalink(); ?>">
+                                    <h2 id="<?php echo esc_attr($card_title_id); ?>">
+                                        <a class="blog-card-primary-link" href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                                    </h2>
+                                    <p class="blog-card-excerpt"><?php echo esc_html(get_the_excerpt()); ?></p>
+                                    <span class="blog-read-more" aria-hidden="true">
                                         <?php esc_html_e('Read More', 'custom-box-theme'); ?>
-                                        <i class="fas fa-arrow-right"></i>
-                                    </a>
+                                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                                    </span>
                                 </div>
                             </article>
                         <?php endwhile; ?>
@@ -125,10 +160,11 @@ if (is_author()) {
                     <nav class="blog-pagination" aria-label="<?php esc_attr_e('Blog pagination', 'custom-box-theme'); ?>">
                         <?php
                         echo wp_kses_post(paginate_links(array(
-                            'current'   => $blog_paged,
-                            'total'     => (int) $blog_query->max_num_pages,
-                            'prev_text' => '<i class="fas fa-chevron-left"></i>',
-                            'next_text' => '<i class="fas fa-chevron-right"></i>',
+                            'current'            => $blog_paged,
+                            'total'              => (int) $blog_query->max_num_pages,
+                            'prev_text'          => '<i class="fas fa-chevron-left" aria-hidden="true"></i><span class="screen-reader-text">' . esc_html__('Previous blog page', 'custom-box-theme') . '</span>',
+                            'next_text'          => '<span class="screen-reader-text">' . esc_html__('Next blog page', 'custom-box-theme') . '</span><i class="fas fa-chevron-right" aria-hidden="true"></i>',
+                            'before_page_number' => '<span class="screen-reader-text">' . esc_html__('Page', 'custom-box-theme') . ' </span>',
                         )));
                         ?>
                     </nav>
@@ -142,7 +178,7 @@ if (is_author()) {
                 <?php endif; ?>
             </div>
 
-            <aside class="blog-sidebar" aria-label="<?php esc_attr_e('Blog sidebar', 'custom-box-theme'); ?>">
+            <aside class="blog-sidebar" aria-label="<?php esc_attr_e('Blog sidebar', 'custom-box-theme'); ?>" data-blog-sidebar>
                 <section class="blog-sidebar-widget blog-search-widget">
                     <h2><?php esc_html_e('Search Insights', 'custom-box-theme'); ?></h2>
                     <form role="search" method="get" class="search-form" action="<?php echo esc_url(home_url('/')); ?>">
@@ -150,12 +186,26 @@ if (is_author()) {
                             <span class="screen-reader-text"><?php esc_html_e('Search for:', 'custom-box-theme'); ?></span>
                             <input type="search" class="search-field" placeholder="<?php esc_attr_e('Search packaging guides...', 'custom-box-theme'); ?>" value="<?php echo esc_attr(get_search_query()); ?>" name="s">
                         </label>
-                        <input type="submit" class="search-submit" value="<?php esc_attr_e('Search', 'custom-box-theme'); ?>">
+                        <input
+                            id="blog-search-submit"
+                            type="submit"
+                            class="search-submit"
+                            name="blog_search_submit"
+                            value="<?php esc_attr_e('Search', 'custom-box-theme'); ?>"
+                            aria-label="<?php esc_attr_e('Search packaging guides', 'custom-box-theme'); ?>"
+                        >
                     </form>
                 </section>
 
-                <section class="blog-sidebar-widget">
-                    <h2><?php esc_html_e('Packaging Topics', 'custom-box-theme'); ?></h2>
+                <details
+                    class="blog-sidebar-widget blog-sidebar-disclosure"
+                    open
+                    data-mobile-disclosure
+                    data-mobile-default="closed"
+                    data-desktop-default="open"
+                    data-disclosure-name="packaging-topics"
+                >
+                    <summary class="blog-sidebar-disclosure-summary"><span role="heading" aria-level="2"><?php esc_html_e('Packaging Topics', 'custom-box-theme'); ?></span><span class="blog-sidebar-disclosure-icon" aria-hidden="true"></span></summary>
                     <ul class="blog-topic-list">
                         <?php
                         wp_list_categories(array(
@@ -164,10 +214,17 @@ if (is_author()) {
                         ));
                         ?>
                     </ul>
-                </section>
+                </details>
 
-                <section class="blog-sidebar-widget">
-                    <h2><?php esc_html_e('Recent Guides', 'custom-box-theme'); ?></h2>
+                <details
+                    class="blog-sidebar-widget blog-sidebar-disclosure"
+                    open
+                    data-mobile-disclosure
+                    data-mobile-default="closed"
+                    data-desktop-default="open"
+                    data-disclosure-name="recent-guides"
+                >
+                    <summary class="blog-sidebar-disclosure-summary"><span role="heading" aria-level="2"><?php esc_html_e('Recent Guides', 'custom-box-theme'); ?></span><span class="blog-sidebar-disclosure-icon" aria-hidden="true"></span></summary>
                     <ul class="blog-recent-list">
                         <?php
                         $recent_posts = new WP_Query(array(
@@ -187,7 +244,7 @@ if (is_author()) {
                             <?php wp_reset_postdata(); ?>
                         <?php endif; ?>
                     </ul>
-                </section>
+                </details>
 
                 <section class="blog-sidebar-cta">
                     <span><?php esc_html_e('Need custom packaging?', 'custom-box-theme'); ?></span>

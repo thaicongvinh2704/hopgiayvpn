@@ -5,6 +5,11 @@
 
 defined('ABSPATH') || exit;
 
+if (is_search()) {
+    locate_template('search.php', true, false);
+    return;
+}
+
 if (!function_exists('custom_box_get_archive_sidebar_categories')) {
     function custom_box_get_archive_sidebar_categories($current_term = null, $limit = 48) {
         if (!taxonomy_exists('product_cat')) {
@@ -144,7 +149,6 @@ if (is_shop()) {
     $archive_description = __('Explore custom packaging product categories including paper boxes, rigid boxes, drawer boxes, food paper boxes, cosmetic packaging boxes, gift boxes, paper bags, and specialty packaging solutions from VPN Paper Box Manufacturer.', 'custom-box-theme');
 }
 
-$show_category_landing = !is_shop() && !empty($landing_categories) && $current_term && !is_wp_error($current_term);
 $archive_context = compact(
     'current_term',
     'archive_title',
@@ -162,13 +166,6 @@ $archive_context = compact(
 
     <?php if (is_shop()) : ?>
         <?php get_template_part('template-parts/woocommerce/product-category-hub', null, $archive_context); ?>
-        <?php
-        get_template_part('template-parts/woocommerce/archive-copy', null, array_merge($archive_context, array(
-            'copy_variant' => 'categories',
-        )));
-        ?>
-    <?php elseif ($show_category_landing) : ?>
-        <?php get_template_part('template-parts/woocommerce/category-grid', null, $archive_context); ?>
         <?php
         get_template_part('template-parts/woocommerce/archive-copy', null, array_merge($archive_context, array(
             'copy_variant' => 'categories',

@@ -20,6 +20,45 @@
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
+<?php if (function_exists('custom_box_is_paper_box_manufacturer_page') && custom_box_is_paper_box_manufacturer_page()) : ?>
+<header class="vpn-lp-minimal-header">
+    <div class="vpn-lp-minimal-header__inner">
+        <div class="vpn-lp-minimal-header__logo">
+            <a href="<?php echo esc_url(home_url('/')); ?>" aria-label="<?php echo esc_attr(get_bloginfo('name')); ?>">
+                <?php
+                if (has_custom_logo()) {
+                    the_custom_logo();
+                } else {
+                    ?>
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-hop-giay-vpn-hcm.png'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" width="711" height="567">
+                    <?php
+                }
+                ?>
+            </a>
+        </div>
+        <nav class="vpn-lp-minimal-header__actions" aria-label="<?php esc_attr_e('Paper box quote actions', 'custom-box-theme'); ?>">
+            <a class="vpn-lp-minimal-header__whatsapp pbm-js-whatsapp" href="https://wa.me/84933102653" target="_blank" rel="noopener" data-cta="header-whatsapp">WhatsApp</a>
+            <a class="vpn-lp-minimal-header__quote pbm-js-quote-cta" href="#quote-form" data-cta="header-get-quote"><span class="vpn-lp-quote-text-long">Get Quote</span><span class="vpn-lp-quote-text-short">Quote</span></a>
+            <button class="vpn-lp-minimal-header__menu" type="button" aria-controls="pbm-mobile-menu" aria-expanded="false" aria-label="<?php esc_attr_e('Open navigation menu', 'custom-box-theme'); ?>" data-pbm-menu-toggle>
+                <i class="fas fa-bars" aria-hidden="true"></i>
+            </button>
+        </nav>
+    </div>
+    <div class="vpn-lp-minimal-header__drawer" id="pbm-mobile-menu" hidden data-pbm-mobile-menu>
+        <a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'custom-box-theme'); ?></a>
+        <a href="<?php echo esc_url(function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/')); ?>"><?php esc_html_e('Products', 'custom-box-theme'); ?></a>
+        <a href="<?php echo esc_url(home_url('/custom-packaging-boxes-manufacturer/')); ?>"><?php esc_html_e('Custom Packaging', 'custom-box-theme'); ?></a>
+        <a href="<?php echo esc_url(home_url('/about/')); ?>"><?php esc_html_e('About Us', 'custom-box-theme'); ?></a>
+        <a href="<?php echo esc_url(home_url('/blog/')); ?>"><?php esc_html_e('Blog', 'custom-box-theme'); ?></a>
+        <a href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Contact Us', 'custom-box-theme'); ?></a>
+        <a href="<?php echo esc_url(home_url('/catalog/')); ?>"><?php esc_html_e('Catalog', 'custom-box-theme'); ?></a>
+        <a href="mailto:sales.vpn@hopgiayvpn.com">Email</a>
+        <button type="button" data-pbm-copy-phone>WeChat / Viber</button>
+    </div>
+</header>
+<?php return; ?>
+<?php endif; ?>
+
 <!-- ===== TOP BAR ===== -->
 <div class="top-bar">
     <div class="container top-inner">
@@ -40,7 +79,7 @@
             <a href="https://www.pinterest.com/VPNPaperBox" aria-label="Pinterest"><i class="fab fa-pinterest-p"></i></a>
             <a href="https://www.linkedin.com/company/vpn-advertising-co/" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
             <a href="https://vpnadvertising.trustpass.alibaba.com/" aria-label="Alibaba TrustPass" target="_blank" rel="noopener">
-                <img class="social-icon-img" src="https://cdn.simpleicons.org/alibabadotcom/FFFFFF" alt="" loading="lazy" decoding="async">
+                <i class="fas fa-store" aria-hidden="true"></i>
             </a>
         </div>
 
@@ -59,7 +98,7 @@
                     the_custom_logo();
                 } else {
                     ?>
-                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-hop-giay-vpn-hcm.png'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>">
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-hop-giay-vpn-hcm.png'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" width="711" height="567">
                     <?php
                 }
                 ?>
@@ -67,7 +106,7 @@
         </div>
 
         <!-- SEARCH -->
-        <form class="header-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>" data-search-suggestions>
+        <form class="header-search" id="mobile-site-search" role="search" method="get" action="<?php echo esc_url(home_url('/')); ?>" data-search-suggestions>
             <label class="screen-reader-text" for="header-search-field"><?php esc_html_e('Search for:', 'custom-box-theme'); ?></label>
             <input id="header-search-field" type="search" name="s" value="<?php echo esc_attr(get_search_query()); ?>" placeholder="<?php esc_attr_e('Search', 'custom-box-theme'); ?>" autocomplete="off" data-search-input>
             <input type="hidden" name="post_type" value="product">
@@ -78,12 +117,12 @@
             <div class="header-search-suggestions" data-search-results hidden></div>
         </form>
 
-        <button class="mobile-menu-icon" type="button" aria-controls="primary-menu" aria-expanded="false" aria-label="<?php esc_attr_e('Open navigation menu', 'custom-box-theme'); ?>">
-            <i class="fas fa-bars"></i>
+        <button class="mobile-search-toggle" type="button" aria-controls="mobile-site-search" aria-expanded="false" aria-label="<?php esc_attr_e('Open product search', 'custom-box-theme'); ?>" data-mobile-search-toggle>
+            <i class="fas fa-search" aria-hidden="true"></i>
         </button>
 
-        <button class="mobile-search-toggle" type="button" aria-controls="header-search-field" aria-expanded="false" aria-label="<?php esc_attr_e('Open product search', 'custom-box-theme'); ?>" data-mobile-search-toggle>
-            <i class="fas fa-search"></i>
+        <button class="mobile-menu-icon" type="button" aria-controls="mobile-site-menu" aria-expanded="false" aria-label="<?php esc_attr_e('Open navigation menu', 'custom-box-theme'); ?>" data-mobile-menu-toggle>
+            <i class="fas fa-bars" aria-hidden="true"></i>
         </button>
 
         <!-- RIGHT -->
@@ -235,6 +274,77 @@
 
     </div>
 </nav>
+
+<div class="mobile-menu-overlay" hidden data-mobile-menu-overlay></div>
+<aside
+    class="mobile-menu-drawer"
+    id="mobile-site-menu"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    aria-labelledby="mobile-site-menu-title"
+    hidden
+    data-mobile-menu-drawer
+>
+    <div class="mobile-menu-drawer__header">
+        <strong id="mobile-site-menu-title"><?php esc_html_e('Menu', 'custom-box-theme'); ?></strong>
+        <button type="button" class="mobile-menu-drawer__close" aria-label="<?php esc_attr_e('Close navigation menu', 'custom-box-theme'); ?>" data-mobile-menu-close>
+            <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+    </div>
+
+    <nav class="mobile-menu-drawer__nav" aria-label="<?php esc_attr_e('Mobile navigation', 'custom-box-theme'); ?>">
+        <a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'custom-box-theme'); ?></a>
+        <a href="<?php echo esc_url($products_link); ?>"><?php esc_html_e('Products', 'custom-box-theme'); ?></a>
+        <a href="<?php echo esc_url(home_url('/custom-packaging-boxes-manufacturer/')); ?>"><?php esc_html_e('Custom Packaging', 'custom-box-theme'); ?></a>
+        <a href="<?php echo esc_url(home_url('/about/')); ?>"><?php esc_html_e('About Us', 'custom-box-theme'); ?></a>
+        <a href="<?php echo esc_url(home_url('/blog/')); ?>"><?php esc_html_e('Blog', 'custom-box-theme'); ?></a>
+        <a href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Contact Us', 'custom-box-theme'); ?></a>
+    </nav>
+
+    <?php if (!empty($all_categories_columns)) : ?>
+        <div class="mobile-menu-drawer__categories" aria-label="<?php esc_attr_e('Product categories', 'custom-box-theme'); ?>">
+            <h2><?php esc_html_e('Product Categories', 'custom-box-theme'); ?></h2>
+            <?php foreach ($all_categories_columns as $mobile_column_index => $column) : ?>
+                <?php
+                $mobile_column_terms = !empty($column['terms']) && is_array($column['terms']) ? $column['terms'] : array();
+                if (empty($mobile_column_terms)) {
+                    continue;
+                }
+                ?>
+                <details class="mobile-menu-category">
+                    <summary>
+                        <span><?php echo esc_html($column['title']); ?></span>
+                        <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                    </summary>
+                    <div class="mobile-menu-category__links">
+                        <?php foreach ($mobile_column_terms as $category) : ?>
+                            <?php
+                            $mobile_category_link = get_term_link($category);
+                            if (is_wp_error($mobile_category_link)) {
+                                continue;
+                            }
+                            ?>
+                            <a href="<?php echo esc_url($mobile_category_link); ?>"><?php echo esc_html($category->name); ?></a>
+                        <?php endforeach; ?>
+                    </div>
+                </details>
+            <?php endforeach; ?>
+        </div>
+    <?php endif; ?>
+
+    <div class="mobile-menu-drawer__contact">
+        <h2><?php esc_html_e('Contact Factory Sales', 'custom-box-theme'); ?></h2>
+        <a href="tel:+84933102653"><i class="fas fa-phone" aria-hidden="true"></i><span>(+84) 933 102 653</span></a>
+        <a href="mailto:sales.vpn@hopgiayvpn.com"><i class="fas fa-envelope" aria-hidden="true"></i><span>sales.vpn@hopgiayvpn.com</span></a>
+        <a href="https://wa.me/84933102653" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>WhatsApp</span></a>
+        <button type="button" data-mobile-copy-contact="+84933102653">
+            <i class="fab fa-viber" aria-hidden="true"></i>
+            <span><?php esc_html_e('Copy number for Viber / WeChat', 'custom-box-theme'); ?></span>
+        </button>
+        <span class="mobile-menu-copy-status" role="status" aria-live="polite" data-mobile-copy-status></span>
+    </div>
+</aside>
 
 <script>
 (function() {

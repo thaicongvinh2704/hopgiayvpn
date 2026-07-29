@@ -1,0 +1,21 @@
+{
+  "name": "vpn-packaging-mobile-ux-tests",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ux": "playwright test --config=playwright.config.mjs",
+    "test:ux:smoke": "playwright test --config=playwright.config.mjs --project=390x844 --grep \"home route contract\"",
+    "test:ux:list": "playwright test --config=playwright.config.mjs --list",
+    "capture:baseline": "node scripts/capture-screenshots.mjs baseline",
+    "capture:after": "node scripts/capture-screenshots.mjs after",
+    "audit:lighthouse": "node scripts/run-lighthouse.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.0",
+    "lighthouse": "12.8.2",
+    "sharp": "0.34.3"
+  }
+}

@@ -549,13 +549,14 @@ function custom_box_build_blog_article_content($raw_content) {
         }
 
         if (preg_match('/\sid=["\']([^"\']+)["\']/i', $attributes, $id_match)) {
-            $heading_id = sanitize_title($id_match[1]);
+            $heading_id = sanitize_title(html_entity_decode($id_match[1], ENT_QUOTES, get_bloginfo('charset')));
             $attributes = preg_replace('/\sid=["\'][^"\']+["\']/i', '', $attributes);
         } else {
-            $heading_id = sanitize_title($heading_text);
+            $heading_id = sanitize_title(html_entity_decode($heading_text, ENT_QUOTES, get_bloginfo('charset')));
         }
 
         $base_id = $heading_id ? $heading_id : 'section';
+        $heading_id = $base_id;
         $suffix = 2;
 
         while (in_array($heading_id, $seen_ids, true)) {
@@ -570,8 +571,12 @@ function custom_box_build_blog_article_content($raw_content) {
             'level' => $level,
         );
 
-        return '<h' . $level . $attributes . ' id="' . esc_attr($heading_id) . '">' . $heading_html . '</h' . $level . '>';
+        $attributes = preg_replace('/\s(?:tabindex|data-article-anchor)(?:=(["\']).*?\1)?/i', '', $attributes);
+
+        return '<h' . $level . $attributes . ' id="' . esc_attr($heading_id) . '" tabindex="-1" data-article-anchor>' . $heading_html . '</h' . $level . '>';
     }, $content);
+
+    $content = custom_box_enhance_blog_article_tables($content);
 
     if (count($toc) >= 2) {
         $toc_html = custom_box_render_blog_toc($toc);
@@ -601,15 +606,38 @@ function custom_box_render_blog_toc($toc) {
 
     $section_index = 0;
     $subsection_index = 0;
+    $toc_suffix = get_the_ID() ? (string) get_the_ID() : wp_unique_id();
+    $toc_id = 'blog-article-toc-' . sanitize_html_class($toc_suffix);
+    $toc_toggle_id = $toc_id . '-toggle';
+    $toc_panel_id = $toc_id . '-panel';
 
     ob_start();
     ?>
-    <nav class="blog-toc blog-toc-easy is-open" aria-label="<?php esc_attr_e('Table of contents', 'custom-box-theme'); ?>">
-        <button class="blog-toc-toggle" type="button" aria-expanded="true">
+    <nav
+        class="blog-toc blog-toc-easy is-open"
+        id="<?php echo esc_attr($toc_id); ?>"
+        aria-label="<?php esc_attr_e('Table of contents', 'custom-box-theme'); ?>"
+        data-article-toc
+        data-mobile-default="closed"
+        data-desktop-default="open"
+    >
+        <button
+            class="blog-toc-toggle"
+            id="<?php echo esc_attr($toc_toggle_id); ?>"
+            type="button"
+            aria-expanded="true"
+            aria-controls="<?php echo esc_attr($toc_panel_id); ?>"
+            data-article-toc-toggle
+        >
             <span><?php esc_html_e('Table of Contents', 'custom-box-theme'); ?></span>
-            <i class="fas fa-chevron-up"></i>
+            <i class="fas fa-chevron-up" aria-hidden="true"></i>
         </button>
-        <ul class="blog-toc-panel">
+        <ul
+            class="blog-toc-panel"
+            id="<?php echo esc_attr($toc_panel_id); ?>"
+            aria-labelledby="<?php echo esc_attr($toc_toggle_id); ?>"
+            data-article-toc-panel
+        >
             <?php foreach ($toc as $item) : ?>
                 <?php
                 if (2 === (int) $item['level']) {
@@ -627,7 +655,7 @@ function custom_box_render_blog_toc($toc) {
                 ?>
                 <li class="blog-toc-item blog-toc-level-<?php echo esc_attr($item['level']); ?>">
                     <span class="blog-toc-number"><?php echo esc_html($toc_number); ?></span>
-                    <a class="blog-toc-link" href="#<?php echo esc_attr($item['id']); ?>">
+                    <a class="blog-toc-link" href="#<?php echo esc_attr($item['id']); ?>" data-article-toc-link>
                         <?php echo esc_html($item['title']); ?>
                     </a>
                 </li>
@@ -637,6 +665,52 @@ function custom_box_render_blog_toc($toc) {
     <?php
 
     return ob_get_clean();
+}
+
+function custom_box_enhance_blog_article_tables($content) {
+    if (false !== strpos($content, 'data-article-table-scroll')) {
+        return $content;
+    }
+
+    $table_index = 0;
+    $post_id = max(0, (int) get_the_ID());
+
+    return preg_replace_callback('/<table\b[^>]*>.*?<\/table>/is', function ($matches) use (&$table_index, $post_id) {
+        $table_index++;
+
+        $table_html = $matches[0];
+        $cue_id = 'blog-table-scroll-cue-' . $post_id . '-' . $table_index;
+        $table_label = sprintf(
+            /* translators: %d: table number within the article. */
+            __('Scrollable data table %d', 'custom-box-theme'),
+            $table_index
+        );
+
+        if (preg_match('/<table\b[^>]*\sclass=(["\'])(.*?)\1/i', $table_html, $class_match)) {
+            $table_classes = trim($class_match[2] . ' blog-content-table');
+            $table_html = preg_replace(
+                '/(<table\b[^>]*\sclass=)(["\'])(.*?)\2/i',
+                '$1$2' . esc_attr($table_classes) . '$2',
+                $table_html,
+                1
+            );
+        } else {
+            $table_html = preg_replace('/<table\b/i', '<table class="blog-content-table"', $table_html, 1);
+        }
+
+        if (false === strpos($table_html, 'data-article-table')) {
+            $table_html = preg_replace('/<table\b/i', '<table data-article-table', $table_html, 1);
+        }
+
+        return '<div class="blog-table-block" data-article-table-block>'
+            . '<p class="blog-table-scroll-cue" id="' . esc_attr($cue_id) . '" data-article-table-cue>'
+            . esc_html__('Scroll horizontally to view all table columns.', 'custom-box-theme')
+            . '</p>'
+            . '<div class="blog-table-scroll" tabindex="0" role="region" aria-label="' . esc_attr($table_label) . '" aria-describedby="' . esc_attr($cue_id) . '" data-article-table-scroll>'
+            . $table_html
+            . '</div>'
+            . '</div>';
+    }, $content);
 }
 
 function custom_box_get_image_alt_caption($image_html) {
@@ -686,44 +760,173 @@ function custom_box_get_attachment_image_caption($attachment_id) {
     return '';
 }
 
+function custom_box_set_blog_image_attribute($image_html, $attribute, $value) {
+    $attribute = sanitize_key($attribute);
+
+    if (!$attribute) {
+        return $image_html;
+    }
+
+    $escaped_value = esc_attr((string) $value);
+    $attribute_pattern = '/\s' . preg_quote($attribute, '/') . '=(["\']).*?\1/i';
+
+    if (preg_match($attribute_pattern, $image_html)) {
+        return preg_replace($attribute_pattern, ' ' . $attribute . '="' . $escaped_value . '"', $image_html, 1);
+    }
+
+    return preg_replace('/<img\b/i', '<img ' . $attribute . '="' . $escaped_value . '"', $image_html, 1);
+}
+
 function custom_box_wrap_blog_image_html($image_html) {
     $caption = custom_box_get_image_alt_caption($image_html);
     $caption_html = $caption ? '<figcaption>' . esc_html($caption) . '</figcaption>' : '';
 
-    return '<figure class="blog-content-figure">' . $image_html . $caption_html . '</figure>';
+    if ($caption) {
+        $image_html = custom_box_set_blog_image_attribute($image_html, 'alt', '');
+    }
+
+    if (preg_match('/^\s*<a\b/i', $image_html) && !preg_match('/^\s*<a\b[^>]*\saria-label=/i', $image_html)) {
+        $link_label = $caption
+            ? sprintf(
+                /* translators: %s: image caption. */
+                __('View full-size image: %s', 'custom-box-theme'),
+                $caption
+            )
+            : sprintf(
+                /* translators: %s: article title. */
+                __('View an image from %s', 'custom-box-theme'),
+                get_the_title()
+            );
+
+        $image_html = preg_replace(
+            '/<a\b/i',
+            '<a aria-label="' . esc_attr($link_label) . '" data-article-image-link',
+            $image_html,
+            1
+        );
+    }
+
+    return '<figure class="blog-content-figure" data-article-figure>' . $image_html . $caption_html . '</figure>';
 }
 
 function custom_box_enhance_blog_article_images($content) {
-    $content = preg_replace_callback('/<p\b[^>]*>\s*((?:<a[^>]*>\s*)?<img[^>]+>(?:\s*<\/a>)?)\s*<\/p>/i', function ($matches) {
-        return custom_box_wrap_blog_image_html($matches[1]);
-    }, $content);
-
-    $content = preg_replace('/\ssizes=(["\']).*?\1/i', ' sizes="(max-width: 820px) 100vw, 820px"', $content);
-
-    $content = preg_replace_callback('/<img\b[^>]*class=(["\'])[^"\']*wp-image-(\d+)[^"\']*\1[^>]*>/i', function ($matches) {
+    $content = preg_replace_callback('/<img\b[^>]*>/i', function ($matches) {
         $image_html = $matches[0];
-        $attachment_id = (int) $matches[2];
-        $full_url = wp_get_attachment_url($attachment_id);
-        $metadata = wp_get_attachment_metadata($attachment_id);
+        $attachment_id = 0;
+        $image_width = 0;
+        $image_height = 0;
 
-        if (!$full_url) {
-            return $image_html;
+        if (preg_match('/\sclass=(["\'])[^"\']*wp-image-(\d+)[^"\']*\1/i', $image_html, $class_match)) {
+            $attachment_id = (int) $class_match[2];
         }
 
-        $image_html = preg_replace('/\ssrc=(["\']).*?\1/i', ' src="' . esc_url($full_url) . '"', $image_html);
+        if (!$attachment_id && preg_match('/\ssrc=(["\'])(.*?)\1/i', $image_html, $src_match)) {
+            $image_src = html_entity_decode($src_match[2], ENT_QUOTES, get_bloginfo('charset'));
+            $attachment_id = (int) attachment_url_to_postid($image_src);
 
-        if (!empty($metadata['width']) && !empty($metadata['height'])) {
-            $image_html = preg_replace('/\swidth=(["\']).*?\1/i', ' width="' . (int) $metadata['width'] . '"', $image_html);
-            $image_html = preg_replace('/\sheight=(["\']).*?\1/i', ' height="' . (int) $metadata['height'] . '"', $image_html);
+            if (!$attachment_id) {
+                $content_base_url = trailingslashit(content_url());
+                $content_base_path = trailingslashit(WP_CONTENT_DIR);
+
+                if (0 === strpos($image_src, $content_base_url)) {
+                    $relative_path = rawurldecode((string) wp_parse_url(substr($image_src, strlen($content_base_url)), PHP_URL_PATH));
+                    $local_path = $content_base_path . wp_normalize_path($relative_path);
+                    $local_size = is_file($local_path) ? wp_getimagesize($local_path) : false;
+
+                    if ($local_size) {
+                        $image_width = (int) $local_size[0];
+                        $image_height = (int) $local_size[1];
+                    } else {
+                        $fallback_path = get_template_directory() . '/assets/images/Cardboard-Packaging.webp';
+                        $fallback_url = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
+                        $fallback_size = is_file($fallback_path) ? wp_getimagesize($fallback_path) : false;
+                        $image_html = custom_box_set_blog_image_attribute($image_html, 'src', $fallback_url);
+                        $image_html = preg_replace('/\ssrcset=(["\']).*?\1/i', '', $image_html);
+                        $image_width = !empty($fallback_size[0]) ? (int) $fallback_size[0] : 506;
+                        $image_height = !empty($fallback_size[1]) ? (int) $fallback_size[1] : 277;
+                    }
+                }
+            }
+        }
+
+        if ($attachment_id) {
+            $attachment_path = get_attached_file($attachment_id);
+            $attachment_url = wp_get_attachment_url($attachment_id);
+
+            if ($attachment_path && is_file($attachment_path) && $attachment_url) {
+                $image_html = custom_box_set_blog_image_attribute($image_html, 'src', $attachment_url);
+            } else {
+                $fallback_path = get_template_directory() . '/assets/images/Cardboard-Packaging.webp';
+                $fallback_url = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
+                $fallback_size = is_file($fallback_path) ? wp_getimagesize($fallback_path) : false;
+
+                $image_html = custom_box_set_blog_image_attribute($image_html, 'src', $fallback_url);
+                $image_html = preg_replace('/\ssrcset=(["\']).*?\1/i', '', $image_html);
+                $image_width = !empty($fallback_size[0]) ? (int) $fallback_size[0] : 506;
+                $image_height = !empty($fallback_size[1]) ? (int) $fallback_size[1] : 277;
+                $attachment_id = 0;
+            }
+        }
+
+        if ($attachment_id) {
+            $metadata = wp_get_attachment_metadata($attachment_id);
+
+            if (!empty($metadata['width']) && !empty($metadata['height'])) {
+                $image_width = (int) $metadata['width'];
+                $image_height = (int) $metadata['height'];
+            }
+
+            if (!preg_match('/\ssrcset=(["\']).*?\1/i', $image_html)) {
+                $srcset = wp_get_attachment_image_srcset($attachment_id, 'full');
+
+                if ($srcset) {
+                    $image_html = custom_box_set_blog_image_attribute($image_html, 'srcset', $srcset);
+                }
+            }
+        }
+
+        if ($image_width > 0 && $image_height > 0) {
+            $image_html = custom_box_set_blog_image_attribute($image_html, 'width', $image_width);
+            $image_html = custom_box_set_blog_image_attribute($image_html, 'height', $image_height);
+        }
+
+        $current_alt = '';
+        $has_alt = preg_match('/\salt=(["\'])(.*?)\1/i', $image_html, $alt_match);
+
+        if ($has_alt) {
+            $current_alt = trim(wp_strip_all_tags(html_entity_decode($alt_match[2], ENT_QUOTES, get_bloginfo('charset'))));
+        }
+
+        if (!$has_alt || ($current_alt && !custom_box_is_meaningful_blog_image_caption($current_alt))) {
+            $fallback_alt = $attachment_id ? custom_box_get_attachment_image_caption($attachment_id) : '';
+            $image_html = custom_box_set_blog_image_attribute($image_html, 'alt', $fallback_alt);
+        }
+
+        $image_html = custom_box_set_blog_image_attribute($image_html, 'loading', 'lazy');
+        $image_html = custom_box_set_blog_image_attribute($image_html, 'decoding', 'async');
+        $image_html = custom_box_set_blog_image_attribute($image_html, 'sizes', '(max-width: 820px) 100vw, 820px');
+
+        if (false === strpos($image_html, 'data-article-image')) {
+            $image_html = preg_replace('/<img\b/i', '<img data-article-image', $image_html, 1);
         }
 
         return $image_html;
+    }, $content);
+
+    $content = preg_replace_callback('/<p\b[^>]*>\s*((?:<a[^>]*>\s*)?<img[^>]+>(?:\s*<\/a>)?)\s*<\/p>/i', function ($matches) {
+        return custom_box_wrap_blog_image_html($matches[1]);
     }, $content);
 
     $content = preg_replace_callback('/(<figure\b[^>]*>.*?wp-image-(\d+).*?)(<figcaption\b[^>]*>)(.*?)(<\/figcaption>)(.*?<\/figure>)/is', function ($matches) {
         $caption = trim(wp_strip_all_tags(html_entity_decode($matches[4], ENT_QUOTES, get_bloginfo('charset'))));
 
         if (custom_box_is_meaningful_blog_image_caption($caption)) {
+            $image_alt = custom_box_get_image_alt_caption($matches[0]);
+
+            if ($image_alt && 0 === strcasecmp($image_alt, $caption)) {
+                return custom_box_set_blog_image_attribute($matches[0], 'alt', '');
+            }
+
             return $matches[0];
         }
 

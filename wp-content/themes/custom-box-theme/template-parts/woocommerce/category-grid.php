@@ -14,27 +14,7 @@ $is_all_categories = $current_term && $parent_term && !is_wp_error($current_term
 
 <section class="product-category-landing-section">
     <div class="container product-category-landing-layout">
-        <aside class="product-category-tabs">
-            <a class="<?php echo $is_all_categories ? 'is-active' : ''; ?>" href="<?php echo esc_url($landing_root_link); ?>">
-                <i class="fas fa-border-all"></i>
-                <span><?php esc_html_e('All Category', 'custom-box-theme'); ?></span>
-            </a>
-            <?php foreach ($landing_categories as $category) : ?>
-                <?php $category_link = get_term_link($category); ?>
-                <?php if (is_wp_error($category_link)) { continue; } ?>
-                <?php $is_current_category = $current_term && !is_wp_error($current_term) && (int) $current_term->term_id === (int) $category->term_id; ?>
-                <a class="<?php echo $is_current_category ? 'is-active' : ''; ?>" href="<?php echo esc_url($category_link); ?>">
-                    <i class="fas fa-box-open"></i>
-                    <span><?php echo esc_html($category->name); ?></span>
-                </a>
-            <?php endforeach; ?>
-            <a class="product-category-more" href="<?php echo esc_url(function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/')); ?>">
-                <i class="fas fa-plus-circle"></i>
-                <span><?php esc_html_e('More Categories', 'custom-box-theme'); ?></span>
-            </a>
-        </aside>
-
-        <div class="product-category-card-grid">
+        <div class="product-category-card-grid product-category-results" data-product-list>
             <?php foreach ($landing_categories as $category) : ?>
                 <?php
                 $category_link = get_term_link($category);
@@ -42,50 +22,85 @@ $is_all_categories = $current_term && $parent_term && !is_wp_error($current_term
                     continue;
                 }
 
-                $thumbnail_id = 0;
-                $image_url = function_exists('custom_box_get_product_category_asset_image_url')
-                    ? custom_box_get_product_category_asset_image_url($category)
-                    : '';
+                $image_url = function_exists('custom_box_get_product_category_card_image_url')
+                    ? custom_box_get_product_category_card_image_url($category, 'medium_large')
+                    : get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
+                $image_id = (int) get_term_meta($category->term_id, 'thumbnail_id', true);
 
-                if (!$image_url) {
-                    $thumbnail_id = (int) get_term_meta($category->term_id, 'thumbnail_id', true);
-
-                    if (!$thumbnail_id) {
-                        $thumbnail_id = (int) get_term_meta($category->term_id, 'custom_box_category_image_id', true);
-                    }
-
-                    $image_url = $thumbnail_id ? wp_get_attachment_image_url($thumbnail_id, 'medium_large') : '';
+                if (!$image_id) {
+                    $image_id = (int) get_term_meta($category->term_id, 'custom_box_category_image_id', true);
                 }
 
-                if (!$image_url && function_exists('wc_get_products')) {
-                    $category_products = wc_get_products(array(
-                        'status'   => 'publish',
-                        'limit'    => 1,
-                        'orderby'  => 'date',
-                        'order'    => 'DESC',
-                        'category' => array($category->slug),
-                        'return'   => 'ids',
-                    ));
-
-                    if (!empty($category_products[0])) {
-                        $product_image_id = get_post_thumbnail_id((int) $category_products[0]);
-                        $image_url = $product_image_id ? wp_get_attachment_image_url($product_image_id, 'medium_large') : '';
-                    }
-                }
-
-                if (!$image_url) {
-                    $image_url = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
+                if (!$image_id && $image_url) {
+                    $image_id = (int) attachment_url_to_postid($image_url);
                 }
 
                 $is_current_category = $current_term && !is_wp_error($current_term) && (int) $current_term->term_id === (int) $category->term_id;
+                $category_title_id = 'product-category-card-title-' . (int) $category->term_id;
                 ?>
-                <a class="product-category-card <?php echo $is_current_category ? 'is-active' : ''; ?>" href="<?php echo esc_url($category_link); ?>">
+                <a
+                    class="product-category-card <?php echo $is_current_category ? 'is-active' : ''; ?>"
+                    href="<?php echo esc_url($category_link); ?>"
+                    data-product-card
+                    aria-labelledby="<?php echo esc_attr($category_title_id); ?>"
+                    <?php echo $is_current_category ? 'aria-current="page"' : ''; ?>
+                >
                     <span class="product-category-card-image">
-                        <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($category->name); ?>" loading="lazy" decoding="async">
+                        <?php if ($image_id) : ?>
+                            <?php
+                            echo wp_get_attachment_image(
+                                $image_id,
+                                'medium_large',
+                                false,
+                                array(
+                                    'alt'      => '',
+                                    'loading'  => 'lazy',
+                                    'decoding' => 'async',
+                                    'sizes'    => '(max-width: 379px) calc(100vw - 36px), (max-width: 767px) calc(50vw - 28px), (max-width: 1200px) 33vw, 360px',
+                                )
+                            );
+                            ?>
+                        <?php else : ?>
+                            <img
+                                src="<?php echo esc_url($image_url); ?>"
+                                width="640"
+                                height="480"
+                                alt=""
+                                loading="lazy"
+                                decoding="async"
+                            >
+                        <?php endif; ?>
                     </span>
-                    <span class="product-category-card-title"><?php echo esc_html($category->name); ?></span>
+                    <h2 id="<?php echo esc_attr($category_title_id); ?>" class="product-category-card-title"><?php echo esc_html($category->name); ?></h2>
                 </a>
             <?php endforeach; ?>
         </div>
+
+        <details
+            class="product-category-tabs-disclosure product-category-taxonomy"
+            data-archive-categories-disclosure
+            data-responsive-disclosure
+        >
+            <summary class="product-category-tabs-summary"><?php esc_html_e('Browse Categories', 'custom-box-theme'); ?></summary>
+            <nav class="product-category-tabs" aria-label="<?php esc_attr_e('Product categories', 'custom-box-theme'); ?>">
+                <a class="<?php echo $is_all_categories ? 'is-active' : ''; ?>" href="<?php echo esc_url($landing_root_link); ?>" <?php echo $is_all_categories ? 'aria-current="page"' : ''; ?>>
+                    <i class="fas fa-border-all" aria-hidden="true"></i>
+                    <span><?php esc_html_e('All Categories', 'custom-box-theme'); ?></span>
+                </a>
+                <?php foreach ($landing_categories as $category) : ?>
+                    <?php $category_link = get_term_link($category); ?>
+                    <?php if (is_wp_error($category_link)) { continue; } ?>
+                    <?php $is_current_category = $current_term && !is_wp_error($current_term) && (int) $current_term->term_id === (int) $category->term_id; ?>
+                    <a class="<?php echo $is_current_category ? 'is-active' : ''; ?>" href="<?php echo esc_url($category_link); ?>" <?php echo $is_current_category ? 'aria-current="page"' : ''; ?>>
+                        <i class="fas fa-box-open" aria-hidden="true"></i>
+                        <span><?php echo esc_html($category->name); ?></span>
+                    </a>
+                <?php endforeach; ?>
+                <a class="product-category-more" href="<?php echo esc_url(function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/')); ?>">
+                    <i class="fas fa-plus-circle" aria-hidden="true"></i>
+                    <span><?php esc_html_e('More Categories', 'custom-box-theme'); ?></span>
+                </a>
+            </nav>
+        </details>
     </div>
 </section>
