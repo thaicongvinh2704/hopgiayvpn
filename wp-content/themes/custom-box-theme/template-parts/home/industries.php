@@ -40,6 +40,7 @@
                             : get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
                     }
 
+                    $image_data = custom_box_get_local_image_data($image_url);
                     $category_link = get_term_link($category);
 
                     if (is_wp_error($category_link)) {
@@ -50,7 +51,7 @@
                         <a class="card product-slider-card" href="<?php echo esc_url($category_link); ?>">
 
                             <div class="product-slider-img">
-                                <img src="<?php echo esc_url($image_url); ?>" alt="<?php echo esc_attr($category->name); ?>" loading="lazy" decoding="async">
+                                <img src="<?php echo esc_url($image_data['url']); ?>" alt="" width="<?php echo esc_attr($image_data['width']); ?>" height="<?php echo esc_attr($image_data['height']); ?>" loading="lazy" decoding="async">
                             </div>
 
                             <div class="card-label">

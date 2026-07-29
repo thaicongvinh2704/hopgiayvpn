@@ -323,8 +323,8 @@ export async function expectTouchTargets(page) {
   ).toEqual([]);
 }
 
-export async function expectHealthyImages(page) {
-  const issues = await page.evaluate(() => {
+export async function collectImageIssues(page) {
+  return page.evaluate(() => {
     const rendered = (image) => {
       const style = getComputedStyle(image);
       const rect = image.getBoundingClientRect();
@@ -362,6 +362,10 @@ export async function expectHealthyImages(page) {
       .filter(({ problems }) => problems.length)
       .slice(0, 80);
   });
+}
+
+export async function expectHealthyImages(page) {
+  const issues = await collectImageIssues(page);
 
   expect(
     issues,

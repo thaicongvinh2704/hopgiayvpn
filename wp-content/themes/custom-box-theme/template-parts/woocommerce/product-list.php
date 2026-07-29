@@ -112,7 +112,7 @@ $product_query = new WP_Query($product_query_args);
             </div>
 
             <?php if ($product_query->have_posts()) : ?>
-                <div class="custom-product-grid" role="list">
+                <div class="custom-product-grid">
                     <?php while ($product_query->have_posts()) : ?>
                         <?php
                         $product_query->the_post();
@@ -135,7 +135,7 @@ $product_query = new WP_Query($product_query_args);
                         $product_title_id = 'product-card-title-' . get_the_ID();
                         ?>
 
-                        <article <?php wc_product_class('custom-product-card', $product); ?> role="listitem" data-product-card>
+                        <article <?php wc_product_class('custom-product-card', $product); ?> data-product-card>
                             <a
                                 class="custom-product-card-link"
                                 href="<?php echo esc_url($product_link); ?>"

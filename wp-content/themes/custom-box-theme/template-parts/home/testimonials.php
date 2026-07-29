@@ -39,13 +39,16 @@
             <div class="testi-track" id="testiTrack">
 
                 <?php foreach ($reviews as $review) : ?>
+                    <?php $review_image = custom_box_get_local_image_data($review['image']); ?>
                     <div class="testi-slide">
                         <div class="testi-card">
 
                             <div class="testi-img">
                                 <img
-                                    src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/' . $review['image']); ?>"
+                                    src="<?php echo esc_url($review_image['url']); ?>"
                                     alt="<?php echo esc_attr($review['alt']); ?>"
+                                    width="<?php echo esc_attr($review_image['width']); ?>"
+                                    height="<?php echo esc_attr($review_image['height']); ?>"
                                     loading="lazy"
                                     decoding="async"
                                 >
@@ -54,7 +57,7 @@
                             <div class="testi-text">
                                 <div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
 
-                                <h4>&ldquo;<?php echo esc_html($review['title']); ?>&rdquo;</h4>
+                                <h3>&ldquo;<?php echo esc_html($review['title']); ?>&rdquo;</h3>
 
                                 <p><?php echo esc_html($review['content']); ?></p>
 

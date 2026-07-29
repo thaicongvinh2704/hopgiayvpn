@@ -39,7 +39,7 @@
 
         <!-- RIGHT IMAGE -->
         <div class="hero-image" data-home-hero-media>
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1.webp'); ?>" alt="Custom luxury product packaging box" width="666" height="374" decoding="async" fetchpriority="high" sizes="(max-width: 767px) 100vw, 50vw">
+            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1.webp'); ?>" srcset="<?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1-mobile.webp'); ?> 480w, <?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1.webp'); ?> 666w" alt="Custom luxury product packaging box" width="666" height="374" decoding="async" fetchpriority="high" sizes="(max-width: 767px) calc(100vw - 36px), 50vw">
         </div>
 
     </div>
@@ -60,16 +60,16 @@
 
             <?php
             $brand_logos = array(
-                array('file' => 'dcons-logo.png', 'name' => 'DCONS', 'width' => 225, 'height' => 225),
-                array('file' => 'hibiscus-gift-logo.png', 'name' => 'Hibiscus Gift', 'width' => 500, 'height' => 500),
-                array('file' => 'iplus-logo.png', 'name' => 'iPlus', 'width' => 225, 'height' => 225),
-                array('file' => 'lcsgroup-logo.png', 'name' => 'LCS Group', 'width' => 705, 'height' => 354),
-                array('file' => 'lovedears.png', 'name' => 'Love Dears', 'width' => 225, 'height' => 225),
-                array('file' => 'mkt-logo.png', 'name' => 'MKT', 'width' => 500, 'height' => 500),
-                array('file' => 'saokim-logo.png', 'name' => 'Sao Kim', 'width' => 666, 'height' => 375),
-                array('file' => 'sharon-logo-.png', 'name' => 'Sharon', 'width' => 500, 'height' => 500),
-                array('file' => 'tien-giang-logo.png', 'name' => 'Tien Giang', 'width' => 500, 'height' => 500),
-                array('file' => 'trungtamdungcu-logo.png', 'name' => 'Trung Tam Dung Cu', 'width' => 500, 'height' => 500),
+                array('file' => 'dcons-logo.webp', 'name' => 'DCONS', 'width' => 225, 'height' => 225),
+                array('file' => 'hibiscus-gift-logo.webp', 'name' => 'Hibiscus Gift', 'width' => 500, 'height' => 500),
+                array('file' => 'iplus-logo.webp', 'name' => 'iPlus', 'width' => 225, 'height' => 225),
+                array('file' => 'lcsgroup-logo.webp', 'name' => 'LCS Group', 'width' => 705, 'height' => 354),
+                array('file' => 'lovedears.webp', 'name' => 'Love Dears', 'width' => 225, 'height' => 225),
+                array('file' => 'mkt-logo.webp', 'name' => 'MKT', 'width' => 500, 'height' => 500),
+                array('file' => 'saokim-logo.webp', 'name' => 'Sao Kim', 'width' => 666, 'height' => 375),
+                array('file' => 'sharon-logo-.webp', 'name' => 'Sharon', 'width' => 500, 'height' => 500),
+                array('file' => 'tien-giang-logo.webp', 'name' => 'Tien Giang', 'width' => 500, 'height' => 500),
+                array('file' => 'trungtamdungcu-logo.webp', 'name' => 'Trung Tam Dung Cu', 'width' => 500, 'height' => 500),
             );
             ?>
 

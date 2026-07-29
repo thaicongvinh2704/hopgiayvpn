@@ -793,7 +793,7 @@ iframe {
     }
 
     .footer-col,
-    .footer-col h4,
+    .footer-col h2,
     .footer-col p {
         text-align: center;
     }
@@ -1003,7 +1003,7 @@ body {
 .brand-card p,
 .trust-card h3,
 .trust-card p,
-.testi-text h4,
+.testi-text h3,
 .faq-question h4,
 .shape-label,
 .card-label,
@@ -1018,8 +1018,8 @@ body {
 .core-values .value-item p,
 .about-cta h2,
 .about-cta p,
-.site-footer h4,
-.site-footer h5,
+.site-footer h2,
+.site-footer h3,
 .site-footer p,
 .site-footer li,
 .site-footer a,

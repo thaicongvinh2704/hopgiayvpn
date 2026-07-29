@@ -35,6 +35,113 @@ function custom_box_primary_menu_fallback() {
     custom_box_primary_menu();
 }
 
+/**
+ * Resolve a local image URL to a real file with intrinsic dimensions.
+ *
+ * Theme templates historically referenced WebP variants that may not exist
+ * even though a JPG, JPEG, or PNG with the same basename is available. This
+ * helper also validates upload URLs before rendering them and falls back to a
+ * tracked theme image instead of allowing a front-end 404.
+ *
+ * @param string $image    Theme image filename or local WordPress image URL.
+ * @param string $fallback Theme image filename used when the preferred image is missing.
+ * @return array{url:string,path:string,width:int,height:int}
+ */
+function custom_box_get_local_image_data($image, $fallback = 'Cardboard-Packaging.webp') {
+    $theme_url = trailingslashit(get_template_directory_uri()) . 'assets/images/';
+    $theme_path = trailingslashit(get_template_directory()) . 'assets/images/';
+    $content_url = trailingslashit(content_url());
+    $content_path = trailingslashit(WP_CONTENT_DIR);
+    $extensions = array('webp', 'jpg', 'jpeg', 'png');
+
+    $resolve_candidate = static function ($candidate) use ($theme_url, $theme_path, $content_url, $content_path, $extensions) {
+        $candidate = trim((string) $candidate);
+
+        if ('' === $candidate) {
+            return null;
+        }
+
+        $candidate_url = $candidate;
+        $candidate_path = '';
+        $is_theme_image = false;
+
+        if (!preg_match('#^https?://#i', $candidate)) {
+            $candidate = ltrim(wp_normalize_path($candidate), '/');
+            $candidate_url = $theme_url . $candidate;
+            $candidate_path = $theme_path . $candidate;
+            $is_theme_image = true;
+        } elseif (0 === strpos($candidate, $theme_url)) {
+            $relative_path = rawurldecode(substr($candidate, strlen($theme_url)));
+            $candidate_path = $theme_path . ltrim(wp_normalize_path($relative_path), '/');
+            $is_theme_image = true;
+        } elseif (0 === strpos($candidate, $content_url)) {
+            $relative_path = rawurldecode(substr($candidate, strlen($content_url)));
+            $candidate_path = $content_path . ltrim(wp_normalize_path($relative_path), '/');
+        }
+
+        $candidate_variants = array(
+            array(
+                'url'  => $candidate_url,
+                'path' => $candidate_path,
+            ),
+        );
+
+        if ($is_theme_image && $candidate_path) {
+            $path_info = pathinfo($candidate_path);
+            $url_path_info = pathinfo($candidate_url);
+
+            if (!empty($path_info['dirname']) && !empty($path_info['filename']) && !empty($url_path_info['dirname'])) {
+                foreach ($extensions as $extension) {
+                    $candidate_variants[] = array(
+                        'url'  => trailingslashit($url_path_info['dirname']) . $path_info['filename'] . '.' . $extension,
+                        'path' => trailingslashit($path_info['dirname']) . $path_info['filename'] . '.' . $extension,
+                    );
+                }
+            }
+        }
+
+        foreach ($candidate_variants as $variant) {
+            if (empty($variant['path']) || !is_file($variant['path'])) {
+                continue;
+            }
+
+            $size = wp_getimagesize($variant['path']);
+
+            if (empty($size[0]) || empty($size[1])) {
+                continue;
+            }
+
+            return array(
+                'url'    => $variant['url'],
+                'path'   => $variant['path'],
+                'width'  => (int) $size[0],
+                'height' => (int) $size[1],
+            );
+        }
+
+        return null;
+    };
+
+    $resolved = $resolve_candidate($image);
+
+    if ($resolved) {
+        return $resolved;
+    }
+
+    $resolved = $resolve_candidate($fallback);
+
+    if ($resolved) {
+        return $resolved;
+    }
+
+    return array(
+        'url'    => $theme_url . 'Cardboard-Packaging.webp',
+        'path'   => $theme_path . 'Cardboard-Packaging.webp',
+        'width'  => 506,
+        'height' => 277,
+    );
+}
+
 function custom_box_get_product_category_manifest_categories() {
     static $categories = null;
 

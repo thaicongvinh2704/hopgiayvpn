@@ -7,11 +7,15 @@ import {
   requiredViewports,
 } from "./site-fixtures.mjs";
 
+const artifactPhase = (process.env.UX_ARTIFACT_PHASE || "")
+  .trim()
+  .replace(/[^a-z0-9-]+/gi, "-");
 const artifactRoot = path.join(
   repoRoot,
   "artifacts",
   "mobile-ux-20260728",
   "playwright",
+  ...(artifactPhase ? [artifactPhase] : []),
 );
 const requestedWorkers = Number.parseInt(
   process.env.UX_TEST_WORKERS || "1",

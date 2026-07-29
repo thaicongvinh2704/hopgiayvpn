@@ -27,7 +27,7 @@ $footer_social_links = array(
 <footer class="site-footer">
     <div class="container">
         <div class="footer-logo">
-            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/logo-hop-giay-vpn-hcm.png'); ?>" alt="<?php echo esc_attr($footer_site_name); ?>" width="711" height="567" loading="lazy" decoding="async">
+            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/logo-hop-giay-vpn-hcm.webp'); ?>" alt="<?php echo esc_attr($footer_site_name); ?>" width="711" height="567" loading="lazy" decoding="async">
         </div>
 
         <div class="footer-contact">
@@ -71,7 +71,7 @@ $footer_social_links = array(
 
         <div class="footer-main">
             <div class="footer-col">
-                <h4><?php echo esc_html($footer_site_name); ?></h4>
+                <h2><?php echo esc_html($footer_site_name); ?></h2>
                 <p>
                     <?php esc_html_e('Vietnam-based packaging manufacturer specializing in custom paper boxes, rigid boxes, paper bags, and export-ready packaging for brands, importers, distributors, and agencies.', 'custom-box-theme'); ?>
                 </p>
@@ -89,7 +89,7 @@ $footer_social_links = array(
                 </div>
 
                 <div class="footer-payment">
-                    <h5><?php esc_html_e('Payment System:', 'custom-box-theme'); ?></h5>
+                    <h3><?php esc_html_e('Payment System:', 'custom-box-theme'); ?></h3>
                     <div class="payment-grid">
                         <div class="payment-item">
                             <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/paypal.png'); ?>" alt="PayPal" width="56" height="17" loading="lazy" decoding="async">
@@ -111,7 +111,7 @@ $footer_social_links = array(
             </div>
 
             <details class="footer-col footer-disclosure" open data-responsive-disclosure>
-                <summary><span class="footer-disclosure-title" role="heading" aria-level="4"><?php esc_html_e('Quick Links', 'custom-box-theme'); ?></span></summary>
+                <summary><span class="footer-disclosure-title" role="heading" aria-level="3"><?php esc_html_e('Quick Links', 'custom-box-theme'); ?></span></summary>
                 <ul>
                     <li><a href="<?php echo esc_url(home_url('/about/')); ?>"><?php esc_html_e('About Us', 'custom-box-theme'); ?></a></li>
                     <li><a href="<?php echo esc_url($footer_shop_url); ?>"><?php esc_html_e('Products', 'custom-box-theme'); ?></a></li>
@@ -123,7 +123,7 @@ $footer_social_links = array(
             </details>
 
             <details class="footer-col footer-disclosure" open data-responsive-disclosure>
-                <summary><span class="footer-disclosure-title" role="heading" aria-level="4"><?php esc_html_e('Packaging Categories', 'custom-box-theme'); ?></span></summary>
+                <summary><span class="footer-disclosure-title" role="heading" aria-level="3"><?php esc_html_e('Packaging Categories', 'custom-box-theme'); ?></span></summary>
                 <ul>
                     <?php if (!empty($footer_categories)) : ?>
                         <?php foreach ($footer_categories as $footer_category) : ?>
@@ -139,7 +139,7 @@ $footer_social_links = array(
             </details>
 
             <details class="footer-col footer-disclosure" open data-responsive-disclosure>
-                <summary><span class="footer-disclosure-title" role="heading" aria-level="4"><?php esc_html_e('Factory Capabilities', 'custom-box-theme'); ?></span></summary>
+                <summary><span class="footer-disclosure-title" role="heading" aria-level="3"><?php esc_html_e('Factory Capabilities', 'custom-box-theme'); ?></span></summary>
                 <ul>
                     <li><?php esc_html_e('Direct factory production in Vietnam', 'custom-box-theme'); ?></li>
                     <li><?php esc_html_e('Custom size, structure, dieline, and inserts', 'custom-box-theme'); ?></li>

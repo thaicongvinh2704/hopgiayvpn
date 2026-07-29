@@ -1,10 +1,12 @@
+<?php $finishing_image = custom_box_get_local_image_data('gift-box.webp'); ?>
+
 <section class="finishing-section">
 
     <div class="container finishing-wrapper">
 
         <!-- LEFT IMAGE -->
         <div class="finishing-image">
-            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/gift-box.webp" alt="Finishing" loading="lazy" decoding="async">
+            <img src="<?php echo esc_url($finishing_image['url']); ?>" alt="Finishing" width="<?php echo esc_attr($finishing_image['width']); ?>" height="<?php echo esc_attr($finishing_image['height']); ?>" loading="lazy" decoding="async">
         </div>
 
         <!-- RIGHT CONTENT -->

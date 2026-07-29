@@ -73,8 +73,29 @@ async function expectBottomBarContract(page, fixture, testInfo) {
   expect(geometry.height).toBeGreaterThanOrEqual(56);
   expect(geometry.height).toBeLessThanOrEqual(80);
 
-  await page.evaluate(() => scrollTo(0, document.documentElement.scrollHeight));
-  await page.waitForTimeout(100);
+  let reachedStableBottom = false;
+
+  for (let attempt = 0; attempt < 8; attempt += 1) {
+    await page.evaluate(() =>
+      scrollTo(0, document.documentElement.scrollHeight),
+    );
+    await page.waitForTimeout(100);
+    reachedStableBottom = await page.evaluate(
+      () =>
+        scrollY + innerHeight >=
+        Math.max(document.documentElement.scrollHeight, document.body.scrollHeight) -
+          2,
+    );
+
+    if (reachedStableBottom) {
+      break;
+    }
+  }
+
+  expect(
+    reachedStableBottom,
+    "The page must reach a stable bottom position before footer obstruction is measured",
+  ).toBe(true);
   const obstruction = await page.evaluate((selector) => {
     const barElement = Array.from(document.querySelectorAll(selector)).find(
       (element) => {
@@ -142,6 +163,29 @@ for (const fixture of representativePages) {
     await expectBottomBarContract(page, fixture, testInfo);
   });
 }
+
+test("home factory video uses an accessible click-to-load facade", async ({
+  page,
+}) => {
+  await gotoFixture(page, fixtureByKey.get("home"));
+
+  const frame = page.locator(".factory-video-frame");
+  const launchButton = frame.getByRole("button", {
+    name: /watch factory video.*vpn paper box manufacturer/i,
+  });
+  await expect(frame.locator("iframe")).toHaveCount(0);
+  await launchButton.scrollIntoViewIfNeeded();
+  await expect(launchButton).toBeVisible();
+  await launchButton.click();
+
+  const iframe = frame.locator("iframe");
+  await expect(iframe).toHaveCount(1);
+  await expect(iframe).toHaveAttribute(
+    "src",
+    /^https:\/\/www\.youtube-nocookie\.com\/embed\/nD0iRaJHgLQ\?/,
+  );
+  await expect(iframe).toHaveAttribute("title", /production capacity video/i);
+});
 
 test.describe("mobile navigation", () => {
   test("drawer traps focus and closes through every required path", async ({

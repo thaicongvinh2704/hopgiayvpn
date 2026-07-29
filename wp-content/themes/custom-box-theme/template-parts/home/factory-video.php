@@ -1,3 +1,8 @@
+<?php
+$factory_team_image = custom_box_get_local_image_data('factory-team showcase.webp');
+$factory_certificate_image = custom_box_get_local_image_data('vpn-packaging-iso-9001-certification-banner.webp');
+?>
+
 <section class="factory-showcase-section" aria-labelledby="factory-showcase-title">
     <div class="container factory-video-wrapper">
         <h2 id="factory-showcase-title" class="screen-reader-text">VPN Paper Box Manufacturer production video</h2>
@@ -21,13 +26,26 @@
             </div>
 
             <div class="factory-video-frame">
-                <iframe
-                    src="https://www.youtube.com/embed/nD0iRaJHgLQ"
-                    title="VPN Paper Box Manufacturer production capacity video"
-                    loading="lazy"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen
-                ></iframe>
+                <button
+                    class="factory-video-launch"
+                    type="button"
+                    data-youtube-video-id="nD0iRaJHgLQ"
+                    aria-label="Watch factory video: VPN Paper Box Manufacturer production capacity video"
+                >
+                    <img
+                        src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/anh-nha-may-2-16x9-100kb.webp'); ?>"
+                        alt=""
+                        width="1280"
+                        height="720"
+                        loading="lazy"
+                        decoding="async"
+                    >
+                    <span class="factory-video-play" aria-hidden="true"></span>
+                    <span class="factory-video-launch-label">Watch factory video</span>
+                </button>
+                <noscript>
+                    <a class="factory-video-fallback" href="https://www.youtube.com/watch?v=nD0iRaJHgLQ" target="_blank" rel="noopener">Watch factory video on YouTube</a>
+                </noscript>
             </div>
         </div>
     </div>
@@ -37,8 +55,10 @@
 
         <div class="factory-showcase-media">
             <img
-                src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/factory-team showcase.webp'); ?>"
+                src="<?php echo esc_url($factory_team_image['url']); ?>"
                 alt="VPN Paper Box Manufacturer team and production showcase"
+                width="<?php echo esc_attr($factory_team_image['width']); ?>"
+                height="<?php echo esc_attr($factory_team_image['height']); ?>"
                 loading="lazy"
                 decoding="async"
             >
@@ -46,8 +66,10 @@
 
         <div class="factory-certification-media">
             <img
-                src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/vpn-packaging-iso-9001-certification-banner.webp'); ?>"
+                src="<?php echo esc_url($factory_certificate_image['url']); ?>"
                 alt="<?php esc_attr_e('VPN Paper Box Manufacturer ISO 9001 certification banner', 'custom-box-theme'); ?>"
+                width="<?php echo esc_attr($factory_certificate_image['width']); ?>"
+                height="<?php echo esc_attr($factory_certificate_image['height']); ?>"
                 loading="lazy"
                 decoding="async"
             >

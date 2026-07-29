@@ -2,6 +2,8 @@
 /**
  * Benefits Section
  */
+
+$benefits_image = custom_box_get_local_image_data('gift-box2.webp');
 ?>
 
 <section class="benefits-section">
@@ -33,8 +35,10 @@
       <!-- RIGHT -->
       <div class="benefits-right">
         <img 
-          src="<?php echo get_template_directory_uri(); ?>/assets/images/gift-box2.webp" 
+          src="<?php echo esc_url($benefits_image['url']); ?>"
           alt="Custom Box"
+          width="<?php echo esc_attr($benefits_image['width']); ?>"
+          height="<?php echo esc_attr($benefits_image['height']); ?>"
           loading="lazy"
           decoding="async"
         >

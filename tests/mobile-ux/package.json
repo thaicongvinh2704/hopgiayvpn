@@ -9,6 +9,9 @@
     "test:ux": "playwright test --config=playwright.config.mjs",
     "test:ux:smoke": "playwright test --config=playwright.config.mjs --project=390x844 --grep \"home route contract\"",
     "test:ux:list": "playwright test --config=playwright.config.mjs --list",
+    "audit:images": "node scripts/audit-images.mjs",
+    "build:css": "node scripts/build-theme-css.mjs",
+    "optimize:images": "node scripts/optimize-theme-images.mjs",
     "capture:baseline": "node scripts/capture-screenshots.mjs baseline",
     "capture:after": "node scripts/capture-screenshots.mjs after",
     "audit:lighthouse": "node scripts/run-lighthouse.mjs"
@@ -16,6 +19,7 @@
   "devDependencies": {
     "@playwright/test": "1.62.0",
     "lighthouse": "12.8.2",
+    "lightningcss": "^1.33.0",
     "sharp": "0.34.3"
   }
 }

@@ -712,6 +712,22 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    document.querySelectorAll("[data-youtube-video-id]").forEach(button => {
+        button.addEventListener("click", () => {
+            const videoId = button.getAttribute("data-youtube-video-id");
+            const frame = button.closest(".factory-video-frame");
+            if (!videoId || !frame) return;
+
+            const iframe = document.createElement("iframe");
+            iframe.src = `https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?autoplay=1&rel=0`;
+            iframe.title = button.getAttribute("aria-label") || "Factory production video";
+            iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+            iframe.allowFullscreen = true;
+            frame.replaceChildren(iframe);
+            iframe.focus();
+        }, { once: true });
+    });
+
     document.querySelectorAll("[data-article-table-scroll]").forEach(region => {
         const cue = region.parentElement?.querySelector("[data-article-table-cue]");
         region.setAttribute("tabindex", "0");

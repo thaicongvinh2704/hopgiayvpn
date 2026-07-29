@@ -40,22 +40,72 @@ await fs.mkdir(outputRoot, { recursive: true });
 
 const summaries = [];
 
+async function waitForChromeExit(chrome, timeoutMs = 5_000) {
+  if (!chrome || chrome.process.exitCode !== null) {
+    return;
+  }
+
+  await Promise.race([
+    new Promise((resolve) => chrome.process.once("close", resolve)),
+    new Promise((resolve) => setTimeout(resolve, timeoutMs)),
+  ]);
+}
+
+function getChromeProfilePath(chrome) {
+  const profileArgument = chrome?.process?.spawnargs?.find((argument) =>
+    argument.startsWith("--user-data-dir="),
+  );
+  return profileArgument?.slice("--user-data-dir=".length) || "";
+}
+
+async function removeChromeProfile(userDataDir, timeoutMs = 2_000) {
+  const deadline = Date.now() + timeoutMs;
+  let lastError;
+
+  do {
+    try {
+      await fs.rm(userDataDir, { recursive: true, force: true });
+      return;
+    } catch (error) {
+      if (!["EBUSY", "ENOTEMPTY", "EPERM"].includes(error.code)) {
+        throw error;
+      }
+      lastError = error;
+      await new Promise((resolve) => setTimeout(resolve, 500));
+    }
+  } while (Date.now() < deadline);
+
+  process.stderr.write(
+    `Warning: unable to remove Chrome profile ${userDataDir}: ` +
+      `${lastError?.code || "unknown error"}\n`,
+  );
+}
+
 for (const fixture of fixtures) {
   const renderedPath = fixture.localFallbackPath || fixture.path;
-  const chrome = await launch({
-    chromePath: chromeExecutable,
-    chromeFlags: [
-      "--headless=new",
-      "--disable-gpu",
-      "--disable-extensions",
-      "--no-default-browser-check",
-      "--no-first-run",
-      "--incognito",
-    ],
-    logLevel: "silent",
-  });
+  let chrome;
 
   try {
+    // chrome-launcher creates and removes an isolated temporary profile by
+    // default, so this never attaches to the user's desktop Chrome session.
+    chrome = await launch({
+      chromePath: chromeExecutable,
+      chromeFlags: [
+        "--headless=new",
+        // Chrome 150's Windows GPU process crashes in headless mode unless
+        // software rendering is explicitly enabled.
+        "--enable-unsafe-swiftshader",
+        "--no-sandbox",
+        "--disable-dev-shm-usage",
+        "--disable-extensions",
+        "--no-default-browser-check",
+        "--no-first-run",
+      ],
+      connectionPollInterval: 250,
+      maxConnectionRetries: 80,
+      logLevel: "silent",
+    });
+
     const result = await lighthouse(makeURL(renderedPath), {
       port: chrome.port,
       logLevel: "error",
@@ -122,12 +172,39 @@ for (const fixture of fixtures) {
       },
     };
     summaries.push(summary);
+    await fs.writeFile(
+      path.join(outputRoot, "summary.json"),
+      `${JSON.stringify(summaries, null, 2)}\n`,
+      "utf8",
+    );
     process.stdout.write(
       `${phase}: ${fixture.key} performance ${summary.scores.performance}, ` +
         `accessibility ${summary.scores.accessibility}\n`,
     );
   } finally {
-    await chrome.kill();
+    if (chrome) {
+      let deferredProfileCleanup = "";
+
+      try {
+        chrome.kill();
+      } catch (error) {
+        if (!["EBUSY", "ENOTEMPTY", "EPERM"].includes(error.code)) {
+          throw error;
+        }
+
+        // chrome-launcher can race Windows profile locks after taskkill. Its
+        // log descriptors are already closed at this point, so defer only the
+        // directory removal until the spawned browser has fully exited.
+        deferredProfileCleanup = getChromeProfilePath(chrome);
+        chrome.process.removeAllListeners("close");
+      }
+
+      await waitForChromeExit(chrome);
+      chrome.process.unref();
+      if (deferredProfileCleanup) {
+        await removeChromeProfile(deferredProfileCleanup);
+      }
+    }
   }
 }
 

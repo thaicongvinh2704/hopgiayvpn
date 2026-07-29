@@ -3,30 +3,10 @@
  * Company profile brochure-style banner.
  */
 
-$image_dir = get_template_directory() . '/assets/images/';
-$image_uri = get_template_directory_uri() . '/assets/images/';
-
-if (!function_exists('vpn_company_profile_image')) {
-    function vpn_company_profile_image($base_name, $fallback) {
-        $image_dir = get_template_directory() . '/assets/images/';
-        $image_uri = get_template_directory_uri() . '/assets/images/';
-
-        foreach (array('webp', 'jpg', 'jpeg', 'png') as $extension) {
-            $file_name = $base_name . '.' . $extension;
-
-            if (file_exists($image_dir . $file_name)) {
-                return $image_uri . $file_name;
-            }
-        }
-
-        return $image_uri . $fallback;
-    }
-}
-
-$factory_fly = vpn_company_profile_image('anh-nha-may-fly', 'profile-company.webp');
-$factory_one = vpn_company_profile_image('anh-nha-may-1', 'factory-team showcase.webp');
-$factory_two = vpn_company_profile_image('anh-nha-may-2', 'factory-team-and-production.jpg');
-$factory_three = vpn_company_profile_image('anh-nha-may-3', 'product-banner1.png');
+$factory_fly = custom_box_get_local_image_data('anh-nha-may-fly.webp', 'profile-company.webp');
+$factory_one = custom_box_get_local_image_data('anh-nha-may-1.webp', 'factory-team showcase.jpg');
+$factory_two = custom_box_get_local_image_data('anh-nha-may-2.webp', 'factory-team-and-production.jpg');
+$factory_three = custom_box_get_local_image_data('anh-nha-may-3.webp', 'product-banner1.png');
 ?>
 
 <section class="vpn-company-profile-banner" aria-labelledby="vpn-company-profile-title">
@@ -43,7 +23,7 @@ $factory_three = vpn_company_profile_image('anh-nha-may-3', 'product-banner1.png
             </div>
 
             <div class="vpn-profile-plant-card">
-                <img src="<?php echo esc_url($factory_fly); ?>" alt="Aerial view of VPN Paper Box Manufacturer in Vietnam" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($factory_fly['url']); ?>" alt="Aerial view of VPN Paper Box Manufacturer in Vietnam" width="<?php echo esc_attr($factory_fly['width']); ?>" height="<?php echo esc_attr($factory_fly['height']); ?>" loading="lazy" decoding="async">
             </div>
 
             <div class="vpn-profile-categories">
@@ -61,16 +41,16 @@ $factory_three = vpn_company_profile_image('anh-nha-may-3', 'product-banner1.png
 
         <div class="vpn-profile-photo-cluster" aria-label="VPN Paper Box Manufacturer production photos">
             <figure class="vpn-profile-photo vpn-profile-photo-one">
-                <img src="<?php echo esc_url($factory_one); ?>" alt="Workers producing packaging inside VPN Paper Box Manufacturer" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($factory_one['url']); ?>" alt="Workers producing packaging inside VPN Paper Box Manufacturer" width="<?php echo esc_attr($factory_one['width']); ?>" height="<?php echo esc_attr($factory_one['height']); ?>" loading="lazy" decoding="async">
             </figure>
             <figure class="vpn-profile-photo vpn-profile-photo-two">
-                <img src="<?php echo esc_url($factory_two); ?>" alt="Packaging finishing and production process at VPN Paper Box Manufacturer" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($factory_two['url']); ?>" alt="Packaging finishing and production process at VPN Paper Box Manufacturer" width="<?php echo esc_attr($factory_two['width']); ?>" height="<?php echo esc_attr($factory_two['height']); ?>" loading="lazy" decoding="async">
             </figure>
             <figure class="vpn-profile-photo vpn-profile-photo-three">
-                <img src="<?php echo esc_url($factory_three); ?>" alt="Premium packaging products produced by VPN Paper Box Manufacturer" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($factory_three['url']); ?>" alt="Premium packaging products produced by VPN Paper Box Manufacturer" width="<?php echo esc_attr($factory_three['width']); ?>" height="<?php echo esc_attr($factory_three['height']); ?>" loading="lazy" decoding="async">
             </figure>
             <figure class="vpn-profile-photo vpn-profile-photo-four">
-                <img src="<?php echo esc_url($factory_fly); ?>" alt="Aerial view of VPN Paper Box Manufacturer facility" loading="lazy" decoding="async">
+                <img src="<?php echo esc_url($factory_fly['url']); ?>" alt="Aerial view of VPN Paper Box Manufacturer facility" width="<?php echo esc_attr($factory_fly['width']); ?>" height="<?php echo esc_attr($factory_fly['height']); ?>" loading="lazy" decoding="async">
             </figure>
         </div>
 
