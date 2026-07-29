@@ -430,6 +430,7 @@
 .about-industry-card img {
     aspect-ratio: 1.1;
     display: block;
+    height: auto;
     object-fit: cover;
     width: 100%;
 }
