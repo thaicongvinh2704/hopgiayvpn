@@ -20,6 +20,10 @@ $featured_paper_bags = array(
         'slug'  => 'custom-lime-green-paper-shopping-bag-with-rope-handles',
         'title' => 'Lime Green Paper Shopping Bag',
     ),
+    array(
+        'slug'  => 'custom-luxury-gift-box-with-paper-bag',
+        'title' => 'Custom Luxury Gift Box with Paper Bag',
+    ),
 );
 
 $fallback_image_url = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
