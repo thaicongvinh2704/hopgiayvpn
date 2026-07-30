@@ -82,6 +82,38 @@ function custom_box_product_category_manifest_attachment(string $relative_asset,
         return $attachment_id;
     }
 
+    $upload_relative = '';
+    if (preg_match('#(?:^|/)uploads/([0-9]{4}/[0-9]{2}/[^/]+)$#', $relative_asset, $matches)) {
+        $upload_relative = (string) $matches[1];
+    }
+
+    if ($upload_relative) {
+        global $wpdb;
+        $attachment_id = (int) $wpdb->get_var($wpdb->prepare(
+            "SELECT p.ID
+             FROM {$wpdb->posts} p
+             INNER JOIN {$wpdb->postmeta} pm ON pm.post_id = p.ID
+             WHERE p.post_type = 'attachment'
+               AND p.post_status = 'inherit'
+               AND pm.meta_key = '_wp_attached_file'
+               AND pm.meta_value = %s
+             ORDER BY p.ID DESC
+             LIMIT 1",
+            $upload_relative
+        ));
+        $attached_file = $attachment_id ? get_attached_file($attachment_id) : '';
+        $attached_hash = $attached_file && file_exists($attached_file)
+            ? md5_file($attached_file)
+            : false;
+
+        if ($attachment_id && $source_hash && $attached_hash === $source_hash) {
+            update_post_meta($attachment_id, '_custom_box_product_category_asset', $relative_asset);
+            update_post_meta($attachment_id, '_custom_box_product_category_asset_hash', $source_hash);
+
+            return $attachment_id;
+        }
+    }
+
     $uploads = wp_upload_dir();
 
     if (!empty($uploads['error']) || empty($uploads['path'])) {

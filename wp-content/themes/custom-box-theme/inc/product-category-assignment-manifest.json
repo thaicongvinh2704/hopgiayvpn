@@ -1,6 +1,6 @@
 {
-    "version": 4,
-    "generated_at": "2026-07-23T06:30:00+00:00",
+    "version": 5,
+    "generated_at": "2026-07-30T03:30:00+00:00",
     "source_url": "http://localhost/website-backup/",
     "taxonomy": "product_cat",
     "mode": "strict_manifest_product_categories",
@@ -31,7 +31,8 @@
         },
         "corporate-gift-packaging": {
             "name": "Corporate Gift Packaging",
-            "slug": "corporate-gift-packaging"
+            "slug": "corporate-gift-packaging",
+            "thumbnail_asset": "inc/product-sample-deploy-assets/uploads/2026/05/custom-drawer-gift-box-1.webp"
         },
         "corrugated-mailer-boxes": {
             "name": "Corrugated Mailer Boxes",
@@ -55,7 +56,8 @@
         },
         "electronics-accessories-packaging": {
             "name": "Electronics Accessories Packaging",
-            "slug": "electronics-accessories-packaging"
+            "slug": "electronics-accessories-packaging",
+            "thumbnail_asset": "inc/product-sample-deploy-assets/uploads/2026/05/custom-charging-cable-packaging-box-1.webp"
         },
         "fashion-sportswear-packaging": {
             "name": "Fashion and Sportswear Packaging",
@@ -75,7 +77,8 @@
         },
         "home-lifestyle-packaging": {
             "name": "Home and Lifestyle Packaging",
-            "slug": "home-lifestyle-packaging"
+            "slug": "home-lifestyle-packaging",
+            "thumbnail_asset": "inc/product-sample-deploy-assets/uploads/2026/05/custom-thermos-bottle-packaging-box-1.webp"
         },
         "jewelry-paper-boxes": {
             "name": "Jewelry Paper Boxes",
