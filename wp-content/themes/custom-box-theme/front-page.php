@@ -10,6 +10,8 @@
 
     <?php get_template_part('template-parts/home/factory-video'); ?>
 
+    <?php get_template_part('template-parts/home/featured-paper-bags'); ?>
+
     <?php get_template_part('template-parts/home/packaging-category-groups'); ?>
 
     <?php get_template_part('template-parts/home/quote-form'); ?>

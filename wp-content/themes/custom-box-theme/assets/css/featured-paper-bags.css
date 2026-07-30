@@ -1,0 +1,115 @@
+.featured-paper-bags-section {
+    background: #ffffff;
+    padding: 74px 0;
+}
+
+.featured-paper-bags-head {
+    margin: 0 auto 34px;
+    max-width: 820px;
+    text-align: center;
+}
+
+.featured-paper-bags-head > span {
+    color: #a84f00;
+    display: inline-flex;
+    font-size: 13px;
+    font-weight: 850;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+}
+
+.featured-paper-bags-head h2 {
+    color: var(--color-primary-dark, #144b68);
+    font-size: clamp(30px, 3.5vw, 44px);
+    line-height: 1.12;
+    margin: 0;
+}
+
+.featured-paper-bags-head p {
+    color: var(--color-muted, #50606b);
+    font-size: 16px;
+    line-height: 1.7;
+    margin: 14px auto 0;
+    max-width: 760px;
+}
+
+.featured-paper-bags-grid {
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.featured-paper-bag-card {
+    background: #ffffff;
+    border: 1px solid var(--color-line, #d8e4eb);
+    border-radius: 6px;
+    color: var(--color-ink, #123243);
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    text-decoration: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.featured-paper-bag-card:hover {
+    border-color: rgba(42, 106, 146, 0.42);
+    box-shadow: 0 14px 30px rgba(42, 106, 146, 0.14);
+    transform: translateY(-2px);
+}
+
+.featured-paper-bag-card:focus-visible {
+    outline: 3px solid rgba(42, 106, 146, 0.34);
+    outline-offset: 3px;
+}
+
+.featured-paper-bag-image {
+    align-items: center;
+    aspect-ratio: 450 / 570;
+    background: #eef2f5;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.featured-paper-bag-image img {
+    display: block;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    width: 100%;
+}
+
+.featured-paper-bag-title {
+    align-items: center;
+    color: var(--color-ink, #123243);
+    display: flex;
+    font-size: 14px;
+    font-weight: 750;
+    justify-content: center;
+    line-height: 1.3;
+    min-height: 66px;
+    padding: 11px 12px;
+    text-align: center;
+}
+
+@media (max-width: 1024px) {
+    .featured-paper-bags-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+    .featured-paper-bags-section {
+        padding: 54px 0;
+    }
+
+    .featured-paper-bags-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .featured-paper-bag-title {
+        font-size: 13px;
+        min-height: 62px;
+        padding: 10px 8px;
+    }
+}

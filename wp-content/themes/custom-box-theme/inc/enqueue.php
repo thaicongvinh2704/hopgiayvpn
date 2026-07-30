@@ -52,6 +52,7 @@ function custom_box_enqueue_assets() {
     $landing_css_path = get_template_directory() . '/assets/css/landing.css';
     $landing_quick_form_css_path = get_template_directory() . '/assets/css/landing-quick-form.css';
     $responsive_css_path = get_template_directory() . '/assets/css/' . $responsive_css_file;
+    $featured_paper_bags_css_path = get_template_directory() . '/assets/css/featured-paper-bags.css';
     $main_js_path = get_template_directory() . '/assets/js/main.js';
 
     wp_enqueue_style(
@@ -80,6 +81,15 @@ function custom_box_enqueue_assets() {
         $responsive_deps,
         file_exists($responsive_css_path) ? filemtime($responsive_css_path) : '5.8'
     );
+
+    if (is_front_page()) {
+        wp_enqueue_style(
+            'featured-paper-bags-style',
+            get_template_directory_uri() . '/assets/css/featured-paper-bags.css',
+            array('main-style', 'responsive-style'),
+            file_exists($featured_paper_bags_css_path) ? filemtime($featured_paper_bags_css_path) : '1.0'
+        );
+    }
 
     if (is_page('about')) {
         wp_enqueue_style(
