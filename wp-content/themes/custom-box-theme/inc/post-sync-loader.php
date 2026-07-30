@@ -116,6 +116,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_packaging_inserts_presentation_sync_version',
             'slug' => 'packaging-inserts-protection-presentation',
         ),
+        'inc/paper-box-dieline-post-sync.php' => array(
+            'version' => '2026-07-30-v2',
+            'option' => 'custom_box_paper_box_dieline_sync_version',
+            'slug' => 'what-is-a-paper-box-dieline',
+        ),
         'inc/perfume-paper-box-structure-post-sync.php' => array(
             'version' => '2026-07-13-v1',
             'option' => 'custom_box_perfume_paper_box_structure_sync_version',
