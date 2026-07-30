@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-07-24-paper-shopping-bags' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-07-30-christmas-gift-box' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -736,6 +736,16 @@ function custom_box_product_sample_deploy_batches(): array {
 				'tools/verify-paper-shopping-bag-products-202607.php',
 			),
 		),
+		array(
+			'name'      => 'Christmas Gift Box With Ribbon product July 2026',
+			'marker'    => 'product-samples-christmas-gift-box-202607',
+			'expected'  => 1,
+			'min_words' => 1500,
+			'scripts'   => array(
+				'tools/import-christmas-gift-box-with-ribbon-product.php',
+				'tools/verify-christmas-gift-box-with-ribbon-product.php',
+			),
+		),
 	);
 }
 
@@ -790,6 +800,17 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 		);
 	}
 
+	if ( 'christmas_gift_box_202607' === $scope ) {
+		return array_values(
+			array_filter(
+				$batches,
+				static function ( $batch ) {
+					return isset( $batch['marker'] ) && 'product-samples-christmas-gift-box-202607' === $batch['marker'];
+				}
+			)
+		);
+	}
+
 	// The default button must deploy the complete current release. Keep
 	// historical batches available through the explicit "all" scope, but do
 	// not make a new release depend on an incomplete legacy batch.
@@ -800,7 +821,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 				return isset( $batch['marker'] ) && in_array(
 					$batch['marker'],
 					array(
-						'product-samples-paper-shopping-bags-202607',
+						'product-samples-christmas-gift-box-202607',
 					),
 					true
 				);
@@ -810,7 +831,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 }
 
 function custom_box_product_sample_deploy_allowed_scopes(): array {
-	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607', 'three_categories_202607', 'paper_bags_202607' );
+	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607', 'three_categories_202607', 'paper_bags_202607', 'christmas_gift_box_202607' );
 }
 
 function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
@@ -920,9 +941,9 @@ function custom_box_product_sample_deploy_restore_tools() {
 	$source_dir = get_template_directory() . '/inc/product-sample-deploy-tools';
 	$target_dir = ABSPATH . 'tools';
 	$source_required = $source_dir . '/import-product-samples-10.php';
-	$source_latest_required = $source_dir . '/import-paper-shopping-bag-products-202607.php';
+	$source_latest_required = $source_dir . '/import-christmas-gift-box-with-ribbon-product.php';
 	$required   = $target_dir . '/import-product-samples-10.php';
-	$latest_required = $target_dir . '/import-paper-shopping-bag-products-202607.php';
+	$latest_required = $target_dir . '/import-christmas-gift-box-with-ribbon-product.php';
 	$log        = array();
 
 	if ( ! is_dir( $source_dir ) ) {
@@ -1066,6 +1087,7 @@ function custom_box_product_sample_deploy_restore_assets() {
 	$log[] = 'Required magnetic image exists after restore: ' . ( file_exists( ABSPATH . 'wp-content/uploads/2026/07/custom-perfume-magnetic-closure-box-main.webp' ) ? 'yes' : 'no' );
 	$log[] = 'Required three-category image exists after restore: ' . ( file_exists( ABSPATH . 'wp-content/uploads/2026/07/board-game-packaging-box-1.webp' ) ? 'yes' : 'no' );
 	$log[] = 'Required paper bag image exists after restore: ' . ( file_exists( ABSPATH . 'wp-content/uploads/2026/07/custom-white-paper-shopping-bag-brown-rope-vpn240724-a-01.webp' ) ? 'yes' : 'no' );
+	$log[] = 'Required Christmas gift box image exists after restore: ' . ( file_exists( ABSPATH . 'wp-content/uploads/2026/07/green-christmas-gift-box-with-ribbon.webp' ) ? 'yes' : 'no' );
 	$log[] = '';
 
 	return implode( PHP_EOL, $log ) . PHP_EOL;
@@ -1154,6 +1176,16 @@ function custom_box_product_sample_deploy_page() {
 			<input type="hidden" name="deploy_scope" value="paper_bags_202607">
 			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
 			<?php submit_button( 'Sync 6 Paper Shopping Bag Products', 'primary large', 'submit', false ); ?>
+		</form>
+
+		<h2>Christmas Gift Box With Ribbon Sync</h2>
+		<p>Imports or updates the July 2026 Christmas rigid gift box product from four bundled seasonal colorway images.</p>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-bottom:24px;">
+			<input type="hidden" name="action" value="custom_box_product_sample_deploy">
+			<input type="hidden" name="reset" value="1">
+			<input type="hidden" name="deploy_scope" value="christmas_gift_box_202607">
+			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
+			<?php submit_button( 'Sync Christmas Gift Box Product', 'primary large', 'submit', false ); ?>
 		</form>
 
 		<hr>

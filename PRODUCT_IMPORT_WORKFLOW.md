@@ -526,16 +526,16 @@ Important:
 
 The Git-tracked root CLI entry point restores the bundled deploy tools from
 `wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/` before running.
-For the current July 2026 release, it synchronizes and verifies six paper
-shopping bag products from 27 bundled original images. It is safe to run again
-because the importer uses a batch marker and updates existing products instead
-of duplicating them.
+For the current July 2026 release, it synchronizes and verifies the Custom
+Christmas Gift Box With Ribbon product from four bundled original images. It is
+safe to run again because the importer uses a batch marker and updates the
+existing product instead of duplicating it.
 
 In WordPress admin, after the Git pull, open **Tools > Product Sample Deploy** and
 click **Run Product Sample Deploy** with **Latest batch only** selected. The default
-scope runs the current six-product paper shopping bag batch, restores its
-Git-tracked tools and 27 original upload assets automatically, and verifies the
-result. Separate buttons remain available for rerunning the earlier batches.
+scope runs the current Christmas gift box batch, restores its Git-tracked tools
+and four original upload assets automatically, and verifies the result.
+Separate buttons remain available for rerunning the earlier batches.
 
 The deploy process:
 
@@ -742,3 +742,33 @@ and click **Run Product Sample Deploy**. A dedicated **Sync 6 Paper Shopping Bag
 Products** button is also available. The deploy restores the 27 original images,
 creates or updates Media Library attachments, imports the six products, and
 verifies the result without creating duplicate product slugs or attachments.
+
+### Christmas Gift Box With Ribbon batch (July 2026)
+
+Local WooCommerce batch marker:
+
+- `_vpn_sample_import = product-samples-christmas-gift-box-202607`
+
+This batch imports one product from four coordinated colorway images:
+
+- `CUSTOM CHRISTMAS GIFT BOX WITH RIBBON`
+
+Files used:
+
+- `tools/import-christmas-gift-box-with-ribbon-product.php`
+- `tools/verify-christmas-gift-box-with-ribbon-product.php`
+- `tools/export-christmas-gift-box-with-ribbon-description.php`
+- `product-samples-christmas-gift-box-202607-audit.md`
+- `product-samples-christmas-gift-box-202607-descriptions-text-only.md`
+- `wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/uploads/2026/07/`
+
+After `git pull` on hosting, run:
+
+- `php tools/deploy-product-samples-all.php`
+
+or open **Tools > Product Sample Deploy**, keep **Latest batch only** selected,
+and click **Run Product Sample Deploy**. A dedicated **Sync Christmas Gift Box
+Product** button is also available. The importer restores the four original
+images, creates missing Media Library attachments, imports or updates the
+product, and verifies content, SEO fields, categories, specifications, gallery,
+and image alt text without creating duplicates.

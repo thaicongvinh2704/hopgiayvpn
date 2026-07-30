@@ -29,7 +29,7 @@ foreach ( glob( $source_dir . '/*.php' ) ?: array() as $source_file ) {
 	}
 }
 
-require $target_dir . '/import-paper-shopping-bag-products-202607.php';
-require $target_dir . '/verify-paper-shopping-bag-products-202607.php';
+require $target_dir . '/import-christmas-gift-box-with-ribbon-product.php';
+require $target_dir . '/verify-christmas-gift-box-with-ribbon-product.php';
 
-echo PHP_EOL . 'Current paper shopping bag product sample deployment complete.' . PHP_EOL;
+echo PHP_EOL . 'Current Christmas gift box product sample deployment complete.' . PHP_EOL;
