@@ -5,7 +5,7 @@
 
 defined('ABSPATH') || exit;
 
-const CUSTOM_BOX_PAPER_BOX_DIELINE_SYNC_VERSION = '2026-07-30-v3';
+const CUSTOM_BOX_PAPER_BOX_DIELINE_SYNC_VERSION = '2026-07-30-v4';
 const CUSTOM_BOX_PAPER_BOX_DIELINE_VERSION_OPTION = 'custom_box_paper_box_dieline_sync_version';
 const CUSTOM_BOX_PAPER_BOX_DIELINE_NOTICE_OPTION = 'custom_box_paper_box_dieline_sync_notice';
 
@@ -16,7 +16,7 @@ function custom_box_paper_box_dieline_post_data(): array
 {
     return array(
         'title' => 'What Is a Dieline in Packaging? Cut, Crease, Bleed and Safe Area',
-        'slug' => 'what-is-a-paper-box-dieline',
+        'slug' => 'what-is-a-dieline-in-packaging',
         'excerpt' => 'Learn what a packaging dieline is, how cut, crease, bleed and safe areas control production, and what to check before approving custom box artwork.',
         'category' => array(
             'name' => 'Packaging Design / Printing Guide',
@@ -79,20 +79,16 @@ function custom_box_paper_box_dieline_content(): string
     return is_string($content) ? $content : '';
 }
 
-function custom_box_find_paper_box_dieline_post(string $slug, string $title): ?WP_Post
+function custom_box_find_paper_box_dieline_post(string $slug): ?WP_Post
 {
     $post = get_page_by_path($slug, OBJECT, 'post');
     if ($post && 'trash' !== $post->post_status) {
         return $post;
     }
 
-    global $wpdb;
-    $post_id = (int) $wpdb->get_var($wpdb->prepare(
-        "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'post' AND post_status <> 'trash' AND post_title = %s ORDER BY ID ASC LIMIT 1",
-        $title
-    ));
-
-    return $post_id ? get_post($post_id) : null;
+    // Do not fall back by title: the legacy paper-box dieline article may use
+    // the same title but must remain a separate post at its existing URL.
+    return null;
 }
 
 function custom_box_sync_paper_box_dieline_post(): void
@@ -102,7 +98,7 @@ function custom_box_sync_paper_box_dieline_post(): void
     }
 
     $data = custom_box_paper_box_dieline_post_data();
-    $post = custom_box_find_paper_box_dieline_post($data['slug'], $data['title']);
+    $post = custom_box_find_paper_box_dieline_post($data['slug']);
     if (
         CUSTOM_BOX_PAPER_BOX_DIELINE_SYNC_VERSION === get_option(CUSTOM_BOX_PAPER_BOX_DIELINE_VERSION_OPTION)
         && $post
@@ -154,7 +150,7 @@ function custom_box_sync_paper_box_dieline_post(): void
 function custom_box_upsert_paper_box_dieline_post()
 {
     $data = custom_box_paper_box_dieline_post_data();
-    $post = custom_box_find_paper_box_dieline_post($data['slug'], $data['title']);
+    $post = custom_box_find_paper_box_dieline_post($data['slug']);
     $content = custom_box_paper_box_dieline_content();
     if ('' === trim($content)) {
         return new WP_Error(
@@ -175,9 +171,14 @@ function custom_box_upsert_paper_box_dieline_post()
         $payload['post_status'] = in_array($post->post_status, array('publish', 'private'), true)
             ? $post->post_status
             : 'draft';
-        // This sync is an explicitly approved in-place upgrade of the existing
-        // canonical URL, so reviewed legacy content must also be replaced.
-        $payload['post_content'] = $content;
+        $existing = (string) $post->post_content;
+        if (
+            !in_array($post->post_status, array('publish', 'private'), true)
+            || '' === trim($existing)
+            || false !== strpos($existing, 'IMAGE_SLOT_')
+        ) {
+            $payload['post_content'] = $content;
+        }
         $result = wp_update_post($payload, true);
     } else {
         $payload['post_status'] = 'draft';
