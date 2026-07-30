@@ -117,7 +117,7 @@ function custom_box_post_sync_registry(): array
             'slug' => 'packaging-inserts-protection-presentation',
         ),
         'inc/paper-box-dieline-post-sync.php' => array(
-            'version' => '2026-07-30-v2',
+            'version' => '2026-07-30-v3',
             'option' => 'custom_box_paper_box_dieline_sync_version',
             'slug' => 'what-is-a-paper-box-dieline',
         ),

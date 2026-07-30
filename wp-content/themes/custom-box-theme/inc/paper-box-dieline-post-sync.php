@@ -5,7 +5,7 @@
 
 defined('ABSPATH') || exit;
 
-const CUSTOM_BOX_PAPER_BOX_DIELINE_SYNC_VERSION = '2026-07-30-v2';
+const CUSTOM_BOX_PAPER_BOX_DIELINE_SYNC_VERSION = '2026-07-30-v3';
 const CUSTOM_BOX_PAPER_BOX_DIELINE_VERSION_OPTION = 'custom_box_paper_box_dieline_sync_version';
 const CUSTOM_BOX_PAPER_BOX_DIELINE_NOTICE_OPTION = 'custom_box_paper_box_dieline_sync_notice';
 
@@ -175,14 +175,9 @@ function custom_box_upsert_paper_box_dieline_post()
         $payload['post_status'] = in_array($post->post_status, array('publish', 'private'), true)
             ? $post->post_status
             : 'draft';
-        $existing = (string) $post->post_content;
-        if (
-            !in_array($post->post_status, array('publish', 'private'), true)
-            || '' === trim($existing)
-            || false !== strpos($existing, 'IMAGE_SLOT_')
-        ) {
-            $payload['post_content'] = $content;
-        }
+        // This sync is an explicitly approved in-place upgrade of the existing
+        // canonical URL, so reviewed legacy content must also be replaced.
+        $payload['post_content'] = $content;
         $result = wp_update_post($payload, true);
     } else {
         $payload['post_status'] = 'draft';
