@@ -1,0 +1,183 @@
+{
+    "created_at_utc": "2026-07-31T07:13:24+00:00",
+    "database": "hopgiayvpnmoi",
+    "prefix": "wp_",
+    "nonpublish_products_in_phase_one_inventory": 10,
+    "draft_count": 0,
+    "trash_count": 10,
+    "passed_count": 10,
+    "failed_count": 0,
+    "failures": [],
+    "rows": [
+        {
+            "product_id": 4229,
+            "status": "trash",
+            "passed": true,
+            "checks": {
+                "record_exists": true,
+                "title_unchanged": true,
+                "slug_unchanged": true,
+                "status_unchanged": true,
+                "excerpt_unchanged": true,
+                "content_unchanged": true,
+                "seo_title_unchanged": true,
+                "meta_description_unchanged": true,
+                "focus_keyword_unchanged": true,
+                "canonical_unchanged": true
+            }
+        },
+        {
+            "product_id": 4250,
+            "status": "trash",
+            "passed": true,
+            "checks": {
+                "record_exists": true,
+                "title_unchanged": true,
+                "slug_unchanged": true,
+                "status_unchanged": true,
+                "excerpt_unchanged": true,
+                "content_unchanged": true,
+                "seo_title_unchanged": true,
+                "meta_description_unchanged": true,
+                "focus_keyword_unchanged": true,
+                "canonical_unchanged": true
+            }
+        },
+        {
+            "product_id": 4272,
+            "status": "trash",
+            "passed": true,
+            "checks": {
+                "record_exists": true,
+                "title_unchanged": true,
+                "slug_unchanged": true,
+                "status_unchanged": true,
+                "excerpt_unchanged": true,
+                "content_unchanged": true,
+                "seo_title_unchanged": true,
+                "meta_description_unchanged": true,
+                "focus_keyword_unchanged": true,
+                "canonical_unchanged": true
+            }
+        },
+        {
+            "product_id": 4296,
+            "status": "trash",
+            "passed": true,
+            "checks": {
+                "record_exists": true,
+                "title_unchanged": true,
+                "slug_unchanged": true,
+                "status_unchanged": true,
+                "excerpt_unchanged": true,
+                "content_unchanged": true,
+                "seo_title_unchanged": true,
+                "meta_description_unchanged": true,
+                "focus_keyword_unchanged": true,
+                "canonical_unchanged": true
+            }
+        },
+        {
+            "product_id": 4320,
+            "status": "trash",
+            "passed": true,
+            "checks": {
+                "record_exists": true,
+                "title_unchanged": true,
+                "slug_unchanged": true,
+                "status_unchanged": true,
+                "excerpt_unchanged": true,
+                "content_unchanged": true,
+                "seo_title_unchanged": true,
+                "meta_description_unchanged": true,
+                "focus_keyword_unchanged": true,
+                "canonical_unchanged": true
+            }
+        },
+        {
+            "product_id": 4352,
+            "status": "trash",
+            "passed": true,
+            "checks": {
+                "record_exists": true,
+                "title_unchanged": true,
+                "slug_unchanged": true,
+                "status_unchanged": true,
+                "excerpt_unchanged": true,
+                "content_unchanged": true,
+                "seo_title_unchanged": true,
+                "meta_description_unchanged": true,
+                "focus_keyword_unchanged": true,
+                "canonical_unchanged": true
+            }
+        },
+        {
+            "product_id": 4385,
+            "status": "trash",
+            "passed": true,
+            "checks": {
+                "record_exists": true,
+                "title_unchanged": true,
+                "slug_unchanged": true,
+                "status_unchanged": true,
+                "excerpt_unchanged": true,
+                "content_unchanged": true,
+                "seo_title_unchanged": true,
+                "meta_description_unchanged": true,
+                "focus_keyword_unchanged": true,
+                "canonical_unchanged": true
+            }
+        },
+        {
+            "product_id": 4390,
+            "status": "trash",
+            "passed": true,
+            "checks": {
+                "record_exists": true,
+                "title_unchanged": true,
+                "slug_unchanged": true,
+                "status_unchanged": true,
+                "excerpt_unchanged": true,
+                "content_unchanged": true,
+                "seo_title_unchanged": true,
+                "meta_description_unchanged": true,
+                "focus_keyword_unchanged": true,
+                "canonical_unchanged": true
+            }
+        },
+        {
+            "product_id": 4395,
+            "status": "trash",
+            "passed": true,
+            "checks": {
+                "record_exists": true,
+                "title_unchanged": true,
+                "slug_unchanged": true,
+                "status_unchanged": true,
+                "excerpt_unchanged": true,
+                "content_unchanged": true,
+                "seo_title_unchanged": true,
+                "meta_description_unchanged": true,
+                "focus_keyword_unchanged": true,
+                "canonical_unchanged": true
+            }
+        },
+        {
+            "product_id": 4400,
+            "status": "trash",
+            "passed": true,
+            "checks": {
+                "record_exists": true,
+                "title_unchanged": true,
+                "slug_unchanged": true,
+                "status_unchanged": true,
+                "excerpt_unchanged": true,
+                "content_unchanged": true,
+                "seo_title_unchanged": true,
+                "meta_description_unchanged": true,
+                "focus_keyword_unchanged": true,
+                "canonical_unchanged": true
+            }
+        }
+    ]
+}

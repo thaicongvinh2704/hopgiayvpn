@@ -95,7 +95,6 @@ while (have_posts()) :
     }
 
     $gallery_main_id = 'product-gallery-main-' . $product_id;
-    $product_overview_id = 'product-overview-' . $product_id;
     $product_specifications_id = 'product-specifications-' . $product_id;
 
     if ($product_long_content_html && function_exists('custom_box_enhance_blog_article_images')) {
@@ -103,19 +102,6 @@ while (have_posts()) :
     }
 
     $related_ids = $product ? wc_get_related_products($product_id, 8) : array();
-
-    if (count($related_ids) < 5) {
-        $fallback_related_ids = wc_get_products(array(
-            'status' => 'publish',
-            'limit' => 8,
-            'exclude' => array_merge(array($product_id), $related_ids),
-            'orderby' => 'date',
-            'order' => 'DESC',
-            'return' => 'ids',
-        ));
-
-        $related_ids = array_slice(array_values(array_unique(array_merge($related_ids, $fallback_related_ids))), 0, 8);
-    }
 ?>
 
 <main class="product-detail-page wc-product-detail-page">
@@ -146,6 +132,12 @@ while (have_posts()) :
                             <span><?php echo esc_html($product_proof_item); ?></span>
                         <?php endforeach; ?>
                     </p>
+                <?php endif; ?>
+
+                <?php if ($short_description) : ?>
+                    <div class="product-hero-short-description" data-product-short-description>
+                        <?php echo wp_kses_post($short_description); ?>
+                    </div>
                 <?php endif; ?>
             </div>
 
@@ -298,7 +290,7 @@ while (have_posts()) :
 
                 <div class="product-detail-actions" role="group" aria-label="<?php esc_attr_e('Product quote actions', 'custom-box-theme'); ?>">
                     <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>" class="btn-primary" data-product-primary-action><?php esc_html_e('Request Custom Packaging Quote', 'custom-box-theme'); ?></a>
-                    <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>" class="btn-outline" data-product-secondary-action><?php esc_html_e('Request Free Sample', 'custom-box-theme'); ?></a>
+                    <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>" class="btn-outline" data-product-secondary-action><?php esc_html_e('Discuss a Structural Sample', 'custom-box-theme'); ?></a>
                 </div>
             </div>
         </div>
@@ -342,18 +334,7 @@ while (have_posts()) :
     <section class="product-detail-overview product-story-section">
         <div class="container">
             <div class="product-detail-description product-content-body blog-content blog-article-content">
-                <?php if ($short_description) : ?>
-                    <details class="product-intro product-overview-disclosure" data-product-overview-disclosure>
-                        <summary class="product-overview-toggle">
-                            <?php esc_html_e('Read full overview', 'custom-box-theme'); ?>
-                        </summary>
-                        <div id="<?php echo esc_attr($product_overview_id); ?>" class="product-overview-content">
-                            <?php echo wp_kses_post($short_description); ?>
-                        </div>
-                    </details>
-                <?php endif; ?>
-
-                <?php if (!$hide_auto_description_heading) : ?>
+                <?php if (!$product_long_content_html && !$hide_auto_description_heading) : ?>
                     <h2><?php echo esc_html(get_the_title()); ?> That Balance Presentation and Function</h2>
                 <?php endif; ?>
                 <?php if ($product_long_content_html) : ?>
@@ -392,89 +373,9 @@ while (have_posts()) :
         </div>
     </section>
 
-    <section class="product-options-section product-customization-section">
-        <div class="container">
-            <div class="product-section-header">
-                <h2>We Know How to Package <?php echo esc_html(get_the_title()); ?> Perfectly</h2>
-                <p>Build packaging around your product, brand identity, and fulfillment needs.</p>
-            </div>
-
-            <div class="product-options-grid">
-                <div class="product-option-card">
-                    <i class="fas fa-layer-group"></i>
-                    <h3>Material Choices</h3>
-                    <p>Select from cardstock, kraft, corrugated, recycled paperboard, and rigid stock.</p>
-                </div>
-                <div class="product-option-card">
-                    <i class="fas fa-print"></i>
-                    <h3>Printing Methods</h3>
-                    <p>Use digital, offset, CMYK, Pantone, or inside-outside printing for a branded finish.</p>
-                </div>
-                <div class="product-option-card">
-                    <i class="fas fa-star"></i>
-                    <h3>Premium Finishing</h3>
-                    <p>Add foil stamping, embossing, debossing, spot UV, matte, gloss, or soft touch lamination.</p>
-                </div>
-                <div class="product-option-card">
-                    <i class="fas fa-ruler-combined"></i>
-                    <h3>Custom Size</h3>
-                    <p>Create boxes around exact product dimensions to improve fit, protection, and presentation.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="product-feedback-section">
-        <div class="container">
-            <h2>Client Feedback That Matters</h2>
-            <div class="product-feedback-card">
-                <div class="product-feedback-image">
-                    <?php
-                    $feedback_image_url = get_template_directory_uri() . '/assets/images/feedback1.jpeg';
-                    $feedback_image_id = (int) attachment_url_to_postid($feedback_image_url);
-
-                    if ($feedback_image_id) {
-                        echo wp_get_attachment_image(
-                            $feedback_image_id,
-                            'large',
-                            false,
-                            array(
-                                'alt'      => __('Custom packaging client feedback', 'custom-box-theme'),
-                                'loading'  => 'lazy',
-                                'decoding' => 'async',
-                                'sizes'    => '(max-width: 767px) calc(100vw - 36px), 45vw',
-                            )
-                        );
-                    } else {
-                        ?>
-                        <img
-                            src="<?php echo esc_url($feedback_image_url); ?>"
-                            width="2400"
-                            height="1792"
-                            alt="<?php esc_attr_e('Custom packaging client feedback', 'custom-box-theme'); ?>"
-                            loading="lazy"
-                            decoding="async"
-                        >
-                        <?php
-                    }
-                    ?>
-                </div>
-                <div class="product-feedback-content">
-                    <div class="stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-                    <h3>Fast, Supportive, Great Print Quality</h3>
-                    <p>Our packaging arrived with clean finishing, accurate colors, and a premium presentation that matched our launch goals. The quote process was clear from start to finish.</p>
-                    <strong>Verified Packaging Client</strong>
-                    <span>Custom Boxes Project</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <?php if ($product_faq_html) : ?>
         <?php echo wp_kses_post($product_faq_html); ?>
     <?php endif; ?>
-
-    <?php get_template_part('template-parts/home/faq'); ?>
 
     <?php if (!empty($related_ids)) : ?>
         <section class="product-related-section">

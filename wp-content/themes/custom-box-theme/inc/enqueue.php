@@ -53,6 +53,7 @@ function custom_box_enqueue_assets() {
     $landing_quick_form_css_path = get_template_directory() . '/assets/css/landing-quick-form.css';
     $responsive_css_path = get_template_directory() . '/assets/css/' . $responsive_css_file;
     $featured_paper_bags_css_path = get_template_directory() . '/assets/css/featured-paper-bags.css';
+    $product_detail_fix_css_path = get_template_directory() . '/assets/css/product-detail-fix.css';
     $main_js_path = get_template_directory() . '/assets/js/main.js';
 
     wp_enqueue_style(
@@ -81,6 +82,15 @@ function custom_box_enqueue_assets() {
         $responsive_deps,
         file_exists($responsive_css_path) ? filemtime($responsive_css_path) : '5.8'
     );
+
+    if (function_exists('is_product') && is_product()) {
+        wp_enqueue_style(
+            'product-detail-fix-style',
+            get_template_directory_uri() . '/assets/css/product-detail-fix.css',
+            array('responsive-style'),
+            file_exists($product_detail_fix_css_path) ? filemtime($product_detail_fix_css_path) : '1.0'
+        );
+    }
 
     if (is_front_page()) {
         wp_enqueue_style(

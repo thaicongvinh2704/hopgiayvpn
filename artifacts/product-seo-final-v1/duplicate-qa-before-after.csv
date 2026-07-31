@@ -1,0 +1,9 @@
+metric,before,after,threshold_or_source,qa_status
+published_products_with_content_duplicate_signal,116,0,"Phase 1 exact/near/shared-block signals; after uses >30% 5-word shingle threshold",PASS
+published_products_under_300_words,3,0,"main content word count",PASS
+exact_duplicate_long_paragraph_groups,131,0,"30+ word normalized paragraphs",PASS
+main_content_pairs_above_30_percent,"not measured at this threshold",0,"5-word shingle Jaccard > 0.30",PASS
+maximum_main_content_similarity,"not measured at this threshold",0.2915,"pair 770 | 776",PASS
+duplicate_seo_title_groups,10,0,"exact normalized nonempty field",PASS
+duplicate_meta_description_groups,10,0,"exact normalized nonempty field",PASS
+duplicate_focus_keyword_groups,10,0,"exact normalized nonempty field",PASS

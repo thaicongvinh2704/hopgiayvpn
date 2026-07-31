@@ -24,38 +24,38 @@ $quote_status_message = isset($quote_messages[$quote_status]) ? $quote_messages[
     <div class="container quote-wrapper">
         <div class="quote-left">
             <h2 id="<?php echo esc_attr($quote_heading_id); ?>">
-                Experience Innovation, Precision, and Trust in
-                <span>Every Packaging Solution</span>
+                Prepare a Clear Brief for
+                <span>Your Packaging Quote</span>
             </h2>
 
             <ul class="quote-list">
                 <li>
                     <i class="fas fa-check-circle" aria-hidden="true"></i>
-                    <div><strong>Expert Consultation Team</strong><p>Personalized guidance that fits perfectly.</p></div>
+                    <div><strong>Product and Box Type</strong><p>Identify what the pack holds and the structure you need.</p></div>
                 </li>
                 <li>
                     <i class="fas fa-check-circle" aria-hidden="true"></i>
-                    <div><strong>Creative Design Perfection</strong><p>Turning great concepts into reality.</p></div>
+                    <div><strong>Dimensions and Fit</strong><p>Share product size, box size, and any insert requirements.</p></div>
                 </li>
                 <li>
                     <i class="fas fa-check-circle" aria-hidden="true"></i>
-                    <div><strong>Premium Packaging Materials</strong><p>Built strong for beauty and durability.</p></div>
+                    <div><strong>Material Direction</strong><p>State known material needs or ask for options to compare.</p></div>
                 </li>
                 <li>
                     <i class="fas fa-check-circle" aria-hidden="true"></i>
-                    <div><strong>Advanced Color Printing</strong><p>Delivering flawless color and clarity.</p></div>
+                    <div><strong>Artwork and Print</strong><p>Attach available artwork and note colors or finishes to review.</p></div>
                 </li>
                 <li>
                     <i class="fas fa-check-circle" aria-hidden="true"></i>
-                    <div><strong>Fast Production Process</strong><p>Always ready when you need.</p></div>
+                    <div><strong>Order Quantity</strong><p>Provide the quantity needed for a project-specific assessment.</p></div>
                 </li>
                 <li>
                     <i class="fas fa-check-circle" aria-hidden="true"></i>
-                    <div><strong>Global Export Support</strong><p>Export-ready packing for international buyers.</p></div>
+                    <div><strong>Delivery Destination</strong><p>Include the destination so packing and logistics can be discussed.</p></div>
                 </li>
                 <li>
                     <i class="fas fa-check-circle" aria-hidden="true"></i>
-                    <div><strong>Eco-Friendly Commitment</strong><p>Sustainable recyclable packaging every time.</p></div>
+                    <div><strong>Timing and Constraints</strong><p>Note your target date and any handling or compliance needs.</p></div>
                 </li>
             </ul>
         </div>

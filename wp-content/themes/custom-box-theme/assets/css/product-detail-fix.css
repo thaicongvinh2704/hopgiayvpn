@@ -1,0 +1,31 @@
+/*
+ * Single-product hero flow correction.
+ * Keeps the short description visible and prevents the tall gallery from
+ * creating an empty first row in the desktop summary column.
+ */
+
+.product-hero-short-description {
+    color: var(--color-muted, #50606b);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-top: 16px;
+    max-width: 760px;
+}
+
+.product-hero-short-description > :first-child {
+    margin-top: 0;
+}
+
+.product-hero-short-description > :last-child {
+    margin-bottom: 0;
+}
+
+@media (min-width: 768px) {
+    .product-detail-mobile-order {
+        grid-template-rows: max-content minmax(0, 1fr);
+    }
+
+    .product-detail-summary {
+        align-self: start;
+    }
+}

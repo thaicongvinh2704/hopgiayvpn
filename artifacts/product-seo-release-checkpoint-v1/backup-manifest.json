@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "created_at_local": "2026-07-31T14:25:56+07:00",
+  "database": "hopgiayvpnmoi",
+  "host": "127.0.0.1",
+  "prefix": "wp_",
+  "backup": {
+    "path": "artifacts/product-seo-release-checkpoint-v1/backups/hopgiayvpnmoi-release-checkpoint-20260731-142556.sql",
+    "bytes": 84597063,
+    "sha256": "6214283A3CB74F8529A1E91A98E02C2D40A31EEF125B77ADF5091040CA6FC99C",
+    "create_table_statements": 68,
+    "completion_marker": true
+  },
+  "production_requests": 0,
+  "production_writes": 0,
+  "old_local_database_hopgiayvpn_reads": 0,
+  "old_local_database_hopgiayvpn_writes": 0
+}

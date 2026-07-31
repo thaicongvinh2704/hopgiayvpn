@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "checked_at_local": "2026-07-31T15:25:00+07:00",
+  "url": "http://localhost/hopgiayvpn/product/custom-colored-pencil-packaging-box/",
+  "product_id": 771,
+  "result": "PASS",
+  "changes": {
+    "short_description_moved_to_hero": true,
+    "collapsed_duplicate_removed": true,
+    "desktop_grid_row_flow_corrected": true,
+    "database_writes": 0,
+    "product_content_changes": 0
+  },
+  "desktop": {
+    "h1_count": 1,
+    "short_description_count": 1,
+    "short_description_visible": true,
+    "old_overview_duplicate_count": 0,
+    "description_to_summary_gap_px": 48,
+    "horizontal_overflow": false
+  },
+  "mobile": {
+    "h1_count": 1,
+    "short_description_count": 1,
+    "short_description_visible": true,
+    "old_overview_duplicate_count": 0,
+    "content_order": "heading > short description > gallery > summary",
+    "content_order_valid": true,
+    "horizontal_overflow": false
+  },
+  "assets": {
+    "product_detail_fix_stylesheet_loaded": true,
+    "browser_console_errors": 0
+  },
+  "full_regression": {
+    "browser": "Microsoft Edge 150.0.4078.105",
+    "batches": 17,
+    "products_sampled": 34,
+    "captures_passed": 68,
+    "captures_failed": 0,
+    "contact_sheets_regenerated": 17,
+    "batch_05_manual_visual_review": "PASS"
+  },
+  "production_requests": 0,
+  "production_writes": 0
+}

@@ -1,0 +1,19 @@
+{
+    "created_at_utc": "2026-07-31T07:15:33+00:00",
+    "checks": {
+        "database_is_hopgiayvpnmoi": true,
+        "prefix_is_wp": true,
+        "home_is_local": true,
+        "environment_is_local": true,
+        "blog_public_zero": true,
+        "wp_cron_disabled": true,
+        "mail_preempted": true,
+        "remote_http_blocked": true,
+        "local_http_allowed": true,
+        "payment_gateways_empty": true,
+        "webhook_delivery_disabled": true,
+        "woocommerce_email_disabled": true
+    },
+    "passed": true,
+    "production_requests_or_writes_performed_by_this_test": 0
+}
