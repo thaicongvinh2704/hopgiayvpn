@@ -133,27 +133,6 @@ $product_query = new WP_Query($product_query_args);
                         }
 
                         $product_title_id = 'product-card-title-' . get_the_ID();
-                        $product_card_title = get_the_title();
-
-                        // Keep the stored product title/H1 unchanged while making legacy
-                        // ALL CAPS titles easier to scan in archive cards.
-                        if ($product_card_title && preg_match('/[a-z]/i', $product_card_title) && strtoupper($product_card_title) === $product_card_title) {
-                            $product_card_title = ucwords(strtolower($product_card_title), " \t\r\n\f\v-");
-                            $product_card_title = preg_replace_callback(
-                                '/\b(?:And|Or|For|With|Of|In|On|To|By)\b/',
-                                static function ($match) {
-                                    return strtolower($match[0]);
-                                },
-                                $product_card_title
-                            );
-                            $product_card_title = preg_replace_callback(
-                                '/\b(?:B2b|Cmyk|Eva|Fsc|Pvc|Rfid|Usb|Uv|Pr)\b/',
-                                static function ($match) {
-                                    return strtoupper($match[0]);
-                                },
-                                $product_card_title
-                            );
-                        }
                         ?>
 
                         <article <?php wc_product_class('custom-product-card', $product); ?> data-product-card>
@@ -193,7 +172,7 @@ $product_query = new WP_Query($product_query_args);
                                     ?>
                                 </span>
                                 <span class="custom-product-body">
-                                    <h2 id="<?php echo esc_attr($product_title_id); ?>" class="custom-product-title"><?php echo esc_html($product_card_title); ?></h2>
+                                    <h2 id="<?php echo esc_attr($product_title_id); ?>" class="custom-product-title"><?php the_title(); ?></h2>
                                 </span>
                             </a>
                         </article>
