@@ -41,6 +41,10 @@ function custom_box_is_dflip_context() {
 
 function custom_box_enqueue_assets() {
     $is_catalog_page = is_page_template('page-catalog.php') || is_page('catalog');
+    $is_product_archive_page = is_post_type_archive('product')
+        || is_tax(array('product_cat', 'product_tag'))
+        || (function_exists('is_shop') && is_shop())
+        || is_page(array('products', 'shop'));
     $main_css_file = file_exists(get_template_directory() . '/assets/css/main.min.css') ? 'main.min.css' : 'main.css';
     $woocommerce_css_file = file_exists(get_template_directory() . '/assets/css/woocommerce.min.css') ? 'woocommerce.min.css' : 'woocommerce.css';
     $responsive_css_file = file_exists(get_template_directory() . '/assets/css/responsive.min.css') ? 'responsive.min.css' : 'responsive.css';
@@ -54,6 +58,7 @@ function custom_box_enqueue_assets() {
     $responsive_css_path = get_template_directory() . '/assets/css/' . $responsive_css_file;
     $featured_paper_bags_css_path = get_template_directory() . '/assets/css/featured-paper-bags.css';
     $product_detail_fix_css_path = get_template_directory() . '/assets/css/product-detail-fix.css';
+    $product_archive_fix_css_path = get_template_directory() . '/assets/css/product-archive-fix.css';
     $main_js_path = get_template_directory() . '/assets/js/main.js';
 
     wp_enqueue_style(
@@ -89,6 +94,15 @@ function custom_box_enqueue_assets() {
             get_template_directory_uri() . '/assets/css/product-detail-fix.css',
             array('responsive-style'),
             file_exists($product_detail_fix_css_path) ? filemtime($product_detail_fix_css_path) : '1.0'
+        );
+    }
+
+    if ($is_product_archive_page) {
+        wp_enqueue_style(
+            'product-archive-fix-style',
+            get_template_directory_uri() . '/assets/css/product-archive-fix.css',
+            array('responsive-style'),
+            file_exists($product_archive_fix_css_path) ? filemtime($product_archive_fix_css_path) : '1.0'
         );
     }
 
