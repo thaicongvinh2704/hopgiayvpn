@@ -1,0 +1,98 @@
+{
+    "schema_version": 1,
+    "created_at_utc": "2026-07-31T07:08:15+00:00",
+    "environment": {
+        "root": "C:\\xampp\\htdocs\\hopgiayvpn",
+        "home": "http://localhost/hopgiayvpn",
+        "database": "hopgiayvpnmoi",
+        "prefix": "wp_",
+        "wp_environment_type": "local",
+        "blog_public": 0,
+        "disable_wp_cron": true
+    },
+    "products": {
+        "required": 179,
+        "completed": 179,
+        "blocked": 0,
+        "failure_product_ids": [],
+        "failures": []
+    },
+    "frontend": {
+        "product_http_200": 179,
+        "product_qa_pass": 179,
+        "unique_internal_target_urls": 205,
+        "internal_target_http_200": 205
+    },
+    "seo": {
+        "unique_titles": 179,
+        "unique_meta_descriptions": 179,
+        "unique_focus_keywords": 179,
+        "duplicate_title_groups": 0,
+        "duplicate_meta_groups": 0,
+        "duplicate_focus_groups": 0
+    },
+    "content": {
+        "exact_duplicate_long_paragraph_groups": 0,
+        "maximum_pairwise_5_word_shingle_similarity": 0.2915,
+        "maximum_similarity_pair": [
+            770,
+            776
+        ],
+        "pairs_above_0_30": [],
+        "source_qa_maximum_similarity": 0.2915
+    },
+    "links": {
+        "planned_rows": 904,
+        "present_and_http_200": 904,
+        "missing_or_non_200": 0
+    },
+    "csv_round_trip": {
+        "product-content-index.csv": {
+            "expected_rows": 179,
+            "parsed_rows": 179,
+            "valid": true,
+            "sha256": "c6fb341a2ccd958a8be25cade7c24baada7c9d9b03bf9f24ed49937c6dd2d0c6"
+        },
+        "keyword-map-final.csv": {
+            "expected_rows": 179,
+            "parsed_rows": 179,
+            "valid": true,
+            "sha256": "b7a8038164197bff78efb842b44b43099be877d7f284a6bd46023e20651cde09"
+        },
+        "internal-link-map-final.csv": {
+            "expected_rows": 904,
+            "parsed_rows": 904,
+            "valid": true,
+            "sha256": "6c731ea061781d9f9c5ed4574d9b60d1a3c4fd7c3e20ba4c85892790aa99e233"
+        },
+        "duplicate-qa-before-after.csv": {
+            "expected_rows": 8,
+            "parsed_rows": 8,
+            "valid": true,
+            "sha256": "136bf9135b5e274556e117ad8ea715f2d83e5a83ccd6f83f706224d9a9cf033b"
+        },
+        "seo-fields-qa.csv": {
+            "expected_rows": 179,
+            "parsed_rows": 179,
+            "valid": true,
+            "sha256": "9c7212dfb7f063eae42fba03b6238a840480424469954624cbcfe4bd07ef3ec0"
+        },
+        "change-log.csv": {
+            "expected_rows": 895,
+            "parsed_rows": 895,
+            "valid": true,
+            "sha256": "53773db5690ff85caa54ecc21725d248ad2b374cbd87fe7047d51595c528d209"
+        },
+        "frontend-qa.csv": {
+            "expected_rows": 179,
+            "parsed_rows": 179,
+            "valid": true,
+            "sha256": "417d73b6cdb845e861fe61a3e0b10aec02b7f9aec6cee0ea6df23a54b56cf260"
+        }
+    },
+    "writes": {
+        "production": 0,
+        "old_local_database_hopgiayvpn": 0,
+        "scope_basis": "All importer and QA guards require DB_NAME=hopgiayvpnmoi and local URL; outbound HTTP is blocked except localhost."
+    }
+}

@@ -1,0 +1,108 @@
+{
+    "created_at_utc": "2026-07-31T08:25:19+00:00",
+    "sheet_count": 17,
+    "sheets": [
+        {
+            "batch_id": "BATCH-01",
+            "path": "artifacts/product-seo-release-checkpoint-v1/contact-sheets/BATCH-01-viewport-contact-sheet-v2.png",
+            "bytes": 617185,
+            "sha256": "4a75857c39914d7117692e14757ee21acb72597034715f476e11bfcfa41642a5"
+        },
+        {
+            "batch_id": "BATCH-02",
+            "path": "artifacts/product-seo-release-checkpoint-v1/contact-sheets/BATCH-02-viewport-contact-sheet-v2.png",
+            "bytes": 623182,
+            "sha256": "bf1bbf026c22202e6af8bb353d969ba9323a70ce2316cc7dc474da8666f7149d"
+        },
+        {
+            "batch_id": "BATCH-03",
+            "path": "artifacts/product-seo-release-checkpoint-v1/contact-sheets/BATCH-03-viewport-contact-sheet-v2.png",
+            "bytes": 648707,
+            "sha256": "412144d2ff61ed9b3e5c273dd075251ce17d32562392a5622ae0008c36408d77"
+        },
+        {
+            "batch_id": "BATCH-04",
+            "path": "artifacts/product-seo-release-checkpoint-v1/contact-sheets/BATCH-04-viewport-contact-sheet-v2.png",
+            "bytes": 739356,
+            "sha256": "acaf1d507684294e9e3cfe55871bc558dc1e73525777ef68b3e1ff2505042fa0"
+        },
+        {
+            "batch_id": "BATCH-05",
+            "path": "artifacts/product-seo-release-checkpoint-v1/contact-sheets/BATCH-05-viewport-contact-sheet-v2.png",
+            "bytes": 640115,
+            "sha256": "067bad7163cfa5dd1e31647fb8a7e13837413a09f8ccade02cc8255ed8fb6c3e"
+        },
+        {
+            "batch_id": "BATCH-06",
+            "path": "artifacts/product-seo-release-checkpoint-v1/contact-sheets/BATCH-06-viewport-contact-sheet-v2.png",
+            "bytes": 641937,
+            "sha256": "86821d7c31ec6376c003f272cb1ce2a44fb4a956423ff54ae749dd589e69fd43"
+        },
+        {
+            "batch_id": "BATCH-07",
+            "path": "artifacts/product-seo-release-checkpoint-v1/contact-sheets/BATCH-07-viewport-contact-sheet-v2.png",
+            "bytes": 632047,
+            "sha256": "c71551bd16da31b2a77e05a91008e5528f9cb28148a2a7f0f4c2881467c9ab8c"
+        },
+        {
+            "batch_id": "BATCH-08",
+            "path": "artifacts/product-seo-release-checkpoint-v1/contact-sheets/BATCH-08-viewport-contact-sheet-v2.png",
+            "bytes": 578017,
+            "sha256": "6414e1893ca31bcb2814a03820fb2d2c9455f9aa06c9462a787eb6e2dff29d1c"
+        },
+        {
+            "batch_id": "BATCH-09",
+            "path": "artifacts/product-seo-release-checkpoint-v1/contact-sheets/BATCH-09-viewport-contact-sheet-v2.png",
+            "bytes": 679558,
+            "sha256": "f5affd0a9683db6be18302c6dc62bb5d4ecd0364b9f4e96fb61f414bc3a23772"
+        },
+        {
+            "batch_id": "BATCH-10",
+            "path": "artifacts/product-seo-release-checkpoint-v1/contact-sheets/BATCH-10-viewport-contact-sheet-v2.png",
+            "bytes": 651462,
+            "sha256": "2c377178211ca3bbe75b170918376348051f717daf9c1b9bc9f4cb056c3440a4"
+        },
+        {
+            "batch_id": "BATCH-11",
+            "path": "artifacts/product-seo-release-checkpoint-v1/contact-sheets/BATCH-11-viewport-contact-sheet-v2.png",
+            "bytes": 581592,
+            "sha256": "c1b01635caaeef74df326779b5a80ef758340136c9c2c341fa9430cfeecdcc2d"
+        },
+        {
+            "batch_id": "BATCH-12",
+            "path": "artifacts/product-seo-release-checkpoint-v1/contact-sheets/BATCH-12-viewport-contact-sheet-v2.png",
+            "bytes": 691593,
+            "sha256": "461f322add5f9b6bcb58e708a4a3cc228aea2c0e781368795df8b2843238712a"
+        },
+        {
+            "batch_id": "BATCH-13",
+            "path": "artifacts/product-seo-release-checkpoint-v1/contact-sheets/BATCH-13-viewport-contact-sheet-v2.png",
+            "bytes": 689676,
+            "sha256": "7598ab428b308030094ee33ec26f0cb4d8cd506d02ea3c55c060fa16da8b4826"
+        },
+        {
+            "batch_id": "BATCH-14",
+            "path": "artifacts/product-seo-release-checkpoint-v1/contact-sheets/BATCH-14-viewport-contact-sheet-v2.png",
+            "bytes": 651072,
+            "sha256": "2906bedb521591a631552882e021cda1494ae8e1bc575f8a97d99c18f24c0c6d"
+        },
+        {
+            "batch_id": "BATCH-15",
+            "path": "artifacts/product-seo-release-checkpoint-v1/contact-sheets/BATCH-15-viewport-contact-sheet-v2.png",
+            "bytes": 639187,
+            "sha256": "dff286fd435b95dc34af0274755415d281967429a6d8a6eec64fcc60956374c8"
+        },
+        {
+            "batch_id": "BATCH-16",
+            "path": "artifacts/product-seo-release-checkpoint-v1/contact-sheets/BATCH-16-viewport-contact-sheet-v2.png",
+            "bytes": 565148,
+            "sha256": "152b83669a721be0a58effa930276ca82bf6cff65979f1d2bd3d66e408efc163"
+        },
+        {
+            "batch_id": "BATCH-17",
+            "path": "artifacts/product-seo-release-checkpoint-v1/contact-sheets/BATCH-17-viewport-contact-sheet-v2.png",
+            "bytes": 629411,
+            "sha256": "d509bdcc42ddb39b3add5bf8ba598da2591f8af811c89c5958afcf4d4db40de3"
+        }
+    ]
+}

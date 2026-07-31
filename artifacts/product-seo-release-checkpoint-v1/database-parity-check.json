@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "checked_at_local": "2026-07-31T16:45:31+07:00",
+  "mode": "read-only dry-run",
+  "command": "php tools/product-seo-import/importer.php dry-run --batch=all",
+  "database": "hopgiayvpnmoi",
+  "home_url": "http://localhost/hopgiayvpn",
+  "product_count": 179,
+  "blocking_product_count": 0,
+  "products_with_changed_fields": 0,
+  "immutable_field_errors": 0,
+  "database_writes": 0,
+  "production_requests": 0,
+  "production_writes": 0,
+  "result": "PASS"
+}

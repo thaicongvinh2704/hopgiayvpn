@@ -1,0 +1,191 @@
+{
+    "schema_version": 1,
+    "created_at_utc": "2026-07-31T07:15:40+00:00",
+    "scope": {
+        "wordpress_root": "C:\\xampp\\htdocs\\hopgiayvpn",
+        "local_url": "http://localhost/hopgiayvpn",
+        "database": "hopgiayvpnmoi",
+        "prefix": "wp_",
+        "production_writes": 0,
+        "old_local_database_writes": 0
+    },
+    "full_database_backup": {
+        "path": "artifacts/product-seo-final-v1/backups/hopgiayvpnmoi-pre-seo-20260731-132354.sql",
+        "bytes": 85379975,
+        "sha256": "70b1105e0372c6bcdd961ffed3d356584015df4ce10bd848680edbb4f738b686"
+    },
+    "product_fields_baseline": {
+        "path": "artifacts/product-seo-final-v1/backups/product-fields-baseline.json",
+        "bytes": 3134388,
+        "sha256": "f3d5b4606e3216f36d90636b3eac0dcefa1c022da31a51072d1c22418e7993c3"
+    },
+    "source_manifest": {
+        "path": "seo-content/product-rewrite-v1/content-manifest.json",
+        "bytes": 916355,
+        "sha256": "12df41ce214c6315db7f0f5554d813cb3e46a97cac61e98eff0c5df88de3604b"
+    },
+    "batch_backups": [
+        {
+            "path": "seo-content/product-rewrite-v1/batch-backups/BATCH-01.before.json",
+            "bytes": 214714,
+            "sha256": "55ba7c75e1336bbd3a939ba39990c88c91567961d553306909646a489187e1ec",
+            "batch_id": "BATCH-01",
+            "product_count": 15,
+            "rollback_command": "php tools\\product-seo-import\\importer.php rollback-batch --batch=BATCH-01"
+        },
+        {
+            "path": "seo-content/product-rewrite-v1/batch-backups/BATCH-02.before.json",
+            "bytes": 160185,
+            "sha256": "ef92b8b08f2192452689f0d0f0c20b1719b04c62588090f1574ec06e7e739f17",
+            "batch_id": "BATCH-02",
+            "product_count": 9,
+            "rollback_command": "php tools\\product-seo-import\\importer.php rollback-batch --batch=BATCH-02"
+        },
+        {
+            "path": "seo-content/product-rewrite-v1/batch-backups/BATCH-03.before.json",
+            "bytes": 110306,
+            "sha256": "d6cc0d87003b341e02c27697268e3329a327ff41056e38968f461954b40e2350",
+            "batch_id": "BATCH-03",
+            "product_count": 9,
+            "rollback_command": "php tools\\product-seo-import\\importer.php rollback-batch --batch=BATCH-03"
+        },
+        {
+            "path": "seo-content/product-rewrite-v1/batch-backups/BATCH-04.before.json",
+            "bytes": 236353,
+            "sha256": "a651ee73fc82b96f14fb19ae0d68e73cc929e3634e87c468b9cb3e4b04ad8d35",
+            "batch_id": "BATCH-04",
+            "product_count": 15,
+            "rollback_command": "php tools\\product-seo-import\\importer.php rollback-batch --batch=BATCH-04"
+        },
+        {
+            "path": "seo-content/product-rewrite-v1/batch-backups/BATCH-05.before.json",
+            "bytes": 219678,
+            "sha256": "19f838f17277a1995dc1078cf8c5865fdea982047c1804f904021d628e7d0cd9",
+            "batch_id": "BATCH-05",
+            "product_count": 13,
+            "rollback_command": "php tools\\product-seo-import\\importer.php rollback-batch --batch=BATCH-05"
+        },
+        {
+            "path": "seo-content/product-rewrite-v1/batch-backups/BATCH-06.before.json",
+            "bytes": 190374,
+            "sha256": "24815e80b779b060283d76e136964d05bedbb2df03591eeffe0bff99a93deb99",
+            "batch_id": "BATCH-06",
+            "product_count": 13,
+            "rollback_command": "php tools\\product-seo-import\\importer.php rollback-batch --batch=BATCH-06"
+        },
+        {
+            "path": "seo-content/product-rewrite-v1/batch-backups/BATCH-07.before.json",
+            "bytes": 113742,
+            "sha256": "7c3e8bfa830184b0efa0d6585f11da6574a319f7c727540bd33c57bd9d60fcb7",
+            "batch_id": "BATCH-07",
+            "product_count": 7,
+            "rollback_command": "php tools\\product-seo-import\\importer.php rollback-batch --batch=BATCH-07"
+        },
+        {
+            "path": "seo-content/product-rewrite-v1/batch-backups/BATCH-08.before.json",
+            "bytes": 224717,
+            "sha256": "be9382a098ba4c3e35a76a23e4fc99fcd61c6f86fdf2c50606ee7bc9686f581a",
+            "batch_id": "BATCH-08",
+            "product_count": 13,
+            "rollback_command": "php tools\\product-seo-import\\importer.php rollback-batch --batch=BATCH-08"
+        },
+        {
+            "path": "seo-content/product-rewrite-v1/batch-backups/BATCH-09.before.json",
+            "bytes": 89918,
+            "sha256": "dc9561160a2f31157bcd8b1ccfda4e1f14703d35dbd9e60704515d4db80da438",
+            "batch_id": "BATCH-09",
+            "product_count": 12,
+            "rollback_command": "php tools\\product-seo-import\\importer.php rollback-batch --batch=BATCH-09"
+        },
+        {
+            "path": "seo-content/product-rewrite-v1/batch-backups/BATCH-10.before.json",
+            "bytes": 76450,
+            "sha256": "92c02603d9f0f68713bafcd7a1c50d425a3565e863c3c5a3e135b15954deeb8f",
+            "batch_id": "BATCH-10",
+            "product_count": 9,
+            "rollback_command": "php tools\\product-seo-import\\importer.php rollback-batch --batch=BATCH-10"
+        },
+        {
+            "path": "seo-content/product-rewrite-v1/batch-backups/BATCH-11.before.json",
+            "bytes": 69092,
+            "sha256": "f04d34fecee279adfebe5accda4597604a5c04b8f44bdfbab70a5ebdbeefe5e5",
+            "batch_id": "BATCH-11",
+            "product_count": 9,
+            "rollback_command": "php tools\\product-seo-import\\importer.php rollback-batch --batch=BATCH-11"
+        },
+        {
+            "path": "seo-content/product-rewrite-v1/batch-backups/BATCH-12.before.json",
+            "bytes": 127085,
+            "sha256": "611f3e0e69c5b3470fe5d9d44bb06ff7d7bff954b3e77590c0fb8df5d4318e08",
+            "batch_id": "BATCH-12",
+            "product_count": 11,
+            "rollback_command": "php tools\\product-seo-import\\importer.php rollback-batch --batch=BATCH-12"
+        },
+        {
+            "path": "seo-content/product-rewrite-v1/batch-backups/BATCH-13.before.json",
+            "bytes": 113636,
+            "sha256": "740e8b71eb89832b81811626e382cbed94fbb858e28777b43fc4740a69f3c626",
+            "batch_id": "BATCH-13",
+            "product_count": 11,
+            "rollback_command": "php tools\\product-seo-import\\importer.php rollback-batch --batch=BATCH-13"
+        },
+        {
+            "path": "seo-content/product-rewrite-v1/batch-backups/BATCH-14.before.json",
+            "bytes": 104279,
+            "sha256": "53d0c1edf90c9d0bc0c2bb00bc90fdc3958d21b18933c68e0f82817ae8d3538c",
+            "batch_id": "BATCH-14",
+            "product_count": 6,
+            "rollback_command": "php tools\\product-seo-import\\importer.php rollback-batch --batch=BATCH-14"
+        },
+        {
+            "path": "seo-content/product-rewrite-v1/batch-backups/BATCH-15.before.json",
+            "bytes": 164927,
+            "sha256": "496e58f3452dde870ca7ff72a444708a01edee4a50346661d70e8b589a794c2d",
+            "batch_id": "BATCH-15",
+            "product_count": 14,
+            "rollback_command": "php tools\\product-seo-import\\importer.php rollback-batch --batch=BATCH-15"
+        },
+        {
+            "path": "seo-content/product-rewrite-v1/batch-backups/BATCH-16.before.json",
+            "bytes": 121090,
+            "sha256": "c03201e54f633fddff641160b996d3211bfc899372b8348cca0b0836e6e75798",
+            "batch_id": "BATCH-16",
+            "product_count": 7,
+            "rollback_command": "php tools\\product-seo-import\\importer.php rollback-batch --batch=BATCH-16"
+        },
+        {
+            "path": "seo-content/product-rewrite-v1/batch-backups/BATCH-17.before.json",
+            "bytes": 83148,
+            "sha256": "5e7181c3ad62b0e8225c136518ae3f0c9248da236a2c91de94a4908415fcb734",
+            "batch_id": "BATCH-17",
+            "product_count": 6,
+            "rollback_command": "php tools\\product-seo-import\\importer.php rollback-batch --batch=BATCH-17"
+        }
+    ],
+    "theme_backups": [
+        {
+            "target": "wp-content/themes/custom-box-theme/woocommerce/single-product.php",
+            "backup": {
+                "path": "artifacts/product-seo-final-v1/backups/theme/single-product.php.before",
+                "bytes": 27621,
+                "sha256": "13b1237189dc8846688a1b2e376a9473de81d84fc5e1873b00554b585973359a"
+            },
+            "current_sha256": "b41cdb376f95e20fdc8405d90974676493cdb743bfa9ca6115452ce672812bcf"
+        },
+        {
+            "target": "wp-content/themes/custom-box-theme/template-parts/home/quote-form.php",
+            "backup": {
+                "path": "artifacts/product-seo-final-v1/backups/theme/quote-form.php.before",
+                "bytes": 31249,
+                "sha256": "2172f5c1b39a5745f317ff24a791617a7c04da098c74c537b00ab00d41b4a873"
+            },
+            "current_sha256": "82e78a25b9bf01fa2ab5aa521330bc88b96ab02eebfdf87af7e5a71d363b039c"
+        }
+    ],
+    "rollback_order": [
+        "Product-only rollback: run batch rollback commands in reverse BATCH-17 through BATCH-01.",
+        "Template rollback: copy each .before backup to its target path.",
+        "Full local rollback: import the SQL dump into hopgiayvpnmoi only after separately backing up the current local database."
+    ],
+    "full_database_restore_command_not_executed": "C:\\xampp\\mysql\\bin\\mysql.exe --host=127.0.0.1 --user=root hopgiayvpnmoi < artifacts\\product-seo-final-v1\\backups\\hopgiayvpnmoi-pre-seo-20260731-132354.sql"
+}

@@ -1,0 +1,314 @@
+{
+  "created_at_utc": "2026-07-31T08:20:32.351Z",
+  "browser_executable": "C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe",
+  "product_count": 34,
+  "viewport_count": 68,
+  "products": [
+    {
+      "batch_id": "BATCH-01",
+      "sample_index": 1,
+      "product_id": 386,
+      "title": "Custom Printed Corrugated Ecommerce Box",
+      "slug": "custom-printed-corrugated-ecommerce-box",
+      "url": "http://localhost/hopgiayvpn/product/custom-printed-corrugated-ecommerce-box/",
+      "cluster": "Priority corrugated duplicates and core mailers"
+    },
+    {
+      "batch_id": "BATCH-01",
+      "sample_index": 2,
+      "product_id": 6024,
+      "title": "CUSTOM CORRUGATED SUBSCRIPTION BOX",
+      "slug": "custom-corrugated-subscription-box",
+      "url": "http://localhost/hopgiayvpn/product/custom-corrugated-subscription-box/",
+      "cluster": "Priority corrugated duplicates and core mailers"
+    },
+    {
+      "batch_id": "BATCH-02",
+      "sample_index": 1,
+      "product_id": 773,
+      "title": "CUSTOM COSMETIC PACKAGING BOX",
+      "slug": "custom-cosmetic-packaging-box",
+      "url": "http://localhost/hopgiayvpn/product/custom-cosmetic-packaging-box/",
+      "cluster": "Skincare product-specific packaging"
+    },
+    {
+      "batch_id": "BATCH-02",
+      "sample_index": 2,
+      "product_id": 5557,
+      "title": "CUSTOM PERFUME AND LOTION GIFT SET BOX",
+      "slug": "custom-perfume-and-lotion-gift-set-box",
+      "url": "http://localhost/hopgiayvpn/product/custom-perfume-and-lotion-gift-set-box/",
+      "cluster": "Skincare product-specific packaging"
+    },
+    {
+      "batch_id": "BATCH-03",
+      "sample_index": 1,
+      "product_id": 240,
+      "title": "Custom Cosmetic Tube Packaging Box with Insert",
+      "slug": "custom-cosmetic-tube-packaging-box-with-insert",
+      "url": "http://localhost/hopgiayvpn/product/custom-cosmetic-tube-packaging-box-with-insert/",
+      "cluster": "Skincare product-specific packaging"
+    },
+    {
+      "batch_id": "BATCH-03",
+      "sample_index": 2,
+      "product_id": 1420,
+      "title": "CUSTOM SKINCARE SET PACKAGING BOX",
+      "slug": "custom-skincare-set-packaging-box",
+      "url": "http://localhost/hopgiayvpn/product/custom-skincare-set-packaging-box/",
+      "cluster": "Skincare product-specific packaging"
+    },
+    {
+      "batch_id": "BATCH-04",
+      "sample_index": 1,
+      "product_id": 397,
+      "title": "Custom Magnetic Gift Box with Insert Tray",
+      "slug": "custom-magnetic-gift-box-with-insert-tray",
+      "url": "http://localhost/hopgiayvpn/product/custom-magnetic-gift-box-with-insert-tray/",
+      "cluster": "Magnetic closure boxes by industry"
+    },
+    {
+      "batch_id": "BATCH-04",
+      "sample_index": 2,
+      "product_id": 5709,
+      "title": "CUSTOM LUXURY PERFUME BOX WITH MAGNETIC CLOSURE",
+      "slug": "custom-luxury-perfume-box-with-magnetic-closure",
+      "url": "http://localhost/hopgiayvpn/product/custom-luxury-perfume-box-with-magnetic-closure/",
+      "cluster": "Magnetic closure boxes by industry"
+    },
+    {
+      "batch_id": "BATCH-05",
+      "sample_index": 1,
+      "product_id": 771,
+      "title": "CUSTOM COLORED PENCIL PACKAGING BOX",
+      "slug": "custom-colored-pencil-packaging-box",
+      "url": "http://localhost/hopgiayvpn/product/custom-colored-pencil-packaging-box/",
+      "cluster": "Toy, game and creative-kit packaging"
+    },
+    {
+      "batch_id": "BATCH-05",
+      "sample_index": 2,
+      "product_id": 7209,
+      "title": "CUSTOM BIRTHDAY PAPER GIFT BAG WITH PRESENT PRINT",
+      "slug": "custom-birthday-paper-gift-bag-with-present-print",
+      "url": "http://localhost/hopgiayvpn/product/custom-birthday-paper-gift-bag-with-present-print/",
+      "cluster": "Toy, game and creative-kit packaging"
+    },
+    {
+      "batch_id": "BATCH-06",
+      "sample_index": 1,
+      "product_id": 228,
+      "title": "Custom Cylindrical Paper Tube Box",
+      "slug": "custom-cylindrical-paper-tube-box",
+      "url": "http://localhost/hopgiayvpn/product/custom-cylindrical-paper-tube-box/",
+      "cluster": "Tea and coffee packaging"
+    },
+    {
+      "batch_id": "BATCH-06",
+      "sample_index": 2,
+      "product_id": 7291,
+      "title": "CUSTOM CHRISTMAS GIFT BOX WITH RIBBON",
+      "slug": "custom-christmas-gift-box-with-ribbon",
+      "url": "http://localhost/hopgiayvpn/product/custom-christmas-gift-box-with-ribbon/",
+      "cluster": "Tea and coffee packaging"
+    },
+    {
+      "batch_id": "BATCH-07",
+      "sample_index": 1,
+      "product_id": 7095,
+      "title": "CUSTOM PET FOOD PACKAGING BOX",
+      "slug": "custom-pet-food-packaging-box",
+      "url": "http://localhost/hopgiayvpn/product/custom-pet-food-packaging-box/",
+      "cluster": "Pet product packaging"
+    },
+    {
+      "batch_id": "BATCH-07",
+      "sample_index": 2,
+      "product_id": 7101,
+      "title": "PET SUPPLEMENT PACKAGING BOX",
+      "slug": "pet-supplement-packaging-box",
+      "url": "http://localhost/hopgiayvpn/product/pet-supplement-packaging-box/",
+      "cluster": "Pet product packaging"
+    },
+    {
+      "batch_id": "BATCH-08",
+      "sample_index": 1,
+      "product_id": 235,
+      "title": "Custom Essential Oil Packaging Box with Insert",
+      "slug": "custom-essential-oil-packaging-box-with-insert",
+      "url": "http://localhost/hopgiayvpn/product/custom-essential-oil-packaging-box-with-insert/",
+      "cluster": "Perfume and beauty packaging"
+    },
+    {
+      "batch_id": "BATCH-08",
+      "sample_index": 2,
+      "product_id": 7192,
+      "title": "CUSTOM PINK PAPER GIFT BAG WITH TWISTED HANDLES",
+      "slug": "custom-pink-paper-gift-bag-with-twisted-handles",
+      "url": "http://localhost/hopgiayvpn/product/custom-pink-paper-gift-bag-with-twisted-handles/",
+      "cluster": "Perfume and beauty packaging"
+    },
+    {
+      "batch_id": "BATCH-09",
+      "sample_index": 1,
+      "product_id": 234,
+      "title": "Custom Incense Packaging Box with Window",
+      "slug": "custom-incense-packaging-box-with-window",
+      "url": "http://localhost/hopgiayvpn/product/custom-incense-packaging-box-with-window/",
+      "cluster": "Perfume and beauty packaging"
+    },
+    {
+      "batch_id": "BATCH-09",
+      "sample_index": 2,
+      "product_id": 829,
+      "title": "Custom Vial Boxes for Glass Vials, Ampoules and Lab Samples",
+      "slug": "custom-vial-packaging-box",
+      "url": "http://localhost/hopgiayvpn/product/custom-vial-packaging-box/",
+      "cluster": "Perfume and beauty packaging"
+    },
+    {
+      "batch_id": "BATCH-10",
+      "sample_index": 1,
+      "product_id": 239,
+      "title": "Custom Pizza Packaging Box",
+      "slug": "custom-pizza-packaging-box",
+      "url": "http://localhost/hopgiayvpn/product/custom-pizza-packaging-box/",
+      "cluster": "Bakery, food and confectionery packaging"
+    },
+    {
+      "batch_id": "BATCH-10",
+      "sample_index": 2,
+      "product_id": 1026,
+      "title": "CUSTOM GREEN BIRD NEST COMPARTMENT GIFT BOX",
+      "slug": "custom-green-bird-nest-compartment-gift-box",
+      "url": "http://localhost/hopgiayvpn/product/custom-green-bird-nest-compartment-gift-box/",
+      "cluster": "Bakery, food and confectionery packaging"
+    },
+    {
+      "batch_id": "BATCH-11",
+      "sample_index": 1,
+      "product_id": 230,
+      "title": "Custom Pastry Display Box with Drawer",
+      "slug": "custom-pastry-display-box-with-drawer",
+      "url": "http://localhost/hopgiayvpn/product/custom-pastry-display-box-with-drawer/",
+      "cluster": "Bakery, food and confectionery packaging"
+    },
+    {
+      "batch_id": "BATCH-11",
+      "sample_index": 2,
+      "product_id": 1024,
+      "title": "CUSTOM GREEN BIRD NEST GIFT BOX WITH HANDLE",
+      "slug": "custom-green-bird-nest-gift-box-with-handle",
+      "url": "http://localhost/hopgiayvpn/product/custom-green-bird-nest-gift-box-with-handle/",
+      "cluster": "Bakery, food and confectionery packaging"
+    },
+    {
+      "batch_id": "BATCH-12",
+      "sample_index": 1,
+      "product_id": 231,
+      "title": "Custom Wine Drawer Box with Insert",
+      "slug": "custom-wine-drawer-box-with-insert",
+      "url": "http://localhost/hopgiayvpn/product/custom-wine-drawer-box-with-insert/",
+      "cluster": "Wine, bottle and beverage packaging"
+    },
+    {
+      "batch_id": "BATCH-12",
+      "sample_index": 2,
+      "product_id": 840,
+      "title": "CUSTOM WINE BOTTLE PACKAGING BOX",
+      "slug": "custom-wine-bottle-packaging-box",
+      "url": "http://localhost/hopgiayvpn/product/custom-wine-bottle-packaging-box/",
+      "cluster": "Wine, bottle and beverage packaging"
+    },
+    {
+      "batch_id": "BATCH-13",
+      "sample_index": 1,
+      "product_id": 229,
+      "title": "Custom Flat Rigid Gift Box with Ribbon",
+      "slug": "custom-flat-rigid-gift-box-with-ribbon",
+      "url": "http://localhost/hopgiayvpn/product/custom-flat-rigid-gift-box-with-ribbon/",
+      "cluster": "Jewelry, watch and premium accessories"
+    },
+    {
+      "batch_id": "BATCH-13",
+      "sample_index": 2,
+      "product_id": 1291,
+      "title": "CUSTOM RING BOX WITH VELVET INSERT",
+      "slug": "custom-ring-box-with-velvet-insert",
+      "url": "http://localhost/hopgiayvpn/product/custom-ring-box-with-velvet-insert/",
+      "cluster": "Jewelry, watch and premium accessories"
+    },
+    {
+      "batch_id": "BATCH-14",
+      "sample_index": 1,
+      "product_id": 725,
+      "title": "CUSTOM LUXURY GIFT BOX WITH PAPER BAG",
+      "slug": "custom-luxury-gift-box-with-paper-bag",
+      "url": "http://localhost/hopgiayvpn/product/custom-luxury-gift-box-with-paper-bag/",
+      "cluster": "Paper bags and carried packaging"
+    },
+    {
+      "batch_id": "BATCH-14",
+      "sample_index": 2,
+      "product_id": 7199,
+      "title": "CUSTOM LIME GREEN PAPER SHOPPING BAG WITH ROPE HANDLES",
+      "slug": "custom-lime-green-paper-shopping-bag-with-rope-handles",
+      "url": "http://localhost/hopgiayvpn/product/custom-lime-green-paper-shopping-bag-with-rope-handles/",
+      "cluster": "Paper bags and carried packaging"
+    },
+    {
+      "batch_id": "BATCH-15",
+      "sample_index": 1,
+      "product_id": 245,
+      "title": "Custom Apparel Drawer Box with Ribbon Pull",
+      "slug": "custom-apparel-drawer-box-with-ribbon-pull",
+      "url": "http://localhost/hopgiayvpn/product/custom-apparel-drawer-box-with-ribbon-pull/",
+      "cluster": "Fashion and sportswear packaging"
+    },
+    {
+      "batch_id": "BATCH-15",
+      "sample_index": 2,
+      "product_id": 1245,
+      "title": "CUSTOM YOGA MAT PACKAGING BOX",
+      "slug": "custom-yoga-mat-packaging-box",
+      "url": "http://localhost/hopgiayvpn/product/custom-yoga-mat-packaging-box/",
+      "cluster": "Fashion and sportswear packaging"
+    },
+    {
+      "batch_id": "BATCH-16",
+      "sample_index": 1,
+      "product_id": 426,
+      "title": "CUSTOM MEDICAL KIT PACKAGING BOX",
+      "slug": "custom-medical-kit-packaging-box",
+      "url": "http://localhost/hopgiayvpn/product/custom-medical-kit-packaging-box/",
+      "cluster": "Pharma, supplement and electronics"
+    },
+    {
+      "batch_id": "BATCH-16",
+      "sample_index": 2,
+      "product_id": 815,
+      "title": "CUSTOM TABLET PACKAGING BOX",
+      "slug": "custom-tablet-packaging-box",
+      "url": "http://localhost/hopgiayvpn/product/custom-tablet-packaging-box/",
+      "cluster": "Pharma, supplement and electronics"
+    },
+    {
+      "batch_id": "BATCH-17",
+      "sample_index": 1,
+      "product_id": 233,
+      "title": "Custom Candle Jar Box with Insert",
+      "slug": "custom-candle-jar-box-with-insert",
+      "url": "http://localhost/hopgiayvpn/product/custom-candle-jar-box-with-insert/",
+      "cluster": "Home, candle and lifestyle packaging"
+    },
+    {
+      "batch_id": "BATCH-17",
+      "sample_index": 2,
+      "product_id": 1215,
+      "title": "CUSTOM CANDLE PAPER TUBE BOX",
+      "slug": "custom-candle-paper-tube-box",
+      "url": "http://localhost/hopgiayvpn/product/custom-candle-paper-tube-box/",
+      "cluster": "Home, candle and lifestyle packaging"
+    }
+  ]
+}
