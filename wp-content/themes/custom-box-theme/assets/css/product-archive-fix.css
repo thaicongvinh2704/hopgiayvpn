@@ -1,0 +1,113 @@
+/* Product archive card polish. Product titles are transformed only in the view layer. */
+
+.product-listing-category-section .custom-product-card {
+    background: #fff;
+    border: 1px solid var(--color-line, #d8e4eb);
+    border-radius: 10px;
+    box-shadow: 0 8px 22px rgba(18, 50, 67, 0.05);
+    height: 100%;
+    overflow: hidden;
+    transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.product-listing-category-section .custom-product-card-link {
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none;
+}
+
+.product-listing-category-section .custom-product-card-link:hover,
+.product-listing-category-section .custom-product-card-link:focus,
+.product-listing-category-section .custom-product-card-link:active {
+    text-decoration: none;
+}
+
+.product-listing-category-section .custom-product-card-link:focus-visible {
+    border-radius: 8px;
+    outline: 3px solid var(--color-primary, #2a6a92);
+    outline-offset: -3px;
+}
+
+.product-listing-category-section .custom-product-image {
+    border-radius: 9px 9px 0 0;
+}
+
+.product-listing-category-section .custom-product-card:hover {
+    border-color: rgba(42, 106, 146, 0.52);
+    box-shadow: 0 14px 30px rgba(18, 50, 67, 0.12);
+    transform: translateY(-2px);
+}
+
+.product-listing-category-section .custom-product-card:hover .custom-product-image img {
+    transform: scale(1.025);
+}
+
+.product-listing-category-section .custom-product-body {
+    flex: 1;
+}
+
+.product-listing-category-section .custom-product-title {
+    align-items: flex-start;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    color: var(--color-ink, #123243);
+    display: flex;
+    font-size: 15px;
+    font-weight: 700;
+    justify-content: flex-start;
+    line-height: 1.45;
+    margin: 0;
+    min-height: 76px;
+    padding: 14px 16px 16px;
+    text-align: left;
+    text-decoration: none;
+    transition: color 180ms ease;
+}
+
+.product-listing-category-section .custom-product-card:hover .custom-product-title,
+.product-listing-category-section .custom-product-card-link:focus-visible .custom-product-title {
+    background: transparent;
+    color: var(--color-primary, #2a6a92);
+}
+
+@media (min-width: 768px) and (max-width: 1100px) {
+    .product-listing-category-section .custom-product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 767px) {
+    .product-listing-category-section .custom-product-title {
+        align-items: flex-start;
+        font-size: 0.9375rem !important;
+        justify-content: flex-start;
+        line-height: 1.4;
+        margin: 0 !important;
+        min-height: 84px;
+        padding: 12px !important;
+        text-align: left;
+    }
+}
+
+@media (max-width: 479px) {
+    .product-listing-category-section .custom-product-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .product-listing-category-section .custom-product-title {
+        min-height: 64px;
+        padding: 14px !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .product-listing-category-section .custom-product-card,
+    .product-listing-category-section .custom-product-image img,
+    .product-listing-category-section .custom-product-title {
+        transition: none;
+    }
+}
