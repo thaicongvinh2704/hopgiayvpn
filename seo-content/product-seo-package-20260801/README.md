@@ -27,6 +27,9 @@ bash tools/sync-product-seo-content-20260801.sh
 The tool pulls `master`, runs the production preflight, applies the content-only
 release and runs final QA. It stops immediately if any step fails.
 
+After the pull, the same migration is also available in WordPress Admin at
+**Tools -> SEO Content Sync**. Open that page and click **Đồng bộ content SEO**.
+
 ## Manual deploy alternative
 
 Run these commands from the WordPress root after the Git pull:
