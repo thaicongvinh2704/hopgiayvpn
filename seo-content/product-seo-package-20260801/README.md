@@ -15,7 +15,19 @@ Changed fields only:
 The payload uses the live URL `https://hopgiayvpn.com`. Do not replace it with
 the local URL.
 
-## Deploy on hosting
+## One-command deploy on hosting
+
+After the first Git pull that delivers this release, run this single command
+from the WordPress root:
+
+```bash
+bash tools/sync-product-seo-content-20260801.sh
+```
+
+The tool pulls `master`, runs the production preflight, applies the content-only
+release and runs final QA. It stops immediately if any step fails.
+
+## Manual deploy alternative
 
 Run these commands from the WordPress root after the Git pull:
 
