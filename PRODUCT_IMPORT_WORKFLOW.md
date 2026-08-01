@@ -533,11 +533,19 @@ The deploy stops before changing the database unless all 80 files are present.
 It is safe to run again because each importer uses a batch marker and product
 slug to update existing products instead of duplicating them.
 
+The same release also runs `tools/sync-product-category-thumbnails-202608.php`
+on every deploy and verifies these category images:
+
+- Pharmaceutical Packaging Boxes: `2026/08/custom-blister-pack-medicine-box-1.webp`
+- Beauty and Skincare Packaging: featured image of `custom-facial-mask-packaging-box`
+- Bird Nest Packaging Boxes: `2026/06/blue-bird-nest-gift-packaging-box-with-gold-pattern-front-view.webp`
+
 In WordPress admin, after the Git pull, open **Tools > Product Sample Deploy** and
 click **Run Product Sample Deploy** with **Latest batch only** selected. The default
 scope runs both current August 2026 batches, restores their Git-tracked tools,
-checks that all 80 manually uploaded originals exist, imports 20 products, and
-verifies the result. Separate buttons remain available for rerunning earlier batches.
+checks that all 80 manually uploaded originals exist, imports 20 products, syncs
+the three requested category thumbnails, and verifies the result. Separate buttons
+remain available for rerunning earlier batches.
 
 The deploy process:
 

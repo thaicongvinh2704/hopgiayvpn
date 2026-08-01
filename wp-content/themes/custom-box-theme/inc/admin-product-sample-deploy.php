@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-08-01-pharma-bird-nest-20' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-08-01-pharma-bird-nest-category-thumbnails' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -812,6 +812,16 @@ function custom_box_product_sample_deploy_batches(): array {
 				'tools/verify-bird-nest-packaging-products-202608.php',
 			),
 		),
+		array(
+			'name'      => 'Current product category thumbnails August 2026',
+			'marker'    => 'product-category-thumbnails-202608',
+			'expected'  => 0,
+			'min_words' => 0,
+			'always'    => true,
+			'scripts'   => array(
+				'tools/sync-product-category-thumbnails-202608.php',
+			),
+		),
 	);
 }
 
@@ -911,6 +921,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 					array(
 						'product-samples-pharmaceutical-packaging-202608',
 						'product-samples-bird-nest-packaging-202608',
+						'product-category-thumbnails-202608',
 					),
 					true
 				);
@@ -1058,6 +1069,7 @@ function custom_box_product_sample_deploy_restore_tools() {
 		'verify-pharmaceutical-packaging-products-202608.php',
 		'import-bird-nest-packaging-products-202608.php',
 		'verify-bird-nest-packaging-products-202608.php',
+		'sync-product-category-thumbnails-202608.php',
 	);
 	$log        = array();
 
@@ -1254,7 +1266,7 @@ function custom_box_product_sample_deploy_page() {
 		<h1>Product Sample Deploy</h1>
 		<p><strong>Tool version:</strong> <?php echo esc_html( CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION ); ?></p>
 		<p>This tool imports or updates the generated WooCommerce product sample batches from the Git-tracked deploy scripts and uploaded or bundled images.</p>
-		<p><strong>Current latest release:</strong> 20 August 2026 products. Upload all 80 original WebP files to <code>wp-content/uploads/2026/08/</code> before running <strong>Latest batch only</strong>.</p>
+		<p><strong>Current latest release:</strong> 20 August 2026 products and 3 category thumbnails. Upload all 80 original WebP files to <code>wp-content/uploads/2026/08/</code> before running <strong>Latest batch only</strong>.</p>
 		<p>It skips completed batches automatically, so it can be run after every deploy without creating duplicate products.</p>
 
 		<?php if ( $result ) : ?>

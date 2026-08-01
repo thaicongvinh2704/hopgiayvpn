@@ -97,4 +97,7 @@ foreach ( $current_batches as $batch ) {
 	require $target_dir . '/' . $batch['verifier'];
 }
 
-echo PHP_EOL . 'Current August 2026 deployment complete: 20 products verified.' . PHP_EOL;
+echo PHP_EOL . '== Current product category thumbnails August 2026 ==' . PHP_EOL;
+require $target_dir . '/sync-product-category-thumbnails-202608.php';
+
+echo PHP_EOL . 'Current August 2026 deployment complete: 20 products and 3 category thumbnails verified.' . PHP_EOL;
