@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-07-30-christmas-gift-box' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-08-01-pharma-bird-nest-20' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -518,6 +518,26 @@ function custom_box_product_sample_deploy_batch_complete( string $marker, int $e
 	return true;
 }
 
+function custom_box_product_sample_deploy_missing_source_images( array $batch ): array {
+	if ( empty( $batch['source_dir'] ) || empty( $batch['source_image_bases'] ) || ! is_array( $batch['source_image_bases'] ) ) {
+		return array();
+	}
+
+	$source_dir = trim( (string) $batch['source_dir'], '/\\' );
+	$missing    = array();
+
+	foreach ( $batch['source_image_bases'] as $base ) {
+		for ( $image_number = 1; $image_number <= 4; ++$image_number ) {
+			$relative = 'wp-content/uploads/' . $source_dir . '/' . $base . '-' . $image_number . '.webp';
+			if ( ! file_exists( trailingslashit( ABSPATH ) . $relative ) ) {
+				$missing[] = $relative;
+			}
+		}
+	}
+
+	return $missing;
+}
+
 function custom_box_product_sample_deploy_run_script( string $relative_script ): void {
 	$script = trailingslashit( ABSPATH ) . ltrim( $relative_script, '/\\' );
 
@@ -746,6 +766,52 @@ function custom_box_product_sample_deploy_batches(): array {
 				'tools/verify-christmas-gift-box-with-ribbon-product.php',
 			),
 		),
+		array(
+			'name'               => 'Pharmaceutical Packaging products August 2026',
+			'marker'             => 'product-samples-pharmaceutical-packaging-202608',
+			'expected'           => 10,
+			'min_words'          => 1500,
+			'source_dir'         => '2026/08',
+			'source_image_bases' => array(
+				'custom-autoinjector-pen-box',
+				'custom-blister-pack-medicine-box',
+				'custom-eye-drop-packaging-box',
+				'custom-inhaler-packaging-box',
+				'custom-liquid-medicine-bottle-box',
+				'custom-nasal-spray-packaging-box',
+				'custom-pharmaceutical-tube-box',
+				'custom-prefilled-syringe-box',
+				'custom-sachet-stick-pack-carton',
+				'custom-transdermal-patch-box',
+			),
+			'scripts'            => array(
+				'tools/import-pharmaceutical-packaging-products-202608.php',
+				'tools/verify-pharmaceutical-packaging-products-202608.php',
+			),
+		),
+		array(
+			'name'               => 'Bird Nest Packaging products August 2026',
+			'marker'             => 'product-samples-bird-nest-packaging-202608',
+			'expected'           => 10,
+			'min_words'          => 1500,
+			'source_dir'         => '2026/08',
+			'source_image_bases' => array(
+				'custom-2-bottle-bird-nest-beverage-box',
+				'custom-6-jar-bird-nest-magnetic-gift-box',
+				'custom-8-jar-bird-nest-lid-and-base-gift-box',
+				'custom-12-jar-double-layer-bird-nest-gift-box',
+				'custom-bird-nest-bowl-and-spoon-gift-box',
+				'custom-bird-nest-paper-tube-packaging',
+				'custom-bird-nest-rock-sugar-gift-box',
+				'custom-bird-nest-sachet-packaging-box',
+				'custom-dried-bird-nest-window-display-box',
+				'custom-single-jar-bird-nest-window-box',
+			),
+			'scripts'            => array(
+				'tools/import-bird-nest-packaging-products-202608.php',
+				'tools/verify-bird-nest-packaging-products-202608.php',
+			),
+		),
 	);
 }
 
@@ -811,6 +877,28 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 		);
 	}
 
+	if ( 'pharmaceutical_202608' === $scope ) {
+		return array_values(
+			array_filter(
+				$batches,
+				static function ( $batch ) {
+					return isset( $batch['marker'] ) && 'product-samples-pharmaceutical-packaging-202608' === $batch['marker'];
+				}
+			)
+		);
+	}
+
+	if ( 'bird_nest_202608' === $scope ) {
+		return array_values(
+			array_filter(
+				$batches,
+				static function ( $batch ) {
+					return isset( $batch['marker'] ) && 'product-samples-bird-nest-packaging-202608' === $batch['marker'];
+				}
+			)
+		);
+	}
+
 	// The default button must deploy the complete current release. Keep
 	// historical batches available through the explicit "all" scope, but do
 	// not make a new release depend on an incomplete legacy batch.
@@ -821,7 +909,8 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 				return isset( $batch['marker'] ) && in_array(
 					$batch['marker'],
 					array(
-						'product-samples-christmas-gift-box-202607',
+						'product-samples-pharmaceutical-packaging-202608',
+						'product-samples-bird-nest-packaging-202608',
 					),
 					true
 				);
@@ -831,7 +920,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 }
 
 function custom_box_product_sample_deploy_allowed_scopes(): array {
-	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607', 'three_categories_202607', 'paper_bags_202607', 'christmas_gift_box_202607' );
+	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607', 'three_categories_202607', 'paper_bags_202607', 'christmas_gift_box_202607', 'pharmaceutical_202608', 'bird_nest_202608' );
 }
 
 function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
@@ -858,6 +947,19 @@ function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
 				++$state['batch_index'];
 				$state['script_index'] = 0;
 				continue;
+			}
+
+			$missing_images = custom_box_product_sample_deploy_missing_source_images( $batch );
+			if ( $missing_images ) {
+				throw new RuntimeException(
+					'Missing ' . count( $missing_images ) . ' required source image(s). '
+					. 'Upload all August 2026 original WebP files before deploying. First missing file: '
+					. $missing_images[0]
+				);
+			}
+
+			if ( ! empty( $batch['source_image_bases'] ) ) {
+				echo 'Source image preflight: ' . ( count( $batch['source_image_bases'] ) * 4 ) . '/' . ( count( $batch['source_image_bases'] ) * 4 ) . ' originals found.' . PHP_EOL;
 			}
 		}
 
@@ -915,6 +1017,15 @@ function custom_box_product_sample_deploy_run_batches(): void {
 			continue;
 		}
 
+		$missing_images = custom_box_product_sample_deploy_missing_source_images( $batch );
+		if ( $missing_images ) {
+			throw new RuntimeException(
+				'Missing ' . count( $missing_images ) . ' required source image(s). '
+				. 'Upload all August 2026 original WebP files before deploying. First missing file: '
+				. $missing_images[0]
+			);
+		}
+
 		foreach ( $batch['scripts'] as $script ) {
 			custom_box_product_sample_deploy_run_script( $script );
 		}
@@ -941,9 +1052,13 @@ function custom_box_product_sample_deploy_restore_tools() {
 	$source_dir = get_template_directory() . '/inc/product-sample-deploy-tools';
 	$target_dir = ABSPATH . 'tools';
 	$source_required = $source_dir . '/import-product-samples-10.php';
-	$source_latest_required = $source_dir . '/import-christmas-gift-box-with-ribbon-product.php';
 	$required   = $target_dir . '/import-product-samples-10.php';
-	$latest_required = $target_dir . '/import-christmas-gift-box-with-ribbon-product.php';
+	$latest_scripts = array(
+		'import-pharmaceutical-packaging-products-202608.php',
+		'verify-pharmaceutical-packaging-products-202608.php',
+		'import-bird-nest-packaging-products-202608.php',
+		'verify-bird-nest-packaging-products-202608.php',
+	);
 	$log        = array();
 
 	if ( ! is_dir( $source_dir ) ) {
@@ -972,7 +1087,9 @@ function custom_box_product_sample_deploy_restore_tools() {
 	$log[] = 'Target writable: ' . ( wp_is_writable( $target_dir ) ? 'yes' : 'no' );
 	$log[] = 'Bundled tool count: ' . count( $files );
 	$log[] = 'Required source script exists: ' . ( file_exists( $source_required ) ? 'yes' : 'no' );
-	$log[] = 'Latest source script exists: ' . ( file_exists( $source_latest_required ) ? 'yes' : 'no' );
+	foreach ( $latest_scripts as $latest_script ) {
+		$log[] = 'Latest source script exists (' . $latest_script . '): ' . ( file_exists( $source_dir . '/' . $latest_script ) ? 'yes' : 'no' );
+	}
 
 	foreach ( $files as $file ) {
 		$target = trailingslashit( $target_dir ) . basename( $file );
@@ -995,8 +1112,26 @@ function custom_box_product_sample_deploy_restore_tools() {
 		}
 	}
 
+	// Always refresh the current release scripts so a Git pull cannot leave an
+	// older root tools copy active on hosting.
+	foreach ( $latest_scripts as $latest_script ) {
+		$source = $source_dir . '/' . $latest_script;
+		$target = trailingslashit( $target_dir ) . $latest_script;
+		if ( ! file_exists( $source ) ) {
+			$log[] = 'Latest script missing from bundle: ' . $latest_script;
+			continue;
+		}
+		if ( copy( $source, $target ) ) {
+			$log[] = 'Latest script refreshed: ' . $latest_script;
+		} else {
+			$log[] = 'Latest script refresh failed: ' . $latest_script;
+		}
+	}
+
 	$log[] = 'Required script exists after restore: ' . ( file_exists( $required ) ? 'yes' : 'no' );
-	$log[] = 'Latest script exists after restore: ' . ( file_exists( $latest_required ) ? 'yes' : 'no' );
+	foreach ( $latest_scripts as $latest_script ) {
+		$log[] = 'Latest script exists after restore (' . $latest_script . '): ' . ( file_exists( trailingslashit( $target_dir ) . $latest_script ) ? 'yes' : 'no' );
+	}
 	$log[] = '';
 
 	return implode( PHP_EOL, $log ) . PHP_EOL;
@@ -1088,6 +1223,16 @@ function custom_box_product_sample_deploy_restore_assets() {
 	$log[] = 'Required three-category image exists after restore: ' . ( file_exists( ABSPATH . 'wp-content/uploads/2026/07/board-game-packaging-box-1.webp' ) ? 'yes' : 'no' );
 	$log[] = 'Required paper bag image exists after restore: ' . ( file_exists( ABSPATH . 'wp-content/uploads/2026/07/custom-white-paper-shopping-bag-brown-rope-vpn240724-a-01.webp' ) ? 'yes' : 'no' );
 	$log[] = 'Required Christmas gift box image exists after restore: ' . ( file_exists( ABSPATH . 'wp-content/uploads/2026/07/green-christmas-gift-box-with-ribbon.webp' ) ? 'yes' : 'no' );
+	$august_found = 0;
+	$august_total = 0;
+	foreach ( custom_box_product_sample_deploy_selected_batches( 'latest' ) as $latest_batch ) {
+		if ( empty( $latest_batch['source_image_bases'] ) ) {
+			continue;
+		}
+		$august_total += count( $latest_batch['source_image_bases'] ) * 4;
+		$august_found += ( count( $latest_batch['source_image_bases'] ) * 4 ) - count( custom_box_product_sample_deploy_missing_source_images( $latest_batch ) );
+	}
+	$log[] = 'Current August 2026 original images present: ' . $august_found . '/' . $august_total;
 	$log[] = '';
 
 	return implode( PHP_EOL, $log ) . PHP_EOL;
@@ -1108,7 +1253,8 @@ function custom_box_product_sample_deploy_page() {
 	<div class="wrap">
 		<h1>Product Sample Deploy</h1>
 		<p><strong>Tool version:</strong> <?php echo esc_html( CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION ); ?></p>
-		<p>This tool imports or updates the generated WooCommerce product sample batches from the Git-tracked deploy scripts and images.</p>
+		<p>This tool imports or updates the generated WooCommerce product sample batches from the Git-tracked deploy scripts and uploaded or bundled images.</p>
+		<p><strong>Current latest release:</strong> 20 August 2026 products. Upload all 80 original WebP files to <code>wp-content/uploads/2026/08/</code> before running <strong>Latest batch only</strong>.</p>
 		<p>It skips completed batches automatically, so it can be run after every deploy without creating duplicate products.</p>
 
 		<?php if ( $result ) : ?>

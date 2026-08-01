@@ -526,16 +526,18 @@ Important:
 
 The Git-tracked root CLI entry point restores the bundled deploy tools from
 `wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/` before running.
-For the current July 2026 release, it synchronizes and verifies the Custom
-Christmas Gift Box With Ribbon product from four bundled original images. It is
-safe to run again because the importer uses a batch marker and updates the
-existing product instead of duplicating it.
+For the current August 2026 release, it synchronizes and verifies 20 products:
+10 Pharmaceutical Packaging products and 10 Bird Nest Packaging products. The
+80 original WebP files are uploaded separately to `wp-content/uploads/2026/08/`.
+The deploy stops before changing the database unless all 80 files are present.
+It is safe to run again because each importer uses a batch marker and product
+slug to update existing products instead of duplicating them.
 
 In WordPress admin, after the Git pull, open **Tools > Product Sample Deploy** and
 click **Run Product Sample Deploy** with **Latest batch only** selected. The default
-scope runs the current Christmas gift box batch, restores its Git-tracked tools
-and four original upload assets automatically, and verifies the result.
-Separate buttons remain available for rerunning the earlier batches.
+scope runs both current August 2026 batches, restores their Git-tracked tools,
+checks that all 80 manually uploaded originals exist, imports 20 products, and
+verifies the result. Separate buttons remain available for rerunning earlier batches.
 
 The deploy process:
 
@@ -547,9 +549,14 @@ The deploy process:
 
 Recommended hosting deploy order:
 
-1. `git pull`
-2. `php tools/deploy-product-samples-all.php`
-3. clear cache if the hosting has page/object cache
+1. Upload all 80 original WebP files to `wp-content/uploads/2026/08/`.
+2. `git pull`
+3. Open **Tools > Product Sample Deploy**, keep **Latest batch only** selected,
+   and click **Run Product Sample Deploy**.
+4. Clear page/object cache if the hosting uses one.
+
+CLI fallback: `php tools/deploy-product-samples-all.php` performs the same 80-image
+preflight, imports both batches, and runs both verification scripts.
 
 For a single latest batch, a dedicated wrapper can be used when available, for example:
 
@@ -772,3 +779,69 @@ Product** button is also available. The importer restores the four original
 images, creates missing Media Library attachments, imports or updates the
 product, and verifies content, SEO fields, categories, specifications, gallery,
 and image alt text without creating duplicates.
+
+### Pharmaceutical Packaging batch (August 2026)
+
+Local WooCommerce batch marker:
+
+- `_vpn_sample_import = product-samples-pharmaceutical-packaging-202608`
+
+This approved hosting batch imports 10 products from 40 original Media Library images in
+`wp-content/uploads/2026/08/`, with four distinct views per product:
+
+1. Custom Autoinjector Pen Box
+2. Custom Blister Pack Medicine Box
+3. Custom Eye Drop Packaging Box
+4. Custom Inhaler Packaging Box
+5. Custom Liquid Medicine Bottle Box
+6. Custom Nasal Spray Packaging Box
+7. Custom Pharmaceutical Tube Box
+8. Custom Prefilled Syringe Box
+9. Custom Sachet Stick Pack Carton
+10. Custom Transdermal Patch Box
+
+Files used:
+
+- `tools/import-pharmaceutical-packaging-products-202608.php`
+- `tools/verify-pharmaceutical-packaging-products-202608.php`
+- `product-samples-pharmaceutical-packaging-202608-audit.md`
+- `product-samples-pharmaceutical-packaging-202608-descriptions-text-only.md`
+
+The importer is idempotent by product slug and batch marker. It creates or updates
+the WooCommerce records, assigns the Pharmaceutical Packaging Boxes category,
+connects all four Media Library attachments, and writes product-specific secondary
+packaging content. This is part of the current **Latest batch only** hosting release.
+The deploy requires all 40 matching files in `wp-content/uploads/2026/08/`.
+
+### Bird Nest Packaging batch (August 2026)
+
+Local WooCommerce batch marker:
+
+- `_vpn_sample_import = product-samples-bird-nest-packaging-202608`
+
+This approved hosting batch imports 10 products from 40 original Media Library images in
+`wp-content/uploads/2026/08/`, with four distinct views per product:
+
+1. Custom 2 Bottle Bird Nest Beverage Box
+2. Custom 6 Jar Bird Nest Magnetic Gift Box
+3. Custom 8 Jar Bird Nest Lid and Base Gift Box
+4. Custom 12 Jar Double Layer Bird Nest Gift Box
+5. Custom Bird Nest Bowl and Spoon Gift Box
+6. Custom Bird Nest Paper Tube Packaging
+7. Custom Bird Nest Rock Sugar Gift Box
+8. Custom Bird Nest Sachet Packaging Box
+9. Custom Dried Bird Nest Window Display Box
+10. Custom Single Jar Bird Nest Window Box
+
+Files used:
+
+- `tools/import-bird-nest-packaging-products-202608.php`
+- `tools/verify-bird-nest-packaging-products-202608.php`
+- `product-samples-bird-nest-packaging-202608-audit.md`
+- `product-samples-bird-nest-packaging-202608-descriptions-text-only.md`
+
+The importer is idempotent by product slug and batch marker. It keeps the earlier
+four-product bird nest batch unchanged, assigns the Bird Nest Packaging Boxes
+category, connects four Media Library attachments per product, and publishes the
+new products. This is part of the current **Latest batch only** hosting release.
+The deploy requires all 40 matching files in `wp-content/uploads/2026/08/`.
