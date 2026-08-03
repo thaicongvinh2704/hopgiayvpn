@@ -22,7 +22,7 @@ function custom_box_post_sync_registry(): array
             'slug' => 'how-much-does-a-cardboard-box-weigh',
         ),
         'inc/how-are-cardboard-boxes-made-post-sync.php' => array(
-            'version' => '2026-08-03-v1',
+            'version' => '2026-08-03-v2',
             'option' => 'custom_box_cardboard_boxes_made_sync_version',
             'slug' => 'how-are-cardboard-boxes-made',
         ),

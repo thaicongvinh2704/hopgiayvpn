@@ -5,7 +5,7 @@
 
 defined('ABSPATH') || exit;
 
-const CUSTOM_BOX_CARDBOARD_BOXES_MADE_SYNC_VERSION = '2026-08-03-v1';
+const CUSTOM_BOX_CARDBOARD_BOXES_MADE_SYNC_VERSION = '2026-08-03-v2';
 const CUSTOM_BOX_CARDBOARD_BOXES_MADE_VERSION_OPTION = 'custom_box_cardboard_boxes_made_sync_version';
 const CUSTOM_BOX_CARDBOARD_BOXES_MADE_NOTICE_OPTION = 'custom_box_cardboard_boxes_made_sync_notice';
 
