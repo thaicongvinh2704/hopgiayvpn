@@ -5,7 +5,7 @@
 
 defined('ABSPATH') || exit;
 
-const CUSTOM_BOX_CARDBOARD_BOXES_MADE_SYNC_VERSION = '2026-08-03-v2';
+const CUSTOM_BOX_CARDBOARD_BOXES_MADE_SYNC_VERSION = '2026-08-03-v3';
 const CUSTOM_BOX_CARDBOARD_BOXES_MADE_VERSION_OPTION = 'custom_box_cardboard_boxes_made_sync_version';
 const CUSTOM_BOX_CARDBOARD_BOXES_MADE_NOTICE_OPTION = 'custom_box_cardboard_boxes_made_sync_notice';
 
@@ -236,8 +236,11 @@ function custom_box_sync_cardboard_boxes_made_images(int $post_id): void
         if (!$attachment_id) {
             $attachment_id = custom_box_create_cardboard_boxes_made_attachment($image['base'], $post_id, $image);
         }
+        $restored = $attachment_id
+            ? custom_box_restore_cardboard_boxes_made_attachment($attachment_id, $image['base'])
+            : false;
         $url = $attachment_id ? wp_get_attachment_url($attachment_id) : false;
-        if (!$attachment_id || !$url) {
+        if (!$attachment_id || !$restored || !$url) {
             $missing_images[] = $image['base'];
             continue;
         }
@@ -278,6 +281,47 @@ function custom_box_sync_cardboard_boxes_made_images(int $post_id): void
 
     update_option('custom_box_cardboard_boxes_made_missing_images', array_values(array_unique($missing_images)), false);
     update_option('custom_box_cardboard_boxes_made_missing_slots', array_values(array_unique($missing_slots)), false);
+}
+
+function custom_box_restore_cardboard_boxes_made_attachment(int $attachment_id, string $base): bool
+{
+    $uploads = wp_upload_dir();
+    if (!empty($uploads['error'])) {
+        return false;
+    }
+
+    $attached = (string) get_post_meta($attachment_id, '_wp_attached_file', true);
+    $extension = strtolower((string) pathinfo($attached, PATHINFO_EXTENSION));
+    $extensions = in_array($extension, array('webp', 'png', 'jpg', 'jpeg'), true)
+        ? array($extension)
+        : array('webp', 'png', 'jpg', 'jpeg');
+
+    foreach ($extensions as $candidate_extension) {
+        $candidate_relative = '2026/08/' . $base . '.' . $candidate_extension;
+        $upload_path = trailingslashit($uploads['basedir']) . $candidate_relative;
+        if (file_exists($upload_path)) {
+            return true;
+        }
+
+        $bundle_path = get_template_directory() . '/inc/product-sample-deploy-assets/uploads/' . $candidate_relative;
+        if (!file_exists($bundle_path)) {
+            continue;
+        }
+        if (!wp_mkdir_p(dirname($upload_path)) || !copy($bundle_path, $upload_path)) {
+            continue;
+        }
+
+        update_post_meta($attachment_id, '_wp_attached_file', $candidate_relative);
+        require_once ABSPATH . 'wp-admin/includes/image.php';
+        $metadata = wp_generate_attachment_metadata($attachment_id, $upload_path);
+        if (is_array($metadata)) {
+            wp_update_attachment_metadata($attachment_id, $metadata);
+        }
+
+        return true;
+    }
+
+    return false;
 }
 
 function custom_box_find_cardboard_boxes_made_attachment(string $base): int
