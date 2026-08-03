@@ -5,7 +5,7 @@
 
 defined('ABSPATH') || exit;
 
-const CUSTOM_BOX_CARDBOARD_BOXES_MADE_SYNC_VERSION = '2026-08-03-v3';
+const CUSTOM_BOX_CARDBOARD_BOXES_MADE_SYNC_VERSION = '2026-08-03-v4';
 const CUSTOM_BOX_CARDBOARD_BOXES_MADE_VERSION_OPTION = 'custom_box_cardboard_boxes_made_sync_version';
 const CUSTOM_BOX_CARDBOARD_BOXES_MADE_NOTICE_OPTION = 'custom_box_cardboard_boxes_made_sync_notice';
 
@@ -299,13 +299,15 @@ function custom_box_restore_cardboard_boxes_made_attachment(int $attachment_id, 
     foreach ($extensions as $candidate_extension) {
         $candidate_relative = '2026/08/' . $base . '.' . $candidate_extension;
         $upload_path = trailingslashit($uploads['basedir']) . $candidate_relative;
-        if (file_exists($upload_path)) {
-            return true;
-        }
-
         $bundle_path = get_template_directory() . '/inc/product-sample-deploy-assets/uploads/' . $candidate_relative;
         if (!file_exists($bundle_path)) {
             continue;
+        }
+
+        $bundle_hash = hash_file('sha256', $bundle_path);
+        $upload_hash = file_exists($upload_path) ? hash_file('sha256', $upload_path) : false;
+        if (is_string($bundle_hash) && is_string($upload_hash) && hash_equals($bundle_hash, $upload_hash)) {
+            return true;
         }
         if (!wp_mkdir_p(dirname($upload_path)) || !copy($bundle_path, $upload_path)) {
             continue;
