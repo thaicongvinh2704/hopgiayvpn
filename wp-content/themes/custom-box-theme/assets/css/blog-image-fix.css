@@ -1,0 +1,13 @@
+/* Keep single-blog hero images at their source aspect ratio. */
+.blog-seo-hero-image {
+    height: auto;
+}
+
+.blog-seo-hero-image img,
+.blog-single-featured img {
+    aspect-ratio: auto;
+    height: auto !important;
+    max-height: none;
+    object-fit: contain;
+    width: 100%;
+}
