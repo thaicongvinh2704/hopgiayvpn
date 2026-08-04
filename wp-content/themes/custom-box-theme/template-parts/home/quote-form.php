@@ -510,6 +510,17 @@ $quote_status_message = isset($quote_messages[$quote_status]) ? $quote_messages[
                             }
 
                             if ('success' === status) {
+                                if (
+                                    !window.__vpnGoogleAdsQuoteConversionSent &&
+                                    typeof window.gtag === 'function'
+                                ) {
+                                    window.gtag('event', 'conversion', {
+                                        send_to: 'AW-18190091085/6FzwCNKm0NscEM2G2-FD'
+                                    });
+
+                                    window.__vpnGoogleAdsQuoteConversionSent = true;
+                                }
+
                                 form.reset();
                             }
 

@@ -270,6 +270,18 @@ $faqs = array(
                                 status = '';
                             }
 
+                            if (
+                                'success' === status &&
+                                !window.__vpnGoogleAdsQuoteConversionSent &&
+                                typeof window.gtag === 'function'
+                            ) {
+                                window.gtag('event', 'conversion', {
+                                    send_to: 'AW-18190091085/6FzwCNKm0NscEM2G2-FD'
+                                });
+
+                                window.__vpnGoogleAdsQuoteConversionSent = true;
+                            }
+
                             if (message) {
                                 message.hidden = false;
                                 message.className = 'vpn-packaging-quick-message vpn-packaging-quick-message-' + (status || 'failed');
