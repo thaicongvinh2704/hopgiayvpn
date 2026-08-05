@@ -26,6 +26,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_cardboard_boxes_made_sync_version',
             'slug' => 'how-are-cardboard-boxes-made',
         ),
+        'inc/packaging-materials-testing-post-sync.php' => array(
+            'version' => '2026-08-05-v1',
+            'option' => 'custom_box_packaging_materials_testing_sync_version',
+            'slug' => 'testing-methods-packaging-materials',
+        ),
         'inc/cosmetic-brand-perception-post-sync.php' => array(
             'version' => '2026-07-06-approved-v1',
             'option' => 'custom_box_cosmetic_brand_perception_sync_version',
