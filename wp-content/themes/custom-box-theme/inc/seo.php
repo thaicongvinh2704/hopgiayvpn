@@ -560,7 +560,32 @@ function custom_box_get_quote_product_offer($product) {
     );
 }
 
+function custom_box_product_schema_sku_is_valid($sku) {
+    if (!is_scalar($sku)) {
+        return false;
+    }
+
+    $sku = (string) $sku;
+    $length = function_exists('mb_strlen') ? mb_strlen($sku, 'UTF-8') : strlen($sku);
+
+    return $length >= 1 && $length <= 50;
+}
+
+function custom_box_remove_invalid_product_schema_sku($entity) {
+    if (!is_array($entity)) {
+        return $entity;
+    }
+
+    if (array_key_exists('sku', $entity) && !custom_box_product_schema_sku_is_valid($entity['sku'])) {
+        unset($entity['sku']);
+    }
+
+    return $entity;
+}
+
 function custom_box_add_quote_product_schema_fields($entity, $product) {
+    $entity = custom_box_remove_invalid_product_schema_sku($entity);
+
     $entity['brand'] = array(
         '@type' => 'Brand',
         'name'  => 'VPN Packaging',
