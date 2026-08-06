@@ -31,6 +31,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_packaging_materials_testing_sync_version',
             'slug' => 'testing-methods-packaging-materials',
         ),
+        'inc/food-packaging-seal-integrity-testing-post-sync.php' => array(
+            'version' => '2026-08-06-v1',
+            'option' => 'custom_box_food_packaging_seal_integrity_testing_sync_version',
+            'slug' => 'food-packaging-seal-integrity-testing',
+        ),
         'inc/cosmetic-brand-perception-post-sync.php' => array(
             'version' => '2026-07-06-approved-v1',
             'option' => 'custom_box_cosmetic_brand_perception_sync_version',
