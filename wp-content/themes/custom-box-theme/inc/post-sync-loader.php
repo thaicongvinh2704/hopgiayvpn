@@ -22,7 +22,7 @@ function custom_box_post_sync_registry(): array
             'slug' => 'how-much-does-a-cardboard-box-weigh',
         ),
         'inc/how-are-cardboard-boxes-made-post-sync.php' => array(
-            'version' => '2026-08-03-v1',
+            'version' => '2026-08-03-v4',
             'option' => 'custom_box_cardboard_boxes_made_sync_version',
             'slug' => 'how-are-cardboard-boxes-made',
         ),
@@ -30,6 +30,11 @@ function custom_box_post_sync_registry(): array
             'version' => '2026-08-05-v1',
             'option' => 'custom_box_packaging_materials_testing_sync_version',
             'slug' => 'testing-methods-packaging-materials',
+        ),
+        'inc/food-packaging-seal-integrity-testing-post-sync.php' => array(
+            'version' => '2026-08-06-v1',
+            'option' => 'custom_box_food_packaging_seal_integrity_testing_sync_version',
+            'slug' => 'food-packaging-seal-integrity-testing',
         ),
         'inc/cosmetic-brand-perception-post-sync.php' => array(
             'version' => '2026-07-06-approved-v1',
