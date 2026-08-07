@@ -11,6 +11,11 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/large-pizza-box-dimensions-post-sync.php' => array(
+            'version' => '2026-08-07-v1',
+            'option' => 'custom_box_large_pizza_box_dimensions_sync_version',
+            'slug' => 'large-pizza-box-dimensions',
+        ),
         'inc/cereal-box-dimensions-post-sync.php' => array(
             'version' => '2026-08-06-v1',
             'option' => 'custom_box_cereal_box_dimensions_sync_version',
