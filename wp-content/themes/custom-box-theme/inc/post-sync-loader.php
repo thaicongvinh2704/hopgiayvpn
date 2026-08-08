@@ -11,6 +11,11 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/shoe-box-dimensions-post-sync.php' => array(
+            'version' => '2026-08-08-v1',
+            'option' => 'custom_box_shoe_box_dimensions_sync_version',
+            'slug' => 'shoe-box-dimensions',
+        ),
         'inc/large-pizza-box-dimensions-post-sync.php' => array(
             'version' => '2026-08-07-v1',
             'option' => 'custom_box_large_pizza_box_dimensions_sync_version',
