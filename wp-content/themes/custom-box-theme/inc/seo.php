@@ -540,26 +540,6 @@ function custom_box_rank_math_sitemap_exclude_low_value_page_slugs($where, $post
 add_filter('rank_math/sitemap/get_posts/where', 'custom_box_rank_math_sitemap_exclude_low_value_page_slugs', 20, 2);
 add_filter('rank_math/sitemap/post_count/where', 'custom_box_rank_math_sitemap_exclude_low_value_page_slugs', 20, 2);
 
-function custom_box_get_quote_product_offer($product) {
-    $product_url = $product instanceof WC_Product ? $product->get_permalink() : get_permalink();
-
-    return array(
-        '@type'              => 'Offer',
-        'name'               => 'Request a Quote',
-        'url'                => $product_url,
-        'priceCurrency'      => 'USD',
-        'price'              => '0',
-        'availability'       => 'https://schema.org/InStock',
-        'itemCondition'      => 'https://schema.org/NewCondition',
-        'priceSpecification' => array(
-            '@type'         => 'PriceSpecification',
-            'price'         => '0',
-            'priceCurrency' => 'USD',
-            'description'   => 'Price available upon request based on size, material, printing, finishing, and order quantity.',
-        ),
-    );
-}
-
 function custom_box_product_schema_sku_is_valid($sku) {
     if (!is_scalar($sku)) {
         return false;
@@ -590,8 +570,6 @@ function custom_box_add_quote_product_schema_fields($entity, $product) {
         '@type' => 'Brand',
         'name'  => 'VPN Packaging',
     );
-
-    $entity['offers'] = custom_box_get_quote_product_offer($product);
 
     if ($product instanceof WC_Product && $product->get_image_id() && empty($entity['image'])) {
         $image = wp_get_attachment_image_src($product->get_image_id(), 'full');
