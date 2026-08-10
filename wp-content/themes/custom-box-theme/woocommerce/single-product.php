@@ -101,6 +101,15 @@ while (have_posts()) :
         $product_long_content_html = custom_box_enhance_blog_article_images($product_long_content_html);
     }
 
+    $product_long_content_output = $product_long_content_html ? wp_kses_post($product_long_content_html) : '';
+
+    if (
+        829 === $product_id
+        && function_exists('custom_box_custom_vial_boxes_restore_inline_image_attributes')
+    ) {
+        $product_long_content_output = custom_box_custom_vial_boxes_restore_inline_image_attributes($product_long_content_output);
+    }
+
     $related_ids = $product ? wc_get_related_products($product_id, 8) : array();
 ?>
 
@@ -337,8 +346,8 @@ while (have_posts()) :
                 <?php if (!$product_long_content_html && !$hide_auto_description_heading) : ?>
                     <h2><?php echo esc_html(get_the_title()); ?> That Balance Presentation and Function</h2>
                 <?php endif; ?>
-                <?php if ($product_long_content_html) : ?>
-                    <?php echo wp_kses_post($product_long_content_html); ?>
+                <?php if ($product_long_content_output) : ?>
+                    <?php echo $product_long_content_output; ?>
                 <?php else : ?>
                     <p>
                         This product can be customized by size, material, printing method, finishing option, and order quantity.
@@ -348,6 +357,10 @@ while (have_posts()) :
             </div>
         </div>
     </section>
+
+    <?php if ($product_faq_html) : ?>
+        <?php echo wp_kses_post($product_faq_html); ?>
+    <?php endif; ?>
 
     <section class="product-quote-intro">
         <div class="container">
@@ -372,10 +385,6 @@ while (have_posts()) :
             </div>
         </div>
     </section>
-
-    <?php if ($product_faq_html) : ?>
-        <?php echo wp_kses_post($product_faq_html); ?>
-    <?php endif; ?>
 
     <?php if (!empty($related_ids)) : ?>
         <section class="product-related-section">
