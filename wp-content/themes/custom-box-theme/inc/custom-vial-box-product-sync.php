@@ -603,6 +603,8 @@ function custom_box_custom_vial_boxes_image_grid(int $product_id, array $indexes
 function custom_box_custom_vial_boxes_long_description(int $product_id): string
 {
     $pharma_url = esc_url('https://hopgiayvpn.com/products/pharmaceutical-packaging-boxes/');
+    $manufacturer_url = esc_url('https://hopgiayvpn.com/custom-packaging-boxes-manufacturer/');
+    $contact_url = esc_url('https://hopgiayvpn.com/contact/');
     $printed_url = esc_url('https://hopgiayvpn.com/products/custom-printed-paper-boxes/');
     $rigid_url = esc_url('https://hopgiayvpn.com/products/rigid-boxes/');
     $folding_url = esc_url('https://hopgiayvpn.com/products/folding-carton-boxes/');
@@ -687,6 +689,7 @@ function custom_box_custom_vial_boxes_long_description(int $product_id): string
 
   <h2>In-House Manufacturing Process for Custom Vial Boxes</h2>
   <p>Custom vial packaging requires coordination between structural design, printing, converting, insert production and final inspection. Our integrated manufacturing workflow keeps these stages under one production system, allowing the packaging team to check how the carton, insert and vial work together before an order moves into mass production.</p>
+  <p>As a <a href="{$manufacturer_url}">custom packaging manufacturer in Vietnam</a>, we coordinate structural development, printing, converting, insert preparation and inspection within one production workflow.</p>
   <p>Rather than treating the printed carton and protective insert as separate components, we develop them as one packaging structure. The vial dimensions, closure, cavity layout, information panels and packing method are reviewed from the beginning of the project. This approach gives buyers a clearer approval process and reduces the risk of discovering structural problems after printing has started.</p>
 
   <h3>1. Vial Measurement and Structural Engineering</h3>
@@ -774,12 +777,13 @@ function custom_box_custom_vial_boxes_long_description(int $product_id): string
 
   <h3>9. Export Packing and International Supply Experience</h3>
   <p>Our team has supplied custom vial boxes and related paper packaging for customers in international markets including India, the United States, the United Kingdom, Pakistan and Australia. These projects have given us experience working with different box structures, artwork requirements, shipping destinations and export-packing instructions.</p>
+  <p>Buyers sourcing <a href="{$pharma_url}">pharmaceutical packaging boxes</a> can also review our broader packaging category before confirming the structure, insert and artwork requirements for a specific vial project.</p>
   <p>Before shipment, finished vial boxes are counted, protected and packed into export cartons according to the confirmed packing plan. Carton markings, packing quantities and shipping documentation are prepared according to the approved order requirements.</p>
   <p>Market-specific product claims, pharmaceutical labeling and regulatory wording remain subject to the buyer’s approval. Our responsibility is to manufacture the packaging according to the approved structure, artwork, material specification and production sample.</p>
 
   <h2>From Dieline to Finished Vial Packaging</h2>
   <p>By coordinating structural development, sampling, printing, finishing, die-cutting, insert preparation, assembly, inspection and export packing, VPN Paper Box Manufacturer can support custom vial box projects from the initial packaging brief through finished production.</p>
-  <p>To begin a project, send us the vial dimensions, cap or closure measurements, vial count per box, target order quantity, preferred box style, insert material, cavity layout, artwork status and shipping destination. A product photo, reference box or physical vial sample will help our engineering team prepare a more accurate structural recommendation.</p>
+  <p>To begin a project, send us the vial dimensions, cap or closure measurements, vial count per box, target order quantity, preferred box style, insert material, cavity layout, artwork status and shipping destination. A product photo, reference box or physical vial sample will help our engineering team prepare a more accurate structural recommendation. <a href="{$contact_url}">Contact our packaging team</a> to submit your dimensions, target quantity and shipping destination.</p>
 
   <h2>MOQ, Lead Time and Quotation Requirements</h2>
   <p>Minimum order quantity and lead time depend on the confirmed box structure, board or rigid material, insert type, finishing, artwork status and order quantity. They should be confirmed in the quotation rather than assumed from a generic product page. Shipping and export packing requirements should also be discussed for the destination market and the finished pack-out.</p>
