@@ -1,12 +1,11 @@
 <?php
 /**
- * Syncs the prepared shoe-box dimensions post with existing Media Library images.
- * No post or image files are created when the prepared local/hosting records are missing.
+ * Deploys the shoe-box dimensions draft and its five bundled images.
  */
 
 defined('ABSPATH') || exit;
 
-const CUSTOM_BOX_SHOE_BOX_DIMENSIONS_SYNC_VERSION = '2026-08-08-v1';
+const CUSTOM_BOX_SHOE_BOX_DIMENSIONS_SYNC_VERSION = '2026-08-10-v2';
 const CUSTOM_BOX_SHOE_BOX_DIMENSIONS_VERSION_OPTION = 'custom_box_shoe_box_dimensions_sync_version';
 const CUSTOM_BOX_SHOE_BOX_DIMENSIONS_NOTICE_OPTION = 'custom_box_shoe_box_dimensions_sync_notice';
 const CUSTOM_BOX_SHOE_BOX_DIMENSIONS_MISSING_IMAGES_OPTION = 'custom_box_shoe_box_dimensions_missing_images';
@@ -144,23 +143,29 @@ function custom_box_upsert_shoe_box_dimensions_post()
 {
     $data = custom_box_shoe_box_dimensions_post_data();
     $post = custom_box_find_shoe_box_dimensions_post($data['slug'], $data['title']);
-    if (!$post) {
-        return new WP_Error('shoe_box_dimensions_target_missing', 'Prepared shoe box dimensions draft was not found; no new post was created.');
-    }
-
     $payload = array(
-        'ID' => (int) $post->ID,
         'post_title' => $data['title'],
         'post_name' => $data['slug'],
         'post_type' => 'post',
         'post_excerpt' => $data['excerpt'],
-        'post_status' => in_array($post->post_status, array('publish', 'private'), true) ? $post->post_status : 'draft',
     );
-    if (custom_box_shoe_box_dimensions_content_needs_restore($post->post_content)) {
+
+    if ($post) {
+        $payload['ID'] = (int) $post->ID;
+        $payload['post_status'] = in_array($post->post_status, array('publish', 'private'), true) ? $post->post_status : 'draft';
+        $restore_content = !in_array($post->post_status, array('publish', 'private'), true)
+            ? custom_box_shoe_box_dimensions_content_needs_restore((string) $post->post_content)
+            : '' === trim((string) $post->post_content) || false !== strpos((string) $post->post_content, 'IMAGE_SLOT_');
+    } else {
+        $payload['post_status'] = 'draft';
+        $restore_content = true;
+    }
+
+    if ($restore_content) {
         $payload['post_content'] = custom_box_shoe_box_dimensions_content();
     }
 
-    $result = wp_update_post($payload, true);
+    $result = $post ? wp_update_post($payload, true) : wp_insert_post($payload, true);
     if (is_wp_error($result)) {
         return $result;
     }
@@ -227,6 +232,9 @@ function custom_box_sync_shoe_box_dimensions_images(int $post_id): void
 
     foreach ($images as $key => $image) {
         $attachment_id = custom_box_find_shoe_box_dimensions_attachment($image['base']);
+        if (!$attachment_id) {
+            $attachment_id = custom_box_create_shoe_box_dimensions_attachment($image['base'], $post_id, $image);
+        }
         if (!$attachment_id || !wp_get_attachment_url($attachment_id)) {
             $missing_images[] = $image['base'];
             if ('featured' !== $key) {
@@ -285,6 +293,53 @@ function custom_box_find_shoe_box_dimensions_attachment(string $base): int
             return (int) $id;
         }
     }
+    return 0;
+}
+
+function custom_box_create_shoe_box_dimensions_attachment(string $base, int $post_id, array $image): int
+{
+    $uploads = wp_upload_dir();
+    if (!empty($uploads['error'])) {
+        return 0;
+    }
+
+    foreach (array('webp', 'png', 'jpg', 'jpeg') as $extension) {
+        $candidate_relative = '2026/08/' . $base . '.' . $extension;
+        $upload_path = trailingslashit($uploads['basedir']) . $candidate_relative;
+        $bundle_path = get_template_directory() . '/inc/product-sample-deploy-assets/uploads/' . $candidate_relative;
+
+        if (!file_exists($upload_path) && file_exists($bundle_path)) {
+            if (!wp_mkdir_p(dirname($upload_path)) || !copy($bundle_path, $upload_path)) {
+                continue;
+            }
+        }
+        if (!file_exists($upload_path)) {
+            continue;
+        }
+
+        $type = wp_check_filetype(wp_basename($upload_path), null);
+        $attachment_id = wp_insert_attachment(array(
+            'post_mime_type' => $type['type'] ?: 'image/webp',
+            'post_title' => $image['title'],
+            'post_excerpt' => $image['caption'],
+            'post_status' => 'inherit',
+            'post_parent' => $post_id,
+        ), $upload_path, $post_id, true);
+        if (is_wp_error($attachment_id)) {
+            return 0;
+        }
+
+        require_once ABSPATH . 'wp-admin/includes/image.php';
+        update_post_meta((int) $attachment_id, '_wp_attached_file', $candidate_relative);
+        $metadata = wp_generate_attachment_metadata((int) $attachment_id, $upload_path);
+        if (is_array($metadata)) {
+            wp_update_attachment_metadata((int) $attachment_id, $metadata);
+        }
+        update_post_meta((int) $attachment_id, '_wp_attachment_image_alt', $image['alt']);
+
+        return (int) $attachment_id;
+    }
+
     return 0;
 }
 

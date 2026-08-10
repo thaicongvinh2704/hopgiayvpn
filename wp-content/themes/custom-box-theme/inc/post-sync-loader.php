@@ -17,7 +17,7 @@ function custom_box_post_sync_registry(): array
             'slug' => 'girdle-product-packaging-definition-uses',
         ),
         'inc/shoe-box-dimensions-post-sync.php' => array(
-            'version' => '2026-08-08-v1',
+            'version' => '2026-08-10-v2',
             'option' => 'custom_box_shoe_box_dimensions_sync_version',
             'slug' => 'shoe-box-dimensions',
         ),
