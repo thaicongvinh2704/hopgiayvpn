@@ -5,7 +5,7 @@
 
 defined('ABSPATH') || exit;
 
-const CUSTOM_BOX_VIAL_BOXES_SYNC_VERSION = 'custom-vial-boxes-seo-20260810-v3';
+const CUSTOM_BOX_VIAL_BOXES_SYNC_VERSION = 'custom-vial-boxes-seo-20260810-v4';
 const CUSTOM_BOX_VIAL_BOXES_VALIDATION_FAILURES_OPTION = 'custom_box_custom_vial_boxes_validation_failures';
 
 add_action('admin_init', 'custom_box_maybe_sync_custom_vial_boxes_product');

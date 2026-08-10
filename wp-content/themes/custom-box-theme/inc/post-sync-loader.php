@@ -12,7 +12,7 @@ function custom_box_post_sync_registry(): array
 {
     return array(
         'inc/custom-vial-box-product-sync.php' => array(
-            'version' => 'custom-vial-boxes-seo-20260810-v3',
+            'version' => 'custom-vial-boxes-seo-20260810-v4',
             'option' => 'custom_box_custom_vial_boxes_sync_version',
             'slug' => 'custom-vial-packaging-box',
         ),
