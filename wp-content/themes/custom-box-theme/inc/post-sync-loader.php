@@ -11,6 +11,11 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/girdle-product-packaging-post-sync.php' => array(
+            'version' => '2026-08-10-v1',
+            'option' => 'custom_box_girdle_packaging_sync_version',
+            'slug' => 'girdle-product-packaging-definition-uses',
+        ),
         'inc/shoe-box-dimensions-post-sync.php' => array(
             'version' => '2026-08-08-v1',
             'option' => 'custom_box_shoe_box_dimensions_sync_version',
