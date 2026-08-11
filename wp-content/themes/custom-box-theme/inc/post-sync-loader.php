@@ -26,6 +26,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_food_truck_packaging_sync_version',
             'slug' => 'food-truck-packaging-and-disposables',
         ),
+        'inc/kraft-paper-stand-up-pouches-post-sync.php' => array(
+            'version' => '2026-08-11-v1',
+            'option' => 'custom_box_kraft_pouch_sync_version',
+            'slug' => 'kraft-paper-stand-up-pouches',
+        ),
         'inc/girdle-product-packaging-post-sync.php' => array(
             'version' => '2026-08-10-v1',
             'option' => 'custom_box_girdle_packaging_sync_version',
