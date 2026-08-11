@@ -16,6 +16,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_good_packaging_growth_sync_version',
             'slug' => 'how-good-product-packaging-helps-business-grow',
         ),
+        'inc/does-product-weight-include-packaging-post-sync.php' => array(
+            'version' => '2026-08-11-v1',
+            'option' => 'custom_box_product_weight_sync_version',
+            'slug' => 'does-product-weight-include-packaging',
+        ),
         'inc/girdle-product-packaging-post-sync.php' => array(
             'version' => '2026-08-10-v1',
             'option' => 'custom_box_girdle_packaging_sync_version',
