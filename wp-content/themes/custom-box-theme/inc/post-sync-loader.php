@@ -16,6 +16,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_custom_vial_boxes_sync_version',
             'slug' => 'custom-vial-packaging-box',
         ),
+        'inc/kraft-paper-bags-with-handles-post-sync.php' => array(
+            'version' => '2026-08-13-v1',
+            'option' => 'custom_box_kraft_handles_sync_version',
+            'slug' => 'kraft-paper-bags-with-handles',
+        ),
         'inc/how-good-product-packaging-helps-business-grow-post-sync.php' => array(
             'version' => '2026-08-11-v1',
             'option' => 'custom_box_good_packaging_growth_sync_version',
