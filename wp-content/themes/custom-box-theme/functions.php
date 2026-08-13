@@ -25,6 +25,7 @@ $custom_box_inc_files = array(
     'inc/post-sync-loader.php',
     'inc/custom-vial-box-product-sync.php',
     'inc/quote-form-handler.php',
+    'inc/custom-paper-bags-manufacturer-landing.php',
     'inc/woocommerce.php',
 );
 

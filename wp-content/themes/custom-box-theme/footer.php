@@ -1,11 +1,12 @@
 <?php
 $footer_theme_uri = get_template_directory_uri();
-$footer_site_name = get_bloginfo('name') ?: 'VPN Paper Box Manufacturer';
+$footer_is_paper_bags_landing = function_exists('custom_box_is_custom_paper_bags_manufacturer_landing') && custom_box_is_custom_paper_bags_manufacturer_landing();
+$footer_site_name = $footer_is_paper_bags_landing ? 'VPN Paper Box' : (get_bloginfo('name') ?: 'VPN Paper Box Manufacturer');
 $footer_phone_display = '(+84) 933 102 653';
 $footer_phone_link = 'tel:+84933102653';
 $footer_email = 'sales.vpn@hopgiayvpn.com';
 $footer_sales_email = 'paperbox@hopgiayvpn.com';
-$footer_factory_name = 'VPN Paper Box Manufacturer';
+$footer_factory_name = $footer_is_paper_bags_landing ? 'VPN Paper Box' : 'VPN Paper Box Manufacturer';
 $footer_factory_address = '1032 An Phu Tay, Hamlet 4, Hung Long Commune, Binh Chanh District, Ho Chi Minh City, Vietnam';
 $footer_factory_map_url = 'https://maps.app.goo.gl/Z68geWnrTmx6kaCg6';
 $footer_office_address = $footer_factory_address;
@@ -36,14 +37,21 @@ $footer_social_links = array(
                 <strong><?php esc_html_e('Address', 'custom-box-theme'); ?></strong>
                 <p>
                     <?php echo esc_html($footer_factory_name); ?><br>
-                    <span class="footer-address-line">
-                        <span class="footer-address-label"><?php esc_html_e('Office', 'custom-box-theme'); ?></span>
-                        <a href="<?php echo esc_url($footer_office_map_url); ?>" target="_blank" rel="noopener"><?php echo esc_html($footer_office_address); ?></a>
-                    </span>
-                    <span class="footer-address-line">
-                        <span class="footer-address-label"><?php esc_html_e('Factory', 'custom-box-theme'); ?></span>
-                        <a href="<?php echo esc_url($footer_factory_map_url); ?>" target="_blank" rel="noopener"><?php echo esc_html($footer_factory_address); ?></a>
-                    </span>
+                    <?php if ($footer_is_paper_bags_landing) : ?>
+                        <span class="footer-address-line">
+                            <span class="footer-address-label"><?php esc_html_e('Office & Factory', 'custom-box-theme'); ?></span>
+                            <a href="<?php echo esc_url($footer_factory_map_url); ?>" target="_blank" rel="noopener"><?php echo esc_html($footer_factory_address); ?></a>
+                        </span>
+                    <?php else : ?>
+                        <span class="footer-address-line">
+                            <span class="footer-address-label"><?php esc_html_e('Office', 'custom-box-theme'); ?></span>
+                            <a href="<?php echo esc_url($footer_office_map_url); ?>" target="_blank" rel="noopener"><?php echo esc_html($footer_office_address); ?></a>
+                        </span>
+                        <span class="footer-address-line">
+                            <span class="footer-address-label"><?php esc_html_e('Factory', 'custom-box-theme'); ?></span>
+                            <a href="<?php echo esc_url($footer_factory_map_url); ?>" target="_blank" rel="noopener"><?php echo esc_html($footer_factory_address); ?></a>
+                        </span>
+                    <?php endif; ?>
                 </p>
             </div>
 
@@ -73,7 +81,11 @@ $footer_social_links = array(
             <div class="footer-col">
                 <h2><?php echo esc_html($footer_site_name); ?></h2>
                 <p>
-                    <?php esc_html_e('Vietnam-based packaging manufacturer specializing in custom paper boxes, rigid boxes, paper bags, and export-ready packaging for brands, importers, distributors, and agencies.', 'custom-box-theme'); ?>
+                    <?php if ($footer_is_paper_bags_landing) : ?>
+                        <?php esc_html_e('Vietnam-based paper packaging production support for brands, retailers, importers, distributors, and agencies.', 'custom-box-theme'); ?>
+                    <?php else : ?>
+                        <?php esc_html_e('Vietnam-based packaging manufacturer specializing in custom paper boxes, rigid boxes, paper bags, and export-ready packaging for brands, importers, distributors, and agencies.', 'custom-box-theme'); ?>
+                    <?php endif; ?>
                 </p>
 
                 <div class="footer-social">
@@ -88,6 +100,7 @@ $footer_social_links = array(
                     <?php endforeach; ?>
                 </div>
 
+                <?php if (!$footer_is_paper_bags_landing) : ?>
                 <div class="footer-payment">
                     <h3><?php esc_html_e('Payment System:', 'custom-box-theme'); ?></h3>
                     <div class="payment-grid">
@@ -108,6 +121,7 @@ $footer_social_links = array(
                         </div>
                     </div>
                 </div>
+                <?php endif; ?>
             </div>
 
             <details class="footer-col footer-disclosure" open data-responsive-disclosure>
@@ -139,14 +153,22 @@ $footer_social_links = array(
             </details>
 
             <details class="footer-col footer-disclosure" open data-responsive-disclosure>
-                <summary><span class="footer-disclosure-title" role="heading" aria-level="3"><?php esc_html_e('Factory Capabilities', 'custom-box-theme'); ?></span></summary>
+                <summary><span class="footer-disclosure-title" role="heading" aria-level="3"><?php echo $footer_is_paper_bags_landing ? esc_html__('Paper Bag Capabilities', 'custom-box-theme') : esc_html__('Factory Capabilities', 'custom-box-theme'); ?></span></summary>
                 <ul>
-                    <li><?php esc_html_e('Direct factory production in Vietnam', 'custom-box-theme'); ?></li>
-                    <li><?php esc_html_e('Custom size, structure, dieline, and inserts', 'custom-box-theme'); ?></li>
-                    <li><?php esc_html_e('Offset and digital printing support', 'custom-box-theme'); ?></li>
-                    <li><?php esc_html_e('Foil stamping, embossing, lamination, and spot UV', 'custom-box-theme'); ?></li>
-                    <li><?php esc_html_e('Sampling before mass production', 'custom-box-theme'); ?></li>
-                    <li><?php esc_html_e('Export-ready packing for international buyers', 'custom-box-theme'); ?></li>
+                    <?php if ($footer_is_paper_bags_landing) : ?>
+                        <li><?php esc_html_e('Paper bag production support in Vietnam', 'custom-box-theme'); ?></li>
+                        <li><?php esc_html_e('Custom size, paper, handles, artwork, and finishing review', 'custom-box-theme'); ?></li>
+                        <li><?php esc_html_e('Printing and finishing options confirmed per project', 'custom-box-theme'); ?></li>
+                        <li><?php esc_html_e('Sampling can be arranged when required', 'custom-box-theme'); ?></li>
+                        <li><?php esc_html_e('Carton packing and shipment review', 'custom-box-theme'); ?></li>
+                    <?php else : ?>
+                        <li><?php esc_html_e('Direct factory production in Vietnam', 'custom-box-theme'); ?></li>
+                        <li><?php esc_html_e('Custom size, structure, dieline, and inserts', 'custom-box-theme'); ?></li>
+                        <li><?php esc_html_e('Offset and digital printing support', 'custom-box-theme'); ?></li>
+                        <li><?php esc_html_e('Foil stamping, embossing, lamination, and spot UV', 'custom-box-theme'); ?></li>
+                        <li><?php esc_html_e('Sampling before mass production', 'custom-box-theme'); ?></li>
+                        <li><?php esc_html_e('Export-ready packing for international buyers', 'custom-box-theme'); ?></li>
+                    <?php endif; ?>
                 </ul>
             </details>
         </div>

@@ -334,7 +334,7 @@
     <?php endif; ?>
 
     <div class="mobile-menu-drawer__contact">
-        <h2><?php esc_html_e('Contact Factory Sales', 'custom-box-theme'); ?></h2>
+        <h2><?php echo function_exists('custom_box_is_custom_paper_bags_manufacturer_landing') && custom_box_is_custom_paper_bags_manufacturer_landing() ? esc_html__('Contact VPN Paper Box Sales', 'custom-box-theme') : esc_html__('Contact Factory Sales', 'custom-box-theme'); ?></h2>
         <a href="tel:+84933102653"><i class="fas fa-phone" aria-hidden="true"></i><span>(+84) 933 102 653</span></a>
         <a href="mailto:sales.vpn@hopgiayvpn.com"><i class="fas fa-envelope" aria-hidden="true"></i><span>sales.vpn@hopgiayvpn.com</span></a>
         <a href="https://wa.me/84933102653" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp" aria-hidden="true"></i><span>WhatsApp</span></a>
