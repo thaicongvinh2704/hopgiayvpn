@@ -54,6 +54,7 @@ $paper_bag_landing_image_overrides = array(
     'custom-mooncake-gift-box-set-with-paper-bag' => array('file' => 'custom-illustrated-gift-box-set-with-paper-bag.webp', 'title' => 'Custom Illustrated Gift Box Set with Paper Bag', 'alt' => 'Illustrated paper gift bag with ribbon handle for a gift box set'),
     'custom-phone-packaging-box-with-paper-bag' => array('file' => 'custom-perfume-gift-box-with-paper-bag.webp', 'title' => 'Custom Perfume Gift Box with Paper Bag', 'alt' => 'Premium perfume gift box with matching paper bag'),
     'custom-birthday-paper-gift-bag-with-candle-print' => array('file' => 'custom-olive-floral-paper-gift-bag-with-fabric-handles.webp', 'title' => 'Custom Olive Floral Paper Gift Bag with Fabric Handles', 'alt' => 'Olive green floral paper gift bag with white fabric handles and a hanging tag'),
+    'custom-cosmetic-paper-bag' => array('file' => 'custom-cosmetic-paper-bag-with-rope-handles.webp', 'title' => 'CUSTOM COSMETIC PAPER BAG', 'alt' => 'White cosmetic paper bag with white braided rope handles'),
 );
 if ($paper_bag_category && !is_wp_error($paper_bag_category)) {
     $resolved_category_link = get_term_link($paper_bag_category);
