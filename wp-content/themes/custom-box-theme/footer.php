@@ -82,7 +82,7 @@ $footer_social_links = array(
                 <h2><?php echo esc_html($footer_site_name); ?></h2>
                 <p>
                     <?php if ($footer_is_paper_bags_landing) : ?>
-                        <?php esc_html_e('Vietnam-based paper packaging production support for brands, retailers, importers, distributors, and agencies.', 'custom-box-theme'); ?>
+                        <?php esc_html_e('Vietnam-based paper packaging production support for brands, retailers, importers, distributors, and agencies. VPN Paper Box is a packaging brand of Công ty TNHH Quảng Cáo VPN.', 'custom-box-theme'); ?>
                     <?php else : ?>
                         <?php esc_html_e('Vietnam-based packaging manufacturer specializing in custom paper boxes, rigid boxes, paper bags, and export-ready packaging for brands, importers, distributors, and agencies.', 'custom-box-theme'); ?>
                     <?php endif; ?>
@@ -101,26 +101,26 @@ $footer_social_links = array(
                 </div>
 
                 <?php if (!$footer_is_paper_bags_landing) : ?>
-                <div class="footer-payment">
-                    <h3><?php esc_html_e('Payment System:', 'custom-box-theme'); ?></h3>
-                    <div class="payment-grid">
-                        <div class="payment-item">
-                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/paypal.png'); ?>" alt="PayPal" width="56" height="17" loading="lazy" decoding="async">
-                        </div>
-                        <div class="payment-item">
-                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/master-card.png'); ?>" alt="Mastercard" width="38" height="25" loading="lazy" decoding="async">
-                        </div>
-                        <div class="payment-item">
-                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/visa.png'); ?>" alt="Visa" width="46" height="15" loading="lazy" decoding="async">
-                        </div>
-                        <div class="payment-item">
-                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/maestro.png'); ?>" alt="Maestro" width="38" height="25" loading="lazy" decoding="async">
-                        </div>
-                        <div class="payment-item">
-                            <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/bank.png'); ?>" alt="<?php esc_attr_e('Bank transfer', 'custom-box-theme'); ?>" width="60" height="21" loading="lazy" decoding="async">
+                    <div class="footer-payment">
+                        <h3><?php esc_html_e('Payment System:', 'custom-box-theme'); ?></h3>
+                        <div class="payment-grid">
+                            <div class="payment-item">
+                                <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/paypal.png'); ?>" alt="PayPal" width="56" height="17" loading="lazy" decoding="async">
+                            </div>
+                            <div class="payment-item">
+                                <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/master-card.png'); ?>" alt="Mastercard" width="38" height="25" loading="lazy" decoding="async">
+                            </div>
+                            <div class="payment-item">
+                                <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/visa.png'); ?>" alt="Visa" width="46" height="15" loading="lazy" decoding="async">
+                            </div>
+                            <div class="payment-item">
+                                <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/maestro.png'); ?>" alt="Maestro" width="38" height="25" loading="lazy" decoding="async">
+                            </div>
+                            <div class="payment-item">
+                                <img src="<?php echo esc_url($footer_theme_uri . '/assets/images/bank.png'); ?>" alt="<?php esc_attr_e('Bank transfer', 'custom-box-theme'); ?>" width="60" height="21" loading="lazy" decoding="async">
+                            </div>
                         </div>
                     </div>
-                </div>
                 <?php endif; ?>
             </div>
 
@@ -155,20 +155,12 @@ $footer_social_links = array(
             <details class="footer-col footer-disclosure" open data-responsive-disclosure>
                 <summary><span class="footer-disclosure-title" role="heading" aria-level="3"><?php echo $footer_is_paper_bags_landing ? esc_html__('Paper Bag Capabilities', 'custom-box-theme') : esc_html__('Factory Capabilities', 'custom-box-theme'); ?></span></summary>
                 <ul>
-                    <?php if ($footer_is_paper_bags_landing) : ?>
-                        <li><?php esc_html_e('Paper bag production support in Vietnam', 'custom-box-theme'); ?></li>
-                        <li><?php esc_html_e('Custom size, paper, handles, artwork, and finishing review', 'custom-box-theme'); ?></li>
-                        <li><?php esc_html_e('Printing and finishing options confirmed per project', 'custom-box-theme'); ?></li>
-                        <li><?php esc_html_e('Sampling can be arranged when required', 'custom-box-theme'); ?></li>
-                        <li><?php esc_html_e('Carton packing and shipment review', 'custom-box-theme'); ?></li>
-                    <?php else : ?>
-                        <li><?php esc_html_e('Direct factory production in Vietnam', 'custom-box-theme'); ?></li>
-                        <li><?php esc_html_e('Custom size, structure, dieline, and inserts', 'custom-box-theme'); ?></li>
-                        <li><?php esc_html_e('Offset and digital printing support', 'custom-box-theme'); ?></li>
-                        <li><?php esc_html_e('Foil stamping, embossing, lamination, and spot UV', 'custom-box-theme'); ?></li>
-                        <li><?php esc_html_e('Sampling before mass production', 'custom-box-theme'); ?></li>
-                        <li><?php esc_html_e('Export-ready packing for international buyers', 'custom-box-theme'); ?></li>
-                    <?php endif; ?>
+                    <li><?php echo $footer_is_paper_bags_landing ? esc_html__('Paper bag production support in Vietnam', 'custom-box-theme') : esc_html__('Direct factory production in Vietnam', 'custom-box-theme'); ?></li>
+                    <li><?php esc_html_e('Custom size, structure, dieline, and inserts', 'custom-box-theme'); ?></li>
+                    <li><?php esc_html_e('Offset and digital printing support', 'custom-box-theme'); ?></li>
+                    <li><?php esc_html_e('Foil stamping, embossing, lamination, and spot UV', 'custom-box-theme'); ?></li>
+                    <li><?php echo $footer_is_paper_bags_landing ? esc_html__('Sampling can be arranged before bulk production when required', 'custom-box-theme') : esc_html__('Sampling before mass production', 'custom-box-theme'); ?></li>
+                    <li><?php echo $footer_is_paper_bags_landing ? esc_html__('Carton packing and shipment details reviewed against the approved order', 'custom-box-theme') : esc_html__('Export-ready packing for international buyers', 'custom-box-theme'); ?></li>
                 </ul>
             </details>
         </div>

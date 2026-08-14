@@ -568,7 +568,7 @@ function custom_box_add_quote_product_schema_fields($entity, $product) {
 
     $entity['brand'] = array(
         '@type' => 'Brand',
-        'name'  => 'VPN Packaging',
+        'name'  => 'VPN Paper Box',
     );
 
     if ($product instanceof WC_Product && $product->get_image_id() && empty($entity['image'])) {
@@ -606,12 +606,8 @@ function custom_box_get_business_schema() {
     return array(
         '@type'       => array('Organization', 'LocalBusiness'),
         '@id'         => home_url('/#organization'),
-        'name'        => 'VPN Paper Box Manufacturer',
-        'alternateName' => array(
-            'VPN Packaging',
-            'VPN Paper Box Factory',
-            'Vietnam Paper Box Factory',
-        ),
+        'name'        => 'VPN Paper Box',
+        'legalName'   => 'Công ty TNHH Quảng Cáo VPN',
         'url'         => $site_url,
         'logo'        => array(
             '@type' => 'ImageObject',
@@ -695,10 +691,13 @@ function custom_box_rank_math_json_ld($data) {
     $remove_article_schema = custom_box_is_low_value_page();
     $is_packaging_money_page = custom_box_is_packaging_money_page();
     $is_paper_box_manufacturer_page = custom_box_is_paper_box_manufacturer_page();
+    $is_paper_bag_landing = function_exists('custom_box_is_custom_paper_bags_manufacturer_landing') && custom_box_is_custom_paper_bags_manufacturer_landing();
     $is_product_page = function_exists('is_product') && is_product();
     $is_non_article_page = (is_page() || is_front_page() || is_home() || (function_exists('is_product_taxonomy') && is_product_taxonomy())) && !is_singular('post') && !$is_product_page;
     $product = $is_product_page && function_exists('wc_get_product') ? wc_get_product(get_queried_object_id()) : null;
     $has_product_schema = false;
+    $paper_bag_organization_key = null;
+    $paper_bag_business_schema = $is_paper_bag_landing ? custom_box_get_business_schema() : array();
 
     foreach ($data as $key => $entity) {
         if (!is_array($entity)) {
@@ -707,6 +706,27 @@ function custom_box_rank_math_json_ld($data) {
 
         $types = isset($entity['@type']) ? (array) $entity['@type'] : array();
         $is_product_schema = array_intersect($types, array('Product', 'WooCommerceProduct', 'ProductGroup'));
+
+        if ($is_paper_bag_landing && in_array('Organization', $types, true)) {
+            if (null !== $paper_bag_organization_key) {
+                unset($data[$key]);
+                continue;
+            }
+
+            $paper_bag_organization_key = $key;
+            $data[$key] = array_merge($entity, $paper_bag_business_schema);
+            $data[$key]['@id'] = home_url('/#organization');
+            $data[$key]['name'] = 'VPN Paper Box';
+            $data[$key]['legalName'] = 'Công ty TNHH Quảng Cáo VPN';
+            $data[$key]['areaServed'] = 'Vietnam';
+            if (!empty($data[$key]['contactPoint']) && is_array($data[$key]['contactPoint'])) {
+                foreach ($data[$key]['contactPoint'] as $contact_point_key => $contact_point) {
+                    if (is_array($contact_point)) {
+                        $data[$key]['contactPoint'][$contact_point_key]['areaServed'] = 'Vietnam';
+                    }
+                }
+            }
+        }
 
         if ($is_packaging_money_page || $is_paper_box_manufacturer_page) {
             $data[$key]['inLanguage'] = 'en-US';
@@ -770,9 +790,14 @@ function custom_box_rank_math_json_ld($data) {
         );
     }
 
-    $data['schema-customBoxOrganization'] = custom_box_get_business_schema();
+    if (!$is_paper_bag_landing) {
+        $data['schema-customBoxOrganization'] = custom_box_get_business_schema();
+    } elseif (null === $paper_bag_organization_key) {
+        $data['schema-customBoxOrganization'] = $paper_bag_business_schema;
+        $data['schema-customBoxOrganization']['@id'] = home_url('/#organization');
+    }
 
-    if ($is_packaging_money_page || $is_paper_box_manufacturer_page) {
+    if (($is_packaging_money_page || $is_paper_box_manufacturer_page) && isset($data['schema-customBoxOrganization'])) {
         $data['schema-customBoxOrganization']['inLanguage'] = 'en-US';
     }
 

@@ -13,6 +13,19 @@ function custom_box_custom_paper_bags_url() {
     return home_url(custom_box_custom_paper_bags_path());
 }
 
+function custom_box_custom_paper_bags_faqs() {
+    return array(
+        array('question' => 'What information is needed for a paper bag quotation?', 'answer' => 'Share the product being carried, finished size, quantity, delivery country, preferred paper or handles, artwork, and target schedule when known.'),
+        array('question' => 'What paper and handle options are available?', 'answer' => 'Options may include brown kraft, white kraft, coated or art paper, specialty paper, twisted paper, flat paper, cotton or PP rope, ribbon, and die-cut handles. The final combination depends on the bag structure, load, finish, and order requirements.'),
+        array('question' => 'Can you match Pantone colors and custom artwork?', 'answer' => 'We review CMYK and Pantone requirements together with the artwork, paper surface, and print method. The final color direction is confirmed before production.'),
+        array('question' => 'Can I request a sample before bulk production?', 'answer' => 'Sampling can be arranged before bulk production when the project requires approval of structure, artwork, material, or finish.'),
+        array('question' => 'What is the MOQ for custom paper bags?', 'answer' => 'MOQ varies by bag construction, paper, handles, printing and finishing. Share your specification and estimated quantity so the applicable MOQ can be confirmed with the quotation.'),
+        array('question' => 'How is the production timeline confirmed?', 'answer' => 'Sampling and bulk-production schedules are confirmed after the bag specification, quantity, artwork approval, sampling requirements and delivery plan are reviewed.'),
+        array('question' => 'Can the bags be packed for international shipping?', 'answer' => 'Carton packing and shipment details can be reviewed against the approved order specification for international B2B projects.'),
+        array('question' => 'Can you produce matching paper bags and boxes?', 'answer' => 'Paper bags and paper boxes can be discussed together when a project requires both. The matching scope is confirmed after reviewing the product, quantity, materials, and artwork.'),
+    );
+}
+
 /**
  * The landing page is code-backed rather than a database Page post. WordPress
  * and SEO plugins still need a complete queried object for body classes,
@@ -33,7 +46,7 @@ function custom_box_custom_paper_bags_virtual_post() {
             'post_date'             => $now,
             'post_date_gmt'         => get_gmt_from_date($now),
             'post_content'          => '',
-            'post_title'            => 'Custom Paper Bags With Logo',
+            'post_title'            => 'Custom Paper Bag Manufacturer in Vietnam for Brands & B2B Buyers',
             'post_excerpt'          => custom_box_custom_paper_bags_description(),
             'post_status'           => 'publish',
             'comment_status'        => 'closed',
@@ -216,11 +229,11 @@ function custom_box_custom_paper_bags_language_attributes($attributes) {
 add_filter('language_attributes', 'custom_box_custom_paper_bags_language_attributes', 30);
 
 function custom_box_custom_paper_bags_title() {
-    return 'Custom Paper Bags With Logo | Vietnam Manufacturer | VPN Paper Box';
+    return 'Custom Paper Bag Manufacturer in Vietnam | VPN Paper Box';
 }
 
 function custom_box_custom_paper_bags_description() {
-    return 'Compare custom paper bag materials, handles, printing and finishing options with VPN Paper Box, a Vietnam-based paper packaging supplier for brands and B2B buyers.';
+    return 'Custom paper bags with logo for brands, retailers and importers. Compare paper, handles and printing options and request a project-specific quote from Vietnam.';
 }
 
 function custom_box_custom_paper_bags_document_title($title) {
@@ -292,16 +305,7 @@ function custom_box_custom_paper_bags_schema() {
 
     $url = custom_box_custom_paper_bags_url();
     $image = get_template_directory_uri() . '/assets/images/paper-bag-landing/paper-bag-factory-production-floor.webp';
-    $faq = array(
-        array('question' => 'What information is needed for a paper bag quotation?', 'answer' => 'Share the product being carried, finished size, quantity, delivery country, preferred paper or handles, artwork, and target schedule when known.'),
-        array('question' => 'What paper and handle options are available?', 'answer' => 'Options may include brown kraft, white kraft, coated or art paper, specialty paper, twisted paper, flat paper, cotton or PP rope, ribbon, and die-cut handles. The final combination depends on the bag structure, load, finish, and order requirements.'),
-        array('question' => 'Can you match Pantone colors and custom artwork?', 'answer' => 'We review CMYK and Pantone requirements together with the artwork, paper surface, and print method. The final color direction is confirmed before production.'),
-        array('question' => 'Can I request a sample before mass production?', 'answer' => 'Sampling can be arranged before bulk production when the project requires approval of structure, artwork, material, or finish.'),
-        array('question' => 'What is the MOQ for custom paper bags?', 'answer' => 'MOQ depends on the bag structure, material, printing, and quantity requirements. The applicable MOQ is confirmed with the project quotation.'),
-        array('question' => 'How is the production timeline confirmed?', 'answer' => 'Sampling and production timing depend on the approved specification, quantity, sampling needs, and order schedule.'),
-        array('question' => 'Can the bags be packed for international shipping?', 'answer' => 'Carton packing and shipment details can be reviewed against the approved order specification for international B2B projects.'),
-        array('question' => 'Can you produce matching paper bags and boxes?', 'answer' => 'Paper bags and paper boxes can be discussed together when a project requires both. The matching scope is confirmed after reviewing the product, quantity, materials, and artwork.'),
-    );
+    $faq = custom_box_custom_paper_bags_faqs();
     $faq_entities = array();
     foreach ($faq as $item) {
         $faq_entities[] = array(
@@ -326,15 +330,29 @@ function custom_box_custom_paper_bags_schema() {
             array(
                 '@type' => 'Service',
                 '@id' => $url . '#service',
-                'name' => 'Custom Paper Bags With Logo',
-                'serviceType' => 'Custom paper bag manufacturing and logo printing',
+                'name' => 'Custom Paper Bag Manufacturing',
+                'serviceType' => 'Custom paper bag manufacturing',
                 'provider' => array('@id' => home_url('/#organization')),
-                'areaServed' => array('Vietnam', 'Worldwide'),
+                'areaServed' => 'Vietnam',
                 'url' => $url,
             ),
             array('@type' => 'FAQPage', '@id' => $url . '#faq', 'mainEntity' => $faq_entities),
         ),
     );
+
+    if (!defined('RANK_MATH_VERSION')) {
+        $organization = function_exists('custom_box_get_business_schema') ? custom_box_get_business_schema() : array(
+            '@type' => array('Organization', 'LocalBusiness'),
+            '@id' => home_url('/#organization'),
+            'name' => 'VPN Paper Box',
+            'legalName' => 'Công ty TNHH Quảng Cáo VPN',
+            'url' => home_url('/'),
+        );
+        $organization['@id'] = home_url('/#organization');
+        $organization['name'] = 'VPN Paper Box';
+        $organization['legalName'] = 'Công ty TNHH Quảng Cáo VPN';
+        $schema['@graph'][] = $organization;
+    }
 
     echo '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) . '</script>' . "\n";
 }

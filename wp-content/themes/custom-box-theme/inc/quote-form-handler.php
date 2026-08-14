@@ -287,6 +287,16 @@ function custom_box_quote_form_rate_limit_check($context = 'quote') {
     );
 }
 
+function custom_box_quote_form_duplicate_key($email, $phone, $product_name, $quantity) {
+    $payload = strtolower(trim((string) $email))
+        . '|' . preg_replace('/\D+/', '', (string) $phone)
+        . '|' . strtolower(trim((string) $product_name))
+        . '|' . strtolower(trim((string) $quantity))
+        . '|' . custom_box_quote_form_ip_hash();
+
+    return 'custom_box_quote_duplicate_' . hash('sha256', $payload);
+}
+
 function custom_box_public_form_antispam_check($context = 'quote') {
     $context = custom_box_quote_form_anti_spam_context($context);
     $honeypot = custom_box_quote_form_post_text('website_url', 255);
@@ -330,7 +340,7 @@ function custom_box_public_form_antispam_check($context = 'quote') {
         );
     }
 
-    if ('quote' === $context) {
+    if ('quote' === $context && custom_box_quote_form_recaptcha_enabled()) {
         $recaptcha_check = custom_box_quote_form_verify_recaptcha();
         if (empty($recaptcha_check['success'])) {
             return array(
@@ -736,6 +746,13 @@ function custom_box_quote_form_should_enqueue_recaptcha() {
         || is_page_template('page-paper-box-manufacturer.php')
         || is_page_template('page-landing-packaging.php')
         || is_singular('product');
+
+    if (
+        (function_exists('custom_box_is_paper_bag_ads_landing') && custom_box_is_paper_bag_ads_landing())
+        || (function_exists('custom_box_is_custom_paper_bags_manufacturer_landing') && custom_box_is_custom_paper_bags_manufacturer_landing())
+    ) {
+        $should_enqueue = true;
+    }
 
     if (function_exists('is_product') && is_product()) {
         $should_enqueue = true;
@@ -1232,6 +1249,7 @@ function custom_box_build_quote_email($quote_data) {
             'printing_option'     => '',
             'finishing_option'    => '',
             'quantity'            => '',
+            'production_timeline' => '',
             'company'             => '',
             'country'             => '',
             'full_name'           => '',
@@ -1248,6 +1266,9 @@ function custom_box_build_quote_email($quote_data) {
             'utm_campaign'        => '',
             'utm_term'            => '',
             'utm_content'         => '',
+            'gclid'               => '',
+            'gbraid'              => '',
+            'wbraid'              => '',
             'referer'             => '',
             'spam_status'         => 'clean',
             'spam_score'          => 0,
@@ -1271,18 +1292,24 @@ function custom_box_build_quote_email($quote_data) {
         $subject = '[Suspicious Quote Lead] ' . $subject;
     }
 
+    $is_paper_bag_quote = in_array($quote_data['quote_source'], array('paper_bag_ads_landing', 'custom_paper_bags_manufacturer', 'custom_paper_bags_manufacturer_quick_form'), true);
+    $size_label = $is_paper_bag_quote ? 'Width x Height x Gusset' : 'Size';
+    $stock_label = $is_paper_bag_quote ? 'Paper / Stock' : 'Box Type / Stock Option';
+    $preference_label = $is_paper_bag_quote ? 'Handle Preference' : 'Material Preference';
+
     $body = array(
         'New quote request',
         '',
         'Product Name: ' . $quote_data['product_name'],
         'Form Location: ' . $quote_data['form_location'],
         'Quote Source: ' . $quote_data['quote_source'],
-        'Size: ' . trim($quote_data['length'] . ' x ' . $quote_data['width'] . ' x ' . $quote_data['depth'] . ' ' . $quote_data['unit']),
-        'Box Type / Stock Option: ' . $quote_data['stock_option'],
-        'Material Preference: ' . $quote_data['material_preference'],
+        $size_label . ': ' . trim($quote_data['length'] . ' x ' . $quote_data['width'] . ' x ' . $quote_data['depth'] . ' ' . $quote_data['unit']),
+        $stock_label . ': ' . $quote_data['stock_option'],
+        $preference_label . ': ' . $quote_data['material_preference'],
         'Printing Option: ' . $quote_data['printing_option'],
         'Finishing Option: ' . $quote_data['finishing_option'],
         'Quantity: ' . $quote_data['quantity'],
+        'Requested Timeline: ' . $quote_data['production_timeline'],
         '',
         'Customer Information',
         'Full Name: ' . $full_name,
@@ -1303,6 +1330,9 @@ function custom_box_build_quote_email($quote_data) {
         'UTM Campaign: ' . $quote_data['utm_campaign'],
         'UTM Term: ' . $quote_data['utm_term'],
         'UTM Content: ' . $quote_data['utm_content'],
+        'GCLID: ' . $quote_data['gclid'],
+        'GBRAID: ' . (isset($quote_data['gbraid']) ? $quote_data['gbraid'] : ''),
+        'WBRAID: ' . (isset($quote_data['wbraid']) ? $quote_data['wbraid'] : ''),
     );
 
     if ('suspicious' === $spam_status) {
@@ -1500,6 +1530,7 @@ function custom_box_handle_quote_form() {
     $printing_option = custom_box_quote_form_post_text('printing_option', 200);
     $finishing_option = custom_box_quote_form_post_text('finishing_option', 200);
     $quantity = custom_box_quote_form_post_text('quantity', 120);
+    $production_timeline = custom_box_quote_form_post_text('production_timeline', 200);
     $company = custom_box_quote_form_post_text('company', 200);
     $country = custom_box_quote_form_post_text('country', 120);
     $full_name = custom_box_quote_form_post_text('full_name', 200);
@@ -1515,8 +1546,13 @@ function custom_box_handle_quote_form() {
     $utm_campaign = custom_box_quote_form_post_text('utm_campaign', 150);
     $utm_term = custom_box_quote_form_post_text('utm_term', 150);
     $utm_content = custom_box_quote_form_post_text('utm_content', 150);
+    $gclid = custom_box_quote_form_post_text('gclid', 180);
+    $gbraid = custom_box_quote_form_post_text('gbraid', 180);
+    $wbraid = custom_box_quote_form_post_text('wbraid', 180);
+    $privacy_consent = custom_box_quote_form_post_key('privacy_consent', 20);
     $email_subject = custom_box_quote_form_post_text('email_subject', 200);
     $attachments = array();
+    $duplicate_key = '';
 
     $quote_data = array(
         'product_name'        => $product_name,
@@ -1529,6 +1565,7 @@ function custom_box_handle_quote_form() {
         'printing_option'     => $printing_option,
         'finishing_option'    => $finishing_option,
         'quantity'            => $quantity,
+        'production_timeline' => $production_timeline,
         'company'             => $company,
         'country'             => $country,
         'full_name'           => $full_name,
@@ -1545,6 +1582,9 @@ function custom_box_handle_quote_form() {
         'utm_campaign'        => $utm_campaign,
         'utm_term'            => $utm_term,
         'utm_content'         => $utm_content,
+        'gclid'               => $gclid,
+        'gbraid'              => $gbraid,
+        'wbraid'              => $wbraid,
         'referer'             => wp_get_referer(),
     );
 
@@ -1553,6 +1593,10 @@ function custom_box_handle_quote_form() {
     $quote_data['spam_status'] = 'clean';
     $quote_data['spam_score'] = 0;
     $quote_data['spam_reasons'] = array();
+
+    if (in_array($quote_source, array('paper_bag_ads_landing', 'custom_paper_bags_manufacturer'), true) && 'yes' !== $privacy_consent) {
+        custom_box_quote_form_reject('consent', 400, array('validation' => 'paper_bag_ads_privacy_consent_required'));
+    }
 
     if ('paper_box_manufacturer' === $quote_source) {
         if (!$full_name) {
@@ -1572,8 +1616,20 @@ function custom_box_handle_quote_form() {
         ) {
             custom_box_quote_form_reject('missing', 400, array('validation' => 'paper_box_manufacturer_required_fields'));
         }
+    } elseif ('custom_paper_bags_manufacturer' === $quote_source) {
+        if (!$product_name || !$full_name || !$email || !is_email($email) || !$quantity || !$country) {
+            custom_box_quote_form_reject('missing', 400, array('validation' => 'custom_paper_bags_manufacturer_required_fields'));
+        }
     } elseif (!$product_name || !$full_name || !$email || !is_email($email)) {
         custom_box_quote_form_reject('missing', 400, array('validation' => 'quote_required_fields'));
+    }
+
+    if (in_array($quote_source, array('paper_bag_ads_landing', 'custom_paper_bags_manufacturer'), true)) {
+        $duplicate_key = custom_box_quote_form_duplicate_key($email, $phone, $product_name, $quantity);
+
+        if (get_transient($duplicate_key)) {
+            custom_box_quote_form_reject('duplicate', 409, array('validation' => 'paper_bag_ads_duplicate_request'));
+        }
     }
 
     if (!empty($_FILES['artwork']['name'])) {
@@ -1633,6 +1689,10 @@ function custom_box_handle_quote_form() {
     $quote_id = custom_box_save_quote_request($quote_data, $attachments);
     if (is_wp_error($quote_id)) {
         custom_box_quote_form_reject('failed', 500, array('save_error' => $quote_id->get_error_code()));
+    }
+
+    if ($duplicate_key) {
+        set_transient($duplicate_key, (int) $quote_id, 15 * MINUTE_IN_SECONDS);
     }
 
     custom_box_quote_form_log('quote_saved', array('quote_id' => $quote_id));
