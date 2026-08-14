@@ -728,6 +728,10 @@ function custom_box_rank_math_json_ld($data) {
             }
         }
 
+        if ($is_paper_bag_landing && in_array('WebSite', $types, true)) {
+            $data[$key]['name'] = 'VPN Paper Box';
+        }
+
         if ($is_packaging_money_page || $is_paper_box_manufacturer_page) {
             $data[$key]['inLanguage'] = 'en-US';
         }

@@ -54,11 +54,11 @@ $paper_bag_category = function_exists('get_term_by') ? get_term_by('slug', 'pape
 $paper_bag_category_link = home_url('/products/paper-bags-with-logo/');
 $paper_bag_landing_image_overrides = array(
     'custom-luxury-paper-gift-bag-with-ribbon-handles' => array('file' => 'custom-floral-paper-gift-bag-with-ribbon-handles.webp', 'title' => 'Custom Floral Paper Gift Bag with Ribbon Handles', 'alt' => 'Yellow floral paper gift bag with ribbon handles'),
-    'custom-birthday-paper-gift-bag-with-candle-print' => array('file' => 'custom-olive-floral-paper-gift-bag-with-fabric-handles.webp', 'title' => 'Custom Olive Floral Paper Gift Bag with Fabric Handles', 'alt' => 'Olive green floral paper gift bag with white fabric handles and a hanging tag'),
+    'custom-birthday-paper-gift-bag-with-candle-print' => array('file' => 'custom-olive-floral-paper-gift-bag-with-fabric-handles.webp', 'title' => 'Custom Olive Green Floral Paper Gift Bag with Fabric Handles', 'alt' => 'Olive green floral paper gift bag with white fabric handles and a hanging tag'),
     'custom-cosmetic-paper-bag' => array('file' => 'custom-cosmetic-paper-bag-with-rope-handles.webp', 'title' => 'Custom Cosmetic Paper Bag', 'alt' => 'White cosmetic paper bag with white braided rope handles'),
 );
 $paper_bag_landing_title_overrides = array(
-    'custom-birthday-paper-gift-bag-with-candle-print' => 'Custom Birthday Paper Gift Bag with Candle Print',
+    'custom-birthday-paper-gift-bag-with-candle-print' => 'Custom Olive Green Floral Paper Gift Bag with Fabric Handles',
     'custom-cosmetic-paper-bag' => 'Custom Cosmetic Paper Bag',
     'custom-kraft-paper-bag-for-supplement-packaging' => 'Custom Kraft Paper Bag for Supplement Packaging',
     'custom-lime-green-paper-shopping-bag-with-rope-handles' => 'Custom Lime Green Paper Shopping Bag with Rope Handles',
@@ -66,6 +66,13 @@ $paper_bag_landing_title_overrides = array(
     'custom-paper-shopping-bag-with-handles' => 'Custom Paper Shopping Bag with Handles',
     'custom-rust-paper-shopping-bag-with-rope-handles' => 'Custom Rust Paper Shopping Bag with Rope Handles',
     'custom-white-paper-shopping-bag-with-brown-rope-handles' => 'Custom White Paper Shopping Bag with Brown Rope Handles',
+);
+$paper_bag_landing_alt_overrides = array(
+    'custom-kraft-paper-bag-for-supplement-packaging' => 'Brown kraft paper shopping bag with flat paper handles and custom logo',
+    'custom-lime-green-paper-shopping-bag-with-rope-handles' => 'Lime green paper shopping bag with rope handles',
+    'custom-paper-shopping-bag-with-handles' => 'Paper shopping bag with handles',
+    'custom-rust-paper-shopping-bag-with-rope-handles' => 'Rust paper shopping bag with rope handles',
+    'custom-white-paper-shopping-bag-with-brown-rope-handles' => 'White paper shopping bag with brown rope handles',
 );
 $paper_bag_product_slugs = array(
     'custom-birthday-paper-gift-bag-with-candle-print',
@@ -119,6 +126,7 @@ if ($paper_bag_category && !is_wp_error($paper_bag_category) && class_exists('WP
 }
 
 $faqs = function_exists('custom_box_custom_paper_bags_faqs') ? custom_box_custom_paper_bags_faqs() : array();
+$quick_privacy_policy_url = function_exists('custom_box_get_privacy_policy_url') ? custom_box_get_privacy_policy_url() : '';
 
 get_header();
 ?>
@@ -149,7 +157,7 @@ get_header();
                     <input type="hidden" name="product_type" value="paper_bags">
                     <input type="hidden" name="product_name" value="Custom paper bag quick inquiry">
                     <input type="hidden" name="current_page_url" value="<?php echo esc_url(custom_box_custom_paper_bags_url()); ?>">
-                    <?php wp_nonce_field('custom_box_quote_form', 'custom_box_quote_nonce'); ?>
+                    <?php $quick_nonce_field = wp_nonce_field('custom_box_quote_form', 'custom_box_quote_nonce', false, false); echo str_replace('id="custom_box_quote_nonce"', 'id="custom_box_quote_nonce-quick"', $quick_nonce_field); ?>
                     <?php custom_box_quote_form_anti_spam_fields('quote'); ?>
 
                     <div class="cpb-quick-fields">
@@ -188,6 +196,7 @@ get_header();
                     </div>
 
                     <?php custom_box_quote_form_recaptcha_fields(); ?>
+                    <p class="cpb-quick-privacy">By submitting this form, you agree that VPN Paper Box may use your information to review and respond to your quotation request.<?php if ($quick_privacy_policy_url) : ?> <a href="<?php echo esc_url($quick_privacy_policy_url); ?>">View the Privacy Policy</a>.<?php endif; ?></p>
                     <button type="submit" data-track="paper_bag_quick_quote_submit">Request My Paper Bag Quote <span aria-hidden="true">→</span></button>
                     <p class="cpb-quick-foot"><span>Free quotation</span><i aria-hidden="true">•</i><span>No obligation</span></p>
                 </form>
@@ -222,7 +231,7 @@ get_header();
                 <div>
                     <p class="cpb-eyebrow">PAPER BAG PRODUCTS</p>
                     <h2>Custom Paper Bag Products</h2>
-                    <p>Browse selected paper bags and related packaging formats. Final materials, sizes, handles, printing, and finishing are confirmed for each project.</p>
+                    <p>Browse selected custom paper bag styles. Final paper, size, handles, printing and finishing are confirmed for each project.</p>
                 </div>
                 <a class="cpb-text-link" href="<?php echo esc_url($paper_bag_category_link); ?>">View all paper bag products <span aria-hidden="true">→</span></a>
             </div>
@@ -239,20 +248,33 @@ get_header();
                             $paper_bag_image_id = (int) $paper_bag_product->get_image_id();
                             $paper_bag_product_slug = $paper_bag_product->get_slug();
                             $paper_bag_landing_image = isset($paper_bag_landing_image_overrides[$paper_bag_product_slug]) ? $paper_bag_landing_image_overrides[$paper_bag_product_slug] : false;
-                             $paper_bag_display_title = isset($paper_bag_landing_title_overrides[$paper_bag_product_slug])
+                            $paper_bag_display_title = isset($paper_bag_landing_title_overrides[$paper_bag_product_slug])
                                  ? $paper_bag_landing_title_overrides[$paper_bag_product_slug]
                                  : ($paper_bag_landing_image ? $paper_bag_landing_image['title'] : get_the_title());
+                            $paper_bag_product_url = get_permalink($paper_bag_product->get_id());
+                            if (!is_string($paper_bag_product_url) || '' === $paper_bag_product_url) {
+                                $paper_bag_product_url = $paper_bag_category_link;
+                            }
+                            $paper_bag_card_alt = $paper_bag_landing_image && !empty($paper_bag_landing_image['alt'])
+                                ? $paper_bag_landing_image['alt']
+                                : (isset($paper_bag_landing_alt_overrides[$paper_bag_product_slug]) ? $paper_bag_landing_alt_overrides[$paper_bag_product_slug] : '');
+                            if ('' === $paper_bag_card_alt && $paper_bag_image_id) {
+                                $paper_bag_card_alt = (string) get_post_meta($paper_bag_image_id, '_wp_attachment_image_alt', true);
+                            }
+                            if ('' === $paper_bag_card_alt) {
+                                $paper_bag_card_alt = $paper_bag_display_title;
+                            }
                             $paper_bag_title_id = 'cpb-product-card-title-' . get_the_ID();
                             ?>
                             <article <?php if (function_exists('wc_product_class')) { wc_product_class('custom-product-card', $paper_bag_product); } else { echo 'class="custom-product-card"'; } ?> data-product-card>
-                                <a class="custom-product-card-link" href="<?php echo esc_url($paper_bag_category_link); ?>" aria-labelledby="<?php echo esc_attr($paper_bag_title_id); ?>">
+                                <a class="custom-product-card-link" href="<?php echo esc_url($paper_bag_product_url); ?>" aria-labelledby="<?php echo esc_attr($paper_bag_title_id); ?>">
                                     <span class="custom-product-image">
                                         <?php if ($paper_bag_landing_image) : ?>
                                             <img src="<?php echo esc_url($asset_uri . $paper_bag_landing_image['file']); ?>" alt="<?php echo esc_attr($paper_bag_landing_image['alt']); ?>" width="900" height="1062" loading="lazy" decoding="async">
                                         <?php elseif ($paper_bag_image_id) : ?>
-                                            <?php echo wp_get_attachment_image($paper_bag_image_id, 'full', false, array('alt' => '', 'loading' => 'lazy', 'decoding' => 'async', 'sizes' => '(max-width: 379px) calc(100vw - 36px), (max-width: 767px) calc(50vw - 28px), (max-width: 1200px) 33vw, 360px')); ?>
+                                            <?php echo wp_get_attachment_image($paper_bag_image_id, 'full', false, array('alt' => $paper_bag_card_alt, 'loading' => 'lazy', 'decoding' => 'async', 'sizes' => '(max-width: 379px) calc(100vw - 36px), (max-width: 767px) calc(50vw - 28px), (max-width: 1200px) 33vw, 360px')); ?>
                                         <?php else : ?>
-                                            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp'); ?>" alt="" width="506" height="277" loading="lazy" decoding="async">
+                                            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp'); ?>" alt="<?php echo esc_attr($paper_bag_card_alt); ?>" width="506" height="277" loading="lazy" decoding="async">
                                         <?php endif; ?>
                                     </span>
                                      <span class="custom-product-body"><h3 id="<?php echo esc_attr($paper_bag_title_id); ?>" class="custom-product-title"><?php echo esc_html($paper_bag_display_title); ?></h3></span>
@@ -268,7 +290,7 @@ get_header();
         </div>
     </section>
 
-    <section class="cpb-section" id="why-vpn"><div class="cpb-shell cpb-why-grid"><div class="cpb-why-image"><img src="<?php echo esc_url($asset_uri . 'custom-paper-bags-quality-inspection.webp'); ?>" alt="Worker checking the folded base of a kraft paper bag with a ruler at a quality inspection table" width="1600" height="900" loading="lazy" decoding="async"><p>Quality checkpoints should be agreed against the approved paper bag specification and order requirements.</p></div><div><p class="cpb-eyebrow">Why VPN Paper Box</p><h2>Why Work With VPN Paper Box?</h2><ul class="cpb-check-list"><li>Vietnam-based paper packaging production support</li><li>Custom size, structure, artwork, and finishing review</li><li>Sampling can be arranged before bulk production when required</li><li>Quality checkpoints for print, folds, handles, and finished appearance</li><li>Carton packing and shipment details reviewed against the approved order</li><li>Paper bags and paper boxes can be discussed together when a project requires both</li></ul></div></div></section>
+    <section class="cpb-section" id="why-vpn"><div class="cpb-shell cpb-why-grid"><div class="cpb-why-image"><img src="<?php echo esc_url($asset_uri . 'custom-paper-bags-quality-inspection.webp'); ?>" alt="Worker checking the folded base of a kraft paper bag with a ruler at a quality inspection table" width="1600" height="900" loading="lazy" decoding="async"><p>Quality checkpoints should be agreed against the approved paper bag specification and order requirements.</p></div><div><p class="cpb-eyebrow">Why VPN Paper Box</p><h2>Why Work With VPN Paper Box?</h2><ul class="cpb-check-list"><li>Vietnam-based paper packaging production support</li><li>Custom sizes, paper stocks, handles, artwork and finishing</li><li>Sampling can be arranged before bulk production when required</li><li>Quality checkpoints for print, folds, handles, and finished appearance</li><li>Carton packing and shipment details reviewed against the approved order</li><li>Paper bags and paper boxes can be discussed together when a project requires both</li></ul></div></div></section>
 
     <?php if (false) : ?><section class="cpb-section cpb-section--soft" id="quote"><div class="cpb-shell cpb-quote-grid"><div class="cpb-quote-intro"><p class="cpb-eyebrow">Project quote</p><h2>Request a Project-Specific Paper Bag Quote</h2><p>Send the details you already have. Our team can review the bag structure, material, printing, and delivery requirements with you.</p><div class="cpb-contact-card"><strong>Prefer a quick conversation?</strong><a href="https://wa.me/84933102653" target="_blank" rel="noopener" data-track="paper_bag_whatsapp_click">Chat on WhatsApp</a><a href="tel:+84933102653" data-track="paper_bag_phone_click">(+84) 933 102 653</a><a href="mailto:sales.vpn@hopgiayvpn.com" data-track="paper_bag_email_click">sales.vpn@hopgiayvpn.com</a></div></div><div class="cpb-form-card">
         <?php if ($is_success) : ?><div class="cpb-success" role="status" aria-live="polite"><span class="cpb-success__icon" aria-hidden="true">✓</span><h3>Quote request received</h3><p>Thank you. VPN Paper Box has received your project details and will review the specification before replying.</p><a href="#options">Review paper bag options</a></div><?php else : ?>
@@ -280,7 +302,7 @@ get_header();
                 <fieldset><legend>Size and preferences <span>(optional)</span></legend><div class="cpb-form-grid cpb-form-grid--four"><div class="cpb-field"><label for="cpb-length">Width</label><input id="cpb-length" name="length" type="text" inputmode="decimal" placeholder="mm"></div><div class="cpb-field"><label for="cpb-width">Height</label><input id="cpb-width" name="width" type="text" inputmode="decimal" placeholder="mm"></div><div class="cpb-field"><label for="cpb-depth">Gusset</label><input id="cpb-depth" name="depth" type="text" inputmode="decimal" placeholder="mm"></div><div class="cpb-field"><label for="cpb-unit">Unit</label><select id="cpb-unit" name="unit"><option value="">Select</option><option value="mm">mm</option><option value="cm">cm</option><option value="inch">inch</option></select></div></div><div class="cpb-form-grid"><div class="cpb-field"><label for="cpb-material">Paper / handle preference</label><select id="cpb-material" name="material_preference"><option value="">Not decided</option><option value="Brown kraft paper">Brown kraft paper</option><option value="White kraft paper">White kraft paper</option><option value="Coated or art paper">Coated or art paper</option><option value="Rope or ribbon handles">Rope or ribbon handles</option><option value="Die-cut handle">Die-cut handle</option></select></div><div class="cpb-field"><label for="cpb-printing">Printing</label><select id="cpb-printing" name="printing_option"><option value="">Not decided</option><option value="One-color">One-color</option><option value="CMYK">CMYK</option><option value="Pantone">Pantone</option></select></div><div class="cpb-field"><label for="cpb-finishing">Finishing</label><select id="cpb-finishing" name="finishing_option"><option value="">Not decided</option><option value="Matte or gloss lamination">Matte or gloss lamination</option><option value="Foil stamping">Foil stamping</option><option value="Embossing or debossing">Embossing or debossing</option><option value="Spot UV">Spot UV</option></select></div><div class="cpb-field"><label for="cpb-timeline">Target schedule</label><input id="cpb-timeline" name="production_timeline" type="text" placeholder="Example: Q4 2026 launch"></div></div></fieldset>
                 <fieldset><legend>Your contact details</legend><div class="cpb-form-grid"><div class="cpb-field"><label for="cpb-name">Full name <span aria-hidden="true">*</span></label><input id="cpb-name" name="full_name" type="text" required autocomplete="name"></div><div class="cpb-field"><label for="cpb-email">Work email <span aria-hidden="true">*</span></label><input id="cpb-email" name="email" type="email" required autocomplete="email"></div><div class="cpb-field"><label for="cpb-company">Company name</label><input id="cpb-company" name="company" type="text" autocomplete="organization"></div><div class="cpb-field"><label for="cpb-phone">Phone / WhatsApp</label><input id="cpb-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel"></div></div></fieldset>
                 <fieldset><legend>Artwork and project notes <span>(optional)</span></legend><div class="cpb-field"><label for="cpb-artwork">Artwork upload</label><input id="cpb-artwork" name="artwork" type="file" accept=".png,.pdf,.jpg,.jpeg,.webp,.doc,.docx,.gif,.psd,.cdr,.eps"><small>PNG, PDF, JPG, WebP, DOC, PSD, CDR, or EPS; maximum 10MB.</small></div><div class="cpb-field"><label for="cpb-message">Project notes</label><textarea id="cpb-message" name="message" rows="4" placeholder="Product, handle, material, artwork, packing, or delivery details"></textarea></div></fieldset>
-                <div class="cpb-consent"><label><input type="checkbox" name="privacy_consent" value="yes" required><span>I agree that VPN Paper Box may use this information to advise on and quote this request. Privacy policy page is not currently available.</span></label></div>
+                <div class="cpb-consent"><label><input type="checkbox" name="privacy_consent" value="yes" required><span>I agree that VPN Paper Box may use this information to review and respond to my quotation request. <?php if ($quick_privacy_policy_url) : ?><a href="<?php echo esc_url($quick_privacy_policy_url); ?>">View the Privacy Policy</a><?php endif; ?></span></label></div>
                 <?php if (function_exists('custom_box_quote_form_recaptcha_fields')) : ?><?php custom_box_quote_form_recaptcha_fields(); ?><?php endif; ?><button class="cpb-button cpb-button--submit" type="submit" data-submit-label="Send quote request">Request a Custom Paper Bag Quote</button><p class="cpb-form-note">Your information is used to review and respond to this project-specific request.</p>
             </form>
         <?php endif; ?>

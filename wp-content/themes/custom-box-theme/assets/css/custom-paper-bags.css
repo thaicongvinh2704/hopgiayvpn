@@ -264,6 +264,8 @@
 .cpb-quick-form button span { font-size: 15px; line-height: 1; margin-left: 6px; }
 .cpb-quick-foot { align-items: center; color: #748993; display: flex; font-size: 9px; gap: 7px; justify-content: center; line-height: 1.3; margin: 7px 0 0; }
 .cpb-quick-foot i { font-style: normal; }
+.cpb-quick-privacy { color: #647985; font-size: 10px; line-height: 1.4; margin: 9px 0 0; }
+.cpb-quick-privacy a { color: var(--cpb-blue-dark); font-weight: 750; }
 .cpb-hero__proof { display: grid; gap: 12px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .cpb-hero__proof span { align-items: center; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.32); border-radius: 6px; color: #fff; display: flex; font-size: 12px; font-weight: 800; line-height: 1.35; min-height: 54px; padding: 11px 13px; }
 

@@ -1,3 +1,7 @@
+<?php
+$header_is_paper_bag_landing = function_exists('custom_box_is_custom_paper_bags_manufacturer_landing') && custom_box_is_custom_paper_bags_manufacturer_landing();
+$header_brand_name = $header_is_paper_bag_landing ? 'VPN Paper Box' : (get_bloginfo('name') ? get_bloginfo('name') : 'VPN Paper Box Manufacturer');
+?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?>>
 <head>
@@ -92,13 +96,17 @@
 
         <!-- LOGO -->
         <div class="logo">
-            <a href="<?php echo esc_url(home_url('/')); ?>">
+            <a href="<?php echo esc_url(home_url('/')); ?>" aria-label="<?php echo esc_attr($header_brand_name); ?>">
                 <?php
                 if (has_custom_logo()) {
-                    the_custom_logo();
+                    $header_logo_html = get_custom_logo();
+                    if ($header_is_paper_bag_landing && is_string($header_logo_html)) {
+                        $header_logo_html = preg_replace('/\salt=([' . "\"'" . ']).*?\1/i', ' alt="' . esc_attr($header_brand_name) . '"', $header_logo_html, 1);
+                    }
+                    echo $header_logo_html;
                 } else {
                     ?>
-                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-hop-giay-vpn-hcm.webp'); ?>" alt="<?php echo esc_attr(get_bloginfo('name')); ?>" width="711" height="567">
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-hop-giay-vpn-hcm.webp'); ?>" alt="<?php echo esc_attr($header_brand_name); ?>" width="711" height="567">
                     <?php
                 }
                 ?>

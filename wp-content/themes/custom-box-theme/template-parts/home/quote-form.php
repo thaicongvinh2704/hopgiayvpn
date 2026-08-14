@@ -185,7 +185,7 @@ $quote_status_message = isset($quote_messages[$quote_status]) ? $quote_messages[
                 <?php if ($quote_source) : ?><input type="hidden" name="quote_source" value="<?php echo esc_attr($quote_source); ?>"><?php endif; ?>
                 <?php if ($quote_form_location) : ?><input type="hidden" name="form_location" value="<?php echo esc_attr($quote_form_location); ?>"><?php endif; ?>
                 <?php if ($quote_current_page_url) : ?><input type="hidden" name="current_page_url" value="<?php echo esc_url($quote_current_page_url); ?>"><?php endif; ?>
-                <?php wp_nonce_field('custom_box_quote_form', 'custom_box_quote_nonce'); ?>
+                <?php $quote_nonce_field = wp_nonce_field('custom_box_quote_form', 'custom_box_quote_nonce', false, false); echo str_replace('id="custom_box_quote_nonce"', 'id="' . esc_attr($quote_id_prefix . '-nonce') . '"', $quote_nonce_field); ?>
                 <?php custom_box_quote_form_anti_spam_fields('quote'); ?>
 
                 <fieldset class="quote-fieldset">
@@ -325,15 +325,12 @@ $quote_status_message = isset($quote_messages[$quote_status]) ? $quote_messages[
                         <legend>Privacy</legend>
                         <label class="quote-consent-label">
                             <input type="checkbox" name="privacy_consent" value="yes" required>
-                            <span>I agree that VPN Paper Box may use this information to advise on and quote this request. <?php
-                                $quote_privacy_policy_id = (int) get_option('wp_page_for_privacy_policy');
-                                $quote_privacy_policy_url = ($quote_privacy_policy_id > 0 && 'publish' === get_post_status($quote_privacy_policy_id) && function_exists('get_privacy_policy_url')) ? get_privacy_policy_url() : '';
+                            <span>I agree that VPN Paper Box may use this information to review and respond to my quotation request. <?php
+                                $quote_privacy_policy_url = function_exists('custom_box_get_privacy_policy_url') ? custom_box_get_privacy_policy_url() : '';
                                 if ($quote_privacy_policy_url) :
                                     ?><a href="<?php echo esc_url($quote_privacy_policy_url); ?>">View the Privacy Policy</a><?php
-                                else :
-                                    ?>Privacy policy page is not currently available.<?php
                                 endif;
-                            ?>.</span>
+                            ?></span>
                         </label>
                     </fieldset>
                 <?php endif; ?>

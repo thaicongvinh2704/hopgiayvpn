@@ -10,6 +10,7 @@ $custom_box_inc_files = array(
     'inc/dev.php',
     'inc/enqueue.php',
     'inc/seo.php',
+    'inc/privacy-policy.php',
     'inc/paper-bag-ads-landing.php',
     'inc/custom-paper-bags-manufacturer-landing.php',
     'inc/breadcrumbs.php',

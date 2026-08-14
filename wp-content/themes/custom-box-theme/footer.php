@@ -156,9 +156,15 @@ $footer_social_links = array(
                 <summary><span class="footer-disclosure-title" role="heading" aria-level="3"><?php echo $footer_is_paper_bags_landing ? esc_html__('Paper Bag Capabilities', 'custom-box-theme') : esc_html__('Factory Capabilities', 'custom-box-theme'); ?></span></summary>
                 <ul>
                     <li><?php echo $footer_is_paper_bags_landing ? esc_html__('Paper bag production support in Vietnam', 'custom-box-theme') : esc_html__('Direct factory production in Vietnam', 'custom-box-theme'); ?></li>
-                    <li><?php esc_html_e('Custom size, structure, dieline, and inserts', 'custom-box-theme'); ?></li>
-                    <li><?php esc_html_e('Offset and digital printing support', 'custom-box-theme'); ?></li>
-                    <li><?php esc_html_e('Foil stamping, embossing, lamination, and spot UV', 'custom-box-theme'); ?></li>
+                    <?php if ($footer_is_paper_bags_landing) : ?>
+                        <li><?php esc_html_e('Custom sizes, paper stocks, handles, artwork and finishing', 'custom-box-theme'); ?></li>
+                        <li><?php esc_html_e('One-color, CMYK and Pantone printing options', 'custom-box-theme'); ?></li>
+                        <li><?php esc_html_e('Quality checkpoints for print, folds, handles and finished appearance', 'custom-box-theme'); ?></li>
+                    <?php else : ?>
+                        <li><?php esc_html_e('Custom size, structure, dieline, and inserts', 'custom-box-theme'); ?></li>
+                        <li><?php esc_html_e('Offset and digital printing support', 'custom-box-theme'); ?></li>
+                        <li><?php esc_html_e('Foil stamping, embossing, lamination, and spot UV', 'custom-box-theme'); ?></li>
+                    <?php endif; ?>
                     <li><?php echo $footer_is_paper_bags_landing ? esc_html__('Sampling can be arranged before bulk production when required', 'custom-box-theme') : esc_html__('Sampling before mass production', 'custom-box-theme'); ?></li>
                     <li><?php echo $footer_is_paper_bags_landing ? esc_html__('Carton packing and shipment details reviewed against the approved order', 'custom-box-theme') : esc_html__('Export-ready packing for international buyers', 'custom-box-theme'); ?></li>
                 </ul>
