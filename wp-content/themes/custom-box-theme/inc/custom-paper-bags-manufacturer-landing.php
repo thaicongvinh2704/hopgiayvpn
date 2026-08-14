@@ -256,7 +256,7 @@ function custom_box_custom_paper_bags_fallback_meta() {
     }
 
     $url = custom_box_custom_paper_bags_url();
-    $image = get_template_directory_uri() . '/assets/images/paper-bag-landing/custom-paper-bags-manufacturing-workshop.webp';
+    $image = get_template_directory_uri() . '/assets/images/paper-bag-landing/paper-bag-factory-production-floor.webp';
     ?>
     <meta name="description" content="<?php echo esc_attr(custom_box_custom_paper_bags_description()); ?>">
     <link rel="canonical" href="<?php echo esc_url($url); ?>">
@@ -280,7 +280,7 @@ function custom_box_custom_paper_bags_preload_hero() {
 
     printf(
         '<link rel="preload" as="image" href="%s" fetchpriority="high">' . "\n",
-        esc_url(get_template_directory_uri() . '/assets/images/paper-bag-landing/custom-paper-bags-manufacturing-workshop.webp')
+        esc_url(get_template_directory_uri() . '/assets/images/paper-bag-landing/paper-bag-factory-production-floor.webp')
     );
 }
 add_action('wp_head', 'custom_box_custom_paper_bags_preload_hero', 2);
@@ -291,7 +291,7 @@ function custom_box_custom_paper_bags_schema() {
     }
 
     $url = custom_box_custom_paper_bags_url();
-    $image = get_template_directory_uri() . '/assets/images/paper-bag-landing/custom-paper-bags-manufacturing-workshop.webp';
+    $image = get_template_directory_uri() . '/assets/images/paper-bag-landing/paper-bag-factory-production-floor.webp';
     $faq = array(
         array('question' => 'What information is needed for a paper bag quotation?', 'answer' => 'Share the product being carried, finished size, quantity, delivery country, preferred paper or handles, artwork, and target schedule when known.'),
         array('question' => 'What paper and handle options are available?', 'answer' => 'Options may include brown kraft, white kraft, coated or art paper, specialty paper, twisted paper, flat paper, cotton or PP rope, ribbon, and die-cut handles. The final combination depends on the bag structure, load, finish, and order requirements.'),
