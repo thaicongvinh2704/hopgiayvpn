@@ -285,7 +285,7 @@ get_header();
                             $paper_bag_title_id = 'cpb-product-card-title-' . get_the_ID();
                             ?>
                             <article <?php if (function_exists('wc_product_class')) { wc_product_class('custom-product-card', $paper_bag_product); } else { echo 'class="custom-product-card"'; } ?> data-product-card>
-                                <a class="custom-product-card-link" href="<?php echo esc_url(get_permalink()); ?>" aria-labelledby="<?php echo esc_attr($paper_bag_title_id); ?>">
+                                <a class="custom-product-card-link" href="<?php echo esc_url($paper_bag_category_link); ?>" aria-labelledby="<?php echo esc_attr($paper_bag_title_id); ?>">
                                     <span class="custom-product-image">
                                         <?php if ($paper_bag_landing_image) : ?>
                                             <img src="<?php echo esc_url($asset_uri . $paper_bag_landing_image['file']); ?>" alt="<?php echo esc_attr($paper_bag_landing_image['alt']); ?>" width="900" height="1062" loading="lazy" decoding="async">
