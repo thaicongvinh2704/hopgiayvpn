@@ -150,6 +150,9 @@
 .cpb-consent a { color: var(--cpb-blue-dark); font-weight: 750; }
 .cpb-button--submit { width: 100%; }
 .cpb-form-note { color: var(--cpb-muted); font-size: 12px; line-height: 1.55; margin: 13px 0 0; text-align: center; }
+.cpb-page .quote-consent-label { align-items: flex-start; color: var(--cpb-muted); display: flex; font-size: 12px; gap: 9px; line-height: 1.55; }
+.cpb-page .quote-consent-label input[type="checkbox"] { accent-color: var(--cpb-blue); flex: 0 0 auto; height: 18px; margin: 2px 0 0; min-height: 18px; padding: 0; width: 18px; }
+.cpb-page .quote-consent-label a { color: var(--cpb-blue-dark); font-weight: 750; }
 .cpb-form-errors, .cpb-alert { background: #fff4f5; border: 1px solid #e6aab6; border-radius: 6px; color: #8d1834; font-size: 13px; line-height: 1.55; margin-bottom: 18px; padding: 12px 14px; }
 .cpb-form-errors ul { margin: 7px 0 0 18px; padding: 0; }
 .cpb-form-errors a { color: inherit; }

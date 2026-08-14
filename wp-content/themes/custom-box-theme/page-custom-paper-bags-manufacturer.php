@@ -16,21 +16,6 @@ $quick_quote_messages = array(
     'spam' => 'Your request could not be verified. Please refresh the page and try again.',
     'rate_limited' => 'Too many requests were sent. Please wait a few minutes and try again.',
 );
-$is_success = 'success' === $quote_status;
-$form_id = 'custom-paper-bags-quote-form';
-    $form_error_message = 'We could not send your request right now. Please review the details or contact VPN Paper Box Sales directly.';
-if ('duplicate' === $quote_status) {
-    $form_error_message = 'VPN Paper Box has already received a similar request. Please wait a moment or contact Sales if you need to add information.';
-} elseif ('consent' === $quote_status) {
-    $form_error_message = 'Please agree to the privacy notice before sending your request.';
-} elseif ('captcha' === $quote_status) {
-    $form_error_message = 'The security check could not be completed. Please reload the page and try again.';
-} elseif ('missing' === $quote_status) {
-    $form_error_message = 'Please complete the required project and contact fields before sending your request.';
-} elseif ('file' === $quote_status) {
-    $form_error_message = 'The artwork file could not be accepted. Please check the file type and 10MB size limit.';
-}
-
 $options = array(
     array('type' => 'Everyday Kraft Paper Bags', 'quote_value' => 'Everyday Kraft Paper Bag', 'description' => 'Natural kraft bags with flat paper handles and simple one-color printing for takeaway, bakery, grocery and everyday retail orders.', 'image' => 'kraft-paper-bag-daily-market.webp', 'width' => 900, 'height' => 900, 'alt' => 'Natural kraft retail paper bag with flat paper handles and one-color printing'),
     array('type' => 'Premium Printed Paper Gift Bags', 'quote_value' => 'Premium Printed Paper Gift Bag', 'description' => 'Printed paper gift bags with rope handles for chocolate, confectionery, premium gifts and branded retail collections.', 'image' => 'printed-paper-gift-bag-chocolate.webp', 'width' => 900, 'height' => 900, 'alt' => 'Dark green marble-pattern printed paper gift bag with rope handles for chocolate packaging'),
@@ -310,7 +295,7 @@ get_header();
 
     <section class="cpb-section" id="why-vpn"><div class="cpb-shell cpb-why-grid"><div class="cpb-why-image"><img src="<?php echo esc_url($asset_uri . 'custom-paper-bags-quality-inspection.webp'); ?>" alt="Worker checking the folded base of a kraft paper bag with a ruler at a quality inspection table" width="1600" height="900" loading="lazy" decoding="async"><p>Quality checkpoints should be agreed against the approved paper bag specification and order requirements.</p></div><div><p class="cpb-eyebrow">Why VPN Paper Box</p><h2>Why Work With VPN Paper Box?</h2><ul class="cpb-check-list"><li>Vietnam-based paper packaging production support</li><li>Custom size, structure, artwork, and finishing review</li><li>Sampling can be arranged before bulk production when required</li><li>Quality checkpoints for print, folds, handles, and finished appearance</li><li>Carton packing and shipment details reviewed against the approved order</li><li>Paper bags and paper boxes can be discussed together when a project requires both</li></ul></div></div></section>
 
-    <section class="cpb-section cpb-section--soft" id="quote"><div class="cpb-shell cpb-quote-grid"><div class="cpb-quote-intro"><p class="cpb-eyebrow">Project quote</p><h2>Request a Project-Specific Paper Bag Quote</h2><p>Send the details you already have. Our team can review the bag structure, material, printing, and delivery requirements with you.</p><div class="cpb-contact-card"><strong>Prefer a quick conversation?</strong><a href="https://wa.me/84933102653" target="_blank" rel="noopener" data-track="paper_bag_whatsapp_click">Chat on WhatsApp</a><a href="tel:+84933102653" data-track="paper_bag_phone_click">(+84) 933 102 653</a><a href="mailto:sales.vpn@hopgiayvpn.com" data-track="paper_bag_email_click">sales.vpn@hopgiayvpn.com</a></div></div><div class="cpb-form-card">
+    <?php if (false) : ?><section class="cpb-section cpb-section--soft" id="quote"><div class="cpb-shell cpb-quote-grid"><div class="cpb-quote-intro"><p class="cpb-eyebrow">Project quote</p><h2>Request a Project-Specific Paper Bag Quote</h2><p>Send the details you already have. Our team can review the bag structure, material, printing, and delivery requirements with you.</p><div class="cpb-contact-card"><strong>Prefer a quick conversation?</strong><a href="https://wa.me/84933102653" target="_blank" rel="noopener" data-track="paper_bag_whatsapp_click">Chat on WhatsApp</a><a href="tel:+84933102653" data-track="paper_bag_phone_click">(+84) 933 102 653</a><a href="mailto:sales.vpn@hopgiayvpn.com" data-track="paper_bag_email_click">sales.vpn@hopgiayvpn.com</a></div></div><div class="cpb-form-card">
         <?php if ($is_success) : ?><div class="cpb-success" role="status" aria-live="polite"><span class="cpb-success__icon" aria-hidden="true">✓</span><h3>Quote request received</h3><p>Thank you. VPN Paper Box has received your project details and will review the specification before replying.</p><a href="#options">Review paper bag options</a></div><?php else : ?>
             <?php if ($quote_status && 'success' !== $quote_status) : ?><div class="cpb-alert" role="alert"><?php echo esc_html($form_error_message); ?></div><?php endif; ?><p class="cpb-required"><span aria-hidden="true">*</span> Required fields</p><div class="cpb-form-errors" id="cpb-form-errors" role="alert" aria-live="assertive" tabindex="-1" hidden></div>
             <form id="<?php echo esc_attr($form_id); ?>" class="cpb-form" method="post" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" enctype="multipart/form-data" novalidate>
@@ -324,7 +309,8 @@ get_header();
                 <?php if (function_exists('custom_box_quote_form_recaptcha_fields')) : ?><?php custom_box_quote_form_recaptcha_fields(); ?><?php endif; ?><button class="cpb-button cpb-button--submit" type="submit" data-submit-label="Send quote request">Request a Custom Paper Bag Quote</button><p class="cpb-form-note">Your information is used to review and respond to this project-specific request.</p>
             </form>
         <?php endif; ?>
-    </div></div></section>
+    </div></div></section><?php endif; ?>
+    <?php get_template_part('template-parts/home/quote-form', null, array('section_id' => 'quote', 'form_id' => 'custom-paper-bags-quote-form', 'product_type' => 'paper_bags', 'product_value' => 'Custom paper bags', 'quote_source' => 'custom_paper_bags_manufacturer', 'form_location' => 'custom_paper_bags_manufacturer_quote', 'current_page_url' => custom_box_custom_paper_bags_url(), 'require_privacy_consent' => true)); ?>
 
     <section class="cpb-section cpb-section--faq" id="faq"><div class="cpb-shell cpb-faq-grid"><div class="cpb-section-heading"><p class="cpb-eyebrow">Questions before ordering</p><h2>Frequently Asked Questions</h2><p>Clear answers for teams comparing paper bag materials, construction, sampling, and delivery.</p></div><div class="cpb-faq-list"><?php foreach ($faqs as $faq) : ?><details><summary><?php echo esc_html($faq['question']); ?></summary><p><?php echo esc_html($faq['answer']); ?></p></details><?php endforeach; ?></div></div></section>
     <section class="cpb-final-cta"><div class="cpb-shell cpb-final-cta__inner"><div><p class="cpb-eyebrow">Ready to develop your custom paper bag?</p><h2>Send your size, quantity, artwork, and delivery country for a project-specific review.</h2></div><div class="cpb-actions"><a class="cpb-button cpb-button--light" href="#quote" data-track="paper_bag_quote_cta">Request a Custom Paper Bag Quote</a><a class="cpb-button cpb-button--outline-light" href="https://wa.me/84933102653" target="_blank" rel="noopener" data-track="paper_bag_whatsapp_click">Chat on WhatsApp</a></div></div></section>

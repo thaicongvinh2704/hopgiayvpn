@@ -1,11 +1,17 @@
 <?php
-$quote_section_id = isset($args['section_id']) ? sanitize_html_class($args['section_id']) : 'quote';
-$quote_form_id = $quote_section_id . '-request-form';
+$quote_args = is_array($args) ? $args : array();
+$quote_section_id = isset($quote_args['section_id']) ? sanitize_html_class($quote_args['section_id']) : 'quote';
+$quote_form_id = isset($quote_args['form_id']) ? sanitize_html_class($quote_args['form_id']) : $quote_section_id . '-request-form';
 $quote_id_prefix = $quote_section_id . '-field';
 $quote_heading_id = $quote_section_id . '-heading';
 $quote_error_id = $quote_section_id . '-errors';
 $quote_status_id = $quote_section_id . '-status';
-$quote_product_value = function_exists('custom_box_quote_product_name') ? custom_box_quote_product_name() : '';
+$quote_product_type = isset($quote_args['product_type']) ? sanitize_key($quote_args['product_type']) : 'boxes';
+$quote_product_value = array_key_exists('product_value', $quote_args) ? sanitize_text_field($quote_args['product_value']) : (function_exists('custom_box_quote_product_name') ? custom_box_quote_product_name() : '');
+$quote_source = isset($quote_args['quote_source']) ? sanitize_key($quote_args['quote_source']) : '';
+$quote_form_location = isset($quote_args['form_location']) ? sanitize_text_field($quote_args['form_location']) : '';
+$quote_current_page_url = isset($quote_args['current_page_url']) ? esc_url_raw($quote_args['current_page_url']) : '';
+$quote_require_privacy_consent = !empty($quote_args['require_privacy_consent']);
 $quote_status = isset($_GET['quote_status']) ? sanitize_text_field(wp_unslash($_GET['quote_status'])) : '';
 $quote_messages = array(
     'success'      => 'Thank you. Your quote request has been sent successfully.',
@@ -94,7 +100,10 @@ $quote_status_message = isset($quote_messages[$quote_status]) ? $quote_messages[
                 novalidate
             >
                 <input type="hidden" name="action" value="custom_box_quote_form">
-                <input type="hidden" name="product_type" value="boxes">
+                <input type="hidden" name="product_type" value="<?php echo esc_attr($quote_product_type); ?>">
+                <?php if ($quote_source) : ?><input type="hidden" name="quote_source" value="<?php echo esc_attr($quote_source); ?>"><?php endif; ?>
+                <?php if ($quote_form_location) : ?><input type="hidden" name="form_location" value="<?php echo esc_attr($quote_form_location); ?>"><?php endif; ?>
+                <?php if ($quote_current_page_url) : ?><input type="hidden" name="current_page_url" value="<?php echo esc_url($quote_current_page_url); ?>"><?php endif; ?>
                 <?php wp_nonce_field('custom_box_quote_form', 'custom_box_quote_nonce'); ?>
                 <?php custom_box_quote_form_anti_spam_fields('quote'); ?>
 
@@ -257,6 +266,16 @@ $quote_status_message = isset($quote_messages[$quote_status]) ? $quote_messages[
                         <textarea id="<?php echo esc_attr($quote_id_prefix); ?>-message" name="message" rows="5" placeholder="Product use, delivery destination, timeline, references or other requirements"></textarea>
                     </div>
                 </fieldset>
+
+                <?php if ($quote_require_privacy_consent) : ?>
+                    <fieldset class="quote-fieldset quote-consent-fieldset">
+                        <legend>Privacy</legend>
+                        <label class="quote-consent-label">
+                            <input type="checkbox" name="privacy_consent" value="yes" required>
+                            <span>I agree that VPN Paper Box may use this information to advise on and quote this request. <a href="<?php echo esc_url(function_exists('get_privacy_policy_url') && get_privacy_policy_url() ? get_privacy_policy_url() : home_url('/contact/')); ?>">View the Privacy Policy</a>.</span>
+                        </label>
+                    </fieldset>
+                <?php endif; ?>
 
                 <fieldset class="quote-fieldset quote-security-fieldset">
                     <legend>Security check</legend>
