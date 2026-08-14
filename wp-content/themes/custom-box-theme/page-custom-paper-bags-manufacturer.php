@@ -64,6 +64,12 @@ $comparison_rows = array(
 
 $paper_bag_category = function_exists('get_term_by') ? get_term_by('slug', 'paper-bags-with-logo', 'product_cat') : false;
 $paper_bag_category_link = home_url('/products/paper-bags-with-logo/');
+$paper_bag_landing_image_overrides = array(
+    'custom-luxury-paper-gift-bag-with-ribbon-handles' => array('file' => 'custom-floral-paper-gift-bag-with-ribbon-handles.webp', 'title' => 'Custom Floral Paper Gift Bag with Ribbon Handles', 'alt' => 'Yellow floral paper gift bag with ribbon handles'),
+    'custom-mooncake-gift-box-set-with-paper-bag' => array('file' => 'custom-illustrated-gift-box-set-with-paper-bag.webp', 'title' => 'Custom Illustrated Gift Box Set with Paper Bag', 'alt' => 'Illustrated paper gift bag with ribbon handle for a gift box set'),
+    'custom-phone-packaging-box-with-paper-bag' => array('file' => 'custom-perfume-gift-box-with-paper-bag.webp', 'title' => 'Custom Perfume Gift Box with Paper Bag', 'alt' => 'Premium perfume gift box with matching paper bag'),
+    'custom-birthday-paper-gift-bag-with-candle-print' => array('file' => 'custom-olive-floral-paper-gift-bag-with-fabric-handles.webp', 'title' => 'Custom Olive Floral Paper Gift Bag with Fabric Handles', 'alt' => 'Olive green floral paper gift bag with white fabric handles and a hanging tag'),
+);
 if ($paper_bag_category && !is_wp_error($paper_bag_category)) {
     $resolved_category_link = get_term_link($paper_bag_category);
     if (!is_wp_error($resolved_category_link)) {
@@ -273,18 +279,23 @@ get_header();
                                 continue;
                             }
                             $paper_bag_image_id = (int) $paper_bag_product->get_image_id();
+                            $paper_bag_product_slug = $paper_bag_product->get_slug();
+                            $paper_bag_landing_image = isset($paper_bag_landing_image_overrides[$paper_bag_product_slug]) ? $paper_bag_landing_image_overrides[$paper_bag_product_slug] : false;
+                            $paper_bag_display_title = $paper_bag_landing_image ? $paper_bag_landing_image['title'] : get_the_title();
                             $paper_bag_title_id = 'cpb-product-card-title-' . get_the_ID();
                             ?>
                             <article <?php if (function_exists('wc_product_class')) { wc_product_class('custom-product-card', $paper_bag_product); } else { echo 'class="custom-product-card"'; } ?> data-product-card>
                                 <a class="custom-product-card-link" href="<?php echo esc_url(get_permalink()); ?>" aria-labelledby="<?php echo esc_attr($paper_bag_title_id); ?>">
                                     <span class="custom-product-image">
-                                        <?php if ($paper_bag_image_id) : ?>
+                                        <?php if ($paper_bag_landing_image) : ?>
+                                            <img src="<?php echo esc_url($asset_uri . $paper_bag_landing_image['file']); ?>" alt="<?php echo esc_attr($paper_bag_landing_image['alt']); ?>" width="900" height="1062" loading="lazy" decoding="async">
+                                        <?php elseif ($paper_bag_image_id) : ?>
                                             <?php echo wp_get_attachment_image($paper_bag_image_id, 'full', false, array('alt' => '', 'loading' => 'lazy', 'decoding' => 'async', 'sizes' => '(max-width: 379px) calc(100vw - 36px), (max-width: 767px) calc(50vw - 28px), (max-width: 1200px) 33vw, 360px')); ?>
                                         <?php else : ?>
                                             <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp'); ?>" alt="" width="506" height="277" loading="lazy" decoding="async">
                                         <?php endif; ?>
                                     </span>
-                                    <span class="custom-product-body"><h2 id="<?php echo esc_attr($paper_bag_title_id); ?>" class="custom-product-title"><?php echo esc_html(get_the_title()); ?></h2></span>
+                                    <span class="custom-product-body"><h2 id="<?php echo esc_attr($paper_bag_title_id); ?>" class="custom-product-title"><?php echo esc_html($paper_bag_display_title); ?></h2></span>
                                 </a>
                             </article>
                         <?php endwhile; ?>
