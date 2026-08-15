@@ -5,7 +5,7 @@
 
 defined('ABSPATH') || exit;
 
-const CUSTOM_BOX_WHY_VPN_PAPER_BOX_MANUFACTURER_VIETNAM_SYNC_VERSION = '2026-08-15-vpn-paper-box-manufacturer-v2';
+const CUSTOM_BOX_WHY_VPN_PAPER_BOX_MANUFACTURER_VIETNAM_SYNC_VERSION = '2026-08-15-vpn-paper-box-manufacturer-v3';
 const CUSTOM_BOX_WHY_VPN_PAPER_BOX_MANUFACTURER_VIETNAM_VERSION_OPTION = 'custom_box_why_vpn_paper_box_manufacturer_vietnam_sync_version';
 const CUSTOM_BOX_WHY_VPN_PAPER_BOX_MANUFACTURER_VIETNAM_NOTICE_OPTION = 'custom_box_why_vpn_paper_box_manufacturer_vietnam_sync_notice';
 
@@ -43,7 +43,7 @@ function custom_box_why_vpn_paper_box_manufacturer_vietnam_images(): array
 {
     return array(
         'featured' => array(
-            'base' => 'vpn-factory-team-and-production-uiux',
+            'base' => 'vpn-factory-team-and-production-uiux-v2',
             'alt' => 'VPN Paper Box Manufacturer factory team and paper packaging production in Vietnam',
             'title' => 'VPN Paper Box Manufacturer Factory Team',
             'caption' => 'A real factory image establishes the Vietnam manufacturing entity behind the packaging service.',
@@ -55,10 +55,10 @@ function custom_box_why_vpn_paper_box_manufacturer_vietnam_images(): array
             'caption' => 'A real VPN paper bag sample illustrates custom printing, handle construction and gift-retail use.',
         ),
         'slot_3' => array(
-            'base' => 'custom-gift-box-with-shredded-paper-filler-vpn-uiux',
-            'alt' => 'Custom gift box with shredded paper filler and paper packaging accessories from Vietnam',
-            'title' => 'Custom Gift Box with Paper Filler',
-            'caption' => 'A real gift-box sample shows how boxes and presentation accessories can be developed as a system.',
+            'base' => 'custom-gift-box-and-paper-bag-system-vpn-uiux-v2',
+            'alt' => 'Custom gift box and paper bag packaging system from Vietnam',
+            'title' => 'Custom Gift Box and Paper Bag System',
+            'caption' => 'A high-resolution packaging sample shows how a gift box and paper bag can be developed as a coordinated system.',
         ),
         'slot_4' => array(
             'base' => 'vpn-paper-packaging-production-area-uiux',
@@ -284,7 +284,7 @@ function custom_box_sync_why_vpn_paper_box_manufacturer_vietnam_images(int $post
         }
 
         $marker = '<!-- why-vpn-paper-box-manufacturer-vietnam-image:' . $key . ' -->';
-        $figure = $marker . "\n<figure style=\"margin:1.5rem 0;\"><img src=\"" . esc_url($url) . "\" alt=\"" . esc_attr($image['alt']) . "\" style=\"display:block; width:100%; height:auto; border-radius:12px;\" loading=\"lazy\" decoding=\"async\"><figcaption>" . esc_html($image['caption']) . '</figcaption></figure>';
+        $figure = $marker . "\n<figure style=\"margin:1.5rem 0;\"><img src=\"" . esc_url($url) . "\" alt=\"" . esc_attr($image['alt']) . "\" style=\"display:block; width:auto; max-width:100%; height:auto; margin:0 auto; border-radius:12px;\" loading=\"lazy\" decoding=\"async\"><figcaption>" . esc_html($image['caption']) . '</figcaption></figure>';
         $slot = '<!-- IMAGE_SLOT_' . substr($key, 5) . ' -->';
         $wrapped_slot_pattern = '/<span\b[^>]*>\s*' . preg_quote($slot, '/') . '\s*<\/span>/i';
         $marker_pattern = '/' . preg_quote($marker, '/') . '\s*<figure\b.*?<\/figure>/is';
