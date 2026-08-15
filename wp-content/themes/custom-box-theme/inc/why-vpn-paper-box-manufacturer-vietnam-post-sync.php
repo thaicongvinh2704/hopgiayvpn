@@ -5,7 +5,7 @@
 
 defined('ABSPATH') || exit;
 
-const CUSTOM_BOX_WHY_VPN_PAPER_BOX_MANUFACTURER_VIETNAM_SYNC_VERSION = '2026-08-15-vpn-paper-box-manufacturer-v1';
+const CUSTOM_BOX_WHY_VPN_PAPER_BOX_MANUFACTURER_VIETNAM_SYNC_VERSION = '2026-08-15-vpn-paper-box-manufacturer-v2';
 const CUSTOM_BOX_WHY_VPN_PAPER_BOX_MANUFACTURER_VIETNAM_VERSION_OPTION = 'custom_box_why_vpn_paper_box_manufacturer_vietnam_sync_version';
 const CUSTOM_BOX_WHY_VPN_PAPER_BOX_MANUFACTURER_VIETNAM_NOTICE_OPTION = 'custom_box_why_vpn_paper_box_manufacturer_vietnam_sync_notice';
 
@@ -43,31 +43,31 @@ function custom_box_why_vpn_paper_box_manufacturer_vietnam_images(): array
 {
     return array(
         'featured' => array(
-            'base' => 'vpn-factory-team-and-production',
+            'base' => 'vpn-factory-team-and-production-uiux',
             'alt' => 'VPN Paper Box Manufacturer factory team and paper packaging production in Vietnam',
             'title' => 'VPN Paper Box Manufacturer Factory Team',
             'caption' => 'A real factory image establishes the Vietnam manufacturing entity behind the packaging service.',
         ),
         'slot_2' => array(
-            'base' => 'custom-birthday-paper-gift-bag-present-print-vpn',
+            'base' => 'custom-birthday-paper-gift-bag-present-print-vpn-uiux',
             'alt' => 'Custom printed paper gift bag produced by VPN Paper Box Manufacturer in Vietnam',
             'title' => 'Custom Printed Paper Gift Bag',
             'caption' => 'A real VPN paper bag sample illustrates custom printing, handle construction and gift-retail use.',
         ),
         'slot_3' => array(
-            'base' => 'custom-gift-box-with-shredded-paper-filler-vpn',
+            'base' => 'custom-gift-box-with-shredded-paper-filler-vpn-uiux',
             'alt' => 'Custom gift box with shredded paper filler and paper packaging accessories from Vietnam',
             'title' => 'Custom Gift Box with Paper Filler',
             'caption' => 'A real gift-box sample shows how boxes and presentation accessories can be developed as a system.',
         ),
         'slot_4' => array(
-            'base' => 'vpn-paper-packaging-production-area',
+            'base' => 'vpn-paper-packaging-production-area-uiux',
             'alt' => 'VPN Paper Box Manufacturer paper packaging production area in Vietnam',
             'title' => 'VPN Paper Packaging Production Area',
             'caption' => 'A real production-area image supports the discussion of factory-direct communication and quality control.',
         ),
         'slot_5' => array(
-            'base' => 'vpn-paper-box-factory-aerial-view',
+            'base' => 'vpn-paper-box-factory-aerial-view-uiux',
             'alt' => 'Aerial view of VPN Paper Box Manufacturer factory in Vietnam',
             'title' => 'VPN Paper Box Factory',
             'caption' => 'A real factory view helps international buyers understand the physical manufacturing base.',
@@ -284,7 +284,7 @@ function custom_box_sync_why_vpn_paper_box_manufacturer_vietnam_images(int $post
         }
 
         $marker = '<!-- why-vpn-paper-box-manufacturer-vietnam-image:' . $key . ' -->';
-        $figure = $marker . "\n<figure><img src=\"" . esc_url($url) . "\" alt=\"" . esc_attr($image['alt']) . "\" style=\"width:100%; height:auto;\" loading=\"lazy\" decoding=\"async\"><figcaption>" . esc_html($image['caption']) . '</figcaption></figure>';
+        $figure = $marker . "\n<figure style=\"margin:1.5rem 0;\"><img src=\"" . esc_url($url) . "\" alt=\"" . esc_attr($image['alt']) . "\" style=\"display:block; width:100%; height:auto; border-radius:12px;\" loading=\"lazy\" decoding=\"async\"><figcaption>" . esc_html($image['caption']) . '</figcaption></figure>';
         $slot = '<!-- IMAGE_SLOT_' . substr($key, 5) . ' -->';
         $wrapped_slot_pattern = '/<span\b[^>]*>\s*' . preg_quote($slot, '/') . '\s*<\/span>/i';
         $marker_pattern = '/' . preg_quote($marker, '/') . '\s*<figure\b.*?<\/figure>/is';
@@ -469,8 +469,8 @@ function custom_box_why_vpn_paper_box_manufacturer_vietnam_is_complete(int $post
     $content = $post ? (string) $post->post_content : '';
     if (
         4 !== substr_count($content, '<!-- why-vpn-paper-box-manufacturer-vietnam-image:slot_')
-        || 4 !== substr_count($content, '<figure>')
-        || 4 !== substr_count($content, '<img ')
+        || 4 !== preg_match_all('/<figure\b/i', $content, $figure_matches)
+        || 4 !== preg_match_all('/<img\b/i', $content, $image_matches)
     ) {
         $failures[] = 'inline image counts';
     }
