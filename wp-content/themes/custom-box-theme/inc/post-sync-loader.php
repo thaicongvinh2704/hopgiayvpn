@@ -16,6 +16,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_kraft_handles_sync_version',
             'slug' => 'kraft-paper-bags-with-handles',
         ),
+        'inc/tissue-paper-for-gift-bags-post-sync.php' => array(
+            'version' => '2026-08-15-tissue-paper-v1',
+            'option' => 'custom_box_tissue_paper_gift_bags_sync_version',
+            'slug' => 'tissue-paper-for-gift-bags',
+        ),
         'inc/how-good-product-packaging-helps-business-grow-post-sync.php' => array(
             'version' => '2026-08-11-v1',
             'option' => 'custom_box_good_packaging_growth_sync_version',
