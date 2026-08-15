@@ -17,7 +17,7 @@ function custom_box_post_sync_registry(): array
             'slug' => 'kraft-paper-bags-with-handles',
         ),
         'inc/tissue-paper-for-gift-bags-post-sync.php' => array(
-            'version' => '2026-08-15-tissue-paper-v1',
+            'version' => '2026-08-15-tissue-paper-v2',
             'option' => 'custom_box_tissue_paper_gift_bags_sync_version',
             'slug' => 'tissue-paper-for-gift-bags',
         ),

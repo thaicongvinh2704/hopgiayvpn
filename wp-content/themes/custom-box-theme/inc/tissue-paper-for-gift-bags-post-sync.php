@@ -5,7 +5,7 @@
 
 defined('ABSPATH') || exit;
 
-const CUSTOM_BOX_TISSUE_PAPER_GIFT_BAGS_SYNC_VERSION = '2026-08-15-tissue-paper-v1';
+const CUSTOM_BOX_TISSUE_PAPER_GIFT_BAGS_SYNC_VERSION = '2026-08-15-tissue-paper-v2';
 const CUSTOM_BOX_TISSUE_PAPER_GIFT_BAGS_VERSION_OPTION = 'custom_box_tissue_paper_gift_bags_sync_version';
 const CUSTOM_BOX_TISSUE_PAPER_GIFT_BAGS_NOTICE_OPTION = 'custom_box_tissue_paper_gift_bags_sync_notice';
 
@@ -78,7 +78,12 @@ function custom_box_tissue_paper_gift_bags_content(): string
     $path = __DIR__ . '/post-content/tissue-paper-for-gift-bags.html';
     $content = is_readable($path) ? file_get_contents($path) : false;
 
-    return is_string($content) ? $content : '';
+    if (!is_string($content)) {
+        return '';
+    }
+
+    // Protect the import from the literal `` `t `` artifacts present in the original pasted HTML.
+    return str_replace('`t<li>', '<li>', $content);
 }
 
 function custom_box_find_tissue_paper_gift_bags_post(string $slug, string $title): ?WP_Post
@@ -469,6 +474,9 @@ function custom_box_tissue_paper_gift_bags_is_complete(int $post_id): bool
     }
     if (preg_match('/IMAGE_SLOT_[0-9]+/', $content)) {
         $failures[] = 'image placeholders';
+    }
+    if (false !== strpos($content, '`t')) {
+        $failures[] = 'literal list formatting artifacts';
     }
 
     $categories = wp_get_post_terms($post_id, 'category', array('fields' => 'slugs'));
