@@ -36,6 +36,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_kraft_bag_printing_sync_version',
             'slug' => 'kraft-paper-bag-custom-printing',
         ),
+        'inc/eco-friendly-food-packaging-small-business-post-sync.php' => array(
+            'version' => '2026-08-17-eco-food-packaging-v1',
+            'option' => 'custom_box_eco_food_packaging_sync_version',
+            'slug' => 'eco-friendly-food-packaging-small-business',
+        ),
         'inc/why-vpn-paper-box-manufacturer-vietnam-post-sync.php' => array(
             'version' => '2026-08-15-vpn-paper-box-manufacturer-v3',
             'option' => 'custom_box_why_vpn_paper_box_manufacturer_vietnam_sync_version',
