@@ -26,6 +26,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_wrapping_presents_kraft_sync_version',
             'slug' => 'wrapping-presents-with-kraft-paper',
         ),
+        'inc/kraft-paper-bag-custom-printing-post-sync.php' => array(
+            'version' => '2026-08-17-kraft-bag-printing-v1',
+            'option' => 'custom_box_kraft_bag_printing_sync_version',
+            'slug' => 'kraft-paper-bag-custom-printing',
+        ),
         'inc/why-vpn-paper-box-manufacturer-vietnam-post-sync.php' => array(
             'version' => '2026-08-15-vpn-paper-box-manufacturer-v3',
             'option' => 'custom_box_why_vpn_paper_box_manufacturer_vietnam_sync_version',
