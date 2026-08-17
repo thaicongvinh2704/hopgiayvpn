@@ -5,6 +5,28 @@
 
 defined('ABSPATH') || exit;
 
+function custom_box_output_pinterest_domain_verification() {
+    $verification = '58c369e38f99c3e9d3b0311b4301f3e4';
+
+    if (is_front_page() && class_exists('RankMath\Helper')) {
+        $configured = trim((string) \RankMath\Helper::get_settings('general.pinterest_verify'));
+        $custom_webmaster_tags = (string) \RankMath\Helper::get_settings('general.custom_webmaster_tags');
+
+        if (
+            $verification === $configured
+            || (
+                false !== strpos($custom_webmaster_tags, 'p:domain_verify')
+                && false !== strpos($custom_webmaster_tags, $verification)
+            )
+        ) {
+            return;
+        }
+    }
+
+    echo '<meta name="p:domain_verify" content="' . esc_attr($verification) . '">' . "\n";
+}
+add_action('wp_head', 'custom_box_output_pinterest_domain_verification', 4);
+
 function custom_box_rank_math_outputs_gtag() {
     global $wp_filter;
 
