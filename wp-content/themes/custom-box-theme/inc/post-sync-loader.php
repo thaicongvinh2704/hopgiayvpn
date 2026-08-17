@@ -21,6 +21,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_tissue_paper_gift_bags_sync_version',
             'slug' => 'tissue-paper-for-gift-bags',
         ),
+        'inc/wrapping-presents-with-kraft-paper-post-sync.php' => array(
+            'version' => '2026-08-17-wrapping-kraft-v1',
+            'option' => 'custom_box_wrapping_presents_kraft_sync_version',
+            'slug' => 'wrapping-presents-with-kraft-paper',
+        ),
         'inc/why-vpn-paper-box-manufacturer-vietnam-post-sync.php' => array(
             'version' => '2026-08-15-vpn-paper-box-manufacturer-v3',
             'option' => 'custom_box_why_vpn_paper_box_manufacturer_vietnam_sync_version',
