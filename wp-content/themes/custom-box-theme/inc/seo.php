@@ -325,7 +325,7 @@ function custom_box_redirect_legacy_broken_urls() {
         exit;
     }
 }
-add_action('template_redirect', 'custom_box_redirect_legacy_broken_urls', 1);
+add_action('init', 'custom_box_redirect_legacy_broken_urls', 1);
 
 function custom_box_get_packaging_money_page_title() {
     return 'Custom Packaging Boxes Manufacturer in Vietnam | VPN Paper Box';
