@@ -46,6 +46,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_sustainable_packaging_sync_version',
             'slug' => 'sustainable-packaging-small-businesses',
         ),
+        'inc/best-compostable-packaging-small-batch-cosmetics-post-sync.php' => array(
+            'version' => '2026-08-19-compostable-cosmetics-v1',
+            'option' => 'custom_box_compostable_cosmetics_sync_version',
+            'slug' => 'best-compostable-packaging-small-batch-cosmetics',
+        ),
         'inc/why-vpn-paper-box-manufacturer-vietnam-post-sync.php' => array(
             'version' => '2026-08-15-vpn-paper-box-manufacturer-v3',
             'option' => 'custom_box_why_vpn_paper_box_manufacturer_vietnam_sync_version',
@@ -55,6 +60,11 @@ function custom_box_post_sync_registry(): array
             'version' => '2026-08-15-light-brown-recycled-kraft-paper-roll-v2',
             'option' => 'custom_box_light_brown_recycled_kraft_paper_roll_sync_version',
             'slug' => 'light-brown-recycled-kraft-paper-roll',
+        ),
+        'inc/custom-vial-box-product-sync.php' => array(
+            'version' => 'custom-vial-boxes-seo-20260810-v4',
+            'option' => 'custom_box_custom_vial_boxes_sync_version',
+            'slug' => 'custom-vial-packaging-box',
         ),
         'inc/how-good-product-packaging-helps-business-grow-post-sync.php' => array(
             'version' => '2026-08-11-v1',
