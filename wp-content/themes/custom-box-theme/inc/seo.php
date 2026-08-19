@@ -305,10 +305,23 @@ function custom_box_redirect_legacy_broken_urls() {
     $redirects = array(
         '/hop-giay-dung-banh-keo/' => home_url('/'),
         '/hop-giay-dung-my-pham/' => home_url('/products/beauty-skincare-packaging/'),
+        '/hop-giay-dung-banh-trung-thu/' => home_url('/products/bakery-packaging-boxes/'),
+        '/hop-giay-dung-ruou/' => home_url('/products/wine-premium-drink-packaging/'),
+        '/hop-giay-dung-ca-phe/' => home_url('/products/tea-and-coffee-packaging-boxes/'),
+        '/hop-giay-dung-qua-tet/' => home_url('/products/gift-paper-boxes/'),
+        '/hop-giay-dung-trang-suc/' => home_url('/products/jewelry-paper-boxes/'),
+        '/hop-giay-dung-tra/' => home_url('/products/tea-and-coffee-packaging-boxes/'),
+        '/hop-giay-dung-qua-tang/' => home_url('/products/gift-paper-boxes/'),
     );
 
     if (isset($redirects[$path])) {
-        wp_safe_redirect($redirects[$path], 301);
+        $target = $redirects[$path];
+        $request_uri = isset($_SERVER['REQUEST_URI']) ? wp_unslash($_SERVER['REQUEST_URI']) : '';
+        $query = wp_parse_url($request_uri, PHP_URL_QUERY);
+        if ($query) {
+            $target .= '?' . $query;
+        }
+        wp_safe_redirect($target, 301);
         exit;
     }
 }
