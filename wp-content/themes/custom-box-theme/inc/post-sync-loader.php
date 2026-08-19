@@ -388,7 +388,16 @@ function custom_box_post_sync_files_to_load(): array
 
         if ($force_all || $stored !== $entry['version'] || ($requested_slug && $requested_slug === $entry['slug'])) {
             $files[] = $file;
+            if (!$force_all && !$requested_slug) {
+                break; // Limit to one sync per request to prevent timeout (ERR_TIMED_OUT)
+            }
         }
+    }
+
+    // Hotfix: Rescue any posts that were accidentally set as their own parent (which causes infinite loops/timeouts)
+    global $wpdb;
+    if (isset($wpdb)) {
+        $wpdb->query("UPDATE {$wpdb->posts} SET post_parent = 0 WHERE ID = post_parent AND post_parent > 0");
     }
 
     if (!$force_all && !$files) {
