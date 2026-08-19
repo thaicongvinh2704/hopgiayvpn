@@ -299,13 +299,20 @@ function custom_box_redirect_old_packaging_landing_url() {
 }
 add_action('template_redirect', 'custom_box_redirect_old_packaging_landing_url', 1);
 
-function custom_box_redirect_404_hop_giay_dung_banh_keo() {
-    if ('/hop-giay-dung-banh-keo/' === custom_box_current_request_path()) {
-        wp_safe_redirect(home_url('/'), 301);
+function custom_box_redirect_legacy_broken_urls() {
+    $path = custom_box_current_request_path();
+    
+    $redirects = array(
+        '/hop-giay-dung-banh-keo/' => home_url('/'),
+        '/hop-giay-dung-my-pham/' => home_url('/products/beauty-skincare-packaging/'),
+    );
+
+    if (isset($redirects[$path])) {
+        wp_safe_redirect($redirects[$path], 301);
         exit;
     }
 }
-add_action('template_redirect', 'custom_box_redirect_404_hop_giay_dung_banh_keo', 1);
+add_action('template_redirect', 'custom_box_redirect_legacy_broken_urls', 1);
 
 function custom_box_get_packaging_money_page_title() {
     return 'Custom Packaging Boxes Manufacturer in Vietnam | VPN Paper Box';
