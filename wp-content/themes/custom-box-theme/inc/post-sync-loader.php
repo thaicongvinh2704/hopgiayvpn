@@ -11,6 +11,11 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/custom-wine-bottle-packaging-box-image-sync.php' => array(
+            'version' => '2026-08-20-wine-bottle-gallery-v1',
+            'option' => 'custom_box_wine_bottle_gallery_sync_version',
+            'slug' => 'custom-wine-bottle-packaging-box',
+        ),
         'inc/custom-vial-box-product-sync.php' => array(
             'version' => 'custom-vial-boxes-seo-20260810-v4',
             'option' => 'custom_box_custom_vial_boxes_sync_version',
