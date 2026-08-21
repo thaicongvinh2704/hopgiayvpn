@@ -61,7 +61,6 @@ $paper_bag_landing_title_overrides = array(
     'custom-birthday-paper-gift-bag-with-candle-print' => 'Custom Olive Green Floral Paper Gift Bag with Fabric Handles',
     'custom-cosmetic-paper-bag' => 'Custom Cosmetic Paper Bag',
     'custom-kraft-paper-bag-for-supplement-packaging' => 'Custom Kraft Paper Bag for Supplement Packaging',
-    'custom-lime-green-paper-shopping-bag-with-rope-handles' => 'Custom Lime Green Paper Shopping Bag with Rope Handles',
     'custom-luxury-paper-gift-bag-with-ribbon-handles' => 'Custom Luxury Paper Gift Bag with Ribbon Handles',
     'custom-paper-shopping-bag-with-handles' => 'Custom Paper Shopping Bag with Handles',
     'custom-rust-paper-shopping-bag-with-rope-handles' => 'Custom Rust Paper Shopping Bag with Rope Handles',
@@ -69,7 +68,6 @@ $paper_bag_landing_title_overrides = array(
 );
 $paper_bag_landing_alt_overrides = array(
     'custom-kraft-paper-bag-for-supplement-packaging' => 'Brown kraft paper shopping bag with flat paper handles and custom logo',
-    'custom-lime-green-paper-shopping-bag-with-rope-handles' => 'Lime green paper shopping bag with rope handles',
     'custom-paper-shopping-bag-with-handles' => 'Paper shopping bag with handles',
     'custom-rust-paper-shopping-bag-with-rope-handles' => 'Rust paper shopping bag with rope handles',
     'custom-white-paper-shopping-bag-with-brown-rope-handles' => 'White paper shopping bag with brown rope handles',
@@ -78,7 +76,6 @@ $paper_bag_product_slugs = array(
     'custom-birthday-paper-gift-bag-with-candle-print',
     'custom-cosmetic-paper-bag',
     'custom-kraft-paper-bag-for-supplement-packaging',
-    'custom-lime-green-paper-shopping-bag-with-rope-handles',
     'custom-luxury-paper-gift-bag-with-ribbon-handles',
     'custom-paper-shopping-bag-with-handles',
     'custom-rust-paper-shopping-bag-with-rope-handles',
