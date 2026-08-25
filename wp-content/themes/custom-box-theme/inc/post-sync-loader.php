@@ -11,6 +11,11 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/packaging-reduction-recycling-infrastructure-act-post-sync.php' => array(
+            'version' => '2026-08-25-prria-guide-v1',
+            'option' => 'custom_box_prria_sync_version',
+            'slug' => 'packaging-reduction-recycling-infrastructure-act',
+        ),
         'inc/pfas-food-packaging-ban-us-rules-post-sync.php' => array(
             'version' => '2026-08-25-pfas-food-packaging-v1',
             'option' => 'custom_box_pfas_food_packaging_sync_version',
