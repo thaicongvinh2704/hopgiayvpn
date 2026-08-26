@@ -224,6 +224,7 @@ function custom_box_get_products_url() {
 function custom_box_get_home_packaging_category_groups() {
     $uploads_2026_05_uri = content_url('/uploads/2026/05/');
     $uploads_2026_06_uri = content_url('/uploads/2026/06/');
+    $uploads_2026_08_uri = content_url('/uploads/2026/08/');
     $theme_image_uri = get_template_directory_uri() . '/assets/images/';
     $deploy_2026_05_uri = get_template_directory_uri()
         . '/inc/product-sample-deploy-assets/uploads/2026/05/';
@@ -267,15 +268,15 @@ function custom_box_get_home_packaging_category_groups() {
         array(
             'title' => 'Specialty Industry Packaging',
             'items' => array(
-                array('Beauty and Skincare Packaging', 'beauty-skincare-packaging', $theme_image_uri . 'custom-cosmetic-skincare-packaging-boxes-gray-background.webp'),
+                array('Beauty and Skincare Packaging', 'beauty-skincare-packaging', $uploads_2026_08_uri . 'beauty-skincare-packaging-category.webp'),
                 array('Pharmaceutical Packaging Boxes', 'pharmaceutical-packaging-boxes', $theme_image_uri . 'custom-pharmaceutical-medicine-packaging-boxes-gray-background.webp'),
                 array('Supplement Packaging Boxes', 'supplement-packaging-boxes', $theme_image_uri . 'custom-supplement-vitamin-packaging-boxes-gray-background.webp'),
                 array('Premium Food and Beverage Packaging', 'premium-food-beverage-packaging', $theme_image_uri . 'premium-tea-coffee-chocolate-packaging-boxes-gray-background.webp'),
                 array('Bird Nest Packaging Boxes', 'bird-nest-packaging-boxes', $uploads_2026_06_uri . 'blue-bird-nest-gift-packaging-box-with-gold-pattern-front-view.webp'),
                 array('Electronics Accessories Packaging', 'electronics-accessories-packaging', $deploy_2026_05_uri . 'custom-charging-cable-packaging-box-1.webp'),
-                array('Fashion and Sportswear Packaging', 'fashion-sportswear-packaging', $theme_image_uri . 'custom-apparel-packaging-boxes-gray-background.webp'),
+                array('Fashion and Sportswear Packaging', 'fashion-sportswear-packaging', $uploads_2026_06_uri . 'fashion-sportswear/custom-men-underwear-packaging-box-uv-gloss-window-01.webp'),
                 array('Sports Packaging Boxes', 'sports-packaging-boxes', $theme_image_uri . 'sport-packaging-box-thumbnail.webp'),
-                array('Wine and Premium Drink Packaging', 'wine-premium-drink-packaging', $theme_image_uri . 'custom-wine-premium-beverage-packaging-boxes-gray-background.webp'),
+                array('Wine and Premium Drink Packaging', 'wine-premium-drink-packaging', $uploads_2026_08_uri . 'custom-wine-bottle-packaging-box-open-standing-view.webp'),
                 array('Corporate Gift Packaging', 'corporate-gift-packaging', $deploy_2026_05_uri . 'custom-drawer-gift-box-1.webp'),
                 array('Home and Lifestyle Packaging', 'home-lifestyle-packaging', $deploy_2026_05_uri . 'custom-thermos-bottle-packaging-box-1.webp'),
                 array('Back-to-School and Stationery Packaging', 'back-to-school-stationery-packaging', $theme_image_uri . 'custom-stationery-school-supplies-packaging-boxes-gray-background.webp'),

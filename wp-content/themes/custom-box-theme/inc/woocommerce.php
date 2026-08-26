@@ -66,12 +66,13 @@ function custom_box_get_product_category_asset_image_url($term_or_slug) {
     $asset_images = array(
         'pharmaceutical-packaging-boxes'      => 'custom-pharmaceutical-medicine-packaging-boxes-gray-background.webp',
         'supplement-packaging-boxes'          => 'custom-supplement-vitamin-packaging-boxes-gray-background.webp',
-        'beauty-skincare-packaging'           => 'custom-cosmetic-skincare-packaging-boxes-gray-background.webp',
+        'beauty-skincare-packaging'           => content_url('/uploads/2026/08/beauty-skincare-packaging-category.webp'),
         'premium-food-beverage-packaging'     => 'premium-tea-coffee-chocolate-packaging-boxes-gray-background.webp',
+        'bird-nest-packaging-boxes'           => content_url('/uploads/2026/06/blue-bird-nest-gift-packaging-box-with-gold-pattern-front-view.webp'),
         'electronics-accessories-packaging'   => 'custom-phone-accessories-packaging-boxes-gray-background.webp',
-        'fashion-sportswear-packaging'        => 'custom-apparel-packaging-boxes-gray-background.webp',
+        'fashion-sportswear-packaging'        => content_url('/uploads/2026/06/fashion-sportswear/custom-men-underwear-packaging-box-uv-gloss-window-01.webp'),
         'sports-packaging-boxes'              => 'sport-packaging-box-thumbnail.webp',
-        'wine-premium-drink-packaging'        => 'custom-wine-premium-beverage-packaging-boxes-gray-background.webp',
+        'wine-premium-drink-packaging'        => content_url('/uploads/2026/08/custom-wine-bottle-packaging-box-open-standing-view.webp'),
         'corporate-gift-packaging'            => 'custom-corporate-gift-set-packaging-boxes-gray-background.webp',
         'home-lifestyle-packaging'            => 'custom-home-lifestyle-product-packaging-boxes-gray-background.webp',
         'back-to-school-stationery-packaging' => 'custom-stationery-school-supplies-packaging-boxes-gray-background.webp',
@@ -81,7 +82,13 @@ function custom_box_get_product_category_asset_image_url($term_or_slug) {
         return '';
     }
 
-    return get_template_directory_uri() . '/assets/images/' . $asset_images[$slug];
+    $asset_image = $asset_images[$slug];
+
+    if (preg_match('#^https?://#i', $asset_image)) {
+        return $asset_image;
+    }
+
+    return get_template_directory_uri() . '/assets/images/' . $asset_image;
 }
 
 function custom_box_get_product_category_card_image_url($term_or_slug, $size = 'medium_large') {

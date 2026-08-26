@@ -74,12 +74,22 @@ $assignments = array(
 	array(
 		'category_slug' => 'beauty-skincare-packaging',
 		'category_name' => 'Beauty and Skincare Packaging',
-		'product_slug'  => 'custom-facial-mask-packaging-box',
+		'upload_file'   => '2026/08/beauty-skincare-packaging-category.webp',
 	),
 	array(
 		'category_slug' => 'bird-nest-packaging-boxes',
 		'category_name' => 'Bird Nest Packaging Boxes',
 		'upload_file'   => '2026/06/blue-bird-nest-gift-packaging-box-with-gold-pattern-front-view.webp',
+	),
+	array(
+		'category_slug' => 'wine-premium-drink-packaging',
+		'category_name' => 'Wine and Premium Drink Packaging',
+		'product_slug'  => 'custom-wine-bottle-packaging-box',
+	),
+	array(
+		'category_slug' => 'fashion-sportswear-packaging',
+		'category_name' => 'Fashion and Sportswear Packaging',
+		'product_slug'  => 'custom-men-underwear-packaging-box',
 	),
 );
 
@@ -116,4 +126,4 @@ foreach ( $assignments as $assignment ) {
 	echo $assignment['category_name'] . ': thumbnail attachment_id=' . $attachment_id . PHP_EOL;
 }
 
-echo 'Verified 3 product category thumbnails successfully.' . PHP_EOL;
+echo 'Verified 5 product category thumbnails successfully.' . PHP_EOL;
