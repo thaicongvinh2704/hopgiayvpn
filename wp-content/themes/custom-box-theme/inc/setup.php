@@ -223,6 +223,7 @@ function custom_box_get_products_url() {
 
 function custom_box_get_home_packaging_category_groups() {
     $uploads_2026_05_uri = content_url('/uploads/2026/05/');
+    $uploads_2026_06_uri = content_url('/uploads/2026/06/');
     $theme_image_uri = get_template_directory_uri() . '/assets/images/';
     $deploy_2026_05_uri = get_template_directory_uri()
         . '/inc/product-sample-deploy-assets/uploads/2026/05/';
@@ -270,7 +271,7 @@ function custom_box_get_home_packaging_category_groups() {
                 array('Pharmaceutical Packaging Boxes', 'pharmaceutical-packaging-boxes', $theme_image_uri . 'custom-pharmaceutical-medicine-packaging-boxes-gray-background.webp'),
                 array('Supplement Packaging Boxes', 'supplement-packaging-boxes', $theme_image_uri . 'custom-supplement-vitamin-packaging-boxes-gray-background.webp'),
                 array('Premium Food and Beverage Packaging', 'premium-food-beverage-packaging', $theme_image_uri . 'premium-tea-coffee-chocolate-packaging-boxes-gray-background.webp'),
-                array('Bird Nest Packaging Boxes', 'bird-nest-packaging-boxes', $theme_image_uri . 'bird-nest-packaging-boxes.webp'),
+                array('Bird Nest Packaging Boxes', 'bird-nest-packaging-boxes', $uploads_2026_06_uri . 'blue-bird-nest-gift-packaging-box-with-gold-pattern-front-view.webp'),
                 array('Electronics Accessories Packaging', 'electronics-accessories-packaging', $deploy_2026_05_uri . 'custom-charging-cable-packaging-box-1.webp'),
                 array('Fashion and Sportswear Packaging', 'fashion-sportswear-packaging', $theme_image_uri . 'custom-apparel-packaging-boxes-gray-background.webp'),
                 array('Sports Packaging Boxes', 'sports-packaging-boxes', $theme_image_uri . 'sport-packaging-box-thumbnail.webp'),
