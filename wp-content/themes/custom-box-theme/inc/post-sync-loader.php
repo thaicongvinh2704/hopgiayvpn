@@ -26,6 +26,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_vodka_packaging_trends_sync_version',
             'slug' => 'trending-vodka-bottle-packaging-designs-2026',
         ),
+        'inc/consumer-attitudes-sustainable-vodka-packaging-materials-post-sync.php' => array(
+            'version' => '2026-08-27-consumer-vodka-packaging-v2',
+            'option' => 'custom_box_consumer_vodka_packaging_sync_version',
+            'slug' => 'consumer-attitudes-sustainable-vodka-packaging-materials',
+        ),
         'inc/custom-wine-bottle-packaging-box-image-sync.php' => array(
             'version' => '2026-08-20-wine-bottle-gallery-v1',
             'option' => 'custom_box_wine_bottle_gallery_sync_version',
