@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-08-01-pharma-bird-nest-category-thumbnails' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-08-27-lunar-new-year-gift-box' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -813,6 +813,16 @@ function custom_box_product_sample_deploy_batches(): array {
 			),
 		),
 		array(
+			'name'      => 'Custom Lunar New Year Gift Boxes product August 2026',
+			'marker'    => 'product-samples-custom-lunar-new-year-gift-box-202608',
+			'expected'  => 1,
+			'min_words' => 1500,
+			'scripts'   => array(
+				'tools/import-custom-lunar-new-year-gift-box-product.php',
+				'tools/verify-custom-lunar-new-year-gift-box-product.php',
+			),
+		),
+		array(
 			'name'      => 'Current product category thumbnails August 2026',
 			'marker'    => 'product-category-thumbnails-202608',
 			'expected'  => 0,
@@ -909,6 +919,17 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 		);
 	}
 
+	if ( 'lunar_new_year_202608' === $scope ) {
+		return array_values(
+			array_filter(
+				$batches,
+				static function ( $batch ) {
+					return isset( $batch['marker'] ) && 'product-samples-custom-lunar-new-year-gift-box-202608' === $batch['marker'];
+				}
+			)
+		);
+	}
+
 	// The default button must deploy the complete current release. Keep
 	// historical batches available through the explicit "all" scope, but do
 	// not make a new release depend on an incomplete legacy batch.
@@ -921,6 +942,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 					array(
 						'product-samples-pharmaceutical-packaging-202608',
 						'product-samples-bird-nest-packaging-202608',
+						'product-samples-custom-lunar-new-year-gift-box-202608',
 						'product-category-thumbnails-202608',
 					),
 					true
@@ -931,7 +953,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 }
 
 function custom_box_product_sample_deploy_allowed_scopes(): array {
-	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607', 'three_categories_202607', 'paper_bags_202607', 'christmas_gift_box_202607', 'pharmaceutical_202608', 'bird_nest_202608' );
+	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607', 'three_categories_202607', 'paper_bags_202607', 'christmas_gift_box_202607', 'pharmaceutical_202608', 'bird_nest_202608', 'lunar_new_year_202608' );
 }
 
 function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
@@ -1069,6 +1091,8 @@ function custom_box_product_sample_deploy_restore_tools() {
 		'verify-pharmaceutical-packaging-products-202608.php',
 		'import-bird-nest-packaging-products-202608.php',
 		'verify-bird-nest-packaging-products-202608.php',
+		'import-custom-lunar-new-year-gift-box-product.php',
+		'verify-custom-lunar-new-year-gift-box-product.php',
 		'sync-product-category-thumbnails-202608.php',
 	);
 	$log        = array();
@@ -1266,7 +1290,7 @@ function custom_box_product_sample_deploy_page() {
 		<h1>Product Sample Deploy</h1>
 		<p><strong>Tool version:</strong> <?php echo esc_html( CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION ); ?></p>
 		<p>This tool imports or updates the generated WooCommerce product sample batches from the Git-tracked deploy scripts and uploaded or bundled images.</p>
-		<p><strong>Current latest release:</strong> 20 August 2026 products and 3 category thumbnails. Upload all 80 original WebP files to <code>wp-content/uploads/2026/08/</code> before running <strong>Latest batch only</strong>.</p>
+		<p><strong>Current latest release:</strong> 21 August 2026 products and 3 category thumbnails. Upload all 80 original WebP files to <code>wp-content/uploads/2026/08/</code> before running <strong>Latest batch only</strong>.</p>
 		<p>It skips completed batches automatically, so it can be run after every deploy without creating duplicate products.</p>
 
 		<?php if ( $result ) : ?>
@@ -1344,6 +1368,16 @@ function custom_box_product_sample_deploy_page() {
 			<input type="hidden" name="deploy_scope" value="christmas_gift_box_202607">
 			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
 			<?php submit_button( 'Sync Christmas Gift Box Product', 'primary large', 'submit', false ); ?>
+		</form>
+
+		<h2>Custom Lunar New Year Gift Box Sync</h2>
+		<p>Imports or updates the Custom Lunar New Year Gift Boxes product from five bundled WebP images and the approved SEO content package.</p>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-bottom:24px;">
+			<input type="hidden" name="action" value="custom_box_product_sample_deploy">
+			<input type="hidden" name="reset" value="1">
+			<input type="hidden" name="deploy_scope" value="lunar_new_year_202608">
+			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
+			<?php submit_button( 'Sync Lunar New Year Gift Box Product', 'primary large', 'submit', false ); ?>
 		</form>
 
 		<hr>

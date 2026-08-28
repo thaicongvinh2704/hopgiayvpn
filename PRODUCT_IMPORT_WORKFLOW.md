@@ -526,9 +526,11 @@ Important:
 
 The Git-tracked root CLI entry point restores the bundled deploy tools from
 `wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/` before running.
-For the current August 2026 release, it synchronizes and verifies 20 products:
-10 Pharmaceutical Packaging products and 10 Bird Nest Packaging products. The
-80 original WebP files are uploaded separately to `wp-content/uploads/2026/08/`.
+For the current August 2026 release, it synchronizes and verifies 21 products:
+10 Pharmaceutical Packaging products, 10 Bird Nest Packaging products, and 1
+Custom Lunar New Year Gift Boxes product. The 80 original WebP files for the
+first two batches are uploaded separately to `wp-content/uploads/2026/08/`;
+the Lunar New Year product uses five bundled WebP deploy assets.
 The deploy stops before changing the database unless all 80 files are present.
 It is safe to run again because each importer uses a batch marker and product
 slug to update existing products instead of duplicating them.
@@ -542,8 +544,9 @@ on every deploy and verifies these category images:
 
 In WordPress admin, after the Git pull, open **Tools > Product Sample Deploy** and
 click **Run Product Sample Deploy** with **Latest batch only** selected. The default
-scope runs both current August 2026 batches, restores their Git-tracked tools,
-checks that all 80 manually uploaded originals exist, imports 20 products, syncs
+scope runs the three current August 2026 product/category batches, restores their
+Git-tracked tools, checks that all 80 manually uploaded originals exist, imports
+21 products, syncs
 the three requested category thumbnails, and verifies the result. Separate buttons
 remain available for rerunning earlier batches.
 
@@ -564,11 +567,15 @@ Recommended hosting deploy order:
 4. Clear page/object cache if the hosting uses one.
 
 CLI fallback: `php tools/deploy-product-samples-all.php` performs the same 80-image
-preflight, imports both batches, and runs both verification scripts.
+preflight, imports all three product batches, and runs their verification scripts.
 
 For a single latest batch, a dedicated wrapper can be used when available, for example:
 
 - `php tools/deploy-magnetic-closure-products.php`
+
+For only the Lunar New Year product, use:
+
+- `php tools/deploy-custom-lunar-new-year-gift-box-product.php`
 
 ### Sports Packaging batch (June 2026)
 
@@ -853,3 +860,28 @@ four-product bird nest batch unchanged, assigns the Bird Nest Packaging Boxes
 category, connects four Media Library attachments per product, and publishes the
 new products. This is part of the current **Latest batch only** hosting release.
 The deploy requires all 40 matching files in `wp-content/uploads/2026/08/`.
+
+### Custom Lunar New Year Gift Boxes product (August 2026)
+
+Local WooCommerce batch marker:
+
+- `_vpn_sample_import = product-samples-custom-lunar-new-year-gift-box-202608`
+
+This approved product imports `Custom Lunar New Year Gift Boxes` into the existing
+`Gift Paper Boxes` category. It uses five approved WebP images bundled under
+`wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/uploads/2026/08/`
+and the canonical product content file:
+
+- `wp-content/themes/custom-box-theme/inc/product-content/custom-lunar-new-year-gift-boxes.html`
+
+Files used:
+
+- `tools/import-custom-lunar-new-year-gift-box-product.php`
+- `tools/verify-custom-lunar-new-year-gift-box-product.php`
+- `tools/deploy-custom-lunar-new-year-gift-box-product.php`
+
+The importer is idempotent by product slug and batch marker. It creates or updates
+one product, attaches the five approved images without restoring omitted ZIP files,
+assigns Gift Paper Boxes as the primary category, and publishes the product. This
+batch is included in the current **Latest batch only** hosting release and can also
+be deployed independently with the dedicated wrapper above.
