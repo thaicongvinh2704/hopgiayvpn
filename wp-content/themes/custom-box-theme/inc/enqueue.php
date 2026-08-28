@@ -402,3 +402,47 @@ function custom_box_theme_favicon() {
     );
 }
 add_action('wp_head', 'custom_box_theme_favicon', 2);
+
+/**
+ * Keep Converter for Media's private cache headers limited to upload URLs.
+ *
+ * The plugin only converts files below wp-content/uploads on this site. Its
+ * default parent-directory rule otherwise makes original theme images private
+ * and forces Cloudflare to bypass them even though they have no negotiated
+ * variant. The Vary/private behavior remains intact for converted uploads.
+ */
+function custom_box_scope_webpc_cache_headers_to_uploads($rules) {
+    if (!is_string($rules) || false === strpos($rules, 'Header always set Cache-Control "private"')) {
+        return $rules;
+    }
+
+    if (false === strpos($rules, 'WEBPC_UPLOAD_VARIANT')) {
+        $rules = str_replace(
+            '<IfModule mod_headers.c>',
+            '<IfModule mod_setenvif.c>' . "\n"
+                . '  SetEnvIf Request_URI "/wp-content/uploads/" WEBPC_UPLOAD_VARIANT=1' . "\n"
+                . '</IfModule>' . "\n"
+                . '<IfModule mod_headers.c>',
+            $rules
+        );
+    }
+
+    $rules = str_replace(
+        'Header always set Cache-Control "private"',
+        'Header always set Cache-Control "private" env=WEBPC_UPLOAD_VARIANT',
+        $rules
+    );
+    $rules = str_replace(
+        'Header always set X-LiteSpeed-Cache-Control "no-cache"',
+        'Header always set X-LiteSpeed-Cache-Control "no-cache" env=WEBPC_UPLOAD_VARIANT',
+        $rules
+    );
+    $rules = str_replace(
+        'Header append Vary "Accept"',
+        'Header append Vary "Accept" env=WEBPC_UPLOAD_VARIANT',
+        $rules
+    );
+
+    return $rules;
+}
+add_filter('webpc_htaccess_mod_headers', 'custom_box_scope_webpc_cache_headers_to_uploads', 100);

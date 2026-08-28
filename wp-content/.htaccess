@@ -46,11 +46,14 @@
   RewriteCond %{DOCUMENT_ROOT}/wp-content/uploads-webpc/$1.jpeg.webp -f
   RewriteRule (?:.*/wp-content/)?(.+)\.jpeg$ /wp-content/uploads-webpc/$1.jpeg.webp [NC,T=image/webp,L]
 </IfModule>
+<IfModule mod_setenvif.c>
+  SetEnvIf Request_URI "/wp-content/uploads/" WEBPC_UPLOAD_VARIANT=1
+</IfModule>
 <IfModule mod_headers.c>
   <FilesMatch "(?i)\.(jpg|png|webp|jpeg)(\.(webp|avif))?$">
-    Header always set Cache-Control "private"
-    Header always set X-LiteSpeed-Cache-Control "no-cache"
-    Header append Vary "Accept"
+    Header always set Cache-Control "private" env=WEBPC_UPLOAD_VARIANT
+    Header always set X-LiteSpeed-Cache-Control "no-cache" env=WEBPC_UPLOAD_VARIANT
+    Header append Vary "Accept" env=WEBPC_UPLOAD_VARIANT
   </FilesMatch>
 </IfModule>
 # ! --- DO NOT EDIT NEXT LINE --- !
