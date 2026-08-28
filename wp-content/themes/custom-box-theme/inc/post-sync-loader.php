@@ -11,6 +11,11 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/frozen-food-packaging-small-business-post-sync.php' => array(
+            'version' => '2026-08-28-frozen-food-packaging-v2',
+            'option' => 'custom_box_frozen_food_packaging_sync_version',
+            'slug' => 'frozen-food-packaging-small-business',
+        ),
         'inc/packaging-reduction-recycling-infrastructure-act-post-sync.php' => array(
             'version' => '2026-08-25-prria-guide-v1',
             'option' => 'custom_box_prria_sync_version',
