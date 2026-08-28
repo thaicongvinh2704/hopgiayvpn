@@ -11,6 +11,11 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/jewelry-packaging-for-small-business-paper-box-budget-post-sync.php' => array(
+            'version' => '2026-08-28-jewelry-packaging-small-business-v1',
+            'option' => 'custom_box_jewelry_packaging_small_business_sync_version',
+            'slug' => 'jewelry-packaging-for-small-business-paper-box-budget',
+        ),
         'inc/frozen-food-packaging-small-business-post-sync.php' => array(
             'version' => '2026-08-28-frozen-food-packaging-v2',
             'option' => 'custom_box_frozen_food_packaging_sync_version',
