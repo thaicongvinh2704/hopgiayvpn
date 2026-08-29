@@ -1380,6 +1380,14 @@ function custom_box_product_sample_deploy_page() {
 			<?php submit_button( 'Sync Lunar New Year Gift Box Product', 'primary large', 'submit', false ); ?>
 		</form>
 
+
+		<h2>V2 Content Package Sync (11 Products)</h2>
+		<p>Imports or updates the 11 SEO/GEO/AIO V2 product content pages securely.</p>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-bottom:24px;">
+			<input type="hidden" name="action" value="custom_box_product_sample_deploy_v2">
+			<?php wp_nonce_field( 'custom_box_product_sample_deploy_v2' ); ?>
+			<?php submit_button( 'Sync 11 V2 Content Products', 'primary large', 'submit', false ); ?>
+		</form>
 		<hr>
 
 		<?php $category_counts = custom_box_product_sample_category_balance_counts(); ?>
@@ -1476,4 +1484,34 @@ function custom_box_product_sample_deploy_page() {
 		<?php endif; ?>
 	</div>
 	<?php
+}
+
+add_action('admin_post_custom_box_product_sample_deploy_v2', 'custom_box_handle_v2_deploy');
+function custom_box_handle_v2_deploy() {
+    if (!current_user_can('manage_options')) {
+        wp_die('Unauthorized');
+    }
+    check_admin_referer('custom_box_product_sample_deploy_v2');
+    
+    // Include WordPress admin header
+    require_once ABSPATH . 'wp-admin/admin-header.php';
+    
+    // Simulate POST for the script
+    $_POST['execute_v2_import'] = '1';
+    
+    echo '<div class="wrap">';
+    echo '<h1>V2 Content Sync Results</h1>';
+    
+    // Capture script output
+    ob_start();
+    require_once ABSPATH . 'tools/import-product-content-v2.php';
+    \ = ob_get_clean();
+    
+    echo \;
+    echo '<p><a href="' . admin_url('tools.php?page=custom-box-product-sample-deploy') . '" class="button">Back to Deploy Menu</a></p>';
+    echo '</div>';
+    
+    // Include WordPress admin footer to make it look native
+    require_once ABSPATH . 'wp-admin/admin-footer.php';
+    exit;
 }

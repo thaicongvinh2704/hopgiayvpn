@@ -1,0 +1,21 @@
+{
+  "product": "Custom Ampoule Carton with Molded Pulp Insert",
+  "visual_product_dna": [
+    "two-cavity molded pulp tray shown",
+    "separate printed outer carton",
+    "neck and body support zones",
+    "front identification panel",
+    "rear information panel",
+    "compact rectangular format",
+    "paper-based insert direction",
+    "container-specific tooling requirement"
+  ],
+  "intended_use": "ampoules, vials, laboratory samples, cosmetic concentrates, and fragile small containers that require indexed secondary packaging",
+  "not_recommended_without_additional_engineering": "primary product contact, unvalidated medical applications, or mixed container formats without separate fit checks",
+  "structure": "a printed folding carton enclosing a molded pulp tray with two illustrated cavities, closure flaps, and printable front, side, and rear information panels",
+  "fit_inputs": "container body diameter, total height, shoulder and neck profile, cap diameter, filled weight, glass tolerance, label position, cavity count, and removal clearance",
+  "insert_direction": "tool-formed molded fiber with shaped pockets, neck support, spacing ribs, and finger access developed from actual containers or controlled drawings",
+  "print_information_direction": "product identity, variant, count, orientation, warnings, lot and expiry coding zones, barcode quiet areas, and legally reviewed copy supplied by the brand owner",
+  "material_direction": "folding boxboard with a molded pulp insert; exact board grade, fiber recipe, barrier needs, and inks must be approved for the declared market and product-contact situation",
+  "content_positioning": "International B2B custom-manufacturing product page; no stock-size, price, lead-time, certification, or performance assumptions."
+}

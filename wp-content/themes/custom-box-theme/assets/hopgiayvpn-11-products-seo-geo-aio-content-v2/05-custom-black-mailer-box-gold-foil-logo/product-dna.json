@@ -1,0 +1,21 @@
+{
+  "product": "Custom Black Mailer Box with Gold Foil Logo",
+  "visual_product_dna": [
+    "matte black visual direction",
+    "gold foil lid logo",
+    "one-piece corrugated mailer",
+    "fold-flat dieline shown",
+    "front locking panel",
+    "open and closed gallery views",
+    "optional branded interior",
+    "premium parcel unboxing intent"
+  ],
+  "intended_use": "premium ecommerce, subscription kits, accessories, cosmetics, launch packs, and corporate gifting",
+  "not_recommended_without_additional_engineering": "unprotected heavy or fragile shipments where the selected flute, insert, and outer protection have not been validated",
+  "structure": "a one-piece fold-flat corrugated mailer with hinged lid, dust flaps, front roll-over panel, locking tabs, black surfaces, and a gold foil lid mark",
+  "fit_inputs": "packed length, width, height, total weight, center of gravity, product fragility, insert or void-fill volume, fulfillment sequence, and parcel route",
+  "insert_direction": "corrugated partitions, paperboard platforms, molded pulp, foam, tissue, or paper void fill selected by fragility, presentation goal, and recovery requirements",
+  "print_information_direction": "consistent black coverage, gold foil size and placement, score-line behavior, optional inside message, barcode-free presentation zones, and rub resistance during packing",
+  "material_direction": "corrugated board with a liner and flute chosen after evaluating weight, stacking, print target, foldability, and distribution exposure",
+  "content_positioning": "International B2B custom-manufacturing product page; no stock-size, price, lead-time, certification, or performance assumptions."
+}

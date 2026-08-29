@@ -1,0 +1,21 @@
+{
+  "product": "Custom Printed Tool Holder Packaging Carton",
+  "visual_product_dna": [
+    "front hero panel",
+    "rear information panel",
+    "top and bottom panel views",
+    "full flat dieline",
+    "industrial specification graphics",
+    "barcode and compatibility zones",
+    "dense-component support need",
+    "multi-panel version control"
+  ],
+  "intended_use": "tool holders, adapters, cutting-tool accessories, hardware components, measuring accessories, and compact industrial retail products",
+  "not_recommended_without_additional_engineering": "heavy, sharp, oily, or irregular components without an engineered inner support, barrier, and route evaluation",
+  "structure": "a printed folding carton with tuck closures, broad front branding, multiple technical-information panels, and a flat dieline that maps copy to each face",
+  "fit_inputs": "maximum product envelope, weight, center of gravity, protrusions, sharp edges, oil residue, accessory count, packing orientation, removal path, and shelf or hanging requirement",
+  "insert_direction": "die-cut paperboard cradles, corrugated pads, molded pulp, protective bags, or partitions designed to stop a dense component from striking carton walls",
+  "print_information_direction": "product family and model on the front, compatibility and dimensions on side panels, instructions and warnings on the rear, barcode quiet zones, country and importer copy, and version control",
+  "material_direction": "folding boxboard or microflute selected from product mass, edge risk, stacking, print density, retail presentation, and distribution conditions",
+  "content_positioning": "International B2B custom-manufacturing product page; no stock-size, price, lead-time, certification, or performance assumptions."
+}
