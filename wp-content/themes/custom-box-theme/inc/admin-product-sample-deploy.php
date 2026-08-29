@@ -1504,7 +1504,7 @@ function custom_box_handle_v2_deploy() {
     
     // Capture script output
     ob_start();
-    require_once ABSPATH . 'tools/import-product-content-v2.php';
+    require_once ABSPATH . 'tools/deploy-v2-full.php';
     $output = ob_get_clean();
     
     echo $output;
