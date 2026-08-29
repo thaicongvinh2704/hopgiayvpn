@@ -55,7 +55,13 @@ function custom_box_privacy_policy_content() {
 }
 
 function custom_box_bootstrap_privacy_policy_page() {
-    if (is_admin() || wp_doing_cron() || (defined('REST_REQUEST') && REST_REQUEST)) {
+    if (
+        !is_admin()
+        || !current_user_can('manage_options')
+        || (function_exists('wp_doing_ajax') && wp_doing_ajax())
+        || wp_doing_cron()
+        || (defined('REST_REQUEST') && REST_REQUEST)
+    ) {
         return;
     }
 
@@ -94,4 +100,4 @@ function custom_box_bootstrap_privacy_policy_page() {
 
     delete_option('custom_box_privacy_policy_creation_lock');
 }
-add_action('init', 'custom_box_bootstrap_privacy_policy_page', 99);
+add_action('admin_init', 'custom_box_bootstrap_privacy_policy_page', 99);

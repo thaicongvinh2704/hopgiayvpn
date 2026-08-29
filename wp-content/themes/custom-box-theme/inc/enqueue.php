@@ -446,3 +446,53 @@ function custom_box_scope_webpc_cache_headers_to_uploads($rules) {
     return $rules;
 }
 add_filter('webpc_htaccess_mod_headers', 'custom_box_scope_webpc_cache_headers_to_uploads', 100);
+
+function custom_box_script_depends_on($scripts, $handle, $dependency, &$visited) {
+    if (isset($visited[$handle])) {
+        return false;
+    }
+
+    $visited[$handle] = true;
+    if (empty($scripts->registered[$handle])) {
+        return false;
+    }
+
+    foreach ((array) $scripts->registered[$handle]->deps as $registered_dependency) {
+        if ($dependency === $registered_dependency) {
+            return true;
+        }
+
+        if (custom_box_script_depends_on($scripts, $registered_dependency, $dependency, $visited)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
+ * Remove orphaned jQuery on non-commerce pages after plugin assets are pruned.
+ */
+function custom_box_dequeue_orphan_jquery() {
+    if (is_admin() || custom_box_is_commerce_context() || custom_box_is_dflip_context()) {
+        return;
+    }
+
+    $scripts = wp_scripts();
+    foreach ((array) $scripts->queue as $handle) {
+        if (in_array($handle, array('jquery', 'jquery-core', 'jquery-migrate'), true)) {
+            continue;
+        }
+
+        $visited = array();
+        if (custom_box_script_depends_on($scripts, $handle, 'jquery', $visited)) {
+            return;
+        }
+    }
+
+    wp_dequeue_script('jquery');
+    wp_dequeue_script('jquery-core');
+    wp_dequeue_script('jquery-migrate');
+}
+add_action('wp_enqueue_scripts', 'custom_box_dequeue_orphan_jquery', PHP_INT_MAX);
+add_action('wp_print_scripts', 'custom_box_dequeue_orphan_jquery', PHP_INT_MAX);

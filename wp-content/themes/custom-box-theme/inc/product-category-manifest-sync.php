@@ -268,4 +268,17 @@ function custom_box_product_category_manifest_sync(): void {
     update_option('custom_box_product_category_manifest_sync', $sync_key, false);
     clean_term_cache(array($parent_id), 'product_cat');
 }
-add_action('init', 'custom_box_product_category_manifest_sync', 30);
+function custom_box_maybe_sync_product_category_manifest(): void {
+    if (
+        !is_admin()
+        || !current_user_can('manage_options')
+        || (function_exists('wp_doing_ajax') && wp_doing_ajax())
+        || (defined('REST_REQUEST') && REST_REQUEST)
+        || (defined('DOING_CRON') && DOING_CRON)
+    ) {
+        return;
+    }
+
+    custom_box_product_category_manifest_sync();
+}
+add_action('admin_init', 'custom_box_maybe_sync_product_category_manifest', 30);

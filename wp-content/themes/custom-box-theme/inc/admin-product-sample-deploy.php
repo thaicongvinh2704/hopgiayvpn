@@ -1505,9 +1505,9 @@ function custom_box_handle_v2_deploy() {
     // Capture script output
     ob_start();
     require_once ABSPATH . 'tools/import-product-content-v2.php';
-    \ = ob_get_clean();
+    $output = ob_get_clean();
     
-    echo \;
+    echo $output;
     echo '<p><a href="' . admin_url('tools.php?page=custom-box-product-sample-deploy') . '" class="button">Back to Deploy Menu</a></p>';
     echo '</div>';
     
