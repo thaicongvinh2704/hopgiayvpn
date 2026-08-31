@@ -12,7 +12,7 @@ function custom_box_post_sync_registry(): array
 {
     return array(
         'inc/cosmetic-packaging-for-small-business-post-sync.php' => array(
-            'version' => '2026-08-31-cosmetic-packaging-small-business-v1',
+            'version' => '2026-08-31-cosmetic-packaging-small-business-v2',
             'option' => 'custom_box_cosmetic_packaging_small_business_sync_version',
             'slug' => 'cosmetic-packaging-for-small-business',
         ),

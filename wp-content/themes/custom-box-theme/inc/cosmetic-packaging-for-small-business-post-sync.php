@@ -5,7 +5,7 @@
 
 defined('ABSPATH') || exit;
 
-const CUSTOM_BOX_COSMETIC_PACKAGING_SMALL_BUSINESS_SYNC_VERSION = '2026-08-31-cosmetic-packaging-small-business-v1';
+const CUSTOM_BOX_COSMETIC_PACKAGING_SMALL_BUSINESS_SYNC_VERSION = '2026-08-31-cosmetic-packaging-small-business-v2';
 const CUSTOM_BOX_COSMETIC_PACKAGING_SMALL_BUSINESS_VERSION_OPTION = 'custom_box_cosmetic_packaging_small_business_sync_version';
 const CUSTOM_BOX_COSMETIC_PACKAGING_SMALL_BUSINESS_NOTICE_OPTION = 'custom_box_cosmetic_packaging_small_business_sync_notice';
 
