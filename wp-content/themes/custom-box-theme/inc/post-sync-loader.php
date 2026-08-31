@@ -11,6 +11,11 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/packaging-boxes-for-beauty-products-post-sync.php' => array(
+            'version' => '2026-08-31-packaging-boxes-beauty-products-v1',
+            'option' => 'custom_box_packaging_boxes_beauty_products_sync_version',
+            'slug' => 'packaging-boxes-for-beauty-products',
+        ),
         'inc/cosmetic-packaging-for-small-business-post-sync.php' => array(
             'version' => '2026-08-31-cosmetic-packaging-small-business-v2',
             'option' => 'custom_box_cosmetic_packaging_small_business_sync_version',
