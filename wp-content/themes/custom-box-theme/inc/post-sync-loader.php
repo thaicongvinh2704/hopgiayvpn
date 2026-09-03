@@ -11,6 +11,11 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/export-paper-packaging-materials-printing-packing-post-sync.php' => array(
+            'version' => '2026-09-03-export-paper-packaging-v1',
+            'option' => 'custom_box_export_paper_packaging_sync_version',
+            'slug' => 'export-paper-packaging-materials-printing-packing',
+        ),
         'inc/packaging-boxes-for-beauty-products-post-sync.php' => array(
             'version' => '2026-08-31-packaging-boxes-beauty-products-v1',
             'option' => 'custom_box_packaging_boxes_beauty_products_sync_version',
