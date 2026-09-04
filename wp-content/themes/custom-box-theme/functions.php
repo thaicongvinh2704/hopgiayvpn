@@ -46,7 +46,10 @@ if (is_admin()) {
     require_once get_template_directory() . '/inc/custom-vial-box-product-sync.php';
 } else {
     add_action('wp', static function () {
-        if (is_singular('product') && 829 === (int) get_queried_object_id()) {
+        if (
+            is_singular('product')
+            && 'custom-vial-packaging-box' === get_post_field('post_name', get_queried_object_id())
+        ) {
             require_once get_template_directory() . '/inc/custom-vial-box-product-sync.php';
         }
     }, 1);
