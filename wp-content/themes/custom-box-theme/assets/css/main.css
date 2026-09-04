@@ -3803,22 +3803,31 @@ html {
 
 /* DOTS */
 .slider-dots {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+    justify-content: center;
     text-align: center;
     margin-top: 20px;
 }
 
-.slider-dots span {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
+.slider-dot {
+    appearance: none;
     background: #ccc;
+    border: 0;
     border-radius: 50%;
-    margin: 0 5px;
+    box-sizing: border-box;
     cursor: pointer;
+    display: inline-block;
+    height: 8px;
+    min-height: 8px;
+    min-width: 8px;
+    padding: 0;
     transition: 0.3s;
+    width: 8px;
 }
 
-.slider-dots span.active {
+.slider-dot.active {
     width: 22px;
     border-radius: 10px;
     background: #2A6A92;

@@ -283,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
 
         let visibleCards = getVisibleCards();
-        let totalSlides = Math.max(cards.length - visibleCards, 0);
+        let totalSlides = Math.max(Math.ceil(cards.length / visibleCards) - 1, 0);
         let dots = [];
 
         function renderDots() {
@@ -310,11 +310,11 @@ document.addEventListener("DOMContentLoaded", function () {
         function updateSlider() {
             const previousTotalSlides = totalSlides;
             visibleCards = getVisibleCards();
-            totalSlides = Math.max(cards.length - visibleCards, 0);
+            totalSlides = Math.max(Math.ceil(cards.length / visibleCards) - 1, 0);
             if (index > totalSlides) index = totalSlides;
             if (previousTotalSlides !== totalSlides) renderDots();
 
-            track.style.transform = `translateX(-${index * cards[0].offsetWidth}px)`;
+            track.style.transform = `translateX(-${index * visibleCards * cards[0].offsetWidth}px)`;
 
             dots.forEach((dot, dotIndex) => {
                 const isActive = dotIndex === index;
@@ -326,6 +326,119 @@ document.addEventListener("DOMContentLoaded", function () {
         window.addEventListener("resize", updateSlider);
         renderDots();
         updateSlider();
+    }
+
+
+    /* =========================
+       FEATURED PAPER BAGS SLIDER
+    ========================= */
+    const featuredPaperBagsTrack = document.querySelector(".featured-paper-bags-track");
+    const featuredPaperBagsSlides = document.querySelectorAll(".featured-paper-bags-slide");
+    const featuredPaperBagsDotsContainer = document.querySelector(".featured-paper-bags-dots");
+
+    if (featuredPaperBagsTrack && featuredPaperBagsSlides.length > 0 && featuredPaperBagsDotsContainer) {
+        let featuredPaperBagsIndex = 0;
+        let featuredPaperBagsTouchStartX = 0;
+        let featuredPaperBagsVisibleCards = 6;
+        let featuredPaperBagsTotalSlides = 0;
+        let featuredPaperBagsDots = [];
+
+        const getFeaturedPaperBagsVisibleCards = () => {
+            if (window.matchMedia("(max-width: 640px)").matches) return 2;
+            if (window.matchMedia("(max-width: 1024px)").matches) return 3;
+            return 6;
+        };
+
+        const renderFeaturedPaperBagsDots = () => {
+            featuredPaperBagsDotsContainer.innerHTML = "";
+
+            for (let dotIndex = 0; dotIndex <= featuredPaperBagsTotalSlides; dotIndex += 1) {
+                const dot = document.createElement("button");
+                dot.type = "button";
+                dot.className = "featured-paper-bags-dot";
+                dot.setAttribute(
+                    "aria-label",
+                    `Show featured paper bag group ${dotIndex + 1} of ${featuredPaperBagsTotalSlides + 1}`
+                );
+                dot.addEventListener("click", () => {
+                    featuredPaperBagsIndex = dotIndex;
+                    updateFeaturedPaperBagsSlider();
+                });
+                featuredPaperBagsDotsContainer.appendChild(dot);
+            }
+
+            featuredPaperBagsDots = Array.from(
+                featuredPaperBagsDotsContainer.querySelectorAll("button")
+            );
+        };
+
+        const updateFeaturedPaperBagsSlider = () => {
+            const previousTotalSlides = featuredPaperBagsTotalSlides;
+            featuredPaperBagsVisibleCards = getFeaturedPaperBagsVisibleCards();
+            featuredPaperBagsTotalSlides = Math.max(
+                Math.ceil(featuredPaperBagsSlides.length / featuredPaperBagsVisibleCards) - 1,
+                0
+            );
+
+            if (featuredPaperBagsIndex > featuredPaperBagsTotalSlides) {
+                featuredPaperBagsIndex = featuredPaperBagsTotalSlides;
+            }
+
+            if (previousTotalSlides !== featuredPaperBagsTotalSlides) {
+                renderFeaturedPaperBagsDots();
+            }
+
+            const slideWidth = featuredPaperBagsSlides[0].getBoundingClientRect().width;
+            const lastPageStart = Math.max(
+                featuredPaperBagsSlides.length - featuredPaperBagsVisibleCards,
+                0
+            );
+            const pageStart = featuredPaperBagsIndex === featuredPaperBagsTotalSlides
+                ? lastPageStart
+                : featuredPaperBagsIndex * featuredPaperBagsVisibleCards;
+            featuredPaperBagsTrack.style.transform =
+                `translateX(-${pageStart * slideWidth}px)`;
+
+            featuredPaperBagsDots.forEach((dot, dotIndex) => {
+                const isActive = dotIndex === featuredPaperBagsIndex;
+                dot.classList.toggle("active", isActive);
+                dot.setAttribute("aria-pressed", isActive ? "true" : "false");
+            });
+        };
+
+        const goToFeaturedPaperBagsSlide = (nextIndex) => {
+            if (nextIndex > featuredPaperBagsTotalSlides) {
+                featuredPaperBagsIndex = 0;
+            } else if (nextIndex < 0) {
+                featuredPaperBagsIndex = featuredPaperBagsTotalSlides;
+            } else {
+                featuredPaperBagsIndex = nextIndex;
+            }
+            updateFeaturedPaperBagsSlider();
+        };
+
+        featuredPaperBagsTrack.addEventListener("touchstart", (event) => {
+            featuredPaperBagsTouchStartX = event.changedTouches[0].screenX;
+        }, { passive: true });
+
+        featuredPaperBagsTrack.addEventListener("touchend", (event) => {
+            const touchEndX = event.changedTouches[0].screenX;
+            const swipeDistance = touchEndX - featuredPaperBagsTouchStartX;
+
+            if (Math.abs(swipeDistance) < 50) return;
+            goToFeaturedPaperBagsSlide(
+                featuredPaperBagsIndex + (swipeDistance < 0 ? 1 : -1)
+            );
+        }, { passive: true });
+
+        featuredPaperBagsVisibleCards = getFeaturedPaperBagsVisibleCards();
+        featuredPaperBagsTotalSlides = Math.max(
+            Math.ceil(featuredPaperBagsSlides.length / featuredPaperBagsVisibleCards) - 1,
+            0
+        );
+        renderFeaturedPaperBagsDots();
+        updateFeaturedPaperBagsSlider();
+        window.addEventListener("resize", updateFeaturedPaperBagsSlider);
     }
 
 

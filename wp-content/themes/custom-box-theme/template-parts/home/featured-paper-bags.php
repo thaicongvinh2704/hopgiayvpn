@@ -24,6 +24,38 @@ $featured_paper_bags = array(
         'slug'  => 'custom-luxury-gift-box-with-paper-bag',
         'title' => 'Custom Luxury Gift Box with Paper Bag',
     ),
+    array(
+        'slug'  => 'custom-printed-flat-bread-paper-bags',
+        'title' => 'Custom Printed Flat Bread Paper Bags',
+    ),
+    array(
+        'slug'  => 'custom-kraft-side-gusset-bread-bags',
+        'title' => 'Custom Kraft Side Gusset Bread Bags',
+    ),
+    array(
+        'slug'  => 'custom-printed-baguette-paper-bags',
+        'title' => 'Custom Printed Baguette Paper Bags',
+    ),
+    array(
+        'slug'  => 'custom-square-bottom-bakery-paper-bags',
+        'title' => 'Custom Square Bottom Bakery Paper Bags',
+    ),
+    array(
+        'slug'  => 'custom-paper-bread-bags-with-window',
+        'title' => 'Custom Paper Bread Bags With Window',
+    ),
+    array(
+        'slug'  => 'custom-greaseproof-bakery-paper-bags',
+        'title' => 'Custom Greaseproof Bakery Paper Bags',
+    ),
+    array(
+        'slug'  => 'custom-die-cut-handle-bakery-paper-bags',
+        'title' => 'Custom Die Cut Handle Bakery Paper Bags',
+    ),
+    array(
+        'slug'  => 'custom-twisted-handle-bakery-paper-bags',
+        'title' => 'Custom Twisted Handle Bakery Paper Bags',
+    ),
 );
 
 $fallback_image_url = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
@@ -37,7 +69,9 @@ $fallback_image_url = get_template_directory_uri() . '/assets/images/Cardboard-P
             <p>Discover a selection of our standout paper bags, from kraft and luxury gift bags to branded retail shopping bags for supplements, gifts, and lifestyle brands.</p>
         </div>
 
-        <div class="featured-paper-bags-grid">
+        <div class="featured-paper-bags-carousel" data-featured-paper-bags-carousel>
+            <div class="featured-paper-bags-viewport">
+                <div class="featured-paper-bags-track">
             <?php foreach ($featured_paper_bags as $featured_paper_bag) : ?>
                 <?php
                 $product = get_page_by_path($featured_paper_bag['slug'], OBJECT, 'product');
@@ -46,35 +80,40 @@ $fallback_image_url = get_template_directory_uri() . '/assets/images/Cardboard-P
                     : home_url('/product/' . $featured_paper_bag['slug'] . '/');
                 $thumbnail_id = $product instanceof WP_Post ? get_post_thumbnail_id($product) : 0;
                 ?>
-                <a class="featured-paper-bag-card" href="<?php echo esc_url($product_url); ?>">
-                    <span class="featured-paper-bag-image">
-                        <?php if ($thumbnail_id) : ?>
-                            <?php
-                            echo wp_get_attachment_image(
-                                $thumbnail_id,
-                                'medium_large',
-                                false,
-                                array(
-                                    'alt'      => $featured_paper_bag['title'],
-                                    'loading'  => 'lazy',
-                                    'decoding' => 'async',
-                                )
-                            );
-                            ?>
-                        <?php else : ?>
-                            <img
-                                src="<?php echo esc_url($fallback_image_url); ?>"
-                                alt="<?php echo esc_attr($featured_paper_bag['title']); ?>"
-                                loading="lazy"
-                                decoding="async"
-                                width="506"
-                                height="277"
-                            >
-                        <?php endif; ?>
-                    </span>
-                    <span class="featured-paper-bag-title"><?php echo esc_html($featured_paper_bag['title']); ?></span>
-                </a>
+                <div class="featured-paper-bags-slide">
+                    <a class="featured-paper-bag-card" href="<?php echo esc_url($product_url); ?>">
+                        <span class="featured-paper-bag-image">
+                            <?php if ($thumbnail_id) : ?>
+                                <?php
+                                echo wp_get_attachment_image(
+                                    $thumbnail_id,
+                                    'medium_large',
+                                    false,
+                                    array(
+                                        'alt'      => $featured_paper_bag['title'],
+                                        'loading'  => 'lazy',
+                                        'decoding' => 'async',
+                                    )
+                                );
+                                ?>
+                            <?php else : ?>
+                                <img
+                                    src="<?php echo esc_url($fallback_image_url); ?>"
+                                    alt="<?php echo esc_attr($featured_paper_bag['title']); ?>"
+                                    loading="lazy"
+                                    decoding="async"
+                                    width="506"
+                                    height="277"
+                                >
+                            <?php endif; ?>
+                        </span>
+                        <span class="featured-paper-bag-title"><?php echo esc_html($featured_paper_bag['title']); ?></span>
+                    </a>
+                </div>
             <?php endforeach; ?>
+                </div>
+            </div>
+            <div class="featured-paper-bags-dots" aria-label="Featured paper bag products navigation"></div>
         </div>
     </div>
 </section>

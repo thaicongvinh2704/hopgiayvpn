@@ -5181,6 +5181,11 @@ html {
         width: 44px;
     }
 
+    .slider-dot.active {
+        background: transparent;
+        width: 44px;
+    }
+
     .slider-dot::after,
     .testi-dot::after {
         background: #7e9baa;
