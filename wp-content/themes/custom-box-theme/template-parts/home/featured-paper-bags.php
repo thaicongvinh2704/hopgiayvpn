@@ -1,30 +1,6 @@
 <?php
 $featured_paper_bags = array(
     array(
-        'slug'  => 'custom-birthday-paper-gift-bag-with-present-print',
-        'title' => 'Custom Birthday Paper Gift Bag',
-    ),
-    array(
-        'slug'  => 'custom-kraft-paper-bag-for-supplement-packaging',
-        'title' => 'Custom Kraft Supplement Paper Bag',
-    ),
-    array(
-        'slug'  => 'custom-luxury-paper-gift-bag-with-ribbon-handles',
-        'title' => 'Luxury Paper Gift Bag with Ribbon Handles',
-    ),
-    array(
-        'slug'  => 'custom-white-paper-shopping-bag-with-brown-rope-handles',
-        'title' => 'White Paper Shopping Bag with Rope Handles',
-    ),
-    array(
-        'slug'  => 'custom-lime-green-paper-shopping-bag-with-rope-handles',
-        'title' => 'Lime Green Paper Shopping Bag',
-    ),
-    array(
-        'slug'  => 'custom-luxury-gift-box-with-paper-bag',
-        'title' => 'Custom Luxury Gift Box with Paper Bag',
-    ),
-    array(
         'slug'  => 'custom-printed-flat-bread-paper-bags',
         'title' => 'Custom Printed Flat Bread Paper Bags',
     ),
@@ -55,6 +31,30 @@ $featured_paper_bags = array(
     array(
         'slug'  => 'custom-twisted-handle-bakery-paper-bags',
         'title' => 'Custom Twisted Handle Bakery Paper Bags',
+    ),
+    array(
+        'slug'  => 'custom-birthday-paper-gift-bag-with-present-print',
+        'title' => 'Custom Birthday Paper Gift Bag',
+    ),
+    array(
+        'slug'  => 'custom-kraft-paper-bag-for-supplement-packaging',
+        'title' => 'Custom Kraft Supplement Paper Bag',
+    ),
+    array(
+        'slug'  => 'custom-luxury-paper-gift-bag-with-ribbon-handles',
+        'title' => 'Luxury Paper Gift Bag with Ribbon Handles',
+    ),
+    array(
+        'slug'  => 'custom-white-paper-shopping-bag-with-brown-rope-handles',
+        'title' => 'White Paper Shopping Bag with Rope Handles',
+    ),
+    array(
+        'slug'  => 'custom-lime-green-paper-shopping-bag-with-rope-handles',
+        'title' => 'Lime Green Paper Shopping Bag',
+    ),
+    array(
+        'slug'  => 'custom-luxury-gift-box-with-paper-bag',
+        'title' => 'Custom Luxury Gift Box with Paper Bag',
     ),
 );
 
