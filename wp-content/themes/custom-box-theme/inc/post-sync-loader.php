@@ -11,6 +11,11 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/custom-pizza-boxes-with-logo-guide-post-sync.php' => array(
+            'version' => '2026-09-04-custom-pizza-boxes-with-logo-v1',
+            'option' => 'custom_box_custom_pizza_boxes_with_logo_sync_version',
+            'slug' => 'custom-pizza-boxes-with-logo-guide',
+        ),
         'inc/export-paper-packaging-materials-printing-packing-post-sync.php' => array(
             'version' => '2026-09-03-export-paper-packaging-v1',
             'option' => 'custom_box_export_paper_packaging_sync_version',
