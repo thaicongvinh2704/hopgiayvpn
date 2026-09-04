@@ -5,6 +5,28 @@
 
 defined('ABSPATH') || exit;
 
+/**
+ * Keep the harmless Schema.org microdata attributes used by visible FAQ
+ * sections when post content is sanitized on save or at render time.
+ */
+function custom_box_allow_visible_schema_attributes($allowed_html, $context) {
+    if ('post' !== $context) {
+        return $allowed_html;
+    }
+
+    foreach (array('section', 'div', 'h2', 'h3', 'p') as $tag) {
+        if (!isset($allowed_html[$tag])) {
+            $allowed_html[$tag] = array();
+        }
+        $allowed_html[$tag]['itemscope'] = true;
+        $allowed_html[$tag]['itemtype'] = true;
+        $allowed_html[$tag]['itemprop'] = true;
+    }
+
+    return $allowed_html;
+}
+add_filter('wp_kses_allowed_html', 'custom_box_allow_visible_schema_attributes', 10, 2);
+
 function custom_box_output_pinterest_domain_verification() {
     $verification = '58c369e38f99c3e9d3b0311b4301f3e4';
 

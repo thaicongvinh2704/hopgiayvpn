@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-08-27-lunar-new-year-gift-box' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-09-04-bread-bags' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -489,7 +489,7 @@ function custom_box_product_sample_deploy_batch_products( string $marker ): arra
 	);
 }
 
-function custom_box_product_sample_deploy_batch_complete( string $marker, int $expected_count, int $min_words = 1500 ): bool {
+function custom_box_product_sample_deploy_batch_complete( string $marker, int $expected_count, int $min_words = 1500, string $expected_moq = '1000 boxes', string $expected_status = 'publish' ): bool {
 	$products = custom_box_product_sample_deploy_batch_products( $marker );
 	if ( count( $products ) !== $expected_count ) {
 		return false;
@@ -510,7 +510,8 @@ function custom_box_product_sample_deploy_batch_complete( string $marker, int $e
 			}
 		}
 
-		if ( 'publish' !== get_post_status( $product->ID ) || $words < $min_words || preg_match( '/<h1\b/i', $content ) || ! is_array( $specs ) || count( $specs ) < 21 || '1000 boxes' !== $moq || ! has_post_thumbnail( $product->ID ) ) {
+		$status_ok = 'any' === $expected_status || $expected_status === get_post_status( $product->ID );
+		if ( ! $status_ok || $words < $min_words || preg_match( '/<h1\b/i', $content ) || ! is_array( $specs ) || count( $specs ) < 21 || $expected_moq !== $moq || ! has_post_thumbnail( $product->ID ) ) {
 			return false;
 		}
 	}
@@ -823,6 +824,18 @@ function custom_box_product_sample_deploy_batches(): array {
 			),
 		),
 		array(
+			'name'            => 'Bread Bag SEO products September 2026',
+			'marker'          => 'product-samples-bread-bags-202609',
+			'expected'        => 8,
+			'min_words'       => 800,
+			'expected_moq'    => 'Project-based quotation; confirm quantity by RFQ',
+			'expected_status'  => 'any',
+			'scripts'         => array(
+				'tools/import-bread-bag-products-202609.php',
+				'tools/verify-bread-bag-products-202609.php',
+			),
+		),
+		array(
 			'name'      => 'Current product category thumbnails August 2026',
 			'marker'    => 'product-category-thumbnails-202608',
 			'expected'  => 0,
@@ -930,6 +943,17 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 		);
 	}
 
+	if ( 'bread_bags_202609' === $scope ) {
+		return array_values(
+			array_filter(
+				$batches,
+				static function ( $batch ) {
+					return isset( $batch['marker'] ) && 'product-samples-bread-bags-202609' === $batch['marker'];
+				}
+			)
+		);
+	}
+
 	// The default button must deploy the complete current release. Keep
 	// historical batches available through the explicit "all" scope, but do
 	// not make a new release depend on an incomplete legacy batch.
@@ -943,6 +967,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 						'product-samples-pharmaceutical-packaging-202608',
 						'product-samples-bird-nest-packaging-202608',
 						'product-samples-custom-lunar-new-year-gift-box-202608',
+						'product-samples-bread-bags-202609',
 						'product-category-thumbnails-202608',
 					),
 					true
@@ -953,7 +978,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 }
 
 function custom_box_product_sample_deploy_allowed_scopes(): array {
-	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607', 'three_categories_202607', 'paper_bags_202607', 'christmas_gift_box_202607', 'pharmaceutical_202608', 'bird_nest_202608', 'lunar_new_year_202608' );
+	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607', 'three_categories_202607', 'paper_bags_202607', 'christmas_gift_box_202607', 'pharmaceutical_202608', 'bird_nest_202608', 'lunar_new_year_202608', 'bread_bags_202609' );
 }
 
 function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
@@ -975,7 +1000,7 @@ function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
 			echo PHP_EOL . '== ' . $batch['name'] . ' ==' . PHP_EOL;
 			$min_words = $batch['min_words'] ?? 1500;
 
-			if ( empty( $batch['always'] ) && custom_box_product_sample_deploy_batch_complete( $batch['marker'], $batch['expected'], $min_words ) ) {
+			if ( empty( $batch['always'] ) && custom_box_product_sample_deploy_batch_complete( $batch['marker'], $batch['expected'], $min_words, $batch['expected_moq'] ?? '1000 boxes', $batch['expected_status'] ?? 'publish' ) ) {
 				echo 'Already complete, skipped.' . PHP_EOL;
 				++$state['batch_index'];
 				$state['script_index'] = 0;
@@ -1045,7 +1070,7 @@ function custom_box_product_sample_deploy_run_batches(): void {
 		echo PHP_EOL . '== ' . $batch['name'] . ' ==' . PHP_EOL;
 		$min_words = $batch['min_words'] ?? 1500;
 
-		if ( empty( $batch['always'] ) && custom_box_product_sample_deploy_batch_complete( $batch['marker'], $batch['expected'], $min_words ) ) {
+		if ( empty( $batch['always'] ) && custom_box_product_sample_deploy_batch_complete( $batch['marker'], $batch['expected'], $min_words, $batch['expected_moq'] ?? '1000 boxes', $batch['expected_status'] ?? 'publish' ) ) {
 			echo 'Already complete, skipped.' . PHP_EOL;
 			continue;
 		}
@@ -1094,6 +1119,8 @@ function custom_box_product_sample_deploy_restore_tools() {
 		'import-custom-lunar-new-year-gift-box-product.php',
 		'verify-custom-lunar-new-year-gift-box-product.php',
 		'sync-product-category-thumbnails-202608.php',
+		'import-bread-bag-products-202609.php',
+		'verify-bread-bag-products-202609.php',
 	);
 	$log        = array();
 
@@ -1453,6 +1480,12 @@ function custom_box_product_sample_deploy_page() {
 				<label>
 					<input type="radio" name="deploy_scope" value="all">
 					All registered product batches
+				</label>
+			</p>
+			<p>
+				<label>
+					<input type="radio" name="deploy_scope" value="bread_bags_202609">
+					Bread Bag SEO products September 2026 only
 				</label>
 			</p>
 			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>

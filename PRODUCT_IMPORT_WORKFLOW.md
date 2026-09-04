@@ -577,6 +577,35 @@ For only the Lunar New Year product, use:
 
 - `php tools/deploy-custom-lunar-new-year-gift-box-product.php`
 
+### Bread Bag SEO products (September 2026)
+
+This batch imports eight WooCommerce products from the attached SEO
+package. The Git bundle contains the eight source TXT files under
+`wp-content/themes/custom-box-theme/inc/product-content/bread-bag-202609/` and
+56 original WebP files under
+`wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/uploads/2026/09/`.
+
+The batch marker is `_vpn_sample_import = product-samples-bread-bags-202609`.
+Each product receives seven Media Library images in numbered order, four
+inline figures, the source short and long copy, visible FAQs, the requested
+categories, 21 specification rows and the three Rank Math fields. The default
+MOQ is intentionally project-based and must be confirmed in the RFQ; the
+import does not invent a fixed quantity, price, certification or delivery
+claim. Publishing was explicitly requested for this batch, so new and existing
+draft products are published; an already private product keeps its private
+status.
+
+After `git pull`, use **Tools > Product Sample Deploy** with **Latest batch only**
+selected, or select the explicit `bread_bags_202609` scope. The latest scope
+includes this batch and restores the bundled importer/verifier before running
+the completion checks. The CLI release entry point also includes this batch:
+
+- `php tools/deploy-product-samples-all.php`
+
+The importer is idempotent by product slug and exact image filename base, so a
+retry repairs missing figures, featured images, categories or Rank Math data
+without creating duplicate products or attachments.
+
 ### Sports Packaging batch (June 2026)
 
 The sports batch imports four products from 18 bundled images:
