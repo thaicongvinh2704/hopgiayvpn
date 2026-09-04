@@ -16,7 +16,6 @@ $custom_box_inc_files = array(
     'inc/breadcrumbs.php',
     'inc/search-suggestions.php',
     'inc/product-specifications.php',
-    'inc/custom-vial-box-product-sync.php',
     'inc/quote-form-handler.php',
     'inc/woocommerce.php',
 );
@@ -41,6 +40,16 @@ if (is_admin() || (defined('WP_CLI') && WP_CLI)) {
 
 foreach ($custom_box_inc_files as $custom_box_inc_file) {
     require_once get_template_directory() . '/' . $custom_box_inc_file;
+}
+
+if (is_admin()) {
+    require_once get_template_directory() . '/inc/custom-vial-box-product-sync.php';
+} else {
+    add_action('wp', static function () {
+        if (is_singular('product') && 829 === (int) get_queried_object_id()) {
+            require_once get_template_directory() . '/inc/custom-vial-box-product-sync.php';
+        }
+    }, 1);
 }
 
 if (function_exists('custom_box_post_sync_files_to_load')) {

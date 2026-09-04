@@ -48,6 +48,14 @@ function custom_box_primary_menu_fallback() {
  * @return array{url:string,path:string,width:int,height:int}
  */
 function custom_box_get_local_image_data($image, $fallback = 'Cardboard-Packaging.webp') {
+    static $image_cache = array();
+
+    $cache_key = (string) $image . "\0" . (string) $fallback;
+
+    if (array_key_exists($cache_key, $image_cache)) {
+        return $image_cache[$cache_key];
+    }
+
     $theme_url = trailingslashit(get_template_directory_uri()) . 'assets/images/';
     $theme_path = trailingslashit(get_template_directory()) . 'assets/images/';
     $content_url = trailingslashit(content_url());
@@ -125,16 +133,16 @@ function custom_box_get_local_image_data($image, $fallback = 'Cardboard-Packagin
     $resolved = $resolve_candidate($image);
 
     if ($resolved) {
-        return $resolved;
+        return $image_cache[$cache_key] = $resolved;
     }
 
     $resolved = $resolve_candidate($fallback);
 
     if ($resolved) {
-        return $resolved;
+        return $image_cache[$cache_key] = $resolved;
     }
 
-    return array(
+    return $image_cache[$cache_key] = array(
         'url'    => $theme_url . 'Cardboard-Packaging.webp',
         'path'   => $theme_path . 'Cardboard-Packaging.webp',
         'width'  => 506,
@@ -222,6 +230,12 @@ function custom_box_get_products_url() {
 }
 
 function custom_box_get_home_packaging_category_groups() {
+    static $groups = null;
+
+    if (null !== $groups) {
+        return $groups;
+    }
+
     $uploads_2026_05_uri = content_url('/uploads/2026/05/');
     $uploads_2026_06_uri = content_url('/uploads/2026/06/');
     $uploads_2026_08_uri = content_url('/uploads/2026/08/');
@@ -348,6 +362,15 @@ function custom_box_get_home_packaging_category_image_url($term_or_slug) {
 }
 
 function custom_box_get_official_packaging_parent_category() {
+    static $parent = null;
+    static $resolved = false;
+
+    if ($resolved) {
+        return $parent;
+    }
+
+    $resolved = true;
+
     if (!taxonomy_exists('product_cat')) {
         return null;
     }
@@ -358,14 +381,22 @@ function custom_box_get_official_packaging_parent_category() {
         $parent = get_term_by('name', 'Custom Packaging Boxes', 'product_cat');
     }
 
-    return ($parent && !is_wp_error($parent)) ? $parent : null;
+    return $parent = ($parent && !is_wp_error($parent)) ? $parent : null;
 }
 
 function custom_box_get_official_packaging_categories($limit = 0) {
+    static $categories_cache = array();
+
+    $cache_key = (int) $limit;
+
+    if (array_key_exists($cache_key, $categories_cache)) {
+        return $categories_cache[$cache_key];
+    }
+
     $parent = custom_box_get_official_packaging_parent_category();
 
     if (!$parent) {
-        return array();
+        return $categories_cache[$cache_key] = array();
     }
 
     $categories = get_terms(array(
@@ -378,7 +409,7 @@ function custom_box_get_official_packaging_categories($limit = 0) {
     ));
 
     if (empty($categories) || is_wp_error($categories)) {
-        return array();
+        return $categories_cache[$cache_key] = array();
     }
 
     usort($categories, function ($a, $b) {
@@ -392,7 +423,7 @@ function custom_box_get_official_packaging_categories($limit = 0) {
         return $a->term_id <=> $b->term_id;
     });
 
-    return $limit > 0 ? array_slice($categories, 0, (int) $limit) : $categories;
+    return $categories_cache[$cache_key] = $limit > 0 ? array_slice($categories, 0, (int) $limit) : $categories;
 }
 
 function custom_box_get_official_packaging_category_slugs() {
@@ -444,8 +475,16 @@ function custom_box_get_packaging_group_for_term($term) {
 }
 
 function custom_box_get_packaging_categories($limit = 48, $require_products = true) {
+    static $categories_cache = array();
+
+    $cache_key = (int) $limit . ':' . ($require_products ? '1' : '0');
+
+    if (array_key_exists($cache_key, $categories_cache)) {
+        return $categories_cache[$cache_key];
+    }
+
     if (!taxonomy_exists('product_cat')) {
-        return array();
+        return $categories_cache[$cache_key] = array();
     }
 
     $categories = array();
@@ -468,7 +507,7 @@ function custom_box_get_packaging_categories($limit = 48, $require_products = tr
         }
     }
 
-    return $categories;
+    return $categories_cache[$cache_key] = $categories;
 }
 
 function custom_box_get_product_group_link($name, $fallback = '#') {
@@ -488,12 +527,20 @@ function custom_box_get_product_group_link($name, $fallback = '#') {
 }
 
 function custom_box_product_category_has_products($term) {
+    static $has_products_cache = array();
+
     if (!$term || is_wp_error($term) || !taxonomy_exists('product_cat')) {
         return false;
     }
 
+    $term_id = (int) $term->term_id;
+
+    if (array_key_exists($term_id, $has_products_cache)) {
+        return $has_products_cache[$term_id];
+    }
+
     if ((int) $term->count > 0) {
-        return true;
+        return $has_products_cache[$term_id] = true;
     }
 
     $children = get_terms(array(
@@ -504,7 +551,7 @@ function custom_box_product_category_has_products($term) {
         'number'     => 1,
     ));
 
-    return !is_wp_error($children) && !empty($children);
+    return $has_products_cache[$term_id] = !is_wp_error($children) && !empty($children);
 }
 
 function custom_box_get_packaging_parent_category() {
@@ -512,6 +559,12 @@ function custom_box_get_packaging_parent_category() {
 }
 
 function custom_box_get_packaging_menu_groups() {
+    static $groups = null;
+
+    if (null !== $groups) {
+        return $groups;
+    }
+
     $groups = array();
 
     foreach (custom_box_get_home_packaging_category_groups() as $group) {
@@ -553,16 +606,30 @@ function custom_box_get_all_categories_sidebar_links($fallback = '#') {
 }
 
 function custom_box_get_product_category_by_slug($slug) {
+    static $term_cache = array();
+
     if (!taxonomy_exists('product_cat')) {
         return null;
     }
 
+    $slug = sanitize_title($slug);
+
+    if (array_key_exists($slug, $term_cache)) {
+        return $term_cache[$slug];
+    }
+
     $term = get_term_by('slug', $slug, 'product_cat');
 
-    return ($term && !is_wp_error($term)) ? $term : null;
+    return $term_cache[$slug] = ($term && !is_wp_error($term)) ? $term : null;
 }
 
 function custom_box_get_all_categories_menu_columns() {
+    static $columns = null;
+
+    if (null !== $columns) {
+        return $columns;
+    }
+
     if (!taxonomy_exists('product_cat')) {
         return array();
     }
@@ -920,8 +987,70 @@ function custom_box_wrap_blog_image_html($image_html) {
     return '<figure class="blog-content-figure" data-article-figure>' . $image_html . $caption_html . '</figure>';
 }
 
+function custom_box_get_inline_attachment_ids_from_content($content) {
+    preg_match_all('/<img\b[^>]*\ssrc=(["\'])(.*?)\1/i', (string) $content, $matches);
+
+    if (empty($matches[2])) {
+        return array(
+            'by_source'   => array(),
+            'by_relative' => array(),
+        );
+    }
+
+    $uploads = wp_get_upload_dir();
+    $uploads_base_path = !empty($uploads['baseurl'])
+        ? wp_parse_url(trailingslashit($uploads['baseurl']), PHP_URL_PATH)
+        : '';
+    $source_paths = array();
+    $relative_paths = array();
+
+    foreach ($matches[2] as $source) {
+        $source = html_entity_decode($source, ENT_QUOTES, get_bloginfo('charset'));
+        $source_path = wp_parse_url($source, PHP_URL_PATH);
+
+        if (!$source_path || !$uploads_base_path || 0 !== strpos($source_path, $uploads_base_path)) {
+            continue;
+        }
+
+        $relative_path = ltrim(rawurldecode(substr($source_path, strlen($uploads_base_path))), '/');
+
+        if (!$relative_path) {
+            continue;
+        }
+
+        $source_paths[md5($source)] = $relative_path;
+        $relative_paths[$relative_path] = true;
+    }
+
+    $attachment_ids = array();
+
+    if (!empty($relative_paths)) {
+        global $wpdb;
+
+        $placeholders = implode(',', array_fill(0, count($relative_paths), '%s'));
+        $query = "SELECT post_id, meta_value FROM {$wpdb->postmeta} WHERE meta_key = %s AND meta_value IN ({$placeholders})";
+        $args = array_merge(array('_wp_attached_file'), array_keys($relative_paths));
+        $rows = $wpdb->get_results($wpdb->prepare($query, $args), ARRAY_A);
+
+        foreach ((array) $rows as $row) {
+            if (!empty($row['meta_value']) && !empty($row['post_id'])) {
+                $attachment_ids[(string) $row['meta_value']] = (int) $row['post_id'];
+            }
+        }
+    }
+
+    return array(
+        'by_source'   => $source_paths,
+        'by_relative' => $attachment_ids,
+    );
+}
+
 function custom_box_enhance_blog_article_images($content) {
-    $content = preg_replace_callback('/<img\b[^>]*>/i', function ($matches) {
+    $inline_attachment_ids = custom_box_get_inline_attachment_ids_from_content($content);
+
+    $content = preg_replace_callback('/<img\b[^>]*>/i', function ($matches) use ($inline_attachment_ids) {
+        static $attachment_id_cache = array();
+
         $image_html = $matches[0];
         $attachment_id = 0;
         $image_width = 0;
@@ -933,7 +1062,39 @@ function custom_box_enhance_blog_article_images($content) {
 
         if (!$attachment_id && preg_match('/\ssrc=(["\'])(.*?)\1/i', $image_html, $src_match)) {
             $image_src = html_entity_decode($src_match[2], ENT_QUOTES, get_bloginfo('charset'));
-            $attachment_id = (int) attachment_url_to_postid($image_src);
+            $attachment_cache_key = md5($image_src);
+
+            if (!empty($inline_attachment_ids['by_source'][$attachment_cache_key])) {
+                $relative_path = $inline_attachment_ids['by_source'][$attachment_cache_key];
+                $attachment_id = !empty($inline_attachment_ids['by_relative'][$relative_path])
+                    ? (int) $inline_attachment_ids['by_relative'][$relative_path]
+                    : 0;
+            }
+
+            if ($attachment_id) {
+                $attachment_id_cache[$attachment_cache_key] = $attachment_id;
+            } elseif (array_key_exists($attachment_cache_key, $attachment_id_cache)) {
+                $attachment_id = $attachment_id_cache[$attachment_cache_key];
+            } else {
+                $persistent_attachment_id = wp_cache_get(
+                    'url_' . $attachment_cache_key,
+                    'custom_box_attachment_url_to_postid'
+                );
+
+                if (false !== $persistent_attachment_id) {
+                    $attachment_id = (int) $persistent_attachment_id;
+                } else {
+                    $attachment_id = (int) attachment_url_to_postid($image_src);
+                    wp_cache_set(
+                        'url_' . $attachment_cache_key,
+                        $attachment_id,
+                        'custom_box_attachment_url_to_postid',
+                        DAY_IN_SECONDS
+                    );
+                }
+
+                $attachment_id_cache[$attachment_cache_key] = $attachment_id;
+            }
 
             if (!$attachment_id) {
                 $content_base_url = trailingslashit(content_url());
@@ -1162,3 +1323,84 @@ function custom_box_widgets_init() {
     ));
 }
 add_action('widgets_init', 'custom_box_widgets_init');
+
+/**
+ * Repair Rank Math Analytics tables once when an incomplete plugin install is
+ * detected. Missing tables make Rank Math issue a database error on repeated
+ * admin requests and can become a significant source of log I/O on hosting.
+ * The repair delegates schema creation to Rank Math itself and never runs on
+ * frontend, AJAX or cron requests.
+ */
+function custom_box_repair_rank_math_analytics_tables() {
+    if (
+        !current_user_can('manage_options')
+        || (function_exists('wp_doing_ajax') && wp_doing_ajax())
+        || (defined('DOING_CRON') && DOING_CRON)
+    ) {
+        return;
+    }
+
+    $repair_version = '2026-09-04-v1';
+
+    if ($repair_version === get_option('custom_box_rank_math_analytics_tables_repair')) {
+        return;
+    }
+
+    if (!class_exists('RankMath\\Analytics\\Workflow\\Workflow')) {
+        return;
+    }
+
+    if (
+        class_exists('RankMath\\Helper')
+        && method_exists('RankMath\\Helper', 'is_module_active')
+        && !\RankMath\Helper::is_module_active('analytics')
+    ) {
+        return;
+    }
+
+    if (get_transient('custom_box_rank_math_analytics_repair_attempt')) {
+        return;
+    }
+
+    global $wpdb;
+
+    $table_names = array(
+        $wpdb->prefix . 'rank_math_analytics_objects',
+        $wpdb->prefix . 'rank_math_analytics_inspections',
+    );
+    $missing_table = false;
+
+    foreach ($table_names as $table_name) {
+        $existing_table = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table_name));
+
+        if ($existing_table !== $table_name) {
+            $missing_table = true;
+            break;
+        }
+    }
+
+    if (!$missing_table) {
+        update_option('custom_box_rank_math_analytics_tables_repair', $repair_version, false);
+        return;
+    }
+
+    set_transient('custom_box_rank_math_analytics_repair_attempt', 1, 5 * MINUTE_IN_SECONDS);
+
+    try {
+        \RankMath\Analytics\Workflow\Workflow::get()->create_tables_only();
+    } catch (Throwable $error) {
+        return;
+    }
+
+    foreach ($table_names as $table_name) {
+        $existing_table = $wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table_name));
+
+        if ($existing_table !== $table_name) {
+            return;
+        }
+    }
+
+    delete_transient('custom_box_rank_math_analytics_repair_attempt');
+    update_option('custom_box_rank_math_analytics_tables_repair', $repair_version, false);
+}
+add_action('admin_init', 'custom_box_repair_rank_math_analytics_tables', 1);
