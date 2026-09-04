@@ -829,7 +829,7 @@ function custom_box_product_sample_deploy_batches(): array {
 			'expected'        => 8,
 			'min_words'       => 800,
 			'expected_moq'    => 'Project-based quotation; confirm quantity by RFQ',
-			'expected_status'  => 'any',
+			'expected_status'  => 'publish',
 			'scripts'         => array(
 				'tools/import-bread-bag-products-202609.php',
 				'tools/verify-bread-bag-products-202609.php',

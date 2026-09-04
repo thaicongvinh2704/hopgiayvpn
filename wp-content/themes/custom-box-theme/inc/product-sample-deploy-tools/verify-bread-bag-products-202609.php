@@ -11,7 +11,7 @@ $products = vpn_bread_bag_202609_products();
 $found    = get_posts(
 	array(
 		'post_type'      => 'product',
-		'post_status'    => array( 'publish', 'draft', 'private' ),
+		'post_status'    => array( 'publish' ),
 		'posts_per_page' => -1,
 		'orderby'        => 'ID',
 		'order'          => 'ASC',
@@ -42,8 +42,8 @@ foreach ( $products as $product ) {
 	if ( $post->post_title !== $product['title'] || $post->post_name !== $product['slug'] ) {
 		$failures[] = $label . ': title or slug mismatch.';
 	}
-	if ( ! in_array( $post->post_status, array( 'draft', 'publish', 'private' ), true ) ) {
-		$failures[] = $label . ': unexpected status ' . $post->post_status . '.';
+	if ( 'publish' !== $post->post_status ) {
+		$failures[] = $label . ': expected publish status, got ' . $post->post_status . '.';
 	}
 	if ( $words < 800 || preg_match( '/<h1\b/i', $content ) ) {
 		$failures[] = $label . ': long description is below 800 words or contains an H1.';

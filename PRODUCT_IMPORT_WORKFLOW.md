@@ -591,9 +591,8 @@ inline figures, the source short and long copy, visible FAQs, the requested
 categories, 21 specification rows and the three Rank Math fields. The default
 MOQ is intentionally project-based and must be confirmed in the RFQ; the
 import does not invent a fixed quantity, price, certification or delivery
-claim. Publishing was explicitly requested for this batch, so new and existing
-draft products are published; an already private product keeps its private
-status.
+claim. Publishing was explicitly requested for this batch, so new, draft and
+private products are all published.
 
 After `git pull`, use **Tools > Product Sample Deploy** with **Latest batch only**
 selected, or select the explicit `bread_bags_202609` scope. The latest scope

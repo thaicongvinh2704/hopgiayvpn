@@ -590,9 +590,9 @@ function vpn_bread_bag_202609_import_product( array $product ): array {
 	}
 
 	$existing = vpn_bread_bag_202609_find_product( $product );
-	// Publishing was explicitly requested for this batch. Preserve an already
-	// private product, but promote new/draft products to publish.
-	$status = $existing && 'private' === $existing->post_status ? 'private' : 'publish';
+	// Publishing was explicitly requested for this batch. Promote existing
+	// private products as well as new/draft products to publish.
+	$status = 'publish';
 	$product_id = $existing ? (int) $existing->ID : 0;
 
 	if ( ! $product_id ) {
