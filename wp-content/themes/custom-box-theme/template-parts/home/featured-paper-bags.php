@@ -25,6 +25,22 @@ $featured_paper_bags = array(
         'title' => 'Custom Greaseproof Bakery Paper Bags',
     ),
     array(
+        'slug'  => 'custom-pink-ghost-laminated-woven-tote-bag',
+        'title' => 'Custom Pink Ghost Laminated Woven Tote Bag',
+    ),
+    array(
+        'slug'  => 'custom-navy-blue-non-woven-tote-bag',
+        'title' => 'Custom Navy Blue Non-Woven Tote Bag',
+    ),
+    array(
+        'slug'  => 'custom-blue-smiley-face-non-woven-tote-bag',
+        'title' => 'Custom Blue Smiley Face Non-Woven Tote Bag',
+    ),
+    array(
+        'slug'  => 'custom-yellow-smiley-face-non-woven-tote-bag',
+        'title' => 'Custom Yellow Smiley Face Non-Woven Tote Bag',
+    ),
+    array(
         'slug'  => 'custom-die-cut-handle-bakery-paper-bags',
         'title' => 'Custom Die Cut Handle Bakery Paper Bags',
     ),
@@ -64,9 +80,9 @@ $fallback_image_url = get_template_directory_uri() . '/assets/images/Cardboard-P
 <section class="featured-paper-bags-section" aria-labelledby="featured-paper-bags-title" data-featured-paper-bags>
     <div class="container">
         <div class="featured-paper-bags-head">
-            <span>Selected Paper Bags</span>
-            <h2 id="featured-paper-bags-title">Featured Paper Bag Products</h2>
-            <p>Discover a selection of our standout paper bags, from kraft and luxury gift bags to branded retail shopping bags for supplements, gifts, and lifestyle brands.</p>
+            <span>Selected Custom Bags</span>
+            <h2 id="featured-paper-bags-title">Featured Custom Bag Products</h2>
+            <p>Discover standout custom bags, from bakery paper bags and luxury gift bags to reusable woven and non-woven totes for retail, events, gifts, and lifestyle brands.</p>
         </div>
 
         <div class="featured-paper-bags-carousel" data-featured-paper-bags-carousel>
@@ -113,7 +129,7 @@ $fallback_image_url = get_template_directory_uri() . '/assets/images/Cardboard-P
             <?php endforeach; ?>
                 </div>
             </div>
-            <div class="featured-paper-bags-dots" aria-label="Featured paper bag products navigation"></div>
+            <div class="featured-paper-bags-dots" aria-label="Featured custom bag products navigation"></div>
         </div>
     </div>
 </section>
