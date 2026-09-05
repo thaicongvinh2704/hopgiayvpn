@@ -211,6 +211,8 @@ function vpn_canvas_tote_202609_verify_one($definition) {
 try {
     $results = array();
     $failed = false;
+    $admin_deploy_context = isset($GLOBALS['custom_box_product_sample_deploy_script_context'])
+        && 'tools/verify-canvas-tote-products-202609.php' === $GLOBALS['custom_box_product_sample_deploy_script_context'];
 
     foreach (vpn_canvas_tote_202609_product_definitions() as $definition) {
         $result = vpn_canvas_tote_202609_verify_one($definition);
@@ -219,8 +221,24 @@ try {
     }
 
     echo wp_json_encode($results, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . PHP_EOL;
-    exit($failed ? 1 : 0);
+    if ($failed) {
+        $message = 'Canvas tote verification failed. Review the errors above.';
+
+        if ($admin_deploy_context) {
+            throw new RuntimeException($message);
+        }
+
+        exit(1);
+    }
+
+    if (!$admin_deploy_context) {
+        exit(0);
+    }
 } catch (Throwable $error) {
+    if (!empty($admin_deploy_context)) {
+        throw $error;
+    }
+
     fwrite(STDERR, $error->getMessage() . PHP_EOL);
     exit(1);
 }

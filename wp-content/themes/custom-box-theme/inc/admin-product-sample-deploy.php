@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-09-04-bread-bags' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-09-05-canvas-tote-runner-fix' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -541,6 +541,7 @@ function custom_box_product_sample_deploy_missing_source_images( array $batch ):
 
 function custom_box_product_sample_deploy_run_script( string $relative_script ): void {
 	$script = trailingslashit( ABSPATH ) . ltrim( $relative_script, '/\\' );
+	$normalized_script = str_replace( '\\', '/', ltrim( $relative_script, '/\\' ) );
 
 	if ( ! file_exists( $script ) ) {
 		throw new RuntimeException(
@@ -555,9 +556,32 @@ function custom_box_product_sample_deploy_run_script( string $relative_script ):
 
 	$previous_cwd = getcwd();
 	chdir( ABSPATH );
-	include $script;
-	if ( $previous_cwd ) {
-		chdir( $previous_cwd );
+	$GLOBALS['custom_box_product_sample_deploy_script_context'] = $normalized_script;
+
+	try {
+		if ( 'tools/import-canvas-tote-products-202609.php' === $normalized_script ) {
+			$bundled_script = get_template_directory() . '/inc/product-sample-deploy-tools/import-canvas-tote-products-202609.php';
+
+			if ( ! file_exists( $bundled_script ) ) {
+				throw new RuntimeException( 'Missing bundled canvas tote importer: ' . $bundled_script );
+			}
+
+			require_once $bundled_script;
+
+			if ( ! function_exists( 'vpn_canvas_tote_202609_run_import' ) ) {
+				throw new RuntimeException( 'Canvas tote importer entry point is unavailable.' );
+			}
+
+			$results = vpn_canvas_tote_202609_run_import();
+			echo wp_json_encode( $results, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . PHP_EOL;
+		} else {
+			include $script;
+		}
+	} finally {
+		unset( $GLOBALS['custom_box_product_sample_deploy_script_context'] );
+		if ( $previous_cwd ) {
+			chdir( $previous_cwd );
+		}
 	}
 }
 
@@ -1144,8 +1168,6 @@ function custom_box_product_sample_deploy_restore_tools() {
 		'sync-product-category-thumbnails-202608.php',
 		'import-bread-bag-products-202609.php',
 		'verify-bread-bag-products-202609.php',
-		'import-canvas-tote-products-202609.php',
-		'verify-canvas-tote-products-202609.php',
 	);
 	$log        = array();
 
