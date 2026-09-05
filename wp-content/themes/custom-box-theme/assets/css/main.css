@@ -3187,6 +3187,102 @@ html {
     width: 100% !important;
 }
 
+/* Product FAQ accordions stored in WooCommerce product metadata. */
+.product-faq {
+    background: #fff;
+    padding: 56px 0 64px;
+}
+
+.product-faq .container {
+    max-width: 960px;
+}
+
+.product-faq h2 {
+    color: var(--color-ink, #123243);
+    font-size: 30px;
+    line-height: 1.25;
+    margin: 0 0 26px;
+    text-align: center;
+}
+
+.product-faq .faq-item {
+    background: #fff;
+    border: 1px solid var(--color-line, #d8e4eb);
+    border-radius: 8px;
+    margin: 0 0 12px;
+    overflow: hidden;
+}
+
+.product-faq .faq-item summary {
+    align-items: center;
+    color: var(--color-ink, #123243);
+    cursor: pointer;
+    display: flex;
+    font-size: 16px;
+    font-weight: 700;
+    justify-content: space-between;
+    line-height: 1.45;
+    list-style: none;
+    padding: 18px 22px;
+}
+
+.product-faq .faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.product-faq .faq-item summary::after {
+    color: var(--color-primary, #2A6A92);
+    content: '+';
+    flex: 0 0 auto;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 1;
+    margin-left: 18px;
+}
+
+.product-faq .faq-item[open] summary {
+    border-bottom: 1px solid var(--color-line, #d8e4eb);
+}
+
+.product-faq .faq-item[open] summary::after {
+    content: '−';
+}
+
+.product-faq .faq-answer {
+    background: #f8fbfd;
+    color: var(--color-muted, #50606b);
+    max-height: none;
+    overflow: visible;
+    padding: 18px 22px 20px;
+}
+
+.product-faq .faq-answer p {
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0;
+}
+
+@media (max-width: 767px) {
+    .product-faq {
+        padding: 42px 0 48px;
+    }
+
+    .product-faq h2 {
+        font-size: 25px;
+        margin-bottom: 20px;
+    }
+
+    .product-faq .faq-item summary,
+    .product-faq .faq-answer {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .product-faq .faq-item summary {
+        font-size: 15px;
+    }
+}
+
 .product-customization-section {
     background: #fff;
     padding-top: 0;

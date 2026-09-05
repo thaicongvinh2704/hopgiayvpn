@@ -500,6 +500,10 @@ function custom_box_public_canonical($canonical) {
         return custom_box_get_packaging_quote_thank_you_page_url();
     }
 
+    if (custom_box_is_canvas_tote_product()) {
+        return get_permalink(get_queried_object_id());
+    }
+
     if ((function_exists('is_shop') && is_shop()) || is_page('products')) {
         return function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
     }
@@ -560,6 +564,35 @@ function custom_box_rank_math_robots($robots) {
     return $robots;
 }
 add_filter('rank_math/frontend/robots', 'custom_box_rank_math_robots');
+
+function custom_box_is_canvas_tote_product() {
+    if (!function_exists('is_product') || !is_product()) {
+        return false;
+    }
+
+    return in_array(
+        get_post_field('post_name', get_queried_object_id()),
+        array(
+            'custom-pink-ghost-laminated-woven-tote-bag',
+            'custom-navy-blue-non-woven-tote-bag',
+            'custom-blue-smiley-face-non-woven-tote-bag',
+            'custom-yellow-smiley-face-non-woven-tote-bag',
+        ),
+        true
+    );
+}
+
+function custom_box_canvas_tote_og_price($value) {
+    return custom_box_is_canvas_tote_product() ? '' : $value;
+}
+add_filter('rank_math/opengraph/facebook/product_price_amount', 'custom_box_canvas_tote_og_price', 20);
+add_filter('rank_math/opengraph/facebook/product_price_currency', 'custom_box_canvas_tote_og_price', 20);
+add_filter('rank_math/opengraph/facebook/product_availability', 'custom_box_canvas_tote_og_price', 20);
+
+function custom_box_canvas_tote_slack_data($data) {
+    return custom_box_is_canvas_tote_product() ? array() : $data;
+}
+add_filter('rank_math/opengraph/slack_enhanced_data', 'custom_box_canvas_tote_slack_data', 20);
 
 function custom_box_packaging_quote_thank_you_meta_robots() {
     if (defined('RANK_MATH_VERSION') || !custom_box_is_packaging_quote_thank_you_page()) {
@@ -638,9 +671,16 @@ function custom_box_remove_invalid_product_schema_sku($entity) {
 function custom_box_add_quote_product_schema_fields($entity, $product) {
     $entity = custom_box_remove_invalid_product_schema_sku($entity);
 
+    $brand_name = 'VPN Paper Box';
+
+    if ($product instanceof WC_Product && custom_box_is_canvas_tote_product()) {
+        $brand_name = 'VPN Packaging';
+        $entity['category'] = 'Reusable Shopping Bags';
+    }
+
     $entity['brand'] = array(
         '@type' => 'Brand',
-        'name'  => 'VPN Paper Box',
+        'name'  => $brand_name,
     );
 
     if ($product instanceof WC_Product && $product->get_image_id() && empty($entity['image'])) {

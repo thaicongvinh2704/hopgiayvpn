@@ -836,6 +836,18 @@ function custom_box_product_sample_deploy_batches(): array {
 			),
 		),
 		array(
+			'name'           => 'Canvas Tote products September 2026',
+			'marker'         => 'product-samples-canvas-totes-202609',
+			'expected'       => 4,
+			'min_words'      => 300,
+			'expected_moq'   => 'Available on request',
+			'expected_status' => 'publish',
+			'scripts'        => array(
+				'tools/import-canvas-tote-products-202609.php',
+				'tools/verify-canvas-tote-products-202609.php',
+			),
+		),
+		array(
 			'name'      => 'Current product category thumbnails August 2026',
 			'marker'    => 'product-category-thumbnails-202608',
 			'expected'  => 0,
@@ -954,6 +966,17 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 		);
 	}
 
+	if ( 'canvas_totes_202609' === $scope ) {
+		return array_values(
+			array_filter(
+				$batches,
+				static function ( $batch ) {
+					return isset( $batch['marker'] ) && 'product-samples-canvas-totes-202609' === $batch['marker'];
+				}
+			)
+		);
+	}
+
 	// The default button must deploy the complete current release. Keep
 	// historical batches available through the explicit "all" scope, but do
 	// not make a new release depend on an incomplete legacy batch.
@@ -978,7 +1001,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 }
 
 function custom_box_product_sample_deploy_allowed_scopes(): array {
-	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607', 'three_categories_202607', 'paper_bags_202607', 'christmas_gift_box_202607', 'pharmaceutical_202608', 'bird_nest_202608', 'lunar_new_year_202608', 'bread_bags_202609' );
+	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607', 'three_categories_202607', 'paper_bags_202607', 'christmas_gift_box_202607', 'pharmaceutical_202608', 'bird_nest_202608', 'lunar_new_year_202608', 'bread_bags_202609', 'canvas_totes_202609' );
 }
 
 function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
@@ -1121,6 +1144,8 @@ function custom_box_product_sample_deploy_restore_tools() {
 		'sync-product-category-thumbnails-202608.php',
 		'import-bread-bag-products-202609.php',
 		'verify-bread-bag-products-202609.php',
+		'import-canvas-tote-products-202609.php',
+		'verify-canvas-tote-products-202609.php',
 	);
 	$log        = array();
 
@@ -1486,6 +1511,12 @@ function custom_box_product_sample_deploy_page() {
 				<label>
 					<input type="radio" name="deploy_scope" value="bread_bags_202609">
 					Bread Bag SEO products September 2026 only
+				</label>
+			</p>
+			<p>
+				<label>
+					<input type="radio" name="deploy_scope" value="canvas_totes_202609">
+					Canvas Tote products September 2026 only
 				</label>
 			</p>
 			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
