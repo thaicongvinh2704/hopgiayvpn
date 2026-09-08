@@ -11,6 +11,11 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/custom-corrugated-packaging-boxes-post-sync.php' => array(
+            'version' => '2026-09-08-custom-corrugated-packaging-boxes-v1',
+            'option' => 'custom_box_corrugated_packaging_boxes_sync_version',
+            'slug' => 'custom-corrugated-packaging-boxes',
+        ),
         'inc/custom-packaging-for-small-business-post-sync.php' => array(
             'version' => '2026-09-05-custom-packaging-small-business-v1',
             'option' => 'custom_box_custom_packaging_small_business_sync_version',
