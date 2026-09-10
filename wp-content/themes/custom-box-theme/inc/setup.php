@@ -1233,6 +1233,9 @@ function custom_box_primary_menu() {
     $packaging_money_page_url = function_exists('custom_box_get_packaging_money_page_url')
         ? custom_box_get_packaging_money_page_url()
         : home_url('/custom-packaging-boxes-manufacturer/');
+    $paper_bags_url = function_exists('custom_box_custom_paper_bags_url')
+        ? custom_box_custom_paper_bags_url()
+        : home_url('/custom-paper-bags-manufacturer/');
     ?>
     <ul class="nav-menu">
         <li><a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'custom-box-theme'); ?></a></li>
@@ -1243,6 +1246,7 @@ function custom_box_primary_menu() {
             </a>
         </li>
         <li><a href="<?php echo esc_url($packaging_money_page_url); ?>"><?php esc_html_e('Custom Packaging', 'custom-box-theme'); ?></a></li>
+        <li><a href="<?php echo esc_url($paper_bags_url); ?>"><?php esc_html_e('Paper Bags', 'custom-box-theme'); ?></a></li>
         <li><a href="<?php echo esc_url(home_url('/catalog/')); ?>"><?php esc_html_e('Catalog', 'custom-box-theme'); ?></a></li>
         <li><a href="<?php echo esc_url($blog_link); ?>"><?php esc_html_e('Blog', 'custom-box-theme'); ?></a></li>
         <li><a href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Contact Us', 'custom-box-theme'); ?></a></li>
@@ -1258,24 +1262,54 @@ function custom_box_add_packaging_money_page_to_primary_menu($items, $args) {
     $packaging_money_page_url = function_exists('custom_box_get_packaging_money_page_url')
         ? custom_box_get_packaging_money_page_url()
         : home_url('/custom-packaging-boxes-manufacturer/');
+    $paper_bags_url = function_exists('custom_box_custom_paper_bags_url')
+        ? custom_box_custom_paper_bags_url()
+        : home_url('/custom-paper-bags-manufacturer/');
     $packaging_path = wp_parse_url($packaging_money_page_url, PHP_URL_PATH);
+    $paper_bags_path = wp_parse_url($paper_bags_url, PHP_URL_PATH);
 
-    if ($packaging_path && false !== strpos($items, $packaging_path)) {
+    $has_packaging_item = $packaging_path && false !== strpos($items, $packaging_path);
+    $has_paper_bags_item = $paper_bags_path && false !== strpos($items, $paper_bags_path);
+
+    if ($has_packaging_item && $has_paper_bags_item) {
         return $items;
     }
 
-    $menu_item = sprintf(
+    $packaging_menu_item = sprintf(
         '<li class="menu-item menu-item-packaging-money-page"><a href="%s">%s</a></li>',
         esc_url($packaging_money_page_url),
         esc_html__('Custom Packaging', 'custom-box-theme')
     );
+    $paper_bags_menu_item = sprintf(
+        '<li class="menu-item menu-item-custom-paper-bags"><a href="%s">%s</a></li>',
+        esc_url($paper_bags_url),
+        esc_html__('Paper Bags', 'custom-box-theme')
+    );
+
+    if ($has_packaging_item && !$has_paper_bags_item) {
+        $packaging_item_pattern = '#(<li\b[^>]*>\s*<a\b[^>]*href=(["\'])[^"\']*'
+            . preg_quote($packaging_path, '#')
+            . '[^"\']*\2[^>]*>.*?</a>\s*</li>)#is';
+
+        if (preg_match($packaging_item_pattern, $items, $matches, PREG_OFFSET_CAPTURE)) {
+            $insert_at = $matches[1][1] + strlen($matches[1][0]);
+            return substr($items, 0, $insert_at) . $paper_bags_menu_item . substr($items, $insert_at);
+        }
+
+        return $items . $paper_bags_menu_item;
+    }
+
+    $menu_items = $packaging_menu_item;
+    if (!$has_paper_bags_item) {
+        $menu_items .= $paper_bags_menu_item;
+    }
 
     if (preg_match('/<li[^>]*>\s*<a[^>]+href=["\'][^"\']*\/products\/?["\'][^>]*>.*?<\/a>\s*<\/li>/is', $items, $matches, PREG_OFFSET_CAPTURE)) {
         $insert_at = $matches[0][1] + strlen($matches[0][0]);
-        return substr($items, 0, $insert_at) . $menu_item . substr($items, $insert_at);
+        return substr($items, 0, $insert_at) . $menu_items . substr($items, $insert_at);
     }
 
-    return $items . $menu_item;
+    return $items . $menu_items;
 }
 add_filter('wp_nav_menu_items', 'custom_box_add_packaging_money_page_to_primary_menu', 20, 2);
 
