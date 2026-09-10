@@ -6,3 +6,272 @@
 .product-listing-category-section .custom-product-title {
     text-decoration: none;
 }
+
+/* Corrugated mailer category: sourceable buyer guidance and decision content. */
+.corrugated-mailer-guide {
+    background: #fff;
+    color: var(--color-ink, #123243);
+    padding: 58px 0 72px;
+}
+
+.corrugated-mailer-guide .product-eyebrow {
+    color: var(--color-primary, #2a6a92);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    margin: 0 0 10px;
+    text-transform: uppercase;
+}
+
+.corrugated-mailer-guide h2 {
+    color: var(--color-ink, #123243);
+    font-size: clamp(25px, 3vw, 34px);
+    line-height: 1.2;
+    margin: 0 0 15px;
+}
+
+.corrugated-mailer-guide h3 {
+    color: var(--color-ink, #123243);
+    font-size: 18px;
+    line-height: 1.3;
+    margin: 0 0 8px;
+}
+
+.corrugated-mailer-guide p,
+.corrugated-mailer-guide li,
+.corrugated-mailer-guide td,
+.corrugated-mailer-guide th {
+    line-height: 1.7;
+}
+
+.corrugated-mailer-guide p {
+    color: var(--color-muted, #50606b);
+}
+
+.corrugated-mailer-guide a:not(.btn-primary) {
+    color: var(--color-primary-dark, #144b68);
+    font-weight: 700;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+}
+
+.corrugated-mailer-guide-intro {
+    margin: 0 auto 40px;
+    max-width: 1040px;
+    text-align: center;
+}
+
+.corrugated-mailer-answer {
+    font-size: 18px;
+    margin: 0 auto;
+    max-width: 900px;
+}
+
+.corrugated-mailer-facts {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 28px;
+    text-align: left;
+}
+
+.corrugated-mailer-facts article,
+.corrugated-mailer-rfq-card,
+.corrugated-mailer-process,
+.corrugated-mailer-faq,
+.corrugated-mailer-source-note {
+    background: var(--color-surface-soft, #f4f8fb);
+    border: 1px solid var(--color-line, #d8e4eb);
+    border-radius: 10px;
+}
+
+.corrugated-mailer-facts article {
+    padding: 22px;
+}
+
+.corrugated-mailer-facts p {
+    margin: 0;
+}
+
+.corrugated-mailer-guide-grid {
+    align-items: start;
+    display: grid;
+    gap: 38px;
+    grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
+    margin: 46px 0;
+}
+
+.corrugated-mailer-guide-grid-secondary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.corrugated-mailer-rfq-card {
+    padding: 26px;
+}
+
+.corrugated-mailer-rfq-card h2 {
+    font-size: 23px;
+}
+
+.corrugated-mailer-rfq-card ol,
+.corrugated-mailer-process ol {
+    color: var(--color-muted, #50606b);
+    padding-left: 22px;
+}
+
+.corrugated-mailer-rfq-card .btn-primary {
+    display: inline-flex;
+    margin-top: 8px;
+}
+
+.corrugated-mailer-table-wrap {
+    border: 1px solid var(--color-line, #d8e4eb);
+    border-radius: 10px;
+    margin: 46px 0;
+    overflow-x: auto;
+}
+
+.corrugated-mailer-table-wrap table {
+    border-collapse: collapse;
+    min-width: 760px;
+    width: 100%;
+}
+
+.corrugated-mailer-table-wrap caption {
+    background: var(--color-primary-dark, #144b68);
+    color: #fff;
+    font-size: 22px;
+    font-weight: 800;
+    padding: 18px 22px;
+    text-align: left;
+}
+
+.corrugated-mailer-table-wrap th,
+.corrugated-mailer-table-wrap td {
+    border-bottom: 1px solid var(--color-line, #d8e4eb);
+    padding: 16px 18px;
+    text-align: left;
+    vertical-align: top;
+}
+
+.corrugated-mailer-table-wrap thead th {
+    background: #eaf3f8;
+}
+
+.corrugated-mailer-table-wrap tbody tr:last-child th,
+.corrugated-mailer-table-wrap tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.corrugated-mailer-process {
+    margin: 46px 0;
+    padding: 30px;
+}
+
+.corrugated-mailer-process li + li {
+    margin-top: 10px;
+}
+
+.corrugated-mailer-link-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.corrugated-mailer-link-list li {
+    border-bottom: 1px solid var(--color-line, #d8e4eb);
+    padding: 10px 0;
+}
+
+.corrugated-mailer-link-list li:last-child {
+    border-bottom: 0;
+}
+
+.corrugated-mailer-faq {
+    margin-top: 48px;
+    padding: 30px;
+}
+
+.corrugated-mailer-faq-list {
+    display: grid;
+    gap: 10px;
+}
+
+.corrugated-mailer-faq details {
+    background: #fff;
+    border: 1px solid var(--color-line, #d8e4eb);
+    border-radius: 8px;
+}
+
+.corrugated-mailer-faq summary {
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 800;
+    line-height: 1.4;
+    min-height: 48px;
+    padding: 15px 48px 15px 18px;
+    position: relative;
+}
+
+.corrugated-mailer-faq summary::after {
+    content: "+";
+    font-size: 24px;
+    position: absolute;
+    right: 18px;
+    top: 10px;
+}
+
+.corrugated-mailer-faq details[open] summary::after {
+    content: "-";
+}
+
+.corrugated-mailer-faq details p {
+    margin: 0;
+    padding: 0 18px 18px;
+}
+
+.corrugated-mailer-source-note {
+    margin-top: 22px;
+    padding: 16px 20px;
+}
+
+.corrugated-mailer-source-note p {
+    font-size: 14px;
+    margin: 0;
+}
+
+@media (max-width: 767px) {
+    .corrugated-mailer-guide {
+        padding: 42px 0 52px;
+    }
+
+    .corrugated-mailer-guide-intro {
+        text-align: left;
+    }
+
+    .corrugated-mailer-answer {
+        font-size: 16px;
+    }
+
+    .corrugated-mailer-facts,
+    .corrugated-mailer-guide-grid,
+    .corrugated-mailer-guide-grid-secondary {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .corrugated-mailer-guide-grid {
+        gap: 24px;
+        margin: 34px 0;
+    }
+
+    .corrugated-mailer-facts article,
+    .corrugated-mailer-rfq-card,
+    .corrugated-mailer-process,
+    .corrugated-mailer-faq {
+        padding: 20px;
+    }
+
+    .corrugated-mailer-table-wrap {
+        margin: 34px 0;
+    }
+}

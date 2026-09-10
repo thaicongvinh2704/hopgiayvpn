@@ -99,6 +99,55 @@ $archive_title = $current_term && !is_wp_error($current_term) ? $current_term->n
 $archive_description = $current_term && !is_wp_error($current_term) && !empty($current_term->description)
     ? $current_term->description
     : __('Explore custom packaging products built for branded presentation, product protection, and flexible production requirements.', 'custom-box-theme');
+$archive_eyebrow = '';
+$archive_primary_cta = array();
+$archive_secondary_cta = array();
+$archive_hero_alt = '';
+$custom_category_guide = '';
+
+if (
+    $current_term
+    && !is_wp_error($current_term)
+    && function_exists('custom_box_is_corrugated_mailer_boxes_category')
+    && custom_box_is_corrugated_mailer_boxes_category($current_term)
+) {
+    $corrugated_mailer_data = custom_box_corrugated_mailer_boxes_category_data();
+    $archive_title = $corrugated_mailer_data['archive_title'];
+    $archive_description = $corrugated_mailer_data['hero_description'];
+    $archive_eyebrow = $corrugated_mailer_data['hero_eyebrow'];
+    $archive_primary_cta = $corrugated_mailer_data['primary_cta'];
+    $archive_secondary_cta = $corrugated_mailer_data['secondary_cta'];
+    $archive_hero_alt = $corrugated_mailer_data['hero_alt'];
+    $custom_category_guide = 'corrugated-mailer-guide';
+} elseif (
+    $current_term
+    && !is_wp_error($current_term)
+    && function_exists('custom_box_is_folding_cartons_vietnam_category')
+    && custom_box_is_folding_cartons_vietnam_category($current_term)
+) {
+    $folding_carton_data = custom_box_folding_cartons_vietnam_category_data();
+    $archive_title = $folding_carton_data['archive_title'];
+    $archive_description = $folding_carton_data['hero_description'];
+    $archive_eyebrow = $folding_carton_data['hero_eyebrow'];
+    $archive_primary_cta = $folding_carton_data['primary_cta'];
+    $archive_secondary_cta = $folding_carton_data['secondary_cta'];
+    $archive_hero_alt = $folding_carton_data['hero_alt'];
+    $custom_category_guide = 'folding-cartons-vietnam-guide';
+} elseif (
+    $current_term
+    && !is_wp_error($current_term)
+    && function_exists('custom_box_is_rigid_box_manufacturer_vietnam_category')
+    && custom_box_is_rigid_box_manufacturer_vietnam_category($current_term)
+) {
+    $rigid_box_data = custom_box_rigid_box_manufacturer_vietnam_category_data();
+    $archive_title = $rigid_box_data['archive_title'];
+    $archive_description = $rigid_box_data['hero_description'];
+    $archive_eyebrow = $rigid_box_data['hero_eyebrow'];
+    $archive_primary_cta = $rigid_box_data['primary_cta'];
+    $archive_secondary_cta = $rigid_box_data['secondary_cta'];
+    $archive_hero_alt = $rigid_box_data['hero_alt'];
+    $custom_category_guide = 'rigid-box-manufacturer-vietnam-guide';
+}
 
 $parent_term = function_exists('custom_box_get_packaging_parent_category') ? custom_box_get_packaging_parent_category() : false;
 $sidebar_categories = array();
@@ -153,6 +202,11 @@ $archive_context = compact(
     'current_term',
     'archive_title',
     'archive_description',
+    'archive_eyebrow',
+    'archive_primary_cta',
+    'archive_secondary_cta',
+    'archive_hero_alt',
+    'custom_category_guide',
     'sidebar_categories',
     'landing_categories',
     'hub_groups',
@@ -176,14 +230,20 @@ $archive_context = compact(
         <?php if ($current_term && !is_wp_error($current_term)) : ?>
             <?php get_template_part('template-parts/woocommerce/related-categories', null, $archive_context); ?>
         <?php endif; ?>
-        <?php
-        get_template_part('template-parts/woocommerce/archive-copy', null, array_merge($archive_context, array(
-            'copy_variant' => 'products',
-        )));
-        ?>
+        <?php if ($custom_category_guide && 1 === max(1, (int) get_query_var('paged'), (int) get_query_var('page'))) : ?>
+            <?php get_template_part('template-parts/woocommerce/' . $custom_category_guide, null, $archive_context); ?>
+        <?php elseif (!$custom_category_guide) : ?>
+            <?php
+            get_template_part('template-parts/woocommerce/archive-copy', null, array_merge($archive_context, array(
+                'copy_variant' => 'products',
+            )));
+            ?>
+        <?php endif; ?>
     <?php endif; ?>
 
-    <?php get_template_part('template-parts/home/faq'); ?>
+    <?php if (!$custom_category_guide) : ?>
+        <?php get_template_part('template-parts/home/faq'); ?>
+    <?php endif; ?>
     <?php get_template_part('template-parts/home/footer-cta'); ?>
 </main>
 

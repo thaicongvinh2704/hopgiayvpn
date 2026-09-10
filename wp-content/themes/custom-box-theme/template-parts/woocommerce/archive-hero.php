@@ -8,6 +8,10 @@ defined('ABSPATH') || exit;
 $current_term = isset($args['current_term']) ? $args['current_term'] : null;
 $archive_title = isset($args['archive_title']) ? $args['archive_title'] : '';
 $archive_description = isset($args['archive_description']) ? $args['archive_description'] : '';
+$archive_eyebrow = !empty($args['archive_eyebrow']) ? $args['archive_eyebrow'] : __('Custom Packaging Catalog', 'custom-box-theme');
+$archive_primary_cta = !empty($args['archive_primary_cta']) && is_array($args['archive_primary_cta']) ? $args['archive_primary_cta'] : array();
+$archive_secondary_cta = !empty($args['archive_secondary_cta']) && is_array($args['archive_secondary_cta']) ? $args['archive_secondary_cta'] : array();
+$archive_hero_alt = !empty($args['archive_hero_alt']) ? $args['archive_hero_alt'] : '';
 $products_url = function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
 $is_products_hub = function_exists('is_shop') && is_shop();
 $current_group = $current_term && !is_wp_error($current_term) && function_exists('custom_box_get_packaging_group_for_term')
@@ -122,12 +126,12 @@ $hero_image_dimensions = $hero_image_id ? array() : $get_local_image_dimensions(
 
         <div class="product-category-hero-grid">
             <div class="product-archive-hero-content">
-                <p class="product-eyebrow"><?php esc_html_e('Custom Packaging Catalog', 'custom-box-theme'); ?></p>
+                <p class="product-eyebrow"><?php echo esc_html($archive_eyebrow); ?></p>
                 <h1><?php echo esc_html($archive_title); ?></h1>
                 <p><?php echo esc_html(wp_strip_all_tags($archive_description)); ?></p>
                 <div class="product-category-hero-actions">
-                    <a class="btn-primary" href="<?php echo esc_url($is_products_hub ? '#category-hub' : home_url('/contact/#quote')); ?>"><?php echo esc_html($is_products_hub ? __('Explore Categories', 'custom-box-theme') : __('Get Your Box', 'custom-box-theme')); ?></a>
-                    <a class="btn-outline" href="<?php echo esc_url(home_url('/contact/#quote')); ?>"><?php echo esc_html($is_products_hub ? __('Request Free Quote', 'custom-box-theme') : __('Request Free Sample', 'custom-box-theme')); ?></a>
+                    <a class="btn-primary" href="<?php echo esc_url(!empty($archive_primary_cta['url']) ? $archive_primary_cta['url'] : ($is_products_hub ? '#category-hub' : home_url('/contact/#quote'))); ?>"><?php echo esc_html(!empty($archive_primary_cta['label']) ? $archive_primary_cta['label'] : ($is_products_hub ? __('Explore Categories', 'custom-box-theme') : __('Get Your Box', 'custom-box-theme'))); ?></a>
+                    <a class="btn-outline" href="<?php echo esc_url(!empty($archive_secondary_cta['url']) ? $archive_secondary_cta['url'] : home_url('/contact/#quote')); ?>"><?php echo esc_html(!empty($archive_secondary_cta['label']) ? $archive_secondary_cta['label'] : ($is_products_hub ? __('Request Free Quote', 'custom-box-theme') : __('Request Free Sample', 'custom-box-theme'))); ?></a>
                 </div>
             </div>
             <div class="product-category-hero-image">
@@ -138,7 +142,7 @@ $hero_image_dimensions = $hero_image_id ? array() : $get_local_image_dimensions(
                         'large',
                         false,
                         array(
-                            'alt'           => '',
+                            'alt'           => $archive_hero_alt,
                             'loading'       => 'eager',
                             'fetchpriority' => 'high',
                             'decoding'      => 'async',
@@ -151,7 +155,7 @@ $hero_image_dimensions = $hero_image_id ? array() : $get_local_image_dimensions(
                         src="<?php echo esc_url($hero_image_url); ?>"
                         width="<?php echo esc_attr($hero_image_dimensions[0]); ?>"
                         height="<?php echo esc_attr($hero_image_dimensions[1]); ?>"
-                        alt=""
+                        alt="<?php echo esc_attr($archive_hero_alt); ?>"
                         loading="eager"
                         fetchpriority="high"
                         decoding="async"

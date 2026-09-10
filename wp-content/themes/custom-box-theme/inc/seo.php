@@ -394,12 +394,75 @@ function custom_box_get_product_category_seo_title($term) {
         return '';
     }
 
+    if (
+        function_exists('custom_box_is_corrugated_mailer_boxes_category')
+        && custom_box_is_corrugated_mailer_boxes_category($term)
+    ) {
+        $data = custom_box_corrugated_mailer_boxes_category_data();
+        $paged = max(1, (int) get_query_var('paged'), (int) get_query_var('page'));
+
+        return $paged > 1
+            ? sprintf('Custom Corrugated Mailer Boxes - Page %d | VPN', $paged)
+            : $data['seo_title'];
+    }
+
+    if (
+        function_exists('custom_box_is_folding_cartons_vietnam_category')
+        && custom_box_is_folding_cartons_vietnam_category($term)
+    ) {
+        $data = custom_box_folding_cartons_vietnam_category_data();
+        $paged = max(1, (int) get_query_var('paged'), (int) get_query_var('page'));
+
+        return $paged > 1
+            ? sprintf('Custom Folding Cartons Vietnam - Page %d | VPN', $paged)
+            : $data['seo_title'];
+    }
+
+    if (
+        function_exists('custom_box_is_rigid_box_manufacturer_vietnam_category')
+        && custom_box_is_rigid_box_manufacturer_vietnam_category($term)
+    ) {
+        $data = custom_box_rigid_box_manufacturer_vietnam_category_data();
+        $paged = max(1, (int) get_query_var('paged'), (int) get_query_var('page'));
+
+        return $paged > 1
+            ? sprintf('Rigid Box Manufacturer Vietnam - Page %d | VPN', $paged)
+            : $data['seo_title'];
+    }
+
     return sprintf('%s | Custom Packaging Category | VPN Paper Box', wp_strip_all_tags($term->name));
 }
 
 function custom_box_get_product_category_seo_description($term) {
     if (!$term || is_wp_error($term) || empty($term->name)) {
         return '';
+    }
+
+    if (
+        function_exists('custom_box_is_corrugated_mailer_boxes_category')
+        && custom_box_is_corrugated_mailer_boxes_category($term)
+    ) {
+        $data = custom_box_corrugated_mailer_boxes_category_data();
+
+        return $data['seo_description'];
+    }
+
+    if (
+        function_exists('custom_box_is_folding_cartons_vietnam_category')
+        && custom_box_is_folding_cartons_vietnam_category($term)
+    ) {
+        $data = custom_box_folding_cartons_vietnam_category_data();
+
+        return $data['seo_description'];
+    }
+
+    if (
+        function_exists('custom_box_is_rigid_box_manufacturer_vietnam_category')
+        && custom_box_is_rigid_box_manufacturer_vietnam_category($term)
+    ) {
+        $data = custom_box_rigid_box_manufacturer_vietnam_category_data();
+
+        return $data['seo_description'];
     }
 
     return sprintf(
