@@ -11,6 +11,11 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/packaging-for-baked-goods-post-sync.php' => array(
+            'version' => '2026-09-11-packaging-for-baked-goods-v1',
+            'option' => 'custom_box_packaging_for_baked_goods_sync_version',
+            'slug' => 'packaging-for-baked-goods',
+        ),
         'inc/custom-corrugated-packaging-boxes-post-sync.php' => array(
             'version' => '2026-09-08-custom-corrugated-packaging-boxes-v1',
             'option' => 'custom_box_corrugated_packaging_boxes_sync_version',
