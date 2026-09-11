@@ -362,9 +362,15 @@ while (have_posts()) :
         <?php echo wp_kses_post($product_faq_html); ?>
     <?php endif; ?>
 
+    <?php
+    $quote_product_title = get_the_title();
+    $quote_heading_prefix = 0 === stripos($quote_product_title, 'Custom ')
+        ? 'Request a Quote for Your'
+        : 'Request a Quote for Your Custom';
+    ?>
     <section class="product-quote-intro">
         <div class="container">
-            <h2>Request a Quote for Your Custom<br><?php echo esc_html(get_the_title()); ?> Today</h2>
+            <h2><?php echo esc_html($quote_heading_prefix); ?><br><?php echo esc_html($quote_product_title); ?> Today</h2>
         </div>
     </section>
 

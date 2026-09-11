@@ -913,3 +913,33 @@ one product, attaches the five approved images without restoring omitted ZIP fil
 assigns Gift Paper Boxes as the primary category, and publishes the product. This
 batch is included in the current **Latest batch only** hosting release and can also
 be deployed independently with the dedicated wrapper above.
+
+### Aurelia rigid-box products (September 2026)
+
+Local WooCommerce batch marker:
+
+- `_vpn_sample_import = product-samples-aurelia-rigid-boxes-202609`
+
+This batch publishes three differentiated OEM product pages:
+
+1. Custom Burgundy Magnetic Perfume Gift Box with Velvet Insert
+2. Custom Emerald Lid and Base Rigid Gift Box
+3. Custom Navy Shoulder Neck Jewelry Box with Velvet Insert
+
+The 19 original 1024 x 1024 WebP files are Git-bundled under
+`wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/uploads/2026/09/`.
+Every file is below 100,000 bytes. The importer copies missing originals into
+WordPress uploads, creates exact-filename Media Library attachments and responsive
+metadata, then writes the products, galleries, four inline figures, taxonomy,
+specifications, FAQ markup and Rank Math fields. Reruns repair incomplete saved
+state without changing product IDs or creating duplicate attachments.
+
+After `git pull`, run either:
+
+- `php tools/deploy-aurelia-rigid-box-products-202609.php`
+- **Tools > Product Sample Deploy > Latest batch only**
+
+The dedicated verifier requires published status, 1,500-2,000 content words, no
+content H1, 120-180 excerpt words, 21 specification rows, exact categories and
+tags, all SEO fields, exact gallery order, four stable inline figures and all
+WebP originals below 100,000 bytes.
