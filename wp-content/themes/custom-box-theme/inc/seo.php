@@ -6,6 +6,15 @@
 defined('ABSPATH') || exit;
 
 /**
+ * Keep the hard-coded Bing verification tag in header.php as the single
+ * source of truth when Rank Math also has an older verification ID saved.
+ */
+function custom_box_suppress_rank_math_bing_verification($verification) {
+    return '';
+}
+add_filter('rank_math/webmaster/bing_verify', 'custom_box_suppress_rank_math_bing_verification', PHP_INT_MAX);
+
+/**
  * Keep the harmless Schema.org microdata attributes used by visible FAQ
  * sections when post content is sanitized on save or at render time.
  */
