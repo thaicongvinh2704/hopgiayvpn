@@ -11,6 +11,11 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/paper-containers-for-food-types-coatings-applications-post-sync.php' => array(
+            'version' => '2026-09-12-paper-containers-for-food-v1',
+            'option' => 'custom_box_paper_containers_for_food_sync_version',
+            'slug' => 'paper-containers-for-food-types-coatings-applications',
+        ),
         'inc/packaging-for-baked-goods-post-sync.php' => array(
             'version' => '2026-09-11-packaging-for-baked-goods-v1',
             'option' => 'custom_box_packaging_for_baked_goods_sync_version',
