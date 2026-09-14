@@ -121,6 +121,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_eco_food_packaging_sync_version',
             'slug' => 'eco-friendly-food-packaging-small-business',
         ),
+        'inc/eco-friendly-food-packaging-materials-post-sync.php' => array(
+            'version' => '2026-09-14-eco-food-packaging-materials-v1',
+            'option' => 'custom_box_eco_food_packaging_materials_sync_version',
+            'slug' => 'eco-friendly-food-packaging-materials',
+        ),
         'inc/sustainable-packaging-small-businesses-post-sync.php' => array(
             'version' => '2026-08-18-sustainable-packaging-v2',
             'option' => 'custom_box_sustainable_packaging_sync_version',
