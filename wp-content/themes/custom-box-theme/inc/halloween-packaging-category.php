@@ -30,6 +30,11 @@ function custom_box_halloween_packaging_category_data(): array {
             'custom-retro-haunted-carnival-halloween-paper-bag',
             'custom-gothic-celestial-raven-halloween-paper-bag',
             'custom-witch-apothecary-kraft-halloween-paper-bag',
+            'custom-luxury-halloween-eclipse-octagonal-rigid-gift-box',
+            'custom-midnight-manor-halloween-octagonal-rigid-box',
+            'custom-orange-halloween-octagonal-rigid-gift-box',
+            'custom-halloween-offset-printed-octagonal-rigid-box',
+            'custom-halloween-gable-treat-box',
         ),
         'primary_cta'      => array(
             'label' => 'Request a Halloween Packaging Quote',
@@ -254,7 +259,7 @@ function custom_box_sync_halloween_packaging_category(): void {
     }
 
     $data = custom_box_halloween_packaging_category_data();
-    $version = '2026-09-16.3';
+    $version = '2026-09-16.4';
     $version_option = 'custom_box_halloween_packaging_category_sync_version';
     $term = get_term_by('slug', $data['slug'], 'product_cat');
     $failures = array();

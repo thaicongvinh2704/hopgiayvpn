@@ -1,5 +1,5 @@
 {
-    "version": 7,
+    "version": 8,
     "generated_at": "2026-09-16T00:00:00+07:00",
     "source_url": "http://localhost/website-backup/",
     "taxonomy": "product_cat",
@@ -1377,6 +1377,51 @@
             "categories": [
                 "halloween-packaging",
                 "paper-bags-with-logo"
+            ]
+        },
+        "custom-luxury-halloween-eclipse-octagonal-rigid-gift-box": {
+            "title": "Custom Luxury Halloween Eclipse Octagonal Rigid Gift Box",
+            "status": "publish",
+            "categories": [
+                "gift-paper-boxes",
+                "halloween-packaging",
+                "rigid-boxes"
+            ]
+        },
+        "custom-midnight-manor-halloween-octagonal-rigid-box": {
+            "title": "Custom Midnight Manor Halloween Octagonal Rigid Box",
+            "status": "publish",
+            "categories": [
+                "gift-paper-boxes",
+                "halloween-packaging",
+                "rigid-boxes"
+            ]
+        },
+        "custom-orange-halloween-octagonal-rigid-gift-box": {
+            "title": "Custom Orange Halloween Octagonal Rigid Gift Box",
+            "status": "publish",
+            "categories": [
+                "gift-paper-boxes",
+                "halloween-packaging",
+                "rigid-boxes"
+            ]
+        },
+        "custom-halloween-offset-printed-octagonal-rigid-box": {
+            "title": "Custom Halloween Offset Printed Octagonal Rigid Box",
+            "status": "publish",
+            "categories": [
+                "gift-paper-boxes",
+                "halloween-packaging",
+                "rigid-boxes"
+            ]
+        },
+        "custom-halloween-gable-treat-box": {
+            "title": "Custom Halloween Gable Treat Box",
+            "status": "publish",
+            "categories": [
+                "food-paper-boxes",
+                "folding-carton-boxes",
+                "halloween-packaging"
             ]
         }
     }
