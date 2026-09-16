@@ -147,6 +147,20 @@ if (
     $archive_secondary_cta = $rigid_box_data['secondary_cta'];
     $archive_hero_alt = $rigid_box_data['hero_alt'];
     $custom_category_guide = 'rigid-box-manufacturer-vietnam-guide';
+} elseif (
+    $current_term
+    && !is_wp_error($current_term)
+    && function_exists('custom_box_is_halloween_packaging_category')
+    && custom_box_is_halloween_packaging_category($current_term)
+) {
+    $halloween_data = custom_box_halloween_packaging_category_data();
+    $archive_title = $halloween_data['archive_title'];
+    $archive_description = $halloween_data['hero_description'];
+    $archive_eyebrow = $halloween_data['hero_eyebrow'];
+    $archive_primary_cta = $halloween_data['primary_cta'];
+    $archive_secondary_cta = $halloween_data['secondary_cta'];
+    $archive_hero_alt = $halloween_data['hero_alt'];
+    $custom_category_guide = 'halloween-packaging-guide';
 }
 
 $parent_term = function_exists('custom_box_get_packaging_parent_category') ? custom_box_get_packaging_parent_category() : false;

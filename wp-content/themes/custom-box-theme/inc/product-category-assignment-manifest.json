@@ -1,6 +1,6 @@
 {
-    "version": 5,
-    "generated_at": "2026-07-30T03:30:00+00:00",
+    "version": 7,
+    "generated_at": "2026-09-16T00:00:00+07:00",
     "source_url": "http://localhost/website-backup/",
     "taxonomy": "product_cat",
     "mode": "strict_manifest_product_categories",
@@ -74,6 +74,12 @@
         "gift-paper-boxes": {
             "name": "Gift Paper Boxes",
             "slug": "gift-paper-boxes"
+        },
+        "halloween-packaging": {
+            "name": "Halloween Packaging",
+            "slug": "halloween-packaging",
+            "group": "Seasonal & Event Packaging",
+            "thumbnail_asset": "inc/product-sample-deploy-assets/uploads/2026/09/custom-halloween-packaging-ghost-tote.webp"
         },
         "home-lifestyle-packaging": {
             "name": "Home and Lifestyle Packaging",
@@ -914,6 +920,14 @@
                 "pharmaceutical-packaging-boxes"
             ]
         },
+        "custom-pink-ghost-laminated-woven-tote-bag": {
+            "title": "Custom Pink Ghost Laminated Woven Tote Bag",
+            "status": "publish",
+            "categories": [
+                "fabric-bags",
+                "halloween-packaging"
+            ]
+        },
         "custom-pizza-packaging-box": {
             "title": "Custom Pizza Packaging Box",
             "status": "publish",
@@ -1323,6 +1337,46 @@
             "categories": [
                 "rigid-boxes",
                 "sports-packaging-boxes"
+            ]
+        },
+        "custom-creepy-cute-ghost-portal-halloween-paper-bag": {
+            "title": "Custom Creepy Cute Ghost Portal Halloween Paper Bag",
+            "status": "publish",
+            "categories": [
+                "halloween-packaging",
+                "paper-bags-with-logo"
+            ]
+        },
+        "custom-pumpkin-lantern-die-cut-handle-halloween-paper-bag": {
+            "title": "Custom Pumpkin Lantern Die-Cut Handle Halloween Paper Bag",
+            "status": "publish",
+            "categories": [
+                "halloween-packaging",
+                "paper-bags-with-logo"
+            ]
+        },
+        "custom-retro-haunted-carnival-halloween-paper-bag": {
+            "title": "Custom Retro Haunted Carnival Halloween Paper Bag",
+            "status": "publish",
+            "categories": [
+                "halloween-packaging",
+                "paper-bags-with-logo"
+            ]
+        },
+        "custom-gothic-celestial-raven-halloween-paper-bag": {
+            "title": "Custom Gothic Celestial Raven Halloween Paper Bag",
+            "status": "publish",
+            "categories": [
+                "halloween-packaging",
+                "paper-bags-with-logo"
+            ]
+        },
+        "custom-witch-apothecary-kraft-halloween-paper-bag": {
+            "title": "Custom Witch Apothecary Kraft Halloween Paper Bag",
+            "status": "publish",
+            "categories": [
+                "halloween-packaging",
+                "paper-bags-with-logo"
             ]
         }
     }

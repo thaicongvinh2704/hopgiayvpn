@@ -78,6 +78,12 @@ $current_batches = array(
 		'importer'    => 'import-bread-bag-products-202609.php',
 		'verifier'    => 'verify-bread-bag-products-202609.php',
 	),
+	array(
+		'name'        => 'Halloween paper bag products September 2026',
+		'image_bases' => array(),
+		'importer'    => 'import-halloween-paper-bag-products-202609.php',
+		'verifier'    => 'verify-halloween-paper-bag-products-202609.php',
+	),
 );
 
 $missing_images = array();
@@ -112,4 +118,4 @@ foreach ( $current_batches as $batch ) {
 echo PHP_EOL . '== Current product category thumbnails August 2026 ==' . PHP_EOL;
 require $target_dir . '/sync-product-category-thumbnails-202608.php';
 
-echo PHP_EOL . 'Current deployment complete: 29 products, 3 category thumbnails and the bread-bag batch verified.' . PHP_EOL;
+echo PHP_EOL . 'Current deployment complete: existing batches plus bread bags and Halloween paper bags verified.' . PHP_EOL;
