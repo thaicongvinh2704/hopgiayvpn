@@ -11,6 +11,11 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/environmentally-friendly-packaging-materials-post-sync.php' => array(
+            'version' => '2026-09-16-environmentally-friendly-packaging-materials-v1',
+            'option' => 'custom_box_env_packaging_materials_sync_version',
+            'slug' => 'environmentally-friendly-packaging-materials',
+        ),
         'inc/product-and-packaging-design-post-sync.php' => array(
             'version' => '2026-09-12-product-packaging-design-v1',
             'option' => 'custom_box_product_and_packaging_design_sync_version',
