@@ -11,6 +11,7 @@ $archive_description = isset($args['archive_description']) ? $args['archive_desc
 $archive_eyebrow = !empty($args['archive_eyebrow']) ? $args['archive_eyebrow'] : __('Custom Packaging Catalog', 'custom-box-theme');
 $archive_primary_cta = !empty($args['archive_primary_cta']) && is_array($args['archive_primary_cta']) ? $args['archive_primary_cta'] : array();
 $archive_secondary_cta = !empty($args['archive_secondary_cta']) && is_array($args['archive_secondary_cta']) ? $args['archive_secondary_cta'] : array();
+$archive_hero_proof_points = !empty($args['archive_hero_proof_points']) && is_array($args['archive_hero_proof_points']) ? $args['archive_hero_proof_points'] : array();
 $archive_hero_alt = !empty($args['archive_hero_alt']) ? $args['archive_hero_alt'] : '';
 $products_url = function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
 $is_products_hub = function_exists('is_shop') && is_shop();
@@ -133,6 +134,13 @@ $hero_image_dimensions = $hero_image_id ? array() : $get_local_image_dimensions(
                     <a class="btn-primary" href="<?php echo esc_url(!empty($archive_primary_cta['url']) ? $archive_primary_cta['url'] : ($is_products_hub ? '#category-hub' : home_url('/contact/#quote'))); ?>"><?php echo esc_html(!empty($archive_primary_cta['label']) ? $archive_primary_cta['label'] : ($is_products_hub ? __('Explore Categories', 'custom-box-theme') : __('Get Your Box', 'custom-box-theme'))); ?></a>
                     <a class="btn-outline" href="<?php echo esc_url(!empty($archive_secondary_cta['url']) ? $archive_secondary_cta['url'] : home_url('/contact/#quote')); ?>"><?php echo esc_html(!empty($archive_secondary_cta['label']) ? $archive_secondary_cta['label'] : ($is_products_hub ? __('Request Free Quote', 'custom-box-theme') : __('Request Free Sample', 'custom-box-theme'))); ?></a>
                 </div>
+                <?php if ($archive_hero_proof_points) : ?>
+                    <ul class="product-category-hero-proof" aria-label="Category sourcing highlights">
+                        <?php foreach ($archive_hero_proof_points as $proof_point) : ?>
+                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><?php echo esc_html($proof_point); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
             </div>
             <div class="product-category-hero-image">
                 <?php if ($hero_image_id) : ?>

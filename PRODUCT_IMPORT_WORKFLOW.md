@@ -856,6 +856,33 @@ connects all four Media Library attachments, and writes product-specific seconda
 packaging content. This is part of the current **Latest batch only** hosting release.
 The deploy requires all 40 matching files in `wp-content/uploads/2026/08/`.
 
+### Alibaba Christmas gift-box collection (September 2026)
+
+Local WooCommerce batch marker:
+
+- `_vpn_sample_import = alibaba-christmas-gift-box-collection-20260917`
+
+This batch imports or updates five Christmas gift-box visualization products. Each
+product uses six supplied JPG views (30 originals total), bundled under
+`wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/uploads/2026/09/`.
+The source package is explicitly treated as design visualization material; product
+copy does not claim that the supplied renders are factory photographs or verified
+manufacturing specifications.
+
+Files used:
+
+- `tools/import-alibaba-christmas-gift-box-collection-20260917.php`
+- `tools/verify-alibaba-christmas-gift-box-collection-20260917.php`
+- `wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/import-alibaba-christmas-gift-box-collection-20260917.php`
+- `wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/verify-alibaba-christmas-gift-box-collection-20260917.php`
+
+After `git pull` on hosting, open **Tools > Product Sample Deploy** and run
+**Latest batch only**, or select **Alibaba Christmas gift-box collection September
+2026 only** for an isolated sync. The deploy restores the tracked importer and
+verifier, copies missing bundled originals into `wp-content/uploads/2026/09/`,
+creates or updates the five WooCommerce products idempotently, and verifies the
+gallery, content, SEO fields, taxonomy, and disclosure without duplicate slugs.
+
 ### Bird Nest Packaging batch (August 2026)
 
 Local WooCommerce batch marker:

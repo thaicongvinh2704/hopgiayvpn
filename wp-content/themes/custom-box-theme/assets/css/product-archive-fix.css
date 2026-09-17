@@ -7,6 +7,29 @@
     text-decoration: none;
 }
 
+.product-category-hero-proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px 18px;
+    list-style: none;
+    margin: 20px 0 0;
+    padding: 0;
+}
+
+.product-category-hero-proof li {
+    align-items: center;
+    color: var(--color-ink, #123243);
+    display: inline-flex;
+    font-size: 13px;
+    font-weight: 750;
+    gap: 7px;
+    line-height: 1.4;
+}
+
+.product-category-hero-proof i {
+    color: var(--color-primary, #2a6a92);
+}
+
 /* Corrugated mailer category: sourceable buyer guidance and decision content. */
 .corrugated-mailer-guide {
     background: #fff;
@@ -240,6 +263,177 @@
     margin: 0;
 }
 
+/* Halloween category: real references, image context, and supplier verification. */
+.halloween-packaging-guide {
+    scroll-margin-top: 110px;
+}
+
+.halloween-format-showcase {
+    background: linear-gradient(135deg, #fff8f0 0%, #fff 62%, #f7f1f6 100%);
+    border: 1px solid #eadfd5;
+    border-radius: 14px;
+    margin: 42px 0 50px;
+    padding: 30px;
+}
+
+.halloween-format-showcase-header {
+    align-items: end;
+    display: grid;
+    gap: 34px;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
+    margin-bottom: 24px;
+}
+
+.halloween-format-showcase-header h2,
+.halloween-format-showcase-header p {
+    margin-bottom: 0;
+}
+
+.halloween-format-showcase-header > p {
+    font-size: 15px;
+}
+
+.halloween-format-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.halloween-format-card {
+    background: #fff;
+    border: 1px solid #e4d9cf;
+    border-radius: 10px;
+    box-shadow: 0 12px 26px rgba(65, 38, 26, .08);
+    overflow: hidden;
+}
+
+.halloween-format-card-image {
+    background: #f3eee8;
+    display: block;
+    overflow: hidden;
+}
+
+.halloween-format-card-image img {
+    aspect-ratio: 1 / 1;
+    display: block;
+    height: auto;
+    object-fit: cover;
+    transition: transform .22s ease;
+    width: 100%;
+}
+
+.halloween-format-card:hover .halloween-format-card-image img {
+    transform: scale(1.025);
+}
+
+.halloween-format-card > div {
+    padding: 17px;
+}
+
+.halloween-format-card h3 {
+    font-size: 17px;
+    margin-bottom: 6px;
+}
+
+.halloween-format-card h3 a {
+    color: var(--color-ink, #123243);
+    text-decoration: none;
+}
+
+.halloween-format-card p {
+    font-size: 14px;
+    margin: 0;
+}
+
+.halloween-format-disclosure {
+    border-left: 3px solid #b86128;
+    font-size: 13px;
+    margin: 22px 0 0;
+    padding-left: 14px;
+}
+
+.halloween-factory-proof {
+    align-items: stretch;
+    background: #f3f7f8;
+    border: 1px solid var(--color-line, #d8e4eb);
+    border-radius: 14px;
+    display: grid;
+    gap: 0;
+    grid-template-columns: minmax(300px, .9fr) minmax(0, 1.1fr);
+    margin: 48px 0;
+    overflow: hidden;
+}
+
+.halloween-factory-proof figure {
+    background: #dce7e9;
+    margin: 0;
+    min-height: 100%;
+    position: relative;
+}
+
+.halloween-factory-proof figure img {
+    display: block;
+    height: 100%;
+    min-height: 420px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.halloween-factory-proof figcaption {
+    background: rgba(13, 42, 53, .9);
+    bottom: 0;
+    color: #fff;
+    font-size: 12px;
+    left: 0;
+    line-height: 1.5;
+    padding: 10px 14px;
+    position: absolute;
+    right: 0;
+}
+
+.halloween-factory-proof > div {
+    padding: 34px;
+}
+
+.halloween-factory-proof ul {
+    color: var(--color-muted, #50606b);
+    margin: 20px 0;
+    padding-left: 21px;
+}
+
+.halloween-factory-proof li + li {
+    margin-top: 9px;
+}
+
+.halloween-factory-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.halloween-factory-links a:not(.btn-primary) {
+    background: #fff;
+    border: 1px solid var(--color-line, #d8e4eb);
+    border-radius: 999px;
+    font-size: 13px;
+    padding: 9px 12px;
+    text-decoration: none;
+}
+
+.halloween-factory-links a:hover {
+    border-color: var(--color-primary, #2a6a92);
+}
+
+@media (max-width: 991px) {
+    .halloween-format-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .halloween-factory-proof {
+        grid-template-columns: minmax(260px, .8fr) minmax(0, 1.2fr);
+    }
+}
+
 @media (max-width: 767px) {
     .corrugated-mailer-guide {
         padding: 42px 0 52px;
@@ -273,5 +467,311 @@
 
     .corrugated-mailer-table-wrap {
         margin: 34px 0;
+    }
+
+    .product-category-hero-proof {
+        display: grid;
+        gap: 8px;
+    }
+
+    .halloween-format-showcase {
+        margin: 34px 0;
+        padding: 20px;
+    }
+
+    .halloween-format-showcase-header,
+    .halloween-factory-proof {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .halloween-format-showcase-header {
+        gap: 12px;
+    }
+
+    .halloween-factory-proof figure img {
+        min-height: 230px;
+    }
+
+    .halloween-factory-proof > div {
+        padding: 24px 20px;
+    }
+}
+
+@media (max-width: 430px) {
+    .halloween-format-grid {
+        gap: 12px;
+    }
+
+    .halloween-format-card > div {
+        padding: 13px;
+    }
+
+    .halloween-format-card h3 {
+        font-size: 15px;
+    }
+
+    .halloween-format-card p {
+        font-size: 12px;
+        line-height: 1.55;
+    }
+}
+
+/* Christmas packaging: restrained seasonal palette with real product references. */
+.christmas-packaging-guide {
+    --christmas-green: #174f3b;
+    --christmas-red: #9d2f2f;
+    --christmas-gold: #b28a45;
+    scroll-margin-top: 110px;
+}
+
+.christmas-format-showcase {
+    background: linear-gradient(135deg, #f1f7f2 0%, #fff 54%, #fff7ed 100%);
+    border: 1px solid #d8e4d9;
+    border-radius: 14px;
+    margin: 42px 0 50px;
+    padding: 30px;
+}
+
+.christmas-format-showcase-header {
+    align-items: end;
+    display: grid;
+    gap: 34px;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
+    margin-bottom: 24px;
+}
+
+.christmas-format-showcase-header h2,
+.christmas-format-showcase-header p {
+    margin-bottom: 0;
+}
+
+.christmas-format-showcase-header > p {
+    font-size: 15px;
+}
+
+.christmas-format-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.christmas-format-card {
+    background: #fff;
+    border: 1px solid #d9e0d9;
+    border-radius: 10px;
+    box-shadow: 0 12px 26px rgba(23, 79, 59, .08);
+    overflow: hidden;
+}
+
+.christmas-format-card-image {
+    background: #edf3ee;
+    display: block;
+    overflow: hidden;
+}
+
+.christmas-format-card-image img {
+    aspect-ratio: 1 / 1;
+    display: block;
+    height: auto;
+    object-fit: cover;
+    transition: transform .22s ease;
+    width: 100%;
+}
+
+.christmas-format-card:hover .christmas-format-card-image img {
+    transform: scale(1.025);
+}
+
+.christmas-format-card > div {
+    padding: 17px;
+}
+
+.christmas-format-card h3 {
+    font-size: 17px;
+    margin-bottom: 6px;
+}
+
+.christmas-format-card h3 a {
+    color: var(--christmas-green);
+    text-decoration: none;
+}
+
+.christmas-format-card p {
+    font-size: 14px;
+    margin: 0;
+}
+
+.christmas-format-disclosure {
+    border-left: 3px solid var(--christmas-gold);
+    font-size: 13px;
+    margin: 22px 0 0;
+    padding-left: 14px;
+}
+
+.christmas-factory-proof {
+    align-items: stretch;
+    background: #f2f7f4;
+    border: 1px solid #d7e4db;
+    border-radius: 14px;
+    display: grid;
+    grid-template-columns: minmax(300px, .9fr) minmax(0, 1.1fr);
+    margin: 48px 0;
+    overflow: hidden;
+}
+
+.christmas-factory-proof figure {
+    background: #dce8e0;
+    margin: 0;
+    min-height: 100%;
+    position: relative;
+}
+
+.christmas-factory-proof figure img {
+    display: block;
+    height: 100%;
+    min-height: 420px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.christmas-factory-proof figcaption {
+    background: rgba(18, 54, 42, .92);
+    bottom: 0;
+    color: #fff;
+    font-size: 12px;
+    left: 0;
+    line-height: 1.5;
+    padding: 10px 14px;
+    position: absolute;
+    right: 0;
+}
+
+.christmas-factory-proof > div {
+    padding: 34px;
+}
+
+.christmas-factory-proof ul {
+    color: var(--color-muted, #50606b);
+    margin: 20px 0;
+    padding-left: 21px;
+}
+
+.christmas-factory-proof li + li {
+    margin-top: 9px;
+}
+
+.christmas-factory-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.christmas-factory-links a {
+    background: #fff;
+    border: 1px solid #ccdcd1;
+    border-radius: 999px;
+    font-size: 13px;
+    padding: 9px 12px;
+    text-decoration: none;
+}
+
+.christmas-factory-links a:hover {
+    border-color: var(--christmas-green);
+}
+
+.christmas-quote-band {
+    align-items: center;
+    background: linear-gradient(120deg, #173f33, #245e49);
+    border-radius: 14px;
+    color: #fff;
+    display: grid;
+    gap: 34px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    margin: 48px 0;
+    padding: 34px;
+}
+
+.christmas-quote-band h2,
+.christmas-quote-band p {
+    color: inherit;
+}
+
+.christmas-quote-band h2 {
+    margin-bottom: 10px;
+}
+
+.christmas-quote-band p:last-child {
+    margin-bottom: 0;
+}
+
+.christmas-quote-band .product-eyebrow {
+    color: #ead3a6;
+}
+
+.christmas-quote-band .btn-primary {
+    background: #fff;
+    color: #174f3b;
+    white-space: nowrap;
+}
+
+@media (max-width: 991px) {
+    .christmas-format-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .christmas-factory-proof {
+        grid-template-columns: minmax(260px, .8fr) minmax(0, 1.2fr);
+    }
+}
+
+@media (max-width: 767px) {
+    .christmas-format-showcase {
+        margin: 34px 0;
+        padding: 20px;
+    }
+
+    .christmas-format-showcase-header,
+    .christmas-factory-proof,
+    .christmas-quote-band {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .christmas-format-showcase-header,
+    .christmas-quote-band {
+        gap: 16px;
+    }
+
+    .christmas-factory-proof figure img {
+        min-height: 230px;
+    }
+
+    .christmas-factory-proof > div,
+    .christmas-quote-band {
+        padding: 24px 20px;
+    }
+
+    .christmas-quote-band .btn-primary {
+        text-align: center;
+        white-space: normal;
+        width: 100%;
+    }
+}
+
+@media (max-width: 430px) {
+    .christmas-format-grid {
+        gap: 12px;
+    }
+
+    .christmas-format-card > div {
+        padding: 13px;
+    }
+
+    .christmas-format-card h3 {
+        font-size: 15px;
+    }
+
+    .christmas-format-card p {
+        font-size: 12px;
+        line-height: 1.55;
     }
 }

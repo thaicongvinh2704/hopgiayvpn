@@ -14,6 +14,7 @@ $custom_box_inc_files = array(
     'inc/folding-cartons-vietnam-category.php',
     'inc/rigid-box-manufacturer-vietnam-category.php',
     'inc/halloween-packaging-category.php',
+    'inc/christmas-packaging-category.php',
     'inc/search-indexing-health.php',
     'inc/privacy-policy.php',
     'inc/paper-bag-ads-landing.php',

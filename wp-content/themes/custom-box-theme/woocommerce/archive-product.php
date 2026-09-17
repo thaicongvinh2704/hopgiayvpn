@@ -102,6 +102,7 @@ $archive_description = $current_term && !is_wp_error($current_term) && !empty($c
 $archive_eyebrow = '';
 $archive_primary_cta = array();
 $archive_secondary_cta = array();
+$archive_hero_proof_points = array();
 $archive_hero_alt = '';
 $custom_category_guide = '';
 
@@ -161,6 +162,21 @@ if (
     $archive_secondary_cta = $halloween_data['secondary_cta'];
     $archive_hero_alt = $halloween_data['hero_alt'];
     $custom_category_guide = 'halloween-packaging-guide';
+} elseif (
+    $current_term
+    && !is_wp_error($current_term)
+    && function_exists('custom_box_is_christmas_packaging_category')
+    && custom_box_is_christmas_packaging_category($current_term)
+) {
+    $christmas_data = custom_box_christmas_packaging_category_data();
+    $archive_title = $christmas_data['archive_title'];
+    $archive_description = $christmas_data['hero_description'];
+    $archive_eyebrow = $christmas_data['hero_eyebrow'];
+    $archive_primary_cta = $christmas_data['primary_cta'];
+    $archive_secondary_cta = $christmas_data['secondary_cta'];
+    $archive_hero_proof_points = $christmas_data['hero_proof_points'];
+    $archive_hero_alt = $christmas_data['hero_alt'];
+    $custom_category_guide = 'christmas-packaging-guide';
 }
 
 $parent_term = function_exists('custom_box_get_packaging_parent_category') ? custom_box_get_packaging_parent_category() : false;
@@ -219,6 +235,7 @@ $archive_context = compact(
     'archive_eyebrow',
     'archive_primary_cta',
     'archive_secondary_cta',
+    'archive_hero_proof_points',
     'archive_hero_alt',
     'custom_category_guide',
     'sidebar_categories',
