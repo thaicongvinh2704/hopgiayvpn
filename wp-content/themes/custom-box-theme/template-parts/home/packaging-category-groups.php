@@ -28,6 +28,7 @@ $priority_category_slugs = array(
     'corrugated-mailer-boxes',
     'cosmetic-paper-boxes',
     'paper-bags-with-logo',
+    'christmas-packaging',
 );
 
 $category_items_by_slug = array();

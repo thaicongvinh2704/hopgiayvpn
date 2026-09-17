@@ -1,6 +1,6 @@
 {
-    "version": 8,
-    "generated_at": "2026-09-16T00:00:00+07:00",
+    "version": 9,
+    "generated_at": "2026-09-17T00:00:00+07:00",
     "source_url": "http://localhost/website-backup/",
     "taxonomy": "product_cat",
     "mode": "strict_manifest_product_categories",
@@ -80,6 +80,12 @@
             "slug": "halloween-packaging",
             "group": "Seasonal & Event Packaging",
             "thumbnail_asset": "inc/product-sample-deploy-assets/uploads/2026/09/custom-halloween-packaging-ghost-tote.webp"
+        },
+        "christmas-packaging": {
+            "name": "Christmas Paper Bags and Gift Boxes",
+            "slug": "christmas-packaging",
+            "group": "Seasonal & Event Packaging",
+            "thumbnail_asset": "inc/product-sample-deploy-assets/uploads/2026/07/green-christmas-gift-box-with-ribbon.webp"
         },
         "home-lifestyle-packaging": {
             "name": "Home and Lifestyle Packaging",
