@@ -80,11 +80,11 @@ try {
     if (!metrics.titleMatches) failures.push("SEO title");
     if (!metrics.descriptionMatches) failures.push("meta description");
     if (metrics.h1 !== "Custom Christmas Paper Bags & Gift Boxes" || metrics.h1Count !== 1) failures.push("single canonical H1");
-    if (metrics.productCount !== 6) failures.push("6-product first-page grid");
+    if (metrics.productCount !== 11) failures.push("11-product first-page grid");
     if (metrics.proofPointCount !== 3) failures.push("hero proof points");
     if (!metrics.secondaryCtaHref.endsWith("#christmas-buyer-guide")) failures.push("buyer-guide CTA");
     if (metrics.guideCount !== 1) failures.push("buyer guide");
-    if (metrics.formatCardCount !== 4) failures.push("format reference gallery");
+    if (metrics.formatCardCount !== 9) failures.push("format reference gallery");
     if (metrics.factoryProofCount !== 1 || !metrics.factoryImageSource.includes("anh-nha-may-1")) failures.push("factory evidence");
     if (metrics.faqCount !== 8 || metrics.genericFaqCount !== 0) failures.push("category-specific FAQ");
     if (metrics.internalGuideLinks < 12) failures.push("internal guide links");

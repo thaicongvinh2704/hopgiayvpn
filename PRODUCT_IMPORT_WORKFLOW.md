@@ -883,6 +883,39 @@ verifier, copies missing bundled originals into `wp-content/uploads/2026/09/`,
 creates or updates the five WooCommerce products idempotently, and verifies the
 gallery, content, SEO fields, taxonomy, and disclosure without duplicate slugs.
 
+### Alibaba Christmas paper-bag collection (September 2026)
+
+Local WooCommerce batch marker:
+
+- `_vpn_sample_import = alibaba-christmas-paper-bags-20260917`
+
+This batch imports or updates five Christmas paper-bag visualization products
+from 30 supplied JPG views (six views per SKU). The originals are tracked under
+`wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/uploads/2026/09/`
+and are copied into the normal WordPress uploads directory by the importer or
+the Product Sample Deploy restore step.
+
+The attached source README and lock sheet are treated as visual design
+constraints only. The pages disclose that these are AI-generated packaging
+concept mockups, not factory photographs, physical samples or engineering
+drawings; copy does not invent dimensions, paper weight, certifications,
+performance, stock, MOQ or manufacturing claims.
+
+Files used:
+
+- `tools/import-alibaba-christmas-paper-bags-20260917.php`
+- `tools/verify-alibaba-christmas-paper-bags-20260917.php`
+- `wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/import-alibaba-christmas-paper-bags-20260917.php`
+- `wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/verify-alibaba-christmas-paper-bags-20260917.php`
+
+After `git pull --ff-only origin main` on hosting, open **Tools > Product Sample
+Deploy** and run **Latest batch only**, or select **Alibaba Christmas paper-bag
+collection September 2026 only** for an isolated sync. The importer is
+idempotent by slug and marker, so rerunning it updates the same five products
+without duplicate URLs. Verification checks the six-image galleries, 500+
+word buyer-focused content, specifications, taxonomy, SEO fields, schema-ready
+metadata and the visualization disclosure.
+
 ### Bird Nest Packaging batch (August 2026)
 
 Local WooCommerce batch marker:

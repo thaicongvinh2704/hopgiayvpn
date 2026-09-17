@@ -8,6 +8,11 @@ defined('ABSPATH') || exit;
 $data = custom_box_christmas_packaging_category_data();
 $quote_url = home_url('/contact/#quote');
 $format_examples = array(
+    array('slug' => 'custom-red-snowflake-twisted-handle-christmas-paper-bag', 'format' => 'Red snowflake twisted-handle bag', 'use' => 'Seasonal retail carry with a compact paper handle and repeat snowflake print', 'alt' => 'AI design visualization of a red snowflake twisted-handle Christmas paper bag'),
+    array('slug' => 'custom-kraft-evergreen-flat-handle-christmas-paper-bag', 'format' => 'Kraft evergreen flat-handle bag', 'use' => 'Lightweight gifts that benefit from a natural kraft surface and flat paper handle', 'alt' => 'AI design visualization of a kraft evergreen flat-handle Christmas paper bag'),
+    array('slug' => 'custom-ivory-holly-rope-handle-christmas-paper-bag', 'format' => 'Ivory holly rope-handle bag', 'use' => 'Premium retail and corporate gifts with a cotton-rope carry direction', 'alt' => 'AI design visualization of an ivory holly rope-handle Christmas paper bag'),
+    array('slug' => 'custom-navy-ornament-rope-handle-christmas-paper-bag', 'format' => 'Navy ornament rope-handle bag', 'use' => 'Tall seasonal gift sets with matte ornament artwork and cotton rope handles', 'alt' => 'AI design visualization of a navy ornament rope-handle Christmas paper bag'),
+    array('slug' => 'custom-gingerbread-flat-handle-christmas-paper-bag', 'format' => 'Gingerbread flat-handle bag', 'use' => 'Small bakery gifts and favors with a cream paper face and red side gussets', 'alt' => 'AI design visualization of a gingerbread flat-handle Christmas paper bag'),
     array('slug' => 'custom-red-snowflake-lid-and-base-christmas-gift-box', 'format' => 'Red snowflake lid-and-base box', 'use' => 'Premium gifts with a separate lift-off lid and clean seasonal print field', 'alt' => 'AI design visualization of a red snowflake lid-and-base Christmas gift box'),
     array('slug' => 'custom-kraft-evergreen-tuck-top-christmas-gift-box', 'format' => 'Kraft evergreen tuck-top box', 'use' => 'Lightweight gifts that benefit from a folding carton and kraft surface', 'alt' => 'AI design visualization of a kraft evergreen tuck-top Christmas gift box'),
     array('slug' => 'custom-holly-berry-gable-christmas-gift-box', 'format' => 'Holly-berry gable box', 'use' => 'Small gifts and treats with an integral die-cut carry handle', 'alt' => 'AI design visualization of a holly-berry gable Christmas gift box'),
@@ -42,8 +47,8 @@ foreach ($format_examples as $index => $example) {
         <?php if ($format_examples) : ?>
             <section class="christmas-format-showcase" aria-labelledby="christmas-format-showcase-title">
                 <div class="christmas-format-showcase-header">
-                    <div><p class="product-eyebrow">Existing VPN References</p><h2 id="christmas-format-showcase-title">Compare Bags, Gift Boxes and Shipping-Ready Formats</h2></div>
-                    <p>These five-design visuals were supplied for this Christmas collection. They are AI design visualizations for discussing structure and artwork—not photographs of manufactured samples. Final dimensions, materials, fit and performance are confirmed through a written brief and physical sample.</p>
+                    <div><p class="product-eyebrow">Christmas Collection References</p><h2 id="christmas-format-showcase-title">Compare Bags, Gift Boxes and Shipping-Ready Formats</h2></div>
+                    <p>These design visuals were supplied for this Christmas collection. They are AI design visualizations for discussing structure and artwork—not photographs of manufactured samples. Final dimensions, materials, fit and performance are confirmed through a written brief and physical sample.</p>
                 </div>
                 <div class="christmas-format-grid">
                     <?php foreach ($format_examples as $example) : ?>

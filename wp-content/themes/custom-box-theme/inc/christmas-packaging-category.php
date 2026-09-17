@@ -23,6 +23,11 @@ function custom_box_christmas_packaging_category_data(): array {
             'caption'  => 'Existing VPN Christmas packaging reference: a two-piece rigid gift box with seasonal artwork and ribbon.',
         ),
         'product_slugs'    => array(
+            'custom-red-snowflake-twisted-handle-christmas-paper-bag',
+            'custom-kraft-evergreen-flat-handle-christmas-paper-bag',
+            'custom-ivory-holly-rope-handle-christmas-paper-bag',
+            'custom-navy-ornament-rope-handle-christmas-paper-bag',
+            'custom-gingerbread-flat-handle-christmas-paper-bag',
             'custom-red-snowflake-lid-and-base-christmas-gift-box',
             'custom-kraft-evergreen-tuck-top-christmas-gift-box',
             'custom-candy-cane-pillow-christmas-gift-box',
@@ -39,7 +44,7 @@ function custom_box_christmas_packaging_category_data(): array {
             'url'   => custom_box_christmas_packaging_category_url() . '#christmas-buyer-guide',
         ),
         'hero_proof_points' => array(
-            '6 current Christmas gift-box references',
+            '11 current Christmas bag and gift-box references',
             'Made-to-size structure and insert planning',
             'Sample approval before bulk production',
         ),
@@ -167,7 +172,7 @@ function custom_box_sync_christmas_packaging_category(): void {
         return;
     }
     $data = custom_box_christmas_packaging_category_data();
-    $version = '2026-09-17.4';
+    $version = '2026-09-17.5';
     $option = 'custom_box_christmas_packaging_category_sync_version';
     $term = get_term_by('slug', $data['slug'], 'product_cat');
     $failures = array();
