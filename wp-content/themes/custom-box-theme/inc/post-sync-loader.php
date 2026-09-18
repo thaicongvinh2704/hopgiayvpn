@@ -11,6 +11,11 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/halloween-packaging-ideas-post-sync.php' => array(
+            'version' => '2026-09-18-halloween-packaging-ideas-v1',
+            'option' => 'custom_box_halloween_packaging_ideas_sync_version',
+            'slug' => 'halloween-packaging-ideas',
+        ),
         'inc/environmentally-friendly-packaging-materials-post-sync.php' => array(
             'version' => '2026-09-16-environmentally-friendly-packaging-materials-v1',
             'option' => 'custom_box_env_packaging_materials_sync_version',
