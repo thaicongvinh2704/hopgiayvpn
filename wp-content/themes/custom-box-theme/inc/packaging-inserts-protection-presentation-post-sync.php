@@ -813,6 +813,8 @@ function custom_box_packaging_inserts_presentation_content(): string
 
 <p><span style="font-size: 110%;">Packaging inserts improve product protection and presentation when they are treated as a two-function system: they control movement and load while also controlling what the customer sees and how the product is removed. The best design is not automatically the tightest, thickest, or most decorative option. It is the option that passes the agreed checks with the real product, real paper box, and intended distribution configuration.</span></p>
 
+<p><span style="font-size: 110%;">For a product-specific application, review <a href="https://hopgiayvpn.com/product/custom-vial-packaging-box/">custom vial boxes with paperboard, EVA, foam or molded-pulp inserts</a> and the measurements needed for a fit-approved sample.</span></p>
+
 <p><span style="font-size: 110%;">If you are preparing a new packaging project, send the product dimensions, weight, fragile and decorated areas, desired first-open view, shipping method, and order quantity to a <a href="https://hopgiayvpn.com/custom-packaging-boxes-manufacturer/">custom packaging boxes manufacturer</a>. A complete brief makes it easier to compare insert structures and review physical samples against the same criteria.</span></p>
 HTML;
 }

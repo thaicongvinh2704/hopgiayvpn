@@ -5,7 +5,7 @@
 
 defined('ABSPATH') || exit;
 
-const CUSTOM_BOX_VIAL_BOXES_SYNC_VERSION = 'custom-vial-boxes-seo-20260810-v4';
+const CUSTOM_BOX_VIAL_BOXES_SYNC_VERSION = 'custom-vial-boxes-seo-20260921-v5';
 const CUSTOM_BOX_VIAL_BOXES_VALIDATION_FAILURES_OPTION = 'custom_box_custom_vial_boxes_validation_failures';
 
 add_action('admin_init', 'custom_box_maybe_sync_custom_vial_boxes_product');
@@ -78,12 +78,13 @@ function custom_box_sync_custom_vial_boxes_product(bool $force = false)
     }
 
     update_post_meta($product_id, 'rank_math_title', 'Custom Vial Boxes with Inserts | Vietnam Manufacturer');
-    update_post_meta($product_id, 'rank_math_description', 'Custom vial boxes with protective paper, EVA or foam inserts. Explore folding cartons, rigid kits and multi-vial packaging from a Vietnam manufacturer.');
+    update_post_meta($product_id, 'rank_math_description', 'Custom vial boxes with paperboard, EVA, foam or molded-pulp inserts for 2 mL, 5 mL, 10 mL and multi-vial packs. Request a structural sample.');
     update_post_meta($product_id, 'rank_math_focus_keyword', 'custom vial boxes');
     update_post_meta($product_id, '_custom_box_product_hero_bullets', custom_box_custom_vial_boxes_hero_bullets());
     update_post_meta($product_id, '_custom_box_product_faq_html', custom_box_custom_vial_boxes_faq_html());
     update_post_meta($product_id, '_custom_box_hide_auto_description_heading', '1');
     custom_box_update_custom_vial_boxes_specs($product_id);
+    custom_box_sync_custom_vial_boxes_internal_links();
 
     $failures = custom_box_custom_vial_boxes_validation_failures($product_id);
     update_option(CUSTOM_BOX_VIAL_BOXES_VALIDATION_FAILURES_OPTION, $failures, false);
@@ -123,6 +124,47 @@ function custom_box_sync_custom_vial_boxes_terms_and_featured_image(int $product
     if ($featured_id) {
         set_post_thumbnail($product_id, $featured_id);
     }
+}
+
+/**
+ * Add contextual inbound links from the three most relevant supporting resources.
+ * Stable markers and URL checks keep repeated deploy syncs idempotent.
+ */
+function custom_box_sync_custom_vial_boxes_internal_links(): void
+{
+    $target_url = home_url('/product/custom-vial-packaging-box/');
+    $target_path = '/product/custom-vial-packaging-box/';
+
+    $pharma_term = get_term_by('slug', 'pharmaceutical-packaging-boxes', 'product_cat');
+    if ($pharma_term && !is_wp_error($pharma_term) && false === strpos((string) $pharma_term->description, $target_path)) {
+        $description = rtrim((string) $pharma_term->description)
+            . "\n\n<!-- custom-vial-boxes-internal-link -->\n"
+            . '<p>For small glass containers, compare our <a href="' . esc_url($target_url) . '">custom vial boxes with fitted protective inserts</a>, including single-vial and multi-vial structures.</p>';
+        wp_update_term((int) $pharma_term->term_id, 'product_cat', array('description' => $description));
+    }
+
+    $insert_guide = get_page_by_path('packaging-inserts-protection-presentation', OBJECT, 'post');
+    if ($insert_guide && false === strpos((string) $insert_guide->post_content, $target_path)) {
+        $content = rtrim((string) $insert_guide->post_content)
+            . "\n\n<!-- custom-vial-boxes-internal-link -->\n"
+            . '<p><span style="font-size: 110%;">For a product-specific application, review <a href="' . esc_url($target_url) . '">custom vial boxes with paperboard, EVA, foam or molded-pulp inserts</a> and the measurements needed for a fit-approved sample.</span></p>';
+        wp_update_post(array('ID' => (int) $insert_guide->ID, 'post_content' => $content));
+    }
+
+    $medical_kit = get_page_by_path('custom-medical-kit-packaging-box', OBJECT, 'product');
+    if ($medical_kit && false === strpos((string) $medical_kit->post_content, $target_path)) {
+        $content = rtrim((string) $medical_kit->post_content)
+            . "\n\n<!-- custom-vial-boxes-internal-link -->\n"
+            . '<p>Need a dedicated cavity layout for glass containers? Compare <a href="' . esc_url($target_url) . '">custom vial boxes with protective inserts</a> for single-vial and multi-vial packs.</p>';
+        wp_update_post(array('ID' => (int) $medical_kit->ID, 'post_content' => $content));
+    }
+}
+
+function custom_box_custom_vial_boxes_has_inbound_link(string $slug, string $post_type): bool
+{
+    $post = get_page_by_path($slug, OBJECT, $post_type);
+
+    return !$post || false !== strpos((string) $post->post_content, '/product/custom-vial-packaging-box/');
 }
 
 function custom_box_custom_vial_boxes_validation_failures(int $product_id): array
@@ -176,6 +218,16 @@ function custom_box_custom_vial_boxes_validation_failures(int $product_id): arra
         $failures[] = 'content figures or placeholders';
     }
 
+    if (
+        1 !== substr_count($content, 'vial-size-planning-table')
+        || 1 !== substr_count($content, 'vial-insert-comparison-table')
+        || 1 !== substr_count($content, 'id="vial-fit-approval-example"')
+        || false === strpos($content, '/packaging-inserts-protection-presentation/')
+        || false === strpos($content, '/product/custom-medical-kit-packaging-box/')
+    ) {
+        $failures[] = 'decision content and internal links';
+    }
+
     $tags = wp_get_post_terms($product_id, 'product_tag', array('fields' => 'slugs'));
     $expected_tags = custom_box_custom_vial_boxes_expected_tag_slugs();
     if (is_wp_error($tags)) {
@@ -190,10 +242,21 @@ function custom_box_custom_vial_boxes_validation_failures(int $product_id): arra
 
     if (
         'Custom Vial Boxes with Inserts | Vietnam Manufacturer' !== get_post_meta($product_id, 'rank_math_title', true)
-        || 'Custom vial boxes with protective paper, EVA or foam inserts. Explore folding cartons, rigid kits and multi-vial packaging from a Vietnam manufacturer.' !== get_post_meta($product_id, 'rank_math_description', true)
+        || 'Custom vial boxes with paperboard, EVA, foam or molded-pulp inserts for 2 mL, 5 mL, 10 mL and multi-vial packs. Request a structural sample.' !== get_post_meta($product_id, 'rank_math_description', true)
         || 'custom vial boxes' !== get_post_meta($product_id, 'rank_math_focus_keyword', true)
     ) {
         $failures[] = 'Rank Math metadata';
+    }
+
+    $pharma_term = get_term_by('slug', 'pharmaceutical-packaging-boxes', 'product_cat');
+    if ($pharma_term && !is_wp_error($pharma_term) && false === strpos((string) $pharma_term->description, '/product/custom-vial-packaging-box/')) {
+        $failures[] = 'pharmaceutical category inbound link';
+    }
+    if (!custom_box_custom_vial_boxes_has_inbound_link('packaging-inserts-protection-presentation', 'post')) {
+        $failures[] = 'insert guide inbound link';
+    }
+    if (!custom_box_custom_vial_boxes_has_inbound_link('custom-medical-kit-packaging-box', 'product')) {
+        $failures[] = 'medical kit inbound link';
     }
 
     return array_values(array_unique($failures));
@@ -222,6 +285,8 @@ function custom_box_custom_vial_boxes_sync_report(int $product_id): string
         'Long description words: ' . str_word_count(wp_strip_all_tags($content)),
         'Content H1 count: ' . preg_match_all('/<h1\b/i', $content),
         'Image grids/cards: ' . substr_count($content, 'product-content-image-grid') . '/' . substr_count($content, 'product-content-image-card'),
+        'Decision tables: ' . substr_count($content, 'vial-size-planning-table') . '/' . substr_count($content, 'vial-insert-comparison-table'),
+        'Worked fit example: ' . substr_count($content, 'id="vial-fit-approval-example"'),
         'FAQ items: ' . substr_count($faq, 'faq-item'),
         'Featured image ID: ' . (int) get_post_thumbnail_id($product->ID),
         'Old all-caps phrase in content: ' . substr_count($content . ' ' . $product->post_excerpt . ' ' . $faq, 'CUSTOM VIAL PACKAGING BOX'),
@@ -232,16 +297,16 @@ function custom_box_custom_vial_boxes_sync_report(int $product_id): string
 
 function custom_box_custom_vial_boxes_short_description(): string
 {
-    return 'Custom vial boxes with protective paper, EVA or foam inserts for single-vial cartons, multi-vial packs and rigid sample kits. VPN Paper Box Manufacturer can develop the structure around the real vial, insert fit, printed information and sampling requirements.';
+    return 'Custom vial boxes with paperboard, EVA, foam or molded-pulp inserts for nominal 2 mL, 5 mL, 10 mL and multi-vial packs. VPN Paper Box Manufacturer develops each structure from the actual vial dimensions, insert fit, printed information and sample-approval requirements.';
 }
 
 function custom_box_custom_vial_boxes_hero_bullets(): array
 {
     return array(
-        'Custom size and structure for different vial dimensions',
-        'Paperboard, EVA or foam insert options for glass vials',
+        'Custom sizing for nominal 2 mL, 5 mL, 10 mL and other vial formats',
+        'Paperboard, EVA, foam or molded-pulp insert options',
         'Single-vial cartons, multi-vial packs and rigid kits',
-        'Artwork, dieline and prototype review before production',
+        'Dieline and physical sample review before mass production',
     );
 }
 
@@ -261,13 +326,13 @@ function custom_box_custom_vial_boxes_image_alts(): array
 function custom_box_custom_vial_boxes_image_captions(): array
 {
     return array(
-        'Protective vial box structure planned around small glass containers and insert fit.',
-        'Custom printed vial packaging box for healthcare samples and B2B product kits.',
-        'Multi-vial paper box layout with organized cavities for several sample bottles.',
-        'Label-ready vial packaging with clear information panels for laboratory products.',
-        'Rigid vial packaging option for premium sample kits and brand launch programs.',
-        'Paperboard vial box concept for cosmetic serum vials and compact sample packs.',
-        'Glass vial packaging boxes can be adjusted by size, insert depth and printed layout.',
+        'Concept example of a protective vial box structure planned around insert fit.',
+        'Concept example of custom printed vial packaging for healthcare sample kits.',
+        'Concept example of a multi-vial box with organized insert cavities.',
+        'Concept example of label-ready vial packaging with clear information panels.',
+        'Concept example of a rigid vial packaging option for premium sample kits.',
+        'Concept example of a paperboard box for cosmetic serum vials.',
+        'Concept examples of vial boxes adjusted by size, insert depth and print layout.',
     );
 }
 
@@ -609,6 +674,8 @@ function custom_box_custom_vial_boxes_long_description(int $product_id): string
     $rigid_url = esc_url('https://hopgiayvpn.com/products/rigid-boxes/');
     $folding_url = esc_url('https://hopgiayvpn.com/products/folding-carton-boxes/');
     $materials_url = esc_url('https://hopgiayvpn.com/paper-materials-for-custom-paper-boxes/');
+    $insert_guide_url = esc_url('https://hopgiayvpn.com/packaging-inserts-protection-presentation/');
+    $medical_kit_url = esc_url('https://hopgiayvpn.com/product/custom-medical-kit-packaging-box/');
     $paper_insert_image = custom_box_custom_vial_boxes_seo_image_figure($product_id, 'paper_insert');
     $structure_image = custom_box_custom_vial_boxes_seo_image_figure($product_id, 'structure_options');
     $insert_comparison_image = custom_box_custom_vial_boxes_seo_image_figure($product_id, 'insert_comparison');
@@ -624,6 +691,9 @@ function custom_box_custom_vial_boxes_long_description(int $product_id): string
   <h2>Custom Vial Boxes Built Around the Vial and Insert</h2>
   <p>Custom vial boxes need more control than a generic carton because a small glass vial can move, tilt or contact the box wall during handling. The structure should be planned around the vial diameter, height, cap or closure, insert depth, opening direction and information panel before artwork is finalized. That approach helps procurement teams compare a folding carton, sleeve-and-tray box or rigid kit on the factors that affect fit and production.</p>
   <p>VPN Paper Box Manufacturer develops custom vial packaging boxes for brands, laboratories, supplement companies, healthcare suppliers, cosmetic sample programs and distributors. The product page is focused on standalone vial boxes, single-vial cartons, multi-vial cartons and protective inserts. The final structure, material and print specification should be confirmed with the real vial and an approved sample.</p>
+  <aside class="vial-answer-summary" aria-label="Custom vial box sizing summary">
+    <p><strong>Short answer:</strong> choose the insert only after the finished vial has been measured. A nominal 2 mL, 5 mL or 10 mL volume does not define the body diameter, total height, shoulder, cap, label projection or filled weight. Those physical inputs—not the volume label alone—determine the cavity and outer box.</p>
+  </aside>
 
   {$paper_insert_image}
 
@@ -645,7 +715,7 @@ function custom_box_custom_vial_boxes_long_description(int $product_id): string
         </tr>
         <tr>
           <td>Insert options</td>
-          <td>Die-cut paperboard, EVA, foam, dividers or paper tray</td>
+          <td>Die-cut paperboard, EVA, foam, molded pulp, dividers or paper tray</td>
           <td>Vial diameter, depth, clearance and movement control</td>
         </tr>
         <tr>
@@ -674,14 +744,122 @@ function custom_box_custom_vial_boxes_long_description(int $product_id): string
   {$structure_image}
 
   <h2>Protective Insert Options for Glass Vials</h2>
-  <p>The insert is the part of a vial packaging box that controls movement. A die-cut paperboard insert can keep the packaging lightweight and visually consistent with a folding carton. EVA or foam can provide a close-fitting cavity for a rigid kit when the product needs a different presentation or cushioning approach. Paper dividers can organize multi-vial cartons, while a tray can simplify loading and unloading.</p>
-  <p>There is no universal “best” insert. The selection should consider vial weight, cavity tolerance, cap shape, packing speed, storage conditions and the desired unboxing experience. A sample with the real vial should be checked for side contact, clearance, insert depth, closure pressure and removal effort before the structure is approved.</p>
+  <p>The insert controls vial position, separation and removal. There is no universal “best” material: the appropriate choice depends on the actual vial, packing process, box style, presentation goal and agreed handling checks. Our <a href="{$insert_guide_url}">paper-box insert design guide</a> explains the wider relationship between fit, protection and presentation.</p>
+  <div class="seo-table-wrapper" id="vial-insert-comparison-table">
+    <table class="seo-product-table">
+      <thead>
+        <tr>
+          <th>Insert type</th>
+          <th>Practical fit</th>
+          <th>Trade-off to review</th>
+          <th>Approve with the sample</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Die-cut paperboard</strong></td>
+          <td>Folding cartons, lightweight vials and printable all-paper presentations</td>
+          <td>Fold geometry and unsupported spans affect rigidity</td>
+          <td>Tab lock, cavity clearance, board spring-back and removal access</td>
+        </tr>
+        <tr>
+          <td><strong>EVA</strong></td>
+          <td>Rigid kits needing a precise-looking cavity and consistent presentation</td>
+          <td>Material appearance, density and project-specific disposal requirements</td>
+          <td>Cavity tolerance, compression, surface contact and extraction force</td>
+        </tr>
+        <tr>
+          <td><strong>Foam</strong></td>
+          <td>Cushioning-focused packs or irregular product envelopes</td>
+          <td>Foam grade, recovery and compatibility must be specified</td>
+          <td>Compression set, dust or odor expectations, cap clearance and movement</td>
+        </tr>
+        <tr>
+          <td><strong>Molded pulp</strong></td>
+          <td>Repeatable tray layouts where molded geometry and a fiber appearance suit the brief</td>
+          <td>Tooling, surface texture and dimensional tolerance differ from cut inserts</td>
+          <td>Part variation, nesting, edge contact, loading direction and vial removal</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Paper dividers can also organize multi-vial cartons. Whichever route is selected, a sample with representative finished vials should be checked for side contact, clearance, insert depth, closure pressure and removal effort before approval.</p>
 
   {$insert_comparison_image}
 
-  <h2>Custom Sizing for 10 mL and Other Vial Formats</h2>
-  <p>A custom 10 mL vial box is only one possible format. The same packaging system can be adapted to a different vial diameter, height, cap or quantity when the dimensions are measured correctly. The quote brief should include the filled vial, closure or cap dimensions, label projection, required clearance and the number of vials per box. If several SKUs share one outer box, identify the largest and smallest dimensions so the insert can be tested across the range.</p>
-  <p>For multi-vial packaging, the layout also affects the outer carton size and the way operators load the product. Clear cavity numbering, dividers and a stable tray can reduce handling errors. Buyers can compare the existing product gallery examples with the structure options below before requesting a revised dieline.</p>
+  <h2>Size Planning for 2 mL, 5 mL, 10 mL and Multi-Vial Boxes</h2>
+  <p>The volume is useful for search and product identification, but it is not a manufacturing dimension. Two vials with the same nominal capacity can use different bodies, shoulders, caps and labels. Use the table as an RFQ checklist, then confirm every structure with controlled dimensions or physical samples.</p>
+  <div class="seo-table-wrapper" id="vial-size-planning-table">
+    <table class="seo-product-table">
+      <thead>
+        <tr>
+          <th>Nominal format</th>
+          <th>Measurements required</th>
+          <th>Practical starting structure</th>
+          <th>Sample approval focus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>2 mL vial</strong></td>
+          <td>Maximum body diameter, shoulder, total height, closure and label projection</td>
+          <td>Compact folding carton with a folded paperboard cradle</td>
+          <td>Small-part removal, cap clearance and movement inside the cavity</td>
+        </tr>
+        <tr>
+          <td><strong>5 mL vial</strong></td>
+          <td>Finished dimensions, filled weight and safe contact areas</td>
+          <td>Folding carton or sleeve-and-tray box with a fitted insert</td>
+          <td>Body support, label contact, opening direction and closure pressure</td>
+        </tr>
+        <tr>
+          <td><strong>10 mL vial</strong></td>
+          <td>Body, shoulder, cap or dropper envelope, label and filled weight</td>
+          <td>Folding carton for one vial or rigid kit for a premium program</td>
+          <td>Insert depth, headspace, sidewall contact and removal effort</td>
+        </tr>
+        <tr>
+          <td><strong>Multi-vial pack</strong></td>
+          <td>Vial count, maximum and minimum envelopes, spacing and pack-out sequence</td>
+          <td>Divider, cavity tray, sleeve-and-tray or rigid multi-cavity kit</td>
+          <td>Vial-to-vial separation, cavity numbering, orientation and count</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p>If several SKUs share one outer box, provide the largest and smallest controlled dimensions and representative samples from the range. For kits that combine a vial with accessories or instructions, compare our <a href="{$medical_kit_url}">custom medical kit packaging</a> approach before the cavity layout is finalized.</p>
+
+  <section class="vial-fit-approval-example" id="vial-fit-approval-example" aria-labelledby="vial-fit-example-heading">
+    <h2 id="vial-fit-example-heading">Worked Fit-Approval Example: 10 mL Vial Box</h2>
+    <p class="vial-example-disclosure"><strong>Evidence note:</strong> this is an illustrative engineering workflow, not a named customer case study, certified laboratory result or performance guarantee. Project results depend on the actual vial, specification and agreed test method.</p>
+    <div class="seo-table-wrapper">
+      <table class="seo-product-table">
+        <tbody>
+          <tr>
+            <th scope="row">Project input</th>
+            <td>Representative filled 10 mL vials; controlled maximum body, shoulder, total height and cap dimensions; label projection; filled weight; quantity and destination.</td>
+          </tr>
+          <tr>
+            <th scope="row">Observed design risks</th>
+            <td>Body movement, contact with the outer wall, cap pressure when closed and insufficient finger access for removal.</td>
+          </tr>
+          <tr>
+            <th scope="row">Starting structure</th>
+            <td>Folding carton with a die-cut paperboard cradle sized from the controlled product envelope, plus defined headspace and a removal feature.</td>
+          </tr>
+          <tr>
+            <th scope="row">Prototype review</th>
+            <td>Load representative minimum and maximum samples; close and reopen the carton; inspect contact points, orientation, insert seating and removal during the agreed handling review.</td>
+          </tr>
+          <tr>
+            <th scope="row">Approval record</th>
+            <td>Sign off the dieline and physical sample only after the accepted cavity clearance, closure, print position and pack-out sequence are documented.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <p class="vial-visual-evidence-note"><strong>About the visuals on this page:</strong> the gallery, process and comparison visuals are identified as concept examples, concept visualizations or production-process illustrations. They help explain the structure; a project-specific physical sample with the real vial remains the approval reference.</p>
 
   <h2>Materials, Printing and Information Panels</h2>
   <p>Material selection should follow the vial weight, sales channel, print requirements and protective insert. SBS or ivory paperboard can support clean graphics and small information panels. Kraft or recycled paperboard can support a natural visual direction when the board and insert still provide the required support. Rigid board is suited to a premium kit when the added structure is justified by the presentation goal. Buyers can review <a href="{$materials_url}">paper material options for custom paper boxes</a> before confirming the specification.</p>
@@ -747,7 +925,7 @@ function custom_box_custom_vial_boxes_long_description(int $product_id): string
   {$die_cutting_image}
 
   <h3>6. Insert Cutting and Cavity Preparation</h3>
-  <p>Protective inserts are produced according to the approved material and cavity layout. Die-cut paperboard inserts can be folded into a cradle or internal support. Paper dividers can separate several vials inside one carton. EVA or foam inserts can be cut with individual cavities when a rigid kit requires a close-fitting presentation.</p>
+  <p>Protective inserts are produced according to the approved material and cavity layout. Die-cut paperboard inserts can be folded into a cradle or internal support. Paper dividers can separate several vials inside one carton. EVA or foam inserts can be cut with individual cavities when a rigid kit requires a close-fitting presentation. Molded-pulp trays require an approved molded geometry, tolerance and loading direction.</p>
   <p>The insert is checked separately before it is assembled with the outer box. Important inspection points include cavity diameter, depth, spacing, edge condition and alignment with the box opening.</p>
   <p>The final insert material and cutting method depend on the vial weight, packing process, presentation requirement and approved sample.</p>
 
@@ -783,14 +961,25 @@ function custom_box_custom_vial_boxes_long_description(int $product_id): string
 
   <h2>From Dieline to Finished Vial Packaging</h2>
   <p>By coordinating structural development, sampling, printing, finishing, die-cutting, insert preparation, assembly, inspection and export packing, VPN Paper Box Manufacturer can support custom vial box projects from the initial packaging brief through finished production.</p>
-  <p>To begin a project, send us the vial dimensions, cap or closure measurements, vial count per box, target order quantity, preferred box style, insert material, cavity layout, artwork status and shipping destination. A product photo, reference box or physical vial sample will help our engineering team prepare a more accurate structural recommendation. <a href="{$contact_url}">Contact our packaging team</a> to submit your dimensions, target quantity and shipping destination.</p>
+  <p>To begin a project, use the RFQ checklist below. A product photo, reference box or physical vial sample will help the packaging team prepare a more accurate structural recommendation.</p>
 
   <h2>MOQ, Lead Time and Quotation Requirements</h2>
   <p>Minimum order quantity and lead time depend on the confirmed box structure, board or rigid material, insert type, finishing, artwork status and order quantity. They should be confirmed in the quotation rather than assumed from a generic product page. Shipping and export packing requirements should also be discussed for the destination market and the finished pack-out.</p>
-  <p>To request a quotation, send the vial height and diameter, cap or closure dimensions, vial count per box, target quantity, preferred structure, insert direction, artwork status, required information panels and shipping market. Product photos, a reference box or a physical sample can help the team recommend a safer starting structure.</p>
 
   <h2>Request a Quote for Custom Vial Boxes</h2>
-  <p>Need custom vial boxes with protective inserts for glass vials, laboratory samples, supplement products or cosmetic sample programs? Send the finished product dimensions and packaging requirements to VPN Paper Box Manufacturer. The team can help compare folding cartons, sleeve-and-tray boxes, rigid vial kits, paperboard inserts, EVA inserts and foam inserts, then prepare a structure and sample for review.</p>
+  <p>For a useful structural quotation, send:</p>
+  <ul class="vial-rfq-checklist">
+    <li>maximum vial body diameter and total height;</li>
+    <li>shoulder, cap, stopper or dropper dimensions;</li>
+    <li>label, sleeve or seal projection outside the glass body;</li>
+    <li>filled weight and any no-contact areas;</li>
+    <li>number of vials per box and the required arrangement;</li>
+    <li>preferred box style and paperboard, EVA, foam or molded-pulp insert;</li>
+    <li>total order quantity by SKU and artwork status;</li>
+    <li>destination market, shipping method and any agreed sample tests.</li>
+  </ul>
+  <p>Need custom vial boxes with inserts for glass vials, laboratory samples, supplement products or cosmetic sample programs? The team can compare folding cartons, sleeve-and-tray boxes and rigid kits, then prepare a dieline and physical sample for review.</p>
+  <p><a class="vial-rfq-button" href="{$contact_url}">Request a custom vial box quotation</a></p>
 
 </section>
 HTML;
@@ -809,8 +998,13 @@ function custom_box_custom_vial_boxes_faq_html(): string
     </details>
 
     <details class="faq-item">
-      <summary>Which insert is better for glass vials: paperboard, EVA or foam?</summary>
-      <div class="faq-answer"><p>It depends on the vial, box style, cavity tolerance, packing method and presentation goal. Paperboard can suit folding cartons and organized dividers, while EVA or foam can suit a close-fitting rigid kit. A real-vial sample should decide the final insert.</p></div>
+      <summary>Is a 2 mL, 5 mL or 10 mL label enough to size the box?</summary>
+      <div class="faq-answer"><p>No. Nominal capacity does not define the finished vial envelope. Provide the maximum body diameter, total height, shoulder, cap or closure, label projection and filled weight. The cavity and outer box should be approved with controlled dimensions or representative physical samples.</p></div>
+    </details>
+
+    <details class="faq-item">
+      <summary>Which insert is better for glass vials: paperboard, EVA, foam or molded pulp?</summary>
+      <div class="faq-answer"><p>It depends on the vial, box style, cavity tolerance, packing method and presentation goal. Paperboard can suit folding cartons, EVA or foam can form close-fitting cavities, and molded pulp can suit repeatable fiber-tray layouts. The final choice should be approved with representative vials.</p></div>
     </details>
 
     <details class="faq-item">
@@ -921,6 +1115,60 @@ function custom_box_custom_vial_boxes_output_styles(): void
             border: 1px solid rgba(0, 0, 0, 0.12);
             text-align: left;
             vertical-align: top;
+        }
+
+        .vial-answer-summary,
+        .vial-fit-approval-example,
+        .vial-visual-evidence-note {
+            padding: 18px 20px;
+            border: 1px solid #cbdde8;
+            border-left: 4px solid #1c79ad;
+            border-radius: 8px;
+            background: #f7fbfd;
+        }
+
+        .vial-answer-summary,
+        .vial-visual-evidence-note {
+            margin: 22px 0;
+        }
+
+        .vial-fit-approval-example {
+            margin: 32px 0;
+        }
+
+        .vial-fit-approval-example h2 {
+            margin-top: 0;
+        }
+
+        .vial-example-disclosure {
+            color: #24435a;
+        }
+
+        .vial-rfq-checklist {
+            columns: 2;
+            column-gap: 36px;
+            margin: 0 0 24px;
+        }
+
+        .vial-rfq-checklist li {
+            break-inside: avoid;
+            margin-bottom: 10px;
+        }
+
+        .vial-rfq-button {
+            display: inline-block;
+            padding: 12px 20px;
+            border-radius: 6px;
+            background: #123b5d;
+            color: #fff;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .vial-rfq-button:hover,
+        .vial-rfq-button:focus-visible {
+            background: #1c79ad;
+            color: #fff;
         }
 
         .product-content-image-grid {
@@ -1048,6 +1296,10 @@ function custom_box_custom_vial_boxes_output_styles(): void
                 grid-template-columns: 1fr;
             }
 
+            .vial-rfq-checklist {
+                columns: 1;
+            }
+
             .custom-vial-boxes-faq {
                 padding: 48px 0 36px;
             }
@@ -1080,7 +1332,7 @@ function custom_box_custom_vial_boxes_schema(): array
         '@context'     => 'https://schema.org/',
         '@type'        => 'Product',
         'name'         => 'Custom Vial Boxes with Protective Inserts',
-        'description'  => 'Custom vial boxes with protective paperboard, EVA or foam inserts for single-vial cartons, multi-vial packaging and rigid sample kits.',
+        'description'  => 'Custom vial boxes with paperboard, EVA, foam or molded-pulp inserts for nominal 2 mL, 5 mL, 10 mL and multi-vial packaging, sized from the finished vial.',
         'url'          => custom_box_custom_vial_boxes_canonical_url(),
         'brand'        => array(
             '@type' => 'Brand',
@@ -1097,6 +1349,28 @@ function custom_box_custom_vial_boxes_schema(): array
         ),
         'sku'          => 'custom-vial-boxes',
         'category'     => 'Vial Packaging Boxes',
+        'additionalProperty' => array(
+            array(
+                '@type' => 'PropertyValue',
+                'name'  => 'Packaging scope',
+                'value' => 'Secondary paper packaging for glass vials',
+            ),
+            array(
+                '@type' => 'PropertyValue',
+                'name'  => 'Nominal vial formats',
+                'value' => '2 mL, 5 mL, 10 mL and multi-vial; final dimensions required',
+            ),
+            array(
+                '@type' => 'PropertyValue',
+                'name'  => 'Insert options',
+                'value' => 'Paperboard, EVA, foam and molded pulp',
+            ),
+            array(
+                '@type' => 'PropertyValue',
+                'name'  => 'Approval input',
+                'value' => 'Controlled dimensions or representative physical vials before production',
+            ),
+        ),
     );
 }
 

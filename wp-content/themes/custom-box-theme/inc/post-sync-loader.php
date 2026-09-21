@@ -107,7 +107,7 @@ function custom_box_post_sync_registry(): array
             'slug' => 'custom-wine-bottle-packaging-box',
         ),
         'inc/custom-vial-box-product-sync.php' => array(
-            'version' => 'custom-vial-boxes-seo-20260810-v4',
+            'version' => 'custom-vial-boxes-seo-20260921-v5',
             'option' => 'custom_box_custom_vial_boxes_sync_version',
             'slug' => 'custom-vial-packaging-box',
         ),
@@ -162,7 +162,7 @@ function custom_box_post_sync_registry(): array
             'slug' => 'light-brown-recycled-kraft-paper-roll',
         ),
         'inc/custom-vial-box-product-sync.php' => array(
-            'version' => 'custom-vial-boxes-seo-20260810-v4',
+            'version' => 'custom-vial-boxes-seo-20260921-v5',
             'option' => 'custom_box_custom_vial_boxes_sync_version',
             'slug' => 'custom-vial-packaging-box',
         ),
