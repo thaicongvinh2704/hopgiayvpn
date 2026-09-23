@@ -9,6 +9,7 @@ $custom_box_inc_files = array(
     'inc/setup.php',
     'inc/dev.php',
     'inc/enqueue.php',
+    'inc/page-transition.php',
     'inc/seo.php',
     'inc/corrugated-mailer-boxes-category.php',
     'inc/folding-cartons-vietnam-category.php',
