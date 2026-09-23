@@ -12,13 +12,20 @@
     const root = document.documentElement;
     const isInitialHomeLoad = root.classList.contains('vpn-initial-page-loading')
         || root.classList.contains('vpn-initial-page-loading-pending');
+    const initialMinimumVisibleTime = 650;
+    const navigationFallbackTime = 120;
     let recoveryTimer = null;
     let stalledTimer = null;
-    let frame = null;
+    let initialHideTimer = null;
+    let navigationFrame = null;
+    let navigationPaintFrame = null;
+    let navigationFallbackTimer = null;
+    let isLeavingPage = false;
 
     const clearInitialTimers = function () {
         window.clearTimeout(window.vpnInitialLoaderShowTimer);
         window.clearTimeout(window.vpnInitialLoaderSafetyTimer);
+        window.clearTimeout(initialHideTimer);
     };
 
     const showTransition = function () {
@@ -34,10 +41,10 @@
         root.classList.add('vpn-page-transition-active');
         document.body.classList.add("vpn-page-transitioning");
         if (status) status.textContent = status.dataset.loadingText;
-        window.cancelAnimationFrame(frame);
-        frame = window.requestAnimationFrame(function () {
-            overlay.classList.add("is-active");
-        });
+        // WebKit can begin unloading before the next animation frame. Apply the
+        // visible state synchronously so Safari never leaves the overlay at
+        // opacity: 0 while the destination document is being requested.
+        overlay.classList.add("is-active");
         // Restore the page if a download, cancelled navigation or stalled request
         // never replaces this document. Never trap the visitor behind the loader.
         recoveryTimer = window.setTimeout(hideTransition, 12000);
@@ -50,7 +57,6 @@
     const hideTransition = function () {
         window.clearTimeout(recoveryTimer);
         window.clearTimeout(stalledTimer);
-        window.cancelAnimationFrame(frame);
         overlay.classList.remove("is-active", "is-stalled");
         dismiss.hidden = true;
         overlay.setAttribute("aria-hidden", "true");
@@ -66,7 +72,7 @@
         if (status) status.textContent = '';
     };
 
-    const isEligibleLink = function (link, event) {
+    const getEligibleDestination = function (link, event) {
         if (
             event.defaultPrevented ||
             event.button !== 0 ||
@@ -78,20 +84,20 @@
             link.closest("[data-no-page-transition], #wpadminbar") ||
             link.matches(".ajax_add_to_cart, .remove, [role='button']")
         ) {
-            return false;
+            return null;
         }
 
         const baseTarget = document.querySelector('base[target]');
         const target = (link.getAttribute("target") || (baseTarget && baseTarget.target) || "").toLowerCase();
         if (target && target !== "_self") {
-            return false;
+            return null;
         }
 
         let destination;
         try {
             destination = new URL(link.href, window.location.href);
         } catch (error) {
-            return false;
+            return null;
         }
 
         if (
@@ -101,31 +107,57 @@
             /\/(wp-admin|wp-login\.php)(\/|$)/i.test(destination.pathname) ||
             destination.searchParams.has('add-to-cart')
         ) {
-            return false;
+            return null;
         }
 
         const sameDocument = destination.pathname === window.location.pathname
             && destination.search === window.location.search;
 
         if (sameDocument) {
-            return false;
+            return null;
         }
 
-        return destination.href !== window.location.href;
+        return destination.href !== window.location.href ? destination : null;
+    };
+
+    const navigateAfterPaint = function (destination) {
+        let navigationCommitted = false;
+
+        const navigate = function () {
+            if (navigationCommitted) {
+                return;
+            }
+
+            navigationCommitted = true;
+            window.clearTimeout(navigationFallbackTimer);
+            window.cancelAnimationFrame(navigationFrame);
+            window.cancelAnimationFrame(navigationPaintFrame);
+            isLeavingPage = true;
+            window.location.assign(destination.href);
+        };
+
+        // Two animation frames guarantee one painted loader frame in WebKit.
+        // The timeout keeps navigation reliable in background/throttled tabs.
+        navigationFrame = window.requestAnimationFrame(function () {
+            navigationPaintFrame = window.requestAnimationFrame(navigate);
+        });
+        navigationFallbackTimer = window.setTimeout(navigate, navigationFallbackTime);
     };
 
     window.addEventListener("click", function (event) {
         const link = event.target instanceof Element ? event.target.closest("a[href]") : null;
+        const destination = link ? getEligibleDestination(link, event) : null;
 
-        if (!link || !isEligibleLink(link, event)) {
+        if (!destination) {
             return;
         }
 
-        // Let the browser navigate immediately; allow other handlers to cancel
-        // gallery, AJAX and menu actions before deciding to show the overlay.
-        queueMicrotask(function () {
-            if (!event.defaultPrevented) showTransition();
-        });
+        // By the time a bubbling event reaches window, target/document handlers
+        // have had an opportunity to cancel AJAX, gallery and menu actions.
+        // Briefly hold native navigation so Safari can paint the loader once.
+        event.preventDefault();
+        showTransition();
+        navigateAfterPaint(destination);
     });
 
     if (isInitialHomeLoad) {
@@ -135,18 +167,36 @@
             if (status) status.textContent = status.dataset.loadingText;
         }
 
-        // A deferred script runs once the HTML is parsed. Do not wait for every
-        // image, font and third-party request: reveal useful page content on the
-        // next paint so the entrance animation cannot hold back LCP.
-        window.requestAnimationFrame(hideTransition);
+        const now = window.performance && window.performance.now
+            ? window.performance.now()
+            : Date.now();
+        const shownAt = Number(window.vpnInitialLoaderShownAt || 0);
+        const remainingVisibleTime = shownAt
+            ? Math.max(0, initialMinimumVisibleTime - (now - shownAt))
+            : 0;
+
+        // Fast visits still skip the loader. Once it has become visible, keep it
+        // on screen long enough to be perceived instead of flashing for 1 frame.
+        if (shownAt && root.classList.contains('vpn-initial-page-loading')) {
+            initialHideTimer = window.setTimeout(hideTransition, remainingVisibleTime);
+        } else {
+            window.requestAnimationFrame(hideTransition);
+        }
     }
 
     window.addEventListener("pageshow", function (event) {
+        isLeavingPage = false;
         if (event.persisted || !isInitialHomeLoad) {
             hideTransition();
         }
     });
-    window.addEventListener("pagehide", hideTransition);
+    window.addEventListener("pagehide", function () {
+        // Keep the transition visible while Safari waits for the next document.
+        // pageshow removes it before a bfcache-restored page is painted again.
+        if (!isLeavingPage) {
+            hideTransition();
+        }
+    });
 
     dismiss.addEventListener('click', hideTransition);
     document.addEventListener('keydown', function (event) {

@@ -46,7 +46,7 @@ function custom_box_page_transition_initial_bootstrap(): void
             var root = document.documentElement;
             var key = 'vpnInitialHomeLoaderSeenV1';
             var showDelay = 250;
-            var hardLimit = 1500;
+            var hardLimit = 1800;
 
             function prepareInitialLoader() {
                 root.classList.add('vpn-initial-page-loading-pending');
@@ -57,6 +57,9 @@ function custom_box_page_transition_initial_bootstrap(): void
                     }
 
                     root.classList.remove('vpn-initial-page-loading-pending');
+                    window.vpnInitialLoaderShownAt = window.performance && window.performance.now
+                        ? window.performance.now()
+                        : Date.now();
                     root.classList.add('vpn-initial-page-loading');
                 }, showDelay);
 
@@ -110,7 +113,7 @@ function custom_box_render_page_transition(): void
             <img class="vpn-page-transition__logo" src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/logo-hop-giay-vpn-loader.webp'); ?>" width="711" height="567" alt="VPN" decoding="async">
             <p class="vpn-page-transition__title">VPN Paper Box Manufacturer</p>
             <div class="vpn-page-transition__progress" aria-hidden="true"><span></span></div>
-            <p class="vpn-page-transition__loading" role="status" aria-live="polite" data-transition-status data-loading-text="<?php esc_attr_e('LOADING...', 'custom-box-theme'); ?>"></p>
+            <p class="vpn-page-transition__loading" role="status" aria-live="polite" data-transition-status data-loading-text="<?php esc_attr_e('LOADING...', 'custom-box-theme'); ?>"><?php esc_html_e('LOADING...', 'custom-box-theme'); ?></p>
             <p class="vpn-page-transition__tagline"><span aria-hidden="true"></span>PACKAGING IDEAS BROUGHT TO LIFE<span aria-hidden="true"></span></p>
         </div>
         <button class="vpn-page-transition__dismiss" type="button" data-transition-dismiss hidden aria-label="<?php esc_attr_e('Hide loading screen', 'custom-box-theme'); ?>">&times;</button>

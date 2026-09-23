@@ -144,17 +144,26 @@ async function testInitialHomeLoad(browser) {
     const delayedPage = await delayedContext.newPage();
     const navigation = delayedPage.goto(`${baseURL}/`, { waitUntil: 'domcontentloaded', timeout: 60000 });
     await delayedPage.waitForFunction(() => document.documentElement.classList.contains('vpn-initial-page-loading'));
+    const visibleAt = Date.now();
     const shownState = await delayedPage.locator('[data-page-transition]').evaluate(overlay => ({
         display: getComputedStyle(overlay).display,
         opacity: getComputedStyle(overlay).opacity,
         ariaHidden: overlay.getAttribute('aria-hidden'),
     }));
     await navigation;
-    await delayedPage.waitForFunction(() => document.querySelector('[data-page-transition]').hidden);
+    await delayedPage.waitForFunction(() => {
+        const root = document.documentElement;
+        const overlay = document.querySelector('[data-page-transition]');
+        return !root.classList.contains('vpn-initial-page-loading')
+            && !root.classList.contains('vpn-initial-page-loading-pending')
+            && getComputedStyle(overlay).display === 'none';
+    });
+    const visibleDuration = Date.now() - visibleAt;
     await delayedPage.reload({ waitUntil: 'domcontentloaded' });
     const repeated = await delayedPage.locator('[data-page-transition]').evaluate(overlay => !overlay.hidden);
     assert.equal(shownState.display, 'grid', 'Delayed first visit displays the loader');
     assert.equal(shownState.opacity, '1', 'Delayed first visit loader is visible');
+    assert.ok(visibleDuration >= 500, `Visible initial loader duration is perceptible (${visibleDuration}ms)`);
     assert.equal(repeated, false, 'Initial loader runs once per tab session');
     await delayedContext.close();
 
@@ -165,7 +174,7 @@ async function testInitialHomeLoad(browser) {
     await failSafePage.goto(`${baseURL}/`, { waitUntil: 'domcontentloaded', timeout: 60000 });
     await failSafePage.waitForTimeout(350);
     assert.ok(await failSafePage.evaluate(() => document.documentElement.classList.contains('vpn-initial-page-loading')), 'Fallback shows while loader JavaScript is unavailable');
-    await failSafePage.waitForTimeout(1350);
+    await failSafePage.waitForTimeout(1600);
     assert.ok(await failSafePage.evaluate(() => !document.documentElement.classList.contains('vpn-initial-page-loading')), 'Inline hard limit releases a failed initial loader');
     await failSafeContext.close();
 
@@ -177,7 +186,7 @@ async function testInitialHomeLoad(browser) {
     assert.equal(innerInitialState, false, 'Direct visits to inner pages do not show the first-home loader');
     await innerContext.close();
 
-    return { delayedFirstVisit: 'PASS', oncePerSession: 'PASS', javascriptFailureSafety: 'PASS', innerPageDirectVisit: 'PASS' };
+    return { delayedFirstVisit: 'PASS', minimumVisibleTime: 'PASS', oncePerSession: 'PASS', javascriptFailureSafety: 'PASS', innerPageDirectVisit: 'PASS' };
 }
 
 async function testLinkBehavior(page) {
@@ -233,7 +242,7 @@ async function testLinkBehavior(page) {
             if (!overlay.hidden && overlay.classList.contains('is-active')) console.log('qa-transition-visible');
         }).observe(overlay, { attributes: true });
     });
-    await page.locator('#internal').click({ noWaitAfter: true });
+    await page.evaluate(() => document.querySelector('#internal').click());
     await visibleDuringNavigation;
     await page.waitForURL('**/qa-next/');
     assert.ok(navigationRequested, 'Internal navigation uses the native browser request');
@@ -245,6 +254,8 @@ async function testLinkBehavior(page) {
 
 async function testRecovery(page) {
     await page.goto(`${baseURL}/qa-transition/`, { waitUntil: 'domcontentloaded' });
+    await page.waitForLoadState('load');
+    await page.waitForTimeout(50);
     const stalledVisible = new Promise((resolve, reject) => {
         const timeout = setTimeout(() => reject(new Error('Stalled dismiss button did not appear')), 4700);
         const onConsole = message => {
@@ -257,18 +268,22 @@ async function testRecovery(page) {
     });
     await page.evaluate(() => {
         const overlay = document.querySelector('[data-page-transition]');
+        const nativeSetTimeout = window.setTimeout.bind(window);
+        window.__qaRestoreNavigationTimers = () => {
+            window.setTimeout = nativeSetTimeout;
+            window.requestAnimationFrame = window.__qaNativeRequestAnimationFrame;
+        };
+        window.__qaNativeRequestAnimationFrame = window.requestAnimationFrame.bind(window);
+        window.requestAnimationFrame = () => 0;
+        window.setTimeout = (callback, timeout, ...args) => timeout === 120
+            ? 0
+            : nativeSetTimeout(callback, timeout, ...args);
         new MutationObserver(() => {
             const dismiss = overlay.querySelector('[data-transition-dismiss]');
             if (overlay.classList.contains('is-stalled') && !dismiss.hidden) console.log('qa-transition-stalled');
         }).observe(overlay, { attributes: true, subtree: true });
-        // Let the loader's window listener approve the original internal URL,
-        // then turn the browser's default action into a harmless same-page hash.
-        // This accurately exercises stalled/recovery timers without unloading.
-        window.addEventListener('click', event => {
-            if (event.target.closest('#internal')) event.target.href = '#qa-stalled';
-        }, { once: true });
     });
-    await page.locator('#internal').click({ noWaitAfter: true });
+    await page.evaluate(() => document.querySelector('#internal').click());
     await stalledVisible;
     const dismissSize = await page.evaluate(() => {
         const button = document.querySelector('[data-transition-dismiss]');
@@ -279,6 +294,7 @@ async function testRecovery(page) {
     await page.evaluate(() => document.querySelector('[data-transition-dismiss]').click());
     assert.ok(await page.evaluate(() => document.querySelector('[data-page-transition]').hidden), 'Dismiss releases a stalled page');
     assert.notEqual(await page.evaluate(() => getComputedStyle(document.documentElement).overflow), 'hidden', 'Dismiss unlocks page scrolling');
+    await page.evaluate(() => window.__qaRestoreNavigationTimers());
 
     await page.goto(`${baseURL}/qa-transition/`, { waitUntil: 'domcontentloaded' });
     await forceVisible(page);
@@ -286,16 +302,26 @@ async function testRecovery(page) {
     assert.ok(await page.locator('[data-page-transition]').evaluate(overlay => overlay.hidden), 'Escape releases the loader');
 
     await page.goto(`${baseURL}/qa-transition/`, { waitUntil: 'domcontentloaded' });
+    await page.waitForLoadState('load');
+    await page.waitForTimeout(50);
     await page.evaluate(() => {
-        window.addEventListener('click', event => {
-            if (event.target.closest('#internal')) event.target.href = '#qa-timeout';
-        }, { once: true });
+        const nativeSetTimeout = window.setTimeout.bind(window);
+        window.__qaNativeRequestAnimationFrame = window.requestAnimationFrame.bind(window);
+        window.__qaRestoreNavigationTimers = () => {
+            window.setTimeout = nativeSetTimeout;
+            window.requestAnimationFrame = window.__qaNativeRequestAnimationFrame;
+        };
+        window.requestAnimationFrame = () => 0;
+        window.setTimeout = (callback, timeout, ...args) => timeout === 120
+            ? 0
+            : nativeSetTimeout(callback, timeout, ...args);
     });
-    await page.locator('#internal').click({ noWaitAfter: true });
+    await page.evaluate(() => document.querySelector('#internal').click());
     await page.waitForFunction(() => !document.querySelector('[data-page-transition]').hidden);
     await page.waitForTimeout(12200);
     assert.ok(await page.locator('[data-page-transition]').evaluate(overlay => overlay.hidden), '12-second recovery timeout releases a stranded loader');
     assert.notEqual(await page.evaluate(() => getComputedStyle(document.documentElement).overflow), 'hidden', 'Automatic recovery unlocks page scrolling');
+    await page.evaluate(() => window.__qaRestoreNavigationTimers());
     return { stalledDismiss: 'PASS', automaticRecovery: 'PASS', scrollUnlock: 'PASS', escape: 'PASS' };
 }
 
