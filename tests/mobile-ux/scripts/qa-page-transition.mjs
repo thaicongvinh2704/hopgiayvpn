@@ -52,7 +52,7 @@ try {
     await page.goto('http://localhost/hopgiayvpn/qa-transition/');
     await page.locator('.vpn-page-transition__logo').evaluate(async image => image.decode());
     const measurements = [];
-    for (const [width, height] of [[1440,900],[375,812],[320,568],[844,390]]) {
+    for (const [width, height] of [[1920,900],[1440,900],[1366,768],[375,812],[320,568],[844,390]]) {
         await page.setViewportSize({ width, height });
         await page.evaluate(() => {
             const o = document.querySelector('[data-page-transition]');
@@ -90,7 +90,12 @@ try {
     });
     await page.evaluate(() => {
         const overlay = document.querySelector('[data-page-transition]');
-        new MutationObserver(() => console.log('qa-overlay:' + (!overlay.hidden && overlay.classList.contains('is-active')))).observe(overlay, {attributes:true});
+        new MutationObserver(() => {
+            const active = !overlay.hidden && overlay.classList.contains('is-active');
+            const rootOverflow = getComputedStyle(document.documentElement).overflow;
+            const layer = getComputedStyle(overlay).zIndex;
+            console.log(`qa-overlay:${active}|${rootOverflow}|${layer}`);
+        }).observe(overlay, {attributes:true});
     });
     await page.route('**/qa-next/', async route => {
         requested = true;
@@ -100,13 +105,17 @@ try {
     await page.locator('#next').click({noWaitAfter:true});
     await page.waitForURL('**/qa-next/');
     assert.ok(requested, 'Native navigation requested the next document');
-    assert.ok(states.includes('qa-overlay:true'), 'Loader is visible during slow native navigation');
+    const activeState = states.find(state => state.startsWith('qa-overlay:true|')) || '';
+    const [, rootOverflow, layer] = activeState.split('|');
+    assert.ok(activeState, 'Loader is visible during slow native navigation');
+    assert.equal(rootOverflow, 'hidden', 'Loader locks background scrolling');
+    assert.ok(Number.parseInt(layer, 10) >= 2147483646, 'Loader stays above third-party widgets');
     await page.goBack();
     assert.ok(await page.locator('[data-page-transition]').evaluate(o => o.hidden), 'Back restores a usable page');
     await page.evaluate(() => { const o=document.querySelector('[data-page-transition]'); o.hidden=false; o.classList.add('is-active'); });
     await page.keyboard.press('Escape');
     assert.ok(await page.locator('[data-page-transition]').evaluate(o => o.hidden), 'Escape recovers the underlying page');
-    console.log(JSON.stringify({result:'PASS', measurements, reducedMotion:'PASS', largeText:'PASS', nativeNavigation:'PASS', anchor:'PASS', cancelledNavigation:'PASS', escape:'PASS', back:'PASS'},null,2));
+    console.log(JSON.stringify({result:'PASS', measurements, reducedMotion:'PASS', largeText:'PASS', nativeNavigation:'PASS', scrollLock:'PASS', topLayer:'PASS', anchor:'PASS', cancelledNavigation:'PASS', escape:'PASS', back:'PASS'},null,2));
 } finally {
     await browser.close();
 }

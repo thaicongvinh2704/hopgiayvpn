@@ -24,10 +24,14 @@
     const showTransition = function () {
         window.clearTimeout(recoveryTimer);
         window.clearTimeout(stalledTimer);
+        // Keep the overlay after widgets injected near the end of <body> so it
+        // wins when a third-party widget also uses the browser's maximum layer.
+        document.body.appendChild(overlay);
         overlay.hidden = false;
         overlay.classList.remove('is-stalled');
         dismiss.hidden = true;
         overlay.setAttribute("aria-hidden", "false");
+        root.classList.add('vpn-page-transition-active');
         document.body.classList.add("vpn-page-transitioning");
         if (status) status.textContent = status.dataset.loadingText;
         window.cancelAnimationFrame(frame);
@@ -40,7 +44,7 @@
         stalledTimer = window.setTimeout(function () {
             overlay.classList.add('is-stalled');
             dismiss.hidden = false;
-        }, 2500);
+        }, 4000);
     };
 
     const hideTransition = function () {
@@ -53,7 +57,8 @@
         document.body.classList.remove("vpn-page-transitioning");
         root.classList.remove(
             'vpn-initial-page-loading',
-            'vpn-initial-page-loading-pending'
+            'vpn-initial-page-loading-pending',
+            'vpn-page-transition-active'
         );
         clearInitialTimers();
 
