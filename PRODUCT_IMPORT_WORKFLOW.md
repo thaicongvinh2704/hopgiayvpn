@@ -1003,3 +1003,35 @@ The dedicated verifier requires published status, 1,500-2,000 content words, no
 content H1, 120-180 excerpt words, 21 specification rows, exact categories and
 tags, all SEO fields, exact gallery order, four stable inline figures and all
 WebP originals below 100,000 bytes.
+
+### Alibaba Christmas gift-box concepts (September 2026)
+
+Local WooCommerce batch marker:
+
+- `_vpn_sample_import = alibaba-christmas-boxes-20260925`
+
+This batch imports or updates five Christmas gift-box concept products from 25
+clean WebP views (five per product). The images and five product content files
+are bundled in the theme under `inc/product-sample-deploy-assets/uploads/2026/09/`
+and `inc/product-content/christmas-boxes-alibaba-20260925/`. The six garbled-text
+infographics in the source package are excluded. The product pages disclose that
+the supplied views are AI design visualizations, not manufactured samples, and
+leave unconfirmed size, board grade, MOQ, price, certificates, and performance
+for project-level quotation.
+
+After `git pull --ff-only origin main`, open **Tools > Product Sample Deploy**
+and use **Sync 5 Christmas Gift-Box Concepts**, or choose **Alibaba Christmas
+gift-box concepts September 2026 only** in the scope list. The batch is also part
+of **Latest batch only**. The tool restores its Git-bundled importer and verifier,
+copies the 25 bundled images into `wp-content/uploads/2026/09/`, creates or
+updates Media Library attachments and the five WooCommerce products, then
+verifies content, specifications, categories, SEO metadata, image galleries and
+the AI-visualization disclosure. It is safe to rerun: product slugs and exact
+image filenames are used to update the same records without duplication.
+
+Deploy files:
+
+- `tools/import-alibaba-christmas-boxes-20260925.php`
+- `tools/verify-alibaba-christmas-boxes-20260925.php`
+- `wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/import-alibaba-christmas-boxes-20260925.php`
+- `wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/verify-alibaba-christmas-boxes-20260925.php`

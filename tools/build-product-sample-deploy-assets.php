@@ -21,6 +21,8 @@ $source_files = array(
 	$root . '/tools/verify-candle-packaging-products.php',
 	$root . '/tools/import-jewelry-paper-box-products.php',
 	$root . '/tools/verify-jewelry-paper-box-products.php',
+	$root . '/tools/import-alibaba-christmas-boxes-20260925.php',
+	$root . '/tools/verify-alibaba-christmas-boxes-20260925.php',
 );
 
 $asset_root    = $root . '/wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/root';
@@ -185,6 +187,8 @@ $tool_files = array(
 	$root . '/tools/verify-candle-packaging-products.php',
 	$root . '/tools/import-jewelry-paper-box-products.php',
 	$root . '/tools/verify-jewelry-paper-box-products.php',
+	$root . '/tools/import-alibaba-christmas-boxes-20260925.php',
+	$root . '/tools/verify-alibaba-christmas-boxes-20260925.php',
 );
 
 foreach ( $tool_files as $tool_file ) {
