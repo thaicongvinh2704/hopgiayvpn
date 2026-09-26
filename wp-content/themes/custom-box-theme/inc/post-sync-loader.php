@@ -21,6 +21,16 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_christmas_packaging_ideas_sync_version',
             'slug' => 'christmas-packaging-ideas',
         ),
+        'inc/christmas-candy-chocolate-boxes-post-sync.php' => array(
+            'version' => '2026-09-26-christmas-candy-chocolate-boxes-v1',
+            'option' => 'custom_box_christmas_candy_chocolate_boxes_sync_version',
+            'slug' => 'christmas-candy-chocolate-boxes',
+        ),
+        'inc/christmas-box-design-guide-post-sync.php' => array(
+            'version' => '2026-09-26-christmas-box-design-guide-v1',
+            'option' => 'custom_box_christmas_box_design_guide_sync_version',
+            'slug' => 'christmas-box-design-guide',
+        ),
         'inc/halloween-packaging-ideas-post-sync.php' => array(
             'version' => '2026-09-18-halloween-packaging-ideas-v1',
             'option' => 'custom_box_halloween_packaging_ideas_sync_version',
