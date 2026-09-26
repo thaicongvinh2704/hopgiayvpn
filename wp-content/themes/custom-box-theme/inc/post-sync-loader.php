@@ -31,6 +31,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_christmas_box_design_guide_sync_version',
             'slug' => 'christmas-box-design-guide',
         ),
+        'inc/christmas-cookie-packaging-post-sync.php' => array(
+            'version' => '2026-09-26-christmas-cookie-packaging-v1',
+            'option' => 'custom_box_christmas_cookie_packaging_sync_version',
+            'slug' => 'christmas-cookie-packaging',
+        ),
         'inc/halloween-packaging-ideas-post-sync.php' => array(
             'version' => '2026-09-18-halloween-packaging-ideas-v1',
             'option' => 'custom_box_halloween_packaging_ideas_sync_version',
