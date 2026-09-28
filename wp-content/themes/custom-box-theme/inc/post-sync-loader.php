@@ -11,6 +11,11 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/advent-calendar-packaging-guide-post-sync.php' => array(
+            'version' => '2026-09-28-advent-calendar-packaging-guide-v1',
+            'option' => 'custom_box_advent_calendar_packaging_guide_sync_version',
+            'slug' => 'advent-calendar-packaging-guide',
+        ),
         'inc/holiday-packaging-guide-post-sync.php' => array(
             'version' => '2026-09-23-holiday-packaging-guide-v1',
             'option' => 'custom_box_holiday_packaging_guide_sync_version',
