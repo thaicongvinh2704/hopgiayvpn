@@ -108,6 +108,12 @@ $current_batches = array(
 		'importer'    => 'import-alibaba-christmas-boxes-20260925.php',
 		'verifier'    => 'verify-alibaba-christmas-boxes-20260925.php',
 	),
+	array(
+		'name'        => 'Pizza Boxes category products September 2026',
+		'image_bases' => array(),
+		'importer'    => 'import-pizza-boxes-products-20260928.php',
+		'verifier'    => 'verify-pizza-boxes-products-20260928.php',
+	),
 );
 
 $missing_images = array();

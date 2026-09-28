@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-09-28-pizza-boxes' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-09-28-pizza-boxes.2' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -44,13 +44,14 @@ function custom_box_product_sample_deploy_admin_post() {
 	}
 
 	$state = get_transient( $state_key );
-	if ( ! is_array( $state ) ) {
+	if ( ! is_array( $state ) || ( $state['version'] ?? '' ) !== CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION ) {
 		$scope = isset( $_POST['deploy_scope'] ) ? sanitize_key( wp_unslash( $_POST['deploy_scope'] ) ) : 'latest';
 		if ( ! in_array( $scope, custom_box_product_sample_deploy_allowed_scopes(), true ) ) {
 			$scope = 'latest';
 		}
 
 		$state = array(
+			'version'      => CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION,
 			'log'          => '',
 			'batch_index'  => 0,
 			'script_index' => 0,
@@ -542,6 +543,11 @@ function custom_box_product_sample_deploy_missing_source_images( array $batch ):
 function custom_box_product_sample_deploy_run_script( string $relative_script ): void {
 	$script = trailingslashit( ABSPATH ) . ltrim( $relative_script, '/\\' );
 	$normalized_script = str_replace( '\\', '/', ltrim( $relative_script, '/\\' ) );
+	if ( in_array( $normalized_script, array( 'tools/import-pizza-boxes-products-20260928.php', 'tools/verify-pizza-boxes-products-20260928.php' ), true ) ) {
+		// Execute the Git-tracked source directly, even when /tools is read-only
+		// or contains an older restored copy from an interrupted deployment.
+		$script = get_template_directory() . '/inc/product-sample-deploy-tools/' . basename( $normalized_script );
+	}
 
 	if ( ! file_exists( $script ) ) {
 		throw new RuntimeException(
@@ -962,6 +968,7 @@ function custom_box_product_sample_deploy_batches(): array {
 		),
 		array(
 			'name'            => 'Pizza Boxes category products September 2026',
+			'always'          => true,
 			'marker'          => 'product-samples-pizza-boxes-20260928',
 			'expected'        => 5,
 			'min_words'       => 1500,
@@ -1573,7 +1580,27 @@ function custom_box_product_sample_deploy_page() {
 		<p><strong>Tool version:</strong> <?php echo esc_html( CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION ); ?></p>
 		<p>This tool imports or updates the generated WooCommerce product sample batches from the Git-tracked deploy scripts and uploaded or bundled images.</p>
 		<p><strong>Current latest release:</strong> five Halloween paper bag products, five Halloween box products, the September 2026 rigid paperboard magazine file holder, three Alibaba Christmas collections, and five Pizza Boxes products. Run <strong>Latest batch only</strong> after pulling the deployment branch, or choose the dedicated Pizza Boxes scope for this collection alone.</p>
-		<p>It skips completed batches automatically, so it can be run after every deploy without creating duplicate products.</p>
+		<p>Completed historical batches are skipped. Pizza Boxes can be rerun to repair the five products and their category assignments without creating duplicates.</p>
+
+		<h2>Pizza Boxes Sync</h2>
+		<p>Import or repair the five pizza-box products and their images. Existing published pizza products are also assigned to the Pizza Boxes category.</p>
+		<p><a href="<?php echo esc_url( custom_box_pizza_boxes_category_url() ); ?>" target="_blank" rel="noopener">View Pizza Boxes category</a> &middot; <a href="<?php echo esc_url( custom_box_pizza_boxes_manufacturer_url() ); ?>" target="_blank" rel="noopener">View Pizza Boxes landing page</a> &middot; <a href="<?php echo esc_url( admin_url( 'edit.php?post_type=product&s=pizza' ) ); ?>">Find pizza products in admin</a></p>
+		<table class="widefat striped" style="max-width:980px;margin-bottom:12px;">
+			<thead><tr><th>Imported product</th><th>Database status</th><th>Actions</th></tr></thead>
+			<tbody>
+			<?php foreach ( array( 'kraft-pizza-delivery-box' => 'Kraft Pizza Delivery Box', 'personal-kraft-pizza-box' => 'Personal Kraft Pizza Box', 'rectangular-flatbread-pizza-box' => 'Rectangular Flatbread Pizza Box', 'white-kraft-pizza-box' => 'White Kraft Pizza Box', 'white-printed-pizza-box' => 'White Printed Pizza Box' ) as $pizza_slug => $pizza_title ) : ?>
+				<?php $pizza_product = get_page_by_path( $pizza_slug, OBJECT, 'product' ); ?>
+				<tr><td><?php echo esc_html( $pizza_title ); ?></td><td><?php echo $pizza_product ? esc_html( get_post_status( $pizza_product->ID ) . ' (#' . $pizza_product->ID . ')' ) : 'Not imported'; ?></td><td><?php if ( $pizza_product ) : ?><a href="<?php echo esc_url( get_edit_post_link( $pizza_product->ID ) ); ?>">Edit product</a><?php endif; ?></td></tr>
+			<?php endforeach; ?>
+			</tbody>
+		</table>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-bottom:24px;">
+			<input type="hidden" name="action" value="custom_box_product_sample_deploy">
+			<input type="hidden" name="reset" value="1">
+			<input type="hidden" name="deploy_scope" value="pizza_boxes_20260928">
+			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
+			<?php submit_button( 'Sync Pizza Boxes Products', 'primary large', 'submit', false ); ?>
+		</form>
 
 		<?php if ( $result ) : ?>
 			<?php if ( ! empty( $result['error'] ) ) : ?>

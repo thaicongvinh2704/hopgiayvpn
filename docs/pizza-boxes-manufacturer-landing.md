@@ -102,3 +102,29 @@ The form validates consent on the server, saves each valid enquiry privately in
 **Quote Requests**, then attempts email delivery. If email fails, the saved lead
 remains available, retry is requested, and the buyer sees a received message
 with a direct contact address. A database/save failure still shows an error.
+
+## Missing pizza products after deployment
+
+The category URL is `/products/pizza-boxes/`; the separate landing URL is
+`/custom-pizza-boxes-manufacturer/`. Pulling Git supplies their templates and
+assets. WooCommerce products must also be imported into the hosting database.
+
+Use **Tools → Product Sample Deploy → Sync Pizza Boxes Products**. The tool
+version should be `2026-09-28-pizza-boxes.2`. This dedicated button starts the
+pizza scope directly; other historical collections cannot block this import.
+The automatic continuation runs import, verification, and the completion step.
+Wait for **Deploy finished** and the log confirming **5 published Pizza Boxes
+products**. The status table links directly to each imported product in admin.
+
+The five-product bundle no longer requires the older fold-flat pizza product or
+food guide to exist on the target installation. Unavailable optional references
+are rendered as plain text. New draft records are marked before further work so
+an interrupted import can resume. Pulling a new tool version restarts old
+in-progress state and restores current bundled sources. Pizza scripts execute
+from the tracked theme bundle, independent of stale `/tools` copies.
+
+The total category count depends on existing published pizza products in that
+database; seven products on local does not establish seven products on hosting.
+Verification reports the actual count. It also requests a purge of the category
+and landing URLs via the [LiteSpeed purge API](https://docs.litespeedtech.com/lscache/lscwp/api/#litespeed_purge_url).
+Other CDN caches may still need to be cleared from their own dashboard.

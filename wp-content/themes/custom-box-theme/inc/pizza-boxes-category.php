@@ -25,7 +25,7 @@ function custom_box_pizza_boxes_category_data(): array {
         'hero_alt'         => 'Kraft pizza delivery box concept visualization for pizzeria and food-service packaging',
         'primary_cta'      => array(
             'label' => 'Request a Pizza Box Quote',
-            'url'   => home_url('/contact/#quote'),
+            'url'   => home_url('/custom-pizza-boxes-manufacturer/#vpb-quote'),
         ),
         'secondary_cta'    => array(
             'label' => 'Read the Buyer Guide',

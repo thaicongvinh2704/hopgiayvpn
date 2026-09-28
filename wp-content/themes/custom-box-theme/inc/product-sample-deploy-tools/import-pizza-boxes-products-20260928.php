@@ -155,7 +155,10 @@ function vpn_pizza_boxes_20260928_category_id( string $slug ): int {
 function vpn_pizza_boxes_20260928_published_url( string $slug, string $post_type ): string {
 	$post = get_page_by_path( $slug, OBJECT, $post_type );
 	if ( ! $post || 'publish' !== $post->post_status ) {
-		throw new RuntimeException( 'Required published internal link target is missing: ' . $slug );
+		// Older catalogue entries and guides are optional on another installation.
+		// Render their references as plain text until those entries are published.
+		echo 'Optional link target unavailable, omitted: ' . $slug . PHP_EOL;
+		return '';
 	}
 	return get_permalink( $post );
 }
@@ -168,6 +171,9 @@ function vpn_pizza_boxes_20260928_canonical_url( string $slug ): string {
 }
 
 function vpn_pizza_boxes_20260928_link( string $url, string $anchor ): string {
+	if ( '' === $url ) {
+		return esc_html( $anchor );
+	}
 	return '<a href="' . esc_url( $url ) . '">' . esc_html( $anchor ) . '</a>';
 }
 
@@ -304,6 +310,8 @@ function vpn_pizza_boxes_20260928_product_post( array $product ): int {
 			throw new RuntimeException( $product_id->get_error_message() );
 		}
 		$product_id = (int) $product_id;
+		// Record ownership before image/content work so an interrupted import can resume.
+		update_post_meta( $product_id, '_vpn_pizza_boxes_20260928_slug', $product['slug'] );
 	}
 	return $product_id;
 }
@@ -439,6 +447,19 @@ function vpn_pizza_boxes_20260928_import_product( array $product, array $categor
 		'figures' => substr_count( get_post_field( 'post_content', $product_id ), 'stable-product-image:' ),
 		'url'     => get_permalink( $product_id ),
 	);
+}
+
+// Check the complete bundle before creating any draft products.
+foreach ( vpn_pizza_boxes_20260928_products() as $product ) {
+	if ( ! is_readable( vpn_pizza_boxes_20260928_source_path( $product ) ) ) {
+		throw new RuntimeException( 'Bundled Pizza Boxes content is missing: ' . $product['content'] );
+	}
+	foreach ( array( '01-closed-hero', '02-open-interior', '03-printed-detail', '04-side-profile', '05-top-view', '06-feature-callouts' ) as $suffix ) {
+		$filename = $product['slug'] . '-' . $suffix . '.webp';
+		if ( ! is_readable( vpn_pizza_boxes_20260928_bundle_path( $filename ) ) ) {
+			throw new RuntimeException( 'Bundled Pizza Boxes image is missing: ' . $filename );
+		}
+	}
 }
 
 $category_ids = array();
