@@ -12,6 +12,7 @@ $custom_box_inc_files = array(
     'inc/page-transition.php',
     'inc/seo.php',
     'inc/corrugated-mailer-boxes-category.php',
+    'inc/pizza-boxes-category.php',
     'inc/folding-cartons-vietnam-category.php',
     'inc/rigid-box-manufacturer-vietnam-category.php',
     'inc/halloween-packaging-category.php',

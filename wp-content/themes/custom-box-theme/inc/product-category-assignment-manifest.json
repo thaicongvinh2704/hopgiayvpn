@@ -1,6 +1,6 @@
 {
-    "version": 9,
-    "generated_at": "2026-09-17T00:00:00+07:00",
+    "version": 11,
+    "generated_at": "2026-09-28T00:00:00+07:00",
     "source_url": "http://localhost/website-backup/",
     "taxonomy": "product_cat",
     "mode": "strict_manifest_product_categories",
@@ -70,6 +70,10 @@
         "food-paper-boxes": {
             "name": "Food Paper Boxes",
             "slug": "food-paper-boxes"
+        },
+        "pizza-boxes": {
+            "name": "Pizza Boxes",
+            "slug": "pizza-boxes"
         },
         "gift-paper-boxes": {
             "name": "Gift Paper Boxes",
@@ -940,7 +944,67 @@
             "categories": [
                 "custom-printed-paper-boxes",
                 "folding-carton-boxes",
-                "food-paper-boxes"
+                "food-paper-boxes",
+                "pizza-boxes"
+            ]
+        },
+        "custom-fold-flat-pizza-delivery-box-full-color-print": {
+            "title": "Custom Fold-Flat Pizza Delivery Box with Full-Color Print",
+            "status": "publish",
+            "categories": [
+                "custom-packaging-boxes",
+                "food-paper-boxes",
+                "pizza-boxes"
+            ]
+        },
+        "kraft-pizza-delivery-box": {
+            "title": "Kraft Pizza Delivery Box",
+            "status": "publish",
+            "categories": [
+                "custom-printed-paper-boxes",
+                "folding-carton-boxes",
+                "food-paper-boxes",
+                "pizza-boxes"
+            ]
+        },
+        "personal-kraft-pizza-box": {
+            "title": "Personal Kraft Pizza Box",
+            "status": "publish",
+            "categories": [
+                "custom-printed-paper-boxes",
+                "folding-carton-boxes",
+                "food-paper-boxes",
+                "pizza-boxes"
+            ]
+        },
+        "rectangular-flatbread-pizza-box": {
+            "title": "Rectangular Flatbread Pizza Box",
+            "status": "publish",
+            "categories": [
+                "custom-printed-paper-boxes",
+                "folding-carton-boxes",
+                "food-paper-boxes",
+                "pizza-boxes"
+            ]
+        },
+        "white-kraft-pizza-box": {
+            "title": "White Kraft Pizza Box",
+            "status": "publish",
+            "categories": [
+                "custom-printed-paper-boxes",
+                "folding-carton-boxes",
+                "food-paper-boxes",
+                "pizza-boxes"
+            ]
+        },
+        "white-printed-pizza-box": {
+            "title": "White Printed Pizza Box",
+            "status": "publish",
+            "categories": [
+                "custom-printed-paper-boxes",
+                "folding-carton-boxes",
+                "food-paper-boxes",
+                "pizza-boxes"
             ]
         },
         "custom-printed-corrugated-ecommerce-box": {

@@ -109,6 +109,21 @@ $custom_category_guide = '';
 if (
     $current_term
     && !is_wp_error($current_term)
+    && function_exists('custom_box_is_pizza_boxes_category')
+    && custom_box_is_pizza_boxes_category($current_term)
+) {
+    $pizza_boxes_data = custom_box_pizza_boxes_category_data();
+    $archive_title = $pizza_boxes_data['archive_title'];
+    $archive_description = $pizza_boxes_data['hero_description'];
+    $archive_eyebrow = $pizza_boxes_data['hero_eyebrow'];
+    $archive_primary_cta = $pizza_boxes_data['primary_cta'];
+    $archive_secondary_cta = $pizza_boxes_data['secondary_cta'];
+    $archive_hero_proof_points = $pizza_boxes_data['hero_proof_points'];
+    $archive_hero_alt = $pizza_boxes_data['hero_alt'];
+    $custom_category_guide = 'pizza-boxes-guide';
+} elseif (
+    $current_term
+    && !is_wp_error($current_term)
     && function_exists('custom_box_is_corrugated_mailer_boxes_category')
     && custom_box_is_corrugated_mailer_boxes_category($current_term)
 ) {

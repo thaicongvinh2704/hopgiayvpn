@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-09-25-alibaba-christmas-boxes' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-09-28-pizza-boxes' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -961,6 +961,19 @@ function custom_box_product_sample_deploy_batches(): array {
 			),
 		),
 		array(
+			'name'            => 'Pizza Boxes category products September 2026',
+			'marker'          => 'product-samples-pizza-boxes-20260928',
+			'expected'        => 5,
+			'min_words'       => 1500,
+			'expected_moq'    => '1000 boxes',
+			'expected_specs'  => 21,
+			'expected_status' => 'publish',
+			'scripts'         => array(
+				'tools/import-pizza-boxes-products-20260928.php',
+				'tools/verify-pizza-boxes-products-20260928.php',
+			),
+		),
+		array(
 			'name'      => 'Current product category thumbnails August 2026',
 			'marker'    => 'product-category-thumbnails-202608',
 			'expected'  => 0,
@@ -1167,6 +1180,17 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 		);
 	}
 
+	if ( 'pizza_boxes_20260928' === $scope ) {
+		return array_values(
+			array_filter(
+				$batches,
+				static function ( $batch ) {
+					return isset( $batch['marker'] ) && 'product-samples-pizza-boxes-20260928' === $batch['marker'];
+				}
+			)
+		);
+	}
+
 	// The default button must deploy the complete current release. Keep
 	// historical batches available through the explicit "all" scope, but do
 	// not make a new release depend on an incomplete legacy batch.
@@ -1183,6 +1207,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 						'alibaba-christmas-gift-box-collection-20260917',
 						'alibaba-christmas-paper-bags-20260917',
 						'alibaba-christmas-boxes-20260925',
+						'product-samples-pizza-boxes-20260928',
 					),
 					true
 				);
@@ -1192,7 +1217,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 }
 
 function custom_box_product_sample_deploy_allowed_scopes(): array {
-	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607', 'three_categories_202607', 'paper_bags_202607', 'christmas_gift_box_202607', 'pharmaceutical_202608', 'bird_nest_202608', 'lunar_new_year_202608', 'bread_bags_202609', 'canvas_totes_202609', 'aurelia_rigid_boxes_202609', 'magazine_file_holder_202609', 'halloween_paper_bags_202609', 'halloween_boxes_202609', 'christmas_collection_202609', 'christmas_paper_bags_202609', 'christmas_boxes_20260925' );
+	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607', 'three_categories_202607', 'paper_bags_202607', 'christmas_gift_box_202607', 'pharmaceutical_202608', 'bird_nest_202608', 'lunar_new_year_202608', 'bread_bags_202609', 'canvas_totes_202609', 'aurelia_rigid_boxes_202609', 'magazine_file_holder_202609', 'halloween_paper_bags_202609', 'halloween_boxes_202609', 'christmas_collection_202609', 'christmas_paper_bags_202609', 'christmas_boxes_20260925', 'pizza_boxes_20260928' );
 }
 
 function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
@@ -1349,6 +1374,8 @@ function custom_box_product_sample_deploy_restore_tools() {
 		'verify-alibaba-christmas-paper-bags-20260917.php',
 		'import-alibaba-christmas-boxes-20260925.php',
 		'verify-alibaba-christmas-boxes-20260925.php',
+		'import-pizza-boxes-products-20260928.php',
+		'verify-pizza-boxes-products-20260928.php',
 	);
 	$log        = array();
 
@@ -1545,7 +1572,7 @@ function custom_box_product_sample_deploy_page() {
 		<h1>Product Sample Deploy</h1>
 		<p><strong>Tool version:</strong> <?php echo esc_html( CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION ); ?></p>
 		<p>This tool imports or updates the generated WooCommerce product sample batches from the Git-tracked deploy scripts and uploaded or bundled images.</p>
-		<p><strong>Current latest release:</strong> five Halloween paper bag products, five Halloween box products, the September 2026 rigid paperboard magazine file holder, and three Alibaba Christmas collections (five gift boxes, five gift-box concepts, and five paper bags). Run <strong>Latest batch only</strong> after pulling the deployment branch, or choose the dedicated Christmas gift-box concepts scope for this collection alone.</p>
+		<p><strong>Current latest release:</strong> five Halloween paper bag products, five Halloween box products, the September 2026 rigid paperboard magazine file holder, three Alibaba Christmas collections, and five Pizza Boxes products. Run <strong>Latest batch only</strong> after pulling the deployment branch, or choose the dedicated Pizza Boxes scope for this collection alone.</p>
 		<p>It skips completed batches automatically, so it can be run after every deploy without creating duplicate products.</p>
 
 		<?php if ( $result ) : ?>
@@ -1782,6 +1809,12 @@ function custom_box_product_sample_deploy_page() {
 				<label>
 					<input type="radio" name="deploy_scope" value="christmas_boxes_20260925">
 					Alibaba Christmas gift-box concepts September 2026 only
+				</label>
+			</p>
+			<p>
+				<label>
+					<input type="radio" name="deploy_scope" value="pizza_boxes_20260928">
+					Pizza Boxes products September 2026 only
 				</label>
 			</p>
 			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
