@@ -750,6 +750,7 @@ function custom_box_quote_form_should_enqueue_recaptcha() {
     if (
         (function_exists('custom_box_is_paper_bag_ads_landing') && custom_box_is_paper_bag_ads_landing())
         || (function_exists('custom_box_is_custom_paper_bags_manufacturer_landing') && custom_box_is_custom_paper_bags_manufacturer_landing())
+        || (function_exists('custom_box_is_pizza_boxes_manufacturer_landing') && custom_box_is_pizza_boxes_manufacturer_landing())
     ) {
         $should_enqueue = true;
     }
@@ -1594,8 +1595,8 @@ function custom_box_handle_quote_form() {
     $quote_data['spam_score'] = 0;
     $quote_data['spam_reasons'] = array();
 
-    if (in_array($quote_source, array('paper_bag_ads_landing', 'custom_paper_bags_manufacturer'), true) && 'yes' !== $privacy_consent) {
-        custom_box_quote_form_reject('consent', 400, array('validation' => 'paper_bag_ads_privacy_consent_required'));
+    if (in_array($quote_source, array('paper_bag_ads_landing', 'custom_paper_bags_manufacturer', 'custom_pizza_boxes_manufacturer'), true) && 'yes' !== $privacy_consent) {
+        custom_box_quote_form_reject('consent', 400, array('validation' => 'landing_privacy_consent_required'));
     }
 
     if ('paper_box_manufacturer' === $quote_source) {
@@ -1674,6 +1675,9 @@ function custom_box_handle_quote_form() {
     }
 
     $quote_data['full_name'] = $full_name;
+    if ('custom_pizza_boxes_manufacturer' === $quote_source) {
+        $quote_data['privacy_consent'] = $privacy_consent;
+    }
 
     custom_box_quote_form_log(
         'validation_success',
@@ -1702,6 +1706,11 @@ function custom_box_handle_quote_form() {
     if (!$sent) {
         if (!custom_box_schedule_quote_email($quote_id)) {
             update_post_meta($quote_id, '_custom_box_quote_mail_status', 'schedule_failed');
+        }
+
+        // The lead is already stored even if the hosting mail transport fails.
+        if ('custom_pizza_boxes_manufacturer' === $quote_source) {
+            custom_box_quote_form_redirect('received');
         }
 
         custom_box_quote_form_reject(

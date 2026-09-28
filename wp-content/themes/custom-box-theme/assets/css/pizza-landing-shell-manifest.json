@@ -1,0 +1,8 @@
+{
+  "sources": {
+    "assets/css/main.min.css": "a59481d1942782c1f7f7424b29647fbec1d03884352211407fc63bb60df84180",
+    "assets/css/responsive.min.css": "d0ee65c5808a46bff54c5f6df54b1b1b457a09d40f20e1bf7f4cc128a5aa2076",
+    "assets/js/main.js": "ff0ff20bd5a7ffbc17ff568eb1f883dc00cd0271cc826bceebad7d77fa037fa8",
+    "assets/vendor/fontawesome/css/all.min.css": "b8bce1534d4c1aa5df1d48ee3a5438333498a3ffd6b0b692fd6b6bbadc58ff28"
+  }
+}
