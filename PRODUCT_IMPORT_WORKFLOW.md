@@ -1035,3 +1035,34 @@ Deploy files:
 - `tools/verify-alibaba-christmas-boxes-20260925.php`
 - `wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/import-alibaba-christmas-boxes-20260925.php`
 - `wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/verify-alibaba-christmas-boxes-20260925.php`
+
+### Christmas gift-box package from September 29, 2026
+
+Local WooCommerce batch marker:
+
+- `_vpn_sample_import = christmas-gift-boxes-20260929`
+
+This batch imports five Christmas gift-box concepts from 30 bundled WebP images
+(six views per product). Product names, descriptions, metadata and image assets
+are included in the Git bundle. The images are AI-generated design
+visualizations, and the copy identifies construction and performance details
+that still need a buyer brief or approved sample.
+
+The importer and verifier are included in the **Latest batch only** Product
+Sample Deploy release. After `git pull --ff-only origin main`, open **Tools >
+Product Sample Deploy** and click **Run Product Sample Deploy** with **Latest
+batch only** selected. The deploy tool restores both scripts and the 30 images,
+imports or updates all five products, and verifies SEO metadata, 21 product
+specifications, category assignments, image galleries, alt text and content.
+It is safe to rerun because product slugs and image filenames are stable.
+
+For only this collection, select **Christmas gift-box products September 29,
+2026 only** or click **Sync 5 Christmas Gift Boxes**.
+
+Deploy files:
+
+- `tools/import-christmas-gift-boxes-20260929.php`
+- `tools/verify-christmas-gift-boxes-20260929.php`
+- `wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/import-christmas-gift-boxes-20260929.php`
+- `wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/verify-christmas-gift-boxes-20260929.php`
+- `wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/uploads/2026/09/` (30 WebP images)

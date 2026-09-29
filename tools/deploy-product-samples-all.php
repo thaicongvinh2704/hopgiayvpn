@@ -114,6 +114,12 @@ $current_batches = array(
 		'importer'    => 'import-pizza-boxes-products-20260928.php',
 		'verifier'    => 'verify-pizza-boxes-products-20260928.php',
 	),
+	array(
+		'name'        => 'Christmas gift-box concepts September 29, 2026',
+		'image_bases' => array(),
+		'importer'    => 'import-christmas-gift-boxes-20260929.php',
+		'verifier'    => 'verify-christmas-gift-boxes-20260929.php',
+	),
 );
 
 $missing_images = array();
@@ -148,4 +154,4 @@ foreach ( $current_batches as $batch ) {
 echo PHP_EOL . '== Current product category thumbnails August 2026 ==' . PHP_EOL;
 require $target_dir . '/sync-product-category-thumbnails-202608.php';
 
-echo PHP_EOL . 'Current deployment complete: existing batches plus bread bags, Halloween paper bags, Halloween boxes, and the Alibaba Christmas gift-box, gift-box concepts, and paper-bag collections verified.' . PHP_EOL;
+echo PHP_EOL . 'Current deployment complete: existing batches plus bread bags, Halloween paper bags, Halloween boxes, the Alibaba Christmas collections, Pizza Boxes, and the September 29 Christmas gift boxes verified.' . PHP_EOL;
