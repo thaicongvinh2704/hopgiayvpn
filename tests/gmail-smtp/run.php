@@ -15,6 +15,7 @@ $test_can_manage = true;
 $test_nonce_valid = true;
 $test_nonce_checks = array();
 $test_result = null;
+$test_db_writable = true;
 class TestDenied extends RuntimeException {}
 class TestRedirect extends RuntimeException {}
 function get_option( $key, $default = false ) { return $GLOBALS['test_options'][ $key ] ?? $default; }
@@ -32,6 +33,7 @@ function check_admin_referer( $action ) {
 	if ( ! $GLOBALS['test_nonce_valid'] ) { throw new TestDenied( 'Invalid nonce' ); }
 }
 function update_option( $name, $value, $autoload = null ) {
+	if ( ! $GLOBALS['test_db_writable'] ) { return false; }
 	$GLOBALS['test_options'][ $name ] = $value;
 	$GLOBALS['test_autoload'] = $autoload;
 }
@@ -64,6 +66,10 @@ verify( ! VPN_Gmail_SMTP::ready(), 'An unconfigured plugin must be inactive.' );
 $input = array( 'email' => 'owner@gmail.com', 'password' => 'abcd efgh ijkl mnop', 'name' => 'VPN', 'port' => '587', 'test_recipient' => 'sales.vpn@hopgiayvpn.com', 'enabled' => '1' );
 $saved = VPN_Gmail_SMTP::validate_settings( $input, $old );
 verify( ! is_wp_error( $saved ), 'Valid Gmail configuration must save.' );
+$unicode_input = $input;
+$unicode_input['password'] = "abcd\u{00A0}efgh\u{200B}ijkl\u{FEFF}mnop";
+$unicode_saved = VPN_Gmail_SMTP::validate_settings( $unicode_input, $old );
+verify( ! is_wp_error( $unicode_saved ) && VPN_Gmail_SMTP::decrypt_password( $unicode_saved['password'] ) === 'abcdefghijklmnop', 'Grouped Google passwords must accept copied Unicode whitespace.' );
 verify( VPN_Gmail_SMTP::decrypt_password( $saved['password'] ) === 'abcdefghijklmnop', 'Encryption must round-trip.' );
 verify( false === strpos( serialize( $saved ), 'abcdefghijklmnop' ), 'App password must not be stored in plaintext.' );
 $raw = base64_decode( $saved['password'] );
@@ -85,6 +91,7 @@ $test_options[ VPN_Gmail_SMTP::OPTION ] = $saved;
 verify( VPN_Gmail_SMTP::ready(), 'Configured Gmail must be ready.' );
 $test_options['active_plugins'] = array( 'wp-mail-smtp/wp_mail_smtp.php' );
 verify( ! VPN_Gmail_SMTP::ready(), 'An active WP Mail SMTP plugin must prevent conflicting transports.' );
+verify( false !== strpos( VPN_Gmail_SMTP::test_blocker(), 'WP Mail SMTP' ), 'The disabled test button must explain the mail plugin conflict.' );
 $test_options['active_plugins'] = array();
 VPN_Gmail_SMTP::register_transport();
 $mailer = new PHPMailer\PHPMailer\PHPMailer( true );
@@ -123,4 +130,18 @@ verify( ! $test_result['success'], 'Do not report success when another mailer sh
 $test_mail_outcome = 'auth_failure';
 try { VPN_Gmail_SMTP::test_email(); } catch ( TestRedirect $error ) {}
 verify( ! $test_result['success'] && false !== strpos( $test_result['message'], 'Gmail từ chối' ), 'Show an actionable Gmail authentication failure.' );
+$test_options[ VPN_Gmail_SMTP::OPTION ]['enabled'] = false;
+remove_action( 'phpmailer_init', array( 'VPN_Gmail_SMTP', 'configure_mailer' ), 100 );
+remove_filter( 'wp_mail_from', array( 'VPN_Gmail_SMTP', 'from_email' ), 100 );
+remove_filter( 'wp_mail_from_name', array( 'VPN_Gmail_SMTP', 'from_name' ), 100 );
+VPN_Gmail_SMTP::register_transport();
+verify( ! has_action( 'phpmailer_init', array( 'VPN_Gmail_SMTP', 'configure_mailer' ) ), 'Disabled Gmail must not take over normal website mail.' );
+verify( '' === VPN_Gmail_SMTP::test_blocker(), 'A saved account can be tested before enabling Gmail for forms.' );
+$test_mail_outcome = 'success';
+try { VPN_Gmail_SMTP::test_email(); } catch ( TestRedirect $error ) {}
+verify( $test_result['success'] && ! VPN_Gmail_SMTP::settings()['enabled'], 'Testing a disabled account must use Gmail without enabling the website transport.' );
+$test_db_writable = false;
+$_POST['name'] = 'Changed name';
+try { VPN_Gmail_SMTP::save(); } catch ( TestRedirect $error ) {}
+verify( ! $test_result['success'], 'A failed database write must not be reported as saved.' );
 echo 'PASS: ' . $checks . " checks, WordPress hooks and real PHPMailer; no email sent.\n";

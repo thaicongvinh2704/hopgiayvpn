@@ -10,6 +10,8 @@ Plugin WordPress tự viết để gửi email qua Gmail cá nhân. Cấu hình 
 4. Chọn **Gửi email WordPress qua Gmail này**, lưu cấu hình, rồi tắt **WP Mail SMTP** đang dùng SendLayer trong trang Plugins. VPN Gmail SMTP cảnh báo và chưa sử dụng Gmail khi WP Mail SMTP vẫn đang bật.
 5. Bấm **Gửi thư thử**. Khi Gmail chấp nhận thư, kiểm tra Inbox và Spam của email nhận. Sau đó gửi một form thử, kiểm tra email báo giá và xác nhận nút Trả lời trỏ tới email khách.
 
+Ô mật khẩu trống sau khi lưu là bình thường: plugin không hiển thị lại mật khẩu đã lưu. Từ phiên bản 1.0.1, có thể gửi thư thử trước khi tích Bật gửi. Nếu nút gửi thử bị mờ, lý do xuất hiện ngay phía trên nút (chưa lưu cấu hình, không đọc được mật khẩu hoặc WP Mail SMTP còn bật). Gửi thư thử không tự thay đổi lựa chọn Bật gửi của website.
+
 Chưa có cấu hình thì plugin không thay đổi cách gửi email hiện tại. Chỉ người có quyền quản trị `manage_options` được cấu hình hoặc gửi thư thử; các thao tác đều kiểm tra nonce.
 
 ## Phạm vi

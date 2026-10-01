@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VPN Gmail SMTP
  * Description: Gửi email WordPress qua Gmail cá nhân, cấu hình và gửi thư thử ngay trong trang quản trị.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author: VPN Packaging
@@ -86,13 +86,34 @@ final class VPN_Gmail_SMTP {
 
 	public static function ready() {
 		$settings = self::settings();
-		return ! empty( $settings['enabled'] ) && is_email( $settings['email'] ) && 16 === strlen( (string) self::decrypt_password( $settings['password'] ) ) && '' === self::conflict();
+		return ! empty( $settings['enabled'] ) && '' === self::test_blocker();
+	}
+
+	public static function test_blocker() {
+		$settings = self::settings();
+		if ( ! is_email( $settings['email'] ) ) {
+			return 'Chưa lưu Gmail người gửi. Điền cấu hình và bấm Lưu cấu hình trước.';
+		}
+		if ( ! self::encryption_available() ) {
+			return 'Máy chủ cần OpenSSL hỗ trợ AES-256-GCM để lưu và đọc mật khẩu ứng dụng.';
+		}
+		if ( '' === $settings['password'] ) {
+			return 'Chưa lưu mật khẩu ứng dụng. Nhập mật khẩu 16 ký tự rồi bấm Lưu cấu hình.';
+		}
+		if ( 16 !== strlen( (string) self::decrypt_password( $settings['password'] ) ) ) {
+			return 'Không đọc được mật khẩu đã lưu. Nhập lại mật khẩu ứng dụng rồi lưu cấu hình.';
+		}
+		return self::conflict();
 	}
 
 	public static function register_transport() {
 		if ( ! self::ready() ) {
 			return;
 		}
+		self::bind_transport();
+	}
+
+	private static function bind_transport() {
 		add_filter( 'wp_mail_from', array( __CLASS__, 'from_email' ), 100 );
 		add_filter( 'wp_mail_from_name', array( __CLASS__, 'from_name' ), 100 );
 		add_action( 'phpmailer_init', array( __CLASS__, 'configure_mailer' ), 100 );
@@ -156,7 +177,11 @@ final class VPN_Gmail_SMTP {
 		if ( ! is_email( $recipient ) ) {
 			return new WP_Error( 'recipient', 'Email nhận thư thử không hợp lệ.' );
 		}
-		$password = preg_replace( '/\s+/', '', $input['password'] );
+		// Google may copy the grouped password with non-breaking spaces.
+		$password = preg_replace( '/[\s\x{00A0}\x{200B}\x{FEFF}]+/u', '', $input['password'] );
+		if ( ! is_string( $password ) ) {
+			return new WP_Error( 'password', 'Mật khẩu ứng dụng chứa ký tự không hợp lệ. Hãy dán lại mật khẩu Google đã cấp.' );
+		}
 		$encrypted = $old['password'];
 		if ( '' !== $password ) {
 			if ( ! preg_match( '/^[a-zA-Z0-9]{16}$/', $password ) ) {
@@ -190,14 +215,23 @@ final class VPN_Gmail_SMTP {
 			self::result( false, $settings->get_error_message() );
 		}
 		update_option( self::OPTION, $settings, false );
-		self::result( true, 'Đã lưu cấu hình. Dùng nút Gửi thư thử bên dưới để kiểm tra.' );
+		if ( get_option( self::OPTION ) !== $settings ) {
+			self::result( false, 'Không lưu được cấu hình vào cơ sở dữ liệu WordPress. Hãy thử lưu lại.' );
+		}
+		$message = 'Đã lưu Gmail và mật khẩu ứng dụng. Ô mật khẩu để trống khi tải lại là bình thường; mật khẩu vẫn được lưu.';
+		if ( empty( $settings['enabled'] ) ) {
+			$message .= ' Bạn có thể gửi thư thử ngay. Để dùng cho form, tích Bật gửi rồi lưu lại.';
+		}
+		self::result( true, $message );
 	}
 
 	public static function test_email() {
 		self::authorize( 'vpn_gmail_smtp_test' );
-		if ( ! self::ready() ) {
-			self::result( false, self::conflict() ?: 'Hãy lưu Gmail, mật khẩu ứng dụng và bật gửi qua Gmail trước khi thử.' );
+		if ( self::test_blocker() ) {
+			self::result( false, self::test_blocker() );
 		}
+		// Test the saved account for this request without changing the enabled setting.
+		self::bind_transport();
 		// Verify that the configured transport was reached; a mail plugin may short-circuit wp_mail().
 		$used_gmail = false;
 		$error_message = '';
@@ -231,6 +265,7 @@ final class VPN_Gmail_SMTP {
 		}
 		$settings = self::settings();
 		$has_password = false !== self::decrypt_password( $settings['password'] );
+		$test_blocker = self::test_blocker();
 		$result = get_transient( self::RESULT . get_current_user_id() );
 		delete_transient( self::RESULT . get_current_user_id() );
 		?>
@@ -246,13 +281,13 @@ final class VPN_Gmail_SMTP {
 			<?php if ( ! self::encryption_available() ) : ?>
 				<div class="notice notice-error"><p>Máy chủ cần OpenSSL hỗ trợ AES-256-GCM để lưu mật khẩu ứng dụng.</p></div>
 			<?php endif; ?>
-			<p><strong>Trạng thái:</strong> <?php echo self::ready() ? 'Đã bật gửi qua Gmail. Cần gửi thư thử để xác nhận kết nối.' : 'Chưa bật gửi qua Gmail.'; ?></p>
+			<p><strong>Gửi cho form:</strong> <?php echo empty( $settings['enabled'] ) ? 'Đang tắt. Tích Bật gửi và lưu cấu hình để sử dụng cho website.' : ( self::ready() ? 'Đã bật. Cần gửi thư thử để xác nhận kết nối.' : 'Đã chọn bật, nhưng cấu hình đang bị chặn. Xem lý do bên dưới.' ); ?></p>
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 				<input type="hidden" name="action" value="vpn_gmail_smtp_save">
 				<?php wp_nonce_field( 'vpn_gmail_smtp_save' ); ?>
 				<table class="form-table" role="presentation">
 					<tr><th scope="row"><label for="vpn-gmail-email">Gmail người gửi</label></th><td><input class="regular-text" type="email" id="vpn-gmail-email" name="email" value="<?php echo esc_attr( $settings['email'] ); ?>" placeholder="ten@gmail.com" required></td></tr>
-					<tr><th scope="row"><label for="vpn-gmail-password">Mật khẩu ứng dụng</label></th><td><input class="regular-text" type="password" id="vpn-gmail-password" name="password" value="" autocomplete="new-password" <?php echo $has_password ? '' : 'required'; ?>>
+					<tr><th scope="row"><label for="vpn-gmail-password">Mật khẩu ứng dụng</label></th><td><input class="regular-text" type="password" id="vpn-gmail-password" name="password" value="" autocomplete="new-password" placeholder="<?php echo $has_password ? 'Đã lưu — để trống để giữ nguyên' : ''; ?>" <?php echo $has_password ? '' : 'required'; ?>>
 						<p class="description"><?php echo $has_password ? 'Đã lưu mật khẩu. Để trống để giữ nguyên, hoặc nhập mật khẩu ứng dụng mới.' : 'Nhập mật khẩu ứng dụng Gmail gồm 16 ký tự.'; ?></p>
 						<p class="description">Bật Xác minh 2 bước, sau đó <a href="https://myaccount.google.com/apppasswords" target="_blank" rel="noopener noreferrer">tạo mật khẩu ứng dụng</a>. Không dùng mật khẩu đăng nhập Gmail.</p></td></tr>
 					<tr><th scope="row"><label for="vpn-gmail-name">Tên người gửi</label></th><td><input class="regular-text" type="text" id="vpn-gmail-name" name="name" value="<?php echo esc_attr( $settings['name'] ); ?>"></td></tr>
@@ -264,11 +299,14 @@ final class VPN_Gmail_SMTP {
 			</form>
 			<hr>
 			<h2>Gửi thư thử</h2>
-			<p>Lưu cấu hình trước, rồi gửi thư thử và kiểm tra hộp thư nhận.</p>
+			<p>Lưu cấu hình trước, rồi gửi thư thử và kiểm tra hộp thư nhận. Có thể gửi thử khi Bật gửi đang tắt; gửi thử không tự bật gửi cho form.</p>
+			<?php if ( $test_blocker ) : ?>
+				<div class="notice notice-warning inline"><p><strong>Chưa thể gửi thử:</strong> <?php echo esc_html( $test_blocker ); ?></p></div>
+			<?php endif; ?>
 			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 				<input type="hidden" name="action" value="vpn_gmail_smtp_test">
 				<?php wp_nonce_field( 'vpn_gmail_smtp_test' ); ?>
-				<?php submit_button( 'Gửi thư thử', 'secondary', 'submit', false, self::ready() ? array() : array( 'disabled' => 'disabled' ) ); ?>
+				<?php submit_button( 'Gửi thư thử', 'secondary', 'submit', false, '' === $test_blocker ? array() : array( 'disabled' => 'disabled' ) ); ?>
 			</form>
 		</div>
 		<?php
