@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-09-29-christmas-gift-boxes.1' );
+define( 'CUSTOM_BOX_PRODUCT_SAMPLE_DEPLOY_VERSION', '2026-10-01-christmas-gift-boxes.2' );
 
 function custom_box_product_sample_deploy_can_run() {
 	return current_user_can( 'manage_woocommerce' ) || current_user_can( 'manage_options' );
@@ -543,7 +543,7 @@ function custom_box_product_sample_deploy_missing_source_images( array $batch ):
 function custom_box_product_sample_deploy_run_script( string $relative_script ): void {
 	$script = trailingslashit( ABSPATH ) . ltrim( $relative_script, '/\\' );
 	$normalized_script = str_replace( '\\', '/', ltrim( $relative_script, '/\\' ) );
-	if ( in_array( $normalized_script, array( 'tools/import-pizza-boxes-products-20260928.php', 'tools/verify-pizza-boxes-products-20260928.php', 'tools/import-christmas-gift-boxes-20260929.php', 'tools/verify-christmas-gift-boxes-20260929.php' ), true ) ) {
+	if ( in_array( $normalized_script, array( 'tools/import-pizza-boxes-products-20260928.php', 'tools/verify-pizza-boxes-products-20260928.php', 'tools/import-christmas-gift-boxes-20260929.php', 'tools/verify-christmas-gift-boxes-20260929.php', 'tools/import-christmas-gift-boxes-20261001.php', 'tools/verify-christmas-gift-boxes-20261001.php' ), true ) ) {
 		// Execute the Git-tracked source directly, even when /tools is read-only
 		// or contains an older restored copy from an interrupted deployment.
 		$script = get_template_directory() . '/inc/product-sample-deploy-tools/' . basename( $normalized_script );
@@ -994,6 +994,19 @@ function custom_box_product_sample_deploy_batches(): array {
 			),
 		),
 		array(
+			'name'            => 'Christmas gift-box concepts October 1, 2026',
+			'marker'          => 'christmas-gift-boxes-20261001',
+			'expected'        => 5,
+			'min_words'       => 1500,
+			'expected_moq'    => '1000 boxes; confirm eligible specifications and quantity breaks in the written quotation.',
+			'expected_specs'  => 21,
+			'expected_status' => 'publish',
+			'scripts'         => array(
+				'tools/import-christmas-gift-boxes-20261001.php',
+				'tools/verify-christmas-gift-boxes-20261001.php',
+			),
+		),
+		array(
 			'name'      => 'Current product category thumbnails August 2026',
 			'marker'    => 'product-category-thumbnails-202608',
 			'expected'  => 0,
@@ -1222,6 +1235,17 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 		);
 	}
 
+	if ( 'christmas_gift_boxes_20261001' === $scope ) {
+		return array_values(
+			array_filter(
+				$batches,
+				static function ( $batch ) {
+					return isset( $batch['marker'] ) && 'christmas-gift-boxes-20261001' === $batch['marker'];
+				}
+			)
+		);
+	}
+
 	// The default button must deploy the complete current release. Keep
 	// historical batches available through the explicit "all" scope, but do
 	// not make a new release depend on an incomplete legacy batch.
@@ -1240,6 +1264,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 						'alibaba-christmas-boxes-20260925',
 						'product-samples-pizza-boxes-20260928',
 						'christmas-gift-boxes-20260929',
+						'christmas-gift-boxes-20261001',
 					),
 					true
 				);
@@ -1249,7 +1274,7 @@ function custom_box_product_sample_deploy_selected_batches( string $scope ): arr
 }
 
 function custom_box_product_sample_deploy_allowed_scopes(): array {
-	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607', 'three_categories_202607', 'paper_bags_202607', 'christmas_gift_box_202607', 'pharmaceutical_202608', 'bird_nest_202608', 'lunar_new_year_202608', 'bread_bags_202609', 'canvas_totes_202609', 'aurelia_rigid_boxes_202609', 'magazine_file_holder_202609', 'halloween_paper_bags_202609', 'halloween_boxes_202609', 'christmas_collection_202609', 'christmas_paper_bags_202609', 'christmas_boxes_20260925', 'pizza_boxes_20260928', 'christmas_gift_boxes_20260929' );
+	return array( 'latest', 'all', 'perfume_202607', 'corrugated_202607', 'three_categories_202607', 'paper_bags_202607', 'christmas_gift_box_202607', 'pharmaceutical_202608', 'bird_nest_202608', 'lunar_new_year_202608', 'bread_bags_202609', 'canvas_totes_202609', 'aurelia_rigid_boxes_202609', 'magazine_file_holder_202609', 'halloween_paper_bags_202609', 'halloween_boxes_202609', 'christmas_collection_202609', 'christmas_paper_bags_202609', 'christmas_boxes_20260925', 'pizza_boxes_20260928', 'christmas_gift_boxes_20260929', 'christmas_gift_boxes_20261001' );
 }
 
 function custom_box_product_sample_deploy_run_next_step( array &$state ): void {
@@ -1410,6 +1435,8 @@ function custom_box_product_sample_deploy_restore_tools() {
 		'verify-pizza-boxes-products-20260928.php',
 		'import-christmas-gift-boxes-20260929.php',
 		'verify-christmas-gift-boxes-20260929.php',
+		'import-christmas-gift-boxes-20261001.php',
+		'verify-christmas-gift-boxes-20261001.php',
 	);
 	$log        = array();
 
@@ -1736,6 +1763,16 @@ function custom_box_product_sample_deploy_page() {
 			<?php submit_button( 'Sync 5 Christmas Gift Boxes', 'primary large', 'submit', false ); ?>
 		</form>
 
+		<h2>Christmas Gift Boxes from the October 1 package</h2>
+		<p>Imports or repairs five seasonal gift-box products from 30 bundled WebP images. Each product includes SEO metadata, product specifications, internal links, FAQs and disclosure that its supplied images are AI-generated design visualizations.</p>
+		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-bottom:24px;">
+			<input type="hidden" name="action" value="custom_box_product_sample_deploy">
+			<input type="hidden" name="reset" value="1">
+			<input type="hidden" name="deploy_scope" value="christmas_gift_boxes_20261001">
+			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
+			<?php submit_button( 'Sync 5 October Christmas Gift Boxes', 'primary large', 'submit', false ); ?>
+		</form>
+
 		<h2>Custom Lunar New Year Gift Box Sync</h2>
 		<p>Imports or updates the Custom Lunar New Year Gift Boxes product from five bundled WebP images and the approved SEO content package.</p>
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>" style="margin-bottom:24px;">
@@ -1885,6 +1922,12 @@ function custom_box_product_sample_deploy_page() {
 				<label>
 					<input type="radio" name="deploy_scope" value="christmas_gift_boxes_20260929">
 					Christmas gift-box products September 29, 2026 only
+				</label>
+			</p>
+			<p>
+				<label>
+					<input type="radio" name="deploy_scope" value="christmas_gift_boxes_20261001">
+					Christmas gift-box products October 1, 2026 only
 				</label>
 			</p>
 			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>

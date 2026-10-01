@@ -120,6 +120,12 @@ $current_batches = array(
 		'importer'    => 'import-christmas-gift-boxes-20260929.php',
 		'verifier'    => 'verify-christmas-gift-boxes-20260929.php',
 	),
+	array(
+		'name'        => 'Christmas gift-box concepts October 1, 2026',
+		'image_bases' => array(),
+		'importer'    => 'import-christmas-gift-boxes-20261001.php',
+		'verifier'    => 'verify-christmas-gift-boxes-20261001.php',
+	),
 );
 
 $missing_images = array();

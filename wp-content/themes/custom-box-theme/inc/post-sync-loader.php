@@ -11,6 +11,18 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/christmas-gift-boxes-20261001-product-sync.php' => array(
+            'version' => '2026-10-01-christmas-v2',
+            'option' => 'custom_box_christmas_gift_boxes_20261001_sync_version',
+            'slug' => 'custom-burgundy-christmas-candle-window-box',
+            'slugs' => array(
+                'custom-burgundy-christmas-candle-window-box',
+                'custom-christmas-house-window-carry-gift-box',
+                'custom-christmas-tree-window-handle-gift-box',
+                'custom-green-ribbon-christmas-rigid-gift-box',
+                'custom-red-round-christmas-gift-cylinder',
+            ),
+        ),
         'inc/advent-calendar-packaging-guide-post-sync.php' => array(
             'version' => '2026-09-28-advent-calendar-packaging-guide-v1',
             'option' => 'custom_box_advent_calendar_packaging_guide_sync_version',
@@ -439,7 +451,7 @@ function custom_box_post_sync_requested_slug(array $registry): string
     }
 
     foreach ($registry as $entry) {
-        if ($slug === $entry['slug']) {
+        if (in_array($slug, $entry['slugs'] ?? array($entry['slug']), true)) {
             return $slug;
         }
     }
@@ -516,7 +528,7 @@ function custom_box_post_sync_files_to_load(): array
     foreach ($registry as $file => $entry) {
         $stored = isset($versions[$entry['option']]) ? $versions[$entry['option']] : '';
 
-        if ($force_all || $stored !== $entry['version'] || ($requested_slug && $requested_slug === $entry['slug'])) {
+        if ($force_all || $stored !== $entry['version'] || ($requested_slug && in_array($requested_slug, $entry['slugs'] ?? array($entry['slug']), true))) {
             $files[] = $file;
             if (!$force_all && !$requested_slug) {
                 break; // Limit to one sync per request to prevent timeout (ERR_TIMED_OUT)

@@ -25,6 +25,8 @@ $source_files = array(
 	$root . '/tools/verify-alibaba-christmas-boxes-20260925.php',
 	$root . '/tools/import-christmas-gift-boxes-20260929.php',
 	$root . '/tools/verify-christmas-gift-boxes-20260929.php',
+	$root . '/tools/import-christmas-gift-boxes-20261001.php',
+	$root . '/tools/verify-christmas-gift-boxes-20261001.php',
 );
 
 $asset_root    = $root . '/wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/root';
@@ -193,6 +195,8 @@ $tool_files = array(
 	$root . '/tools/verify-alibaba-christmas-boxes-20260925.php',
 	$root . '/tools/import-christmas-gift-boxes-20260929.php',
 	$root . '/tools/verify-christmas-gift-boxes-20260929.php',
+	$root . '/tools/import-christmas-gift-boxes-20261001.php',
+	$root . '/tools/verify-christmas-gift-boxes-20261001.php',
 );
 
 foreach ( $tool_files as $tool_file ) {
