@@ -144,4 +144,20 @@ $test_db_writable = false;
 $_POST['name'] = 'Changed name';
 try { VPN_Gmail_SMTP::save(); } catch ( TestRedirect $error ) {}
 verify( ! $test_result['success'], 'A failed database write must not be reported as saved.' );
+$test_db_writable = true;
+$test_can_manage = false;
+try { VPN_Gmail_SMTP::apply_all_forms(); verify( false, 'Unauthorized form integration was allowed.' ); } catch ( TestDenied $error ) {}
+$test_can_manage = true;
+$test_nonce_valid = false;
+try { VPN_Gmail_SMTP::apply_all_forms(); verify( false, 'Integration without valid nonce was allowed.' ); } catch ( TestDenied $error ) {}
+$test_nonce_valid = true;
+$before_apply = VPN_Gmail_SMTP::settings();
+try { VPN_Gmail_SMTP::apply_all_forms(); } catch ( TestRedirect $error ) {}
+$after_apply = VPN_Gmail_SMTP::settings();
+verify( $test_result['success'] && $after_apply['enabled'], 'Applying Gmail must enable the shared transport.' );
+verify( $before_apply['email'] === $after_apply['email'] && $before_apply['password'] === $after_apply['password'], 'Applying Gmail must preserve the account and saved credential.' );
+verify( end( $test_nonce_checks ) === 'vpn_gmail_smtp_apply', 'Apply must check its dedicated nonce.' );
+$test_options['active_plugins'] = array( 'wp-mail-smtp/wp_mail_smtp.php' );
+try { VPN_Gmail_SMTP::apply_all_forms(); } catch ( TestRedirect $error ) {}
+verify( ! $test_result['success'], 'Applying Gmail must reject an active conflicting mailer.' );
 echo 'PASS: ' . $checks . " checks, WordPress hooks and real PHPMailer; no email sent.\n";

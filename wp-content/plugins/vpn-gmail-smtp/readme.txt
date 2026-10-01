@@ -1,7 +1,7 @@
 === VPN Gmail SMTP ===
 Requires at least: 6.0
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 
 Gửi email WordPress qua Gmail cá nhân, cấu hình trong Cài đặt → VPN Gmail SMTP.
@@ -12,6 +12,7 @@ Gửi email WordPress qua Gmail cá nhân, cấu hình trong Cài đặt → VPN
 2. Kích hoạt VPN Gmail SMTP và mở Cài đặt → VPN Gmail SMTP.
 3. Nhập Gmail và mật khẩu ứng dụng 16 ký tự sau khi bật Xác minh 2 bước.
 4. Bật gửi Gmail, lưu cấu hình, tắt WP Mail SMTP/SendLayer, rồi gửi thư thử.
+5. Khi nhận được thư thử, bấm Áp dụng Gmail cho toàn bộ form nếu chưa bật gửi.
 
 == Notes ==
 

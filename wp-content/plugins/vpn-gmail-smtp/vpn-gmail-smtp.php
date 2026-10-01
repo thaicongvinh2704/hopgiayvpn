@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VPN Gmail SMTP
  * Description: Gửi email WordPress qua Gmail cá nhân, cấu hình và gửi thư thử ngay trong trang quản trị.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author: VPN Packaging
@@ -21,6 +21,7 @@ final class VPN_Gmail_SMTP {
 		add_action( 'admin_menu', array( __CLASS__, 'menu' ) );
 		add_action( 'admin_post_vpn_gmail_smtp_save', array( __CLASS__, 'save' ) );
 		add_action( 'admin_post_vpn_gmail_smtp_test', array( __CLASS__, 'test_email' ) );
+		add_action( 'admin_post_vpn_gmail_smtp_apply', array( __CLASS__, 'apply_all_forms' ) );
 		add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( __CLASS__, 'action_links' ) );
 		add_action( 'plugins_loaded', array( __CLASS__, 'register_transport' ), 100 );
 	}
@@ -259,6 +260,20 @@ final class VPN_Gmail_SMTP {
 		self::result( false, $message );
 	}
 
+	public static function apply_all_forms() {
+		self::authorize( 'vpn_gmail_smtp_apply' );
+		if ( self::test_blocker() ) {
+			self::result( false, self::test_blocker() );
+		}
+		$settings = self::settings();
+		$settings['enabled'] = true;
+		update_option( self::OPTION, $settings, false );
+		if ( get_option( self::OPTION ) !== $settings ) {
+			self::result( false, 'Không lưu được cấu hình vào cơ sở dữ liệu WordPress. Hãy thử lại.' );
+		}
+		self::result( true, 'Đã áp dụng Gmail cho toàn bộ form báo giá: trang chủ, liên hệ, sản phẩm, landing bao bì, túi giấy, hộp giấy và hộp pizza. Email báo giá gửi tới sales.vpn@hopgiayvpn.com; Reply-To là email khách.' );
+	}
+
 	public static function render() {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
@@ -307,6 +322,13 @@ final class VPN_Gmail_SMTP {
 				<input type="hidden" name="action" value="vpn_gmail_smtp_test">
 				<?php wp_nonce_field( 'vpn_gmail_smtp_test' ); ?>
 				<?php submit_button( 'Gửi thư thử', 'secondary', 'submit', false, '' === $test_blocker ? array() : array( 'disabled' => 'disabled' ) ); ?>
+			</form>
+			<h2>Áp dụng cho toàn bộ form</h2>
+			<p>Sau khi nhận được thư thử, áp dụng Gmail cho form trang chủ, liên hệ, sản phẩm, landing bao bì, túi giấy, hộp giấy và hộp pizza. Tất cả dùng Gmail đã lưu, gửi báo giá về sales.vpn@hopgiayvpn.com và giữ email khách ở Reply-To.</p>
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+				<input type="hidden" name="action" value="vpn_gmail_smtp_apply">
+				<?php wp_nonce_field( 'vpn_gmail_smtp_apply' ); ?>
+				<?php submit_button( self::ready() ? 'Gmail đã được áp dụng cho toàn bộ form' : 'Áp dụng Gmail cho toàn bộ form', 'primary', 'submit', false, '' === $test_blocker && ! self::ready() ? array() : array( 'disabled' => 'disabled' ) ); ?>
 			</form>
 		</div>
 		<?php
