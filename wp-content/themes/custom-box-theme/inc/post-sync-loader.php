@@ -153,6 +153,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_kraft_handles_sync_version',
             'slug' => 'kraft-paper-bags-with-handles',
         ),
+        'inc/custom-printed-tissue-paper-post-sync.php' => array(
+            'version' => '2026-10-02-custom-printed-tissue-paper-v1',
+            'option' => 'custom_box_custom_printed_tissue_paper_sync_version',
+            'slug' => 'custom-printed-tissue-paper-gsm-printing-moq-cost-guide',
+        ),
         'inc/tissue-paper-for-gift-bags-post-sync.php' => array(
             'version' => '2026-08-15-tissue-paper-v2',
             'option' => 'custom_box_tissue_paper_gift_bags_sync_version',

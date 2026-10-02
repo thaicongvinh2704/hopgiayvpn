@@ -1,0 +1,11 @@
+# Custom Printed Tissue Paper: image map
+
+| Slot | Filename | Alt | Image title | Caption | Placement | Why it belongs |
+|---|---|---|---|---|---|---|
+| Featured + inline 1 | `custom-printed-tissue-paper-gsm-printing-moq-cost-guide.webp` | Custom printed tissue paper samples showing different paper weights and branded repeat patterns | Custom Printed Tissue Paper Specification Guide | Compare paper weight, print coverage and repeat patterns before requesting a quote. | Featured image and after introduction | Establishes the query and specification intent immediately. |
+| Inline 2 | `custom-tissue-paper-gsm-transparency-comparison.webp` | Lightweight and heavier tissue paper compared for transparency, drape and printed logo visibility | Tissue Paper GSM Comparison | GSM changes drape, transparency and the way printed artwork appears. | After GSM section | Shows the practical GSM trade-off. |
+| Inline 3 | `tissue-paper-logo-repeat-pattern-artwork-guide.webp` | Custom tissue paper logo repeat pattern showing spacing, angle and folding visibility | Tissue Paper Logo Repeat Pattern | Logo size, spacing and direction should be approved in the intended fold. | After repeat-pattern section | Explains why “repeat our logo” is incomplete artwork direction. |
+| Inline 4 | `custom-tissue-paper-rfq-cost-comparison-checklist.webp` | Custom tissue paper samples and RFQ specification sheets used to compare supplier quotations | Custom Tissue Paper RFQ Comparison | Compare suppliers after GSM, size, colors, coverage, quantity and delivery scope are aligned. | After quote-normalization table | Supports supplier evaluation. |
+| Inline 5 | `custom-tissue-paper-print-coverage-examples.webp` | Custom tissue paper examples showing sparse repeat, medium coverage and full-background printing | Custom Tissue Paper Print Coverage Examples | A sparse repeat and a full-coverage design can require different production assumptions. | After ink-coverage table | Makes a material pricing and production variable visible. |
+
+All five source images are WebP, 16:9, and under 100 KB.
