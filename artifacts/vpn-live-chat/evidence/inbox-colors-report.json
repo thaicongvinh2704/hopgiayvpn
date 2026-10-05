@@ -1,0 +1,21 @@
+{
+  "version": "1.2.1",
+  "checks": 14,
+  "passed": [
+    "unread has explicit label",
+    "email customers identified",
+    "missing email distinguished",
+    "anonymous name fallback",
+    "email visible in contact list",
+    "unread background differs in both contact groups",
+    "unread title bold",
+    "header contact badge",
+    "read acknowledgement removes unread emphasis",
+    "read acknowledgement retains email priority",
+    "header no-email fallback",
+    "mobile list available",
+    "contact labels do not overflow mobile",
+    "no JS errors"
+  ],
+  "fixture": "browser mock only; no anonymous customer written to database"
+}

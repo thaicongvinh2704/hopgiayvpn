@@ -1,0 +1,8 @@
+PASS missing Turnstile secret disables new chats
+PASS no unprotected creation when secret missing
+PASS nontransactional table fails health gate
+PASS transaction engine restored
+PASS unchosen retention does not erase
+PASS configured retention removes old closed conversations
+PASS erase revokes owning session
+TOTAL 7 configuration/retention checks passed

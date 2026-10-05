@@ -1,0 +1,8 @@
+PASS simultaneous claim exactly one winner and one conflict
+PASS 12 parallel requests enforce atomic quota of 5
+PASS uncommitted message never advances visible cursor
+PASS row lock serializes concurrent sequence and commit
+PASS delta includes both acknowledged concurrent messages
+PASS simultaneous same client ID stores one message
+PASS outbox lease prevents parallel duplicate mail
+TOTAL 7 concurrency checks passed

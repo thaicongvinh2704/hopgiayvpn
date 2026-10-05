@@ -1,0 +1,18 @@
+PASS quote missing captcha denied
+PASS quote invalid captcha denied
+PASS quote valid mock accepted
+PASS quote wrong action denied
+PASS quote wrong hostname denied
+PASS quote low score denied
+PASS quote allowed burst 0
+PASS quote allowed burst 1
+PASS quote allowed burst 2
+PASS quote allowed burst 3
+PASS quote allowed burst 4
+PASS quote allowed burst 5
+PASS quote allowed burst 6
+PASS quote allowed burst 7
+PASS quote allowed burst 8
+PASS quote allowed burst 9
+PASS quote eleventh request denied
+TOTAL 17 quote regression checks passed (no form submitted)

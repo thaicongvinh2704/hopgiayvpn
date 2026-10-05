@@ -1,0 +1,27 @@
+{
+  "version": "1.1.0",
+  "date": "2026-10-05",
+  "checks": {
+    "backend": 86,
+    "concurrency": 7,
+    "config_retention": 7,
+    "profiles_unread": 21,
+    "browser_retry_session": 22,
+    "ui_profile": 30,
+    "profile_upload": 9,
+    "theme": 16,
+    "quote_regression": 17,
+    "local_role_access": 8,
+    "local_install": 8
+  },
+  "total": 231,
+  "reference_images_available": false,
+  "production_deployed": false,
+  "diff_baseline": "previous delivered plugin ZIP 1.0.0",
+  "not_verified": [
+    "real iOS/Android keyboard and browser throttling",
+    "comparison with missing reference images",
+    "real portrait asset not supplied",
+    "production Turnstile/SMTP/load"
+  ]
+}

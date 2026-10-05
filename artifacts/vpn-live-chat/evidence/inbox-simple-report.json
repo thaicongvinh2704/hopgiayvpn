@@ -1,0 +1,31 @@
+{
+  "version": "1.2.0",
+  "checks": 25,
+  "passed": [
+    "default inbox combines new and ongoing chats",
+    "empty state explains one-click workflow",
+    "admin tools collapsed",
+    "system notices moved outside chat",
+    "chat fills usable admin workspace",
+    "search updates automatically",
+    "customer details collapsed",
+    "new customer can be replied to directly",
+    "draft stays with correct customer",
+    "draft restored when returning to customer",
+    "Enter sends and auto-claims without extra button",
+    "new chat owned by replying agent",
+    "Shift Enter makes newline",
+    "IME does not accidentally send",
+    "private notes never reach guest",
+    "details remain available on demand",
+    "mobile shows selected conversation",
+    "mobile composer fits viewport",
+    "mobile back returns to contact list",
+    "hidden mobile transcript does not mark read",
+    "background sync keeps mobile contact list visible",
+    "same customer reopens after mobile back",
+    "visible conversation marks actual customer message read",
+    "mobile customer selection restores correct draft",
+    "no uncaught JS errors"
+  ]
+}

@@ -1,0 +1,8 @@
+PASS ZIP plugin activates through WordPress API
+PASS fresh ZIP install defaults disabled
+PASS fresh prefix release schema InnoDB
+PASS WordPress deactivate stops plugin job
+PASS WordPress deactivate preserves lead
+PASS WordPress reactivate preserves data
+PASS WordPress uninstall hook preserves data by default
+TOTAL 7 release lifecycle checks passed

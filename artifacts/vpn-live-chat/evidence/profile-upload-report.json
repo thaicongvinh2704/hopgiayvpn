@@ -1,0 +1,15 @@
+{
+  "checks": 9,
+  "passed": [
+    "least-privileged sales has own avatar upload field",
+    "profile mutation rejects invalid nonce",
+    "sales cannot alter another account profile",
+    "avatar upload rejects SVG/non-raster content",
+    "avatar upload enforces size/error bound",
+    "valid image uploads through capability/nonce-guarded profile action",
+    "uploaded image saved as image attachment with profile preview",
+    "avatar can be reset to initials without modifying user role",
+    "admin Media Library picker script is functional"
+  ],
+  "test_attachment_id": 12
+}

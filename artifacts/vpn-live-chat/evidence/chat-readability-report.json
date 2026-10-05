@@ -1,0 +1,32 @@
+{
+  "version": "1.3.0",
+  "checks": 25,
+  "passed": [
+    "unread has explicit label",
+    "email customers identified",
+    "missing email distinguished",
+    "anonymous name fallback",
+    "email visible in contact list",
+    "unread background differs in both contact groups",
+    "unread title bold",
+    "admin names at least 17px",
+    "admin previews at least 15px",
+    "welcome button opens unread customer",
+    "admin messages at least 17px",
+    "header contact badge",
+    "read acknowledgement removes unread emphasis",
+    "read acknowledgement retains email priority",
+    "header no-email fallback",
+    "mobile list available",
+    "contact labels do not overflow mobile",
+    "guest bubble at least 16px",
+    "guest title at least 19px",
+    "quote suggestion fills editable draft",
+    "suggestion never sends automatically",
+    "mobile sample suggestion works",
+    "large text widget and composer fit mobile",
+    "large text widget has no horizontal overflow",
+    "no JS errors"
+  ],
+  "fixture": "browser mock only; no anonymous customer written to database"
+}

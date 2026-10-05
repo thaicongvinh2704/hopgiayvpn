@@ -1,0 +1,142 @@
+#vpn-chat-admin{--vpn-admin-primary:#2a6a92;--vpn-admin-border:#dce5eb;font-family:Arial,sans-serif;color:#17313b;max-width:none;margin:12px 18px 0 0;font-size:14px}
+#vpn-chat-admin *{box-sizing:border-box}
+#vpn-chat-admin [hidden]{display:none!important}
+#vpn-chat-admin .vpn-visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+#vpn-chat-admin .vpn-inbox-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+#vpn-chat-admin h1{font-size:24px;font-weight:600;margin:0;padding:0}
+#vpn-chat-admin .vpn-toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+#vpn-chat-admin .vpn-presence-label{display:flex;align-items:center;gap:8px;margin:0;font-size:12px}
+#vpn-chat-admin #vpn-admin-error{font-size:12px;color:#5d6b73}
+#vpn-chat-admin button{padding:8px 12px;margin:0;border:1px solid var(--vpn-admin-border);border-radius:8px;background:#fff;color:#17313b;cursor:pointer;min-height:36px;font:inherit}
+#vpn-chat-admin button:hover{background:#edf4f8}
+#vpn-chat-admin button:disabled{opacity:.5;cursor:default}
+#vpn-chat-admin input:not([type=checkbox]),#vpn-chat-admin select,#vpn-chat-admin textarea{font:14px/1.5 Arial,sans-serif;border:1px solid var(--vpn-admin-border);border-radius:8px;background:#fff;padding:9px 11px;box-shadow:none;color:#17313b;max-width:100%}
+#vpn-chat-admin .vpn-workspace{display:grid;grid-template-columns:320px minmax(0,1fr);gap:0;height:calc(100dvh - 132px);min-height:430px;max-height:1000px;background:#fff;border:1px solid var(--vpn-admin-border);border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgb(23 49 59 / 5%)}
+#vpn-chat-admin .vpn-sidebar{display:flex;flex-direction:column;min-width:0;min-height:0;border-right:1px solid var(--vpn-admin-border);background:#fff}
+#vpn-chat-admin .vpn-sidebar-tools{padding:16px;background:#f7fafc;border-bottom:1px solid var(--vpn-admin-border)}
+#vpn-chat-admin .vpn-search-box{position:relative;display:flex;gap:6px;margin-bottom:10px}
+#vpn-chat-admin #vpn-search{width:100%;min-width:0;margin:0;padding-right:38px}
+#vpn-chat-admin #vpn-search-button{position:absolute;right:2px;top:2px;width:36px;padding:0;border:0;font-size:24px;background:transparent}
+#vpn-chat-admin #vpn-filter{width:100%;margin:0;min-height:38px}
+#vpn-chat-admin #vpn-list{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain}
+#vpn-chat-admin .vpn-row{display:flex;gap:12px;align-items:center;width:100%;text-align:left;min-height:80px;border:0;border-bottom:1px solid #eff3f6;border-radius:0;padding:14px 16px;background:#fff}
+#vpn-chat-admin .vpn-row.selected{background:#e9f3f8;box-shadow:inset 3px 0 var(--vpn-admin-primary)}
+#vpn-chat-admin .vpn-contact-avatar{display:grid;place-items:center;width:42px;height:42px;border-radius:50%;flex-shrink:0;background:#e8eff4;color:#2a6a92;font-size:14px;font-weight:700}
+#vpn-chat-admin .vpn-contact-body{flex:1;min-width:0}
+#vpn-chat-admin .vpn-contact-top,#vpn-chat-admin .vpn-contact-bottom{display:flex;align-items:center;gap:8px}
+#vpn-chat-admin .vpn-contact-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;font-weight:500}
+#vpn-chat-admin .unread .vpn-contact-name{font-weight:700}
+#vpn-chat-admin .vpn-contact-time{font-size:11px;color:#5d6b73;flex-shrink:0}
+#vpn-chat-admin .vpn-contact-bottom{margin-top:6px}
+#vpn-chat-admin .vpn-contact-preview{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#5d6b73;font-size:12px}
+#vpn-chat-admin .vpn-unread-dot{font-size:10px;line-height:20px;padding:0 6px;border-radius:12px;background:var(--vpn-admin-primary);color:#fff}
+#vpn-chat-admin .vpn-pagination{display:flex;align-items:center;justify-content:center;gap:12px;padding:8px;border-top:1px solid var(--vpn-admin-border)}
+#vpn-chat-admin .vpn-list-empty{padding:20px;color:#5d6b73;font-size:13px}
+#vpn-chat-admin .vpn-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;background:#f7fafc;color:#5d6b73}
+#vpn-chat-admin .vpn-empty-icon{display:grid;place-items:center;width:80px;height:80px;font-size:40px;background:#e9f3f8;color:var(--vpn-admin-primary);border-radius:50%;margin-bottom:16px}
+#vpn-chat-admin .vpn-empty h2{font-size:22px;font-weight:500;margin:8px 0;color:#17313b}
+#vpn-chat-admin #vpn-detail{display:flex;flex-direction:column;min-width:0;min-height:0;position:relative;background:#f4f8fa}
+#vpn-chat-admin .vpn-conversation-header{display:flex;align-items:center;gap:12px;padding:16px 22px;border-bottom:1px solid var(--vpn-admin-border);background:#fff;flex-shrink:0;min-height:80px}
+#vpn-chat-admin #vpn-customer{flex:1;min-width:0}
+#vpn-chat-admin #vpn-customer h2{font-size:17px;margin:0;color:#17313b;overflow-wrap:anywhere}
+#vpn-chat-admin #vpn-customer p{font-size:12px;color:#5d6b73;margin:5px 0 0;overflow-wrap:anywhere}
+#vpn-chat-admin #vpn-back{display:none;font-size:26px;padding:0;width:36px}
+#vpn-chat-admin #vpn-conversation-info{position:absolute;z-index:2;right:12px;top:78px;width:min(440px,calc(100% - 24px));max-height:65%;overflow:auto;margin:0;box-shadow:0 12px 30px rgb(23 49 59 / 15%);padding:16px;background:#fff;border:1px solid var(--vpn-admin-border);border-radius:12px}
+#vpn-chat-admin #vpn-conversation-info:not([open]){display:none}
+#vpn-chat-admin .vpn-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+#vpn-chat-admin .vpn-fields label,#vpn-chat-admin details label{display:block;margin:8px 0;font-size:12px}
+#vpn-chat-admin .vpn-fields input,#vpn-chat-admin .vpn-fields select,#vpn-chat-admin .vpn-fields textarea,#vpn-chat-admin .vpn-admin-tools input:not([type=checkbox]),#vpn-chat-admin .vpn-admin-tools textarea{display:block;width:100%;margin-top:4px}
+#vpn-chat-admin .vpn-info-help{font-size:12px;color:#5d6b73}
+#vpn-chat-admin #vpn-transcript{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:24px;white-space:pre-wrap;overflow-wrap:anywhere;display:flex;flex-direction:column;gap:14px}
+#vpn-chat-admin .vpn-msg{align-self:flex-start;max-width:75%;background:#fff;border:1px solid var(--vpn-admin-border);border-radius:4px 14px 14px 14px;padding:10px 14px;line-height:1.55;flex-shrink:0}
+#vpn-chat-admin .vpn-msg strong{display:block;font-size:11px;font-weight:600;color:#5d6b73;margin-bottom:4px}
+#vpn-chat-admin .vpn-msg small{display:block;font-size:10px;text-align:right;color:#5d6b73;margin-top:5px}
+#vpn-chat-admin .vpn-msg[data-sender=agent]{align-self:flex-end;background:#e1eff7;border-color:#d1e5f0;border-radius:14px 4px 14px 14px}
+#vpn-chat-admin .vpn-msg[data-sender=note]{background:#fff4d7;border-color:#e4d3a1}
+#vpn-chat-admin .vpn-reply-area{flex-shrink:0;padding:14px 20px 10px;background:#fff;border-top:1px solid var(--vpn-admin-border)}
+#vpn-chat-admin .vpn-compose-line{display:flex;align-items:flex-end;gap:12px}
+#vpn-chat-admin #vpn-message{flex:1;min-width:0;width:100%;min-height:44px;max-height:120px;resize:none;margin:0;background:#f7fafc}
+#vpn-chat-admin #vpn-agent-send{width:44px;height:44px;border:0;border-radius:50%;background:var(--vpn-admin-primary);color:#fff;font-size:22px;flex-shrink:0;padding:0}
+#vpn-chat-admin #vpn-agent-send:hover{background:#164c6d}
+#vpn-chat-admin .vpn-compose-options{display:flex;align-items:center;gap:14px;margin-top:9px;flex-wrap:wrap;font-size:12px}
+#vpn-chat-admin .vpn-compose-options label{margin:0;font-size:12px;color:#5d6b73}
+#vpn-chat-admin #vpn-canned{font-size:12px;padding:3px 7px;min-height:28px;max-width:200px;border:0;background:#f7fafc}
+#vpn-chat-admin #vpn-send-status{font-size:12px;color:#5d6b73;margin-left:auto}
+#vpn-chat-admin details{padding:12px;background:#fff;margin:12px 0;border:1px solid var(--vpn-admin-border);border-radius:8px}
+#vpn-chat-admin summary,.vpn-system-notices summary{cursor:pointer;font-size:12px;color:#5d6b73}
+#vpn-chat-admin pre{white-space:pre-wrap;overflow-wrap:anywhere}
+#vpn-chat-admin :focus-visible{outline:2px solid var(--vpn-admin-primary);outline-offset:2px}
+.vpn-system-notices{margin:12px 18px 20px 0;padding:10px;background:#fff;border:1px solid #dce5eb;border-radius:8px}
+@media(max-width:1100px){#vpn-chat-admin .vpn-workspace{grid-template-columns:280px minmax(0,1fr)}}
+@media(max-width:780px){#vpn-chat-admin{margin-right:10px}#vpn-chat-admin .vpn-inbox-heading{align-items:flex-start;flex-wrap:wrap}#vpn-chat-admin .vpn-workspace{display:block;height:calc(100dvh - 185px);min-height:380px}#vpn-chat-admin .vpn-sidebar,#vpn-chat-admin #vpn-detail{height:100%}#vpn-chat-admin .vpn-empty,#vpn-chat-admin #vpn-detail{display:none}#vpn-chat-admin.vpn-chat-selected .vpn-sidebar{display:none}#vpn-chat-admin.vpn-chat-selected #vpn-detail{display:flex}#vpn-chat-admin #vpn-back{display:block}#vpn-chat-admin .vpn-conversation-header{padding:12px}#vpn-chat-admin #vpn-transcript{padding:16px}#vpn-chat-admin .vpn-msg{max-width:90%}#vpn-chat-admin .vpn-reply-area{padding:12px}#vpn-chat-admin .vpn-fields{grid-template-columns:1fr}}
+/* 1.2.1: distinguish unread activity from contact information. */
+#vpn-chat-admin .vpn-sidebar-tools{background:linear-gradient(135deg,#e9f3f8,#f7fafc)}
+#vpn-chat-admin .vpn-conversation-header{background:linear-gradient(110deg,#e9f3f8 0%,#fff 75%);border-top:3px solid var(--vpn-admin-primary)}
+#vpn-chat-admin .vpn-row{min-height:104px}
+#vpn-chat-admin .vpn-row.has-email .vpn-contact-avatar{background:#dceef8;color:#164c6d;border:1px solid #bcd8e9}
+#vpn-chat-admin .vpn-row.has-email .vpn-contact-name{color:#164c6d;font-weight:600}
+#vpn-chat-admin .vpn-contact-identity{display:flex;align-items:center;gap:6px;min-width:0;margin-top:5px}
+#vpn-chat-admin .vpn-email-badge{display:inline-flex;align-items:center;flex-shrink:0;padding:2px 6px;border-radius:5px;background:#e1eff7;color:#164c6d;font-size:10px;line-height:1.5;font-weight:700;white-space:nowrap;border:1px solid #bcd8e9}
+#vpn-chat-admin .vpn-contact-email{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#295b78;font-size:11px}
+#vpn-chat-admin .vpn-row.no-email .vpn-email-badge{background:#f1f3f5;border-color:#dce2e6;color:#5d6b73;font-weight:400}
+#vpn-chat-admin .vpn-row.no-email .vpn-contact-avatar{background:#f1f3f5;color:#5d6b73}
+#vpn-chat-admin .vpn-row.unread{background:#fff5e0;box-shadow:inset 4px 0 #d77708;border-bottom-color:#f3dfbc}
+#vpn-chat-admin .vpn-row.unread:hover{background:#ffedca}
+#vpn-chat-admin .vpn-row.unread .vpn-contact-name{font-weight:800;color:#17313b}
+#vpn-chat-admin .vpn-row.unread .vpn-contact-preview{font-weight:700;color:#17313b}
+#vpn-chat-admin .vpn-row.unread .vpn-contact-time{color:#8a4200;font-weight:700}
+#vpn-chat-admin .vpn-unread-dot{background:#9b4700;color:#fff;font-size:10px;font-weight:700;line-height:22px;padding:0 7px}
+#vpn-chat-admin .vpn-row.selected{background:#dceef8;box-shadow:inset 4px 0 #2a6a92}
+#vpn-chat-admin .vpn-row.selected.unread{background:#fff0ce;box-shadow:inset 4px 0 #d77708}
+#vpn-chat-admin #vpn-customer .vpn-customer-email{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin-top:6px}
+#vpn-chat-admin .vpn-customer-address{font-weight:600;color:#164c6d;overflow-wrap:anywhere}
+#vpn-chat-admin .vpn-customer-email:not(.has-email) .vpn-email-badge{background:#f1f3f5;border-color:#dce2e6;color:#5d6b73}
+/* 1.3.0: readable type scale and a welcoming conversation workspace. */
+#vpn-chat-admin{font-size:16px;--vpn-admin-border:#d5e3ed}
+#vpn-chat-admin .vpn-inbox-heading{min-height:66px}
+#vpn-chat-admin h1{font-size:28px;line-height:1.3;margin-top:3px}
+#vpn-chat-admin .vpn-section-eyebrow{display:block;font-size:12px;font-weight:700;letter-spacing:1.2px;color:#295b78}
+#vpn-chat-admin .vpn-toolbar,#vpn-chat-admin .vpn-presence-label,#vpn-chat-admin #vpn-admin-error{font-size:14px}
+#vpn-chat-admin button{min-height:42px}
+#vpn-chat-admin input:not([type=checkbox]),#vpn-chat-admin select,#vpn-chat-admin textarea{font-size:16px;min-height:42px}
+#vpn-chat-admin .vpn-workspace{grid-template-columns:380px minmax(0,1fr);height:calc(100dvh - 155px);border-radius:20px;box-shadow:0 14px 40px rgb(23 49 59 / 8%)}
+#vpn-chat-admin .vpn-sidebar-tools{padding:20px}
+#vpn-chat-admin .vpn-row{padding:18px;gap:14px;min-height:126px;transition:background .16s ease}
+#vpn-chat-admin .vpn-contact-avatar{width:48px;height:48px;font-size:17px}
+#vpn-chat-admin .vpn-contact-name{font-size:17px;line-height:1.4}
+#vpn-chat-admin .vpn-contact-time{font-size:13px}
+#vpn-chat-admin .vpn-contact-preview{font-size:15px;line-height:1.5}
+#vpn-chat-admin .vpn-contact-email{font-size:13px}
+#vpn-chat-admin .vpn-email-badge{font-size:12px;padding:3px 7px}
+#vpn-chat-admin .vpn-unread-dot{font-size:12px;line-height:26px;padding:0 8px}
+#vpn-chat-admin .vpn-contact-identity{flex-wrap:wrap}
+#vpn-chat-admin .vpn-empty{background:radial-gradient(ellipse at 65% 30%,#dceef8 0%,#f4f8fb 55%,#edf4f8 100%)}
+#vpn-chat-admin .vpn-empty-card{width:min(560px,100%);padding:38px 30px;background:rgb(255 255 255 / 85%);border:1px solid #fff;border-radius:24px;box-shadow:0 20px 60px rgb(42 106 146 / 10%)}
+#vpn-chat-admin .vpn-empty-art{display:flex;flex-direction:column;align-items:flex-start;gap:14px;max-width:310px;margin:28px auto}
+#vpn-chat-admin .vpn-art-bubble,#vpn-chat-admin .vpn-art-reply{display:block;padding:15px 20px;border-radius:18px 18px 18px 4px;font-size:18px;box-shadow:0 6px 16px rgb(42 106 146 / 8%)}
+#vpn-chat-admin .vpn-art-bubble{background:#e9f3f8;color:#164c6d}
+#vpn-chat-admin .vpn-art-reply{align-self:flex-end;background:#2a6a92;color:#fff;border-radius:18px 18px 4px 18px;font-size:15px}
+#vpn-chat-admin .vpn-empty h2{font-size:28px;font-weight:700;line-height:1.35}
+#vpn-chat-admin .vpn-empty p{font-size:16px;line-height:1.8;margin:14px 0 22px}
+#vpn-chat-admin #vpn-open-next{background:#2a6a92;color:#fff;border:0;padding:13px 22px;font-weight:700;border-radius:12px;box-shadow:0 6px 16px rgb(42 106 146 / 18%)}
+#vpn-chat-admin #vpn-open-next:hover{background:#164c6d}
+#vpn-chat-admin .vpn-empty-hint{display:block;font-size:13px;color:#5d6b73;margin-top:16px}
+#vpn-chat-admin .vpn-conversation-header{min-height:94px;padding:18px 24px}
+#vpn-chat-admin #vpn-customer h2{font-size:21px}
+#vpn-chat-admin #vpn-customer p{font-size:15px}
+#vpn-chat-admin #vpn-conversation-info{top:94px}
+#vpn-chat-admin #vpn-transcript{padding:28px;background:linear-gradient(135deg,#f1f7fb,#f9fbfc)}
+#vpn-chat-admin .vpn-msg{font-size:17px;line-height:1.65;padding:14px 18px;border-radius:6px 18px 18px 18px;box-shadow:0 3px 10px rgb(23 49 59 / 4%)}
+#vpn-chat-admin .vpn-msg strong{font-size:13px}
+#vpn-chat-admin .vpn-msg small{font-size:12px}
+#vpn-chat-admin .vpn-msg[data-sender=agent]{background:#dceef8;border-radius:18px 6px 18px 18px}
+#vpn-chat-admin .vpn-reply-area{padding:18px 22px 14px}
+#vpn-chat-admin #vpn-message{font-size:17px;min-height:52px;padding:13px 15px;border-radius:14px}
+#vpn-chat-admin #vpn-agent-send{height:52px;width:52px}
+#vpn-chat-admin .vpn-compose-options label,#vpn-chat-admin #vpn-send-status,#vpn-chat-admin #vpn-canned{font-size:14px}
+#vpn-chat-admin .vpn-fields label,#vpn-chat-admin details label,#vpn-chat-admin .vpn-info-help,#vpn-chat-admin summary{font-size:14px}
+@media(max-width:1100px){#vpn-chat-admin .vpn-workspace{grid-template-columns:340px minmax(0,1fr)}#vpn-chat-admin .vpn-empty-card{padding:28px 20px}}
+@media(max-width:780px){#vpn-chat-admin .vpn-workspace{display:block;height:calc(100dvh - 205px)}#vpn-chat-admin h1{font-size:24px}#vpn-chat-admin .vpn-conversation-header{padding:12px;min-height:94px}#vpn-chat-admin #vpn-customer h2{font-size:18px}#vpn-chat-admin #vpn-transcript{padding:16px}#vpn-chat-admin .vpn-reply-area{padding:12px}#vpn-chat-admin .vpn-compose-options{gap:8px}#vpn-chat-admin .vpn-msg{font-size:16px}#vpn-chat-admin .vpn-row{padding:16px}}
+@media(prefers-reduced-motion:reduce){#vpn-chat-admin .vpn-row{transition:none}}
+
+.vpn-history-label{display:flex;gap:8px;align-items:center;font-size:14px;margin-top:8px}.vpn-customer-history{max-width:360px;font-size:14px!important}.vpn-history-count{font-size:12px;color:#53697a}

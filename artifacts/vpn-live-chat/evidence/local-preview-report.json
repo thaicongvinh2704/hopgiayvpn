@@ -1,0 +1,15 @@
+{
+  "checks": 8,
+  "passed": [
+    "widget installed on existing local homepage",
+    "local demo challenge works without external service",
+    "local guest first message committed",
+    "local demo sales login and claim work",
+    "local sales reply reaches visitor",
+    "local reload restores persisted transcript",
+    "existing local theme and chat have no uncaught JS errors",
+    "demo credentials and test runtime protected from HTTP"
+  ],
+  "widget": "http://localhost/hopgiayvpn/",
+  "inbox": "http://localhost/hopgiayvpn/wp-admin/admin.php?page=vpn-live-chat"
+}

@@ -1,0 +1,27 @@
+{
+  "checks": 22,
+  "passed": [
+    "passive reader loads no full widget, session or poll",
+    "expired challenge preserves draft",
+    "visitor XSS rendered as text",
+    "guest cookie HttpOnly and SameSite Strict",
+    "HTTP private error response no-store",
+    "chat API removes reflected CORS header",
+    "lost acknowledgement keeps draft",
+    "network retry shows one saved message",
+    "minimized existing chat keeps slow unread sync",
+    "Escape returns keyboard focus to launcher",
+    "reload restores session transcript without email lookup",
+    "no persistent email/body storage",
+    "sales claim/reply reaches active visitor",
+    "internal note absent in real guest UI",
+    "mobile widget fits viewport",
+    "close/reopen keeps in-memory mobile draft",
+    "mobile inbox has no horizontal overflow",
+    "hidden-tab event stops polling",
+    "focus visibility resumes sync",
+    "no uncaught visitor JS errors",
+    "same-browser second tab restores and receives new message",
+    "lost first acknowledgement retries one lead and first message"
+  ]
+}

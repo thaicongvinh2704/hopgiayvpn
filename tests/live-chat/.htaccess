@@ -1,0 +1,2 @@
+# Test runtimes, DB fixtures and local demo credentials must never be served by Apache.
+Require all denied

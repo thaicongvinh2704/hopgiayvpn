@@ -1,0 +1,21 @@
+{
+  "checks": 16,
+  "passed": [
+    "desktop theme navigation renders",
+    "desktop existing WhatsApp link remains",
+    "desktop SEO description remains",
+    "desktop SEO schema remains",
+    "desktop scoped widget closes on theme",
+    "desktop theme/chat have no uncaught JS errors",
+    "desktop original quote form remains",
+    "mobile theme navigation renders",
+    "mobile existing WhatsApp link remains",
+    "mobile SEO description remains",
+    "mobile SEO schema remains",
+    "mobile launcher avoids conversion CTA",
+    "mobile scoped widget closes on theme",
+    "mobile theme/chat have no uncaught JS errors",
+    "mobile original quote form remains",
+    "custom-box REST namespace remains available"
+  ]
+}

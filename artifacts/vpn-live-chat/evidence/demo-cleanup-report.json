@@ -1,0 +1,8 @@
+{
+    "date": "2026-10-05",
+    "environment": "local",
+    "removed_test_conversations": 17,
+    "removed_test_messages": 30,
+    "preserved_conversations": 1,
+    "verification": "Test conversations/messages/outbox removed; other conversations preserved"
+}

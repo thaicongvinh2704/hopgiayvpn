@@ -1,0 +1,87 @@
+PASS InnoDB tables and migrations
+PASS idempotent activation
+PASS sales least privilege
+PASS guest mutation requires CSRF
+PASS guest identity requires cookie
+PASS reject Turnstile forged
+PASS reject Turnstile expired
+PASS reject Turnstile wrong-host-6ac30b8d8224a
+PASS reject Turnstile wrong-action-6ac30b8d8224b
+PASS reject Turnstile timeout-6ac30b8d8224c
+PASS first message accepted
+PASS start retry deduplicates lead
+PASS same start ID different payload conflicts
+PASS replayed Siteverify token rejected
+PASS same unverified email creates separate ownership
+PASS guest A cannot read B
+PASS guest A cannot write B
+PASS random cookie cannot recover history
+PASS subscriber cannot use inbox
+PASS agent REST nonce required
+PASS agent claim succeeds
+PASS second claimant receives conflict
+PASS agent cannot read another owner transcript
+PASS agent cannot reply to other owner
+PASS text XSS/SQL payload safely stored
+PASS message retry exactly once
+PASS retry payload mismatch conflicts
+PASS internal note saved
+PASS guest serializer excludes note and lead fields
+PASS private API no-store
+PASS owner can transfer with audit
+PASS previous owner loses access after transfer
+PASS state/transfer audit persisted
+PASS stale status update rejected
+PASS monotonic conversation cursor
+PASS delta pagination omits no committed visible message
+PASS cursor pages have no duplicates
+PASS close conversation
+PASS closed chat rejects new message
+PASS reopen label needs and follow-up
+PASS sales label separate from state
+PASS follow-up can close without date overriding status
+PASS closing clears pending follow-up
+PASS failure rolls back message and conversation sequence
+PASS cross-origin request denied
+PASS Fetch Metadata cross-site denied
+PASS 16 KiB body limit
+PASS malformed JSON denied
+PASS malformed UTF-8 denied
+PASS content type enforced
+PASS suspicious session has no challenge bypass
+PASS session re-challenge clears after verified send
+PASS idle session expiry
+PASS available heartbeat inside duty
+PASS stale presence offline
+PASS outside duty remains offline
+PASS agent cannot change canned templates
+PASS manager canned CRUD create
+PASS canned edit
+PASS canned delete
+PASS scoped temporary block
+PASS blocked session denied
+PASS unban restores access
+PASS allowed burst 0
+PASS allowed burst 1
+PASS allowed burst 2
+PASS allowed burst 3
+PASS allowed burst 4
+PASS allowed burst 5
+PASS allowed burst 6
+PASS allowed burst 7
+PASS allowed burst 8
+PASS allowed burst 9
+PASS quota rejects with Retry-After
+PASS outbox attempts only configured internal recipient
+PASS SMTP failure retains durable retry
+PASS backoff prevents notification flood
+PASS mail sink success drains retry queue
+PASS minimal internal email without transcript or bearer link
+PASS privacy export manager only
+PASS privacy erase requires verified request
+PASS authorized export includes internal record
+PASS deactivate retains leads
+PASS reactivation retains leads
+PASS verified erase transaction
+PASS erase removes transcript and outbox
+TOTAL 86 passed

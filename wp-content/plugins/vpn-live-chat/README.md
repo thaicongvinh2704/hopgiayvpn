@@ -1,0 +1,50 @@
+# VPN Live Chat 1.0.0
+
+Plugin độc lập cho WordPress, guest UI tiếng Anh, inbox sales tiếng Việt. PHP/WordPress REST + MySQL/MariaDB InnoDB + JavaScript thuần. ZIP chứa assets sẵn; production không chạy npm, Node, Redis hay WebSocket. Đây là bản MVP đã kiểm thử local; chưa phê duyệt production/pilot trên shared hosting.
+
+## Cài đặt và cấu hình pilot
+
+1. Sao lưu database và plugin đang dùng. Cài ZIP `vpn-live-chat-1.0.0.zip`, activate. **Widget và nhận chat mới mặc định tắt**, lịch trực và paths mặc định trống. Activation tạo bảng prefix thực tế, role và cron; không sửa core/theme/quote.
+2. Yêu cầu WordPress >=6.2, PHP >=8.0, HTTPS, database user có CREATE/ALTER và tất cả bảng chat dùng InnoDB. HTTPS bắt buộc cho khách; chỉ local loopback được dùng HTTP khi `WP_ENVIRONMENT_TYPE=local`.
+3. Tạo Turnstile widget riêng, allowlist hostname thực tế. Trong `wp-config.php` đặt `VPN_CHAT_TURNSTILE_SECRET` từ secret manager/biến môi trường của host. Ví dụ `define('VPN_CHAT_TURNSTILE_SECRET', getenv('VPN_CHAT_TURNSTILE_SECRET') ?: '');`. Không commit giá trị thật. Nhập **site key công khai** trong VPN Live Chat → Cấu hình. Backend kiểm tra success, hostname, action `vpn_chat_start`; timeout/failure không tạo chat mới. Token chỉ dùng một lần và hết hạn theo [Siteverify của Cloudflare](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/).
+4. Nhập fallback thực tế. Project hiện có `/contact/#quote`, email footer `sales.vpn@hopgiayvpn.com`, `paperbox@hopgiayvpn.com`, WhatsApp trong theme. Chủ website xác nhận kênh mong muốn rồi lưu URL đầy đủ hoặc `mailto:`; plugin không tự chọn hay gửi email tới khách.
+5. Nhập email đội sales cho SLA; cấu hình/kiểm tra SMTP đang có trên staging với mail sink. Plugin gọi `wp_mail`, tương thích adapter `vpn-gmail-smtp` trong repo. `wp_mail=true` chỉ là transport chấp nhận, không chứng minh delivery vào inbox. Health báo adapter/configuration; không tự gửi mail thử cho khách.
+6. Tạo WP users với role **VPN Chat Sales** (chỉ read + `vpn_chat_agent`) hoặc **VPN Chat Manager** (thêm `vpn_chat_manage`). Administrator được hai capability. Agent thấy hàng chờ chưa nhận và chat của mình; manager thấy tất cả. Không gán sales Administrator để sử dụng inbox. Bật 2FA qua giải pháp WP đang được công ty sử dụng/đánh giá tương thích; plugin này không tự triển khai 2FA.
+7. Chọn timezone IANA, lịch JSON theo ngày ISO 1–7, ví dụ `{"1":[["08:00","17:00"]],"2":[["08:00","17:00"]]}`. Ngày nghỉ mỗi dòng `YYYY-MM-DD`. Ca qua đêm chia thành hai ngày. Lịch trống = ngoài giờ; tự viết copy tiếng Anh với thời gian phản hồi mà sales chấp thuận. Không có cam kết 24/7 mặc định.
+8. Nhập paths **chính xác**, mỗi dòng một path; có phân biệt trailing slash. Ví dụ `/contact/` và path của một sản phẩm pilot thực tế. Không dùng wildcard mở toàn site. Bottom offset mặc định 100px để tránh thanh CTA mobile; kiểm tra thêm cookie banner/nút nổi thực tế.
+9. Loại REST namespace khỏi cache/CDN/service worker và kiểm tra response. Hoàn tất test staging/load trước khi bật hai flags; rollout từng nhóm trang. Secret thiếu, HTTPS thiếu hoặc bảng không InnoDB làm `accepting=false` và vẫn có fallback nếu đã cấu hình.
+
+## Cron, SMTP và cache
+
+- Worker event `vpn_chat_worker` mỗi phút, tối đa 10 jobs hoặc khoảng 15 giây mỗi lần. SMTP timeout 10 giây cho mail của worker. Khi host cho phép, panel scheduled task chạy `wp cron event run vpn_chat_worker --path=/duong/dan/wordpress` mỗi phút, với user có quyền trên site. Kiểm tra WP-CLI/PHP path thực tế trước khi dùng.
+- Nếu không có scheduler, WP-Cron là fallback phụ thuộc traffic. **Không tắt WP-Cron toàn site** để cài plugin. Health ghi `cron_disabled`, `last_runner`, pending, failed và oldest_due. Trong repo local `DISABLE_WP_CRON=true`, test gọi worker trực tiếp.
+- Outbox dedup theo hội thoại/lần quay lại hàng chờ, row lock + lease 120 giây chống runner chồng, backoff tới một giờ, tối đa 8 attempts. Jobs failed cần quản lý xử lý transport và requeue bằng công cụ quản trị database được kiểm soát (chỉ các rows đã xác định, đặt state=pending/due_at hiện tại/lease=NULL/lease_until=NULL). Không resend cả queue một cách mù quáng. Email SMTP có semantics at-least-once khi process chết ngay sau gửi trước lúc đánh dấu done; dedup giảm flood nhưng không bảo đảm exactly-once của SMTP.
+- CDN bypass cả `/wp-json/vpn-chat/v1/*` và biến thể `?rest_route=/vpn-chat/v1/...`; query có thể URL-encode dấu `/`. Không cache POST, nonce/bootstrap, login/admin. Plugin gửi `Cache-Control: private, no-store` cả response lỗi và bỏ CORS reflection mặc định của WP cho namespace này. Không tắt cache toàn site.
+- Exclude handles `vpn-chat-launcher`, `vpn-chat-admin`, globals `VPNChatLauncher`/`VPNChatAdmin`, widget.js và Turnstile khỏi combine/delay/Rocket Loader nếu công cụ tối ưu làm sai thứ tự. Plugin tải đầy đủ widget.js/Turnstile sau thao tác mở, không fetch/bootstrap/poll khi chỉ đọc trang. Launcher config chỉ chứa public URLs; cookie/CSRF không phát trong cached HTML.
+- Không có service worker riêng. Nếu site có worker, bổ sung network-only/bypass namespace chat và admin; kiểm tra caches thật. Không tự fetch link người khách gửi.
+
+## Phiên, dữ liệu và API
+
+- Guest secret 32 bytes CSPRNG trong cookie host-only HttpOnly, Secure trên HTTPS, SameSite Strict. DB chỉ lưu SHA-256; token không có trong URL/localStorage/log. CSRF HMAC riêng từ secret + WP nonce salt, header `X-VPN-CSRF` trên guest mutations. Idle 24h, absolute 7 ngày mặc định, có revoke. Đổi email không cấp lịch sử cũ; email luôn tự khai báo.
+- JSON mutations yêu cầu Origin đúng origin của `home_url`, Fetch Metadata same-origin/none nếu có, content type application/json, body <=16 KiB. CLI/integrations phải gửi Origin; cookies + CSRF/nonce vẫn bắt buộc. REST agent dùng login cookie + `X-WP-Nonce` + capability. Không có API guest theo email hoặc public download.
+- Mỗi hội thoại khóa dòng để cấp `seq` trong transaction; first lead + message + outbox + audit cùng commit. Ack sau commit; retry `client_message_id` (16–64 chữ/số/_/-) có unique `(conversation_id,sender_scope,client_message_id)`, payload khác trả 409. Tin và note có cùng sequence nhưng guest SELECT loại note; guest serializer không trả lead/email/owner/metadata/needs. Cursors chụp seq đã commit và paginate 50; không dùng global auto increment để đồng bộ.
+- Claims/update dùng row lock + version; transfer được audit. Bảng `messages.id` là khóa nội bộ, không làm cursor. Agent read acknowledgment phải bấm **Đánh dấu đã đọc đến đây**; guest UI chỉ báo Saved, không tự báo đã đọc.
+- Rate limit dùng counter rows atomic, fixed UTC windows: 10 send/30s, 60/5min, 3 new conversations/10min theo phiên; ngưỡng IP rộng hơn 100 create/10min và 1000 sends/5min. Bootstrap 120/IP/10min, auth/CSRF failures 100/IP/5min, sync 60/session/minute, agent 180/user/minute. Window boundary có thể cho burst hai windows; tuning/WAF trên staging nếu cần sliding window. 429 có Retry-After 30s. IP được HMAC, chỉ dùng `REMOTE_ADDR`; **không tin X-Forwarded-For hoặc CF-Connecting-IP tùy ý**.
+- Với Cloudflare, host phải allowlist proxy thật ở web server, normalize REMOTE_ADDR bằng module trusted proxy và chặn đường truy cập origin ngoài proxy trước khi dùng header IP. Tự xác minh ranges/cấu hình host; plugin không tự cấu hình firewall/proxy.
+- Manager có thể yêu cầu re-challenge, block phiên có lý do/thời hạn, review/unban. Lệnh đánh spam và block riêng; spam đóng gửi tin nhưng không tự cấm một IP dùng chung. Không cấm Gmail/VPN/country/Hi/Price/link doanh nghiệp. Không có hệ thống chấm điểm doanh nghiệp hay autofill honeypot.
+
+API namespace `/wp-json/vpn-chat/v1`:
+
+| Routes | Quyền |
+|---|---|
+| POST bootstrap | Same-origin, quota; phát phiên và CSRF sau khi mở |
+| GET guest/sync; POST guest/start/send/revoke | Cookie phiên hợp lệ, ownership; mutation thêm CSRF; start Turnstile |
+| POST agent/sync/send/update | WP user + REST nonce + capability, ownership kiểm tra backend |
+| POST agent/canned | Manager CRUD nội dung mẫu |
+| GET manager/health; POST manager/block/privacy | Manager; xóa cần verified_request |
+
+## Vận hành và giới hạn
+
+Xem [hướng dẫn sales](docs/SALES.md), [dữ liệu/retention](docs/DATA.md), [monitoring/rollback](docs/OPERATIONS.md) và [báo cáo kiểm thử](docs/TEST-REPORT.md). Upload tắt; không AI, CRM đầy đủ, native app, email verification xuyên thiết bị, nhận email hai chiều hay push đảm bảo khi đóng browser. Nhu cầu/nhãn/source link dùng cho follow-up thủ công, không sửa backend quote. Không phát GA4/dataLayer events trong MVP; nếu thêm sau này, phải xử lý consent trước và không gửi PII/IDs/body.
+
+Dependencies runtime: WordPress APIs, PHP JSON/CSPRNG/mysqli/UTF-8 helpers, InnoDB, outbound HTTPS tới Siteverify khi nhận mới, browser Fetch/AbortController. Không có dependency Composer/npm cho plugin. Developer tests dùng Chrome + Playwright và MariaDB local; `tests/live-chat` có setup riêng với credentials giả, mail sink và Siteverify mock, **không đóng gói tests/config/mocks trong ZIP**. Khi đóng widget hoặc tab hidden, polling dừng; mở/focus sync lại. BroadcastChannel nhắc tab cùng browser sync; không có leader election, nhiều tab vẫn dùng chung quota.

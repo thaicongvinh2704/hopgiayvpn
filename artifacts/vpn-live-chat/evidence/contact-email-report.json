@@ -1,0 +1,26 @@
+{
+    "version": "1.4.0",
+    "checks": 15,
+    "passed": [
+        "always Online label",
+        "green Online dot",
+        "no offline notice in always-online mode",
+        "follow-up email stays optional after start",
+        "email saved during conversation",
+        "saved email restored on reload",
+        "sync preserves unsaved email draft",
+        "email can be updated",
+        "email and composer fit mobile",
+        "invalid contact email rejected",
+        "contact requires CSRF",
+        "other guest cannot change contact",
+        "email can be cleared without closing chat",
+        "chat still works after contact edits",
+        "saved contact available to sales inbox"
+    ],
+    "created_fixture_ids": [
+        "bd9b7001-de36-4679-8d58-a452031052e7"
+    ],
+    "marker": "Contact capture QA 1791192904489",
+    "temporary_chats_deleted": 1
+}

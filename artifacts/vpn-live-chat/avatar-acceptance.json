@@ -1,0 +1,31 @@
+{
+  "checks": 22,
+  "passed": [
+    "no greeting before opening 1366",
+    "greeting waits after opening 1366",
+    "arrival identified as automatic 1366",
+    "real lightweight avatar 1366",
+    "text-only controls 1366",
+    "panel fits viewport 1366",
+    "first message composer fixed at bottom 1366",
+    "attachment JSON refused guest/start",
+    "attachment JSON refused guest/send",
+    "multipart upload refused",
+    "Escape closes panel",
+    "welcome retained without duplicate on reopen",
+    "one automatic welcome",
+    "no uncaught errors 1366",
+    "no greeting before opening 390",
+    "greeting waits after opening 390",
+    "arrival identified as automatic 390",
+    "real lightweight avatar 390",
+    "text-only controls 390",
+    "panel fits viewport 390",
+    "first message composer fixed at bottom 390",
+    "no uncaught errors 390"
+  ],
+  "version": "1.1.1",
+  "local_flow_checks": 8,
+  "reference_images_available": true,
+  "production_deployed": false
+}

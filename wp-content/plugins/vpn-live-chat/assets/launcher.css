@@ -1,0 +1,36 @@
+/* Palette audited against custom-box-theme main.css:4945 and responsive.css:4085. */
+.vpn-chat-launch,.vpn-chat-greeting,.vpn-chat-panel{
+ --vpn-chat-primary:var(--color-primary,var(--mobile-ux-primary,#2a6a92));
+ --vpn-chat-primary-hover:var(--color-primary-dark,var(--mobile-ux-primary-dark,#164c6d));
+ --vpn-chat-surface:var(--color-surface,#fff);--vpn-chat-background:var(--color-surface-soft,var(--mobile-ux-soft,#f7fafc));
+ --vpn-chat-agent:var(--color-primary-soft,#e9f3f8);
+ --vpn-chat-text:var(--color-ink,var(--mobile-ux-ink,#17313b));
+ --vpn-chat-muted:var(--color-muted,var(--mobile-ux-muted,#5d6b73));
+ --vpn-chat-border:var(--color-line,var(--mobile-ux-line,#dce8ee));
+ --vpn-chat-unread:var(--color-primary-dark,#164c6d);
+ --vpn-chat-shadow:0 12px 32px rgb(23 49 59 / 18%);
+ font-family:Arial,Helvetica,sans-serif!important;box-sizing:border-box;
+}
+.vpn-chat-launch[hidden],.vpn-chat-greeting[hidden],.vpn-chat-launch [hidden],.vpn-chat-greeting-suppressed{display:none!important}
+.vpn-chat-launch{position:fixed;right:20px;bottom:100px;z-index:1200;width:58px;height:58px;min-height:58px;padding:0;border:0;border-radius:50%;display:grid;place-items:center;background:var(--vpn-chat-primary);color:#fff;box-shadow:0 6px 20px rgb(23 49 59 / 22%);cursor:pointer;transition:background .18s,transform .18s}
+.vpn-chat-launch:hover{background:var(--vpn-chat-primary-hover);transform:translateY(-2px)}
+.vpn-chat-launch:focus-visible,.vpn-chat-greeting button:focus-visible{outline:3px solid var(--vpn-chat-primary-hover);outline-offset:4px}
+.vpn-chat-launch svg{display:block;width:26px;height:26px;pointer-events:none}
+.vpn-chat-launch .vpn-chat-icon-close,.vpn-chat-launch[data-open=true] .vpn-chat-icon-open{display:none}
+.vpn-chat-launch[data-open=true] .vpn-chat-icon-close{display:block}
+.vpn-chat-unread{position:absolute;right:-4px;top:-4px;display:grid;place-items:center;min-width:24px;height:24px;padding:0 5px;border:2px solid #fff;border-radius:999px;background:var(--vpn-chat-unread);color:#fff;font:bold 12px/1 Arial,sans-serif}
+.vpn-chat-greeting{position:fixed;right:20px;bottom:172px;z-index:1190;max-width:min(272px,calc(100vw - 32px));border:1px solid var(--vpn-chat-border);border-radius:14px 14px 4px 14px;background:var(--vpn-chat-surface);box-shadow:0 6px 24px rgb(23 49 59 / 14%);color:var(--vpn-chat-text);padding:0}
+.vpn-chat-greeting .vpn-chat-greeting-open{display:block;background:transparent;color:var(--vpn-chat-text);border:0;border-radius:14px;padding:17px 42px 17px 18px;cursor:pointer;text-align:left;min-height:64px;width:100%}
+.vpn-chat-greeting p{font:14px/1.55 Arial,sans-serif;margin:0;color:inherit}
+.vpn-chat-greeting .vpn-chat-greeting-dismiss{position:absolute;top:1px;right:1px;width:40px;min-height:44px;height:44px;display:grid;place-items:center;background:transparent;border:0;color:var(--vpn-chat-muted);font:24px/1 Arial,sans-serif;padding:0;cursor:pointer}
+@media(prefers-reduced-motion:reduce){.vpn-chat-launch{transition:none}}
+.vpn-chat-greeting{max-width:min(320px,calc(100vw - 32px));border-radius:18px 18px 6px 18px;border-top:3px solid var(--vpn-chat-primary);box-shadow:0 12px 36px rgb(23 49 59 / 18%)}
+.vpn-chat-greeting .vpn-chat-greeting-open{padding:18px;text-align:left;border-radius:18px;width:100%}
+.vpn-chat-invite-identity{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-right:20px}
+.vpn-chat-invite-avatar{position:relative;display:grid;place-items:center;width:44px;height:44px;flex-shrink:0;border-radius:50%;overflow:hidden;background:var(--vpn-chat-agent);color:var(--vpn-chat-primary);font-weight:700}
+.vpn-chat-invite-avatar img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.vpn-chat-invite-identity strong{display:block;font-size:16px;line-height:1.5;color:var(--vpn-chat-text)}
+.vpn-chat-invite-identity>span>span{display:block;font-size:12px;line-height:1.5;color:var(--vpn-chat-muted)}
+.vpn-chat-greeting p{font-size:16px;line-height:1.6}
+.vpn-chat-invite-action{display:block;text-align:center;margin-top:14px;padding:11px 14px;background:var(--vpn-chat-primary);border-radius:10px;color:#fff;font-size:15px;font-weight:700;line-height:1.5}
+.vpn-chat-greeting-open:hover .vpn-chat-invite-action{background:var(--vpn-chat-primary-hover)}

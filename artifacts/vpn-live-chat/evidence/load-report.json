@@ -1,0 +1,49 @@
+{
+  "environment": "Local Windows PHP built-in single-worker server; not representative of shared hosting. No production requests.",
+  "reports": [
+    {
+      "guests": 5,
+      "sales": 3,
+      "guest_interval_ms": 3000,
+      "sales_interval_ms": 5000,
+      "duration_ms": 16080,
+      "api_requests": 34,
+      "p95_ms": 1939,
+      "max_ms": 2139,
+      "errors": []
+    },
+    {
+      "guests": 10,
+      "sales": 3,
+      "guest_interval_ms": 3000,
+      "sales_interval_ms": 5000,
+      "duration_ms": 16913,
+      "api_requests": 59,
+      "p95_ms": 2623,
+      "max_ms": 3116,
+      "errors": []
+    },
+    {
+      "guests": 20,
+      "sales": 3,
+      "guest_interval_ms": 3000,
+      "sales_interval_ms": 5000,
+      "duration_ms": 20077,
+      "api_requests": 89,
+      "p95_ms": 5289,
+      "max_ms": 5302,
+      "errors": []
+    },
+    {
+      "guests": 30,
+      "sales": 3,
+      "guest_interval_ms": 3000,
+      "sales_interval_ms": 5000,
+      "duration_ms": 22214,
+      "api_requests": 100,
+      "p95_ms": 7372,
+      "max_ms": 7375,
+      "errors": []
+    }
+  ]
+}

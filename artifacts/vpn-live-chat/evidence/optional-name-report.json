@@ -1,0 +1,21 @@
+{
+    "version": "1.3.3",
+    "checks": 9,
+    "passed": [
+        "name is optional",
+        "email remains optional",
+        "chat starts with no name or email",
+        "anonymous history restored by session",
+        "inbox anonymous fallback",
+        "conversation anonymous title",
+        "agent can reply to anonymous guest",
+        "invalid supplied name rejected",
+        "API accepts omitted name and email"
+    ],
+    "created_fixture_ids": [
+        "0fe34813-2878-40a0-85c0-1b1d8e2074ed",
+        "7955d139-640a-4d8e-b3db-7c076fab6021"
+    ],
+    "marker": "Anonymous chat QA 1791192503177",
+    "temporary_chats_deleted": 2
+}

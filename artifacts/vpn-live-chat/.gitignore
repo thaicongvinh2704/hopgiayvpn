@@ -1,0 +1,4 @@
+# Keep local screenshots, generated packages and duplicate source diffs out of Git.
+*.png
+*.zip
+*.diff
