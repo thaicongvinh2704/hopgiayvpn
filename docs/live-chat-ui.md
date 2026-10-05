@@ -103,3 +103,8 @@ Khách không cần email để bắt đầu; ô email vẫn nằm phía trên, 
 ## 1.5.0 — Hồ sơ khách và lịch sử
 
 Khách ẩn danh có mã riêng. Widget đặt nút Continue a previous conversation và menu lịch sử dưới header, xác minh email qua mã 6 số tùy chọn. Admin gom một dòng mỗi khách trong phạm vi bộ lọc/quyền, badge Đã xác minh và menu chọn lịch sử. Phiên ngắn hạn tách cookie nhận diện 180 ngày; không tự ghép theo email chưa xác minh. Chi tiết và phần chưa nghiệm thu production tại live-chat-status.md.
+
+
+## 1.5.1 — Tin tự động nhắc email
+
+Khi không có nhân viên available theo lịch/heartbeat thật, hiện một bubble Automatic message nhắc để lại email và nút Leave your email. Header Online cố định vẫn theo cấu hình người dùng. Ẩn nhắc sau khi lưu email, có người trực hoặc cuộc chat đã đóng; không tạo tin database/unread giả.

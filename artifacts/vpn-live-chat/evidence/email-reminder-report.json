@@ -1,0 +1,18 @@
+{
+  "version": "1.5.1",
+  "checks": 11,
+  "passed": [
+    "unattended chat automatically asks for email",
+    "configured Online header retained",
+    "reminder clearly labelled automatic",
+    "email action focuses optional pre-chat email",
+    "email remains optional",
+    "email action focuses follow-up email during chat",
+    "reminder hides after saved email",
+    "reminder returns when contact email removed",
+    "reminder hides when staff becomes available",
+    "polling never duplicates automatic message",
+    "mobile composer remains accessible"
+  ],
+  "fixture_mode": "mock HTTP responses; no persisted messages"
+}

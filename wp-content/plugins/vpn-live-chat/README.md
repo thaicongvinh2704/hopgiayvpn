@@ -1,10 +1,10 @@
-# VPN Live Chat 1.0.0
+# VPN Live Chat 1.5.1
 
 Plugin độc lập cho WordPress, guest UI tiếng Anh, inbox sales tiếng Việt. PHP/WordPress REST + MySQL/MariaDB InnoDB + JavaScript thuần. ZIP chứa assets sẵn; production không chạy npm, Node, Redis hay WebSocket. Đây là bản MVP đã kiểm thử local; chưa phê duyệt production/pilot trên shared hosting.
 
 ## Cài đặt và cấu hình pilot
 
-1. Sao lưu database và plugin đang dùng. Cài ZIP `vpn-live-chat-1.0.0.zip`, activate. **Widget và nhận chat mới mặc định tắt**, lịch trực và paths mặc định trống. Activation tạo bảng prefix thực tế, role và cron; không sửa core/theme/quote.
+1. Sao lưu database và plugin đang dùng. Deploy thư mục `wp-content/plugins/vpn-live-chat/` từ Git, rồi kích hoạt plugin; có thể dùng ZIP đúng phiên bản nếu cần. **Widget và nhận chat mới mặc định tắt**, lịch trực và paths mặc định trống. Activation tạo bảng prefix thực tế, role và cron; không sửa core/theme/quote.
 2. Yêu cầu WordPress >=6.2, PHP >=8.0, HTTPS, database user có CREATE/ALTER và tất cả bảng chat dùng InnoDB. HTTPS bắt buộc cho khách; chỉ local loopback được dùng HTTP khi `WP_ENVIRONMENT_TYPE=local`.
 3. Tạo Turnstile widget riêng, allowlist hostname thực tế. Trong `wp-config.php` đặt `VPN_CHAT_TURNSTILE_SECRET` từ secret manager/biến môi trường của host. Ví dụ `define('VPN_CHAT_TURNSTILE_SECRET', getenv('VPN_CHAT_TURNSTILE_SECRET') ?: '');`. Không commit giá trị thật. Nhập **site key công khai** trong VPN Live Chat → Cấu hình. Backend kiểm tra success, hostname, action `vpn_chat_start`; timeout/failure không tạo chat mới. Token chỉ dùng một lần và hết hạn theo [Siteverify của Cloudflare](https://developers.cloudflare.com/turnstile/get-started/server-side-validation/).
 4. Nhập fallback thực tế. Project hiện có `/contact/#quote`, email footer `sales.vpn@hopgiayvpn.com`, `paperbox@hopgiayvpn.com`, WhatsApp trong theme. Chủ website xác nhận kênh mong muốn rồi lưu URL đầy đủ hoặc `mailto:`; plugin không tự chọn hay gửi email tới khách.
@@ -48,3 +48,19 @@ API namespace `/wp-json/vpn-chat/v1`:
 Xem [hướng dẫn sales](docs/SALES.md), [dữ liệu/retention](docs/DATA.md), [monitoring/rollback](docs/OPERATIONS.md) và [báo cáo kiểm thử](docs/TEST-REPORT.md). Upload tắt; không AI, CRM đầy đủ, native app, email verification xuyên thiết bị, nhận email hai chiều hay push đảm bảo khi đóng browser. Nhu cầu/nhãn/source link dùng cho follow-up thủ công, không sửa backend quote. Không phát GA4/dataLayer events trong MVP; nếu thêm sau này, phải xử lý consent trước và không gửi PII/IDs/body.
 
 Dependencies runtime: WordPress APIs, PHP JSON/CSPRNG/mysqli/UTF-8 helpers, InnoDB, outbound HTTPS tới Siteverify khi nhận mới, browser Fetch/AbortController. Không có dependency Composer/npm cho plugin. Developer tests dùng Chrome + Playwright và MariaDB local; `tests/live-chat` có setup riêng với credentials giả, mail sink và Siteverify mock, **không đóng gói tests/config/mocks trong ZIP**. Khi đóng widget hoặc tab hidden, polling dừng; mở/focus sync lại. BroadcastChannel nhắc tab cùng browser sync; không có leader election, nhiều tab vẫn dùng chung quota.
+
+
+## Deploy bản 1.5.1: điều kiện sử dụng thực tế
+
+Mã nguồn từ Git không bao gồm option database, Media Library, secret Turnstile hoặc SMTP của local. Deploy mới không tự bật widget. Nếu production đã có plugin và cấu hình hợp lệ, cập nhật code giữ cấu hình hiện tại; migration schema chạy khi plugin được tải, không cần xóa bảng. Xóa cache assets/CDN sau cập nhật.
+
+Lần đầu vào VPN Live Chat → Cấu hình:
+
+- Bật widget và nhận chat mới; nhập paths production đúng, ví dụ `/` và `/contact/` thay các path `/hopgiayvpn/...` của local.
+- Cấu hình Turnstile site key cho domain thật, secret ngoài Git trong wp-config/env, HTTPS và kiểm tra Health/InnoDB.
+- Chọn Tho Nguyen, tải avatar vào Media Library production và chọn đúng ID; ID 8869 của local không được mặc định dùng cho production. Bật danh tính chung, Online cố định và lời mời chat nếu muốn giống cấu hình local đã duyệt.
+- Đặt thông báo ngoài giờ: “Thanks for reaching out! Please leave your email address so we can get back to you as soon as possible.” Giá trị mặc định mới chỉ áp dụng khi chưa lưu giá trị cũ; nếu production đã có copy khác, thay tại Cấu hình.
+- Đặt lịch trực/timezone và nhân viên Online trong inbox khi trực. Lời nhắc dựa lịch/heartbeat thật, kể cả khi header luôn Online. Tin tự động ẩn sau khi khách lưu email hoặc nhân viên available.
+- Kiểm tra SMTP thật cho email xác minh và nhắc SLA; scheduler cho outbox/cleanup; bypass cache cho REST chat. Chỉ deploy plugin production, không chạy installer demo hoặc sao chép runtime/database local.
+
+Khách để lại email là lưu thông tin liên hệ. Phản hồi sales trong inbox được gửi tới widget qua polling, **chưa tự gửi phản hồi chat tới email khách**. Việc gửi email liên hệ do sales thực hiện qua kênh email hiện có. SMTP production, tải nhiều khách và hosting thật vẫn cần nghiệm thu trước khi coi là hoàn tất vận hành.

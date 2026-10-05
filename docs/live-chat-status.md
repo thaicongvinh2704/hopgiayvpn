@@ -1,6 +1,6 @@
 # VPN Live Chat — Tài liệu chức năng và tình trạng hoàn thành
 
-**Cập nhật:** 05/10/2026 · **Plugin:** 1.5.0 · **Schema:** 3
+**Cập nhật:** 05/10/2026 · **Plugin:** 1.5.1 · **Schema:** 3
 
 Đây là tài liệu tổng hợp hiện trạng mới nhất, dùng để biết đã làm gì, còn thiếu gì và tiếp tục công việc sau này. Các báo cáo phiên bản cũ được giữ làm bằng chứng kiểm thử, không thay thế hiện trạng trong tài liệu này. Khi sửa tính năng, cần cập nhật phiên bản, các bảng trạng thái và kết quả kiểm thử tại đây.
 
@@ -309,3 +309,16 @@ Phần nhận diện dài hạn/đa trình duyệt đã được triển khai tr
 Bằng chứng: `artifacts/vpn-live-chat/evidence/identity-report.json`, `identity-admin.png`. Tin kiểm thử tạo trong lượt này được dọn theo UUID và nội dung đầu có prefix Identity QA; dữ liệu chat thật được giữ.
 
 Kiểm thử 1.5.0: **32 checks** nhận diện/khôi phục/phân quyền/mã xác minh/block và **8 checks** luồng gửi–sales trả lời–reload thực tế đạt; PHP lint và JS syntax đạt. Đã dọn **4 hội thoại QA** sau lượt kiểm tra cuối, giữ **2 hội thoại thật**. Báo cáo dọn: `artifacts/vpn-live-chat/evidence/identity-cleanup-report.json`. SMTP ngoài local và các kiểm chứng production ở trên vẫn chưa nghiệm thu.
+
+
+## Nhắc để lại email khi không có người trực — 1.5.1
+
+Đã bật trên local nội dung tiếng Anh phù hợp widget: **“Thanks for reaching out! Please leave your email address so we can get back to you as soon as possible.”** Đây là tin tự động có nhãn Automatic message, kèm nút Leave your email để focus đúng ô email (trước hoặc sau khi bắt đầu chat). Email vẫn không bắt buộc.
+
+Server xuất `agent_available` dựa lịch trực và heartbeat thực tế, trước khi áp dụng always_online. Vì vậy header Tho Nguyen / Sale Manager vẫn Online theo cấu hình hiện tại, nhưng lời nhắc email xuất hiện nếu người phụ trách không available, tạm vắng, heartbeat hết hạn hoặc ngoài lịch trực. Sau khi email được lưu hoặc có người available, lời nhắc ẩn; polling không tạo bản sao. Chat đã đóng không nhắc nhập email. Lời nhắc hiển thị trong widget, không giả làm tin nhân viên đã gửi và không thêm tin vào database, unread hay outbox.
+
+Kiểm tra: 4 trạng thái backend (available, away, offline, heartbeat hết hạn), 11 checks browser về điều kiện hiện/ẩn, nhãn tự động, focus ô email, email tùy chọn, không lặp và mobile. Browser sử dụng mock HTTP cho các thay đổi trạng thái, không tạo tin mẫu trong database; backend dùng transaction rollback. Báo cáo: `artifacts/vpn-live-chat/evidence/email-reminder-report.json`. PHP lint/JS syntax đạt.
+
+## Triển khai từ Git — 1.5.1
+
+Cấu hình lưu trong database, không trong Git. Cài mới cần activate plugin, bật widget/nhận chat và paths production, Turnstile thật, HTTPS, avatar production và lịch trực; cập nhật plugin đã cấu hình thì giữ options cũ. Nếu có offline_copy cũ, đổi tại Cấu hình để dùng lời nhắc email mới. Email khách được lưu để sales liên hệ, chưa có tự gửi phản hồi chat qua email khách. SMTP thật phục vụ mã xác minh/nhắc SLA vẫn cần nghiệm thu. Hướng dẫn chi tiết tại wp-content/plugins/vpn-live-chat/README.md mục Deploy bản 1.5.1.

@@ -6,7 +6,7 @@ final class VPN_Chat_Settings {
             'widget' => false, 'accept_new' => false, 'paths' => [],
             'site_key' => '', 'fallback_url' => '', 'sales_email' => '',
             'timezone' => 'Asia/Ho_Chi_Minh', 'hours' => [], 'holidays' => [],
-            'offline_copy' => 'Our team is currently away. Leave a message and we will reply during our next business hours.',
+            'offline_copy' => 'Thanks for reaching out! Please leave your email address so we can get back to you as soon as possible.',
             'max_chars' => 2000, 'idle_hours' => 24, 'absolute_days' => 7,
             'retention_days' => 0, 'sla_minutes' => 15, 'heartbeat_seconds' => 30,
             'presence_seconds' => 90, 'short_limit' => 10, 'long_limit' => 60,
@@ -44,7 +44,8 @@ final class VPN_Chat_Settings {
         $args=[gmdate('Y-m-d H:i:s',time()-$s['presence_seconds'])];if($owner)$args[]=$owner;
         $state=(string)$wpdb->get_var($wpdb->prepare($sql,$args));
         $presence=self::on_duty() ? (['available'=>'online','away'=>'away'][$state]??'offline') : 'offline';
+        $agent_available=$presence==='online';
         if($s['always_online'])$presence='online';
-        return ['accepting' => (bool) self::ready(), 'online' => $presence==='online', 'presence'=>$presence, 'support'=>$owner ? VPN_Chat_Profiles::user($owner) : VPN_Chat_Profiles::support(), 'offline_copy' => $s['offline_copy'], 'site_key' => $s['site_key'], 'max_chars' => $s['max_chars'], 'fallback_url' => $s['fallback_url']];
+        return ['accepting' => (bool) self::ready(), 'online' => $presence==='online', 'presence'=>$presence, 'agent_available'=>$agent_available, 'support'=>$owner ? VPN_Chat_Profiles::user($owner) : VPN_Chat_Profiles::support(), 'offline_copy' => $s['offline_copy'], 'site_key' => $s['site_key'], 'max_chars' => $s['max_chars'], 'fallback_url' => $s['fallback_url']];
     }
 }
