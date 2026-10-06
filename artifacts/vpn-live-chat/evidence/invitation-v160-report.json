@@ -1,0 +1,32 @@
+{
+  "version": "1.6.0",
+  "checks": 25,
+  "passed": [
+    "invitation waits before arrival 1366",
+    "clear invitation copy 1366",
+    "real avatar loads 1366",
+    "label visible on launcher 1366",
+    "invitation opens no guest session or fake message 1366",
+    "pulse limited to three cycles 1366",
+    "invitation fits and avoids bottom CTA 1366",
+    "unopened invitation remains available after navigation 1366",
+    "explicit dismissal persists 1366",
+    "no page errors 1366",
+    "invitation waits before arrival 390",
+    "clear invitation copy 390",
+    "real avatar loads 390",
+    "label visible on launcher 390",
+    "invitation opens no guest session or fake message 390",
+    "pulse limited to three cycles 390",
+    "invitation fits and avoids bottom CTA 390",
+    "unopened invitation remains available after navigation 390",
+    "explicit dismissal persists 390",
+    "no page errors 390",
+    "reduced motion disables halo",
+    "reduced motion disables entrance",
+    "invitation action opens real widget",
+    "open chat retains compact close button",
+    "admin can disable invitation"
+  ],
+  "mode": "actual plugin assets with mock homepage/bootstrap; no database messages"
+}

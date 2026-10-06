@@ -10,7 +10,7 @@ plugin = root / 'wp-content' / 'plugins' / 'vpn-live-chat'
 output = root / 'artifacts' / 'vpn-live-chat'
 output.mkdir(parents=True, exist_ok=True)
 files = sorted(p for p in plugin.rglob('*') if p.is_file())
-allowed = {'.php', '.js', '.css', '.md'}
+allowed = {'.php', '.js', '.css', '.md', '.png'}
 assert all(p.suffix in allowed for p in files), 'Unexpected release artifact'
 version = re.search(r"define\('VPN_CHAT_VERSION', '([^']+)'\)", (plugin / 'vpn-live-chat.php').read_text(encoding='utf-8')).group(1)
 package = output / f'vpn-live-chat-{version}.zip'

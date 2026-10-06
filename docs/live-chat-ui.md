@@ -108,3 +108,7 @@ Khách ẩn danh có mã riêng. Widget đặt nút Continue a previous conversa
 ## 1.5.1 — Tin tự động nhắc email
 
 Khi không có nhân viên available theo lịch/heartbeat thật, hiện một bubble Automatic message nhắc để lại email và nút Leave your email. Header Online cố định vẫn theo cấu hình người dùng. Ẩn nhắc sau khi lưu email, có người trực hoặc cuộc chat đã đóng; không tạo tin database/unread giả.
+
+## 1.6.0 — Lời mời nổi bật, 06/10/2026
+
+Nút Chat with Sales có nhãn dễ đọc. Card avatar/Tho Nguyen/Sale Manager mời khách hỏi báo giá hoặc chọn bao bì, hiện sau 2,5 giây và giữ qua đổi trang cho đến khi khách đóng hoặc mở chat. Animation vào nhẹ, vòng sáng và nudge chỉ ba lần; hỗ trợ reduced motion. Nâng cấp bật lời mời một lần để sửa cấu hình greeting_enabled=false trên production, không ghi đè lựa chọn admin về sau. Avatar mặc định nhỏ đi kèm plugin giúp deploy không phụ thuộc Media Library local. 25 checks browser, 3 checks migration và kiểm tra trang local thật desktop/mobile đạt; không tạo chat mẫu.

@@ -72,7 +72,9 @@ final class VPN_Chat_Profiles {
     }
     public static function support(): array {
         $s=VPN_Chat_Settings::get();
-        return self::make($s['support_name'],(int)$s['support_avatar_id']);
+        $profile=self::make($s['support_name'],(int)$s['support_avatar_id']);
+        if(!$profile['avatar'] && $s['support_name']==='Tho Nguyen')$profile['avatar']=plugins_url('assets/tho-nguyen.png',VPN_CHAT_FILE);
+        return $profile;
     }
     public static function user(int $id): array {
         $s=VPN_Chat_Settings::get();

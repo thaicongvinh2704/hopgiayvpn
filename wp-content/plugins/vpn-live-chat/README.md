@@ -1,4 +1,4 @@
-# VPN Live Chat 1.5.1
+# VPN Live Chat 1.6.0
 
 Plugin độc lập cho WordPress, guest UI tiếng Anh, inbox sales tiếng Việt. PHP/WordPress REST + MySQL/MariaDB InnoDB + JavaScript thuần. ZIP chứa assets sẵn; production không chạy npm, Node, Redis hay WebSocket. Đây là bản MVP đã kiểm thử local; chưa phê duyệt production/pilot trên shared hosting.
 
@@ -64,3 +64,9 @@ Lần đầu vào VPN Live Chat → Cấu hình:
 - Kiểm tra SMTP thật cho email xác minh và nhắc SLA; scheduler cho outbox/cleanup; bypass cache cho REST chat. Chỉ deploy plugin production, không chạy installer demo hoặc sao chép runtime/database local.
 
 Khách để lại email là lưu thông tin liên hệ. Phản hồi sales trong inbox được gửi tới widget qua polling, **chưa tự gửi phản hồi chat tới email khách**. Việc gửi email liên hệ do sales thực hiện qua kênh email hiện có. SMTP production, tải nhiều khách và hosting thật vẫn cần nghiệm thu trước khi coi là hoàn tất vận hành.
+
+## Nâng cấp lời mời chat — 1.6.0
+
+Deploy toàn bộ thư mục plugin, gồm ảnh `assets/tho-nguyen.png`. Bản nâng cấp bật `greeting_enabled` một lần và ghi marker `vpn_chat_invitation_version`; lựa chọn tắt sau đó của admin được giữ. Purge cache HTML/assets/CDN để trang dùng launcher 1.6.0 và public config mới. Không bật lại plugin, thay secret hay sao chép database local chỉ để cập nhật lời mời.
+
+Card xuất hiện sau 2,5 giây, có CTA và avatar hỗ trợ. Nút **Chat with Sales** có vòng sáng nhẹ ba lần rồi dừng; reduced motion tắt animation. Đóng/mở chat sẽ ẩn lời mời trong tab. Khi tên hỗ trợ là Tho Nguyen và không có avatar Media Library hợp lệ, ảnh đi kèm plugin được dùng; ảnh tùy chỉnh vẫn được ưu tiên.

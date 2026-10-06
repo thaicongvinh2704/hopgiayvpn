@@ -1,6 +1,6 @@
 # VPN Live Chat — Tài liệu chức năng và tình trạng hoàn thành
 
-**Cập nhật:** 05/10/2026 · **Plugin:** 1.5.1 · **Schema:** 3
+**Cập nhật:** 06/10/2026 · **Plugin:** 1.6.0 · **Schema:** 3
 
 Đây là tài liệu tổng hợp hiện trạng mới nhất, dùng để biết đã làm gì, còn thiếu gì và tiếp tục công việc sau này. Các báo cáo phiên bản cũ được giữ làm bằng chứng kiểm thử, không thay thế hiện trạng trong tài liệu này. Khi sửa tính năng, cần cập nhật phiên bản, các bảng trạng thái và kết quả kiểm thử tại đây.
 
@@ -322,3 +322,18 @@ Kiểm tra: 4 trạng thái backend (available, away, offline, heartbeat hết h
 ## Triển khai từ Git — 1.5.1
 
 Cấu hình lưu trong database, không trong Git. Cài mới cần activate plugin, bật widget/nhận chat và paths production, Turnstile thật, HTTPS, avatar production và lịch trực; cập nhật plugin đã cấu hình thì giữ options cũ. Nếu có offline_copy cũ, đổi tại Cấu hình để dùng lời nhắc email mới. Email khách được lưu để sales liên hệ, chưa có tự gửi phản hồi chat qua email khách. SMTP thật phục vụ mã xác minh/nhắc SLA vẫn cần nghiệm thu. Hướng dẫn chi tiết tại wp-content/plugins/vpn-live-chat/README.md mục Deploy bản 1.5.1.
+
+## Lời mời nổi bật và animation — 1.6.0, 06/10/2026
+
+Kiểm tra production trước sửa xác nhận launcher 1.5.1 đã được tải, nhưng public config có greeting_enabled=false và avatar rỗng. Không còn kết luận plugin chưa được kích hoạt của ngày 05/10; đây là trạng thái mới sau khi người dùng cấu hình production.
+
+- Nút góc màn hình có chữ **Chat with Sales**, kích thước dễ bấm; mở chat thì thu lại thành nút đóng gọn.
+- Card lời mời có avatar thật Tho Nguyen, chức danh Sale Manager, tiêu đề **Need a quote or help choosing packaging?**, hướng dẫn không cần đăng ký và CTA **Chat with Tho Nguyen**.
+- Lời mời đến sau 2,5 giây; hiệu ứng xuất hiện nhẹ và vòng sáng/nudge ở nút chạy 3 lần rồi dừng. Prefers-reduced-motion tắt animation. Không tạo session, tin nhắn hoặc unread giả chỉ vì thấy lời mời.
+- Không đánh dấu “đã xem” ngay khi card hiện. Nếu chưa đóng hoặc mở chat, card tiếp tục hiện khi đổi trang. Khi khách đóng/mở chat, lưu dismissal trong tab; không bật lại liên tục. Bản 1.6 dùng khóa dismissal riêng để trạng thái của bản cũ không chặn lời mời mới.
+- Migration cấu hình một lần bật greeting_enabled cho bản nâng cấp; marker vpn_chat_invitation_version=1.6.0. Sau đó quản trị viên tắt checkbox thì giữ lựa chọn, không tự bật lại mỗi request. Không tự bật widget/nhận chat hay đổi Turnstile/lịch/trạng thái trực.
+- Đóng gói avatar nhỏ 150px (~42KB) tại assets/tho-nguyen.png; khi tên hỗ trợ là Tho Nguyen và chưa có avatar hợp lệ trong Media Library, dùng ảnh này. Avatar tùy chỉnh vẫn được ưu tiên. Không phụ thuộc ID 8869 của local nữa. Build script chấp nhận PNG trong plugin.
+
+Kiểm tra: 25 checks browser với assets thật/mock homepage và API, gồm desktop/mobile, CTA, avatar, delay, dismissal qua navigation, không tạo session/tin tự động, reduced motion và mở widget; 3 checks backend migration bật một lần/giữ lựa chọn admin/avatar fallback bằng transaction rollback. PHP lint và JS syntax đạt. Báo cáo invitation-v160-report.json trong artifacts/vpn-live-chat/evidence; ảnh bằng chứng chỉ lưu local. Không tạo hội thoại mẫu.
+
+Production cần deploy bản 1.6.0 và purge cache HTML/assets/CDN để thấy cấu hình mới. Mã không tự xóa cache CDN từ local; SMTP/Turnstile production vẫn giữ điều kiện vận hành đã nêu ở trên.

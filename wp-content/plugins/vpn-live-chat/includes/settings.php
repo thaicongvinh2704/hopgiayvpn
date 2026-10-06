@@ -12,8 +12,15 @@ final class VPN_Chat_Settings {
             'presence_seconds' => 90, 'short_limit' => 10, 'long_limit' => 60,
             'conversation_limit' => 3, 'bottom_offset' => 100,
             'support_name'=>'Tho Nguyen', 'support_avatar_id'=>0, 'shared_identity'=>false, 'always_online'=>false,
-            'greeting_enabled'=>false, 'greeting_text'=>'Hi! How can we help with your packaging project?',
+            'greeting_enabled'=>true, 'greeting_text'=>'Hi! How can we help with your packaging project?',
         ], (array) get_option('vpn_chat_settings', []));
+    }
+    public static function upgrade_invitation(): void {
+        // Enable the approved invitation once on upgrade; later admin choices persist.
+        if(get_option('vpn_chat_invitation_version')==='1.6.0')return;
+        $settings=self::get();$settings['greeting_enabled']=true;
+        update_option('vpn_chat_settings',$settings,false);
+        update_option('vpn_chat_invitation_version','1.6.0',false);
     }
     public static function secret(): string {
         return defined('VPN_CHAT_TURNSTILE_SECRET') ? (string) VPN_CHAT_TURNSTILE_SECRET : '';

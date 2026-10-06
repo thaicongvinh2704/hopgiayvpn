@@ -5,21 +5,31 @@
   if(!cfg || document.getElementById('vpn-chat-launch'))return;
   const svg=(path,kind)=>`<svg class="vpn-chat-icon-${kind}" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">${path}</svg>`;
   const button=document.createElement('button');button.id='vpn-chat-launch';button.className='vpn-chat-launch';button.type='button';
-  button.innerHTML=svg('<path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8 11h8M8 7.5h5"/>','open')+svg('<path d="m6 6 12 12M18 6 6 18"/>','close')+'<span id="vpn-chat-unread" class="vpn-chat-unread" hidden></span>';
+  button.innerHTML=svg('<path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8 11h8M8 7.5h5"/>','open')+svg('<path d="m6 6 12 12M18 6 6 18"/>','close')+'<span class="vpn-chat-launch-label">Chat with Sales</span><span id="vpn-chat-unread" class="vpn-chat-unread" hidden></span>';
   button.setAttribute('aria-label','Open packaging chat');button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-expanded','false');button.setAttribute('aria-controls','vpn-chat-panel');
   const greeting=document.createElement('aside');greeting.id='vpn-chat-greeting';greeting.className='vpn-chat-greeting';greeting.setAttribute('aria-label','Chat with our Sale Manager');
   const identity=document.createElement('div');identity.className='vpn-chat-invite-identity';
   const avatar=document.createElement('span');avatar.className='vpn-chat-invite-avatar';avatar.textContent=cfg.support?.initials||'TN';
   if(cfg.support?.avatar){const img=document.createElement('img');img.src=cfg.support.avatar;img.alt='';img.width=44;img.height=44;img.decoding='async';img.addEventListener('error',()=>img.remove(),{once:true});avatar.append(img);}
   const profile=document.createElement('span');const name=document.createElement('strong');name.textContent=cfg.support?.name||'Tho Nguyen';const role=document.createElement('span');role.textContent='Sale Manager · VPN Packaging';profile.append(name,role);identity.append(avatar,profile);
-  const text=document.createElement('p');text.textContent='Need help with your packaging? Chat directly with our Sale Manager.';
-  const action=document.createElement('span');action.className='vpn-chat-invite-action';action.textContent='Chat with Tho Nguyen →';
-  const open=document.createElement('button');open.id='vpn-chat-greeting-open';open.className='vpn-chat-greeting-open';open.type='button';open.append(identity,text,action);
+  const eyebrow=document.createElement('span');eyebrow.className='vpn-chat-invite-eyebrow';eyebrow.textContent='LET’S TALK PACKAGING';
+  const text=document.createElement('p');text.textContent='Need a quote or help choosing packaging?';
+  const help=document.createElement('span');help.className='vpn-chat-invite-help';help.textContent='Ask our Sale Manager directly. No sign-up needed.';
+  const action=document.createElement('span');action.className='vpn-chat-invite-action';action.textContent=`Chat with ${cfg.support?.name||'Tho Nguyen'} \u2192`;
+  const open=document.createElement('button');open.id='vpn-chat-greeting-open';open.className='vpn-chat-greeting-open';open.type='button';open.append(eyebrow,identity,text,help,action);
   const dismiss=document.createElement('button');dismiss.type='button';dismiss.className='vpn-chat-greeting-dismiss';dismiss.textContent='×';dismiss.setAttribute('aria-label','Dismiss welcome message');greeting.append(open,dismiss);
-  let shown=false;try{shown=sessionStorage.getItem('vpn-chat-invite-shown')==='1'||sessionStorage.getItem('vpn-chat-invite-dismissed')==='1';}catch{}
-  greeting.hidden=!cfg.greeting_enabled||shown;
-  if(!greeting.hidden)try{sessionStorage.setItem('vpn-chat-invite-shown','1');}catch{}
-  function dismissGreeting(){greeting.hidden=true;try{sessionStorage.setItem('vpn-chat-invite-dismissed','1');}catch{}}
+  let dismissed=false,inviteTimer,attentionTimer;
+  try{dismissed=sessionStorage.getItem('vpn-chat-invite-dismissed-v160')==='1';}catch{}
+  greeting.hidden=true;
+  function revealInvitation(){
+    if(!cfg.greeting_enabled||dismissed||document.hidden||button.dataset.open==='true')return;
+    greeting.hidden=false;greeting.classList.add('vpn-chat-invite-visible');button.classList.add('vpn-chat-attention');
+    clearTimeout(attentionTimer);attentionTimer=setTimeout(()=>button.classList.remove('vpn-chat-attention'),9500);
+  }
+  function queueInvitation(){clearTimeout(inviteTimer);if(!document.hidden&&!dismissed&&cfg.greeting_enabled)inviteTimer=setTimeout(revealInvitation,2500);}
+  function dismissGreeting(){dismissed=true;clearTimeout(inviteTimer);clearTimeout(attentionTimer);button.classList.remove('vpn-chat-attention');greeting.hidden=true;try{sessionStorage.setItem('vpn-chat-invite-dismissed-v160','1');}catch{}}
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)clearTimeout(inviteTimer);else if(greeting.hidden)queueInvitation();});
+  window.addEventListener('pagehide',()=>{clearTimeout(inviteTimer);clearTimeout(attentionTimer);});
   dismiss.addEventListener('click',()=>{dismissGreeting();button.focus();});open.addEventListener('click',()=>button.click());
   const obstacleSelector='.mobile-conversion-bar,.cky-consent-container,.cmplz-cookiebanner,#cookie-law-info-bar,#cookie-notice,[data-cookie-banner],.floating-whatsapp,.whatsapp-float,.contact-floating';
   cfg.layout=()=>{
@@ -58,6 +68,6 @@
     dismissGreeting();button.disabled=true;
     try{await load();await window.VPNChatOpen(cfg,button);}catch{button.setAttribute('aria-label','Chat could not load. Click to retry.');}finally{button.disabled=false;}
   });
-  document.body.append(greeting,button);align();
+  document.body.append(greeting,button);align();queueInvitation();
   try{if(sessionStorage.getItem('vpn-chat-active')==='1')load().then(()=>window.VPNChatResume(cfg,button)).catch(()=>{});}catch{}
 })();
