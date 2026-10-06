@@ -120,3 +120,20 @@ Thay card lớn bằng bong bóng trắng gọn (260px desktop / 246px mobile), 
 Giữ delay 2,5 giây, dismissal trong tab, animation 3 lần rồi dừng và reduced motion. Tự né thanh liên hệ dưới cùng; ẩn lời mời khi chiều cao khả dụng quá nhỏ. Không tạo hội thoại/tin nhắn mẫu.
 
 Đã đạt 35 checks browser với assets thật và API giả lập ở 1366px, 390px, 320px; kiểm tra trang WordPress local thật ở desktop/mobile và ảnh friendly-bubble-local trong evidence; JS syntax và PHP lint đạt. Báo cáo invitation-v161-report.json. Bản 1.6.1 đổi version assets để tránh dùng CSS/JS cũ; migration bật lời mời của 1.6.0 giữ nguyên, không ghi đè lựa chọn tắt của quản trị viên. Production cần deploy commit mới và purge cache; chưa nghiệm thu phiên bản này trên production.
+
+## 1.7.0 — Mẫu 03 Gentle Follow-up được chọn, 06/10/2026
+
+Hiện trạng giao diện này thay thế form/lời nhắc của các phiên bản 1.3–1.5 bên trên:
+
+- Mở chat: header Tho Nguyen / Sale Manager / chấm xanh, lời chào ngắn và ô nhắn tin. Bỏ form tên/email và các nút gợi ý để tránh nhiều tầng thông tin.
+- Sau khi có hội thoại thật, khách chưa có email sẽ thấy một card Follow-up: “Want our quote by email?”, ô email, Save và “Optional — keep chatting here”. Không cần điền để gửi tin. Không hiển thị thêm bubble nhắc offline ở đầu khung; lời mời mới hiện cả khi có/không có người trực.
+- Khách có thể đóng card, tiếp tục chat, rồi mở lại qua Add email (optional) luôn nằm dưới composer. Có email đổi thành Edit email; cho phép sửa/xóa. Save trước tin đầu chỉ giữ email trong bộ nhớ trang và gửi cùng tin đầu, không tạo hội thoại chỉ vì điền email.
+- Lưu email thành công thu gọn card; giữ nháp và báo lỗi khi lưu thất bại. Polling không nhân đôi hoặc bật lại card đã đóng trong lượt mở trang. Tải lại trang nếu chưa có email có thể mời lại; nếu có email đã lưu thì giữ ẩn.
+- Mã khách, chọn lịch sử và khôi phục qua mã email chuyển vào menu ba chấm. Escape đóng menu trước khi đóng chat. Nhận diện khách, backend, xác minh email và inbox không đổi.
+- Thu gọn header, composer luôn nằm dưới transcript; card email cuộn cùng hội thoại. Sửa selector chấm xanh của launcher để không ảnh hưởng trạng thái trong header. Thông báo lỗi/mất kết nối vẫn hiển thị; bỏ các dòng trạng thái thành công lặp lại.
+
+Kiểm tra: 86 checks với assets thật/API giả lập, gồm desktop 1366px, mobile 390px và 320px, gửi ẩn danh, khôi phục/xác minh qua menu, nhập email trước/sau tin đầu, validation, lưu thất bại/nháp, reload, sửa/xóa email, hội thoại đóng/new chat, không có upload và bố cục tránh thanh liên hệ. Báo cáo gentle-followup-report.json; ảnh open/sent tại evidence. Kiểm tra trang WordPress local thật desktop/mobile không tạo tin mẫu, JS syntax/PHP lint đạt.
+
+Bộ 30 câu trả lời mời khách để lại email được lưu riêng tại live-chat-sales-email-playbook.md; chưa cài bot trả lời theo bộ này, chưa tự gửi báo giá hay phản hồi chat qua email khách. Các bài kiểm tra giao diện cũ là bằng chứng cho phiên bản cũ; dùng gentle-followup.mjs cho luồng UI 1.7.0.
+
+Deploy plugin 1.7.0 và purge cache HTML/assets/CDN để áp dụng trên production. Không đổi tùy chọn accepting, Turnstile hoặc lịch trực; chưa nghiệm thu phiên bản 1.7.0 trên production.
