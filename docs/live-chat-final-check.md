@@ -1,17 +1,23 @@
-﻿# Kiểm tra VPN Live Chat 1.8.0 — 06/10/2026
+# Kiểm tra VPN Live Chat 1.8.1 — 06/10/2026
 
 ## Kết quả
 
-220 kiểm tra đạt; cú pháp 12 file PHP và 4 file JavaScript đạt. Chat dùng giới hạn tần suất trên máy chủ, không cần Turnstile site key/secret. Gửi thật qua WordPress HTTP/database đã xác nhận trong môi trường cô lập. Chưa nghiệm thu bản 1.8.0 trên production sau deploy.
+233 kiểm tra đạt; cú pháp 12 file PHP và 4 file JavaScript đạt. Chat dùng giới hạn tần suất trên máy chủ, không cần Turnstile site key/secret. Gửi thật qua WordPress HTTP/database đã xác nhận trong môi trường cô lập. Chưa nghiệm thu bản 1.8.1 trên production sau deploy.
 
 | Bộ kiểm tra | Số kiểm tra | Kết quả |
 |---|---:|---|
 | REST/database WordPress thật, test port 3311 | 55 | Đạt |
-| Browser/HTTP WordPress thật, port 8091 | 30 | Đạt |
-| Giao diện, lỗi mạng, mobile bằng HTTP giả lập | 100 | Đạt |
+| Browser/HTTP WordPress thật, port 8091 | 34 | Đạt |
+| Giao diện, lỗi mạng, mobile bằng HTTP giả lập | 109 | Đạt |
 | Launcher, lời mời, animation, reduced motion | 35 | Đạt |
 
 HTTP thật không dùng mock CAPTCHA; request ra ngoài và email bị chặn trong test. Database vpn_chat_test riêng, không dùng database local chính/production. Dữ liệu chat test đã dọn; không gửi tin mẫu lên production.
+
+## 1.8.1 — Mở chat tức thì, 06/10/2026
+
+Tải widget.js/chat.css cùng trang, trước launcher, và dựng sẵn khung ẩn. Nhấn biểu tượng mở khung đồng bộ ngay trong click handler; không khóa launcher trong lúc bootstrap/sync. Kết nối và lịch sử tải nền. Mở lại giữ transcript đã có và composer, không xóa lịch sử để chờ tải. Khách gõ khi đang kết nối vẫn giữ nháp; nếu bootstrap tìm được hội thoại cũ, chuyển nháp sang composer trả lời. Gửi chỉ bật khi đã có phiên/CSRF hợp lệ.
+
+233 kiểm tra đạt: backend 55, browser HTTP thật 34, UI/mock 109, launcher 35. Kiểm tra bổ sung trì hoãn bootstrap/sync 1,6 giây xác nhận mở ngay, đóng/mở nhanh, giữ nháp và xóa thông báo connecting khi sẵn sàng. Không tạo phiên/chat chỉ vì tải sẵn giao diện. Cú pháp 12 PHP/4 JS đạt. Deploy 1.8.1 và purge cache HTML/assets/CDN; production chưa nghiệm thu bản mới. Mạng vẫn quyết định tốc độ nhận lịch sử/gửi tin, nhưng không cản việc mở khung.
 
 ## Chống spam
 
@@ -27,9 +33,9 @@ Nút gửi và Enter; Shift+Enter xuống dòng; IME không gửi nhầm; ẩn d
 
 ## Deploy và phần còn lại
 
-Deploy toàn bộ plugin 1.8.0 rồi purge cache HTML/assets/CDN. Nâng cấp tự bật nhận chat mới một lần nếu widget đã bật; marker vpn_chat_rate_limits_version=1.8.0 giữ lựa chọn tắt của admin sau đó. Cài mới vẫn cần activate, bật widget/nhận chat và cấu hình paths. HTTPS và bảng database khỏe vẫn là điều kiện nhận chat; không cần tạo khóa CAPTCHA.
+Deploy toàn bộ plugin 1.8.1 rồi purge cache HTML/assets/CDN. Nâng cấp tự bật nhận chat mới một lần nếu widget đã bật; marker vpn_chat_rate_limits_version=1.8.0 giữ lựa chọn tắt của admin sau đó. Cài mới vẫn cần activate, bật widget/nhận chat và cấu hình paths. HTTPS và bảng database khỏe vẫn là điều kiện nhận chat; không cần tạo khóa CAPTCHA.
 
-Trước cập nhật, production được kiểm tra chỉ đọc: bootstrap HTTP 200 nhưng accepting=false/site key rỗng. Đây là trạng thái bản cũ, không phải kết quả 1.8.0. Sau deploy cần xác nhận accepting=true, gửi được và nhận phản hồi trong inbox. SMTP thật, delivery email, scheduler và hiệu năng hosting chưa nghiệm thu. Chat không tự gửi phản hồi sales tới email khách.
+Trước cập nhật, production được kiểm tra chỉ đọc: bootstrap HTTP 200 nhưng accepting=false/site key rỗng. Đây là trạng thái bản cũ, không phải kết quả 1.8.1. Sau deploy cần xác nhận accepting=true, gửi được và nhận phản hồi trong inbox. SMTP thật, delivery email, scheduler và hiệu năng hosting chưa nghiệm thu. Chat không tự gửi phản hồi sales tới email khách.
 
 ## Bằng chứng
 

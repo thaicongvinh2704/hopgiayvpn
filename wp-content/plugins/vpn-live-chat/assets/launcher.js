@@ -56,6 +56,7 @@
   window.addEventListener('resize',scheduleAlign);window.visualViewport?.addEventListener('resize',scheduleAlign);window.visualViewport?.addEventListener('scroll',scheduleAlign);
   let loading;
   function load(){
+    if(window.VPNChatOpen)return Promise.resolve();
     if(!loading)loading=Promise.all([
       new Promise((resolve,reject)=>{const link=document.createElement('link');link.rel='stylesheet';link.href=cfg.css;link.onload=resolve;link.onerror=()=>{link.remove();reject(Error('style'));};document.head.append(link);}),
       new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=cfg.bundle;script.onload=resolve;script.onerror=()=>{script.remove();reject(Error('script'));};document.head.append(script);})
@@ -63,9 +64,10 @@
     return loading;
   }
   button.addEventListener('click',async()=>{
-    dismissGreeting();button.disabled=true;
-    try{await load();await window.VPNChatOpen(cfg,button);}catch{button.setAttribute('aria-label','Chat could not load. Click to retry.');}finally{button.disabled=false;}
+    dismissGreeting();
+    try{if(!window.VPNChatOpen)await load();window.VPNChatOpen(cfg,button);}catch{button.setAttribute('aria-label','Chat could not load. Click to retry.');}
   });
   document.body.append(greeting,button);align();queueInvitation();
+  window.VPNChatPrepare?.(cfg,button);
   try{if(sessionStorage.getItem('vpn-chat-active')==='1')load().then(()=>window.VPNChatResume(cfg,button)).catch(()=>{});}catch{}
 })();

@@ -1,7 +1,9 @@
 {
-  "version": "1.8.0",
-  "checks": 30,
+  "version": "1.8.1",
+  "checks": 34,
   "passed": [
+    "real page preloads widget before first click 390",
+    "real panel opens in same click handler 390",
     "real prechat has no email form 390",
     "real HTTP /guest/start accepted",
     "button send persists message 390",
@@ -14,6 +16,8 @@
     "reload restores actual saved history without duplicates 390",
     "real saved email restored 390",
     "real composer fits viewport 390",
+    "real page preloads widget before first click 1366",
+    "real panel opens in same click handler 1366",
     "real prechat has no email form 1366",
     "real HTTP /guest/start accepted",
     "button send persists message 1366",

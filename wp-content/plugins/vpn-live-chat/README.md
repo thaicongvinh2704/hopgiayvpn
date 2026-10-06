@@ -1,6 +1,12 @@
-# VPN Live Chat 1.8.0
+# VPN Live Chat 1.8.1
 
 Plugin độc lập cho WordPress, guest UI tiếng Anh, inbox sales tiếng Việt. PHP/WordPress REST + MySQL/MariaDB InnoDB + JavaScript thuần. ZIP chứa assets sẵn; production không chạy npm, Node, Redis hay WebSocket. Đây là bản MVP đã kiểm thử local; chưa phê duyệt production/pilot trên shared hosting.
+
+## 1.8.1 — Mở chat tức thì, 06/10/2026
+
+Tải widget.js/chat.css cùng trang, trước launcher, và dựng sẵn khung ẩn. Nhấn biểu tượng mở khung đồng bộ ngay trong click handler; không khóa launcher trong lúc bootstrap/sync. Kết nối và lịch sử tải nền. Mở lại giữ transcript đã có và composer, không xóa lịch sử để chờ tải. Khách gõ khi đang kết nối vẫn giữ nháp; nếu bootstrap tìm được hội thoại cũ, chuyển nháp sang composer trả lời. Gửi chỉ bật khi đã có phiên/CSRF hợp lệ.
+
+233 kiểm tra đạt: backend 55, browser HTTP thật 34, UI/mock 109, launcher 35. Kiểm tra bổ sung trì hoãn bootstrap/sync 1,6 giây xác nhận mở ngay, đóng/mở nhanh, giữ nháp và xóa thông báo connecting khi sẵn sàng. Không tạo phiên/chat chỉ vì tải sẵn giao diện. Cú pháp 12 PHP/4 JS đạt. Deploy 1.8.1 và purge cache HTML/assets/CDN; production chưa nghiệm thu bản mới. Mạng vẫn quyết định tốc độ nhận lịch sử/gửi tin, nhưng không cản việc mở khung.
 
 ## 1.8.0 — Chống spam đơn giản theo yêu cầu, 06/10/2026
 

@@ -26,8 +26,10 @@ final class VPN_Chat_UI {
         $path = VPN_Chat_Security::source((string)wp_parse_url($_SERVER['REQUEST_URI'] ?? '/',PHP_URL_PATH));
         if (!$s['widget'] || !in_array($path,$s['paths'],true)) { return; }
         wp_enqueue_style('vpn-chat-launcher',plugins_url('assets/launcher.css',VPN_CHAT_FILE),[],VPN_CHAT_VERSION);
-        wp_enqueue_script('vpn-chat-launcher',plugins_url('assets/launcher.js',VPN_CHAT_FILE),[],VPN_CHAT_VERSION,true);
-        wp_add_inline_script('vpn-chat-launcher','window.VPNChatLauncher=' . wp_json_encode(['api'=>rest_url('vpn-chat/v1/'), 'bundle'=>add_query_arg('ver',VPN_CHAT_VERSION,plugins_url('assets/widget.js',VPN_CHAT_FILE)),'css'=>add_query_arg('ver',VPN_CHAT_VERSION,plugins_url('assets/chat.css',VPN_CHAT_FILE)), 'bottom'=>(int)$s['bottom_offset'],'fallback_url'=>$s['fallback_url'],'support'=>VPN_Chat_Profiles::support(),'greeting_enabled'=>(bool)$s['greeting_enabled'],'greeting_text'=>$s['greeting_text']]) . ';','before');
+        wp_enqueue_style('vpn-chat-widget',plugins_url('assets/chat.css',VPN_CHAT_FILE),['vpn-chat-launcher'],VPN_CHAT_VERSION);
+        wp_enqueue_script('vpn-chat-widget',plugins_url('assets/widget.js',VPN_CHAT_FILE),[],VPN_CHAT_VERSION,true);
+        wp_enqueue_script('vpn-chat-launcher',plugins_url('assets/launcher.js',VPN_CHAT_FILE),['vpn-chat-widget'],VPN_CHAT_VERSION,true);
+        wp_add_inline_script('vpn-chat-launcher','window.VPNChatLauncher=' . wp_json_encode(['api'=>rest_url('vpn-chat/v1/'), 'bundle'=>add_query_arg('ver',VPN_CHAT_VERSION,plugins_url('assets/widget.js',VPN_CHAT_FILE)),'css'=>add_query_arg('ver',VPN_CHAT_VERSION,plugins_url('assets/chat.css',VPN_CHAT_FILE)), 'presence'=>$s['always_online']?'online':'offline','bottom'=>(int)$s['bottom_offset'],'fallback_url'=>$s['fallback_url'],'support'=>VPN_Chat_Profiles::support(),'greeting_enabled'=>(bool)$s['greeting_enabled'],'greeting_text'=>$s['greeting_text']]) . ';','before');
     }
     public static function menu(): void {
         add_menu_page('VPN Live Chat','VPN Live Chat','vpn_chat_agent','vpn-live-chat',[self::class,'inbox'],'dashicons-format-chat',58);

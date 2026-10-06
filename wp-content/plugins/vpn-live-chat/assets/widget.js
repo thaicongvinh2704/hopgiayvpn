@@ -104,7 +104,8 @@
    const result=await request('bootstrap',{});csrf=result.csrf;
    if(result.conversation!==conversation){seen.clear();cursor=0;readCursor=0;$('vpn-chat-log').replaceChildren();}
    paintIdentity(result);conversationClosed=false;contactEmail='';conversation=result.conversation;emailReminder();activeFlag(!!conversation);paintConfig(result.config);
-   $('vpn-chat-loading').hidden=!conversation;
+   $('vpn-chat-loading').hidden=!conversation||seen.size>0;
+   if(conversation&&!pending&&$('vpn-chat-first').value&&!$('vpn-chat-message').value){$('vpn-chat-message').value=$('vpn-chat-first').value;$('vpn-chat-first').value='';grow($('vpn-chat-message'));}
    $('vpn-chat-welcome').hidden=!!conversation||!welcomeShown;$('vpn-chat-start').hidden=!!conversation;$('vpn-chat-first-composer').hidden=!!conversation;$('vpn-chat-prompts').hidden=!!conversation;$('vpn-chat-reply').hidden=!conversation;$('vpn-chat-log').hidden=!conversation;
    emailReminder();arriveWelcome();
    if(conversation)await sync();else if(opened&&config.accepting)await challenge();
@@ -120,7 +121,7 @@
  }
  function grow(textarea){textarea.style.height='auto';textarea.style.height=`${Math.min(120,Math.max(44,textarea.scrollHeight))}px`;if(resizePanel)resizePanel();}
  async function send(event){
-  event.preventDefault();if(busy)return;const first=pending?Object.hasOwn(pending,'name'):!conversation;
+  event.preventDefault();if(busy)return;if(!csrf){state('Connecting… You can type now; your draft is kept.');return;}const first=pending?Object.hasOwn(pending,'name'):!conversation;
   if(!first&&conversationClosed){state('This conversation is closed. Please start a new chat. Your draft is kept.');return;}
   if(first&&!config.accepting){state('Chat is temporarily unavailable. Your draft is kept. Please try again later or contact us another way.');return;}
   if(first&&config.site_key&&!token){state('Please complete the security check below before sending. Your draft is kept.');try{await challenge();$('vpn-chat-challenge').scrollIntoView({block:'nearest'});}catch{state('The security check could not load. Please refresh or check your connection. Your draft is kept.');}return;}
@@ -180,10 +181,14 @@
   resizePanel=()=>{const l=cfg.layout();const clearance=l.keyboard?16:l.bottom+72;panel.style.width=`${Math.min(400,l.width-(l.width<=600?16:40))}px`;panel.style.right=`${l.edge+(l.width<=600?8:20)}px`;panel.style.bottom=`calc(${l.insetBottom+clearance}px + env(safe-area-inset-bottom))`;const natural=conversation ? Math.max(360,panel.querySelector('.vpn-chat-header').offsetHeight+panel.querySelector('.vpn-chat-composer').offsetHeight+$('vpn-chat-log').offsetHeight+($('vpn-chat-contact').hidden?0:$('vpn-chat-contact').offsetHeight+16)+32) : 500;panel.style.height=`${Math.min(natural,l.width<=600?660:580,Math.max(150,l.height-clearance-16))}px`;launch.style.visibility=opened&&l.keyboard?'hidden':'';};
   document.addEventListener('vpn-chat-layout',resizePanel);window.addEventListener('resize',resizePanel);window.visualViewport?.addEventListener('resize',resizePanel);window.visualViewport?.addEventListener('scroll',resizePanel);resizePanel();
  }
- function initialize(configuration,button){cfg=configuration;launch=button;if(!panel)build();}
+ function initialize(configuration,button){cfg=configuration;launch=button;if(!panel){build();paintConfig({support:cfg.support,presence:cfg.presence||'offline',accepting:false,fallback_url:cfg.fallback_url});$('vpn-chat-start-button').disabled=true;state('');}}
+ window.VPNChatPrepare=initialize;
  window.VPNChatResume=async(configuration,button)=>{initialize(configuration,button);try{await bootstrap();}catch{activeFlag(false);}};
  window.VPNChatOpen=async(configuration,button)=>{
-  initialize(configuration,button);if(opened){close();return;}opened=true;panel.hidden=false;launch.dataset.open='true';launch.setAttribute('aria-expanded','true');badge(unread);resizePanel();state('Connecting…');
+  initialize(configuration,button);if(opened){close();return;}opened=true;panel.hidden=false;launch.dataset.open='true';launch.setAttribute('aria-expanded','true');badge(unread);resizePanel();panel.focus({preventScroll:true});
+  if(!csrf){state('Connecting…');$('vpn-chat-loading').hidden=false;}
+  // Reopening keeps the existing transcript and composer usable while syncing.
+  if(!conversation&&!welcomeShown&&!bootstrapPromise){welcomeShown=true;$('vpn-chat-welcome').hidden=false;resizePanel();}
   try{if(!csrf)await bootstrap();else if(conversation)await sync();else{arriveWelcome();if(config.accepting)await challenge();}if(!opened)return;if(!conversation&&config.accepting&&!config.site_key&&$('vpn-chat-state').textContent==='Connecting…')state('');if(conversation){scrollBottom();await acknowledge();}if(conversation&&cfg.layout().width>600)$('vpn-chat-message').focus({preventScroll:true});else panel.focus({preventScroll:true});}
   catch{state('Chat cannot connect right now. Close and reopen to retry.');}
  };

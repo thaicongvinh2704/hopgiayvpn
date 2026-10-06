@@ -1,8 +1,14 @@
 # VPN Live Chat — Tài liệu chức năng và tình trạng hoàn thành
 
-**Cập nhật:** 06/10/2026 · **Plugin:** 1.8.0 · **Schema:** 3
+**Cập nhật:** 06/10/2026 · **Plugin:** 1.8.1 · **Schema:** 3
 
 Đây là tài liệu tổng hợp hiện trạng mới nhất, dùng để biết đã làm gì, còn thiếu gì và tiếp tục công việc sau này. Các báo cáo phiên bản cũ được giữ làm bằng chứng kiểm thử, không thay thế hiện trạng trong tài liệu này. Khi sửa tính năng, cần cập nhật phiên bản, các bảng trạng thái và kết quả kiểm thử tại đây.
+
+## 1.8.1 — Mở chat tức thì, 06/10/2026
+
+Tải widget.js/chat.css cùng trang, trước launcher, và dựng sẵn khung ẩn. Nhấn biểu tượng mở khung đồng bộ ngay trong click handler; không khóa launcher trong lúc bootstrap/sync. Kết nối và lịch sử tải nền. Mở lại giữ transcript đã có và composer, không xóa lịch sử để chờ tải. Khách gõ khi đang kết nối vẫn giữ nháp; nếu bootstrap tìm được hội thoại cũ, chuyển nháp sang composer trả lời. Gửi chỉ bật khi đã có phiên/CSRF hợp lệ.
+
+233 kiểm tra đạt: backend 55, browser HTTP thật 34, UI/mock 109, launcher 35. Kiểm tra bổ sung trì hoãn bootstrap/sync 1,6 giây xác nhận mở ngay, đóng/mở nhanh, giữ nháp và xóa thông báo connecting khi sẵn sàng. Không tạo phiên/chat chỉ vì tải sẵn giao diện. Cú pháp 12 PHP/4 JS đạt. Deploy 1.8.1 và purge cache HTML/assets/CDN; production chưa nghiệm thu bản mới. Mạng vẫn quyết định tốc độ nhận lịch sử/gửi tin, nhưng không cản việc mở khung.
 
 ## 1.8.0 — Chống spam đơn giản theo yêu cầu, 06/10/2026
 
