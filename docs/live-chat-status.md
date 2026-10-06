@@ -1,6 +1,6 @@
 # VPN Live Chat — Tài liệu chức năng và tình trạng hoàn thành
 
-**Cập nhật:** 06/10/2026 · **Plugin:** 1.7.0 · **Schema:** 3
+**Cập nhật:** 06/10/2026 · **Plugin:** 1.7.1 · **Schema:** 3
 
 Đây là tài liệu tổng hợp hiện trạng mới nhất, dùng để biết đã làm gì, còn thiếu gì và tiếp tục công việc sau này. Các báo cáo phiên bản cũ được giữ làm bằng chứng kiểm thử, không thay thế hiện trạng trong tài liệu này. Khi sửa tính năng, cần cập nhật phiên bản, các bảng trạng thái và kết quả kiểm thử tại đây.
 
@@ -362,3 +362,11 @@ Kiểm tra: 86 checks với assets thật/API giả lập, gồm desktop 1366px,
 Bộ 30 câu trả lời mời khách để lại email được lưu riêng tại live-chat-sales-email-playbook.md; chưa cài bot trả lời theo bộ này, chưa tự gửi báo giá hay phản hồi chat qua email khách. Các bài kiểm tra giao diện cũ là bằng chứng cho phiên bản cũ; dùng gentle-followup.mjs cho luồng UI 1.7.0.
 
 Deploy plugin 1.7.0 và purge cache HTML/assets/CDN để áp dụng trên production. Không đổi tùy chọn accepting, Turnstile hoặc lịch trực; chưa nghiệm thu phiên bản 1.7.0 trên production.
+
+## 1.7.1 — Chẩn đoán lỗi gửi trên production, 06/10/2026
+
+Kiểm tra trình duyệt chỉ mở chat, không gửi tin mẫu: bootstrap trên hopgiayvpn.com trả HTTP 200 nhưng accepting=false, site_key rỗng; nút gửi bị khóa và không hiện challenge. Online vẫn hiển thị do cấu hình danh tính, không có nghĩa máy chủ đã sẵn sàng nhận tin. Chưa xác minh secret hoặc toàn bộ cấu hình hosting; thiếu site key đã đủ khiến ready() trả false.
+
+Đã sửa Enter/requestSubmit không được gửi khi không nhận chat mới; tin đầu phải chờ token chống spam khi có site key. Giữ nháp, báo cụ thể unavailable, xác minh, phiên, quota, email và phản hồi không phải JSON. Console chỉ ghi mã lỗi/status, không ghi nội dung/email/cookie/token. Backend không bỏ kiểm tra chống spam.
+
+93 checks UI/mock HTTP đạt (gồm 7 kiểm tra bổ sung về khóa Enter, giữ nháp và lỗi xác minh/máy chủ), JS syntax/PHP lint đạt. Bản 1.7.1 cần deploy/purge cache. Việc nhận tin production chưa hoàn tất: chủ hosting phải cấu hình Turnstile site key trong VPN Live Chat → Cấu hình, secret qua VPN_CHAT_TURNSTILE_SECRET trong wp-config.php ngoài Git, bật nhận chat mới và kiểm tra Health/HTTPS. Chưa thay cấu hình hay gửi tin thử trên production.

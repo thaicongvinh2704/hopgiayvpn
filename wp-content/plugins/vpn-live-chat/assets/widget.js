@@ -13,7 +13,7 @@
    const url=new URL(cfg.api),route=path.split('?')[0];if(url.searchParams.has('rest_route'))url.searchParams.set('rest_route',url.searchParams.get('rest_route')+route);else url.pathname+=route;
    const query=path.split('?')[1];if(query)for(const [k,v]of new URLSearchParams(query))url.searchParams.set(k,v);
    const response=await fetch(url,{method:data===undefined?'GET':'POST',credentials:'same-origin',cache:'no-store',headers:{'Content-Type':'application/json','X-VPN-CSRF':csrf},body:data===undefined?undefined:JSON.stringify(data),signal:abort.signal});
-   const json=await response.json();if(!response.ok){const e=Error(json.code||'request_failed');e.retry=Number(response.headers.get('Retry-After'))||0;throw e;}return json;
+   let json;try{json=await response.json();}catch{const e=Error('invalid_response');e.status=response.status;throw e;}if(!response.ok){const e=Error(json.code||'request_failed');e.status=response.status;e.retry=Number(response.headers.get('Retry-After'))||0;throw e;}return json;
   }finally{clearTimeout(timeout);signal?.removeEventListener('abort',onAbort);}
  }
  function avatar(profile,className='vpn-chat-avatar'){
@@ -120,7 +120,10 @@
  }
  function grow(textarea){textarea.style.height='auto';textarea.style.height=`${Math.min(120,Math.max(44,textarea.scrollHeight))}px`;if(resizePanel)resizePanel();}
  async function send(event){
-  event.preventDefault();if(busy)return;busy=true;const first=pending?Object.hasOwn(pending,'name'):!conversation;const textarea=$(first?'vpn-chat-first':'vpn-chat-message'),button=$(first?'vpn-chat-start-button':'vpn-chat-send-button');button.disabled=true;$('vpn-chat-send-button').disabled=true;
+  event.preventDefault();if(busy)return;const first=pending?Object.hasOwn(pending,'name'):!conversation;
+  if(first&&!config.accepting){state('Chat is temporarily unavailable. Your draft is kept. Please try again later or contact us another way.');return;}
+  if(first&&config.site_key&&!token){state('Please complete the security check below before sending. Your draft is kept.');try{await challenge();$('vpn-chat-challenge').scrollIntoView({block:'nearest'});}catch{state('The security check could not load. Please refresh or check your connection. Your draft is kept.');}return;}
+  busy=true;const textarea=$(first?'vpn-chat-first':'vpn-chat-message'),button=$(first?'vpn-chat-start-button':'vpn-chat-send-button');button.disabled=true;$('vpn-chat-send-button').disabled=true;
   try{
    if(!pending){pending={message:textarea.value,client_message_id:crypto.randomUUID().replaceAll('-','')};if(first){const metadata={},query=new URLSearchParams(location.search);for(const key of ['utm_source','utm_medium','utm_campaign'])if(query.has(key))metadata[key]=query.get(key).slice(0,100);Object.assign(pending,{name:$('vpn-chat-name').value,email:$('vpn-chat-email').value,source_path:location.pathname,metadata});}else pending.id=conversation;}
    state('Sending…');const result=await request(first?'guest/start':'guest/send',{...pending,challenge:token});conversation=result.id;activeFlag(true);
@@ -131,7 +134,13 @@
    token='';if(['challenge_required','challenge_unavailable'].includes(e.message)||first)try{await challenge();}catch{}
    if(['invalid_text','invalid_email'].includes(e.message))pending=null;
    if(e.message==='session_expired'){csrf='';state('Session expired. Close and reopen chat; your draft is kept.');}
-   else state(e.message==='rate_limited'?'Please wait before retrying. Your draft is kept.':'Message was not confirmed. Click send to retry the same message. Your draft is kept.');
+   else {
+    const messages={new_chat_unavailable:'Chat is temporarily unavailable. Your draft is kept. Please try again later or contact us another way.',challenge_required:'Please complete the security check below, then send again. Your draft is kept.',challenge_unavailable:'The security check is temporarily unavailable. Please try again shortly. Your draft is kept.',csrf_required:'Your chat session needs refreshing. Close and reopen chat, then try again. Your draft is kept.',rate_limited:'Please wait before retrying. Your draft is kept.',invalid_email:'Please check your email address, or remove it and keep chatting. Your draft is kept.',invalid_text:'Please enter a message within the character limit.',temporarily_blocked:'Chat is temporarily restricted. Please contact us another way. Your draft is kept.',conversation_closed:'This conversation is closed. Please start a new chat. Your draft is kept.',invalid_response:'The server returned an unexpected response. Please retry shortly. Your draft is kept.'};
+    state(messages[e.message]||'Message was not confirmed. Click send to retry the same message. Your draft is kept.');
+    // Support diagnostics only; never log message text, email, cookies or tokens.
+    console.warn('VPN chat send failed',{code:/^[a-z_]+$/.test(e.message)?e.message:'connection_error',status:e.status||0});
+    if(e.message==='csrf_required')csrf='';
+   }
   }finally{busy=false;button.disabled=first&&!config.accepting;$('vpn-chat-send-button').disabled=conversationClosed;}
  }
  function close(){clearTimeout(welcomeTimer);opened=false;panel.hidden=true;$('vpn-chat-options').setAttribute('aria-expanded','false');panel.querySelector('.vpn-chat-identity').hidden=true;launch.disabled=false;launch.dataset.open='false';launch.setAttribute('aria-expanded','false');launch.style.visibility='';badge(unread);schedule(15000);launch.focus();}

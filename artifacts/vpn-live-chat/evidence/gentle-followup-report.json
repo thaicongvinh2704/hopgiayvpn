@@ -1,6 +1,6 @@
 {
-  "version": "1.7.0",
-  "checks": 86,
+  "version": "1.7.1",
+  "checks": 93,
   "passed": [
     "no contact form before chatting 1366",
     "follow-up waits for a message 1366",
@@ -87,7 +87,14 @@
     "new chat starts without email form 320",
     "no JavaScript page errors 320",
     "pre-chat email creates no conversation or API save",
-    "optional pre-chat email accompanies first message"
+    "optional pre-chat email accompanies first message",
+    "Enter cannot bypass disabled new chat",
+    "unavailable status explains rejected action",
+    "unavailable chat retains draft",
+    "first message waits for verification token",
+    "missing verification has clear guidance",
+    "server rejection preserves draft",
+    "server rejection uses specific explanation"
   ],
   "mode": "actual plugin assets and mocked HTTP; no database fixtures"
 }
