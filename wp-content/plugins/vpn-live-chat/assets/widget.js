@@ -68,7 +68,8 @@
    const content=document.createElement('div');content.className='vpn-chat-bubble';content.textContent=message.body;
    const meta=document.createElement('div');meta.className='vpn-chat-message-meta';const time=document.createElement('time');const date=new Date(message.created_at.replace(' ','T')+'Z');time.dateTime=date.toISOString();time.textContent=date.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});time.title=date.toLocaleString();
    meta.append(time);if(message.sender==='guest'){const delivery=document.createElement('span');delivery.className='vpn-chat-delivery';delivery.textContent='Saved';meta.append(delivery);}
-   group.append(who,content,meta);item.append(group);log.append(item);
+   group.append(who,content,meta);item.append(group);
+   const later=Array.from(log.children).find(el=>Number(el.dataset.seq)>Number(message.seq));log.insertBefore(item,later||null);
   }
   if(rows.length&&follow)scrollBottom();
  }
@@ -80,12 +81,14 @@
   readPromise=request('guest/read',{id,cursor:seq}).then(result=>{if(conversation===id){summary(result);channel?.postMessage('read');}}).catch(()=>{}).finally(()=>{readPromise=null;});
   return readPromise;
  }
- async function sync(){
-  if(document.hidden||!conversation)return;if(syncPromise)return syncPromise;
+ async function sync(fresh=false){
+  if(document.hidden||!conversation)return;if(syncPromise){await syncPromise;if(fresh===true)return sync();return;}
   syncPromise=(async()=>{
    controller=new AbortController();
    try{
-    const result=await request(`guest/sync?id=${encodeURIComponent(conversation)}&cursor=${cursor}`,undefined,controller.signal);
+    const id=conversation;
+    const result=await request('guest/sync',{id,cursor},controller.signal);
+    if(conversation!==id)return;
     append(result.messages);cursor=result.cursor;paintConfig(result.config);summary(result.conversation);$('vpn-chat-loading').hidden=true;resizePanel();
     if($('vpn-chat-state').textContent==='Connecting…'||$('vpn-chat-state').textContent.startsWith('Connection interrupted'))state('Connected.');
     idle=result.messages.length?0:Math.min(3,idle+1);failures=0;const closed=result.conversation.status==='closed';conversationClosed=closed;emailReminder();$('vpn-chat-send-button').disabled=closed||busy;$('vpn-chat-new').hidden=!closed;
@@ -129,9 +132,12 @@
   try{
    if(!pending){pending={message:textarea.value,client_message_id:crypto.randomUUID().replaceAll('-','')};if(first){const metadata={},query=new URLSearchParams(location.search);for(const key of ['utm_source','utm_medium','utm_campaign'])if(query.has(key))metadata[key]=query.get(key).slice(0,100);Object.assign(pending,{name:$('vpn-chat-name').value,email:$('vpn-chat-email').value,source_path:location.pathname,metadata});}else pending.id=conversation;}
    state('Sending…');const result=await request(first?'guest/start':'guest/send',{...pending,challenge:token});conversation=result.id;activeFlag(true);
+   // Render only after the server confirms storage, without waiting for polling.
+   const saved=result.message||{seq:result.seq,sender:'guest',body:pending.message,created_at:new Date().toISOString().slice(0,19).replace('T',' ')};
+   if(Number.isInteger(Number(saved.seq))&&Number(saved.seq)>0)append([saved]);
    if(textarea.value===pending.message)textarea.value='';else if(first){$('vpn-chat-message').value=textarea.value;textarea.value='';grow($('vpn-chat-message'));}grow(textarea);pending=null;token='';state('Saved.');idle=0;
    clearTimeout(welcomeTimer);$('vpn-chat-welcome').hidden=true;$('vpn-chat-start').hidden=true;$('vpn-chat-first-composer').hidden=true;$('vpn-chat-prompts').hidden=true;$('vpn-chat-reply').hidden=false;$('vpn-chat-log').hidden=false;$('vpn-chat-challenge').hidden=true;
-   channel?.postMessage('saved');await sync();scrollBottom();await acknowledge();
+   emailReminder();resizePanel();scrollBottom();channel?.postMessage('saved');sync(true);
   }catch(e){
    token='';if(['challenge_required','challenge_unavailable'].includes(e.message)||first)try{await challenge();}catch{}
    if(['invalid_text','invalid_email'].includes(e.message))pending=null;

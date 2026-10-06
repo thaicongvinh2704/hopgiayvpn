@@ -1,8 +1,16 @@
 # VPN Live Chat — Tài liệu chức năng và tình trạng hoàn thành
 
-**Cập nhật:** 06/10/2026 · **Plugin:** 1.8.1 · **Schema:** 3
+**Cập nhật:** 06/10/2026 · **Plugin:** 1.8.2 · **Schema:** 3
 
 Đây là tài liệu tổng hợp hiện trạng mới nhất, dùng để biết đã làm gì, còn thiếu gì và tiếp tục công việc sau này. Các báo cáo phiên bản cũ được giữ làm bằng chứng kiểm thử, không thay thế hiện trạng trong tài liệu này. Khi sửa tính năng, cần cập nhật phiên bản, các bảng trạng thái và kết quả kiểm thử tại đây.
+
+## 1.8.2 — Tin đã lưu phải hiện ngay phía khách, 06/10/2026
+
+Tái hiện được lỗi: guest/start hoặc guest/send thành công nhưng UI chỉ hiện tin sau guest/sync. Sync thất bại khiến admin thấy tin mà khách không thấy. Poll đang chạy cũng có thể trả snapshot trước lần gửi. Kiểm tra hồi quy đã thất bại trước sửa và đạt sau sửa; chưa xác định riêng lỗi mạng/cache nào xảy ra trên hosting của ảnh người dùng.
+
+Phản hồi gửi/retry trả nội dung, seq và thời gian của tin đã lưu. Widget hiển thị receipt ngay, không chờ sync và không khóa gửi trong lúc tải lịch sử. Poll sau gửi phải thực hiện một lượt mới sau poll đang chạy. Dùng POST/CSRF để tránh cache GET ở proxy, vẫn hỗ trợ GET cho client cũ. Không tăng cursor chỉ vì receipt, nên không bỏ sót tin sales hoặc ghi chú có seq xen giữa. Dedup theo seq và chèn theo thứ tự server khi receipt đến trước lịch sử.
+
+61 kiểm tra backend, 34 browser HTTP thật và 117 UI/mock đạt (212 kiểm tra chạy trong lần sửa này); 35 launcher giữ kết quả 1.8.1, tổng hiện hành 247. Có tình huống sync 503 sau gửi, gửi tiếp khi sync lỗi, khôi phục/reload, snapshot poll cũ đang chạy, tin sales xen giữa, thứ tự và không nhân đôi. Cú pháp PHP/JS đạt. Database test đã dọn, không gửi mẫu hoặc xóa tin thật trên production. Deploy toàn bộ 1.8.2 rồi purge cache HTML/assets/CDN. Production chưa nghiệm thu bản mới.
 
 ## 1.8.1 — Mở chat tức thì, 06/10/2026
 

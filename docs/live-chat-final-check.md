@@ -1,14 +1,22 @@
-# Kiểm tra VPN Live Chat 1.8.1 — 06/10/2026
+# Kiểm tra VPN Live Chat 1.8.2 — 06/10/2026
+
+## 1.8.2 — Tin đã lưu phải hiện ngay phía khách, 06/10/2026
+
+Tái hiện được lỗi: guest/start hoặc guest/send thành công nhưng UI chỉ hiện tin sau guest/sync. Sync thất bại khiến admin thấy tin mà khách không thấy. Poll đang chạy cũng có thể trả snapshot trước lần gửi. Kiểm tra hồi quy đã thất bại trước sửa và đạt sau sửa; chưa xác định riêng lỗi mạng/cache nào xảy ra trên hosting của ảnh người dùng.
+
+Phản hồi gửi/retry trả nội dung, seq và thời gian của tin đã lưu. Widget hiển thị receipt ngay, không chờ sync và không khóa gửi trong lúc tải lịch sử. Poll sau gửi phải thực hiện một lượt mới sau poll đang chạy. Dùng POST/CSRF để tránh cache GET ở proxy, vẫn hỗ trợ GET cho client cũ. Không tăng cursor chỉ vì receipt, nên không bỏ sót tin sales hoặc ghi chú có seq xen giữa. Dedup theo seq và chèn theo thứ tự server khi receipt đến trước lịch sử.
+
+61 kiểm tra backend, 34 browser HTTP thật và 117 UI/mock đạt (212 kiểm tra chạy trong lần sửa này); 35 launcher giữ kết quả 1.8.1, tổng hiện hành 247. Có tình huống sync 503 sau gửi, gửi tiếp khi sync lỗi, khôi phục/reload, snapshot poll cũ đang chạy, tin sales xen giữa, thứ tự và không nhân đôi. Cú pháp PHP/JS đạt. Database test đã dọn, không gửi mẫu hoặc xóa tin thật trên production. Deploy toàn bộ 1.8.2 rồi purge cache HTML/assets/CDN. Production chưa nghiệm thu bản mới.
 
 ## Kết quả
 
-233 kiểm tra đạt; cú pháp 12 file PHP và 4 file JavaScript đạt. Chat dùng giới hạn tần suất trên máy chủ, không cần Turnstile site key/secret. Gửi thật qua WordPress HTTP/database đã xác nhận trong môi trường cô lập. Chưa nghiệm thu bản 1.8.1 trên production sau deploy.
+247 kiểm tra hiện hành đạt (212 chạy lại ở 1.8.2, 35 launcher giữ kết quả 1.8.1); cú pháp 12 file PHP và 4 file JavaScript đạt. Chat dùng giới hạn tần suất trên máy chủ, không cần Turnstile site key/secret. Gửi thật qua WordPress HTTP/database đã xác nhận trong môi trường cô lập. Chưa nghiệm thu bản 1.8.2 trên production sau deploy.
 
 | Bộ kiểm tra | Số kiểm tra | Kết quả |
 |---|---:|---|
-| REST/database WordPress thật, test port 3311 | 55 | Đạt |
+| REST/database WordPress thật, test port 3311 | 61 | Đạt |
 | Browser/HTTP WordPress thật, port 8091 | 34 | Đạt |
-| Giao diện, lỗi mạng, mobile bằng HTTP giả lập | 109 | Đạt |
+| Giao diện, lỗi mạng, mobile bằng HTTP giả lập | 117 | Đạt |
 | Launcher, lời mời, animation, reduced motion | 35 | Đạt |
 
 HTTP thật không dùng mock CAPTCHA; request ra ngoài và email bị chặn trong test. Database vpn_chat_test riêng, không dùng database local chính/production. Dữ liệu chat test đã dọn; không gửi tin mẫu lên production.
@@ -33,7 +41,7 @@ Nút gửi và Enter; Shift+Enter xuống dòng; IME không gửi nhầm; ẩn d
 
 ## Deploy và phần còn lại
 
-Deploy toàn bộ plugin 1.8.1 rồi purge cache HTML/assets/CDN. Nâng cấp tự bật nhận chat mới một lần nếu widget đã bật; marker vpn_chat_rate_limits_version=1.8.0 giữ lựa chọn tắt của admin sau đó. Cài mới vẫn cần activate, bật widget/nhận chat và cấu hình paths. HTTPS và bảng database khỏe vẫn là điều kiện nhận chat; không cần tạo khóa CAPTCHA.
+Deploy toàn bộ plugin 1.8.2 rồi purge cache HTML/assets/CDN. Nâng cấp tự bật nhận chat mới một lần nếu widget đã bật; marker vpn_chat_rate_limits_version=1.8.0 giữ lựa chọn tắt của admin sau đó. Cài mới vẫn cần activate, bật widget/nhận chat và cấu hình paths. HTTPS và bảng database khỏe vẫn là điều kiện nhận chat; không cần tạo khóa CAPTCHA.
 
 Trước cập nhật, production được kiểm tra chỉ đọc: bootstrap HTTP 200 nhưng accepting=false/site key rỗng. Đây là trạng thái bản cũ, không phải kết quả 1.8.1. Sau deploy cần xác nhận accepting=true, gửi được và nhận phản hồi trong inbox. SMTP thật, delivery email, scheduler và hiệu năng hosting chưa nghiệm thu. Chat không tự gửi phản hồi sales tới email khách.
 

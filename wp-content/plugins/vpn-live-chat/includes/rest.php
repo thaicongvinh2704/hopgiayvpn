@@ -28,7 +28,7 @@ final class VPN_Chat_REST {
     }
     public static function routes(): void {
         foreach (['bootstrap' => 'POST', 'guest/sync' => 'GET', 'guest/start' => 'POST', 'guest/send' => 'POST', 'guest/identity/request'=>'POST','guest/identity/verify'=>'POST','guest/history'=>'GET','guest/contact'=>'POST', 'guest/read'=>'POST', 'guest/revoke' => 'POST', 'agent/sync' => 'POST', 'agent/send' => 'POST', 'agent/update' => 'POST', 'agent/canned' => 'POST', 'manager/health' => 'GET', 'manager/block' => 'POST', 'manager/privacy' => 'POST'] as $path => $method) {
-            register_rest_route('vpn-chat/v1', '/' . $path, ['methods' => $method, 'permission_callback' => [self::class, 'permission'], 'callback' => [self::class, 'dispatch']]);
+            register_rest_route('vpn-chat/v1', '/' . $path, ['methods' => $path==='guest/sync'?'GET, POST':$method, 'permission_callback' => [self::class, 'permission'], 'callback' => [self::class, 'dispatch']]);
         }
     }
     public static function permission(WP_REST_Request $r) {

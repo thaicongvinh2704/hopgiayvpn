@@ -1,6 +1,14 @@
-# VPN Live Chat 1.8.1
+# VPN Live Chat 1.8.2
 
 Plugin độc lập cho WordPress, guest UI tiếng Anh, inbox sales tiếng Việt. PHP/WordPress REST + MySQL/MariaDB InnoDB + JavaScript thuần. ZIP chứa assets sẵn; production không chạy npm, Node, Redis hay WebSocket. Đây là bản MVP đã kiểm thử local; chưa phê duyệt production/pilot trên shared hosting.
+
+## 1.8.2 — Tin đã lưu phải hiện ngay phía khách, 06/10/2026
+
+Tái hiện được lỗi: guest/start hoặc guest/send thành công nhưng UI chỉ hiện tin sau guest/sync. Sync thất bại khiến admin thấy tin mà khách không thấy. Poll đang chạy cũng có thể trả snapshot trước lần gửi. Kiểm tra hồi quy đã thất bại trước sửa và đạt sau sửa; chưa xác định riêng lỗi mạng/cache nào xảy ra trên hosting của ảnh người dùng.
+
+Phản hồi gửi/retry trả nội dung, seq và thời gian của tin đã lưu. Widget hiển thị receipt ngay, không chờ sync và không khóa gửi trong lúc tải lịch sử. Poll sau gửi phải thực hiện một lượt mới sau poll đang chạy. Dùng POST/CSRF để tránh cache GET ở proxy, vẫn hỗ trợ GET cho client cũ. Không tăng cursor chỉ vì receipt, nên không bỏ sót tin sales hoặc ghi chú có seq xen giữa. Dedup theo seq và chèn theo thứ tự server khi receipt đến trước lịch sử.
+
+61 kiểm tra backend, 34 browser HTTP thật và 117 UI/mock đạt (212 kiểm tra chạy trong lần sửa này); 35 launcher giữ kết quả 1.8.1, tổng hiện hành 247. Có tình huống sync 503 sau gửi, gửi tiếp khi sync lỗi, khôi phục/reload, snapshot poll cũ đang chạy, tin sales xen giữa, thứ tự và không nhân đôi. Cú pháp PHP/JS đạt. Database test đã dọn, không gửi mẫu hoặc xóa tin thật trên production. Deploy toàn bộ 1.8.2 rồi purge cache HTML/assets/CDN. Production chưa nghiệm thu bản mới.
 
 ## 1.8.1 — Mở chat tức thì, 06/10/2026
 

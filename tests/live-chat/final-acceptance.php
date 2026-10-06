@@ -29,11 +29,11 @@ try{
  $invalid=$p;$invalid['message']='';ac(rest_chat('guest/start',$invalid,$cookies,0,$csrf)->get_status()===400,'empty message rejected');
  $invalid=$p;$invalid['message']=str_repeat('x',2001);ac(rest_chat('guest/start',$invalid,$cookies,0,$csrf)->get_status()===400,'oversized message rejected');
  $invalid=$p;$invalid['files']=[];ac(rest_chat('guest/start',$invalid,$cookies,0,$csrf)->get_status()===400,'attachment payload rejected');
- $r=rest_chat('guest/start',$p,$cookies,0,$csrf);ac($r->get_status()===200,'anonymous first message accepted without name/email');$id=$r->get_data()['id'];
- $r=rest_chat('guest/start',$p,$cookies,0,$csrf);ac($r->get_status()===200,'first-message retry accepted idempotently');
+ $r=rest_chat('guest/start',$p,$cookies,0,$csrf);ac($r->get_status()===200,'anonymous first message accepted without name/email');$id=$r->get_data()['id'];$firstReceipt=$r->get_data()['message'];ac($firstReceipt['body']===$p['message']&&(int)$firstReceipt['seq']===1&&!empty($firstReceipt['created_at']),'first receipt contains canonical stored message');
+ $r=rest_chat('guest/start',$p,$cookies,0,$csrf);ac($r->get_status()===200,'first-message retry accepted idempotently');ac($r->get_data()['message']===$firstReceipt,'first retry returns identical receipt');
  ac((int)$wpdb->get_var('SELECT COUNT(*) FROM '.VPN_Chat_Store::table('messages'))===1,'retry stores exactly one message');
  $invalid=$p;$invalid['message']='changed';ac(rest_chat('guest/start',$invalid,$cookies,0,$csrf)->get_status()===409,'same retry ID cannot change message');
- $sync=rest_chat('guest/sync',['id'=>$id,'cursor'=>0],$cookies,0,'','GET');ac($sync->get_status()===200&&count($sync->get_data()['messages'])===1,'saved message visible in sync');
+ $sync=rest_chat('guest/sync',['id'=>$id,'cursor'=>0],$cookies,0,'','GET');ac($sync->get_status()===200&&count($sync->get_data()['messages'])===1,'saved message visible in sync');ac(rest_chat('guest/sync',['id'=>$id,'cursor'=>0],$cookies,0,$csrf)->get_status()===200,'POST sync supports uncached browser polling');ac(rest_chat('guest/sync',['id'=>$id,'cursor'=>0],$cookies)->get_status()===403,'POST sync requires CSRF');ac(rest_chat('guest/sync',['id'=>$id,'cursor'=>0],$b['cookies'],0,$b['data']['csrf'])->get_status()===404,'POST sync rejects other customer');
  ac(rest_chat('guest/sync',['id'=>$id,'cursor'=>0],$b['cookies'],0,'','GET')->get_status()===404,'other anonymous customer cannot read chat');
  ac(rest_chat('guest/send',['id'=>$id,'message'=>'Intrusion','client_message_id'=>bin2hex(random_bytes(16))],$b['cookies'],0,$b['data']['csrf'])->get_status()===404,'other customer cannot send to chat');
  ac(rest_chat('guest/contact',['id'=>$id,'email'=>'buyer@example.invalid'],$cookies,0,$csrf)->get_status()===200,'optional email saved');
@@ -41,7 +41,7 @@ try{
  ac(rest_chat('guest/contact',['id'=>$id,'email'=>''],$cookies,0,$csrf)->get_status()===200,'email may be removed');
  $restored=rest_chat('bootstrap',[],$cookies)->get_data();ac($restored['conversation']===$id,'bootstrap restores existing conversation');
  usleep(1100000);$body=['id'=>$id,'message'=>'Second message','client_message_id'=>bin2hex(random_bytes(16))];ac(rest_chat('guest/send',$body,$cookies,0,$csrf)->get_status()===200,'subsequent message accepted');
- ac(rest_chat('guest/send',$body,$cookies,0,$csrf)->get_status()===200,'subsequent retry accepted');
+ $retryResponse=rest_chat('guest/send',$body,$cookies,0,$csrf);ac($retryResponse->get_status()===200,'subsequent retry accepted');ac($retryResponse->get_data()['message']['body']===$body['message']&&(int)$retryResponse->get_data()['message']['seq']===2,'subsequent receipt matches stored message');
  ac((int)$wpdb->get_var('SELECT COUNT(*) FROM '.VPN_Chat_Store::table('messages'))===2,'subsequent retry does not duplicate');
  $manager=(int)get_user_by('login','chat-test-manager')->ID;$agent=(int)get_user_by('login','agent-a')->ID;$viewer=(int)get_user_by('login','viewer')->ID;
  $reply=['id'=>$id,'message'=>'Reply from isolated sales','client_message_id'=>bin2hex(random_bytes(16))];

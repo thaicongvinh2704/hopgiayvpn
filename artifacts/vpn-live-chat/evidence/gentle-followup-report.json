@@ -1,6 +1,6 @@
 {
-  "version": "1.8.1",
-  "checks": 109,
+  "version": "1.8.2",
+  "checks": 117,
   "passed": [
     "no contact form before chatting 1366",
     "follow-up waits for a message 1366",
@@ -94,6 +94,14 @@
     "Enter cannot bypass disabled new chat",
     "unavailable status explains rejected action",
     "unavailable chat retains draft",
+    "confirmed first message visible even if sync fails",
+    "subsequent message displays while sync is unavailable",
+    "recovered sync does not duplicate receipts",
+    "reload restores confirmed messages from server",
+    "confirmed reply displays before old in-flight poll completes",
+    "post-send fresh poll retrieves messages missed by old poll",
+    "receipts and later sync render in server sequence order",
+    "in-flight poll and fresh poll do not duplicate messages",
     "preloaded chat creates no conversation and stays hidden",
     "first click opens panel and welcome synchronously before slow bootstrap",
     "Enter during connection does not send without session",

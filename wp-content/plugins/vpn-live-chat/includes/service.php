@@ -3,6 +3,12 @@ defined('ABSPATH') || exit;
 final class VPN_Chat_Service {
     const STATES = ['unassigned', 'assigned', 'waiting_customer', 'follow_up', 'closed', 'spam'];
     const LABELS = ['', 'needs_sample', 'needs_quote', 'qualified', 'quote_sent', 'won', 'lost'];
+    private static function receipt(array $c, int $seq, string $sender): array {
+        global $wpdb;
+        $result=['saved'=>true,'seq'=>$seq,'id'=>$c['public_id']];
+        if($sender==='guest')$result['message']=$wpdb->get_row($wpdb->prepare('SELECT seq,sender,body,created_at FROM '.VPN_Chat_Store::table('messages')." WHERE conversation_id=%d AND seq=%d AND sender='guest'",$c['id'],$seq),ARRAY_A);
+        return $result;
+    }
     public static function send_locked(array $c, string $body, string $client, string $sender, int $actor): array {
         global $wpdb;
         $scope = $sender === 'guest' ? 'guest' : 'user:' . $actor;
@@ -10,7 +16,7 @@ final class VPN_Chat_Service {
         $old = $wpdb->get_row($wpdb->prepare('SELECT seq,payload_hash FROM ' . VPN_Chat_Store::table('messages') . ' WHERE conversation_id=%d AND sender_scope=%s AND client_message_id=%s', $c['id'], $scope, $client), ARRAY_A);
         if ($old) {
             if (!hash_equals($old['payload_hash'], $hash)) { throw new VPN_Chat_Fault('idempotency_conflict', 409); }
-            return ['saved' => true, 'seq' => (int) $old['seq'], 'id' => $c['public_id']];
+            return self::receipt($c,(int)$old['seq'],$sender);
         }
         if ($sender !== 'note' && in_array($c['status'], ['spam', 'closed'], true)) { throw new VPN_Chat_Fault('conversation_closed', 409); }
         $seq = (int) $c['seq'] + 1;
@@ -20,7 +26,7 @@ final class VPN_Chat_Service {
         if ($sender === 'guest') {
             VPN_Chat_Store::query($wpdb->prepare('INSERT IGNORE INTO ' . VPN_Chat_Store::table('outbox') . ' (conversation_id,dedup_key,due_at) VALUES (%d,%s,%s)', $c['id'], 'unassigned:' . $c['id'], gmdate('Y-m-d H:i:s', time() + VPN_Chat_Settings::get()['sla_minutes'] * 60)));
         }
-        return ['saved' => true, 'seq' => $seq, 'id' => $c['public_id']];
+        return self::receipt($c,$seq,$sender);
     }
     public static function start(array $s, array $p): array {
         global $wpdb;
@@ -47,7 +53,7 @@ final class VPN_Chat_Service {
         $old = $wpdb->get_row($wpdb->prepare('SELECT c.public_id,c.metadata FROM ' . VPN_Chat_Store::table('conversations') . ' c JOIN ' . VPN_Chat_Store::table('messages') . " m ON m.conversation_id=c.id AND m.seq=1 WHERE c.customer_id=%d AND m.client_message_id=%s AND m.sender_scope='guest' LIMIT 1", $s['customer_id'], $client), ARRAY_A);
         if ($old) {
             if ((json_decode($old['metadata'], true)['start_hash'] ?? '') !== $fingerprint) { throw new VPN_Chat_Fault('idempotency_conflict', 409); }
-            return ['id' => $old['public_id'], 'saved' => true, 'seq' => 1];
+            return self::receipt(VPN_Chat_Store::conversation($old['public_id']),1,'guest');
         }
         if (!VPN_Chat_Settings::ready()) { throw new VPN_Chat_Fault('new_chat_unavailable', 503); }
         VPN_Chat_Security::message_rate($s);
