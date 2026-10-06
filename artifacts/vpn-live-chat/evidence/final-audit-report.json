@@ -1,0 +1,21 @@
+﻿{
+    "version":  "1.7.2",
+    "date":  "2026-10-06",
+    "backend_checks":  43,
+    "real_http_browser_checks":  30,
+    "ui_fault_and_mobile_checks":  99,
+    "launcher_checks":  35,
+    "php_lint_files":  12,
+    "js_syntax_files":  4,
+    "production":  {
+                       "bootstrap_status":  200,
+                       "accepting":  false,
+                       "site_key_present":  false,
+                       "send_button_disabled":  true,
+                       "messages_sent":  0,
+                       "ready_for_live_send":  false
+                   },
+    "test_database":  "vpn_chat_test:3311",
+    "test_database_cleaned":  true,
+    "main_database_test_messages":  0
+}

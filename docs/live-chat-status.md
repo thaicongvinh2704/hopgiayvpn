@@ -1,6 +1,6 @@
 # VPN Live Chat — Tài liệu chức năng và tình trạng hoàn thành
 
-**Cập nhật:** 06/10/2026 · **Plugin:** 1.7.1 · **Schema:** 3
+**Cập nhật:** 06/10/2026 · **Plugin:** 1.7.2 · **Schema:** 3
 
 Đây là tài liệu tổng hợp hiện trạng mới nhất, dùng để biết đã làm gì, còn thiếu gì và tiếp tục công việc sau này. Các báo cáo phiên bản cũ được giữ làm bằng chứng kiểm thử, không thay thế hiện trạng trong tài liệu này. Khi sửa tính năng, cần cập nhật phiên bản, các bảng trạng thái và kết quả kiểm thử tại đây.
 
@@ -370,3 +370,9 @@ Kiểm tra trình duyệt chỉ mở chat, không gửi tin mẫu: bootstrap tr�
 Đã sửa Enter/requestSubmit không được gửi khi không nhận chat mới; tin đầu phải chờ token chống spam khi có site key. Giữ nháp, báo cụ thể unavailable, xác minh, phiên, quota, email và phản hồi không phải JSON. Console chỉ ghi mã lỗi/status, không ghi nội dung/email/cookie/token. Backend không bỏ kiểm tra chống spam.
 
 93 checks UI/mock HTTP đạt (gồm 7 kiểm tra bổ sung về khóa Enter, giữ nháp và lỗi xác minh/máy chủ), JS syntax/PHP lint đạt. Bản 1.7.1 cần deploy/purge cache. Việc nhận tin production chưa hoàn tất: chủ hosting phải cấu hình Turnstile site key trong VPN Live Chat → Cấu hình, secret qua VPN_CHAT_TURNSTILE_SECRET trong wp-config.php ngoài Git, bật nhận chat mới và kiểm tra Health/HTTPS. Chưa thay cấu hình hay gửi tin thử trên production.
+
+## 1.7.2 — Kiểm tra cuối trước cập nhật, 06/10/2026
+
+207 kiểm tra đạt: backend 43, browser qua HTTP/WordPress/database test thật 30, UI/mobile/lỗi mạng 99, launcher 35; lint 12 PHP/4 JS đạt. Sửa mất nội dung mới khi retry tin đầu đã lưu nhưng mất phản hồi; chuyển nháp sang composer tiếp theo. Khóa Enter khi hội thoại đã đóng. Không đổi backend hoặc bỏ chống spam.
+
+Báo cáo đầy đủ: live-chat-final-check.md và evidence/final-audit-report.json. Database test riêng port 3311, HTTP 8091, đã dọn mẫu; không tạo tin trên local chính/production. Production vẫn accepting=false/site_key rỗng, nên chưa nghiệm thu gửi tin production; cần cấu hình Turnstile trên hosting trước. Bản 1.7.2 sẵn sàng cập nhật mã nguồn, không có nghĩa cấu hình production đã hoàn tất.

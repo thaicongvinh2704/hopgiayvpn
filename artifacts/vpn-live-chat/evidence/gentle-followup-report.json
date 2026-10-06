@@ -1,6 +1,6 @@
 {
-  "version": "1.7.1",
-  "checks": 93,
+  "version": "1.7.2",
+  "checks": 99,
   "passed": [
     "no contact form before chatting 1366",
     "follow-up waits for a message 1366",
@@ -28,6 +28,7 @@
     "composer stays visible above bottom CTA 1366",
     "text-only chat has no file upload 1366",
     "closed conversation has no unsolicited email prompt 1366",
+    "Enter cannot submit to a closed conversation 1366",
     "new chat starts without email form 1366",
     "no JavaScript page errors 1366",
     "no contact form before chatting 390",
@@ -56,6 +57,7 @@
     "composer stays visible above bottom CTA 390",
     "text-only chat has no file upload 390",
     "closed conversation has no unsolicited email prompt 390",
+    "Enter cannot submit to a closed conversation 390",
     "new chat starts without email form 390",
     "no JavaScript page errors 390",
     "no contact form before chatting 320",
@@ -84,6 +86,7 @@
     "composer stays visible above bottom CTA 320",
     "text-only chat has no file upload 320",
     "closed conversation has no unsolicited email prompt 320",
+    "Enter cannot submit to a closed conversation 320",
     "new chat starts without email form 320",
     "no JavaScript page errors 320",
     "pre-chat email creates no conversation or API save",
@@ -94,7 +97,10 @@
     "first message waits for verification token",
     "missing verification has clear guidance",
     "server rejection preserves draft",
-    "server rejection uses specific explanation"
+    "server rejection uses specific explanation",
+    "lost response retains first draft",
+    "lost response retry confirms original without duplicate",
+    "edited draft survives first-message retry transition"
   ],
   "mode": "actual plugin assets and mocked HTTP; no database fixtures"
 }

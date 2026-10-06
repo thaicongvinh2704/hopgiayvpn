@@ -121,13 +121,14 @@
  function grow(textarea){textarea.style.height='auto';textarea.style.height=`${Math.min(120,Math.max(44,textarea.scrollHeight))}px`;if(resizePanel)resizePanel();}
  async function send(event){
   event.preventDefault();if(busy)return;const first=pending?Object.hasOwn(pending,'name'):!conversation;
+  if(!first&&conversationClosed){state('This conversation is closed. Please start a new chat. Your draft is kept.');return;}
   if(first&&!config.accepting){state('Chat is temporarily unavailable. Your draft is kept. Please try again later or contact us another way.');return;}
   if(first&&config.site_key&&!token){state('Please complete the security check below before sending. Your draft is kept.');try{await challenge();$('vpn-chat-challenge').scrollIntoView({block:'nearest'});}catch{state('The security check could not load. Please refresh or check your connection. Your draft is kept.');}return;}
   busy=true;const textarea=$(first?'vpn-chat-first':'vpn-chat-message'),button=$(first?'vpn-chat-start-button':'vpn-chat-send-button');button.disabled=true;$('vpn-chat-send-button').disabled=true;
   try{
    if(!pending){pending={message:textarea.value,client_message_id:crypto.randomUUID().replaceAll('-','')};if(first){const metadata={},query=new URLSearchParams(location.search);for(const key of ['utm_source','utm_medium','utm_campaign'])if(query.has(key))metadata[key]=query.get(key).slice(0,100);Object.assign(pending,{name:$('vpn-chat-name').value,email:$('vpn-chat-email').value,source_path:location.pathname,metadata});}else pending.id=conversation;}
    state('Sending…');const result=await request(first?'guest/start':'guest/send',{...pending,challenge:token});conversation=result.id;activeFlag(true);
-   if(textarea.value===pending.message)textarea.value='';grow(textarea);pending=null;token='';state('Saved.');idle=0;
+   if(textarea.value===pending.message)textarea.value='';else if(first){$('vpn-chat-message').value=textarea.value;textarea.value='';grow($('vpn-chat-message'));}grow(textarea);pending=null;token='';state('Saved.');idle=0;
    clearTimeout(welcomeTimer);$('vpn-chat-welcome').hidden=true;$('vpn-chat-start').hidden=true;$('vpn-chat-first-composer').hidden=true;$('vpn-chat-prompts').hidden=true;$('vpn-chat-reply').hidden=false;$('vpn-chat-log').hidden=false;$('vpn-chat-challenge').hidden=true;
    channel?.postMessage('saved');await sync();scrollBottom();await acknowledge();
   }catch(e){

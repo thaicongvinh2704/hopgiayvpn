@@ -51,3 +51,15 @@ Results/screenshots ở ignored `tests/live-chat/results/`; báo cáo bàn giao/
 Sau test, dừng PHP server và MariaDB riêng trên port 3311; giữ runtime khi cần xem lại. Không xóa junction bằng recursive traversal. Không dừng dịch vụ MySQL của người khác hoặc restore DB gốc.
 
 UI 1.1.0: chạy `profiles-unread.php` để seed profile sales test Tho Nguyen/Linh Ngo trước `ui-profile.mjs`; theme phải là custom-box-theme (lệnh switch ở trên). `profile-upload.mjs` thử upload logo QA trong Media Library **DB test**, rồi reset profile về avatar chữ; không upload ảnh vào local gốc. Receipt, unread monotonic/CSRF/ownership và snapshot nhiều người gửi được kiểm tra riêng. `browser.mjs` nay xác minh minimized chat tiếp tục sync chậm để có badge; hidden tab vẫn dừng sync.
+
+## Kiểm tra cuối cho UI 1.7.2 / schema 3
+
+Sau khi khởi động DB test 3311 và HTTP test 8091 theo hướng dẫn trên, chạy tuần tự:
+
+- `php tests/live-chat/install.php`
+- `php tests/live-chat/final-acceptance.php` (có guard database test/port, dọn bảng chat test trước/sau)
+- `node tests/live-chat/final-browser.mjs` (HTTP thật, khách và sales, dọn bằng backend suite khi kết thúc)
+- `node tests/live-chat/gentle-followup.mjs` (API giả lập, không dùng DB)
+- `node tests/live-chat/invitation.mjs` (API giả lập, không dùng DB)
+
+Không chạy backend và browser HTTP cùng lúc. Các browser harness mặc định dùng đường dẫn Node/Playwright/Chrome của máy này. Các suite integration/config-failures/browser cũ ở trên là lịch sử cho phiên bản trước; fixtures chưa chuyển hết sang customer_id/schema 3 nên không dùng chúng thay bộ final-acceptance/final-browser hiện tại. Báo cáo giới hạn kiểm tra và production tại docs/live-chat-final-check.md.
