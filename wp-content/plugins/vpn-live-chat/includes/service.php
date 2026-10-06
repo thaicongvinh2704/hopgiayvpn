@@ -50,9 +50,9 @@ final class VPN_Chat_Service {
             return ['id' => $old['public_id'], 'saved' => true, 'seq' => 1];
         }
         if (!VPN_Chat_Settings::ready()) { throw new VPN_Chat_Fault('new_chat_unavailable', 503); }
-        VPN_Chat_Security::quota('create:s:' . $s['id'], VPN_Chat_Settings::get()['conversation_limit'], 600);
+        VPN_Chat_Security::message_rate($s);
+        VPN_Chat_Security::quota('create:c:' . $s['customer_id'], VPN_Chat_Settings::get()['conversation_limit'], 600);
         VPN_Chat_Security::quota('create:ip:' . VPN_Chat_Security::ip(), 100, 600);
-        VPN_Chat_Security::challenge((string) ($p['challenge'] ?? ''));
         return VPN_Chat_Store::transaction(static function () use ($wpdb, $s, $client, $body, $name, $email, $path, $metadata, $fingerprint) {
             // A session lock prevents simultaneous starts creating multiple conversations.
             $locked_session=$wpdb->get_row($wpdb->prepare('SELECT * FROM ' . VPN_Chat_Store::table('sessions') . ' WHERE id=%d FOR UPDATE', $s['id']),ARRAY_A);
@@ -72,18 +72,16 @@ final class VPN_Chat_Service {
         $body = VPN_Chat_Security::text($p['message'] ?? null, VPN_Chat_Settings::get()['max_chars']);
         $client = VPN_Chat_Security::client_id($p['client_message_id'] ?? null);
         if ($s) {
-            VPN_Chat_Security::quota('send:s:' . $s['id'], VPN_Chat_Settings::get()['short_limit'], 30);
-            VPN_Chat_Security::quota('long:s:' . $s['id'], VPN_Chat_Settings::get()['long_limit'], 300);
-            VPN_Chat_Security::quota('send:ip:' . VPN_Chat_Security::ip(), 1000, 300);
-            if ($s['challenge_required']) { VPN_Chat_Security::challenge((string) ($p['challenge'] ?? '')); }
+            global $wpdb;
+            $prior=VPN_Chat_Store::conversation($id);VPN_Chat_Store::authorize($prior,$s,true);
+            $retry=$wpdb->get_var($wpdb->prepare('SELECT id FROM '.VPN_Chat_Store::table('messages')." WHERE conversation_id=%d AND sender_scope='guest' AND client_message_id=%s",$prior['id'],$client));
+            if(!$retry)VPN_Chat_Security::message_rate($s);
         }
         return VPN_Chat_Store::transaction(static function () use ($id, $body, $client, $s, $p) {
             if ($s) {
                 global $wpdb;
                 $current = $wpdb->get_row($wpdb->prepare('SELECT * FROM ' . VPN_Chat_Store::table('sessions') . ' WHERE id=%d FOR UPDATE', $s['id']), ARRAY_A);
                 if (!$current || $current['revoked'] || (int)$current['customer_id']!==(int)$s['customer_id'] || strtotime($current['expires_at'].' UTC')<=time()) { throw new VPN_Chat_Fault('session_expired',401); }
-                if ($current['challenge_required'] && !$s['challenge_required']) { throw new VPN_Chat_Fault('challenge_required',403); }
-                if ($s['challenge_required']) { $wpdb->update(VPN_Chat_Store::table('sessions'),['challenge_required'=>0],['id'=>$s['id']]); }
             }
             $c = VPN_Chat_Store::conversation($id, true);
             VPN_Chat_Store::authorize($c, $s, true);

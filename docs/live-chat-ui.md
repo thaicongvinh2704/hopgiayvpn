@@ -151,3 +151,8 @@ Kiểm tra trình duyệt chỉ mở chat, không gửi tin mẫu: bootstrap tr�
 207 kiểm tra đạt: backend 43, browser qua HTTP/WordPress/database test thật 30, UI/mobile/lỗi mạng 99, launcher 35; lint 12 PHP/4 JS đạt. Sửa mất nội dung mới khi retry tin đầu đã lưu nhưng mất phản hồi; chuyển nháp sang composer tiếp theo. Khóa Enter khi hội thoại đã đóng. Không đổi backend hoặc bỏ chống spam.
 
 Báo cáo đầy đủ: live-chat-final-check.md và evidence/final-audit-report.json. Database test riêng port 3311, HTTP 8091, đã dọn mẫu; không tạo tin trên local chính/production. Production vẫn accepting=false/site_key rỗng, nên chưa nghiệm thu gửi tin production; cần cấu hình Turnstile trên hosting trước. Bản 1.7.2 sẵn sàng cập nhật mã nguồn, không có nghĩa cấu hình production đã hoàn tất.
+## 1.8.0 — Chống spam đơn giản theo yêu cầu, 06/10/2026
+
+Thay yêu cầu Turnstile bằng giới hạn trên máy chủ: 2 tin/giây; mặc định 10 tin/30 giây, 60 tin/5 phút, 3 hội thoại mới/10 phút theo mã khách. Nhiều tab/phiên dùng chung quota; có giới hạn IP bổ sung. Khi quá giới hạn, báo thời gian chờ và giữ nháp. Không cần site key/secret, không có CAPTCHA. Giữ cookie/CSRF/origin, quyền hội thoại và chỉ nhận văn bản.
+
+Nâng cấp bật nhận chat mới một lần nếu widget đã bật, giữ lựa chọn tắt của admin sau đó. Deploy plugin 1.8.0 và purge cache; vẫn cần HTTPS/database khỏe. 220 kiểm tra đạt, gồm gửi/nhận HTTP thật trên WordPress test và giới hạn đồng thời. Chưa kiểm tra gửi thật bản mới trên production; SMTP/delivery email và hiệu năng hosting vẫn chưa nghiệm thu. Báo cáo hiện hành: docs/live-chat-final-check.md. Các đoạn Turnstile trong nhật ký phiên bản cũ chỉ mô tả lịch sử, không còn là yêu cầu của 1.8.0.

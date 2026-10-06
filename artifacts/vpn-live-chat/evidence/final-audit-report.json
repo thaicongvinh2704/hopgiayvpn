@@ -1,19 +1,18 @@
 ﻿{
-    "version":  "1.7.2",
+    "version":  "1.8.0",
     "date":  "2026-10-06",
-    "backend_checks":  43,
+    "backend_checks":  55,
     "real_http_browser_checks":  30,
-    "ui_fault_and_mobile_checks":  99,
+    "ui_fault_and_mobile_checks":  100,
     "launcher_checks":  35,
+    "total":  220,
     "php_lint_files":  12,
     "js_syntax_files":  4,
+    "anti_spam":  "server-side fixed-window atomic rate limits; no CAPTCHA keys",
     "production":  {
-                       "bootstrap_status":  200,
-                       "accepting":  false,
-                       "site_key_present":  false,
-                       "send_button_disabled":  true,
+                       "new_version_send_verified":  false,
                        "messages_sent":  0,
-                       "ready_for_live_send":  false
+                       "requires_deploy":  true
                    },
     "test_database":  "vpn_chat_test:3311",
     "test_database_cleaned":  true,

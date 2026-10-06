@@ -63,3 +63,6 @@ Sau khi khởi động DB test 3311 và HTTP test 8091 theo hướng dẫn trên
 - `node tests/live-chat/invitation.mjs` (API giả lập, không dùng DB)
 
 Không chạy backend và browser HTTP cùng lúc. Các browser harness mặc định dùng đường dẫn Node/Playwright/Chrome của máy này. Các suite integration/config-failures/browser cũ ở trên là lịch sử cho phiên bản trước; fixtures chưa chuyển hết sang customer_id/schema 3 nên không dùng chúng thay bộ final-acceptance/final-browser hiện tại. Báo cáo giới hạn kiểm tra và production tại docs/live-chat-final-check.md.
+
+## 1.8.0
+Bộ hiện hành final-acceptance.php/final-browser.mjs không cần mock CAPTCHA. rate-worker.php kiểm tra quota đồng thời, chỉ chạy trên database test riêng. Các suites cũ mô tả Turnstile là lịch sử, không dùng để nghiệm thu 1.8.0.

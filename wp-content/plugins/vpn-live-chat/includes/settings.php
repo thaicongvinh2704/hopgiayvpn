@@ -25,9 +25,17 @@ final class VPN_Chat_Settings {
     public static function secret(): string {
         return defined('VPN_CHAT_TURNSTILE_SECRET') ? (string) VPN_CHAT_TURNSTILE_SECRET : '';
     }
+    public static function upgrade_rate_limits(): void {
+        if(get_option('vpn_chat_rate_limits_version')==='1.8.0')return;
+        $s=self::get();
+        // The approved upgrade enables chat on sites already displaying the widget.
+        if($s['widget'])$s['accept_new']=true;
+        update_option('vpn_chat_settings',$s,false);
+        update_option('vpn_chat_rate_limits_version','1.8.0',false);
+    }
     public static function ready(): bool {
         $s = self::get();
-        return $s['accept_new'] && $s['site_key'] && self::secret() && VPN_Chat_Schema::healthy()
+        return $s['accept_new'] && VPN_Chat_Schema::healthy()
             && (is_ssl() || self::local());
     }
     public static function local(): bool {
@@ -53,6 +61,6 @@ final class VPN_Chat_Settings {
         $presence=self::on_duty() ? (['available'=>'online','away'=>'away'][$state]??'offline') : 'offline';
         $agent_available=$presence==='online';
         if($s['always_online'])$presence='online';
-        return ['accepting' => (bool) self::ready(), 'online' => $presence==='online', 'presence'=>$presence, 'agent_available'=>$agent_available, 'support'=>$owner ? VPN_Chat_Profiles::user($owner) : VPN_Chat_Profiles::support(), 'offline_copy' => $s['offline_copy'], 'site_key' => $s['site_key'], 'max_chars' => $s['max_chars'], 'fallback_url' => $s['fallback_url']];
+        return ['accepting' => (bool) self::ready(), 'online' => $presence==='online', 'presence'=>$presence, 'agent_available'=>$agent_available, 'support'=>$owner ? VPN_Chat_Profiles::user($owner) : VPN_Chat_Profiles::support(), 'offline_copy' => $s['offline_copy'], 'site_key' => '', 'max_chars' => $s['max_chars'], 'fallback_url' => $s['fallback_url']];
     }
 }

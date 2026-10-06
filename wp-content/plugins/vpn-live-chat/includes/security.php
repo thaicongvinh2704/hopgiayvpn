@@ -31,7 +31,15 @@ final class VPN_Chat_Security {
             VPN_Chat_Store::query($wpdb->prepare('INSERT INTO ' . VPN_Chat_Store::table('rate_limits') . ' (bucket,hits,expires_at) VALUES (%s,1,%s) ON DUPLICATE KEY UPDATE hits=hits+1', $key, $expires));
             return (int) $wpdb->get_var($wpdb->prepare('SELECT hits FROM ' . VPN_Chat_Store::table('rate_limits') . ' WHERE bucket=%s FOR UPDATE', $key));
         });
-        if ($hits > $limit) { throw new VPN_Chat_Fault('rate_limited', 429); }
+        if ($hits > $limit) { $e=new VPN_Chat_Fault('rate_limited',429);$e->retry_after=max(1,($window+1)*$seconds-time());throw $e; }
+    }
+    public static function message_rate(array $s): void {
+        $customer=(int)$s['customer_id'];$settings=VPN_Chat_Settings::get();
+        // Same counters for first/reply messages and all sessions of a customer.
+        self::quota('message:second:'.$customer,2,1);
+        self::quota('message:short:'.$customer,(int)$settings['short_limit'],30);
+        self::quota('message:long:'.$customer,(int)$settings['long_limit'],300);
+        self::quota('message:ip:'.self::ip(),1000,300);
     }
     public static function session(bool $csrf = false): array {
         global $wpdb;

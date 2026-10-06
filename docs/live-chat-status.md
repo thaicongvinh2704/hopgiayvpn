@@ -1,8 +1,14 @@
 # VPN Live Chat — Tài liệu chức năng và tình trạng hoàn thành
 
-**Cập nhật:** 06/10/2026 · **Plugin:** 1.7.2 · **Schema:** 3
+**Cập nhật:** 06/10/2026 · **Plugin:** 1.8.0 · **Schema:** 3
 
 Đây là tài liệu tổng hợp hiện trạng mới nhất, dùng để biết đã làm gì, còn thiếu gì và tiếp tục công việc sau này. Các báo cáo phiên bản cũ được giữ làm bằng chứng kiểm thử, không thay thế hiện trạng trong tài liệu này. Khi sửa tính năng, cần cập nhật phiên bản, các bảng trạng thái và kết quả kiểm thử tại đây.
+
+## 1.8.0 — Chống spam đơn giản theo yêu cầu, 06/10/2026
+
+Thay yêu cầu Turnstile bằng giới hạn trên máy chủ: 2 tin/giây; mặc định 10 tin/30 giây, 60 tin/5 phút, 3 hội thoại mới/10 phút theo mã khách. Nhiều tab/phiên dùng chung quota; có giới hạn IP bổ sung. Khi quá giới hạn, báo thời gian chờ và giữ nháp. Không cần site key/secret, không có CAPTCHA. Giữ cookie/CSRF/origin, quyền hội thoại và chỉ nhận văn bản.
+
+Nâng cấp bật nhận chat mới một lần nếu widget đã bật, giữ lựa chọn tắt của admin sau đó. Deploy plugin 1.8.0 và purge cache; vẫn cần HTTPS/database khỏe. 220 kiểm tra đạt, gồm gửi/nhận HTTP thật trên WordPress test và giới hạn đồng thời. Chưa kiểm tra gửi thật bản mới trên production; SMTP/delivery email và hiệu năng hosting vẫn chưa nghiệm thu. Báo cáo hiện hành: docs/live-chat-final-check.md. Các đoạn Turnstile trong nhật ký phiên bản cũ chỉ mô tả lịch sử, không còn là yêu cầu của 1.8.0.
 
 ## 1. Kết quả hiện tại
 

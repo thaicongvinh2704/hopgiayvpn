@@ -103,7 +103,7 @@ final class VPN_Chat_REST {
             $response = new WP_REST_Response($data, 200);
         } catch (VPN_Chat_Fault $e) {
             $response = new WP_REST_Response(['code' => $e->getMessage()], $e->status);
-            if ($e->status === 429) { $response->header('Retry-After', '30'); }
+            if ($e->status === 429) { $response->header('Retry-After', (string)($e->retry_after?:30)); }
         } catch (Throwable $e) {
             $response = new WP_REST_Response(['code' => 'service_unavailable'], 503);
         }
@@ -167,7 +167,7 @@ final class VPN_Chat_REST {
             VPN_Chat_Store::audit('unban', (int)($p['block_id'] ?? 0));
         } else {
             $c = VPN_Chat_Store::conversation((string)($p['id'] ?? ''));
-            if (($p['action'] ?? '') === 'challenge') { $wpdb->update(VPN_Chat_Store::table('sessions'), ['challenge_required' => 1], ['customer_id' => $c['customer_id']]); VPN_Chat_Store::audit('challenge', (int)$c['id']); }
+            if (($p['action'] ?? '') === 'challenge') { throw new VPN_Chat_Fault('unsupported_action',400); }
             else {
                 VPN_Chat_Store::insert('blocks', ['session_id' => $c['session_id'], 'reason' => VPN_Chat_Security::text($p['reason'] ?? null,240), 'actor_id' => get_current_user_id(), 'expires_at' => gmdate('Y-m-d H:i:s', time() + max(1,min(168,(int)($p['hours'] ?? 24))) * 3600), 'created_at' => gmdate('Y-m-d H:i:s')]);
                 VPN_Chat_Store::audit('block', (int)$c['id']);

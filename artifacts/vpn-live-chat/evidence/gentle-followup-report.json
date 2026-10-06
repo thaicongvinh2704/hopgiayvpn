@@ -1,6 +1,6 @@
 {
-  "version": "1.7.2",
-  "checks": 99,
+  "version": "1.8.0",
+  "checks": 100,
   "passed": [
     "no contact form before chatting 1366",
     "follow-up waits for a message 1366",
@@ -94,8 +94,9 @@
     "Enter cannot bypass disabled new chat",
     "unavailable status explains rejected action",
     "unavailable chat retains draft",
-    "first message waits for verification token",
-    "missing verification has clear guidance",
+    "rate limit keeps draft",
+    "rate limit creates no message",
+    "rate limit retry sends once without CAPTCHA",
     "server rejection preserves draft",
     "server rejection uses specific explanation",
     "lost response retains first draft",

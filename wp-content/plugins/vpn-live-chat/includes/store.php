@@ -2,6 +2,7 @@
 defined('ABSPATH') || exit;
 final class VPN_Chat_Fault extends RuntimeException {
     public int $status;
+    public int $retry_after = 0;
     public function __construct(string $code, int $status = 400) { parent::__construct($code); $this->status = $status; }
 }
 final class VPN_Chat_Store {

@@ -139,7 +139,7 @@
   if(cfg.manager){
     $('vpn-canned-form').addEventListener('submit',e=>{e.preventDefault();action(()=>api('agent/canned',{id:Number($('vpn-canned-id').value)||undefined,title:$('vpn-canned-title').value,body:$('vpn-canned-body').value}));});
     $('vpn-canned-delete').addEventListener('click',()=>action(()=>api('agent/canned',{action:'delete',id:Number($('vpn-canned-id').value)})));
-    $('vpn-challenge').addEventListener('click',()=>action(()=>api('manager/block',{id:selected.public_id,action:'challenge'})));
+
     $('vpn-block').addEventListener('click',()=>action(()=>api('manager/block',{id:selected.public_id,reason:$('vpn-block-reason').value,hours:24})));
     $('vpn-export').addEventListener('click',()=>action(async()=>{
       let after=0,all=[],c,more;

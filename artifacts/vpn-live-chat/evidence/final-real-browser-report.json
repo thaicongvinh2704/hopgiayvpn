@@ -1,5 +1,5 @@
 {
-  "version": "1.7.2",
+  "version": "1.8.0",
   "checks": 30,
   "passed": [
     "real prechat has no email form 390",
@@ -33,6 +33,6 @@
     "visible response read acknowledgement clears badge",
     "real pages have no JavaScript errors"
   ],
-  "mode": "real WordPress HTTP + InnoDB on isolated 8091/3311; only Turnstile/mail simulated",
+  "mode": "real WordPress HTTP + InnoDB on isolated 8091/3311; external HTTP/mail blocked; no CAPTCHA mocks needed",
   "errors": []
 }
