@@ -112,3 +112,11 @@ Khi không có nhân viên available theo lịch/heartbeat thật, hiện một 
 ## 1.6.0 — Lời mời nổi bật, 06/10/2026
 
 Nút Chat with Sales có nhãn dễ đọc. Card avatar/Tho Nguyen/Sale Manager mời khách hỏi báo giá hoặc chọn bao bì, hiện sau 2,5 giây và giữ qua đổi trang cho đến khi khách đóng hoặc mở chat. Animation vào nhẹ, vòng sáng và nudge chỉ ba lần; hỗ trợ reduced motion. Nâng cấp bật lời mời một lần để sửa cấu hình greeting_enabled=false trên production, không ghi đè lựa chọn admin về sau. Avatar mặc định nhỏ đi kèm plugin giúp deploy không phụ thuộc Media Library local. 25 checks browser, 3 checks migration và kiểm tra trang local thật desktop/mobile đạt; không tạo chat mẫu.
+
+## 1.6.1 — Mẫu 01 Friendly Bubble được chọn, 06/10/2026
+
+Thay card lớn bằng bong bóng trắng gọn (260px desktop / 246px mobile), tiêu đề “Hi! Need help with packaging?”, dòng “Chat with Tho Nguyen, Sale Manager” và CTA teal “Let’s chat →”. Launcher dùng avatar thật 80px, viền/chấm xanh và icon chat nhỏ ở góc; mở khung vẫn đổi sang nút đóng 58px. Không thay đổi luồng chat, dữ liệu khách hay lời nhắc email.
+
+Giữ delay 2,5 giây, dismissal trong tab, animation 3 lần rồi dừng và reduced motion. Tự né thanh liên hệ dưới cùng; ẩn lời mời khi chiều cao khả dụng quá nhỏ. Không tạo hội thoại/tin nhắn mẫu.
+
+Đã đạt 35 checks browser với assets thật và API giả lập ở 1366px, 390px, 320px; kiểm tra trang WordPress local thật ở desktop/mobile và ảnh friendly-bubble-local trong evidence; JS syntax và PHP lint đạt. Báo cáo invitation-v161-report.json. Bản 1.6.1 đổi version assets để tránh dùng CSS/JS cũ; migration bật lời mời của 1.6.0 giữ nguyên, không ghi đè lựa chọn tắt của quản trị viên. Production cần deploy commit mới và purge cache; chưa nghiệm thu phiên bản này trên production.

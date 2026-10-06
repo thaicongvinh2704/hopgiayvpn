@@ -1,6 +1,6 @@
 # VPN Live Chat — Tài liệu chức năng và tình trạng hoàn thành
 
-**Cập nhật:** 06/10/2026 · **Plugin:** 1.6.0 · **Schema:** 3
+**Cập nhật:** 06/10/2026 · **Plugin:** 1.6.1 · **Schema:** 3
 
 Đây là tài liệu tổng hợp hiện trạng mới nhất, dùng để biết đã làm gì, còn thiếu gì và tiếp tục công việc sau này. Các báo cáo phiên bản cũ được giữ làm bằng chứng kiểm thử, không thay thế hiện trạng trong tài liệu này. Khi sửa tính năng, cần cập nhật phiên bản, các bảng trạng thái và kết quả kiểm thử tại đây.
 
@@ -22,7 +22,7 @@ Khách mở widget và gửi tin bằng văn bản ngay; tên và email đều k
 | Trang có widget hiện tại | `/hopgiayvpn/` và `/hopgiayvpn/contact/` |
 | Profile hỗ trợ | Tho Nguyen; ảnh Thọ Nguyễn do người dùng cung cấp |
 | Avatar local | Media Library ID 8869; thumbnail 150 × 150, khoảng 42 KB |
-| Lời chào ngoài khung | Đang tắt; lời chào trong khung hiện sau khi mở |
+| Lời chào ngoài khung | Đã bật trên local; mẫu 01 Friendly Bubble được người dùng chọn |
 | Retention local | 0: chưa tự xóa hội thoại theo thời hạn |
 | Email đội sales / cron local | Chưa cấu hình email; WP-Cron bị tắt, email ngoài bị chặn |
 | Đóng gói | ZIP 1.0.0 là bản cũ; thay đổi 1.2.0 đã sửa trực tiếp local, chưa tạo ZIP mới |
@@ -35,7 +35,7 @@ Các dòng cấu hình trên đã được đọc lại từ WordPress bằng th
 
 | Chức năng | Kết quả và cách hoạt động |
 |---|---|
-| Nút mở chat | Nút tròn 58px ở góc dưới bên phải, icon chat, đổi sang đóng khi mở |
+| Nút mở chat | Avatar tròn 80px, viền/chấm xanh và icon chat; đổi sang nút đóng 58px khi mở |
 | Giao diện | Header, vùng hội thoại cuộn riêng, ô nhập cố định dưới cùng; màu xanh theo CTA website |
 | Desktop/mobile | Rộng tối đa 400px; giới hạn chiều cao theo viewport; xử lý safe-area và resize |
 | Avatar và tên | Ảnh thật Thọ Nguyễn trong header/lời chào; ảnh lỗi có chữ viết tắt dự phòng |
@@ -337,3 +337,11 @@ Kiểm tra production trước sửa xác nhận launcher 1.5.1 đã được t�
 Kiểm tra: 25 checks browser với assets thật/mock homepage và API, gồm desktop/mobile, CTA, avatar, delay, dismissal qua navigation, không tạo session/tin tự động, reduced motion và mở widget; 3 checks backend migration bật một lần/giữ lựa chọn admin/avatar fallback bằng transaction rollback. PHP lint và JS syntax đạt. Báo cáo invitation-v160-report.json trong artifacts/vpn-live-chat/evidence; ảnh bằng chứng chỉ lưu local. Không tạo hội thoại mẫu.
 
 Production cần deploy bản 1.6.0 và purge cache HTML/assets/CDN để thấy cấu hình mới. Mã không tự xóa cache CDN từ local; SMTP/Turnstile production vẫn giữ điều kiện vận hành đã nêu ở trên.
+
+## 1.6.1 — Mẫu 01 Friendly Bubble được chọn, 06/10/2026
+
+Thay card lớn bằng bong bóng trắng gọn (260px desktop / 246px mobile), tiêu đề “Hi! Need help with packaging?”, dòng “Chat with Tho Nguyen, Sale Manager” và CTA teal “Let’s chat →”. Launcher dùng avatar thật 80px, viền/chấm xanh và icon chat nhỏ ở góc; mở khung vẫn đổi sang nút đóng 58px. Không thay đổi luồng chat, dữ liệu khách hay lời nhắc email.
+
+Giữ delay 2,5 giây, dismissal trong tab, animation 3 lần rồi dừng và reduced motion. Tự né thanh liên hệ dưới cùng; ẩn lời mời khi chiều cao khả dụng quá nhỏ. Không tạo hội thoại/tin nhắn mẫu.
+
+Đã đạt 35 checks browser với assets thật và API giả lập ở 1366px, 390px, 320px; kiểm tra trang WordPress local thật ở desktop/mobile và ảnh friendly-bubble-local trong evidence; JS syntax và PHP lint đạt. Báo cáo invitation-v161-report.json. Bản 1.6.1 đổi version assets để tránh dùng CSS/JS cũ; migration bật lời mời của 1.6.0 giữ nguyên, không ghi đè lựa chọn tắt của quản trị viên. Production cần deploy commit mới và purge cache; chưa nghiệm thu phiên bản này trên production.

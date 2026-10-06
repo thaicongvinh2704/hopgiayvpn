@@ -5,18 +5,16 @@
   if(!cfg || document.getElementById('vpn-chat-launch'))return;
   const svg=(path,kind)=>`<svg class="vpn-chat-icon-${kind}" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">${path}</svg>`;
   const button=document.createElement('button');button.id='vpn-chat-launch';button.className='vpn-chat-launch';button.type='button';
-  button.innerHTML=svg('<path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8 11h8M8 7.5h5"/>','open')+svg('<path d="m6 6 12 12M18 6 6 18"/>','close')+'<span class="vpn-chat-launch-label">Chat with Sales</span><span id="vpn-chat-unread" class="vpn-chat-unread" hidden></span>';
+  button.innerHTML='<span class="vpn-chat-launch-portrait"></span><span class="vpn-chat-presence" aria-hidden="true"></span><span class="vpn-chat-launch-chat">'+svg('<path d="M21 11.5a8.5 8.5 0 0 1-12.3 7.6L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8 11h8M8 7.5h5"/>','open')+'</span>'+svg('<path d="m6 6 12 12M18 6 6 18"/>','close')+'<span id="vpn-chat-unread" class="vpn-chat-unread" hidden></span>';
   button.setAttribute('aria-label','Open packaging chat');button.setAttribute('aria-haspopup','dialog');button.setAttribute('aria-expanded','false');button.setAttribute('aria-controls','vpn-chat-panel');
   const greeting=document.createElement('aside');greeting.id='vpn-chat-greeting';greeting.className='vpn-chat-greeting';greeting.setAttribute('aria-label','Chat with our Sale Manager');
-  const identity=document.createElement('div');identity.className='vpn-chat-invite-identity';
-  const avatar=document.createElement('span');avatar.className='vpn-chat-invite-avatar';avatar.textContent=cfg.support?.initials||'TN';
-  if(cfg.support?.avatar){const img=document.createElement('img');img.src=cfg.support.avatar;img.alt='';img.width=44;img.height=44;img.decoding='async';img.addEventListener('error',()=>img.remove(),{once:true});avatar.append(img);}
-  const profile=document.createElement('span');const name=document.createElement('strong');name.textContent=cfg.support?.name||'Tho Nguyen';const role=document.createElement('span');role.textContent='Sale Manager · VPN Packaging';profile.append(name,role);identity.append(avatar,profile);
-  const eyebrow=document.createElement('span');eyebrow.className='vpn-chat-invite-eyebrow';eyebrow.textContent='LET’S TALK PACKAGING';
-  const text=document.createElement('p');text.textContent='Need a quote or help choosing packaging?';
-  const help=document.createElement('span');help.className='vpn-chat-invite-help';help.textContent='Ask our Sale Manager directly. No sign-up needed.';
-  const action=document.createElement('span');action.className='vpn-chat-invite-action';action.textContent=`Chat with ${cfg.support?.name||'Tho Nguyen'} \u2192`;
-  const open=document.createElement('button');open.id='vpn-chat-greeting-open';open.className='vpn-chat-greeting-open';open.type='button';open.append(eyebrow,identity,text,help,action);
+  const avatar=button.querySelector('.vpn-chat-launch-portrait');avatar.textContent=cfg.support?.initials||'TN';
+  if(cfg.support?.avatar){const img=document.createElement('img');img.src=cfg.support.avatar;img.alt='';img.width=72;img.height=72;img.decoding='async';img.addEventListener('error',()=>img.remove(),{once:true});avatar.append(img);}
+  const text=document.createElement('p');text.textContent='Hi! Need help with packaging?';
+  const help=document.createElement('span');help.className='vpn-chat-invite-help';help.textContent=`Chat with ${cfg.support?.name||'Tho Nguyen'},`;
+  const role=document.createElement('span');role.className='vpn-chat-invite-role';role.textContent='Sale Manager';
+  const action=document.createElement('span');action.className='vpn-chat-invite-action';action.textContent='Let’s chat \u2192';
+  const open=document.createElement('button');open.id='vpn-chat-greeting-open';open.className='vpn-chat-greeting-open';open.type='button';open.append(text,help,role,action);
   const dismiss=document.createElement('button');dismiss.type='button';dismiss.className='vpn-chat-greeting-dismiss';dismiss.textContent='×';dismiss.setAttribute('aria-label','Dismiss welcome message');greeting.append(open,dismiss);
   let dismissed=false,inviteTimer,attentionTimer;
   try{dismissed=sessionStorage.getItem('vpn-chat-invite-dismissed-v160')==='1';}catch{}
@@ -48,8 +46,8 @@
   function align(){
     const l=cfg.layout();button.style.right=greeting.style.right=`${l.edge+l.margin}px`;
     button.style.bottom=`calc(${l.insetBottom+l.bottom}px + env(safe-area-inset-bottom))`;
-    greeting.style.bottom=`calc(${l.insetBottom+l.bottom+72}px + env(safe-area-inset-bottom))`;
-    greeting.classList.toggle('vpn-chat-greeting-suppressed',l.height-l.bottom<190);
+    greeting.style.bottom=`calc(${l.insetBottom+l.bottom+98}px + env(safe-area-inset-bottom))`;
+    greeting.classList.toggle('vpn-chat-greeting-suppressed',l.height-l.bottom<300);
     document.querySelectorAll(obstacleSelector).forEach(el=>{if(!observed.has(el)){observed.add(el);observer.observe(el,{attributes:true,attributeFilter:['class','style','hidden']});}});
     const key=JSON.stringify(l);if(key!==previous){previous=key;document.dispatchEvent(new CustomEvent('vpn-chat-layout'));}
   }
