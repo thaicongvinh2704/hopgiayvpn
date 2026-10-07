@@ -93,6 +93,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_custom_pizza_boxes_with_logo_sync_version',
             'slug' => 'custom-pizza-boxes-with-logo-guide',
         ),
+        'inc/custom-shipping-boxes-with-company-logo-post-sync.php' => array(
+            'version' => '2026-10-07-custom-shipping-boxes-company-logo-v1',
+            'option' => 'custom_box_custom_shipping_boxes_company_logo_sync_version',
+            'slug' => 'custom-shipping-boxes-with-company-logo',
+        ),
         'inc/export-paper-packaging-materials-printing-packing-post-sync.php' => array(
             'version' => '2026-09-03-export-paper-packaging-v1',
             'option' => 'custom_box_export_paper_packaging_sync_version',
