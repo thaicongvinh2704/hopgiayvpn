@@ -8,7 +8,7 @@ $header_brand_name = $header_is_paper_bag_landing ? 'VPN Paper Box' : (get_blogi
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-site-verification" content="LOs4ohXuZmpUmZKsNAkORmduEB6kRpSOhTVwpx6FjLI">
-    <meta name="msvalidate.01" content="7FFD3C140B3BFAE8F8C8DF0FF3F17F3C">
+    <meta name="msvalidate.01" content="FDA41D94AD7DB6B53E0E0247E25FB3F7">
 
     <script type="text/javascript">
         (function(c,l,a,r,i,t,y){
