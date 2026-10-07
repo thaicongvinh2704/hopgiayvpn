@@ -38,6 +38,10 @@
 #vpn-chat-admin #vpn-detail{display:flex;flex-direction:column;min-width:0;min-height:0;position:relative;background:#f4f8fa}
 #vpn-chat-admin .vpn-conversation-header{display:flex;align-items:center;gap:12px;padding:16px 22px;border-bottom:1px solid var(--vpn-admin-border);background:#fff;flex-shrink:0;min-height:80px}
 #vpn-chat-admin #vpn-customer{flex:1;min-width:0}
+#vpn-chat-admin #vpn-info-toggle,#vpn-chat-admin #vpn-delete{flex-shrink:0}
+#vpn-chat-admin #vpn-delete{color:#b32d2e;border-color:#e4b4b4}
+#vpn-chat-admin #vpn-delete:hover{background:#fff0f0}
+@media(max-width:480px){#vpn-chat-admin .vpn-conversation-header{flex-wrap:wrap}#vpn-chat-admin #vpn-customer{flex-basis:calc(100% - 48px)}#vpn-chat-admin #vpn-delete{margin-left:auto}}
 #vpn-chat-admin #vpn-customer h2{font-size:17px;margin:0;color:#17313b;overflow-wrap:anywhere}
 #vpn-chat-admin #vpn-customer p{font-size:12px;color:#5d6b73;margin:5px 0 0;overflow-wrap:anywhere}
 #vpn-chat-admin #vpn-back{display:none;font-size:26px;padding:0;width:36px}

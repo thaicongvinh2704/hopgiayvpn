@@ -1,5 +1,5 @@
 {
-  "version": "1.8.2",
+  "version": "1.8.4",
   "checks": 34,
   "passed": [
     "real page preloads widget before first click 390",

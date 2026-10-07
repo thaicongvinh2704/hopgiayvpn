@@ -1,6 +1,18 @@
-# VPN Live Chat 1.8.2
+# VPN Live Chat 1.8.4
 
 Plugin độc lập cho WordPress, guest UI tiếng Anh, inbox sales tiếng Việt. PHP/WordPress REST + MySQL/MariaDB InnoDB + JavaScript thuần. ZIP chứa assets sẵn; production không chạy npm, Node, Redis hay WebSocket. Đây là bản MVP đã kiểm thử local; chưa phê duyệt production/pilot trên shared hosting.
+
+## 1.8.4 — Giảm độ trễ inbox admin, 07/10/2026
+
+Chọn khách/tìm kiếm/phân trang ưu tiên request mới, bỏ snapshot poll cũ. Chọn khách tải riêng detail có kiểm tra quyền; list JOIN email đã xác minh, giảm 27 xuống 2 truy vấn chat cho 25 khách trong benchmark. Giữ nhóm khách/bộ lọc/unread/phạm vi quyền. Reply đầu nhận chat và lưu tin trong một transaction; hiển thị receipt đã lưu ngay, không chờ sync, giữ thứ tự và loại trùng. Không dựng lại list/header/câu trả lời mẫu khi dữ liệu không đổi. Poll hội thoại đang mở khoảng 2–2,4 giây, tab ẩn dừng poll.
+
+209 kiểm tra backend/UI/browser HTTP thật đạt. Benchmark UI với độ trễ giả lập: chọn khách 1.401 → 96 ms, hiện trả lời 1.384 → 243 ms; chưa phải số đo hosting. Chưa deploy production. Cập nhật toàn bộ plugin 1.8.4 và purge cache; bao gồm nút xóa từ 1.8.3.
+
+## 1.8.3 — Xóa hội thoại ngay trong inbox, 07/10/2026
+
+Quản trị thấy nút **Xóa hội thoại** cạnh **Chi tiết**. Bấm và xác nhận để xóa vĩnh viễn hội thoại đang chọn, gồm tin nhắn/ghi chú/outbox. Không cần ô xác minh trong menu ẩn. API yêu cầu `confirmed_delete: true`, vẫn hỗ trợ `verified_request: true` từ client cũ; giữ quyền manager, nonce và origin. Các hội thoại khác của khách được giữ; cơ chế erase thu hồi phiên/thiết bị hiện có của khách.
+
+Xóa thành công dọn transcript/nháp và làm mới danh sách. Xóa thất bại giữ nháp và cho thử lại. Chặn xóa lặp, gửi và chuyển khách trong lúc xóa; phản hồi sync cũ không khôi phục hội thoại vừa xóa. 74 kiểm tra backend cô lập và 37 kiểm tra UI desktop/mobile đạt; PHP/JS lint đạt. Chưa triển khai production.
 
 ## 1.8.2 — Tin đã lưu phải hiện ngay phía khách, 06/10/2026
 
@@ -61,7 +73,7 @@ API namespace `/wp-json/vpn-chat/v1`:
 | GET guest/sync; POST guest/start/send/revoke | Cookie phiên hợp lệ, ownership; mutation thêm CSRF; start Turnstile |
 | POST agent/sync/send/update | WP user + REST nonce + capability, ownership kiểm tra backend |
 | POST agent/canned | Manager CRUD nội dung mẫu |
-| GET manager/health; POST manager/block/privacy | Manager; xóa cần verified_request |
+| GET manager/health; POST manager/block/privacy | Manager; xóa cần confirmed_delete=true (hoặc verified_request=true từ client cũ) |
 
 ## Vận hành và giới hạn
 

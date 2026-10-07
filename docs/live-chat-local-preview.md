@@ -17,7 +17,7 @@ Dùng Ctrl+F5 sau khi sửa assets. Widget hiện bật ở homepage và `/hopgi
 
 Tài khoản riêng `vpn-chat-demo` có quyền quản lý chat, không có quyền quản trị website/bài viết/WooCommerce. Mật khẩu nằm trong `tests/live-chat/runtime/local-demo-access.json`, chỉ mở trực tiếp trong trình soạn thảo; không chép vào tài liệu. Apache chặn toàn bộ `tests/live-chat` qua HTTP bằng `.htaccess`.
 
-MU `wp-content/mu-plugins/hopgiayvpn-live-chat-local-demo.php` giả lập Turnstile để thử khi chưa có khóa thật. Adapter giới hạn môi trường local, database local, localhost và loopback; token ngắn hạn, một lần dùng, gắn với phiên. Adapter và credentials không nằm trong ZIP plugin.
+MU `wp-content/mu-plugins/hopgiayvpn-live-chat-local-demo.php` giả lập Turnstile để thử khi chưa có khóa thật. Adapter giới hạn môi trường local, database local, localhost và loopback; token ngắn hạn, một lần dùng, gắn với phiên. Adapter và credentials không nằm trong ZIP plugin. Từ 07/10/2026, adapter này và `hopgiayvpn-chat-verification-local.php` được bỏ khỏi Git và đưa vào `.gitignore`; bản trên máy được giữ nguyên để không ảnh hưởng local. Clone mới không có hai file này.
 
 Email ra ngoài bị chặn, chưa cấu hình email đội sales. WP-Cron local đang tắt; demo không xác minh SMTP/cron nhắc SLA thật. Chưa deploy production. Cần thực hiện các mục còn mở trong tài liệu tổng hợp trước khi dùng thật. ZIP 1.0.0 là bản cũ; không ghi đè local 1.2.0 bằng ZIP đó.
 
@@ -38,4 +38,4 @@ Các browser test tạo hội thoại giả với email `example.invalid`, dùng
 
 ## Lưu trên Git
 
-Mã plugin, công cụ local, test và báo cáo văn bản được lưu trong repository. Runtime, mật khẩu demo, mã xác minh, database, ZIP và ảnh chụp local được bỏ qua; không có cấu hình database hoặc nội dung chat thật trong commit này. Ảnh bằng chứng được nhắc trong tài liệu chỉ có ở máy local.
+Mã plugin, công cụ chạy thủ công, test và báo cáo văn bản được lưu trong repository. Hai MU adapter local, runtime, mật khẩu demo, mã xác minh, database, ZIP và ảnh chụp local được bỏ qua; không có cấu hình database hoặc nội dung chat thật trong commit này. Test/công cụ không phải MU plugin và không tự chạy khi WordPress khởi động. Ảnh bằng chứng được nhắc trong tài liệu chỉ có ở máy local.

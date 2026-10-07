@@ -1,4 +1,16 @@
-# Kiểm tra VPN Live Chat 1.8.2 — 06/10/2026
+# Kiểm tra VPN Live Chat 1.8.4 — 07/10/2026
+
+## 1.8.4 — Hiệu năng inbox
+
+209 kiểm tra đạt: backend REST/InnoDB 83; so sánh dữ liệu/quyền/truy vấn 37; UI với độ trễ có kiểm soát 18; UI xóa 37; browser WordPress HTTP thật 34. PHP/JS lint đạt. Benchmark dùng database cô lập với 750 khách, 1.500 hội thoại và 3.000 tin, dọn dữ liệu sau test. Tải danh sách 25 khách giảm 27 xuống 2 truy vấn chat, detail dùng 4; số này không tính bootstrap WordPress/presence. Với poll cũ chậm 1,2 giây và refresh sau gửi chậm 1 giây, chọn khách 1.401 → 96 ms, hiện trả lời 1.384 → 243 ms. Chưa đo production/shared hosting.
+
+Kiểm tra ưu tiên chọn khách, snapshot cũ, receipt không bỏ sót/trùng tin, retry mất phản hồi, nháp, sync 503, DOM không dựng lại, atomic claim/send, ghi chú riêng, quyền detail, các bộ lọc/search/phân trang và xóa. Báo cáo `admin-performance-backend.json`, `admin-performance-ui.json`, `final-backend-report.json`, `final-real-browser-report.json`, `inbox-delete-report.json` trong `artifacts/vpn-live-chat/evidence/`. ZIP `vpn-live-chat-1.8.4.zip`; chưa triển khai production. Các phần dưới là lịch sử.
+
+## 1.8.3 — Xóa hội thoại trong inbox
+
+Đã chạy 74 kiểm tra backend thật trong database `vpn_chat_test` port 3311 và 37 kiểm tra UI với markup PHP/assets thật, HTTP giả lập. Kiểm tra xóa dành cho manager, yêu cầu xác nhận boolean, nonce/origin, giữ hội thoại khác, xóa tin/outbox, hỗ trợ client cũ; giao diện desktop 1366px/mobile 390px và 320px, hủy, lỗi/thử lại, giữ/dọn nháp và sync đến muộn. PHP/JS lint đạt, ảnh 320px đã kiểm tra trực quan. Database test được dọn sau suite.
+
+Báo cáo: `artifacts/vpn-live-chat/evidence/final-backend-report.json` và `inbox-delete-report.json`. ZIP: `artifacts/vpn-live-chat/vpn-live-chat-1.8.3.zip`. Chưa deploy/nghiệm thu production, chưa xóa hội thoại thật. Các kết quả 1.8.2 dưới đây là lịch sử; không chạy lại toàn bộ suite widget cho thay đổi inbox này.
 
 ## 1.8.2 — Tin đã lưu phải hiện ngay phía khách, 06/10/2026
 

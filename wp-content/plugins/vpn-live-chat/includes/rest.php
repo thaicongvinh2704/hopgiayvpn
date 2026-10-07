@@ -112,6 +112,8 @@ final class VPN_Chat_REST {
     }
     public static function sync(array $p): array {
         global $wpdb;
+        // Foreground selection/reply refresh does not need the entire inbox query.
+        if (($p['detail_only'] ?? false) === true) { return self::selected($p); }
         if (isset($p['presence']) && in_array($p['presence'], ['available', 'away', 'offline'], true)) {
             $interval = VPN_Chat_Settings::get()['heartbeat_seconds'];
             VPN_Chat_Store::query($wpdb->prepare('INSERT INTO ' . VPN_Chat_Store::table('agent_presence') . ' (user_id,state,heartbeat_at) VALUES (%d,%s,UTC_TIMESTAMP()) ON DUPLICATE KEY UPDATE heartbeat_at=IF(state<>VALUES(state) OR heartbeat_at<=DATE_SUB(UTC_TIMESTAMP(),INTERVAL %d SECOND),UTC_TIMESTAMP(),heartbeat_at),state=VALUES(state)', get_current_user_id(), $p['presence'], $interval));
@@ -127,17 +129,22 @@ final class VPN_Chat_REST {
         $page = max(1, min(1000, (int) ($p['page'] ?? 1)));
         // Group only conversations visible under the agent's existing scope/filter.
         $table=VPN_Chat_Store::table('conversations');
-        $eligible="SELECT * FROM $table WHERE $where";
+        $eligible="SELECT id,customer_id,updated_at,guest_seq,read_seq FROM $table WHERE $where";
         if($args)$eligible=$wpdb->prepare($eligible,$args);
-        $sql="SELECT c.customer_id,c.public_id AS id,c.name,c.email,c.source_path,c.status,c.label,c.owner_id,c.version,c.guest_seq,c.read_seq,c.created_at,c.updated_at,c.follow_up_at,g.group_unread,g.conversation_count,(SELECT LEFT(body,160) FROM ".VPN_Chat_Store::table('messages')." m WHERE m.conversation_id=c.id AND m.sender!='note' ORDER BY m.seq DESC LIMIT 1) AS preview FROM ($eligible) c JOIN (SELECT customer_id,MAX(CONCAT(updated_at,LPAD(id,20,'0'))) AS latest,MAX(guest_seq>read_seq) AS group_unread,COUNT(*) AS conversation_count FROM ($eligible) e GROUP BY customer_id) g ON g.customer_id=c.customer_id AND CONCAT(c.updated_at,LPAD(c.id,20,'0'))=g.latest ORDER BY c.updated_at DESC,c.id DESC LIMIT 26 OFFSET ".(($page-1)*25);
+        $sql="SELECT c.customer_id,c.public_id AS id,c.name,c.email,c.source_path,c.status,c.label,c.owner_id,c.version,c.guest_seq,c.read_seq,c.created_at,c.updated_at,c.follow_up_at,g.group_unread,g.conversation_count,identity.verified_email,(SELECT LEFT(body,160) FROM ".VPN_Chat_Store::table('messages')." m WHERE m.conversation_id=c.id AND m.sender!='note' ORDER BY m.seq DESC LIMIT 1) AS preview FROM $table c JOIN (SELECT customer_id,MAX(CONCAT(updated_at,LPAD(id,20,'0'))) AS latest,MAX(guest_seq>read_seq) AS group_unread,COUNT(*) AS conversation_count FROM ($eligible) e GROUP BY customer_id) g ON g.customer_id=c.customer_id AND CONCAT(c.updated_at,LPAD(c.id,20,'0'))=g.latest LEFT JOIN ".VPN_Chat_Store::table('customers')." identity ON identity.id=c.customer_id ORDER BY c.updated_at DESC,c.id DESC LIMIT 26 OFFSET ".(($page-1)*25);
         $list=$wpdb->get_results($sql,ARRAY_A);if($wpdb->last_error)throw new VPN_Chat_Fault('storage_unavailable',503);
         $has_more = count($list) > 25; $list = array_slice($list, 0, 25);
         foreach ($list as &$row) {
             $row['unread'] = !empty($row['group_unread']);
-            $identity=VPN_Chat_Identity::summary((int)$row['customer_id']);$row['customer_code']=$identity['code'];$row['verified_email']=$identity['verified_email'];if($row['verified_email'])$row['email']=$row['verified_email'];
+            $row['customer_code']='Khách #'.str_pad((string)$row['customer_id'],6,'0',STR_PAD_LEFT);$row['verified_email']=$row['verified_email']?:'';if($row['verified_email'])$row['email']=$row['verified_email'];
             $row['overdue'] = ($row['status'] === 'unassigned' && strtotime($row['created_at'] . ' UTC') < time() - VPN_Chat_Settings::get()['sla_minutes'] * 60) || ($row['follow_up_at'] && strtotime($row['follow_up_at'] . ' UTC') <= time());
         } unset($row);
         $data = ['list' => $list, 'has_more' => $has_more, 'page' => $page, 'canned' => $wpdb->get_results('SELECT id,title,body FROM ' . VPN_Chat_Store::table('canned') . ' ORDER BY id LIMIT 100', ARRAY_A)];
+        if (!empty($p['id'])) { $data += self::selected($p); }
+        return $data;
+    }
+    private static function selected(array $p): array {
+        $data=[];
         if (!empty($p['id'])) {
             $c = VPN_Chat_Store::conversation((string) $p['id']); VPN_Chat_Store::authorize($c);
             $identity=VPN_Chat_Identity::summary((int)$c['customer_id']);$c['customer_code']=$identity['code'];$c['verified_email']=$identity['verified_email'];if($c['verified_email'])$c['email']=$c['verified_email'];$c['history']=VPN_Chat_Identity::history((int)$c['customer_id'],false);
@@ -177,6 +184,7 @@ final class VPN_Chat_REST {
     }
     public static function privacy(array $p): array {
         global $wpdb;
+        if (!current_user_can('vpn_chat_manage')) { throw new VPN_Chat_Fault('forbidden', 403); }
         $c = VPN_Chat_Store::conversation((string)($p['id'] ?? ''));
         if (($p['action'] ?? '') === 'export') {
             VPN_Chat_Store::audit('export', (int)$c['id']);
@@ -185,7 +193,7 @@ final class VPN_Chat_REST {
             $next=$messages?(int)end($messages)['seq']:$after;
             return ['conversation'=>$c,'messages'=>$messages,'cursor'=>$next,'more'=>$next<(int)$c['seq']];
         }
-        if (($p['action'] ?? '') !== 'delete' || empty($p['verified_request'])) { throw new VPN_Chat_Fault('verified_request_required'); }
+        if (($p['action'] ?? '') !== 'delete' || (($p['confirmed_delete'] ?? false) !== true && ($p['verified_request'] ?? false) !== true)) { throw new VPN_Chat_Fault('delete_confirmation_required'); }
         VPN_Chat_Jobs::erase((int)$c['id']);
         return ['deleted' => true];
     }

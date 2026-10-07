@@ -1,8 +1,26 @@
 # VPN Live Chat — Tài liệu chức năng và tình trạng hoàn thành
 
-**Cập nhật:** 06/10/2026 · **Plugin:** 1.8.2 · **Schema:** 3
+**Cập nhật:** 07/10/2026 · **Plugin:** 1.8.4 · **Schema:** 3
 
 Đây là tài liệu tổng hợp hiện trạng mới nhất, dùng để biết đã làm gì, còn thiếu gì và tiếp tục công việc sau này. Các báo cáo phiên bản cũ được giữ làm bằng chứng kiểm thử, không thay thế hiện trạng trong tài liệu này. Khi sửa tính năng, cần cập nhật phiên bản, các bảng trạng thái và kết quả kiểm thử tại đây.
+
+## 1.8.4 — Giảm độ trễ inbox admin, 07/10/2026
+
+Chọn khách, tìm kiếm và đổi trang ưu tiên yêu cầu mới ngay, không xếp hàng sau poll cũ; phản hồi cũ không ghi đè giao diện mới. Khi chọn khách dùng `detail_only` để chỉ tải hội thoại có quyền xem, bỏ truy vấn danh sách/câu trả lời mẫu. Danh sách dùng JOIN email xác minh thay 25 truy vấn riêng; giảm projection và bỏ một bản sao truy vấn bảng hội thoại. Các bộ lọc, tìm kiếm, nhóm khách, unread và phạm vi quyền giữ kết quả giống bản 1.8.3.
+
+Trả lời đầu tiên nhận chat và lưu tin trong một transaction/khóa hội thoại, dùng một request gửi. Sales/note receipt trả tin đã lưu và phiên bản hội thoại; UI hiển thị ngay, không chờ poll, giữ cursor cho đến khi tải đủ delta, sắp xếp theo seq và loại tin trùng. Không dựng lại list/header/câu trả lời mẫu khi dữ liệu không đổi; giữ DOM/focus/nháp. Hội thoại đang mở poll khoảng 2–2,4 giây; chưa chọn khách vẫn 5–5,4 giây, tab ẩn dừng poll.
+
+Đo cùng database test với 750 khách/1.500 hội thoại/3.000 tin: tải danh sách 25 khách giảm 27 xuống 2 truy vấn chat (không tính bootstrap WordPress, presence hoặc hội thoại chọn); detail dùng 4 truy vấn. Kiểm thử HTTP giả lập có poll cũ chậm 1,2 giây và refresh chậm 1 giây: chọn khách 1.401 → 96 ms, hiện trả lời 1.384 → 243 ms. Đây là số đo môi trường thử, chưa đo hosting production.
+
+209 kiểm tra đạt: backend 83, truy vấn/quyền/so sánh kết quả 37, UI độ trễ 18, UI xóa desktop/mobile 37, browser WordPress HTTP thật 34. PHP/JS lint đạt. Báo cáo hiệu năng tại `artifacts/vpn-live-chat/evidence/admin-performance-{backend,ui}.json`. ZIP mới `vpn-live-chat-1.8.4.zip`; chưa deploy/nghiệm thu production. Cài toàn bộ plugin và purge cache để tránh chạy JS/PHP khác phiên bản.
+
+## 1.8.3 — Xóa hội thoại ngay trong inbox, 07/10/2026
+
+Nút **Xóa hội thoại** nằm cạnh **Chi tiết**, chỉ hiển thị cho tài khoản có `vpn_chat_manage`. Bỏ ô xác minh yêu cầu xóa trong menu lồng nhau; quản trị xác nhận xóa vĩnh viễn qua hộp thoại. API yêu cầu `confirmed_delete: true`, vẫn nhận `verified_request: true` từ client cũ. Giữ kiểm tra quyền, nonce và origin.
+
+Xóa thành công dọn transcript/nháp, trả về danh sách và tải lại trang đầu. Chặn gửi/chuyển hội thoại và nhấn xóa lặp khi đang xóa; bỏ phản hồi sync cũ để hội thoại không xuất hiện lại. Xóa thất bại giữ hội thoại và nháp, hiển thị lỗi và cho thử lại. Cơ chế erase hiện có xóa tin/ghi chú/outbox của hội thoại, thu hồi phiên/thiết bị của khách; các hội thoại khác vẫn được giữ.
+
+74 kiểm tra backend thật trên database cô lập và 37 kiểm tra UI với markup PHP/assets thật, HTTP giả lập đạt. UI kiểm tra desktop 1366px, mobile 390px/320px, hủy xác nhận, lỗi 503/thử lại và sync cũ đến sau xóa. PHP/JS lint đạt. ZIP mới: `artifacts/vpn-live-chat/vpn-live-chat-1.8.3.zip`. Chưa cập nhật production; cần cài bản 1.8.3 và purge cache. Không xóa hội thoại thật khi kiểm thử.
 
 ## 1.8.2 — Tin đã lưu phải hiện ngay phía khách, 06/10/2026
 
@@ -114,7 +132,7 @@ Giao diện đã đơn giản hóa thao tác thường dùng. Những công cụ
 | Nhiều sales | Chuyển người phụ trách không đổi người gửi trong lịch sử đã lưu |
 | Avatar quản trị | Upload ảnh JPG/PNG/WebP tối đa 2 MB/12 MP, kiểm tra ảnh, nonce và quyền sửa profile |
 | Hàng đợi email | Outbox, dedup, lease và retry cho nhắc đội sales; đã có code, chưa nghiệm thu gửi mail thật |
-| Retention/export/delete | Có cơ chế cấu hình, export và xóa hội thoại đã xác minh; mặc định chưa tự xóa |
+| Retention/export/delete | Có cơ chế cấu hình, export và nút xóa hội thoại với xác nhận dành cho quản trị; mặc định chưa tự xóa |
 | Vòng đời plugin | Activation/migration, kiểm tra InnoDB; deactivate/uninstall không tự xóa lead |
 
 Upload avatar trong quản trị là thao tác của nhân viên có quyền, tách biệt với chức năng chat văn bản của khách.

@@ -1,0 +1,57 @@
+{
+  "checks": 12,
+  "passed": [
+    "authenticated admin loads index.php (HTTP 200)",
+    "authenticated admin loads edit.php (HTTP 200)",
+    "authenticated admin loads upload.php?mode=list (HTTP 200)",
+    "authenticated admin loads edit.php?post_type=product (HTTP 200)",
+    "authenticated admin loads plugins.php (HTTP 200)",
+    "authenticated admin loads options-general.php (HTTP 200)",
+    "authenticated editor creates a real draft",
+    "authenticated editor saves a real draft edit",
+    "saved draft persists in the database",
+    "actual theme frontend still renders",
+    "admin and frontend have no uncaught JavaScript errors",
+    "isolated draft is removed after testing"
+  ],
+  "samples": [
+    {
+      "path": "index.php",
+      "status": 200,
+      "ttfb_ms": 873,
+      "domcontentloaded_ms": 2678
+    },
+    {
+      "path": "edit.php",
+      "status": 200,
+      "ttfb_ms": 2320,
+      "domcontentloaded_ms": 2532
+    },
+    {
+      "path": "upload.php?mode=list",
+      "status": 200,
+      "ttfb_ms": 1499,
+      "domcontentloaded_ms": 1736
+    },
+    {
+      "path": "edit.php?post_type=product",
+      "status": 200,
+      "ttfb_ms": 855,
+      "domcontentloaded_ms": 2654
+    },
+    {
+      "path": "plugins.php",
+      "status": 200,
+      "ttfb_ms": 2964,
+      "domcontentloaded_ms": 8344
+    },
+    {
+      "path": "options-general.php",
+      "status": 200,
+      "ttfb_ms": 849,
+      "domcontentloaded_ms": 1143
+    }
+  ],
+  "errors": [],
+  "mode": "Actual WordPress HTTP and browser on isolated 8091/3311; local host only; timings are not production measurements"
+}

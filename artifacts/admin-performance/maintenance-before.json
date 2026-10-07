@@ -1,0 +1,78 @@
+{
+    "mode": "isolated DB with incomplete category fixtures; custom shared admin callbacks only, not total page latency",
+    "plugins": [
+        "seo-by-rank-math\/rank-math.php",
+        "vpn-live-chat\/vpn-live-chat.php",
+        "woocommerce\/woocommerce.php"
+    ],
+    "samples": {
+        "first": {
+            "custom_box_maybe_sync_corrugated_mailer_boxes_category": {
+                "queries": 5,
+                "ms": 1.797
+            },
+            "custom_box_maybe_sync_folding_cartons_vietnam_category": {
+                "queries": 4,
+                "ms": 0.81
+            },
+            "custom_box_maybe_sync_rigid_box_manufacturer_vietnam_category": {
+                "queries": 6,
+                "ms": 0.965
+            },
+            "custom_box_maybe_sync_pizza_boxes_category": {
+                "queries": 13,
+                "ms": 2.182
+            },
+            "custom_box_maybe_sync_halloween_packaging_category": {
+                "queries": 52,
+                "ms": 29.82
+            },
+            "custom_box_maybe_sync_christmas_packaging_category": {
+                "queries": 47,
+                "ms": 13.612
+            },
+            "custom_box_run_search_indexing_sync": {
+                "queries": 1,
+                "ms": 0.153
+            },
+            "post_loader": {
+                "queries": 2,
+                "ms": 0.789
+            }
+        },
+        "repeat": {
+            "custom_box_maybe_sync_corrugated_mailer_boxes_category": {
+                "queries": 1,
+                "ms": 0.387
+            },
+            "custom_box_maybe_sync_folding_cartons_vietnam_category": {
+                "queries": 1,
+                "ms": 0.356
+            },
+            "custom_box_maybe_sync_rigid_box_manufacturer_vietnam_category": {
+                "queries": 1,
+                "ms": 0.353
+            },
+            "custom_box_maybe_sync_pizza_boxes_category": {
+                "queries": 9,
+                "ms": 1.21
+            },
+            "custom_box_maybe_sync_halloween_packaging_category": {
+                "queries": 43,
+                "ms": 10.62
+            },
+            "custom_box_maybe_sync_christmas_packaging_category": {
+                "queries": 43,
+                "ms": 12.248
+            },
+            "custom_box_run_search_indexing_sync": {
+                "queries": 0,
+                "ms": 0.062
+            },
+            "post_loader": {
+                "queries": 2,
+                "ms": 0.803
+            }
+        }
+    }
+}

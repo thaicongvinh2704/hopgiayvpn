@@ -6,6 +6,7 @@
  */
 
 $custom_box_inc_files = array(
+    'inc/admin-maintenance.php',
     'inc/setup.php',
     'inc/dev.php',
     'inc/enqueue.php',
@@ -51,9 +52,7 @@ foreach ($custom_box_inc_files as $custom_box_inc_file) {
     require_once get_template_directory() . '/' . $custom_box_inc_file;
 }
 
-if (is_admin()) {
-    require_once get_template_directory() . '/inc/custom-vial-box-product-sync.php';
-} else {
+if (!is_admin()) {
     add_action('wp', static function () {
         if (
             is_singular('product')

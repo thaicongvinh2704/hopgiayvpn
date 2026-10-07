@@ -372,6 +372,9 @@ function custom_box_maybe_sync_halloween_packaging_category(): void {
         return;
     }
 
+    if (function_exists('custom_box_admin_task_due') && !custom_box_admin_task_due(__FUNCTION__, __FILE__)) {
+        return;
+    }
     custom_box_sync_halloween_packaging_category();
 }
 add_action('admin_init', 'custom_box_maybe_sync_halloween_packaging_category', 40);

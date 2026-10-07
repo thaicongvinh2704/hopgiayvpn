@@ -534,17 +534,14 @@ function custom_box_post_sync_files_to_load(): array
         $stored = isset($versions[$entry['option']]) ? $versions[$entry['option']] : '';
 
         if ($force_all || $stored !== $entry['version'] || ($requested_slug && in_array($requested_slug, $entry['slugs'] ?? array($entry['slug']), true))) {
+            if (!$force_all && !$requested_slug && $stored !== $entry['version'] && function_exists('custom_box_admin_task_due') && !custom_box_admin_task_due('post-sync-' . $file, get_template_directory() . '/' . $file, 5 * MINUTE_IN_SECONDS)) {
+                continue;
+            }
             $files[] = $file;
             if (!$force_all && !$requested_slug) {
                 break; // Limit to one sync per request to prevent timeout (ERR_TIMED_OUT)
             }
         }
-    }
-
-    // Hotfix: Rescue any posts that were accidentally set as their own parent (which causes infinite loops/timeouts)
-    global $wpdb;
-    if (isset($wpdb)) {
-        $wpdb->query("UPDATE {$wpdb->posts} SET post_parent = 0 WHERE ID = post_parent AND post_parent > 0");
     }
 
     if (!$force_all && !$files) {

@@ -237,6 +237,9 @@ function custom_box_maybe_sync_pizza_boxes_category(): void {
         return;
     }
 
+    if (function_exists('custom_box_admin_task_due') && !custom_box_admin_task_due(__FUNCTION__, __FILE__)) {
+        return;
+    }
     $version = '2026-09-28.2';
     $term = get_term_by('slug', 'pizza-boxes', 'product_cat');
     $failures = array();

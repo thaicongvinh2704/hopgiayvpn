@@ -18,7 +18,10 @@ add_filter('rank_math/json_ld', 'custom_box_custom_vial_boxes_rank_math_json_ld'
 
 function custom_box_maybe_sync_custom_vial_boxes_product(): void
 {
-    if (!current_user_can('manage_options')) {
+    if (!current_user_can('manage_options') || wp_doing_ajax() || wp_doing_cron() || (defined('REST_REQUEST') && REST_REQUEST)) {
+        return;
+    }
+    if (function_exists('custom_box_admin_task_due') && !custom_box_admin_task_due(__FUNCTION__, __FILE__, 5 * MINUTE_IN_SECONDS)) {
         return;
     }
 

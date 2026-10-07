@@ -1,5 +1,11 @@
 wp-config.php
 wp-config-*.php
+# Local-only MU adapters stay on the developer's machine, never in deployments.
+/wp-content/mu-plugins/hopgiayvpn-live-chat-local-demo.php
+/wp-content/mu-plugins/hopgiayvpn-chat-verification-local.php
+# Isolated test runtime, credentials and generated mailboxes.
+/tests/**/runtime/
+/tests/**/results/
 wp-content/cache/
 wp-content/litespeed/
 wp-content/wflogs/

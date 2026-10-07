@@ -7,6 +7,12 @@ final class VPN_Chat_Service {
         global $wpdb;
         $result=['saved'=>true,'seq'=>$seq,'id'=>$c['public_id']];
         if($sender==='guest')$result['message']=$wpdb->get_row($wpdb->prepare('SELECT seq,sender,body,created_at FROM '.VPN_Chat_Store::table('messages')." WHERE conversation_id=%d AND seq=%d AND sender='guest'",$c['id'],$seq),ARRAY_A);
+        else {
+            $result['conversation']=VPN_Chat_Store::conversation($c['public_id']);
+            $result['message']=$wpdb->get_row($wpdb->prepare('SELECT seq,sender,body,created_at,sender_profile FROM '.VPN_Chat_Store::table('messages').' WHERE conversation_id=%d AND seq=%d',$c['id'],$seq),ARRAY_A);
+            $result['message']['profile']=json_decode((string)$result['message']['sender_profile'],true)?:VPN_Chat_Profiles::user(get_current_user_id());
+            unset($result['message']['sender_profile']);
+        }
         return $result;
     }
     public static function send_locked(array $c, string $body, string $client, string $sender, int $actor): array {
@@ -84,12 +90,20 @@ final class VPN_Chat_Service {
             if(!$retry)VPN_Chat_Security::message_rate($s);
         }
         return VPN_Chat_Store::transaction(static function () use ($id, $body, $client, $s, $p) {
+            global $wpdb;
             if ($s) {
                 global $wpdb;
                 $current = $wpdb->get_row($wpdb->prepare('SELECT * FROM ' . VPN_Chat_Store::table('sessions') . ' WHERE id=%d FOR UPDATE', $s['id']), ARRAY_A);
                 if (!$current || $current['revoked'] || (int)$current['customer_id']!==(int)$s['customer_id'] || strtotime($current['expires_at'].' UTC')<=time()) { throw new VPN_Chat_Fault('session_expired',401); }
             }
             $c = VPN_Chat_Store::conversation($id, true);
+            if (!$s && ($p['claim_if_unassigned'] ?? false) === true && $c['status']==='unassigned' && !(int)$c['owner_id']) {
+                // Serialize first reply and claim under the same conversation lock.
+                VPN_Chat_Store::authorize($c);
+                VPN_Chat_Store::query($wpdb->prepare('UPDATE '.VPN_Chat_Store::table('conversations')." SET owner_id=%d,status='assigned',version=version+1 WHERE id=%d",get_current_user_id(),$c['id']));
+                VPN_Chat_Store::audit('claim',(int)$c['id']);
+                $c=VPN_Chat_Store::conversation($id,true);
+            }
             VPN_Chat_Store::authorize($c, $s, true);
             return self::send_locked($c, $body, $client, $s ? 'guest' : (!empty($p['note']) ? 'note' : 'agent'), $s ? 0 : get_current_user_id());
         });

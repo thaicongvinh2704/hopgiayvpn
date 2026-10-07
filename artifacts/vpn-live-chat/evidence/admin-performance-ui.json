@@ -1,0 +1,31 @@
+{
+  "version": "1.8.4",
+  "checks": 18,
+  "passed": [
+    "selection bypasses a 1.2-second old poll",
+    "selection requests lightweight detail",
+    "late old sync cannot replace the selected customer",
+    "stored sales receipt displays without a one-second refresh",
+    "send button unlocks while background refresh is slow",
+    "first reply avoids a separate claim request",
+    "receipt and subsequent delta remain in server sequence order",
+    "receipt and delta do not duplicate the sales message",
+    "measured selection improves with the same simulated latency",
+    "measured reply display improves with the same simulated latency",
+    "unchanged sync preserves list/header/canned DOM nodes",
+    "unchanged sync keeps the draft",
+    "optimized inbox has no uncaught errors",
+    "successful send stays visible when sync returns 503",
+    "unconfirmed send keeps the draft",
+    "unconfirmed send prevents switching customers",
+    "retry reuses the original message identifier",
+    "retry displays one canonical message"
+  ],
+  "samples": {
+    "select_before_ms": 1401,
+    "send_before_ms": 1384,
+    "select_after_ms": 96,
+    "send_after_ms": 243
+  },
+  "mode": "real PHP markup and assets; controlled HTTP delays, not production latency"
+}

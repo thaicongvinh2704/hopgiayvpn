@@ -66,3 +66,11 @@ Không chạy backend và browser HTTP cùng lúc. Các browser harness mặc đ
 
 ## 1.8.0
 Bộ hiện hành final-acceptance.php/final-browser.mjs không cần mock CAPTCHA. rate-worker.php kiểm tra quota đồng thời, chỉ chạy trên database test riêng. Các suites cũ mô tả Turnstile là lịch sử, không dùng để nghiệm thu 1.8.0.
+
+## 1.8.3 — Xóa hội thoại
+
+Chạy `php tests/live-chat/final-acceptance.php` và `node tests/live-chat/inbox-delete.mjs` tuần tự khi DB test 3311 đang chạy. Suite UI không cần server HTTP: lấy markup thật từ `inbox-delete-markup.php`, chạy admin.js/admin.css thật và giả lập API. Kiểm tra hủy/xác nhận/lỗi/thử lại, dọn nháp, quyền manager/sales, desktop/mobile và sync cũ đến sau xóa. Backend suite dọn dữ liệu test trước/sau, giữ database chính và production.
+
+## 1.8.4 — Hiệu năng admin
+
+Để so sánh trước/sau, cần ZIP 1.8.3 ở artifacts/vpn-live-chat. Chạy `python tools/prepare-vpn-admin-benchmark.py` để lấy JS/REST cũ vào runtime test (không chép vào plugin); sau đó chạy `php tests/live-chat/admin-performance.php`, `node tests/live-chat/admin-performance.mjs`, `php tests/live-chat/final-acceptance.php` tuần tự. DB riêng 3311 phải đang chạy. Backend benchmark tạo/dọn 750 khách/1.500 hội thoại/3.000 tin trong DB test, so sánh dữ liệu/scope và số truy vấn. UI dùng markup/assets thật, API giả lập có độ trễ và snapshot cũ cố ý bỏ qua AbortSignal. Thêm `node tests/live-chat/final-browser.mjs` khi HTTP test 8091 đang chạy để xác minh gửi/nhận thật.

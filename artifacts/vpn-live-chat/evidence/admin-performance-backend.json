@@ -1,0 +1,97 @@
+{
+    "version": "1.8.4",
+    "checks": 37,
+    "passed": [
+        "same grouped data and scope: 1\/inbox\/page1",
+        "same grouped data and scope: 1\/inbox\/page2",
+        "same grouped data and scope: 1\/unassigned\/page1",
+        "same grouped data and scope: 1\/unassigned\/page2",
+        "same grouped data and scope: 1\/mine\/page1",
+        "same grouped data and scope: 1\/mine\/page2",
+        "same grouped data and scope: 1\/closed\/page1",
+        "same grouped data and scope: 1\/closed\/page2",
+        "same grouped data and scope: 1\/spam\/page1",
+        "same grouped data and scope: 1\/spam\/page2",
+        "same grouped data and scope: 1\/follow_up\/page1",
+        "same grouped data and scope: 1\/follow_up\/page2",
+        "same search and scope: 1\/Perf 1",
+        "same search and scope: 1\/verified-10@",
+        "same search and scope: 1\/Private note",
+        "same search and scope: 1\/Kh\u00e1ch #",
+        "same grouped data and scope: 2\/inbox\/page1",
+        "same grouped data and scope: 2\/inbox\/page2",
+        "same grouped data and scope: 2\/unassigned\/page1",
+        "same grouped data and scope: 2\/unassigned\/page2",
+        "same grouped data and scope: 2\/mine\/page1",
+        "same grouped data and scope: 2\/mine\/page2",
+        "same grouped data and scope: 2\/closed\/page1",
+        "same grouped data and scope: 2\/closed\/page2",
+        "same grouped data and scope: 2\/spam\/page1",
+        "same grouped data and scope: 2\/spam\/page2",
+        "same grouped data and scope: 2\/follow_up\/page1",
+        "same grouped data and scope: 2\/follow_up\/page2",
+        "same search and scope: 2\/Perf 1",
+        "same search and scope: 2\/verified-10@",
+        "same search and scope: 2\/Private note",
+        "same search and scope: 2\/Kh\u00e1ch #",
+        "list removes at least 20 per-customer queries",
+        "lightweight detail returns the same authorized transcript",
+        "lightweight detail omits list\/canned",
+        "opening a chat uses at most five chat queries",
+        "lightweight detail enforces owner scope"
+    ],
+    "fixtures": {
+        "customers": 750,
+        "conversations": 1500,
+        "messages": 3000
+    },
+    "samples": {
+        "before": [
+            {
+                "queries": 27,
+                "ms": 4.192
+            },
+            {
+                "queries": 27,
+                "ms": 3.763
+            },
+            {
+                "queries": 27,
+                "ms": 11.228
+            },
+            {
+                "queries": 27,
+                "ms": 5.846
+            },
+            {
+                "queries": 27,
+                "ms": 5.009
+            }
+        ],
+        "after": [
+            {
+                "queries": 2,
+                "ms": 2.136
+            },
+            {
+                "queries": 2,
+                "ms": 2.626
+            },
+            {
+                "queries": 2,
+                "ms": 2.555
+            },
+            {
+                "queries": 2,
+                "ms": 3.193
+            },
+            {
+                "queries": 2,
+                "ms": 2.135
+            }
+        ]
+    },
+    "detail_queries": 4,
+    "database": "isolated vpn_chat_test:3311; not production latency",
+    "cleaned": true
+}

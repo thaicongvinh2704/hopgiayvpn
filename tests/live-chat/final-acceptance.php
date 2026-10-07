@@ -58,6 +58,32 @@ try{
  $disabled=$s;$disabled['accept_new']=false;update_option('vpn_chat_settings',$disabled,false);ac(!VPN_Chat_Settings::public_config()['accepting'],'admin may still disable new chat');
  $x=boot_fixture();$new['client_message_id']=bin2hex(random_bytes(16));ac(rest_chat('guest/start',$new,$x['cookies'],0,$x['data']['csrf'])->get_status()===503,'backend refuses unconfigured chat');
  update_option('vpn_chat_settings',$s,false);$expired=$cookies;$_COOKIE=$cookies;$session=VPN_Chat_Security::session();$wpdb->update(VPN_Chat_Store::table('sessions'),['expires_at'=>'2000-01-01 00:00:00'],['id'=>$session['id']]);ac(rest_chat('guest/contact',['id'=>$id,'email'=>'x@example.invalid'],$expired,0,$csrf)->get_status()===401,'expired session cannot mutate');
+ // Deletion uses the real manager REST permissions and isolated InnoDB records.
+ $del=['id'=>$id,'action'=>'delete','confirmed_delete'=>true];
+ ac(rest_chat('manager/privacy',$del)->get_status()===403,'anonymous cannot delete a conversation');
+ ac(rest_chat('manager/privacy',$del,[],$agent)->get_status()===403,'sales cannot delete a conversation');
+ ac(rest_chat('manager/privacy',['id'=>$id,'action'=>'delete'],[],$manager)->get_status()===400,'manager deletion requires confirmation');
+ ac(rest_chat('manager/privacy',['id'=>$id,'action'=>'delete','confirmed_delete'=>'false'],[],$manager)->get_status()===400,'truthy text is not a deletion confirmation');
+ $request=new WP_REST_Request('POST','/vpn-chat/v1/manager/privacy');$request->set_body(wp_json_encode($del));$request->set_header('origin','http://127.0.0.1:8091');$request->set_header('content-type','application/json');wp_set_current_user($manager);
+ $permission=VPN_Chat_REST::permission($request);ac(is_wp_error($permission)&&$permission->get_error_code()==='forbidden','manager deletion requires a valid WordPress nonce');
+ ac(rest_chat('manager/privacy',$del,[],$manager,'','POST','https://attacker.invalid')->get_status()===403,'cross-origin deletion is rejected');
+ $remaining=(int)$wpdb->get_var($wpdb->prepare('SELECT id FROM '.VPN_Chat_Store::table('conversations').' WHERE customer_id=%d AND id<>%d',$c['customer_id'],$c['id']));
+ ac(rest_chat('manager/privacy',$del,[],$manager)->get_status()===200,'confirmed manager deletion succeeds');
+ foreach(['conversations'=>'id','messages'=>'conversation_id','outbox'=>'conversation_id'] as $table=>$column)ac((int)$wpdb->get_var($wpdb->prepare('SELECT COUNT(*) FROM '.VPN_Chat_Store::table($table)." WHERE $column=%d",$c['id']))===0,'delete removes '.$table.' records');
+ ac((int)$wpdb->get_var($wpdb->prepare('SELECT COUNT(*) FROM '.VPN_Chat_Store::table('conversations').' WHERE id=%d',$remaining))===1,'deletion preserves other conversations of the same customer');
+ ac(rest_chat('manager/privacy',$del,[],$manager)->get_status()===404,'deleted conversation cannot be deleted again');
+ $remainingPublic=$wpdb->get_var($wpdb->prepare('SELECT public_id FROM '.VPN_Chat_Store::table('conversations').' WHERE id=%d',$remaining));
+ ac(rest_chat('manager/privacy',['id'=>$remainingPublic,'action'=>'delete','verified_request'=>true],[],$manager)->get_status()===200,'legacy verified manager deletion stays compatible');
+ $fast=boot_fixture();$fp=['message'=>'Fast inbox fixture','client_message_id'=>bin2hex(random_bytes(16))];$fr=rest_chat('guest/start',$fp,$fast['cookies'],0,$fast['data']['csrf']);$fid=$fr->get_data()['id'];
+ $fbody=['id'=>$fid,'message'=>'One request first reply','client_message_id'=>bin2hex(random_bytes(16)),'claim_if_unassigned'=>true];
+ ac(rest_chat('agent/send',$fbody,[],$viewer)->get_status()===403,'subscriber cannot use atomic claim and send');
+ $fr=rest_chat('agent/send',$fbody,[],$agent);ac($fr->get_status()===200,'first reply atomically claims and sends');$receipt=$fr->get_data();
+ ac((int)$receipt['conversation']['owner_id']===$agent&&$receipt['conversation']['status']==='waiting_customer','atomic first reply returns confirmed owner and status');
+ ac($receipt['message']['body']===$fbody['message']&&$receipt['message']['sender']==='agent'&&!empty($receipt['message']['profile']),'sales receipt includes stored message and sender profile');
+ $retry=rest_chat('agent/send',$fbody,[],$agent)->get_data();ac($retry['message']===$receipt['message'],'atomic first reply retry returns the same message');
+ $otherAgent=(int)get_user_by('login','agent-b')->ID;$fbody['client_message_id']=bin2hex(random_bytes(16));ac(rest_chat('agent/send',$fbody,[],$otherAgent)->get_status()===403,'another agent cannot claim and send after first reply');
+ $fbody['message']='Fast private note';$fbody['note']=true;$fr=rest_chat('agent/send',$fbody,[],$agent);ac($fr->get_status()===200&&$fr->get_data()['message']['sender']==='note','private-note receipt uses the saved note sender');
+ $fg=rest_chat('guest/sync',['id'=>$fid,'cursor'=>0],$fast['cookies'],0,$fast['data']['csrf'])->get_data();ac(!str_contains(wp_json_encode($fg),'Fast private note'),'fast reply receipts keep notes private from guest');
  // Rate limits apply to the same customer even when using another short session.
  $rate=boot_fixture();usleep((int)((1-fmod(microtime(true),1)+0.05)*1000000));
  $q=['message'=>'Burst one','client_message_id'=>bin2hex(random_bytes(16))];$r=rest_chat('guest/start',$q,$rate['cookies'],0,$rate['data']['csrf']);ac($r->get_status()===200,'first message needs no CAPTCHA token');$rid=$r->get_data()['id'];

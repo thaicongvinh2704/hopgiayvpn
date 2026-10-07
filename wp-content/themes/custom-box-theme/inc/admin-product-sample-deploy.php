@@ -293,6 +293,10 @@ function custom_box_product_sample_custom_vial_sync_admin_post() {
 
 	delete_transient( 'custom_box_product_sample_deploy_state_' . get_current_user_id() );
 
+	// Load the sample importer only when this explicit deployment is requested.
+	if ( ! function_exists( 'custom_box_sync_custom_vial_boxes_product' ) ) {
+		require_once get_template_directory() . '/inc/custom-vial-box-product-sync.php';
+	}
 	if ( ! function_exists( 'custom_box_sync_custom_vial_boxes_product' ) ) {
 		$error = 'Custom vial boxes sync helper is not available.';
 	} else {

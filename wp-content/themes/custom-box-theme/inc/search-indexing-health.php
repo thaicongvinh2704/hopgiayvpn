@@ -9,7 +9,7 @@
 defined('ABSPATH') || exit;
 
 function custom_box_search_indexing_sync_version() {
-    return '2026-09-09.1';
+    return '2026-10-07.1';
 }
 
 function custom_box_search_indexing_post_types() {
@@ -186,6 +186,11 @@ function custom_box_run_search_indexing_sync() {
         $version === get_option('custom_box_search_indexing_sync_version')
         && custom_box_search_indexing_settings_are_complete()
     ) {
+        custom_box_queue_search_indexing_submission($version);
+        return;
+    }
+
+    if (function_exists('custom_box_admin_task_due') && !custom_box_admin_task_due(__FUNCTION__, __FILE__, 5 * MINUTE_IN_SECONDS)) {
         return;
     }
 
@@ -224,37 +229,19 @@ function custom_box_run_search_indexing_sync() {
     update_option('rank-math-options-instant-indexing', $instant);
 
     $cache_cleared = custom_box_flush_rank_math_sitemap_cache();
-    $submitted     = !custom_box_search_indexing_is_live_site();
-    $submitted_urls = 0;
-    $response_code  = 0;
-
-    if (custom_box_search_indexing_is_live_site()) {
-        $last_attempt = (int) get_option('custom_box_search_indexing_last_attempt');
-        if (!$last_attempt || time() - $last_attempt >= 15 * MINUTE_IN_SECONDS) {
-            update_option('custom_box_search_indexing_last_attempt', time(), false);
-            $urls           = custom_box_search_indexing_urls();
-            $submitted_urls = count($urls);
-
-            if ($urls && class_exists('RankMath\\Instant_Indexing\\Api')) {
-                $api           = \RankMath\Instant_Indexing\Api::get();
-                $submitted     = $api->submit($urls, true);
-                $response_code = (int) $api->get_response_code();
-            }
-        }
-    }
-
-    $success = custom_box_search_indexing_settings_are_complete()
-        && $cache_cleared
-        && $submitted;
+    // Configuration completion is independent of network submission/delivery.
+    $success = custom_box_search_indexing_settings_are_complete() && $cache_cleared;
+    $queued = $success && custom_box_queue_search_indexing_submission($version);
 
     update_option(
         'custom_box_search_indexing_sync_status',
         array(
             'success'          => $success,
             'sitemap_cache'    => $cache_cleared,
-            'indexnow'         => $submitted,
-            'indexnow_status'  => $response_code,
-            'submitted_urls'   => $submitted_urls,
+            'indexnow'         => !custom_box_search_indexing_is_live_site(),
+            'indexnow_pending' => $queued,
+            'indexnow_status'  => 0,
+            'submitted_urls'   => 0,
             'time'             => time(),
         ),
         false
@@ -267,3 +254,56 @@ function custom_box_run_search_indexing_sync() {
     }
 }
 add_action('admin_init', 'custom_box_run_search_indexing_sync', 30);
+
+function custom_box_queue_search_indexing_submission(string $version): bool {
+    if (!custom_box_search_indexing_is_live_site() || $version === get_option('custom_box_search_indexing_submission_version')) {
+        return false;
+    }
+    $args = array($version);
+    if (wp_next_scheduled('custom_box_search_indexing_submit', $args)) {
+        return true;
+    }
+    $last = (int) get_option('custom_box_search_indexing_last_attempt');
+    return (bool) wp_schedule_single_event(max(time() + 10, $last + 15 * MINUTE_IN_SECONDS), 'custom_box_search_indexing_submit', $args);
+}
+
+/** Runs in WP-Cron, outside an admin click/save request. */
+function custom_box_submit_search_indexing_background(string $version): void {
+    if ($version !== custom_box_search_indexing_sync_version() || !custom_box_search_indexing_is_live_site() || !custom_box_search_indexing_settings_are_complete() || $version === get_option('custom_box_search_indexing_submission_version')) {
+        return;
+    }
+    $last = (int) get_option('custom_box_search_indexing_last_attempt');
+    if ($last && time() - $last < 15 * MINUTE_IN_SECONDS) {
+        custom_box_queue_search_indexing_submission($version);
+        return;
+    }
+    update_option('custom_box_search_indexing_last_attempt', time(), false);
+    $submitted = false;
+    $urls = array();
+    $code = 0;
+    try {
+        $urls = custom_box_search_indexing_urls();
+        if ($urls && class_exists('RankMath\\Instant_Indexing\\Api')) {
+            $api = \RankMath\Instant_Indexing\Api::get();
+            $submitted = $api->submit($urls, true);
+            $code = (int) $api->get_response_code();
+        }
+    } catch (Throwable $error) {
+        // Keep retries off the interactive admin request; no URL/content logging.
+        $submitted = false;
+    }
+    if ($submitted) {
+        update_option('custom_box_search_indexing_submission_version', $version, false);
+    } else {
+        custom_box_queue_search_indexing_submission($version);
+    }
+    $status = (array) get_option('custom_box_search_indexing_sync_status', array());
+    update_option('custom_box_search_indexing_sync_status', array_merge($status, array(
+        'indexnow' => $submitted,
+        'indexnow_pending' => !$submitted,
+        'indexnow_status' => $code,
+        'submitted_urls' => count($urls),
+        'time' => time(),
+    )), false);
+}
+add_action('custom_box_search_indexing_submit', 'custom_box_submit_search_indexing_background');

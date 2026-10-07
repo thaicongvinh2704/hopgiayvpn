@@ -1,0 +1,55 @@
+{
+  "package": "admin-performance-patch-2026-10-07.zip",
+  "zip_sha256": "058e5ccb1d51889844e6bed7911a14b1079d149c4d8e083fee16aef48b2eb696",
+  "theme_files": {
+    "wp-content/themes/custom-box-theme/functions.php": {
+      "sha256": "07767a76d317a1483f26fe8e15ddb1878b50cdd9c24a828637a046e69a7cdee2",
+      "baseline_head_sha256": "6b89dfff17e1ed5e32fff5126c24395132a148e5518a407a934fd099513252b3"
+    },
+    "wp-content/themes/custom-box-theme/inc/admin-maintenance.php": {
+      "sha256": "82ab216ddf10dc5c56eb46f15e14eb31917b6b20385f61d5d7ce136dcd3fc5b8",
+      "baseline_head_sha256": null
+    },
+    "wp-content/themes/custom-box-theme/inc/admin-product-sample-deploy.php": {
+      "sha256": "1e81d597b7164dc8a273c82de97ce0a60c0075e92ed3005765e5178858d8311c",
+      "baseline_head_sha256": "b2cc3c4212df0d416fb5f473a1ddecf7d488b9468c6e9aee1fc5360af2b786e3"
+    },
+    "wp-content/themes/custom-box-theme/inc/post-sync-loader.php": {
+      "sha256": "01415764fb3be921fbfc7916aeb55bb34aba33a4a05c777ce1bc75ef84d834d5",
+      "baseline_head_sha256": "0c925e83c5df0c7c7a16c8fac478c98e36454ee877b187353624004d188bf377"
+    },
+    "wp-content/themes/custom-box-theme/inc/search-indexing-health.php": {
+      "sha256": "10e33af764bc0197c4b6966d20ce138609e79cca692653240c19d456820c1aa9",
+      "baseline_head_sha256": "b457f2b748a371f3625d4f30e36608d40d5c5ea06519794315bfaff175cc4378"
+    },
+    "wp-content/themes/custom-box-theme/inc/custom-vial-box-product-sync.php": {
+      "sha256": "0a8c3d094b907b48aad9f29932b978b7f467b2b2c3d89c3192f13039bed1959d",
+      "baseline_head_sha256": "009d6aff3885bdbb4cd566ae6ef1c59fd0a9f14d40e16daebe38f2a7d031fac8"
+    },
+    "wp-content/themes/custom-box-theme/inc/corrugated-mailer-boxes-category.php": {
+      "sha256": "b1052db4faf361e8266ca6e1c641eb134c2d1b5572cc117069a7921369b48cf6",
+      "baseline_head_sha256": "70c716203d48440122b2c014a8e7bac562b9caac06df28d98bb7f8bc93ec8b6e"
+    },
+    "wp-content/themes/custom-box-theme/inc/folding-cartons-vietnam-category.php": {
+      "sha256": "cc01fa654a0d9cd24b1d109d823c81b92f84e73b071a6497e42ec07e03bdd31c",
+      "baseline_head_sha256": "33c512fdeb24328ca9c94d83396e9aac3a16af8298dee5d80a3d52ade8e1f450"
+    },
+    "wp-content/themes/custom-box-theme/inc/rigid-box-manufacturer-vietnam-category.php": {
+      "sha256": "cf11a6ea014dc8283015311a57b742ce9ad76306a4731a4c3750fd394958069a",
+      "baseline_head_sha256": "e95c40d822ae8e1c05138fb9af71deea5e5d5e0345f7efa97eca4abed64f2359"
+    },
+    "wp-content/themes/custom-box-theme/inc/pizza-boxes-category.php": {
+      "sha256": "ae58f1870aa298b358cc8a2c3c0d4744f02da80c0d4e7869c65b13438e090732",
+      "baseline_head_sha256": "57b094da7e47057f1bfc3d59fc376cee38c4b460799b28eb3444ad2fabae92d1"
+    },
+    "wp-content/themes/custom-box-theme/inc/halloween-packaging-category.php": {
+      "sha256": "66e5d51ee64561c8618607471085b74119ebd29571692e487771dd06910b4932",
+      "baseline_head_sha256": "b556239de06f9881832afa047fd34bda34a1b8a1dc6d5540f548762f4c3914a5"
+    },
+    "wp-content/themes/custom-box-theme/inc/christmas-packaging-category.php": {
+      "sha256": "c7c708beafe5dd5d035fc0b28e4f680bbfb0d5b644f4bb5b40b885aa1db06df9",
+      "baseline_head_sha256": "536c7c5a345478fba1352cea4409c9f07d0c1245d978c5375f2003e5254a9c2d"
+    }
+  },
+  "scope": "Shared WordPress admin theme maintenance; not a plugin installer; not deployed to hosting"
+}

@@ -252,6 +252,9 @@ function custom_box_maybe_sync_christmas_packaging_category(): void {
     if (!is_admin() || !current_user_can('manage_options') || (function_exists('wp_doing_ajax') && wp_doing_ajax()) || (defined('REST_REQUEST') && REST_REQUEST) || (defined('DOING_CRON') && DOING_CRON)) {
         return;
     }
+    if (function_exists('custom_box_admin_task_due') && !custom_box_admin_task_due(__FUNCTION__, __FILE__)) {
+        return;
+    }
     custom_box_sync_christmas_packaging_category();
 }
 add_action('admin_init', 'custom_box_maybe_sync_christmas_packaging_category', 41);
