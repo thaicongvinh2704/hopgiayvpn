@@ -1,6 +1,10 @@
-# VPN Live Chat 1.8.4
+# VPN Live Chat 1.8.5
 
 Plugin độc lập cho WordPress, guest UI tiếng Anh, inbox sales tiếng Việt. PHP/WordPress REST + MySQL/MariaDB InnoDB + JavaScript thuần. ZIP chứa assets sẵn; production không chạy npm, Node, Redis hay WebSocket. Đây là bản MVP đã kiểm thử local; chưa phê duyệt production/pilot trên shared hosting.
+
+## 1.8.5 — Hiển thị chat trên toàn website, 07/10/2026
+
+Khi bật widget, chat hiển thị trên tất cả trang phía khách, gồm trang chủ, bài viết, sản phẩm, danh mục, tìm kiếm và trang liên hệ. Bỏ giới hạn Paths pilot và trường cấu hình đường dẫn. Các path lưu từ phiên bản cũ không còn giới hạn hiển thị; không cần sửa database hoặc khai báo từng URL. Nút bật/tắt widget vẫn có hiệu lực. Sau cập nhật cần purge cache HTML của toàn website để các trang cũ tải widget.
 
 ## 1.8.4 — Giảm độ trễ inbox admin, 07/10/2026
 
@@ -34,16 +38,16 @@ Thay yêu cầu Turnstile bằng giới hạn trên máy chủ: 2 tin/giây; m�
 
 Nâng cấp bật nhận chat mới một lần nếu widget đã bật, giữ lựa chọn tắt của admin sau đó. Deploy plugin 1.8.0 và purge cache; vẫn cần HTTPS/database khỏe. 220 kiểm tra đạt, gồm gửi/nhận HTTP thật trên WordPress test và giới hạn đồng thời. Chưa kiểm tra gửi thật bản mới trên production; SMTP/delivery email và hiệu năng hosting vẫn chưa nghiệm thu. Báo cáo hiện hành: docs/live-chat-final-check.md. Các đoạn Turnstile trong nhật ký phiên bản cũ chỉ mô tả lịch sử, không còn là yêu cầu của 1.8.0.
 
-## Cài đặt và cấu hình pilot
+## Cài đặt và cấu hình
 
-1. Sao lưu database và plugin đang dùng. Deploy thư mục `wp-content/plugins/vpn-live-chat/` từ Git, rồi kích hoạt plugin; có thể dùng ZIP đúng phiên bản nếu cần. **Widget và nhận chat mới mặc định tắt**, lịch trực và paths mặc định trống. Activation tạo bảng prefix thực tế, role và cron; không sửa core/theme/quote.
+1. Sao lưu database và plugin đang dùng. Deploy thư mục `wp-content/plugins/vpn-live-chat/` từ Git, rồi kích hoạt plugin; có thể dùng ZIP đúng phiên bản nếu cần. **Widget và nhận chat mới mặc định tắt**, lịch trực mặc định trống. Activation tạo bảng prefix thực tế, role và cron; không sửa core/theme/quote.
 2. Yêu cầu WordPress >=6.2, PHP >=8.0, HTTPS, database user có CREATE/ALTER và tất cả bảng chat dùng InnoDB. HTTPS bắt buộc cho khách; chỉ local loopback được dùng HTTP khi `WP_ENVIRONMENT_TYPE=local`.
 3. Không cần Turnstile. Máy chủ giới hạn 2 tin/giây, mặc định 10 tin/30 giây, 60 tin/5 phút và 3 hội thoại mới/10 phút theo mã khách; có quota IP bổ sung. Quá giới hạn trả HTTP 429/Retry-After, giữ nháp để gửi lại. Có thể chỉnh các giới hạn dài hơn trong Cấu hình.
 4. Nhập fallback thực tế. Project hiện có `/contact/#quote`, email footer `sales.vpn@hopgiayvpn.com`, `paperbox@hopgiayvpn.com`, WhatsApp trong theme. Chủ website xác nhận kênh mong muốn rồi lưu URL đầy đủ hoặc `mailto:`; plugin không tự chọn hay gửi email tới khách.
 5. Nhập email đội sales cho SLA; cấu hình/kiểm tra SMTP đang có trên staging với mail sink. Plugin gọi `wp_mail`, tương thích adapter `vpn-gmail-smtp` trong repo. `wp_mail=true` chỉ là transport chấp nhận, không chứng minh delivery vào inbox. Health báo adapter/configuration; không tự gửi mail thử cho khách.
 6. Tạo WP users với role **VPN Chat Sales** (chỉ read + `vpn_chat_agent`) hoặc **VPN Chat Manager** (thêm `vpn_chat_manage`). Administrator được hai capability. Agent thấy hàng chờ chưa nhận và chat của mình; manager thấy tất cả. Không gán sales Administrator để sử dụng inbox. Bật 2FA qua giải pháp WP đang được công ty sử dụng/đánh giá tương thích; plugin này không tự triển khai 2FA.
 7. Chọn timezone IANA, lịch JSON theo ngày ISO 1–7, ví dụ `{"1":[["08:00","17:00"]],"2":[["08:00","17:00"]]}`. Ngày nghỉ mỗi dòng `YYYY-MM-DD`. Ca qua đêm chia thành hai ngày. Lịch trống = ngoài giờ; tự viết copy tiếng Anh với thời gian phản hồi mà sales chấp thuận. Không có cam kết 24/7 mặc định.
-8. Nhập paths **chính xác**, mỗi dòng một path; có phân biệt trailing slash. Ví dụ `/contact/` và path của một sản phẩm pilot thực tế. Không dùng wildcard mở toàn site. Bottom offset mặc định 100px để tránh thanh CTA mobile; kiểm tra thêm cookie banner/nút nổi thực tế.
+8. Widget đã bật hiển thị trên tất cả trang phía khách; không cần nhập paths. Bottom offset mặc định 100px để tránh thanh CTA mobile; kiểm tra thêm cookie banner/nút nổi thực tế.
 9. Loại REST namespace khỏi cache/CDN/service worker và kiểm tra response. Hoàn tất test staging/load trước khi bật hai flags; rollout từng nhóm trang. HTTPS thiếu hoặc bảng không InnoDB làm `accepting=false` và vẫn có fallback nếu đã cấu hình.
 
 ## Cron, SMTP và cache
@@ -88,7 +92,7 @@ Mã nguồn từ Git không bao gồm option database, Media Library, secret Tur
 
 Lần đầu vào VPN Live Chat → Cấu hình:
 
-- Bật widget và nhận chat mới; nhập paths production đúng, ví dụ `/` và `/contact/` thay các path `/hopgiayvpn/...` của local.
+- Bật widget và nhận chat mới; widget hiển thị toàn website, không cần thay path local bằng path production.
 - Cấu hình Turnstile site key cho domain thật, secret ngoài Git trong wp-config/env, HTTPS và kiểm tra Health/InnoDB.
 - Chọn Tho Nguyen, tải avatar vào Media Library production và chọn đúng ID; ID 8869 của local không được mặc định dùng cho production. Bật danh tính chung, Online cố định và lời mời chat nếu muốn giống cấu hình local đã duyệt.
 - Đặt thông báo ngoài giờ: “Thanks for reaching out! Please leave your email address so we can get back to you as soon as possible.” Giá trị mặc định mới chỉ áp dụng khi chưa lưu giá trị cũ; nếu production đã có copy khác, thay tại Cấu hình.

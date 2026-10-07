@@ -18,7 +18,7 @@ Thu latency/error/429, delivery lag, CPU, memory, PHP queue/workers, DB queries/
 ## Rollback
 
 1. Tắt **Nhận chat mới** nếu cần dừng influx nhưng sales vẫn xử lý lead hiện có.
-2. Tắt **Widget** và purge page cache trên pilot paths. Namespace private luôn bypass cache; không cần flush toàn site.
+2. Tắt **Widget** và purge page cache trên toàn website để mọi trang đã cache nhận trạng thái tắt. Namespace private luôn bypass cache.
 3. Nếu plugin lỗi, deactivate: cron plugin dừng, presence offline, **dữ liệu không xóa**. Giữ bản ZIP trước đó; reinstall/reactivate v1 trên schema v1 bảo toàn dữ liệu. Uninstall cũng giữ lead/settings/roles.
 4. Không hạ code chưa hiểu schema mới; các migrations sau v1 cần kiểm tra compatibility riêng. Bản v1 không có migration destructive. Không restore toàn DB làm mất đơn/quote mới. Nếu bảng chuyển MyISAM hoặc quyền CREATE/ALTER thiếu: giữ disabled, sửa engine/quyền qua quản trị host rồi chạy activation/health lại.
 5. Sau rollback kiểm tra menu, quote, WhatsApp, SEO và logged-in sales access. Lead lưu trước deactivate có thể truy cập sau reinstall; manager export trước một downtime dự kiến nếu cần.

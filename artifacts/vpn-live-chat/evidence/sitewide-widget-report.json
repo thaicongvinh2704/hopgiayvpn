@@ -1,0 +1,31 @@
+{
+  "version": "1.8.5",
+  "checks": 23,
+  "passed": [
+    "actual home HTTP 200",
+    "one launcher on home despite legacy homepage-only paths",
+    "chat opens immediately on home",
+    "actual page HTTP 200",
+    "one launcher on page despite legacy homepage-only paths",
+    "chat opens immediately on page",
+    "actual post HTTP 200",
+    "one launcher on post despite legacy homepage-only paths",
+    "chat opens immediately on post",
+    "actual product HTTP 200",
+    "one launcher on product despite legacy homepage-only paths",
+    "chat opens immediately on product",
+    "actual product category HTTP 200",
+    "one launcher on product category despite legacy homepage-only paths",
+    "chat opens immediately on product category",
+    "actual search HTTP 200",
+    "one launcher on search despite legacy homepage-only paths",
+    "chat opens immediately on search",
+    "actual 404 HTTP 404",
+    "one launcher on 404 despite legacy homepage-only paths",
+    "chat opens immediately on 404",
+    "global widget off still hides chat",
+    "actual theme pages have no uncaught JavaScript errors"
+  ],
+  "errors": [],
+  "mode": "Real WordPress, custom theme and WooCommerce on isolated 8091/3311; stored paths only homepage; no guest messages; outbound HTTP blocked; fixtures removed"
+}

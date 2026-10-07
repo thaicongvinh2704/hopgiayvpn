@@ -1,8 +1,12 @@
 # VPN Live Chat — Tài liệu chức năng và tình trạng hoàn thành
 
-**Cập nhật:** 07/10/2026 · **Plugin:** 1.8.4 · **Schema:** 3
+**Cập nhật:** 07/10/2026 · **Plugin:** 1.8.5 · **Schema:** 3
 
 Đây là tài liệu tổng hợp hiện trạng mới nhất, dùng để biết đã làm gì, còn thiếu gì và tiếp tục công việc sau này. Các báo cáo phiên bản cũ được giữ làm bằng chứng kiểm thử, không thay thế hiện trạng trong tài liệu này. Khi sửa tính năng, cần cập nhật phiên bản, các bảng trạng thái và kết quả kiểm thử tại đây.
+
+## 1.8.5 — Chat hiển thị trên tất cả trang, 07/10/2026
+
+Bỏ điều kiện khớp chính xác với danh sách Paths pilot. Khi bật widget, chat hiển thị trên mọi trang frontend; paths lưu từ các bản cũ không còn giới hạn hiển thị. Xóa trường paths khỏi Cấu hình, giữ nút bật/tắt widget. Không cần chỉnh database trên hosting. Sau deploy từ `main`, purge cache HTML toàn website để các trang đã cache nhận scripts mới. Các mục về paths ở phần lịch sử mô tả hành vi bản cũ.
 
 ## 1.8.4 — Giảm độ trễ inbox admin, 07/10/2026
 

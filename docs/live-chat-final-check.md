@@ -1,4 +1,8 @@
-# Kiểm tra VPN Live Chat 1.8.4 — 07/10/2026
+# Kiểm tra VPN Live Chat 1.8.5 — 07/10/2026
+
+## 1.8.5 — Hiển thị widget toàn website
+
+Bỏ giới hạn đường dẫn pilot khỏi frontend và Cấu hình. Kiểm tra HTTP/trình duyệt với WordPress, theme thật và WooCommerce trong database cô lập, giữ settings cũ chỉ cho phép `/`. Trang chủ, page, bài viết, sản phẩm, danh mục sản phẩm, tìm kiếm và 404 đều có đúng một launcher và mở chat ngay. Tắt widget vẫn ẩn chat. Không gửi tin thử; fixtures và cấu hình thử được khôi phục. Báo cáo `artifacts/vpn-live-chat/evidence/sitewide-widget-report.json`. Cú pháp PHP đạt. Sau deploy cần purge cache HTML toàn website; chưa xác minh hosting đã cập nhật 1.8.5.
 
 ## 1.8.4 — Hiệu năng inbox
 

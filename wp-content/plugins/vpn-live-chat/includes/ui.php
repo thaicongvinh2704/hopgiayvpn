@@ -23,8 +23,8 @@ final class VPN_Chat_UI {
     }
     public static function widget(): void {
         $s = VPN_Chat_Settings::get();
-        $path = VPN_Chat_Security::source((string)wp_parse_url($_SERVER['REQUEST_URI'] ?? '/',PHP_URL_PATH));
-        if (!$s['widget'] || !in_array($path,$s['paths'],true)) { return; }
+        // The enabled widget covers every frontend page, including legacy pilot installs.
+        if (!$s['widget'] || is_admin()) { return; }
         wp_enqueue_style('vpn-chat-launcher',plugins_url('assets/launcher.css',VPN_CHAT_FILE),[],VPN_CHAT_VERSION);
         wp_enqueue_style('vpn-chat-widget',plugins_url('assets/chat.css',VPN_CHAT_FILE),['vpn-chat-launcher'],VPN_CHAT_VERSION);
         wp_enqueue_script('vpn-chat-widget',plugins_url('assets/widget.js',VPN_CHAT_FILE),[],VPN_CHAT_VERSION,true);
@@ -65,10 +65,10 @@ final class VPN_Chat_UI {
         echo '<h2>Danh tính hỗ trợ và lời chào</h2><p>Tên mặc định khi chưa nhận chat; khi đã nhận, header dùng profile người phụ trách. Mỗi tin sales lưu đúng profile của tài khoản gửi. Chỉ bật danh tính chung nếu đó là chính sách công ty.</p><p><label>Tên hỗ trợ mặc định <input name="support_name" maxlength="100" required value="'.esc_attr($s['support_name']).'"></label></p><p><label>Avatar hỗ trợ (Media Library ID) <input id="vpn-support-avatar" name="support_avatar_id" type="number" min="0" value="'.(int)$s['support_avatar_id'].'"></label>';
         VPN_Chat_Profiles::picker('vpn-support-avatar');
         echo '</p><p><label><input type="checkbox" name="shared_identity" value="1" '.checked($s['shared_identity'],true,false).'> Dùng danh tính hỗ trợ chung cho các tin mới của mọi sales</label></p><p><label><input type="checkbox" name="greeting_enabled" value="1" '.checked($s['greeting_enabled'],true,false).'> Hiện lời mời chat nổi bật với Sale Manager (animation nhẹ, có nút đóng)</label></p><p><label>Lời chào <input style="width:min(600px,100%)" name="greeting_text" maxlength="240" value="'.esc_attr($s['greeting_text']).'"></label></p>';
-        foreach (['always_online'=>'Luôn hiển thị Online ở khung khách (không phụ thuộc ca trực)', 'widget'=>'Bật widget','accept_new'=>'Nhận chat mới'] as $key=>$label) { echo '<p><label><input name="' . esc_attr($key) . '" type="checkbox" value="1" ' . checked($s[$key],true,false) . '> ' . esc_html($label) . '</label></p>'; }
+        foreach (['always_online'=>'Luôn hiển thị Online ở khung khách (không phụ thuộc ca trực)', 'widget'=>'Bật widget trên tất cả các trang phía khách','accept_new'=>'Nhận chat mới'] as $key=>$label) { echo '<p><label><input name="' . esc_attr($key) . '" type="checkbox" value="1" ' . checked($s[$key],true,false) . '> ' . esc_html($label) . '</label></p>'; }
         $fields=['fallback_url'=>'Link quote/email thực tế (https hoặc mailto)','sales_email'=>'Email đội sales nhận nhắc SLA','timezone'=>'Timezone IANA','offline_copy'=>'Thông báo ngoài giờ và SLA dự kiến','max_chars'=>'Ký tự mỗi tin (1–2000)','idle_hours'=>'Phiên idle (giờ, 1–168)','absolute_days'=>'Phiên tối đa (ngày, 1–30)','retention_days'=>'Tự xóa closed/spam sau ngày (0: chưa chốt)','sla_minutes'=>'SLA chưa nhận (phút)','short_limit'=>'Tin mỗi 30 giây','long_limit'=>'Tin mỗi 5 phút','conversation_limit'=>'Hội thoại mỗi 10 phút','heartbeat_seconds'=>'Heartbeat (giây)','presence_seconds'=>'Presence hết hạn (giây)','bottom_offset'=>'Khoảng đáy widget (px)'];
         foreach($fields as $key=>$label) { echo '<p><label>' . esc_html($label) . '<br><input style="width:min(600px,100%)" name="' . esc_attr($key) . '" value="' . esc_attr($s[$key]) . '"></label></p>'; }
-        foreach(['paths'=>'Paths pilot chính xác, mỗi dòng một path (không query)','holidays'=>'Ngày nghỉ YYYY-MM-DD, mỗi dòng một ngày'] as $key=>$label) { echo '<p><label>' . esc_html($label) . '<br><textarea rows="4" cols="65" name="' . esc_attr($key) . '">' . esc_textarea(implode("\n",$s[$key])) . '</textarea></label></p>'; }
+        foreach(['holidays'=>'Ngày nghỉ YYYY-MM-DD, mỗi dòng một ngày'] as $key=>$label) { echo '<p><label>' . esc_html($label) . '<br><textarea rows="4" cols="65" name="' . esc_attr($key) . '">' . esc_textarea(implode("\n",$s[$key])) . '</textarea></label></p>'; }
         echo '<p><label>Lịch JSON: ngày ISO 1 (thứ Hai) đến 7. Ví dụ {"1":[["08:00","17:00"]]}<br><textarea rows="5" cols="65" name="hours">' . esc_textarea(wp_json_encode($s['hours'])) . '</textarea></label></p>';
         submit_button('Lưu cấu hình'); echo '</form><h2>Health</h2><pre>' . esc_html(wp_json_encode(VPN_Chat_Jobs::health(),JSON_PRETTY_PRINT)) . '</pre></div>';
     }
@@ -89,7 +89,6 @@ final class VPN_Chat_UI {
         $s['timezone']=$raw['timezone'];
         foreach(['max_chars'=>[1,2000],'idle_hours'=>[1,168],'absolute_days'=>[1,30],'retention_days'=>[0,3650],'sla_minutes'=>[1,1440],'short_limit'=>[1,100],'long_limit'=>[1,1000],'conversation_limit'=>[1,20],'heartbeat_seconds'=>[15,60],'presence_seconds'=>[45,300],'bottom_offset'=>[0,300]] as $key=>$range) { $s[$key]=max($range[0],min($range[1],(int)($raw[$key]??$s[$key]))); }
         $s['presence_seconds']=max($s['presence_seconds'],$s['heartbeat_seconds']*3);
-        $s['paths']=array_values(array_filter(array_map([VPN_Chat_Security::class,'source'],preg_split('/\R/',(string)($raw['paths']??'')))));
         $s['holidays']=array_values(array_filter(preg_split('/\R/',(string)($raw['holidays']??'')), static fn($d)=>preg_match('/^\d{4}-\d{2}-\d{2}$/D',$d)));
         $hours=json_decode($raw['hours']??'[]',true);
         if(!is_array($hours)) { wp_die('Lịch JSON không hợp lệ'); }

@@ -1,6 +1,6 @@
 {
-  "version": "1.8.4",
-  "zip_sha256": "e42d8ca5c457e570f75f579808e8601761f17a41bad97b047f25cc1a52ded50a",
+  "version": "1.8.5",
+  "zip_sha256": "3b5734317d79441ea91e86f4189cfbd559bdb8273235fe172c81cac09c29bb24",
   "files": {
     "vpn-live-chat/assets/admin.css": "283e65ab35a3b823518301195561563eeed0abe5977f12af9645597e7cee5e06",
     "vpn-live-chat/assets/admin.js": "979442b7cc2e23b65ad53529fdde6a64ad3841ea60bd629541c6400e84884682",
@@ -11,7 +11,7 @@
     "vpn-live-chat/assets/tho-nguyen.png": "29f81bbf6ba956db15413624c15644bf5d1ca9f2a04e0e02980ed8c4321fb183",
     "vpn-live-chat/assets/widget.js": "0acf0569ed596f3fc70a15cd6c5d8dcd3a0c8caf2febea96f2ede5cb47296c3a",
     "vpn-live-chat/docs/DATA.md": "e4cc23b3057a50ef31183ad738256ff8d380f5659cd31b373ed154a29d33793b",
-    "vpn-live-chat/docs/OPERATIONS.md": "76446a287dccdaee16d1b9bf8b83699aed08997351da70c84a82eaa84080e93a",
+    "vpn-live-chat/docs/OPERATIONS.md": "d75fc7ca68f918708908913342dbd0d997b026e54cfec3398b4dfb4a6f18c86e",
     "vpn-live-chat/docs/SALES.md": "39a04d61105af3fd627a5d255b097d1e6bef6865bd5df9ba4e3020bdd51be7a6",
     "vpn-live-chat/docs/TEST-REPORT.md": "1064e281b221aece22cb606760894d097679526b6f1090627b71adf69c4f8600",
     "vpn-live-chat/includes/identity.php": "6f012a235109282d13b09d6d388f9543021fafca4ad064a1d5ecb12fa7a1c6ec",
@@ -23,9 +23,9 @@
     "vpn-live-chat/includes/service.php": "122365dd2e702207ea649189c8a30e2610b1679cc198339ad6d743b1657b70bf",
     "vpn-live-chat/includes/settings.php": "24c7f6d76136903b4a7fecd71ec6293aa503e2c27e1d900b4294e8ad47d87dc0",
     "vpn-live-chat/includes/store.php": "c76cbf32197be6ec3c076666d257793f01c86d6c0a85878ecb0d62b0e0af87d9",
-    "vpn-live-chat/includes/ui.php": "d59acfee170bca230ebb4320cc2dc760d8994b610c206a040f629fc714fc70cc",
-    "vpn-live-chat/README.md": "f3b8408001665d7cd632f0126c7e3995dddd9f8f778aa28b519baff3f12d3d8e",
+    "vpn-live-chat/includes/ui.php": "9ccea2ea23e353c52c8b22c29bf89f4ccac40f11fa43b4bb2f6298152f438eb5",
+    "vpn-live-chat/README.md": "ea7faa3347ba0d4447254d6a59c7cc52e628934db5007e2bf4865ceeff06891e",
     "vpn-live-chat/uninstall.php": "a6e4acd2ea4f5c6d2ff5c0d72be63aad5ee6027df3cdbd008f74baf5423b97ce",
-    "vpn-live-chat/vpn-live-chat.php": "5d7e6c6146c135ddc7e83240e874836022ec543f877cbc9bc3e43abd37ab3483"
+    "vpn-live-chat/vpn-live-chat.php": "a85288cecec6a97ca700b5419e695417c0c8b829ffcc116abf51578e52bba9ec"
   }
 }
