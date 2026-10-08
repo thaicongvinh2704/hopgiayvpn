@@ -20,6 +20,7 @@ $custom_box_inc_files = array(
     'inc/halloween-packaging-category.php',
     'inc/christmas-packaging-category.php',
     'inc/search-indexing-health.php',
+    'inc/product-search-submission.php',
     'inc/privacy-policy.php',
     'inc/paper-bag-ads-landing.php',
     'inc/custom-paper-bags-manufacturer-landing.php',

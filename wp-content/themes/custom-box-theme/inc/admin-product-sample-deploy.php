@@ -1794,6 +1794,7 @@ function custom_box_product_sample_deploy_page() {
 			<?php wp_nonce_field( 'custom_box_product_sample_deploy' ); ?>
 			<?php submit_button( 'Sync 5 Mailer Box Products', 'primary large', 'submit', false ); ?>
 		</form>
+		<p>After deployment, <a href="<?php echo esc_url( admin_url( 'tools.php?page=vpn-product-google-submission' ) ); ?>">submit the five mailer products to Google Search Console</a>.</p>
 
 		<h2>Christmas Gift Boxes from the October 1 package</h2>
 		<p>Imports or repairs five seasonal gift-box products from 30 bundled WebP images. Each product includes SEO metadata, product specifications, internal links, FAQs and disclosure that its supplied images are AI-generated design visualizations.</p>
