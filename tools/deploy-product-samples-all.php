@@ -126,6 +126,12 @@ $current_batches = array(
 		'importer'    => 'import-christmas-gift-boxes-20261001.php',
 		'verifier'    => 'verify-christmas-gift-boxes-20261001.php',
 	),
+	array(
+		'name' => 'Five mailer design products October 8, 2026',
+		'image_bases' => array(),
+		'importer' => 'import-mailer-products-20261008.php',
+		'verifier' => 'verify-mailer-products-20261008.php',
+	),
 );
 
 $missing_images = array();

@@ -51,3 +51,6 @@ artifacts/product-seo-release-checkpoint-v1/screenshots/
 artifacts/product-seo-release-checkpoint-v1/production-pilot-batch-01/
 artifacts/product-seo-release-checkpoint-v1/release-checkpoint-staging/
 artifacts/product-seo-release-checkpoint-v1/*.zip
+
+# Local mailer import review and headless browser artifacts
+/artifacts/mailer-20261008*

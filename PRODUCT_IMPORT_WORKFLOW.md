@@ -1066,3 +1066,14 @@ Deploy files:
 - `wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/import-christmas-gift-boxes-20260929.php`
 - `wp-content/themes/custom-box-theme/inc/product-sample-deploy-tools/verify-christmas-gift-boxes-20260929.php`
 - `wp-content/themes/custom-box-theme/inc/product-sample-deploy-assets/uploads/2026/09/` (30 WebP images)
+
+
+### Five mailer design products (October 8, 2026)
+
+Batch marker: `mailer-products-20261008`. Five published English B2B concept pages use all 30 supplied WebP images, six per product. Source content and products.json are bundled under `inc/product-content/mailer-products-20261008/`; originals are under `inc/product-sample-deploy-assets/uploads/2026/10/`.
+
+After `git pull --ff-only origin main`, open **Tools > Product Sample Deploy** and click **Sync 5 Mailer Box Products**. Wait for **Product sample deployment complete**. This publishes all five products and imports the 30 bundled images automatically, with no separate uploads. You can also select **Five mailer design products October 8, 2026 only** in the scope list. The batch is also in Latest.
+
+The importer and verifier are bundled under `inc/product-sample-deploy-tools/`. The admin runner uses these Git-tracked scripts directly. CLI alternative: `php tools/deploy-mailer-products-20261008.php`. The importer resolves URLs on the target installation and reruns without duplicate products or attachments. A fresh-install admin-runner test and a repeat run both passed with five published products and 30 images. Use `php tools/import-mailer-products-20261008.php --preflight` for a read-only validation.
+
+Copy identifies AI-assisted visualization and does not assert dimensions, board grades, performance, stock, certification, price or fixed MOQ. MOQ is confirmed by written project quotation. Product schema and Open Graph omit unverified commerce fields; quote-only schema does not promise Google rich-result eligibility. See `product-samples-mailer-20261008-audit.md` for local verification and production follow-up. Existing local isolation/noindex stays enabled.

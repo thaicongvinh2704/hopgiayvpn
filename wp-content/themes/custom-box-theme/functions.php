@@ -68,3 +68,5 @@ if (function_exists('custom_box_post_sync_files_to_load')) {
         require_once get_template_directory() . '/' . $custom_box_post_sync_file;
     }
 }
+
+require_once get_template_directory() . '/inc/mailer-products-20261008-support.php';
