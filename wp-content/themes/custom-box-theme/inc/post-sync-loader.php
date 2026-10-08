@@ -408,6 +408,11 @@ function custom_box_post_sync_registry(): array
             'option' => 'custom_box_rigid_box_folding_carton_sync_version',
             'slug' => 'rigid-box-vs-folding-carton',
         ),
+        'inc/wholesale-rigid-boxes-post-sync.php' => array(
+            'version' => '2026-10-08-wholesale-rigid-boxes-v1',
+            'option' => 'custom_box_wholesale_rigid_boxes_sync_version',
+            'slug' => 'wholesale-rigid-boxes',
+        ),
         'inc/skincare-paper-packaging-selection-post-sync.php' => array(
             'version' => '2026-07-13-v1',
             'option' => 'custom_box_skincare_paper_packaging_selection_sync_version',
