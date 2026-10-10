@@ -1,0 +1,135 @@
+<p>A shipping carton can fit a product perfectly and still cost more to send than expected. The reason is simple: the <strong>inside dimensions</strong> that protect the product are not the same as the <strong>outside dimensions</strong> a parcel carrier measures. Board thickness, protective inserts, closing flaps and carrier rounding rules sit between those two numbers.</p>
+<p>For procurement and ecommerce operations teams, the reliable sizing sequence is <strong>measure the packed product → allow for protection → specify the usable inside space → estimate the finished outside size → check dimensional weight → approve a physical sample</strong>. This guide shows the calculations, the assumptions that matter and the information needed to request a comparable custom-box quotation.</p>
+<h2>Start with two different dimensions: product fit and parcel size</h2>
+<p>Custom-sized boxes for shipping should be specified with two separately labelled measurements:</p>
+<ul>
+<li><strong>Internal dimensions (ID):</strong> the usable cavity inside the erected box. Use these to decide whether the product, protective packaging and inserts fit.</li>
+<li><strong>External dimensions (OD):</strong> the measured outside of the assembled, fully closed shipping parcel. Use these for carrier quotations, dimensional-weight estimates and warehouse or pallet planning.</li>
+</ul>
+<p>For corrugated cases, the FEFCO box-style convention expresses internal dimensions in millimetres as <strong>Length × Width × Height (L × W × H)</strong>. Length is the longer opening dimension, width is the shorter opening dimension, and height runs from the opening to the base. For a hinged mailer, show the opening orientation on the drawing because the closure and rolled edges affect usable space.</p>
+<p><strong>Do not treat a flat dieline, an erected inside cavity and a closed outside package as interchangeable.</strong> A dieline must include structural allowances for scores, folds, flaps and the chosen board. The finished outside size should be confirmed on an assembled sample rather than inferred from a generic wall-thickness chart.</p>
+<!-- IMAGE_SLOT_2 -->
+<h2>Measure the item as it will actually be shipped</h2>
+<ol>
+<li><strong>Choose the packing orientation.</strong> Stand the product upright or lay it down as the fulfillment team intends. Keep the intended label and unboxing orientation in mind.</li>
+<li><strong>Measure the maximum envelope.</strong> Include caps, handles, protective sleeves, retail cartons and other protrusions. For multi-item kits, measure the complete arrangement rather than each SKU separately.</li>
+<li><strong>Record variation.</strong> Check representative units if the products vary in fill, folding, assembly or manufacturing size. Design around the approved realistic maximum, not one unusually small sample.</li>
+<li><strong>Measure the complete packed weight.</strong> Product-only weight is not the weight the carrier bills. Include the shipping box, pads, inserts, printed collateral and closure materials when the sample is available.</li>
+<li><strong>State the basis of each number.</strong> Example: “Product assembly: 392 × 292 × 172 mm, arranged flat. Proposed shipper: 400 × 300 × 180 mm ID, subject to physical fit and transit testing.”</li>
+</ol>
+<p>For soft goods, determine the folded size used at the packing station. For fragile goods, avoid sizing from the bare glass jar or device if the shipping configuration includes a retail carton, molded insert or cushioning.</p>
+<h2>Calculate the required internal box dimensions</h2>
+<p>Use one allowance budget for each axis. Do not count the same insert or pad twice:</p>
+<p><strong>Internal length = packed-product length + left allowance + right allowance.</strong><br><strong>Internal width = packed-product width + front allowance + back allowance.</strong><br><strong>Internal height = packed-product height + bottom allowance + top allowance.</strong></p>
+<p>When protection is symmetric, each expression can be simplified to <strong>product dimension + 2 × (clearance per side + separate insert/padding thickness per side)</strong>. This is a starting geometry calculation, not an assurance of transit protection.</p>
+<table>
+<thead><tr><th>Allowance</th><th>What it covers</th><th>Buyer decision</th></tr></thead>
+<tbody>
+<tr><td>Loading/fit clearance</td><td>Space required to place or remove the product without forcing it</td><td>Test with actual product variation and packing speed</td></tr>
+<tr><td>Insert or cushion thickness</td><td>Foam, molded pulp, corrugated pads or other separate protective parts</td><td>Get the insert drawing and measure its effective installed envelope</td></tr>
+<tr><td>Closure/headroom</td><td>Internal tabs, lid rollover, flap intrusion or top pads</td><td>Close the fully packed sample without bulging</td></tr>
+<tr><td>Production variation</td><td>Agreed tolerance on finished inside size and board construction</td><td>Put nominal size, measuring method and acceptance range on the approved specification</td></tr>
+</tbody>
+</table>
+<p>There is no safe universal clearance such as “always add 5 mm” or “always add two inches.” A nonfragile garment and a glass bottle need different retention and shock protection. If a cushioning supplier specifies a minimum installed thickness, use that specification instead of an arbitrary rule of thumb.</p>
+<h2>Editable custom shipping box size calculator</h2>
+<p>Enter the <strong>packed product</strong> measurements, additional clearance on each side, separate insert/padding thickness on each side, and estimated corrugated-board caliper. The calculator returns an estimated internal cavity, external parcel and two illustrative DIM-weight methods. Change the values to see how the proposed box changes.</p>
+<section id="vpn-box-size-calculator" aria-label="Custom shipping box sizing calculator">
+
+<h3>1. Product and allowances</h3>
+<div class="vpn-calc-grid">
+<label>Dimension unit<select name="unit"><option value="mm">Millimetres (mm)</option><option value="in">Inches (in)</option></select></label>
+<label>Product length<input name="pL" type="number" min="0.01" step="any" value="392"></label>
+<label>Product width<input name="pW" type="number" min="0.01" step="any" value="292"></label>
+<label>Product height<input name="pH" type="number" min="0.01" step="any" value="172"></label>
+<label>Fit clearance per side<input name="clear" type="number" min="0" step="any" value="4"></label>
+<label>Separate insert/padding per side<input name="insert" type="number" min="0" step="any" value="0"></label>
+<label>Board caliper per wall<input name="wall" type="number" min="0" step="any" value="3"></label>
+<label>Estimated packed weight (kg)<input name="weight" type="number" min="0" step="any" value="2.8"></label>
+</div>
+<h3>2. Optional current box for comparison</h3>
+<p class="vpn-calc-small">Enter the current shipping box's measured <strong>external</strong> dimensions in the selected unit. Leave empty if you do not have an existing box.</p>
+<div class="vpn-calc-grid">
+<label>Current external length<input name="oldL" type="number" min="0" step="any" placeholder="Optional"></label>
+<label>Current external width<input name="oldW" type="number" min="0" step="any" placeholder="Optional"></label>
+<label>Current external height<input name="oldH" type="number" min="0" step="any" placeholder="Optional"></label>
+</div>
+<div class="vpn-calc-out" aria-live="polite">
+<p class="vpn-calc-result" id="vpn-calc-id">Suggested nominal inside dimensions: calculating…</p>
+<p id="vpn-calc-od"></p><p id="vpn-calc-cube"></p><p id="vpn-calc-metric"></p><p id="vpn-calc-imperial"></p><p id="vpn-calc-compare"></p>
+</div>
+<h3>3. Copy the sizing brief</h3>
+<textarea id="vpn-calc-brief" aria-label="Sizing brief for manufacturer" readonly></textarea>
+<p class="vpn-calc-small"><strong>Estimation limits:</strong> external size assumes approximately two wall-caliper thicknesses added to each internal dimension. Actual fold geometry, closed-lid thickness, seam construction, bulging and production variation can change the result. DIM figures apply separate ceiling-rounding to each measured external dimension (whole centimetre for the metric illustration; whole inch for the imperial illustration), then divide by 5,000 cm³/kg or 139 in³/lb. These are <em>unrounded calculated dimensional weights</em>, not guaranteed carrier-billed weights or prices. Confirm the applicable carrier, market, contract, billing increment and physical sample.</p>
+</section>
+
+<h2>Choose corrugated board after you know the shipping job</h2>
+<p>Board caliper affects outside dimensions, but flute name alone does not certify shipping strength. The total board construction, liner and medium papers, flute profile, moisture exposure, box geometry and closing method all matter.</p>
+<table><thead><tr><th>Starting option</th><th>Reason to evaluate it</th><th>What to verify before approval</th></tr></thead><tbody>
+<tr><td>Microflute / E-flute mailer</td><td>Compact ecommerce presentation, printing and smaller folding profiles</td><td>Actual caliper, locking-flap fit, required compression and parcel handling</td></tr>
+<tr><td>B- or C-flute single-wall carton</td><td>Conventional shipping-corrugated constructions with different cushion and compression behaviour</td><td>Measured board properties, box-style geometry, package weight and stacking requirement</td></tr>
+<tr><td>Double-wall corrugated</td><td>Candidate for demanding load/stacking cases</td><td>Additional OD/cube, handling method, proven box performance and material cost</td></tr>
+</tbody></table>
+<p><strong>Buyer rule:</strong> Ask suppliers to compare at least two suitable board specifications <em>at the same target inside dimensions</em>. Request actual board caliper, board grade/test data where relevant, finished OD estimate and an assembled sample. A thicker board can make the parcel bigger without fixing a weak closure or inadequate internal restraint.</p>
+<p>For example, VPN Packaging lists customizable E-flute/B-flute constructions on its <a href="https://hopgiayvpn.com/product/custom-corrugated-mailer-box/">custom corrugated mailer box</a> product page. The exact material, structure and production specification need confirmation for the individual project. If size changes after artwork has been developed, review the <a href="https://hopgiayvpn.com/cardboard-box-dieline-guide/">cardboard box dieline guide</a> before releasing final print files.</p>
+<!-- IMAGE_SLOT_3 -->
+<h2>The carrier's rounding rule can matter more than a few millimetres</h2>
+<p><strong>Dimensional weight</strong> converts the outside volume of a parcel into a weight for freight rating. The general calculation is length × width × height divided by a carrier- and service-specific divisor. Depending on the carrier's rules, each side measurement is rounded before multiplication; the final weight is then rounded to the service's billing increment. The greater of dimensional and actual weight typically governs, subject to service-specific conditions.</p>
+<p>For illustration, FedEx's Vietnam guidance shows whole-centimetre upward measurement rounding with <strong>5,000 cm³/kg</strong>, while UPS's U.S. guide distinguishes an example <strong>139 in³/lb</strong> daily-rate divisor from <strong>166 in³/lb</strong> retail-rate divisor. These values must not be substituted for the actual carrier contract or destination service without checking.</p>
+<h3>Worked shipping scenario: a 20 mm change in box height</h3>
+<p>Consider two hypothetical corrugated shippers with equal length and width, the same assumed 3 mm caliper per wall and an actual packed weight of 2.8 kg. Both designs must independently pass the same product-fit and protection requirements.</p>
+<table><thead><tr><th>Measurement</th><th>Design A</th><th>Design B</th></tr></thead><tbody>
+<tr><td>Nominal inside (ID)</td><td>400 × 300 × 180 mm</td><td>400 × 300 × 160 mm</td></tr>
+<tr><td>Estimated outside (OD)</td><td>406 × 306 × 186 mm</td><td>406 × 306 × 166 mm</td></tr>
+<tr><td>Dimensions rounded upward to whole cm</td><td>41 × 31 × 19 cm</td><td>41 × 31 × 17 cm</td></tr>
+<tr><td>Metric DIM at divisor 5,000</td><td>4.830 kg (unrounded)</td><td>4.321 kg (unrounded)</td></tr>
+<tr><td>External geometric volume</td><td>0.02311 m³</td><td>0.02062 m³</td></tr>
+</tbody></table>
+<p>In this example, the narrower height reduces external geometric volume by about <strong>10.8%</strong> and the unrounded metric DIM by about <strong>0.51 kg</strong>. If a relevant service rounds chargeable weight upward to 0.5 kg and actual weight remains at 2.8 kg, the two designs could fall into 5.0 kg and 4.5 kg billing steps respectively. <strong>That is a hypothetical service-dependent rate-step outcome—not a claim of 10.8% freight savings.</strong> A different weight increment, minimum charge, oversize fee, contract or packed weight could erase the billed-weight difference.</p>
+<p>The decision is not “always make the box 20 mm shorter.” It is: <em>can the packing engineer remove 20 mm without compressing protection, obstructing closure or increasing damage?</em> If not, the apparent freight advantage is false economy.</p>
+<!-- IMAGE_SLOT_4 -->
+<h2>How custom box size changes the cost of an order</h2>
+<p>A smaller carton is not automatically a cheaper shipped order. Compare designs using the same order volume, print specification, destination and packing conditions. Separate these cost layers:</p>
+<ol>
+<li><strong>Box manufacturing:</strong> board area and grade, box style, converting method, setup/die costs, printing coverage, run quantity and wastage.</li>
+<li><strong>Packing operation:</strong> insert cost, protective material, sealing, staff time and packing-line compatibility.</li>
+<li><strong>Parcel or inbound freight:</strong> the measured OD, the billed weight/rate band, possible size surcharges and master-carton/pallet cube.</li>
+<li><strong>Failure and returns:</strong> damage, replacement, customer-service handling and repeated shipments if protection is insufficient.</li>
+</ol>
+<p>A practical comparison is <strong>total packaging and fulfillment cost per successfully delivered order = box + inserts/dunnage + packing labor + freight + expected damage/return cost + applicable setup allocation</strong>. This is a procurement model, not a published VPN unit-price promise. Ask vendors to quote each alternative against one shared specification so a cheaper board or smaller box cannot hide a difference in protection.</p>
+<h2>Set a measurable tolerance and sample-approval rule</h2>
+<p>Nominal ID alone does not define acceptance. A custom corrugated box can vary with flute profile, paper moisture, cutting and scoring, assembly and measurement method. Instead of accepting a blanket claim that all boxes are “within ±2 mm,” agree in writing on the <strong>finished-size tolerance for this design</strong> and where it is measured.</p>
+<ul>
+<li>Approve an erected sample with the actual product and the final insert; verify loading clearance at representative small and large product conditions.</li>
+<li>Measure finished internal dimensions at the defined locations, plus the maximum external measurements when the carton is closed and sealed as shipped.</li>
+<li>Check that locking tabs engage, tape seams stay closed, the lid does not bulge and no pad is unintentionally compressed.</li>
+<li>Record the approved box style, board construction, measured caliper, flute orientation and closure method on the sample sign-off.</li>
+<li>For fragile or stacked shipments, agree on performance validation appropriate to the distribution route. For example, <a href="https://store.astm.org/standards/d642">ASTM D642</a> describes shipping-container compression testing; it is not a blanket pass/fail guarantee for every product.</li>
+</ul>
+<p>If the box passes a visual fit check but fails during transit, use a distribution-focused <a href="https://hopgiayvpn.com/how-to-reduce-paper-box-damage-during-shipping/">shipping-damage prevention review</a> to examine inserts, closure, compression, humidity, handling and master cartons before removing more material.</p>
+<h2>Prepare a box-size RFQ that suppliers can actually price</h2>
+<p>Send the following as one specification rather than asking for “a 40 × 30 × 18 box” without context:</p>
+<table><thead><tr><th>Specification field</th><th>What to send</th></tr></thead><tbody>
+<tr><td>Product</td><td>Packed product description, photos, weight, quantity per box, orientation and dimension variation</td></tr>
+<tr><td>Target box</td><td>Nominal inside L × W × H with units; any hard limit on closed outside dimensions</td></tr>
+<tr><td>Protection</td><td>Insert/cushion drawing, pad thickness, fragility points and closure requirements</td></tr>
+<tr><td>Corrugated structure</td><td>Proposed style (for example RSC or die-cut mailer), preferred board if known, or request two costed options</td></tr>
+<tr><td>Printing and quantity</td><td>Logo/artwork, print sides, colors, quantity per SKU and forecast reorder volume</td></tr>
+<tr><td>Fulfillment and freight</td><td>Destination, parcel carrier/service or distribution method, relevant maximum parcel size, pallet/storage limits</td></tr>
+<tr><td>Approvals</td><td>Required fit, finished-size tolerance, test/inspection criteria, prototype and production sample sign-off</td></tr>
+</tbody></table>
+<p>When requesting multiple supplier quotes, make each vendor identify whether dimensions are <strong>ID or OD</strong>, which allowances were assumed, and which test criteria are included. This avoids comparing one supplier's nominal-size quote with another supplier's finished-shipping-size quote.</p>
+<h2>Questions buyers ask before ordering</h2>
+<h3>Are custom shipping box sizes quoted inside or outside?</h3>
+<p>Corrugated manufacturers commonly specify box styles by internal dimensions, but sales listings and carrier tools may use external sizes. Label the dimension type explicitly on every drawing, quotation and order.</p>
+<h3>How much extra space should I add around my product?</h3>
+<p>Use the installed thickness of the chosen protective system plus the verified clearance needed for practical loading. There is no safe single allowance for all products: evaluate fragility, fit, product variation and the intended shipment.</p>
+<h3>Does switching to a thinner flute always reduce shipping cost?</h3>
+<p>No. A thinner board may reduce outside size but may also affect closure performance or protection. Compare final box performance and the actual carrier billing bracket before changing the specification.</p>
+<h3>Can I calculate the final box size from a dieline alone?</h3>
+<p>A dieline helps establish panel geometry but does not replace an assembled physical sample. Corrugated thickness, scoring, folds, locking features and production variation affect the closed outside dimensions and usable cavity.</p>
+<h3>Can a shipping-box calculator give an accurate factory quotation?</h3>
+<p>It can produce a more useful sizing brief, not a binding price. Final quotations depend on the approved structure, tested material, artwork, production quantity, packing method and destination.</p>
+<h2>Send the dimensions—not a guess—to the packaging manufacturer</h2>
+<p>If your objective is to control product fit, material use and shipping cube, start with the calculator's sizing brief and attach product photos, inserts, quantity and intended carrier route. <a href="https://hopgiayvpn.com/custom-packaging-boxes-manufacturer/">VPN Packaging's custom box manufacturing team</a> can review the proposed structure, materials, sample requirements and project-specific quotation. The final inside tolerance and outside shipping size should be approved on an erected sample before bulk production.</p>
+<p><strong>Technical references:</strong> <a href="https://www.fefco.org/technical-information/fefco-testing-methods-recommendations">FEFCO measuring recommendations</a> · <a href="https://www.fedex.com/en-vn/customer-support/faq/invoices-and-payments/fees-and-charges/calculate-dimensional-weight.html">FedEx Vietnam dimensional weight</a> · <a href="https://www.ups.com/vn/en/support/shipping-support/shipping-dimensions-weight">UPS Vietnam dimensions and weight</a> · <a href="https://www.ups.com/us/en/support/shipping-support/shipping-dimensions-weight">UPS US dimensional-weight rate types</a>.</p>

@@ -1,0 +1,73 @@
+{
+  "title": "Custom-Sized Boxes for Shipping: How to Calculate Size, Board and Cost",
+  "slug": "custom-sized-boxes-for-shipping",
+  "status": "publish",
+  "excerpt": "Learn how to calculate custom shipping box dimensions, account for protective inserts and corrugated board thickness, estimate dimensional weight, and prepare a factory-ready box specification.",
+  "category": {
+    "name": "Packaging Guides",
+    "slug": "packaging-guides"
+  },
+  "meta": {
+    "rank_math_title": "Custom Sized Boxes for Shipping: Size & Cost Guide",
+    "rank_math_description": "Calculate custom shipping box dimensions, add padding and board thickness, estimate dimensional weight, and prepare an accurate factory quote.",
+    "rank_math_focus_keyword": "custom sized boxes for shipping"
+  },
+  "content_sha256": "257202e41304119054635e5524d7a2b2533820e48895739fcdbe884a81d1957e",
+  "images": [
+    {
+      "file": "custom-sized-boxes-for-shipping-sizing-board-cost.webp",
+      "bytes": 98494,
+      "width": 1600,
+      "height": 900,
+      "sha256": "f0c9213968a195cf0bc66ff447522e3b1e102ce87907d775b3874239eb6eec93",
+      "title": "Custom Shipping Box Sizing and Cost Guide",
+      "alt": "Custom-sized corrugated shipping boxes with ruler, caliper and packing materials",
+      "caption": "Custom shipping box sizing starts with product fit, board construction and parcel dimensions.",
+      "featured": true
+    },
+    {
+      "file": "measure-internal-vs-external-corrugated-box-dimensions.webp",
+      "bytes": 98456,
+      "width": 1600,
+      "height": 900,
+      "sha256": "48f04798edcf2e3fd99800e9117231e7a0c0a3c10f9ee8ab605ef71da60c3068",
+      "title": "Internal vs External Shipping Box Dimensions",
+      "alt": "Measuring internal and external dimensions of a corrugated shipping box",
+      "caption": "Internal dimensions define usable space; external dimensions define the finished parcel envelope.",
+      "slot": 2
+    },
+    {
+      "file": "corrugated-flute-caliper-technical-close-up.webp",
+      "bytes": 99496,
+      "width": 1600,
+      "height": 900,
+      "sha256": "b7c171a61bd8fe68dc80a598d6d12ad4d000c711bb3a3d5adc2b74b01a7d9b5c",
+      "title": "Corrugated Board Caliper for Shipping Boxes",
+      "alt": "Close-up of corrugated board caliper and flute structure",
+      "caption": "Board construction changes wall thickness and may affect finished external dimensions.",
+      "slot": 3
+    },
+    {
+      "file": "shipping-box-height-dim-weight-comparison.webp",
+      "bytes": 99700,
+      "width": 1600,
+      "height": 900,
+      "sha256": "6c30776df761a19dcd0ed4933b7d08949844ba7230097c6289830b06932d40fe",
+      "title": "Shipping Box Height and Dimensional Weight Comparison",
+      "alt": "Two corrugated shipping boxes with different heights compared for dimensional weight",
+      "caption": "Even a small change in finished box height can affect the dimensional-weight calculation.",
+      "slot": 4
+    },
+    {
+      "file": "shipping-box-sizing-material-selection-workflow.webp",
+      "bytes": 97326,
+      "width": 1600,
+      "height": 900,
+      "sha256": "7d5de007d8aacc59d73059d10b8342bc9e5be4ada977fe48650f35da400d9f32",
+      "title": "Shipping Box Sizing and Material Selection",
+      "alt": "Corrugated shipping boxes, board samples and measuring tools on a packing workbench",
+      "caption": "",
+      "reference_only": true
+    }
+  ]
+}

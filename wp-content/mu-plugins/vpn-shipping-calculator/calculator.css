@@ -1,0 +1,11 @@
+
+#vpn-box-size-calculator{border:1px solid #d9e0e4;border-radius:12px;padding:18px;margin:22px 0;background:#f8fafb;font:inherit;color:#243443}
+#vpn-box-size-calculator *{box-sizing:border-box}
+#vpn-box-size-calculator .vpn-calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin:12px 0}
+#vpn-box-size-calculator label{display:block;font-weight:600;font-size:14px}
+#vpn-box-size-calculator input,#vpn-box-size-calculator select,#vpn-box-size-calculator textarea{display:block;width:100%;margin-top:6px;padding:9px;border:1px solid #9fabb7;border-radius:6px;background:#fff;color:#182c39;font:inherit}
+#vpn-box-size-calculator h3{margin:16px 0 5px;font-size:1.12em}
+#vpn-box-size-calculator .vpn-calc-out{background:#fff;border:1px solid #d9e0e4;border-radius:8px;padding:12px;margin-top:12px}
+#vpn-box-size-calculator .vpn-calc-small{font-size:13px;color:#4f6472}
+#vpn-box-size-calculator .vpn-calc-result{font-size:1.08em;font-weight:700}
+#vpn-box-size-calculator textarea{min-height:110px;resize:vertical}
