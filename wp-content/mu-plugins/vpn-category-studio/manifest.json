@@ -1,0 +1,311 @@
+{
+  "release": "20261010-v2",
+  "width": 450,
+  "height": 570,
+  "images": {
+    "custom-paper-boxes": {
+      "name": "Custom Paper Boxes",
+      "file": "custom-paper-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 30176,
+      "sha256": "ce94453f6f40734231d4dc764e5cf0953a564c5475f9edec345003e0e7582e2e"
+    },
+    "custom-printed-paper-boxes": {
+      "name": "Custom Printed Paper Boxes",
+      "file": "custom-printed-paper-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 37956,
+      "sha256": "66b100414a1161c7662d4557683ab2ba077e14216e569f2d915ed7e87e7b0576"
+    },
+    "rigid-boxes": {
+      "name": "Rigid Boxes",
+      "file": "rigid-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 21110,
+      "sha256": "a69fd116cdaa42b0c554ee502732fac7aa0cc9ed2cc7850818261410f4cebd6c"
+    },
+    "folding-carton-boxes": {
+      "name": "Folding Carton Boxes",
+      "file": "folding-carton-boxes-v2.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 18046,
+      "sha256": "5d4ebc8a8a5b3ab2e0c413287a1cce3aa5ebc35c05988d16116cbd77a40d269d"
+    },
+    "magnetic-closure-boxes": {
+      "name": "Magnetic Closure Boxes",
+      "file": "magnetic-closure-boxes-v2.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 24216,
+      "sha256": "075c94811c83e189c00b82de7573b64651c7f6a7a2c3a3e76f0171cd5dc9b64a"
+    },
+    "drawer-boxes": {
+      "name": "Drawer Boxes",
+      "file": "drawer-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 26540,
+      "sha256": "4844382ab260d8d706a4bf4f6407e2288dc707f89fa304a92c23abfd64b32747"
+    },
+    "lid-and-base-boxes": {
+      "name": "Lid and Base Boxes",
+      "file": "lid-and-base-boxes-v2.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 23164,
+      "sha256": "cfd88a18ca1bfedc70058ce458261916e81e0c76c72b7fa870d6417120a534bc"
+    },
+    "paper-tube-packaging": {
+      "name": "Paper Tube Packaging",
+      "file": "paper-tube-packaging.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 27772,
+      "sha256": "bd1e807dc65cfb14e0014c324eec727e56a2c6a605c859fa432f389bedb1013e"
+    },
+    "corrugated-mailer-boxes": {
+      "name": "Corrugated Mailer Boxes",
+      "file": "corrugated-mailer-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 32294,
+      "sha256": "d77ccbe9e12e27f41dfb592c716ca1855a548165c82c8ae28f2393bf5d829c17"
+    },
+    "cosmetic-paper-boxes": {
+      "name": "Cosmetic Paper Boxes",
+      "file": "cosmetic-paper-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 45778,
+      "sha256": "8e6d422052f195841205054f05d2e2a540f2700238008731f3ff7ef38aa0f1c3"
+    },
+    "perfume-packaging-boxes": {
+      "name": "Perfume Packaging Boxes",
+      "file": "perfume-packaging-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 21030,
+      "sha256": "1e5a6f4c2c567088050e40893971715900885f81f9a569df30d51bb3c77c148a"
+    },
+    "skincare-packaging-boxes": {
+      "name": "Skincare Packaging Boxes",
+      "file": "skincare-packaging-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 21146,
+      "sha256": "da1133d96f9fa0b1ed10865bd3937ee0bd06be9f5de5972578a0add260d008fc"
+    },
+    "jewelry-paper-boxes": {
+      "name": "Jewelry Paper Boxes",
+      "file": "jewelry-paper-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 38632,
+      "sha256": "cf44e1e55f208468d719b4ca81c5d972ec4b0419dcd41e3cdd0e9f748c5c98c5"
+    },
+    "gift-paper-boxes": {
+      "name": "Gift Paper Boxes",
+      "file": "gift-paper-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 17054,
+      "sha256": "61f2415cb3dcfdbe0a890915c1fad289a5371fa75ca6bf6e3475522ada64c805"
+    },
+    "chocolate-gift-boxes": {
+      "name": "Chocolate Gift Boxes",
+      "file": "chocolate-gift-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 34470,
+      "sha256": "fdfa156a53eeda89c7cd5b126f535258556b3c913b83ea06bfc7434735710e91"
+    },
+    "food-paper-boxes": {
+      "name": "Food Paper Boxes",
+      "file": "food-paper-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 29974,
+      "sha256": "b91ec40fbfe4a5a9e89cb648d944ef1559bc7e7cb8e5477abf428ba8bf3f3b35"
+    },
+    "bakery-packaging-boxes": {
+      "name": "Bakery Packaging Boxes",
+      "file": "bakery-packaging-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 30666,
+      "sha256": "5e60758e8b8a5ac7a604c7b36714c580a110e26a68a70b0a93388b654ae5e3a3"
+    },
+    "candle-packaging-boxes": {
+      "name": "Candle Packaging Boxes",
+      "file": "candle-packaging-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 18884,
+      "sha256": "61a8e147d55012111c639b0f0301ddba006e979e7736c7fa301770382ae964bc"
+    },
+    "paper-bags-with-logo": {
+      "name": "Paper Bags with Logo",
+      "file": "paper-bags-with-logo.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 50648,
+      "sha256": "60a48e6f1e1dff0b54ca8c5294bf05f79afe6832313a5627e4eed0d287022dec"
+    },
+    "packaging-accessories": {
+      "name": "Packaging Accessories",
+      "file": "packaging-accessories.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 32414,
+      "sha256": "9143efc25256ed9ad09606c7b84224246b8e3b03f34348e929739f11f71a4b5a"
+    },
+    "beauty-skincare-packaging": {
+      "name": "Beauty and Skincare Packaging",
+      "file": "beauty-skincare-packaging-v2.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 24694,
+      "sha256": "756f8f87782679dd325d680c2909337977b041756dea611f644b8ec1cae79643"
+    },
+    "pharmaceutical-packaging-boxes": {
+      "name": "Pharmaceutical Packaging Boxes",
+      "file": "pharmaceutical-packaging-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 31268,
+      "sha256": "7e2635e81fe4795338e2ef77cc262baa0f08b3f0ec971e8295e5c5c3ff216b5b"
+    },
+    "supplement-packaging-boxes": {
+      "name": "Supplement Packaging Boxes",
+      "file": "supplement-packaging-boxes-v2.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 31048,
+      "sha256": "6e9da9040568fad5d23a60084410291f0e9324e982a4844fbf3dd3006af85399"
+    },
+    "premium-food-beverage-packaging": {
+      "name": "Premium Food and Beverage Packaging",
+      "file": "premium-food-beverage-packaging.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 50230,
+      "sha256": "f60d97dd93a433fbacc62521fbb2810464e93b1e064d18c62987d738c191c3a9"
+    },
+    "bird-nest-packaging-boxes": {
+      "name": "Bird Nest Packaging Boxes",
+      "file": "bird-nest-packaging-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 41744,
+      "sha256": "914dbdc174bd27fc116674e294e0de6b70669ad1b85c5a93d9215e05119fa174"
+    },
+    "electronics-accessories-packaging": {
+      "name": "Electronics Accessories Packaging",
+      "file": "electronics-accessories-packaging.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 24756,
+      "sha256": "715d843e3860409cff303450bcc69835db47267c373db1b9f03cf67fffd2b467"
+    },
+    "fashion-sportswear-packaging": {
+      "name": "Fashion and Sportswear Packaging",
+      "file": "fashion-sportswear-packaging.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 41562,
+      "sha256": "a139a67cd322de5ac5a6117c9e685e41b16845e1bacb2798899bb9dbe1a36eda"
+    },
+    "sports-packaging-boxes": {
+      "name": "Sports Packaging Boxes",
+      "file": "sports-packaging-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 22014,
+      "sha256": "01abab1291e507687fc11c2e28571c0f9d23ae80cdf1700ca65c41dc224df714"
+    },
+    "wine-premium-drink-packaging": {
+      "name": "Wine and Premium Drink Packaging",
+      "file": "wine-premium-drink-packaging.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 37996,
+      "sha256": "a264f15c255ebe6f77ddcc39658c7ca62593bdec6076385304de8b4ea84abaf3"
+    },
+    "corporate-gift-packaging": {
+      "name": "Corporate Gift Packaging",
+      "file": "corporate-gift-packaging.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 33684,
+      "sha256": "c97eea203481170ac74a5d3d8a61a7f861d54344461a7f51c9e9cae55f99650c"
+    },
+    "home-lifestyle-packaging": {
+      "name": "Home and Lifestyle Packaging",
+      "file": "home-lifestyle-packaging.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 21240,
+      "sha256": "bc123a24e570a919c6b2b4b11c45bcd80d3a950bad7b12931879b0c6513b83f5"
+    },
+    "back-to-school-stationery-packaging": {
+      "name": "Back-to-School and Stationery Packaging",
+      "file": "back-to-school-stationery-packaging.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 43704,
+      "sha256": "7832b3284a9a746720ae1d92cc9b0f8d8db6cc723ba3896c85264b0fbe0e969b"
+    },
+    "pizza-boxes": {
+      "name": "Pizza Boxes",
+      "file": "pizza-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 70076,
+      "sha256": "4fb411d564f52762aa45555cffde4a092bd49738f6c0388692bd07f7d82c51d8"
+    },
+    "tea-and-coffee-packaging-boxes": {
+      "name": "Tea and Coffee Packaging Boxes",
+      "file": "tea-and-coffee-packaging-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 36842,
+      "sha256": "ef0218ef61d707bc4ebb5da53e4581f56ae4f298af143d3e96580eb88f994434"
+    },
+    "toy-and-game-packaging-boxes": {
+      "name": "Toy and Game Packaging Boxes",
+      "file": "toy-and-game-packaging-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 47194,
+      "sha256": "ff5e87db1493f6431fa206703fd37596a9aa8066918c2b9ee11ca3496107379d"
+    },
+    "pet-product-packaging-boxes": {
+      "name": "Pet Product Packaging Boxes",
+      "file": "pet-product-packaging-boxes.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 24690,
+      "sha256": "863ecd194ff4d1d88c4950cefb4c516bf79e97604cac83c1b108aeab9c36565e"
+    },
+    "halloween-packaging": {
+      "name": "Halloween Packaging",
+      "file": "halloween-packaging.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 39526,
+      "sha256": "677821453591b30dedd263533f70b666cbf8458c8b37f72de9f4ec68a23d48ef"
+    },
+    "christmas-packaging": {
+      "name": "Christmas Paper Bags and Gift Boxes",
+      "file": "christmas-packaging.webp",
+      "width": 450,
+      "height": 570,
+      "bytes": 43292,
+      "sha256": "2d28c12cb4c9f59c4bc9fc5cd1f8002afa9b24d637328753c604fa49d9a299dc"
+    }
+  }
+}

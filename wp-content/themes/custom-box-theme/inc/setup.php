@@ -339,6 +339,8 @@ function custom_box_get_home_packaging_category_groups() {
     }
     unset($group);
 
+    $groups = apply_filters('custom_box_home_packaging_category_groups', $groups);
+
     return $groups;
 }
 
