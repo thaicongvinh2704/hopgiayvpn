@@ -1,0 +1,80 @@
+{
+  "title": "Collapsible Rigid Boxes: Structure, Assembly, Cost and Shipping Benefits",
+  "slug": "collapsible-rigid-boxes",
+  "status": "draft",
+  "excerpt": "Learn how collapsible rigid boxes work, compare them with traditional setup boxes, and evaluate assembly, durability, shipping CBM and total landed cost.",
+  "category": {
+    "name": "Custom Packaging",
+    "slug": "custom-packaging"
+  },
+  "tags": [
+    {
+      "name": "Rigid Boxes",
+      "slug": "rigid-boxes"
+    },
+    {
+      "name": "Luxury Packaging",
+      "slug": "luxury-packaging"
+    },
+    {
+      "name": "Foldable Packaging",
+      "slug": "foldable-packaging"
+    },
+    {
+      "name": "Packaging Logistics",
+      "slug": "packaging-logistics"
+    },
+    {
+      "name": "Packaging Cost",
+      "slug": "packaging-cost"
+    }
+  ],
+  "meta": {
+    "rank_math_title": "Collapsible Rigid Boxes: Cost, Assembly & CBM Guide",
+    "rank_math_description": "Compare collapsible rigid boxes with setup boxes: structures, assembly, durability, and an original CBM and landed-cost example for importers.",
+    "rank_math_focus_keyword": "collapsible rigid boxes"
+  },
+  "images": [
+    {
+      "file": "collapsible-rigid-boxes-structure-shipping-benefits.webp",
+      "title": "Collapsible Rigid Boxes – Flat and Assembled",
+      "alt": "Collapsible rigid box displayed flat and assembled for a shipping comparison",
+      "caption": "A fold-flat rigid box can reduce empty packaging volume before assembly.",
+      "featured": true,
+      "sha256": "2e2adfac44156d92027dd42c701181d7b749ef180550fd577311f8112846de7f"
+    },
+    {
+      "file": "collapsible-rigid-box-hinge-corner-structure.webp",
+      "title": "Foldable Rigid Box Corner Structure",
+      "alt": "Close-up of collapsible rigid box hinge and adhesive corner construction",
+      "caption": "Hinges, rigid panels and secure corners determine the assembled box's performance.",
+      "slot": 1,
+      "sha256": "da928b0dd066108c5e8f281ed5b02e0001a07403eba2f0a5a50edb145ab318e3"
+    },
+    {
+      "file": "collapsible-rigid-box-assembly-steps.webp",
+      "title": "Collapsible Rigid Box Assembly",
+      "alt": "Step-by-step assembly of a foldable magnetic rigid gift box",
+      "caption": "Correct panel alignment and corner fixing help achieve a premium finished shape.",
+      "slot": 2,
+      "sha256": "8cfd64e800551b951824a9ee063cf5f0c815100c92e418457d927a9e6ae24bd7"
+    },
+    {
+      "file": "collapsible-vs-setup-rigid-boxes-carton-cbm.webp",
+      "title": "Rigid Box Shipping Volume Comparison",
+      "alt": "Flat-packed versus assembled rigid boxes arranged for export shipment",
+      "caption": "Compare actual export-carton dimensions and quantities before calculating CBM savings.",
+      "slot": 3,
+      "sha256": "6b8c1f20cac7d5623ad4fa00130d4e64db7bc36496e25dc36ca6031a156e5915"
+    },
+    {
+      "file": "foldable-rigid-box-insert-packing-tradeoff.webp",
+      "title": "Collapsible Box Insert Packing",
+      "alt": "Foldable rigid box with separate protective insert packing",
+      "caption": "Bulky non-folding inserts can reduce the transport advantage of collapsible boxes.",
+      "slot": 4,
+      "sha256": "66a5fa0c926b2bdba4890dd2cbe19269dca684d2d9904c048db0ee153c9c5246"
+    }
+  ],
+  "content_sha256": "abb04cac017822c28e414a0660f6a6c7cff2af7701bf22ea9d97539267a5c763"
+}
