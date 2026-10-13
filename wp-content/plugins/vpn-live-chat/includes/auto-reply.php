@@ -53,6 +53,7 @@ final class VPN_Chat_Auto_Reply {
                 || self::matches(mb_strtolower($guest, 'UTF-8'), 'mỹ|úc|anh quốc|đức|nhật bản') || (bool) preg_match('/(?<!\p{L})US(?!\p{L})/u', $guest)
                 || (bool) preg_match('~(?:ship(?:ping)? to|deliver(?:y)? to|destination(?: is)?|gui (?:den|ve)|giao (?:den|ve))\s+\p{L}~u', $text),
             'email' => $email !== '' || (bool) preg_match('/[^\s@]+@[^\s@]+\.[^\s@]+/u', $guest),
+            'email_declined' => self::matches($text, "no email|do not ask (?:for )?(?:my )?email|don't ask (?:for )?(?:my )?email|(?:do not|don't|dont) want (?:to (?:share|give) )?(?:my )?email|prefer to chat here|khong (?:muon|can|gui|cho|cung cap|de lai) email"),
         ];
     }
 
@@ -63,8 +64,21 @@ final class VPN_Chat_Auto_Reply {
         if (!$d['size'] && !$d['destination']) { return $vi ? 'Bạn cho mình kích thước và quốc gia nhận hàng nhé?' : 'What dimensions do you need, and which country will receive the order?'; }
         if (!$d['size']) { return $vi ? 'Bạn cho mình kích thước mong muốn hoặc kích thước sản phẩm bên trong nhé?' : 'What dimensions do you need, or what size is the product going inside?'; }
         if (!$d['destination']) { return $vi ? 'Bạn muốn giao hàng đến quốc gia nào?' : 'Which country will receive the order?'; }
-        if (!$d['email']) { return $vi ? 'Bạn có thể để lại email qua nút Add email để sales gửi báo giá; email không bắt buộc để tiếp tục chat.' : 'You can optionally use Add email so sales can follow up with a quote. You can also keep chatting here.'; }
-        return $vi ? 'Sales sẽ xem các thông tin bạn đã gửi trong hội thoại này để xác nhận báo giá.' : 'Sales can review the details you shared in this conversation and confirm a quote.';
+        return $vi ? 'Bạn có thể cho biết tên công ty/dự án và sản phẩm cần đựng để sales tư vấn phù hợp hơn không?' : 'Could you share your company or project name and what the packaging will hold, so sales can advise on the right specification?';
+    }
+
+    /** Every scenario ends with a relevant lead action, without asking again for a supplied email. */
+    private static function lead_invitation(array $d, bool $vi, array $intents): string {
+        if ($d['email'] || $d['email_declined']) { return ''; }
+        $purpose = $vi ? 'sales tư vấn và gửi báo giá theo nhu cầu của bạn' : 'sales can advise and follow up with a quote for your project';
+        if (in_array('existing_order', $intents, true)) { $purpose = $vi ? 'nhân viên liên hệ lại về đơn hàng của bạn' : 'a team member can follow up about your order'; }
+        elseif (in_array('sample', $intents, true)) { $purpose = $vi ? 'sales liên hệ về phương án, chi phí và thời gian làm mẫu' : 'sales can follow up with sample options, cost and timing'; }
+        elseif (in_array('timing', $intents, true)) { $purpose = $vi ? 'sales kiểm tra và liên hệ về lịch đáp ứng hạn nhận hàng của bạn' : 'sales can review your required delivery date and follow up with timing'; }
+        elseif (in_array('shipping', $intents, true)) { $purpose = $vi ? 'sales liên hệ về phương án và chi phí giao hàng' : 'sales can follow up with shipping options and costs'; }
+        elseif (in_array('specification', $intents, true)) { $purpose = $vi ? 'sales liên hệ về thông số và tài liệu phù hợp với sản phẩm của bạn' : 'sales can follow up with specifications and relevant product documentation'; }
+        elseif (in_array('handoff', $intents, true)) { $purpose = $vi ? 'sales có thể liên hệ ngay cả khi bạn đã rời trang' : 'sales can contact you even after you leave this page'; }
+        elseif (in_array('fallback', $intents, true)) { $purpose = $vi ? 'sales liên hệ và giải đáp đúng yêu cầu bạn vừa gửi' : 'sales can follow up on the question you just shared'; }
+        return $vi ? 'Bạn để lại email qua nút Add email để '.$purpose.' nhé? Bạn vẫn có thể tiếp tục chat ở đây.' : 'Would you leave your email using Add email so '.$purpose.'? You can keep chatting here too.';
     }
 
     /** Pure answer selection, also used for isolated scenario tests. */
@@ -76,9 +90,13 @@ final class VPN_Chat_Auto_Reply {
         $handoff = self::matches($text, 'human|real person|live agent|sales (?:person|manager|representative)|speak to|talk to|stop (?:the )?bot|stop (?:auto|automatic)|nguoi that|nhan vien|gap sales|gap nguoi|tat bot|dung tu dong|khong muon bot');
         $order = self::matches($text, 'my order|order (?:status|number|tracking)|tracking number|where is my|refund|complaint|damaged|cancel (?:my )?order|don hang cua|ma don|tinh trang don|tra hang|hoan tien|khieu nai|bi hong|huy don');
         if ($handoff || $order || $sent >= self::LIMIT - 1) {
-            $copy = $vi ? 'Mình sẽ dừng trả lời tự động để sales tiếp nhận. Tin nhắn của bạn đã lưu trong inbox; thời gian phản hồi phụ thuộc lúc nhân viên có mặt. Bạn có thể để lại email qua Add email nếu cần rời trang.' : 'I will stop automated replies so sales can take over. Your messages are saved in the inbox; response time depends on staff availability. You can optionally use Add email if you need to leave.';
-            if ($order) { $copy = $vi ? 'Việc kiểm tra đơn hàng hoặc khiếu nại cần nhân viên xử lý. Bạn gửi mã đơn hoặc email dùng khi đặt hàng nhé; không gửi thông tin thanh toán. Mình sẽ dừng trả lời tự động để sales tiếp nhận.' : 'Order checks or complaints need a team member. Please share your order reference or the email used for the order, without payment details. I will stop automated replies so sales can take over.'; }
-            return ['body' => $copy, 'handoff' => true, 'intent' => $order ? 'existing_order' : 'handoff'];
+            $copy = $vi ? 'Mình sẽ dừng trả lời tự động để sales tiếp nhận. Tin nhắn của bạn đã lưu trong inbox; thời gian phản hồi phụ thuộc lúc nhân viên có mặt.' : 'I will stop automated replies so sales can take over. Your messages are saved in the inbox; response time depends on staff availability.';
+            if ($order) { $copy = $vi ? 'Việc kiểm tra đơn hàng hoặc khiếu nại cần nhân viên xử lý. Bạn gửi mã đơn nhé; không gửi thông tin thanh toán. Mình sẽ dừng trả lời tự động để sales tiếp nhận.' : 'Order checks or complaints need a team member. Please share your order reference, without payment details. I will stop automated replies so sales can take over.'; }
+            $intent = $order ? 'existing_order' : 'handoff';
+            $invitation = self::lead_invitation($d, $vi, [$intent]);
+            if ($invitation !== '') { $copy .= "\n\n".$invitation; }
+            elseif (!$order) { $copy .= "\n\n".self::next_question($d, $vi); }
+            return ['body' => $copy, 'handoff' => true, 'intent' => $intent];
         }
         $parts = [];
         $intents = [];
@@ -107,7 +125,7 @@ final class VPN_Chat_Auto_Reply {
             $parts[] = $vi ? 'VPN Packaging là nhà sản xuất bao bì giấy tại Việt Nam, nhận yêu cầu túi giấy và hộp giấy theo thiết kế riêng.' : 'VPN Packaging is a paper packaging manufacturer in Vietnam, handling custom paper bag and paper box requests.'; $intents[] = 'manufacturer';
         }
         if (self::matches($text, 'contact|email|phone|whatsapp|lien he|dien thoai')) {
-            $parts[] = $vi ? 'Sales có thể tiếp nhận ngay trong hội thoại này. Bạn có thể dùng Add email hoặc trang Contact của website để để lại yêu cầu.' : 'Sales can take over in this conversation. You can use Add email or the website Contact page to leave your enquiry.'; $intents[] = 'contact';
+            $parts[] = $vi ? 'Bạn có thể gửi nhu cầu ngay trong hội thoại này để sales tiếp nhận.' : 'You can share your packaging requirements in this conversation for sales to review.'; $intents[] = 'contact';
         }
         if ($d['quantity'] > 0 && $d['quantity'] < 1000 && !in_array('moq', $intents, true)) {
             $parts[] = $vi ? 'Số lượng bạn nêu thấp hơn MOQ chung để lên kế hoạch là 1.000 chiếc; sales cần kiểm tra khả năng nhận đơn, mình chưa thể xác nhận.' : 'Your quantity is below our general planning minimum of 1,000 units. Sales needs to check whether this request can be accepted; it is not confirmed.'; $intents[] = 'below_moq';
@@ -121,6 +139,8 @@ final class VPN_Chat_Auto_Reply {
         // A multi-topic question stays concise; invite remaining details rather than a wall of text.
         $parts = array_slice($parts, 0, 2);
         if (!in_array('timing', $intents, true) && !in_array('specification', $intents, true)) { $parts[] = self::next_question($d, $vi); }
+        $invitation = self::lead_invitation($d, $vi, $intents);
+        if ($invitation !== '') { $parts[] = $invitation; }
         return ['body' => implode("\n\n", $parts), 'handoff' => false, 'intent' => implode(',', $intents)];
     }
 

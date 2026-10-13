@@ -1,8 +1,12 @@
 # VPN Live Chat — Tài liệu chức năng và tình trạng hoàn thành
 
-**Cập nhật:** 13/10/2026 · **Plugin:** 1.9.0 · **Schema:** 3
+**Cập nhật:** 13/10/2026 · **Plugin:** 1.9.1 · **Schema:** 3
 
 Đây là tài liệu tổng hợp hiện trạng mới nhất, dùng để biết đã làm gì, còn thiếu gì và tiếp tục công việc sau này. Các báo cáo phiên bản cũ được giữ làm bằng chứng kiểm thử, không thay thế hiện trạng trong tài liệu này. Khi sửa tính năng, cần cập nhật phiên bản, các bảng trạng thái và kết quả kiểm thử tại đây.
+
+## 1.9.1 — Thu thông tin khách, 13/10/2026
+
+Mọi kịch bản hướng tới thông tin dự án và liên hệ: lời mời email theo đúng chủ đề, lời chào hỏi nhu cầu, nút Share email rõ mục đích tư vấn/báo giá. Không hỏi lại email đã có; khách từ chối email vẫn tiếp tục chat và chia sẻ chi tiết. Local bật sẵn; 113 backend/40 real browser checks đạt. Push/deploy bản mới và purge cache. Giữ checkbox hiện có; không cần cấu hình mới. Chưa deploy production. Xem [kịch bản](live-chat-keyword-replies.md).
 
 ## 1.9.0 — Trả lời theo từ khóa, 13/10/2026
 

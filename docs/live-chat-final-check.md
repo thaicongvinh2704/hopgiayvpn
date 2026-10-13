@@ -1,4 +1,8 @@
-# Kiểm tra VPN Live Chat 1.9.0 — 13/10/2026
+# Kiểm tra VPN Live Chat 1.9.1 — 13/10/2026
+
+## 1.9.1 — Lời mời thu thông tin
+
+113 checks WP/REST/database cô lập và 40 real browser HTTP tại 1366/390/320px đạt. Bao gồm mọi nhóm kịch bản hướng tới liên hệ/nhu cầu, email đã có không hỏi lại, từ chối email vẫn hỏi chi tiết, lời chào thu nhu cầu và reply có lời mời Add email ngay cả khi sync 503. Đã xem ảnh mobile, PHP/JS syntax đạt. Test data/settings được dọn; production không thay đổi. Báo cáo keyword-backend-report.json và keyword-browser-report.json được cập nhật 1.9.1. Các kết quả 1.9.0 dưới đây là lịch sử.
 
 ## 1.9.0 — Trả lời theo từ khóa
 

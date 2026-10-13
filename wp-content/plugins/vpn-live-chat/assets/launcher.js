@@ -10,10 +10,10 @@
   const greeting=document.createElement('aside');greeting.id='vpn-chat-greeting';greeting.className='vpn-chat-greeting';greeting.setAttribute('aria-label','Chat with our Sale Manager');
   const avatar=button.querySelector('.vpn-chat-launch-portrait');avatar.textContent=cfg.support?.initials||'TN';
   if(cfg.support?.avatar){const img=document.createElement('img');img.src=cfg.support.avatar;img.alt='';img.width=72;img.height=72;img.decoding='async';img.addEventListener('error',()=>img.remove(),{once:true});avatar.append(img);}
-  const text=document.createElement('p');text.textContent='Hi! Need help with packaging?';
+  const text=document.createElement('p');text.textContent=cfg.auto_reply?'Need a packaging quote?':'Hi! Need help with packaging?';
   const help=document.createElement('span');help.className='vpn-chat-invite-help';help.textContent=`Chat with ${cfg.support?.name||'Tho Nguyen'},`;
   const role=document.createElement('span');role.className='vpn-chat-invite-role';role.textContent='Sale Manager';
-  const action=document.createElement('span');action.className='vpn-chat-invite-action';action.textContent='Let’s chat \u2192';
+  const action=document.createElement('span');action.className='vpn-chat-invite-action';action.textContent=cfg.auto_reply?'Share your requirements \u2192':'Let’s chat \u2192';
   const open=document.createElement('button');open.id='vpn-chat-greeting-open';open.className='vpn-chat-greeting-open';open.type='button';open.append(text,help,role,action);
   const dismiss=document.createElement('button');dismiss.type='button';dismiss.className='vpn-chat-greeting-dismiss';dismiss.textContent='×';dismiss.setAttribute('aria-label','Dismiss welcome message');greeting.append(open,dismiss);
   let dismissed=false,inviteTimer,attentionTimer;

@@ -1,6 +1,12 @@
-# VPN Live Chat 1.9.0 — trả lời tự động theo từ khóa
+# VPN Live Chat 1.9.1 — trả lời tự động theo từ khóa
 
 Yêu cầu ngày 13/10/2026: phản hồi ngay khi khách nhắn để họ có câu trả lời trong lúc sales chưa tiếp nhận. Chủ website chọn kịch bản theo từ khóa, không dùng AI/API.
+
+## 1.9.1 — mục tiêu thu thông tin khách
+
+Chủ website yêu cầu mọi kịch bản và lời gợi ý hướng tới lấy thông tin liên hệ/nhu cầu. Mỗi chủ đề có lời mời Add email gắn với mục đích cụ thể: báo giá, phương án mẫu, lịch sản xuất, vận chuyển, tài liệu hoặc sales tiếp nhận. Lời chào và nút mở chat mời chia sẻ nhu cầu; form dùng nút Share email, mô tả tư vấn/báo giá. Khi đã có email, không hỏi lại; nếu khách từ chối email, tiếp tục hỏi chi tiết dự án. Các câu hỏi thu loại sản phẩm, số lượng, kích thước, nơi giao và có thể hỏi tên công ty/dự án cùng mục đích sử dụng. Email vẫn tùy chọn, không tự gửi báo giá hay tự đăng ký marketing.
+
+113 checks backend gồm toàn bộ chủ đề có lời mời liên hệ, không hỏi lại email và tôn trọng từ chối; 40 checks real browser gồm lời chào/receipt thu thông tin và desktop/mobile đạt. Giữ cơ chế handoff và lưu tin của 1.9.0. Production chưa được triển khai trong tác vụ này.
 
 ## Cách hoạt động
 
@@ -34,7 +40,7 @@ Nội dung cố định trong `wp-content/plugins/vpn-live-chat/includes/auto-re
 
 ## Deploy
 
-Pull/deploy **toàn bộ thư mục plugin `wp-content/plugins/vpn-live-chat/`**, không chỉ file chính. Không cần đổi schema, tạo API key hay dùng Product Sample Deploy. Purge cache HTML/assets của website để frontend dùng JS 1.9.0. Vào **VPN Live Chat → Cấu hình**, bật **Trả lời tự động theo từ khóa** và lưu. Mặc định khi nâng cấp là tắt; lựa chọn đã lưu được giữ. Local đã bật để chủ website thử.
+Pull/deploy **toàn bộ thư mục plugin `wp-content/plugins/vpn-live-chat/`**, không chỉ file chính. Không cần đổi schema, tạo API key hay dùng Product Sample Deploy. Purge cache HTML/assets của website để frontend dùng JS 1.9.1. Vào **VPN Live Chat → Cấu hình**, bật **Trả lời tự động theo từ khóa** và lưu. Mặc định khi nâng cấp là tắt; lựa chọn đã lưu được giữ. Local đã bật để chủ website thử.
 
 Production chưa được triển khai hoặc gửi tin thử trong tác vụ này. Sau deploy, xác nhận nhận chat đang bật, REST không bị cache, gửi một câu MOQ từ trình duyệt thử và nhận chat trong inbox để xác nhận tự động dừng. Tắt checkbox để quay về cách chat trước đó; không xóa lịch sử.
 
