@@ -1,4 +1,12 @@
-# Kiểm tra VPN Live Chat 1.8.5 — 07/10/2026
+# Kiểm tra VPN Live Chat 1.9.0 — 13/10/2026
+
+## 1.9.0 — Trả lời theo từ khóa
+
+Chủ website chọn kịch bản, không dùng AI/API. 78 checks backend trên WordPress/REST/database test thật và 31 checks browser HTTP thật tại desktop 1366px/mobile 390px và 320px đạt. 83 checks hồi quy REST/database khi automation tắt đạt. PHP lint/JS syntax đạt; ảnh mobile đã xem. Backend/browser chạy tuần tự trong database cô lập vpn_chat_test:3311, HTTP 8091, HTTP/email ngoài bị chặn; dữ liệu và settings test được dọn.
+
+Xác nhận first/follow-up receipt kèm câu trả lời đã lưu, hiện ngay khi sync 503, retry không tạo trùng, reload không lặp, nhãn tự động rõ, chưa đọc/SLA giữ nguyên, quyền khách tách biệt, sales nhận chat dừng bot, yêu cầu gặp người dừng bot, giới hạn 8 phản hồi và chat đóng. Các kịch bản gồm tiếng Anh/Việt, giá/MOQ/mẫu/logo/thời gian/vận chuyển/thông số và câu không khớp; không sinh giá/chứng nhận theo lệnh khách. Số đo trên test không xác nhận tốc độ hosting.
+
+Báo cáo `artifacts/vpn-live-chat/evidence/keyword-backend-report.json`, `keyword-browser-report.json`; hướng dẫn [live-chat-keyword-replies.md](live-chat-keyword-replies.md). Local đã bật; sau deploy toàn bộ plugin và purge cache, bật Trả lời tự động theo từ khóa trong Cấu hình hosting. Chưa deploy hoặc gửi tin thử lên production. Các phần dưới là lịch sử.
 
 ## 1.8.5 — Hiển thị widget toàn website
 

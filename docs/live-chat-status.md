@@ -1,8 +1,14 @@
 # VPN Live Chat — Tài liệu chức năng và tình trạng hoàn thành
 
-**Cập nhật:** 07/10/2026 · **Plugin:** 1.8.5 · **Schema:** 3
+**Cập nhật:** 13/10/2026 · **Plugin:** 1.9.0 · **Schema:** 3
 
 Đây là tài liệu tổng hợp hiện trạng mới nhất, dùng để biết đã làm gì, còn thiếu gì và tiếp tục công việc sau này. Các báo cáo phiên bản cũ được giữ làm bằng chứng kiểm thử, không thay thế hiện trạng trong tài liệu này. Khi sửa tính năng, cần cập nhật phiên bản, các bảng trạng thái và kết quả kiểm thử tại đây.
+
+## 1.9.0 — Trả lời theo từ khóa, 13/10/2026
+
+Theo lựa chọn của chủ website, thêm trợ lý kịch bản tiếng Anh/Việt, không dùng AI/API. Tin được lưu và trả cùng receipt gửi tin; khách thấy câu trả lời ngay mà không chờ sync. Nhãn VPN Automated Assistant phân biệt với sales. Các chủ đề gồm giá, MOQ, mẫu, logo, thời gian, vận chuyển, thông số và liên hệ; đọc chi tiết gần đây để hạn chế hỏi lại. Không xác nhận giá, lịch giao hoặc chứng nhận chưa có dữ liệu.
+
+Dừng khi sales nhận/đã nhắn, khách yêu cầu gặp người, hỏi đơn hàng/khiếu nại hoặc sau 8 phản hồi. Giữ hàng chờ, unread và SLA. Bật/tắt ở Cấu hình; mặc định nâng cấp tắt, local đã bật để thử. Deploy toàn bộ plugin và purge cache, rồi bật checkbox trên hosting. 78 kiểm tra backend, 31 browser HTTP thật ở 1366/390/320px và 83 kiểm tra hồi quy đạt; dữ liệu test đã dọn. Chưa deploy/nghiệm thu production. Xem [kịch bản và hướng dẫn](live-chat-keyword-replies.md). Các phần dưới là lịch sử phiên bản trước.
 
 ## 1.8.5 — Chat hiển thị trên tất cả trang, 07/10/2026
 

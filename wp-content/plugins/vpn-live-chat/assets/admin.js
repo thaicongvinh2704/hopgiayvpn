@@ -65,7 +65,7 @@
   function appendMessage(message){
     if(seen.has(Number(message.seq)))return;seen.add(Number(message.seq));
     const item=node('div','vpn-msg');item.dataset.sender=message.sender;item.dataset.seq=message.seq;
-    const who=node('strong','',message.sender==='note'?'Ghi chú nội bộ':message.sender==='guest'?'Khách':(message.profile?.name||'Sales'));
+    const who=node('strong','',message.sender==='note'?'Ghi chú nội bộ':message.sender==='guest'?'Khách':message.sender==='bot'?'VPN Automated Assistant':(message.profile?.name||'Sales'));
     const content=node('div','',message.body),time=node('small','',date(message.created_at).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}));time.title=date(message.created_at).toLocaleString();
     item.append(who,content,time);const transcript=$('vpn-transcript');
     const last=transcript.lastElementChild;

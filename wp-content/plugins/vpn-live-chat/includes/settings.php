@@ -4,6 +4,7 @@ final class VPN_Chat_Settings {
     public static function get(): array {
         return array_merge([
             'widget' => false, 'accept_new' => false, 'paths' => [],
+            'auto_reply' => false,
             'site_key' => '', 'fallback_url' => '', 'sales_email' => '',
             'timezone' => 'Asia/Ho_Chi_Minh', 'hours' => [], 'holidays' => [],
             'offline_copy' => 'Thanks for reaching out! Please leave your email address so we can get back to you as soon as possible.',

@@ -6,7 +6,11 @@ final class VPN_Chat_Service {
     private static function receipt(array $c, int $seq, string $sender): array {
         global $wpdb;
         $result=['saved'=>true,'seq'=>$seq,'id'=>$c['public_id']];
-        if($sender==='guest')$result['message']=$wpdb->get_row($wpdb->prepare('SELECT seq,sender,body,created_at FROM '.VPN_Chat_Store::table('messages')." WHERE conversation_id=%d AND seq=%d AND sender='guest'",$c['id'],$seq),ARRAY_A);
+        if($sender==='guest'){
+            $result['message']=$wpdb->get_row($wpdb->prepare('SELECT seq,sender,body,created_at FROM '.VPN_Chat_Store::table('messages')." WHERE conversation_id=%d AND seq=%d AND sender='guest'",$c['id'],$seq),ARRAY_A);
+            $reply=$wpdb->get_row($wpdb->prepare('SELECT seq,sender,body,created_at,sender_profile FROM '.VPN_Chat_Store::table('messages')." WHERE conversation_id=%d AND sender_scope='bot' AND client_message_id=%s",$c['id'],'guest-'.$seq),ARRAY_A);
+            if($reply){$reply['profile']=json_decode((string)$reply['sender_profile'],true)?:VPN_Chat_Auto_Reply::profile();unset($reply['sender_profile']);$result['auto_reply']=$reply;}
+        }
         else {
             $result['conversation']=VPN_Chat_Store::conversation($c['public_id']);
             $result['message']=$wpdb->get_row($wpdb->prepare('SELECT seq,sender,body,created_at,sender_profile FROM '.VPN_Chat_Store::table('messages').' WHERE conversation_id=%d AND seq=%d',$c['id'],$seq),ARRAY_A);
@@ -17,7 +21,7 @@ final class VPN_Chat_Service {
     }
     public static function send_locked(array $c, string $body, string $client, string $sender, int $actor): array {
         global $wpdb;
-        $scope = $sender === 'guest' ? 'guest' : 'user:' . $actor;
+        $scope = $sender === 'guest' ? 'guest' : ($sender === 'bot' ? 'bot' : 'user:' . $actor);
         $hash = hash('sha256', $sender . ':' . $body);
         $old = $wpdb->get_row($wpdb->prepare('SELECT seq,payload_hash FROM ' . VPN_Chat_Store::table('messages') . ' WHERE conversation_id=%d AND sender_scope=%s AND client_message_id=%s', $c['id'], $scope, $client), ARRAY_A);
         if ($old) {
@@ -26,11 +30,12 @@ final class VPN_Chat_Service {
         }
         if ($sender !== 'note' && in_array($c['status'], ['spam', 'closed'], true)) { throw new VPN_Chat_Fault('conversation_closed', 409); }
         $seq = (int) $c['seq'] + 1;
-        VPN_Chat_Store::insert('messages', ['conversation_id' => $c['id'], 'seq' => $seq, 'sender' => $sender, 'actor_id' => $actor, 'sender_profile'=>$actor ? wp_json_encode(VPN_Chat_Profiles::user($actor)) : null, 'sender_scope' => $scope, 'client_message_id' => $client, 'payload_hash' => $hash, 'body' => $body, 'created_at' => gmdate('Y-m-d H:i:s')]);
+        VPN_Chat_Store::insert('messages', ['conversation_id' => $c['id'], 'seq' => $seq, 'sender' => $sender, 'actor_id' => $actor, 'sender_profile'=>$sender==='bot' ? wp_json_encode(VPN_Chat_Auto_Reply::profile()) : ($actor ? wp_json_encode(VPN_Chat_Profiles::user($actor)) : null), 'sender_scope' => $scope, 'client_message_id' => $client, 'payload_hash' => $hash, 'body' => $body, 'created_at' => gmdate('Y-m-d H:i:s')]);
         $status = $sender === 'agent' ? 'waiting_customer' : ($sender === 'guest' && $c['owner_id'] ? 'assigned' : $c['status']);
         VPN_Chat_Store::query($wpdb->prepare('UPDATE ' . VPN_Chat_Store::table('conversations') . ' SET seq=%d,guest_seq=%d,status=%s,version=version+1,updated_at=UTC_TIMESTAMP() WHERE id=%d', $seq, $sender === 'guest' ? $seq : $c['guest_seq'], $status, $c['id']));
         if ($sender === 'guest') {
             VPN_Chat_Store::query($wpdb->prepare('INSERT IGNORE INTO ' . VPN_Chat_Store::table('outbox') . ' (conversation_id,dedup_key,due_at) VALUES (%d,%s,%s)', $c['id'], 'unassigned:' . $c['id'], gmdate('Y-m-d H:i:s', time() + VPN_Chat_Settings::get()['sla_minutes'] * 60)));
+            VPN_Chat_Auto_Reply::reply_locked(VPN_Chat_Store::conversation($c['public_id'],true),$body);
         }
         return self::receipt($c,$seq,$sender);
     }

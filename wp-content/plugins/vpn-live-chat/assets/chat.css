@@ -39,7 +39,7 @@
 .vpn-chat-panel .vpn-chat-message-group{min-width:0;max-width:calc(100% - 38px)}
 .vpn-chat-panel .vpn-chat-message-name{font:600 11px/1.5 Arial,sans-serif;color:var(--vpn-chat-muted);display:block;margin:0 0 4px}
 .vpn-chat-panel .vpn-chat-message-meta{display:flex;gap:8px;margin-top:5px;color:var(--vpn-chat-muted);font:11px/1.5 Arial,sans-serif}
-.vpn-chat-panel .vpn-chat-message[data-sender=agent] .vpn-chat-bubble{background:var(--vpn-chat-agent)}
+.vpn-chat-panel .vpn-chat-message[data-sender=agent] .vpn-chat-bubble,.vpn-chat-panel .vpn-chat-message[data-sender=bot] .vpn-chat-bubble{background:var(--vpn-chat-agent)}
 .vpn-chat-panel .vpn-chat-message[data-sender=guest]{justify-content:flex-end}
 .vpn-chat-panel .vpn-chat-message[data-sender=guest] .vpn-chat-message-name{text-align:right}
 .vpn-chat-panel .vpn-chat-message[data-sender=guest] .vpn-chat-bubble{background:var(--vpn-chat-primary);color:#fff;border-color:var(--vpn-chat-primary);border-radius:14px 4px 14px 14px}

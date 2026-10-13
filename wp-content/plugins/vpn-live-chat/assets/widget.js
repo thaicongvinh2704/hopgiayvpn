@@ -63,8 +63,8 @@
    if(seen.has(Number(message.seq)))continue;seen.add(Number(message.seq));
    const item=document.createElement('div');item.className='vpn-chat-message';item.dataset.sender=message.sender;item.dataset.seq=message.seq;
    const profile=message.profile||{name:'Packaging team',initials:'VP'};
-   if(message.sender==='agent')item.append(avatar(profile));
-   const group=document.createElement('div');group.className='vpn-chat-message-group';const who=document.createElement('strong');who.className='vpn-chat-message-name';who.textContent=message.sender==='agent'?profile.name:'You';
+   if(message.sender==='agent'||message.sender==='bot')item.append(avatar(profile));
+   const group=document.createElement('div');group.className='vpn-chat-message-group';const who=document.createElement('strong');who.className='vpn-chat-message-name';who.textContent=message.sender==='bot'?'VPN Automated Assistant':message.sender==='agent'?profile.name:'You';
    const content=document.createElement('div');content.className='vpn-chat-bubble';content.textContent=message.body;
    const meta=document.createElement('div');meta.className='vpn-chat-message-meta';const time=document.createElement('time');const date=new Date(message.created_at.replace(' ','T')+'Z');time.dateTime=date.toISOString();time.textContent=date.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});time.title=date.toLocaleString();
    meta.append(time);if(message.sender==='guest'){const delivery=document.createElement('span');delivery.className='vpn-chat-delivery';delivery.textContent='Saved';meta.append(delivery);}
@@ -135,6 +135,7 @@
    // Render only after the server confirms storage, without waiting for polling.
    const saved=result.message||{seq:result.seq,sender:'guest',body:pending.message,created_at:new Date().toISOString().slice(0,19).replace('T',' ')};
    if(Number.isInteger(Number(saved.seq))&&Number(saved.seq)>0)append([saved]);
+   if(result.auto_reply&&result.auto_reply.sender==='bot')append([result.auto_reply]);
    if(textarea.value===pending.message)textarea.value='';else if(first){$('vpn-chat-message').value=textarea.value;textarea.value='';grow($('vpn-chat-message'));}grow(textarea);pending=null;token='';state('Saved.');idle=0;
    clearTimeout(welcomeTimer);$('vpn-chat-welcome').hidden=true;$('vpn-chat-start').hidden=true;$('vpn-chat-first-composer').hidden=true;$('vpn-chat-prompts').hidden=true;$('vpn-chat-reply').hidden=false;$('vpn-chat-log').hidden=false;$('vpn-chat-challenge').hidden=true;
    emailReminder();resizePanel();scrollBottom();channel?.postMessage('saved');sync(true);

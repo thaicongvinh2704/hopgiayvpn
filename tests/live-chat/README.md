@@ -1,5 +1,9 @@
 # Local test harness
 
+## 1.9.0 — Trả lời theo từ khóa
+
+Với database test 3311 đang chạy, dùng `php tests/live-chat/keyword-replies.php` (78 checks). HTTP 8091 đang chạy: `php tests/live-chat/keyword-fixture.php enable`, `node tests/live-chat/keyword-browser.mjs` (31 checks), rồi **luôn** `php tests/live-chat/keyword-fixture.php cleanup` trong finally. Fixture chỉ bật automation trong DB test; cleanup khôi phục setting và dọn bảng chat test. `final-acceptance.php` (83 checks) tiếp tục kiểm tra hành vi trước đó khi automation tắt. Không chạy suites cùng lúc. Không gửi tin thật trên local chính hoặc production để tạo bằng chứng.
+
 Chỉ dùng database `vpn_chat_test` tại loopback port 3311. Tất cả user/email/password/keys là dữ liệu giả. MU test sink chặn external HTTP và mail; Siteverify mock xác minh hostname/action và token reuse trong test table. Không có bypass/mocks trong plugin ZIP. Test scripts reset/xóa **bảng chat test**; không chạy trên database production.
 
 ## Windows / XAMPP setup

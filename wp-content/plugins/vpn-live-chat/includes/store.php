@@ -52,7 +52,7 @@ final class VPN_Chat_Store {
     }
     public static function guest_summary(array $c): array {
         global $wpdb;
-        $unread=(int)$wpdb->get_var($wpdb->prepare('SELECT COUNT(*) FROM '.self::table('messages')." WHERE conversation_id=%d AND sender='agent' AND seq>%d",$c['id'],(int)$c['guest_read_seq']));
+        $unread=(int)$wpdb->get_var($wpdb->prepare('SELECT COUNT(*) FROM '.self::table('messages')." WHERE conversation_id=%d AND sender IN ('agent','bot') AND seq>%d",$c['id'],(int)$c['guest_read_seq']));
         return ['id' => $c['public_id'], 'email'=>$c['email'], 'status' => $c['status'] === 'spam' ? 'closed' : $c['status'], 'unread'=>$unread,'guest_read_seq'=>(int)$c['guest_read_seq'],'agent_read_seq'=>(int)$c['read_seq']];
     }
 }

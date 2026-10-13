@@ -56,6 +56,7 @@
 #vpn-chat-admin .vpn-msg strong{display:block;font-size:11px;font-weight:600;color:#5d6b73;margin-bottom:4px}
 #vpn-chat-admin .vpn-msg small{display:block;font-size:10px;text-align:right;color:#5d6b73;margin-top:5px}
 #vpn-chat-admin .vpn-msg[data-sender=agent]{align-self:flex-end;background:#e1eff7;border-color:#d1e5f0;border-radius:14px 4px 14px 14px}
+#vpn-chat-admin .vpn-msg[data-sender=bot]{align-self:flex-end;background:#eef4f0;border-color:#d1e3d8;border-radius:14px 4px 14px 14px}
 #vpn-chat-admin .vpn-msg[data-sender=note]{background:#fff4d7;border-color:#e4d3a1}
 #vpn-chat-admin .vpn-reply-area{flex-shrink:0;padding:14px 20px 10px;background:#fff;border-top:1px solid var(--vpn-admin-border)}
 #vpn-chat-admin .vpn-compose-line{display:flex;align-items:flex-end;gap:12px}
