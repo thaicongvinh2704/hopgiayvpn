@@ -1,8 +1,10 @@
 # Local test harness
 
-## 1.9.1 — Trả lời theo từ khóa
+## 1.10.0 — Trả lời theo từ khóa
 
-Với database test 3311 đang chạy, dùng `php tests/live-chat/keyword-replies.php` (113 checks). HTTP 8091 đang chạy: `php tests/live-chat/keyword-fixture.php enable`, `node tests/live-chat/keyword-browser.mjs` (40 checks), rồi **luôn** `php tests/live-chat/keyword-fixture.php cleanup` trong finally. Fixture chỉ bật automation trong DB test; cleanup khôi phục setting và dọn bảng chat test. `final-acceptance.php` (83 checks) tiếp tục kiểm tra hành vi trước đó khi automation tắt. Không chạy suites cùng lúc. Không gửi tin thật trên local chính hoặc production để tạo bằng chứng.
+Với database test 3311 đang chạy, dùng `php tests/live-chat/keyword-replies.php` (311 checks). HTTP 8091 đang chạy: `php tests/live-chat/keyword-fixture.php enable`, `node tests/live-chat/keyword-browser.mjs` (58 checks), rồi **luôn** `php tests/live-chat/keyword-fixture.php cleanup` trong finally. Fixture chỉ bật automation trong DB test; cleanup khôi phục setting và dọn bảng chat test. `final-acceptance.php` (83 checks) tiếp tục kiểm tra hành vi trước đó khi automation tắt. Không chạy suites cùng lúc. Không gửi tin thật trên local chính hoặc production để tạo bằng chứng.
+
+`keyword-audit-cases.php` là bộ 58 câu đối chiếu kịch bản, gồm 30 chủ đề sales. Backend kiểm tra lời mời email, không hỏi lại/refusal, lưu email trong contact, nhận diện email lỗi/bên thứ ba/nhiều địa chỉ, retry và handoff. Browser thử gõ email, Edit email, sync 503 và snapshot cũ đến sau khi lưu email. Báo cáo phủ chủ đề tại `artifacts/vpn-live-chat/evidence/keyword-scenario-audit.json`.
 
 Chỉ dùng database `vpn_chat_test` tại loopback port 3311. Tất cả user/email/password/keys là dữ liệu giả. MU test sink chặn external HTTP và mail; Siteverify mock xác minh hostname/action và token reuse trong test table. Không có bypass/mocks trong plugin ZIP. Test scripts reset/xóa **bảng chat test**; không chạy trên database production.
 

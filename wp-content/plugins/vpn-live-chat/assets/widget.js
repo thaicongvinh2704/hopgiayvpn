@@ -2,7 +2,7 @@
  'use strict';
  let panel,launch,cfg,csrf='',conversation=null,cursor=0,timer,controller,opened=false,busy=false,config={},idle=0,failures=0,pending=null,token='',turnstileId;
  let challengeScript,bootstrapPromise,syncPromise,readPromise,readCursor=0,readTimer,resizePanel,unread=0,conversationClosed=false;
- let welcomeTimer,welcomeShown=false,contactDirty=false,contactBusy=false,identityRequest='',identityBusy=false,contactEmail='',contactExpanded=false,contactDismissed=false;
+ let welcomeTimer,welcomeShown=false,contactDirty=false,contactBusy=false,identityRequest='',identityBusy=false,contactEmail='',contactExpanded=false,contactDismissed=false,contactConversation=null,contactVersion=0;
  const seen=new Set(),channel=typeof BroadcastChannel==='function'?new BroadcastChannel('vpn-chat-refresh'):null;
  const $=id=>panel.querySelector(`#${id}`);
  function state(text){$('vpn-chat-state').textContent=['Saved.','Connected.','Ready to send.'].includes(text)?'':text;}
@@ -44,8 +44,9 @@
  }
  function openContact(){contactExpanded=true;emailReminder();resizePanel();$('vpn-chat-contact').scrollIntoView({block:'nearest'});$('vpn-chat-contact-email').focus({preventScroll:true});}
  function summary(c){
-  contactEmail=(c.email||'').trim();emailReminder();
-  if(!contactDirty&&!contactBusy)$('vpn-chat-contact-email').value=c.email||'';
+  if(contactConversation!==conversation){contactConversation=conversation;contactVersion=0;}
+  if(!c.version||Number(c.version)>=contactVersion){contactVersion=Number(c.version)||0;contactEmail=(c.email||'').trim();if(!contactDirty&&!contactBusy)$('vpn-chat-contact-email').value=c.email||'';}
+  emailReminder();
   if(Number(c.guest_read_seq)>=readCursor){readCursor=Number(c.guest_read_seq);badge(c.unread);}
   panel.querySelectorAll('.vpn-chat-message[data-sender=guest]').forEach(el=>{el.querySelector('.vpn-chat-delivery').textContent=Number(el.dataset.seq)<=Number(c.agent_read_seq)?'Read':'Saved';});
  }
@@ -136,6 +137,7 @@
    const saved=result.message||{seq:result.seq,sender:'guest',body:pending.message,created_at:new Date().toISOString().slice(0,19).replace('T',' ')};
    if(Number.isInteger(Number(saved.seq))&&Number(saved.seq)>0)append([saved]);
    if(result.auto_reply&&result.auto_reply.sender==='bot')append([result.auto_reply]);
+   if(Object.hasOwn(result,'contact_email')){if(contactConversation!==conversation){contactConversation=conversation;contactVersion=0;}if(!result.contact_version||Number(result.contact_version)>=contactVersion){contactVersion=Number(result.contact_version)||contactVersion;contactEmail=result.contact_email||'';if(!contactDirty&&!contactBusy)$('vpn-chat-contact-email').value=contactEmail;}}
    if(textarea.value===pending.message)textarea.value='';else if(first){$('vpn-chat-message').value=textarea.value;textarea.value='';grow($('vpn-chat-message'));}grow(textarea);pending=null;token='';state('Saved.');idle=0;
    clearTimeout(welcomeTimer);$('vpn-chat-welcome').hidden=true;$('vpn-chat-start').hidden=true;$('vpn-chat-first-composer').hidden=true;$('vpn-chat-prompts').hidden=true;$('vpn-chat-reply').hidden=false;$('vpn-chat-log').hidden=false;$('vpn-chat-challenge').hidden=true;
    emailReminder();resizePanel();scrollBottom();channel?.postMessage('saved');sync(true);
@@ -174,7 +176,7 @@
   $('vpn-chat-contact-email').addEventListener('input',()=>{contactDirty=true;$('vpn-chat-contact-status').textContent='';});
   $('vpn-chat-contact').addEventListener('submit',async e=>{e.preventDefault();if(contactBusy)return;const email=$('vpn-chat-contact-email').value.trim();
    if(!conversation){$('vpn-chat-email').value=email;contactEmail=email;contactDirty=false;contactExpanded=false;contactDismissed=!!email;emailReminder();resizePanel();state(email?'Email added. It will be saved with your first message.':'Email removed. You can keep chatting.');return;}
-   contactBusy=true;$('vpn-chat-contact-save').disabled=true;try{const result=await request('guest/contact',{id:conversation,email});if($('vpn-chat-contact-email').value.trim()===email){contactDirty=false;$('vpn-chat-contact-email').value=result.email;}contactEmail=result.email.trim();contactExpanded=false;contactDismissed=!!contactEmail;emailReminder();state(result.email?'Email saved. Thank you!':'Email removed. You can keep chatting.');channel?.postMessage('contact');}catch{$('vpn-chat-contact-status').textContent='Could not save email. Please check it and try again.';}finally{contactBusy=false;$('vpn-chat-contact-save').disabled=false;resizePanel();}});
+   contactBusy=true;$('vpn-chat-contact-save').disabled=true;try{const result=await request('guest/contact',{id:conversation,email});if($('vpn-chat-contact-email').value.trim()===email){contactDirty=false;$('vpn-chat-contact-email').value=result.email;}contactEmail=result.email.trim();contactVersion=Number(result.contact_version)||contactVersion;contactConversation=conversation;contactExpanded=false;contactDismissed=!!contactEmail;emailReminder();state(result.email?'Email saved. Thank you!':'Email removed. You can keep chatting.');channel?.postMessage('contact');}catch{$('vpn-chat-contact-status').textContent='Could not save email. Please check it and try again.';}finally{contactBusy=false;$('vpn-chat-contact-save').disabled=false;resizePanel();}});
   $('vpn-chat-start').addEventListener('submit',send);$('vpn-chat-reply').addEventListener('submit',send);
   $('vpn-chat-new').addEventListener('click',()=>{stop();conversation=null;conversationClosed=false;contactEmail='';contactExpanded=false;contactDismissed=false;contactDirty=false;$('vpn-chat-email').value='';$('vpn-chat-contact-email').value='';emailReminder();pending=null;seen.clear();cursor=readCursor=0;badge(0);activeFlag(false);$('vpn-chat-log').replaceChildren();$('vpn-chat-log').hidden=true;$('vpn-chat-start').hidden=false;$('vpn-chat-first-composer').hidden=false;$('vpn-chat-reply').hidden=true;$('vpn-chat-new').hidden=true;$('vpn-chat-prompts').hidden=false;state('Start a new conversation.');challenge().catch(()=>state('Could not load verification. Please retry.'));resizePanel();});
   $('vpn-chat-history').addEventListener('change',async()=>{if(busy||pending){state('Please finish sending your message first.');return;}stop();if(syncPromise)await syncPromise;conversation=$('vpn-chat-history').value;seen.clear();cursor=readCursor=0;$('vpn-chat-log').replaceChildren();$('vpn-chat-start').hidden=true;$('vpn-chat-first-composer').hidden=true;$('vpn-chat-prompts').hidden=true;$('vpn-chat-reply').hidden=false;$('vpn-chat-log').hidden=false;contactExpanded=false;contactDismissed=false;emailReminder();activeFlag(true);await sync();scrollBottom();});

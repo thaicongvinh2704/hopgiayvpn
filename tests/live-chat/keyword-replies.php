@@ -68,6 +68,30 @@ try {
     $h=[['sender'=>'guest','body'=>"I don't want to share my email"],['sender'=>'guest','body'=>'How much for 2000 boxes?']];
     $a=VPN_Chat_Auto_Reply::answer($h[1]['body'],$h);
     kr_check(!str_contains($a['body'],'Add email')&&str_contains($a['body'],'dimensions'),'declined email still collects product details without pressure');
+    foreach(["I won't share my email",'Tôi không muốn gửi email',"I am not comfortable sharing my email"] as $decline){
+        $h=[['sender'=>'guest','body'=>$decline],['sender'=>'guest','body'=>'What is MOQ for boxes?']];
+        $a=VPN_Chat_Auto_Reply::answer($h[1]['body'],$h);kr_check(!str_contains($a['body'],'Add email'),'refusal variant stops email pressure: '.$decline);
+    }
+    $audit_cases=require __DIR__.'/keyword-audit-cases.php';$coverage=[];
+    foreach($audit_cases as [$body,$expected]){
+        $a=VPN_Chat_Auto_Reply::answer($body,[['sender'=>'guest','body'=>$body]]);
+        kr_check(str_contains($a['intent'],$expected),'audit scenario: '.$body);
+        kr_check(str_contains($a['body'],'Add email'),'audit lead invitation: '.$expected);
+        kr_check(mb_strlen($a['body'])<1400,'audit answer stays concise: '.$expected);
+        $coverage[]=['question'=>$body,'intent'=>$a['intent'],'contact_invitation'=>true];
+    }
+    file_put_contents(__DIR__.'/../../artifacts/vpn-live-chat/evidence/keyword-scenario-audit.json',wp_json_encode(['version'=>VPN_CHAT_VERSION,'scenarios'=>count($coverage),'coverage'=>$coverage],JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE));
+    kr_check(VPN_Chat_Auto_Reply::contact_email('buyer@gmail.com')==='buyer@gmail.com','personal email accepted without business-domain restriction');
+    kr_check(VPN_Chat_Auto_Reply::contact_email('Email:buyer+quotes@example.invalid')==='buyer+quotes@example.invalid','explicit plus-address contact accepted');
+    kr_check(VPN_Chat_Auto_Reply::contact_email('My supplier email is supplier@example.invalid')===null,'third-party address not mistaken for guest contact');
+    $refused="Don't use my email buyer@example.invalid";$refusedAnswer=VPN_Chat_Auto_Reply::answer($refused,[['sender'=>'guest','body'=>$refused]]);
+    kr_check(VPN_Chat_Auto_Reply::contact_email($refused)===null&&!str_contains($refusedAnswer['body'],'Add email'),'explicit refusal with an address does not capture or request it');
+    kr_check(VPN_Chat_Auto_Reply::contact_email('My email is buyer@invalid')===null,'invalid address not considered a captured lead');
+    kr_check(VPN_Chat_Auto_Reply::contact_email('My emails are one@example.invalid and two@example.invalid')===null,'ambiguous multiple addresses require guest selection');
+    $h=[['sender'=>'guest','body'=>'I need boxes'],['sender'=>'bot','body'=>'Approximately how many units?'],['sender'=>'guest','body'=>'100'],['sender'=>'guest','body'=>'Actually 2000 boxes']];
+    $a=VPN_Chat_Auto_Reply::answer('Actually 2000 boxes',$h);kr_check(!str_contains($a['intent'],'below_moq'),'revised quantity replaces earlier small-order quantity');
+    $h=[['sender'=>'guest','body'=>"I need 2000 boxes but don't know dimensions"],['sender'=>'bot','body'=>'Which country will receive the order?'],['sender'=>'guest','body'=>'Kenya']];
+    $a=VPN_Chat_Auto_Reply::answer('Kenya',$h);kr_check(!str_contains($a['body'],'Which country')&&!str_contains($a['body'],'What dimensions'),'unknown size and country answer do not loop on missing specifications');
     $g=kr_guest();[$first,$start]=kr_start($g,'What is MOQ for custom boxes?');$id=$first['id'];
     kr_check($first['message']['sender']==='guest'&&(int)$first['message']['seq']===1&&$first['auto_reply']['sender']==='bot'&&(int)$first['auto_reply']['seq']===2,'stored automatic answer included in first receipt');
     kr_check($first['auto_reply']['profile']['name']==='VPN Automated Assistant','automatic sender is distinct from staff');
@@ -90,6 +114,16 @@ try {
     [$reply]=kr_send($g,$id,'What is the sample cost?');kr_check(!isset($reply['auto_reply']),'automation does not resume after a human conversation is unassigned');
     $g2=kr_guest();[$first]=kr_start($g2,'Can I speak to a human?');kr_check(isset($first['auto_reply'])&&str_contains($first['auto_reply']['body'],'stop automated'),'human request is acknowledged');
     [$reply]=kr_send($g2,$first['id'],'Hello, anyone there?');kr_check(!isset($reply['auto_reply']),'human request permanently pauses automation in this conversation');
+    [$reply,$emailPayload]=kr_send($g2,$first['id'],'My email is buyer+followup@example.invalid');
+    $contact=VPN_Chat_Store::conversation($first['id']);
+    kr_check($contact['email']==='buyer+followup@example.invalid'&&!isset($reply['auto_reply']),'email still captured after guest asks human, bot remains paused');
+    kr_check($reply['contact_email']===$contact['email'],'receipt confirms saved contact without relying on sync');
+    $contactVersion=$contact['version'];$retry=kr_rest('guest/send',$emailPayload,$g2['cookies'],$g2['csrf'])->get_data();
+    kr_check($retry['contact_email']===$contact['email']&&VPN_Chat_Store::conversation($first['id'])['version']===$contactVersion,'email retry does not duplicate writes');
+    kr_check(!$wpdb->get_var($wpdb->prepare('SELECT verified_email FROM '.VPN_Chat_Store::table('customers').' WHERE id=%d',$contact['customer_id'])),'captured email does not verify identity or merge customer history');
+    [$reply]=kr_send($g2,$first['id'],'My email is other@example.invalid');kr_check($reply['contact_email']==='buyer+followup@example.invalid','new typed email does not silently overwrite saved contact');
+    $lead=kr_guest();[$emailFirst]=kr_start($lead,'personal@example.invalid');kr_check($emailFirst['contact_email']==='personal@example.invalid'&&str_contains($emailFirst['auto_reply']['body'],'Thank you'),'email-only first message becomes lead and gets acknowledged');
+    $bad=kr_guest();[$badFirst]=kr_start($bad,'My email is buyer@invalid');kr_check($badFirst['contact_email']===''&&str_contains($badFirst['auto_reply']['body'],'does not look complete'),'invalid typed contact prompts correction instead of false lead');
     $s['auto_reply']=false;update_option('vpn_chat_settings',$s,false);$g3=kr_guest();[$first]=kr_start($g3,'Hi');kr_check(!isset($first['auto_reply']),'disabled setting leaves existing chat behavior unchanged');
     $s['auto_reply']=true;update_option('vpn_chat_settings',$s,false);$g4=kr_guest();[$first]=kr_start($g4,'Hello');$limitId=$first['id'];
     for($i=1;$i<VPN_Chat_Auto_Reply::LIMIT;$i++){[$reply]=kr_send($g4,$limitId,'What is MOQ?');}

@@ -70,7 +70,7 @@ final class VPN_Chat_REST {
                         global $wpdb;
                         $c=VPN_Chat_Store::conversation((string)($p['id']??''),true);VPN_Chat_Store::authorize($c,$s);
                         VPN_Chat_Store::query($wpdb->prepare('UPDATE '.VPN_Chat_Store::table('conversations').' SET email=%s,version=version+1 WHERE id=%d',$email,$c['id']));
-                        return ['saved'=>true,'email'=>$email];
+                        return ['saved'=>true,'email'=>$email,'contact_version'=>(int)$c['version']+1];
                     });
                 }
                 elseif ($path === 'guest/read') {

@@ -1,6 +1,6 @@
 # 30 tình huống live chat — mời khách để lại email
 
-Cập nhật: 06/10/2026. Dành cho VPN Packaging / Tho Nguyen, Sale Manager.
+Cập nhật: 13/10/2026. Dành cho VPN Packaging / Tho Nguyen, Sale Manager.
 
 ## Mục tiêu và cách dùng
 
@@ -8,7 +8,7 @@ Mục tiêu chuyển đổi duy nhất: khách tự nguyện cung cấp email đ
 
 Trả lời đúng câu hỏi trước, sau đó mời nhận một kết quả cụ thể qua email. Mỗi lượt chỉ nên hỏi email và tối đa một thông tin dự án. Nếu khách đã cung cấp đủ dữ liệu thì bỏ câu hỏi bổ sung. Chấp nhận email cá nhân, không bắt buộc email công ty.
 
-Nếu email đã có trong hội thoại, không hỏi lại: thay lời mời bằng “Thanks — we have your email. Our sales team will follow up with the details.” Chỉ nói sẽ gửi tài liệu/báo giá khi đội sales có thể thực hiện; không nói đã gửi khi chưa gửi. Các mẫu dưới đây là nội dung soạn sẵn, chưa được cài thành bot hoặc tự động gửi email.
+Nếu email đã có trong hội thoại, không hỏi lại: thay lời mời bằng “Thanks — we have your email. Our sales team will follow up with the details.” Chỉ nói sẽ gửi tài liệu/báo giá khi đội sales có thể thực hiện; không nói đã gửi khi chưa gửi. Bản 1.10.0 đã đối chiếu đủ 30 chủ đề dưới đây và bổ sung 28 tình huống mẫu. Các đoạn dưới là mẫu dành cho sales; bot dùng câu trả lời đã rà soát trong `includes/auto-reply.php`, yêu cầu sales xác nhận mọi khả năng làm mẫu/hoàn thiện, giá, lịch và điều khoản. Bot không tự gửi email. Xem [báo cáo triển khai và kiểm thử](live-chat-scenario-audit-20261013.md).
 
 ## A. Giá, số lượng và mẫu thử
 
@@ -34,7 +34,7 @@ Nếu email đã có trong hội thoại, không hỏi lại: thay lời mời b
 
 **Khách:** “Can I get a sample before placing an order?”
 
-**Trả lời:** “Yes, sampling can be arranged before bulk production. What product will the box hold? Share your email and we can follow up with the sample options and next steps.”
+**Trả lời:** “Sales can review whether sampling can be arranged before bulk production. What product will the box hold? Share your email and we can follow up with the sample options and next steps.”
 
 ### 05. Mẫu miễn phí / phí mẫu
 

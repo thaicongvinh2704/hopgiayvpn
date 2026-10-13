@@ -1,5 +1,7 @@
 # Hướng dẫn sales
 
+1.10.0: email khách gõ trực tiếp và cung cấp rõ là thông tin liên hệ có thể được lưu vào ô email hội thoại khi automation bật. Đây là email tự khai báo, chưa xác minh. Đọc email và nhu cầu đã lưu trước khi hỏi tiếp; khách sửa qua Edit email. Bộ kịch bản bổ sung catalogue, thiết kế/kích thước, hoàn thiện/màu/khay lót, ngân sách, đặt lại, wholesale và khách sắp rời trang. Không hứa đã gửi báo giá/tài liệu; không tự đăng ký marketing.
+
 1.9.1: mọi kịch bản hướng tới thu nhu cầu và email để follow-up. Khi tiếp nhận, đọc chi tiết đã cung cấp, dùng email khách chia sẻ để tư vấn/báo giá đúng yêu cầu. Không hỏi lại email đã có hoặc tiếp tục thúc ép nếu khách từ chối; không tự đăng ký marketing.
 
 Từ 1.9.0, khi quản lý bật trả lời theo từ khóa, khách chưa được nhận có thể thấy tin **VPN Automated Assistant**. Đây là kịch bản cố định, không phải nhân viên. Đọc các thông tin khách đã gửi rồi nhận chat hoặc trả lời đầu tiên như bình thường; automation tự dừng. Yêu cầu gặp người/đơn hàng/khiếu nại hoặc cap 8 phản hồi dừng bot nhưng không nhận chat thay sales và không đổi thời gian SLA. Giữ theo dõi hàng chờ và phản hồi khách thực tế. Mức 1.000 chiếc trong kịch bản chỉ là MOQ chung để lên kế hoạch; xác nhận theo từng mẫu.

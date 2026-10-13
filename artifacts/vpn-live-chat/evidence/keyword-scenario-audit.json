@@ -1,0 +1,296 @@
+{
+    "version": "1.10.0",
+    "scenarios": 58,
+    "coverage": [
+        {
+            "question": "How much do your custom boxes cost?",
+            "intent": "quote",
+            "contact_invitation": true
+        },
+        {
+            "question": "What is your MOQ?",
+            "intent": "moq",
+            "contact_invitation": true
+        },
+        {
+            "question": "I am starting a small brand. Can I order 100 boxes?",
+            "intent": "below_moq",
+            "contact_invitation": true
+        },
+        {
+            "question": "Can I get a sample before placing an order?",
+            "intent": "sample",
+            "contact_invitation": true
+        },
+        {
+            "question": "Are samples free?",
+            "intent": "sample",
+            "contact_invitation": true
+        },
+        {
+            "question": "How long does production take?",
+            "intent": "timing",
+            "contact_invitation": true
+        },
+        {
+            "question": "I need the boxes urgently. Can you deliver before my launch?",
+            "intent": "timing,shipping",
+            "contact_invitation": true
+        },
+        {
+            "question": "Do you ship to the USA?",
+            "intent": "shipping",
+            "contact_invitation": true
+        },
+        {
+            "question": "How much is shipping? Is it included in the price?",
+            "intent": "quote,shipping",
+            "contact_invitation": true
+        },
+        {
+            "question": "Can you send me your catalogue?",
+            "intent": "catalogue",
+            "contact_invitation": true
+        },
+        {
+            "question": "Can you print my logo on the boxes?",
+            "intent": "printing",
+            "contact_invitation": true
+        },
+        {
+            "question": "I don't have a design. Can you help?",
+            "intent": "design_help",
+            "contact_invitation": true
+        },
+        {
+            "question": "Can you make a box in my exact size?",
+            "intent": "size_help",
+            "contact_invitation": true
+        },
+        {
+            "question": "Which paper material or thickness should I choose?",
+            "intent": "specification",
+            "contact_invitation": true
+        },
+        {
+            "question": "Can you do gold foil, embossing or spot UV?",
+            "intent": "finishing",
+            "contact_invitation": true
+        },
+        {
+            "question": "Can you match my brand color?",
+            "intent": "color",
+            "contact_invitation": true
+        },
+        {
+            "question": "Can you add an insert to hold my product?",
+            "intent": "insert",
+            "contact_invitation": true
+        },
+        {
+            "question": "Do you make magnetic gift boxes?",
+            "intent": "product_options",
+            "contact_invitation": true
+        },
+        {
+            "question": "Can you make packaging for skincare, perfume or candles?",
+            "intent": "product_options",
+            "contact_invitation": true
+        },
+        {
+            "question": "Do you make jewelry or watch gift boxes?",
+            "intent": "product_options",
+            "contact_invitation": true
+        },
+        {
+            "question": "Can I use your boxes for food or bakery products?",
+            "intent": "specification",
+            "contact_invitation": true
+        },
+        {
+            "question": "Can you make matching paper bags for my boxes?",
+            "intent": "product_options",
+            "contact_invitation": true
+        },
+        {
+            "question": "Do you offer eco-friendly or recyclable packaging?",
+            "intent": "specification",
+            "contact_invitation": true
+        },
+        {
+            "question": "Can you provide FSC-certified packaging or certificates?",
+            "intent": "specification",
+            "contact_invitation": true
+        },
+        {
+            "question": "What artwork format do you need? Can I upload my design here?",
+            "intent": "artwork",
+            "contact_invitation": true
+        },
+        {
+            "question": "Your price is too high. Can you make it cheaper?",
+            "intent": "budget",
+            "contact_invitation": true
+        },
+        {
+            "question": "Do you offer wholesale pricing? I am a distributor.",
+            "intent": "wholesale",
+            "contact_invitation": true
+        },
+        {
+            "question": "How do I place an order, and what are your payment terms?",
+            "intent": "ordering",
+            "contact_invitation": true
+        },
+        {
+            "question": "Can you reproduce my existing box or help with a repeat order?",
+            "intent": "reorder",
+            "contact_invitation": true
+        },
+        {
+            "question": "Hi, is anyone there? I need help with packaging.",
+            "intent": "greeting",
+            "contact_invitation": true
+        },
+        {
+            "question": "price?",
+            "intent": "quote",
+            "contact_invitation": true
+        },
+        {
+            "question": "MOQ",
+            "intent": "moq",
+            "contact_invitation": true
+        },
+        {
+            "question": "sample",
+            "intent": "sample",
+            "contact_invitation": true
+        },
+        {
+            "question": "catalog",
+            "intent": "catalogue",
+            "contact_invitation": true
+        },
+        {
+            "question": "I am busy now, talk later",
+            "intent": "leaving",
+            "contact_invitation": true
+        },
+        {
+            "question": "Bye",
+            "intent": "leaving",
+            "contact_invitation": true
+        },
+        {
+            "question": "I need 2000 boxes but don't know the dimensions",
+            "intent": "size_help",
+            "contact_invitation": true
+        },
+        {
+            "question": "Tôi chưa có thiết kế, cần hỗ trợ",
+            "intent": "design_help",
+            "contact_invitation": true
+        },
+        {
+            "question": "Cho tôi xem bảng giá",
+            "intent": "catalogue",
+            "contact_invitation": true
+        },
+        {
+            "question": "Giá cao quá, có giảm giá không?",
+            "intent": "budget",
+            "contact_invitation": true
+        },
+        {
+            "question": "Tôi cần hộp nam châm",
+            "intent": "product_options",
+            "contact_invitation": true
+        },
+        {
+            "question": "Có ép kim không?",
+            "intent": "finishing",
+            "contact_invitation": true
+        },
+        {
+            "question": "Khay lót bảo vệ sản phẩm",
+            "intent": "insert",
+            "contact_invitation": true
+        },
+        {
+            "question": "Tôi muốn thanh toán thế nào?",
+            "intent": "ordering",
+            "contact_invitation": true
+        },
+        {
+            "question": "Tôi muốn đặt lại đơn cũ",
+            "intent": "reorder",
+            "contact_invitation": true
+        },
+        {
+            "question": "Tôi phải đi rồi",
+            "intent": "leaving",
+            "contact_invitation": true
+        },
+        {
+            "question": "Email:buyer@gmail",
+            "intent": "invalid_email",
+            "contact_invitation": true
+        },
+        {
+            "question": "buyer@invalid",
+            "intent": "invalid_email",
+            "contact_invitation": true
+        },
+        {
+            "question": "Do you have samples for skincare boxes?",
+            "intent": "sample",
+            "contact_invitation": true
+        },
+        {
+            "question": "What is MOQ for magnetic boxes?",
+            "intent": "moq",
+            "contact_invitation": true
+        },
+        {
+            "question": "Unknown question about something else",
+            "intent": "fallback",
+            "contact_invitation": true
+        },
+        {
+            "question": "Can you send photos of the boxes?",
+            "intent": "catalogue",
+            "contact_invitation": true
+        },
+        {
+            "question": "What are your prices?",
+            "intent": "quote",
+            "contact_invitation": true
+        },
+        {
+            "question": "Need them tomorrow",
+            "intent": "timing",
+            "contact_invitation": true
+        },
+        {
+            "question": "Can you quote DDP with import duties included?",
+            "intent": "shipping_terms",
+            "contact_invitation": true
+        },
+        {
+            "question": "Tôi cần hàng tuần sau",
+            "intent": "timing",
+            "contact_invitation": true
+        },
+        {
+            "question": "Why do you need my email? Will I get spam?",
+            "intent": "email_privacy",
+            "contact_invitation": true
+        },
+        {
+            "question": "Email có bắt buộc không?",
+            "intent": "email_privacy",
+            "contact_invitation": true
+        }
+    ]
+}

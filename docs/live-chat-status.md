@@ -1,8 +1,18 @@
 # VPN Live Chat — Tài liệu chức năng và tình trạng hoàn thành
 
-**Cập nhật:** 13/10/2026 · **Plugin:** 1.9.1 · **Schema:** 3
+**Cập nhật:** 13/10/2026 · **Plugin:** 1.10.0 · **Schema:** 3
 
 Đây là tài liệu tổng hợp hiện trạng mới nhất, dùng để biết đã làm gì, còn thiếu gì và tiếp tục công việc sau này. Các báo cáo phiên bản cũ được giữ làm bằng chứng kiểm thử, không thay thế hiện trạng trong tài liệu này. Khi sửa tính năng, cần cập nhật phiên bản, các bảng trạng thái và kết quả kiểm thử tại đây.
+
+## 1.10.0 — Rà soát kịch bản và lưu email, 13/10/2026
+
+Đối chiếu 30 chủ đề sales và 28 câu ngắn/tiếng Việt/trường hợp bổ sung: 58 tình huống mẫu có câu trả lời và lời mời email đúng mục đích. Bổ sung catalogue/ảnh mẫu, giá cao/ngân sách, chưa có thiết kế/kích thước, artwork, ép kim/UV, Pantone, khay lót, dòng sản phẩm, bán sỉ, thanh toán, đặt lại, thuế/điều kiện giao, khách sắp rời trang và lý do cần email. Xem [báo cáo rà soát](live-chat-scenario-audit-20261013.md).
+
+Khi automation bật, email hợp lệ khách cung cấp rõ là liên hệ của mình trong chat được lưu vào ô email hội thoại cho sales. Bot xác nhận đã nhận, giao diện chuyển sang Edit email và ngừng mời cung cấp lại. Email lỗi được hướng dẫn sửa; email cá nhân được chấp nhận; không nhận nhầm địa chỉ bên thứ ba/nhiều địa chỉ và không tự ghi đè email đã lưu. Khách sửa qua Edit email. Email vẫn tự khai báo, không xác minh danh tính, không tự gửi báo giá hoặc đăng ký marketing. Tôn trọng từ chối và tiếp tục thu nhu cầu.
+
+311 kiểm tra backend, 58 kiểm tra trình duyệt HTTP thật ở 1366/390/320px và 83 kiểm tra hồi quy đạt. Bao gồm lưu email sau handoff, retry, sửa email, sync 503 và phản hồi sync cũ không xóa trạng thái email vừa lưu. Đã xem ảnh mobile; dữ liệu/cấu hình test được dọn. Kịch bản từ khóa hữu hạn, chưa thể hiểu mọi cách diễn đạt; câu không khớp mời sales tiếp nhận và xin email theo nhu cầu.
+
+Local bật sẵn. Pull/deploy toàn bộ plugin và purge cache HTML/assets; giữ checkbox automation hiện có, không đổi schema/API key. Production chưa triển khai trong tác vụ này.
 
 ## 1.9.1 — Thu thông tin khách, 13/10/2026
 

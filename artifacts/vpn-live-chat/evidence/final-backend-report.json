@@ -1,5 +1,5 @@
 {
-    "version": "1.9.0",
+    "version": "1.10.0",
     "checks": 83,
     "passed": [
         "schema 3 tables use InnoDB",

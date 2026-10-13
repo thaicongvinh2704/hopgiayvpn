@@ -7,6 +7,8 @@ final class VPN_Chat_Service {
         global $wpdb;
         $result=['saved'=>true,'seq'=>$seq,'id'=>$c['public_id']];
         if($sender==='guest'){
+            $result['contact_email']=(string)$c['email'];
+            $result['contact_version']=(int)$c['version'];
             $result['message']=$wpdb->get_row($wpdb->prepare('SELECT seq,sender,body,created_at FROM '.VPN_Chat_Store::table('messages')." WHERE conversation_id=%d AND seq=%d AND sender='guest'",$c['id'],$seq),ARRAY_A);
             $reply=$wpdb->get_row($wpdb->prepare('SELECT seq,sender,body,created_at,sender_profile FROM '.VPN_Chat_Store::table('messages')." WHERE conversation_id=%d AND sender_scope='bot' AND client_message_id=%s",$c['id'],'guest-'.$seq),ARRAY_A);
             if($reply){$reply['profile']=json_decode((string)$reply['sender_profile'],true)?:VPN_Chat_Auto_Reply::profile();unset($reply['sender_profile']);$result['auto_reply']=$reply;}
@@ -35,7 +37,11 @@ final class VPN_Chat_Service {
         VPN_Chat_Store::query($wpdb->prepare('UPDATE ' . VPN_Chat_Store::table('conversations') . ' SET seq=%d,guest_seq=%d,status=%s,version=version+1,updated_at=UTC_TIMESTAMP() WHERE id=%d', $seq, $sender === 'guest' ? $seq : $c['guest_seq'], $status, $c['id']));
         if ($sender === 'guest') {
             VPN_Chat_Store::query($wpdb->prepare('INSERT IGNORE INTO ' . VPN_Chat_Store::table('outbox') . ' (conversation_id,dedup_key,due_at) VALUES (%d,%s,%s)', $c['id'], 'unassigned:' . $c['id'], gmdate('Y-m-d H:i:s', time() + VPN_Chat_Settings::get()['sla_minutes'] * 60)));
-            VPN_Chat_Auto_Reply::reply_locked(VPN_Chat_Store::conversation($c['public_id'],true),$body);
+            if(VPN_Chat_Settings::get()['auto_reply']){
+                $c=VPN_Chat_Store::conversation($c['public_id'],true);
+                if(VPN_Chat_Auto_Reply::capture_email_locked($c,$body))$c=VPN_Chat_Store::conversation($c['public_id'],true);
+                VPN_Chat_Auto_Reply::reply_locked($c,$body);
+            }
         }
         return self::receipt($c,$seq,$sender);
     }
