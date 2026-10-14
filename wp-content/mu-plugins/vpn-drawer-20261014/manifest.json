@@ -1,0 +1,186 @@
+{
+  "version": "drawer-20261014-v1",
+  "theme_files": {
+    "inc/drawer-boxes-20261014.php": "8b986229d22820fcd94c3e9e68cd42209ade6767ecd2b66a2e5ae812f479ee34",
+    "inc/drawer-boxes-20261014.json": "2135737a02ee521ed16f869298dc7b448e98e1424640650a7ed073ee50d11f20",
+    "assets/css/drawer-boxes-20261014.css": "ae9d1a0512e45c74f1b09ac16e1b6d390124292e0d47072378be5c419071077a",
+    "assets/css/drawer-boxes-ui-20261014.css": "55695361031b1215983b105f3e66c1807fcf578858b836fcd43f3fb70a3a6bc2",
+    "template-parts/woocommerce/drawer-boxes-models.php": "d7fd8a635ab714bdf4c3b80c3e817512b977d3b0d8d07b566bdb1d661a29dbec",
+    "template-parts/woocommerce/drawer-boxes-guide.php": "9bdab81f284820b190ff1870f8627901456a6943f91a6ab67c38cb5bfc56b564",
+    "template-parts/woocommerce/drawer-boxes-hero.php": "bfd8d9933dc8390889e9d7bb86c08673b42d0d86c3900dce340fdc0786991333",
+    "assets/images/drawer-20261014/apparel-360.webp": "b00987d150f9da3ae9111328da1e639933d69922a92d3dc6f8b34f612734fa4f",
+    "assets/images/drawer-20261014/apparel-720.webp": "f93feba759ee69434d28b6be782b43d4d14cddd2e9d644dbf437e68168863dec",
+    "assets/images/drawer-20261014/cosmetic-360.webp": "92c7111c85178aa4e6330117517424dd1365a488867821e7386b4b2f4a69e8eb",
+    "assets/images/drawer-20261014/cosmetic-720.webp": "2ef036ffb29697abe52916a6cd51d9c69c4ebffa77e53ba27c534271654dc1ee",
+    "assets/images/drawer-20261014/kraft-360.webp": "a75cbe1ec4148b60fcfc1a86b59e99e6c679acdc9975bdfe1c1287475feacd7a",
+    "assets/images/drawer-20261014/kraft-720.webp": "dd434b96b0a624b5be95a1f88ea51a679b3564bd314a7096ce965db2203f44fe",
+    "assets/images/drawer-20261014/multi-360.webp": "9fef8d1ba6cabeb499e8ec95a4cc04844a919d4713d2031cb0488b2fbc4b59b8",
+    "assets/images/drawer-20261014/multi-720.webp": "f2404f9cacb1bbec717be3e61a763cc1aeeb2d00068e6760830a37b8e7075002",
+    "assets/images/drawer-20261014/orange-360.webp": "274292f42c0c7e62828de25af239d56a3dd4152597b19a4aec216cce1aeb7300",
+    "assets/images/drawer-20261014/orange-720.webp": "12f3c2c704d859e4973ba6366d1ec4d8360abcd65feb9348529d8758b5b2d237",
+    "assets/images/drawer-20261014/watch-360.webp": "06e263b7a78738695c46bdb9be046dbfc916b00f40e9b179c29fb83241fe434a",
+    "assets/images/drawer-20261014/watch-720.webp": "a13023dfab685395529694b64b6256bd9830d88e5906a2c330f72524902a74cb"
+  },
+  "botanical": {
+    "slug": "custom-botanical-embossed-drawer-gift-box",
+    "content_sha256": "2eb2109a471be9df4accb90a4f63f2fe609afe03cc772e9df6fdc1dc3b53d833",
+    "images": [
+      {
+        "file": "custom-botanical-embossed-drawer-gift-box-partially-open-hero.webp",
+        "sha256": "335fd4fca0ad2fa4f26cbdc01855ac7c00d4e8d63b4b88460a35341521b7b0df",
+        "width": 1086,
+        "height": 1448,
+        "alt": "Custom Botanical Embossed Drawer Gift Box - partially open hero",
+        "title": "Custom Botanical Embossed Drawer Gift Box Partially Open Hero",
+        "caption": ""
+      },
+      {
+        "file": "custom-botanical-embossed-drawer-gift-box-top-open-view.webp",
+        "sha256": "5777321afc49f7cf5ce55b7e497fc2980a450705c7c816012ad1defae79160c9",
+        "width": 1086,
+        "height": 1448,
+        "alt": "Custom Botanical Embossed Drawer Gift Box - top open view",
+        "title": "Custom Botanical Embossed Drawer Gift Box Top Open View",
+        "caption": ""
+      },
+      {
+        "file": "custom-botanical-embossed-drawer-gift-box-angled-open-view.webp",
+        "sha256": "3c4671d7395e159b7761752df436e3d7c5b9faeb9c0b2d56a9c1b0d9644612c1",
+        "width": 1086,
+        "height": 1448,
+        "alt": "Custom Botanical Embossed Drawer Gift Box - angled open view",
+        "title": "Custom Botanical Embossed Drawer Gift Box Angled Open View",
+        "caption": ""
+      },
+      {
+        "file": "custom-botanical-embossed-drawer-gift-box-closed-three-quarter-view.webp",
+        "sha256": "5a72d1b53583f7976c195b8cd16e7f9cccbac1da49ec1359340c2d3ee9651af4",
+        "width": 1086,
+        "height": 1448,
+        "alt": "Custom Botanical Embossed Drawer Gift Box - closed three quarter view",
+        "title": "Custom Botanical Embossed Drawer Gift Box Closed Three Quarter View",
+        "caption": ""
+      },
+      {
+        "file": "custom-botanical-embossed-drawer-gift-box-gold-foil-logo-detail.webp",
+        "sha256": "a4414030912c08ddd28b6d3c3f251ce6621896bd0d1b8586186aa698a5ba423a",
+        "width": 1086,
+        "height": 1448,
+        "alt": "Custom Botanical Embossed Drawer Gift Box - gold foil logo detail",
+        "title": "Custom Botanical Embossed Drawer Gift Box Gold Foil Logo Detail",
+        "caption": ""
+      },
+      {
+        "file": "custom-botanical-embossed-drawer-gift-box-botanical-emboss-detail.webp",
+        "sha256": "d30f42e7253eadc03b93328d5ea290200adf48c63f3ec651dcecdfa7568e2dcd",
+        "width": 1086,
+        "height": 1448,
+        "alt": "Custom Botanical Embossed Drawer Gift Box - botanical emboss detail",
+        "title": "Custom Botanical Embossed Drawer Gift Box Botanical Emboss Detail",
+        "caption": ""
+      },
+      {
+        "file": "custom-botanical-embossed-drawer-gift-box-sleeve-tray-edge-detail.webp",
+        "sha256": "989e001790bfc699cbf89e1dcf2d0d3f1c43a686d1e830d44593278d821f850f",
+        "width": 1086,
+        "height": 1448,
+        "alt": "Custom Botanical Embossed Drawer Gift Box - sleeve tray edge detail",
+        "title": "Custom Botanical Embossed Drawer Gift Box Sleeve Tray Edge Detail",
+        "caption": ""
+      }
+    ],
+    "specs": [
+      {
+        "label": "Feature",
+        "value": "Botanical embossing with gold foil and sliding drawer"
+      },
+      {
+        "label": "Industrial Use",
+        "value": "Beauty, wellness, jewelry and premium gifts"
+      },
+      {
+        "label": "Paper Type",
+        "value": "Embossable specialty paper and rigid greyboard"
+      },
+      {
+        "label": "Box Type",
+        "value": "Rigid drawer gift box"
+      },
+      {
+        "label": "Shape",
+        "value": "Rectangular"
+      },
+      {
+        "label": "Place of Origin",
+        "value": "Vietnam"
+      },
+      {
+        "label": "Model Number",
+        "value": "VPN-DRW-BOT-EMB"
+      },
+      {
+        "label": "Brand Name",
+        "value": "VPN"
+      },
+      {
+        "label": "Province",
+        "value": "Ho Chi Minh City"
+      },
+      {
+        "label": "Accessories",
+        "value": "Optional custom insert, ribbon or thumb access"
+      },
+      {
+        "label": "Custom Order",
+        "value": "Accept"
+      },
+      {
+        "label": "Liner Type",
+        "value": "Wrapped rigid tray with tailored insert"
+      },
+      {
+        "label": "Logo Printing",
+        "value": "Custom logo"
+      },
+      {
+        "label": "Printing Handling",
+        "value": "Embossing, gold foil, offset print or debossing"
+      },
+      {
+        "label": "Color",
+        "value": "Custom botanical palette / gold detail"
+      },
+      {
+        "label": "Size",
+        "value": "Customized size"
+      },
+      {
+        "label": "Thickness",
+        "value": "Customized thickness"
+      },
+      {
+        "label": "Single Piece Price",
+        "value": "Quoted by size, paper, tooling, finish and quantity"
+      },
+      {
+        "label": "Minimum Order Quantity (MOQ)",
+        "value": "1,000 units"
+      },
+      {
+        "label": "Product Name",
+        "value": "Botanical Embossed Drawer Gift Box"
+      },
+      {
+        "label": "Design",
+        "value": "Customer's Specific Requirement"
+      }
+    ],
+    "bullets": "",
+    "categories": [
+      "custom-packaging-boxes",
+      "drawer-boxes",
+      "gift-paper-boxes"
+    ],
+    "tags": []
+  }
+}

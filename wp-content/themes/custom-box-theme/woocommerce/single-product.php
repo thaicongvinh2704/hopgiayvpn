@@ -13,6 +13,9 @@ while (have_posts()) :
     global $product;
 
     $product_id = get_the_ID();
+    $drawer_profile = function_exists('vpn_drawer_product_profile') ? vpn_drawer_product_profile($product_id) : array();
+    $product_quote_url = $drawer_profile ? vpn_drawer_quote_url($drawer_profile['slug']) : home_url('/contact/#quote');
+    $product_sample_url = $drawer_profile ? vpn_drawer_quote_url($drawer_profile['slug'], true) : home_url('/contact/#quote');
     $image_id = $product ? $product->get_image_id() : 0;
     $gallery_ids = $product ? $product->get_gallery_image_ids() : array();
     $product_gallery_ids = array_values(
@@ -298,8 +301,8 @@ while (have_posts()) :
                 <?php endif; ?>
 
                 <div class="product-detail-actions" role="group" aria-label="<?php esc_attr_e('Product quote actions', 'custom-box-theme'); ?>">
-                    <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>" class="btn-primary" data-product-primary-action><?php esc_html_e('Request Custom Packaging Quote', 'custom-box-theme'); ?></a>
-                    <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>" class="btn-outline" data-product-secondary-action><?php esc_html_e('Discuss a Structural Sample', 'custom-box-theme'); ?></a>
+                    <a href="<?php echo esc_url($product_quote_url); ?>" class="btn-primary" data-product-primary-action><?php esc_html_e('Request Custom Packaging Quote', 'custom-box-theme'); ?></a>
+                    <a href="<?php echo esc_url($product_sample_url); ?>" class="btn-outline" data-product-secondary-action><?php esc_html_e('Discuss a Structural Sample', 'custom-box-theme'); ?></a>
                 </div>
             </div>
         </div>
@@ -374,7 +377,10 @@ while (have_posts()) :
         </div>
     </section>
 
-    <?php get_template_part('template-parts/home/quote-form'); ?>
+    <?php get_template_part('template-parts/home/quote-form', null, $drawer_profile ? array(
+        'product_value' => $drawer_profile['name'], 'quote_source' => 'drawer_boxes',
+        'form_location' => 'drawer-product', 'current_page_url' => get_permalink($product_id),
+    ) : array()); ?>
 
     <section class="product-workflow-band">
         <div class="container product-workflow-inner">

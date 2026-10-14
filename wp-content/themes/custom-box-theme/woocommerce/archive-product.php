@@ -194,6 +194,18 @@ if (
     $custom_category_guide = 'christmas-packaging-guide';
 }
 
+if ($current_term && !is_wp_error($current_term) && 'drawer-boxes' === $current_term->slug && function_exists('vpn_drawer_data')) {
+        $drawer_profile = vpn_drawer_data();
+        $archive_title = $drawer_profile['heading'];
+        $archive_description = $drawer_profile['intro'];
+        $archive_eyebrow = 'Custom paper packaging · Vietnam';
+        $archive_primary_cta = array('label' => 'Request a Drawer Box Quote', 'url' => vpn_drawer_quote_url());
+        $archive_secondary_cta = array('label' => 'Discuss a Custom Sample', 'url' => vpn_drawer_quote_url('custom', true));
+        $archive_hero_proof_points = array('MOQ 1,000 units', 'Custom design & sizes', 'Samples in 7–15 days, depending on the order');
+        $archive_hero_alt = 'Paper drawer box with a sliding tray and outer sleeve';
+        $custom_category_guide = 'drawer-boxes-guide';
+}
+
 $parent_term = function_exists('custom_box_get_packaging_parent_category') ? custom_box_get_packaging_parent_category() : false;
 $sidebar_categories = array();
 $child_categories = array();
@@ -262,7 +274,7 @@ $archive_context = compact(
 ?>
 
 <main class="product-archive-page">
-    <?php get_template_part('template-parts/woocommerce/archive-hero', null, $archive_context); ?>
+    <?php get_template_part('template-parts/woocommerce/' . ('drawer-boxes-guide' === $custom_category_guide ? 'drawer-boxes-hero' : 'archive-hero'), null, $archive_context); ?>
 
     <?php if (is_shop()) : ?>
         <?php get_template_part('template-parts/woocommerce/product-category-hub', null, $archive_context); ?>
@@ -272,6 +284,9 @@ $archive_context = compact(
         )));
         ?>
     <?php else : ?>
+        <?php if ('drawer-boxes-guide' === $custom_category_guide && 1 === max(1, (int) get_query_var('paged'))) : ?>
+            <?php get_template_part('template-parts/woocommerce/drawer-boxes-models'); ?>
+        <?php endif; ?>
         <?php get_template_part('template-parts/woocommerce/product-list', null, $archive_context); ?>
         <?php if ($current_term && !is_wp_error($current_term)) : ?>
             <?php get_template_part('template-parts/woocommerce/related-categories', null, $archive_context); ?>

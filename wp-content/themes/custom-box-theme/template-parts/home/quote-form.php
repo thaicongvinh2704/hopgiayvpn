@@ -1,5 +1,6 @@
 <?php
 $quote_args = is_array($args) ? $args : array();
+if (function_exists('vpn_drawer_quote_context')) { $quote_args = array_merge(vpn_drawer_quote_context(), $quote_args); }
 $quote_section_id = isset($quote_args['section_id']) ? sanitize_html_class($quote_args['section_id']) : 'quote';
 $quote_form_id = isset($quote_args['form_id']) ? sanitize_html_class($quote_args['form_id']) : $quote_section_id . '-request-form';
 $quote_id_prefix = $quote_section_id . '-field';

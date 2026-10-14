@@ -11,6 +11,7 @@ $landing_root_link = isset($args['landing_root_link']) ? $args['landing_root_lin
 $product_fallback_image_url = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
 
 $paged = max(1, (int) get_query_var('paged'), (int) get_query_var('page'));
+$drawer_listing = $current_term && 'drawer-boxes' === $current_term->slug && function_exists('vpn_drawer_listing_ids');
 $default_orderby = function_exists('wc_get_loop_prop') && wc_get_loop_prop('is_search')
     ? 'relevance'
     : apply_filters('woocommerce_default_catalog_orderby', get_option('woocommerce_default_catalog_orderby', 'menu_order'));
@@ -31,6 +32,10 @@ $catalog_orderby_options = apply_filters(
 
 if (function_exists('wc_review_ratings_enabled') && !wc_review_ratings_enabled()) {
     unset($catalog_orderby_options['rating']);
+}
+if ($drawer_listing) {
+    $catalog_orderby_options = array('menu_order' => 'Recommended designs', 'date' => 'Newest designs');
+    if (!isset($catalog_orderby_options[$orderby_value])) { $orderby_value = 'menu_order'; }
 }
 
 $product_query_args = array(
@@ -67,10 +72,19 @@ if (function_exists('WC') && WC()->query) {
     }
 }
 
+if ($drawer_listing && 'menu_order' === $orderby_value) {
+    $drawer_ids = vpn_drawer_listing_ids();
+    $product_query_args['post__in'] = $drawer_ids ?: array(0);
+    $product_query_args['orderby'] = 'post__in';
+    unset($product_query_args['meta_key']);
+}
 $product_query = new WP_Query($product_query_args);
 ?>
 
-<section class="product-category-landing-section product-listing-category-section">
+<section class="product-category-landing-section product-listing-category-section" <?php if ($drawer_listing) { echo 'id="drawer-all-products"'; } ?>>
+    <?php if ($drawer_listing) : ?>
+    <div class="container vpn-drawer-catalog-heading"><div><p class="product-eyebrow">The design collection</p><h2>Explore all drawer box designs</h2><p>Choose a reference, then make it your own.</p></div><span>Made to order · MOQ 1,000</span></div>
+    <?php endif; ?>
     <div class="container product-category-landing-layout product-listing-layout">
         <div class="product-archive-main product-category-products product-listing-products" data-product-list>
             <div class="product-archive-toolbar">
@@ -78,10 +92,12 @@ $product_query = new WP_Query($product_query_args);
                     <?php if ($product_query->have_posts()) : ?>
                         <p class="woocommerce-result-count">
                             <?php
-                            printf(
+                            if ($drawer_listing) {
+                                printf('Showing %1$d–%2$d of %3$d designs', ($paged - 1) * 12 + 1, min($paged * 12, (int) $product_query->found_posts), (int) $product_query->found_posts);
+                            } else { printf(
                                 esc_html(_n('Showing %d product', 'Showing %d products', (int) $product_query->found_posts, 'custom-box-theme')),
                                 (int) $product_query->found_posts
-                            );
+                            ); }
                             ?>
                         </p>
                     <?php else : ?>
@@ -142,13 +158,15 @@ $product_query = new WP_Query($product_query_args);
                                 aria-labelledby="<?php echo esc_attr($product_title_id); ?>"
                             >
                                 <span class="custom-product-image">
+                                    <?php $drawer_image = $drawer_listing ? vpn_drawer_card_image(get_the_ID()) : ''; ?>
+                                    <?php if ($drawer_image) : echo $drawer_image; else : ?>
                                     <?php
                                     if ($product_image_id) {
                                         ?>
                                         <img
                                             src="<?php echo esc_url($product_image_url); ?>"
                                             srcset="<?php echo esc_url($product_image_url); ?> <?php echo esc_attr((int) $product_image_size[0]); ?>w"
-                                            alt=""
+                                            alt="<?php echo esc_attr($drawer_listing ? get_the_title() : ''); ?>"
                                             width="<?php echo esc_attr((int) $product_image_size[0]); ?>"
                                             height="<?php echo esc_attr((int) $product_image_size[1]); ?>"
                                             loading="lazy"
@@ -170,9 +188,12 @@ $product_query = new WP_Query($product_query_args);
                                         <?php
                                     }
                                     ?>
+                                    <?php endif; ?>
                                 </span>
                                 <span class="custom-product-body">
                                     <h2 id="<?php echo esc_attr($product_title_id); ?>" class="custom-product-title"><?php the_title(); ?></h2>
+                                    <?php $drawer_product = $drawer_listing ? vpn_drawer_product_profile(get_the_ID()) : array(); ?>
+                                    <?php if ($drawer_product) : ?><span class="custom-product-detail"><?php echo esc_html($drawer_product['audience']); ?></span><?php endif; ?>
                                 </span>
                             </a>
                         </article>
@@ -204,9 +225,9 @@ $product_query = new WP_Query($product_query_args);
         <details
             class="product-category-tabs-disclosure product-listing-taxonomy"
             data-archive-categories-disclosure
-            data-responsive-disclosure
+            <?php if (!$drawer_listing) { echo 'data-responsive-disclosure'; } ?>
         >
-            <summary class="product-category-tabs-summary"><?php esc_html_e('Browse Categories', 'custom-box-theme'); ?></summary>
+            <summary class="product-category-tabs-summary"><?php echo esc_html($drawer_listing ? 'Explore other packaging categories' : __('Browse Categories', 'custom-box-theme')); ?></summary>
             <nav class="product-category-tabs product-listing-tabs" aria-label="<?php esc_attr_e('Product categories', 'custom-box-theme'); ?>">
                 <a href="<?php echo esc_url($landing_root_link); ?>">
                     <i class="fas fa-border-all" aria-hidden="true"></i>
