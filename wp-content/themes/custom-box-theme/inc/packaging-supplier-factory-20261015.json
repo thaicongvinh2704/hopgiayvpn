@@ -1,0 +1,58 @@
+{
+  "cutting": {
+    "file": "vpn-factory-paper-cutting-20261009.webp",
+    "width": 1280,
+    "height": 960,
+    "caption": "Paper cutting equipment",
+    "alt": "Paper cutting machine and stacked sheets in the packaging workshop"
+  },
+  "die-cutting": {
+    "file": "vpn-factory-die-cutting-20261009.webp",
+    "width": 1280,
+    "height": 960,
+    "caption": "Die-cutting equipment",
+    "alt": "Die-cutting machine on the packaging workshop floor"
+  },
+  "laminating": {
+    "file": "vpn-factory-laminating-20261009.webp",
+    "width": 1280,
+    "height": 960,
+    "caption": "Laminating equipment",
+    "alt": "Paper laminating equipment with material rolls in the workshop"
+  },
+  "printing": {
+    "file": "vpn-factory-offset-printing-20261009.webp",
+    "width": 1280,
+    "height": 960,
+    "caption": "Offset printing equipment",
+    "alt": "Offset printing machine in the paper packaging workshop"
+  },
+  "workshop": {
+    "file": "vpn-factory-workshop-floor-20261009.webp",
+    "width": 1152,
+    "height": 648,
+    "caption": "Box-making workspace",
+    "alt": "Packaging workshop with box-making equipment and finishing workstations"
+  },
+  "finishing": {
+    "file": "vpn-factory-box-finishing-20261009.webp",
+    "width": 1280,
+    "height": 720,
+    "caption": "Box finishing workstations",
+    "alt": "Workers and red gift boxes at the box finishing workstations"
+  },
+  "storage": {
+    "file": "vpn-factory-carton-storage-20261009.webp",
+    "width": 1280,
+    "height": 960,
+    "caption": "Carton storage area",
+    "alt": "Stacked cartons on pallets in the packaging storage area"
+  },
+  "entrance": {
+    "file": "vpn-factory-entrance-20261009.webp",
+    "width": 1280,
+    "height": 960,
+    "caption": "Packaging workshop entrance",
+    "alt": "Entrance to the packaging workshop building"
+  }
+}

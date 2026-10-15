@@ -28,6 +28,7 @@ $custom_box_inc_files = array(
     'inc/search-suggestions.php',
     'inc/product-specifications.php',
     'inc/drawer-boxes-20261014.php',
+    'inc/packaging-suppliers-20261015.php',
     'inc/quote-form-handler.php',
     'inc/woocommerce.php',
 );
