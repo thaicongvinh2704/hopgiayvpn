@@ -54,6 +54,23 @@ function custom_box_quote_form_log($event, $context = array()) {
     error_log('[custom_box_quote_form] ' . wp_json_encode($payload));
 }
 
+/** Explicit source/format pairs opt into JSON; other quote flows retain redirects. */
+function custom_box_quote_json_request() {
+    return custom_box_paper_bag_json_request() || (
+        isset($_POST['response_format'], $_POST['quote_source'])
+        && !is_array($_POST['response_format']) && !is_array($_POST['quote_source'])
+        && 'email_popup_json' === wp_unslash($_POST['response_format'])
+        && 'website_email_popup' === wp_unslash($_POST['quote_source'])
+    );
+}
+
+function custom_box_paper_bag_json_request() {
+    return isset($_POST['response_format'], $_POST['quote_source'])
+        && !is_array($_POST['response_format']) && !is_array($_POST['quote_source'])
+        && 'paper_bag_json' === wp_unslash($_POST['response_format'])
+        && 'custom_paper_bags_manufacturer' === wp_unslash($_POST['quote_source']);
+}
+
 function custom_box_quote_form_reject($status, $http_status = 400, $context = array()) {
     custom_box_quote_form_log(
         'reject_' . $status,
@@ -64,6 +81,11 @@ function custom_box_quote_form_reject($status, $http_status = 400, $context = ar
             $context
         )
     );
+
+    if (custom_box_quote_json_request()) {
+        nocache_headers();
+        wp_send_json(array('success' => false, 'data' => array('status' => sanitize_key($status))), (int) $http_status);
+    }
 
     if (429 === (int) $http_status) {
         status_header(429);
@@ -1595,7 +1617,7 @@ function custom_box_handle_quote_form() {
     $quote_data['spam_score'] = 0;
     $quote_data['spam_reasons'] = array();
 
-    if (in_array($quote_source, array('paper_bag_ads_landing', 'custom_paper_bags_manufacturer', 'custom_pizza_boxes_manufacturer'), true) && 'yes' !== $privacy_consent) {
+    if (in_array($quote_source, array('paper_bag_ads_landing', 'custom_paper_bags_manufacturer', 'custom_pizza_boxes_manufacturer', 'website_email_popup'), true) && 'yes' !== $privacy_consent) {
         custom_box_quote_form_reject('consent', 400, array('validation' => 'landing_privacy_consent_required'));
     }
 
@@ -1617,15 +1639,28 @@ function custom_box_handle_quote_form() {
         ) {
             custom_box_quote_form_reject('missing', 400, array('validation' => 'paper_box_manufacturer_required_fields'));
         }
+    } elseif ('website_email_popup' === $quote_source) {
+        if (!$email || !is_email($email)) {
+            custom_box_quote_form_reject('missing', 400, array('validation' => 'popup_email_required'));
+        }
+        $product_name = $product_name ? $product_name : 'Custom packaging enquiry';
+        $full_name = $full_name ? $full_name : 'Website email enquiry';
+        $quote_data['product_name'] = $product_name;
     } elseif ('custom_paper_bags_manufacturer' === $quote_source) {
-        if (!$product_name || !$full_name || !$email || !is_email($email) || !$quantity || !$country) {
+        if (!$product_name || !$email || !is_email($email) || !$quantity || !$country) {
             custom_box_quote_form_reject('missing', 400, array('validation' => 'custom_paper_bags_manufacturer_required_fields'));
+        }
+        if (!ctype_digit($quantity) || (int) $quantity < 1000 || (int) $quantity > 100000000) {
+            custom_box_quote_form_reject('quantity', 400, array('validation' => 'paper_bag_minimum_quantity'));
+        }
+        if (!$full_name) {
+            $full_name = $company ? $company : 'Paper bag quote enquiry';
         }
     } elseif (!$product_name || !$full_name || !$email || !is_email($email)) {
         custom_box_quote_form_reject('missing', 400, array('validation' => 'quote_required_fields'));
     }
 
-    if (in_array($quote_source, array('paper_bag_ads_landing', 'custom_paper_bags_manufacturer'), true)) {
+    if (in_array($quote_source, array('paper_bag_ads_landing', 'custom_paper_bags_manufacturer', 'website_email_popup'), true)) {
         $duplicate_key = custom_box_quote_form_duplicate_key($email, $phone, $product_name, $quantity);
 
         if (get_transient($duplicate_key)) {
@@ -1675,7 +1710,7 @@ function custom_box_handle_quote_form() {
     }
 
     $quote_data['full_name'] = $full_name;
-    if ('custom_pizza_boxes_manufacturer' === $quote_source) {
+    if (in_array($quote_source, array('custom_pizza_boxes_manufacturer', 'custom_paper_bags_manufacturer', 'website_email_popup'), true)) {
         $quote_data['privacy_consent'] = $privacy_consent;
     }
 
@@ -1700,8 +1735,24 @@ function custom_box_handle_quote_form() {
     }
 
     custom_box_quote_form_log('quote_saved', array('quote_id' => $quote_id));
+    do_action('custom_box_quote_saved', $quote_id);
 
     $sent = custom_box_send_queued_quote_email($quote_id);
+
+    // A saved lead is received even when email needs retrying. Return only a receipt, never contact data.
+    if (in_array($quote_source, array('custom_paper_bags_manufacturer', 'website_email_popup'), true)) {
+        if (!$sent && !custom_box_schedule_quote_email($quote_id)) {
+            update_post_meta($quote_id, '_custom_box_quote_mail_status', 'schedule_failed');
+        }
+        if (custom_box_quote_json_request()) {
+            nocache_headers();
+            wp_send_json(array('success' => true, 'data' => array(
+                'status' => $sent ? 'success' : 'received',
+                'receipt' => 'vpn-quote-' . (int) $quote_id,
+            )));
+        }
+        custom_box_quote_form_redirect($sent ? 'success' : 'received');
+    }
 
     if (!$sent) {
         if (!custom_box_schedule_quote_email($quote_id)) {

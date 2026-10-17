@@ -1,5 +1,9 @@
 # Local test harness
 
+## 1.11.0 — Email bắt buộc
+
+Bộ hiện hành: `php tests/live-chat/required-email.php` (REST thật, DB riêng 3311), `node tests/live-chat/required-email.mjs` (API giả lập, desktop/390/320px), và `php tests/live-chat/final-acceptance.php` đã cập nhật kỳ vọng email bắt buộc. Không cần HTTP 8091 cho hai bộ PHP dispatch REST trong cùng process. PHP luôn dọn bảng chat test và khôi phục cài đặt trong finally. Browser chỉ gửi dữ liệu giả vào route mock. Các bộ `optional-email`, `gentle-followup` và fixture keyword không email bên dưới ghi lại hành vi lịch sử trước 1.11.0, không dùng để nghiệm thu yêu cầu mới.
+
 ## 1.10.0 — Trả lời theo từ khóa
 
 Với database test 3311 đang chạy, dùng `php tests/live-chat/keyword-replies.php` (311 checks). HTTP 8091 đang chạy: `php tests/live-chat/keyword-fixture.php enable`, `node tests/live-chat/keyword-browser.mjs` (58 checks), rồi **luôn** `php tests/live-chat/keyword-fixture.php cleanup` trong finally. Fixture chỉ bật automation trong DB test; cleanup khôi phục setting và dọn bảng chat test. `final-acceptance.php` (83 checks) tiếp tục kiểm tra hành vi trước đó khi automation tắt. Không chạy suites cùng lúc. Không gửi tin thật trên local chính hoặc production để tạo bằng chứng.

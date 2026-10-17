@@ -20,25 +20,25 @@ try{
  $s=VPN_Chat_Settings::get();$original=$s;$s['accept_new']=true;$s['site_key']='';$s['short_limit']=100;$s['long_limit']=200;$s['conversation_limit']=20;update_option('vpn_chat_settings',$s,false);
  ac(VPN_Chat_Settings::ready(),'chat ready without site key or secret');ac(VPN_Chat_Settings::public_config()['site_key']==='','browser never requests Turnstile');
  $a=boot_fixture();$b=boot_fixture();ac($a['data']['customer']['code']!==$b['data']['customer']['code'],'anonymous customers have distinct identity');
- $cookies=$a['cookies'];$csrf=$a['data']['csrf'];$p=['message'=>'Final isolated acceptance','client_message_id'=>bin2hex(random_bytes(16)),'challenge'=>'valid-'.bin2hex(random_bytes(16))];
+ $cookies=$a['cookies'];$csrf=$a['data']['csrf'];$p=['email'=>'acceptance@example.invalid','message'=>'Final isolated acceptance','client_message_id'=>bin2hex(random_bytes(16)),'challenge'=>'valid-'.bin2hex(random_bytes(16))];
  ac(rest_chat('guest/start',$p,$cookies)->get_status()===403,'CSRF required');
  ac(rest_chat('guest/start',$p,[],0,$csrf)->get_status()===401,'session cookie required');
  ac(rest_chat('guest/start',$p,$cookies,0,$csrf,'POST','https://attacker.invalid')->get_status()===403,'cross-origin mutation rejected');
  unset($p['challenge']);
- $invalid=$p;$invalid['email']='bad-address';ac(rest_chat('guest/start',$invalid,$cookies,0,$csrf)->get_status()===400,'invalid optional email rejected');
+ $invalid=$p;$invalid['email']='bad-address';ac(rest_chat('guest/start',$invalid,$cookies,0,$csrf)->get_status()===400,'invalid required email rejected');
  $invalid=$p;$invalid['message']='';ac(rest_chat('guest/start',$invalid,$cookies,0,$csrf)->get_status()===400,'empty message rejected');
  $invalid=$p;$invalid['message']=str_repeat('x',2001);ac(rest_chat('guest/start',$invalid,$cookies,0,$csrf)->get_status()===400,'oversized message rejected');
  $invalid=$p;$invalid['files']=[];ac(rest_chat('guest/start',$invalid,$cookies,0,$csrf)->get_status()===400,'attachment payload rejected');
- $r=rest_chat('guest/start',$p,$cookies,0,$csrf);ac($r->get_status()===200,'anonymous first message accepted without name/email');$id=$r->get_data()['id'];$firstReceipt=$r->get_data()['message'];ac($firstReceipt['body']===$p['message']&&(int)$firstReceipt['seq']===1&&!empty($firstReceipt['created_at']),'first receipt contains canonical stored message');
+ $r=rest_chat('guest/start',$p,$cookies,0,$csrf);ac($r->get_status()===200,'first message accepted with email and no name');$id=$r->get_data()['id'];$firstReceipt=$r->get_data()['message'];ac($firstReceipt['body']===$p['message']&&(int)$firstReceipt['seq']===1&&!empty($firstReceipt['created_at']),'first receipt contains canonical stored message');
  $r=rest_chat('guest/start',$p,$cookies,0,$csrf);ac($r->get_status()===200,'first-message retry accepted idempotently');ac($r->get_data()['message']===$firstReceipt,'first retry returns identical receipt');
  ac((int)$wpdb->get_var('SELECT COUNT(*) FROM '.VPN_Chat_Store::table('messages'))===1,'retry stores exactly one message');
  $invalid=$p;$invalid['message']='changed';ac(rest_chat('guest/start',$invalid,$cookies,0,$csrf)->get_status()===409,'same retry ID cannot change message');
  $sync=rest_chat('guest/sync',['id'=>$id,'cursor'=>0],$cookies,0,'','GET');ac($sync->get_status()===200&&count($sync->get_data()['messages'])===1,'saved message visible in sync');ac(rest_chat('guest/sync',['id'=>$id,'cursor'=>0],$cookies,0,$csrf)->get_status()===200,'POST sync supports uncached browser polling');ac(rest_chat('guest/sync',['id'=>$id,'cursor'=>0],$cookies)->get_status()===403,'POST sync requires CSRF');ac(rest_chat('guest/sync',['id'=>$id,'cursor'=>0],$b['cookies'],0,$b['data']['csrf'])->get_status()===404,'POST sync rejects other customer');
  ac(rest_chat('guest/sync',['id'=>$id,'cursor'=>0],$b['cookies'],0,'','GET')->get_status()===404,'other anonymous customer cannot read chat');
  ac(rest_chat('guest/send',['id'=>$id,'message'=>'Intrusion','client_message_id'=>bin2hex(random_bytes(16))],$b['cookies'],0,$b['data']['csrf'])->get_status()===404,'other customer cannot send to chat');
- ac(rest_chat('guest/contact',['id'=>$id,'email'=>'buyer@example.invalid'],$cookies,0,$csrf)->get_status()===200,'optional email saved');
+ ac(rest_chat('guest/contact',['id'=>$id,'email'=>'buyer@example.invalid'],$cookies,0,$csrf)->get_status()===200,'contact email updated');
  ac(rest_chat('guest/contact',['id'=>$id,'email'=>'invalid'],$cookies,0,$csrf)->get_status()===400,'invalid follow-up email rejected');
- ac(rest_chat('guest/contact',['id'=>$id,'email'=>''],$cookies,0,$csrf)->get_status()===200,'email may be removed');
+ ac(rest_chat('guest/contact',['id'=>$id,'email'=>''],$cookies,0,$csrf)->get_status()===400,'required email cannot be removed');
  $restored=rest_chat('bootstrap',[],$cookies)->get_data();ac($restored['conversation']===$id,'bootstrap restores existing conversation');
  usleep(1100000);$body=['id'=>$id,'message'=>'Second message','client_message_id'=>bin2hex(random_bytes(16))];ac(rest_chat('guest/send',$body,$cookies,0,$csrf)->get_status()===200,'subsequent message accepted');
  $retryResponse=rest_chat('guest/send',$body,$cookies,0,$csrf);ac($retryResponse->get_status()===200,'subsequent retry accepted');ac($retryResponse->get_data()['message']['body']===$body['message']&&(int)$retryResponse->get_data()['message']['seq']===2,'subsequent receipt matches stored message');
@@ -74,7 +74,7 @@ try{
  ac(rest_chat('manager/privacy',$del,[],$manager)->get_status()===404,'deleted conversation cannot be deleted again');
  $remainingPublic=$wpdb->get_var($wpdb->prepare('SELECT public_id FROM '.VPN_Chat_Store::table('conversations').' WHERE id=%d',$remaining));
  ac(rest_chat('manager/privacy',['id'=>$remainingPublic,'action'=>'delete','verified_request'=>true],[],$manager)->get_status()===200,'legacy verified manager deletion stays compatible');
- $fast=boot_fixture();$fp=['message'=>'Fast inbox fixture','client_message_id'=>bin2hex(random_bytes(16))];$fr=rest_chat('guest/start',$fp,$fast['cookies'],0,$fast['data']['csrf']);$fid=$fr->get_data()['id'];
+ $fast=boot_fixture();$fp=['email'=>'acceptance@example.invalid','message'=>'Fast inbox fixture','client_message_id'=>bin2hex(random_bytes(16))];$fr=rest_chat('guest/start',$fp,$fast['cookies'],0,$fast['data']['csrf']);$fid=$fr->get_data()['id'];
  $fbody=['id'=>$fid,'message'=>'One request first reply','client_message_id'=>bin2hex(random_bytes(16)),'claim_if_unassigned'=>true];
  ac(rest_chat('agent/send',$fbody,[],$viewer)->get_status()===403,'subscriber cannot use atomic claim and send');
  $fr=rest_chat('agent/send',$fbody,[],$agent);ac($fr->get_status()===200,'first reply atomically claims and sends');$receipt=$fr->get_data();
@@ -86,7 +86,7 @@ try{
  $fg=rest_chat('guest/sync',['id'=>$fid,'cursor'=>0],$fast['cookies'],0,$fast['data']['csrf'])->get_data();ac(!str_contains(wp_json_encode($fg),'Fast private note'),'fast reply receipts keep notes private from guest');
  // Rate limits apply to the same customer even when using another short session.
  $rate=boot_fixture();usleep((int)((1-fmod(microtime(true),1)+0.05)*1000000));
- $q=['message'=>'Burst one','client_message_id'=>bin2hex(random_bytes(16))];$r=rest_chat('guest/start',$q,$rate['cookies'],0,$rate['data']['csrf']);ac($r->get_status()===200,'first message needs no CAPTCHA token');$rid=$r->get_data()['id'];
+ $q=['email'=>'acceptance@example.invalid','message'=>'Burst one','client_message_id'=>bin2hex(random_bytes(16))];$r=rest_chat('guest/start',$q,$rate['cookies'],0,$rate['data']['csrf']);ac($r->get_status()===200,'first message needs no CAPTCHA token');$rid=$r->get_data()['id'];
  $q=['id'=>$rid,'message'=>'Burst two','client_message_id'=>bin2hex(random_bytes(16))];ac(rest_chat('guest/send',$q,$rate['cookies'],0,$rate['data']['csrf'])->get_status()===200,'two messages in a second allowed');
  $q['message']='Burst three';$q['client_message_id']=bin2hex(random_bytes(16));$r=rest_chat('guest/send',$q,$rate['cookies'],0,$rate['data']['csrf']);ac($r->get_status()===429,'third message in same second rejected');ac((int)($r->get_headers()['Retry-After']??0)===1,'burst limit provides one-second retry guidance');
  $count=(int)$wpdb->get_var($wpdb->prepare('SELECT COUNT(*) FROM '.VPN_Chat_Store::table('messages').' WHERE conversation_id=%d',VPN_Chat_Store::conversation($rid)['id']));ac($count===2,'rejected spam creates no message');
@@ -95,7 +95,7 @@ try{
  $_COOKIE=$rateCookies;$same=VPN_Chat_Security::session();$key=hash('sha256','message:short:'.$same['customer_id'].':'.intdiv(time(),30));$wpdb->replace(VPN_Chat_Store::table('rate_limits'),['bucket'=>$key,'hits'=>100,'expires_at'=>gmdate('Y-m-d H:i:s',time()+30)]);$q['client_message_id']=bin2hex(random_bytes(16));ac(rest_chat('guest/send',$q,$rateCookies,0,$rb['csrf'])->get_status()===429,'new session cannot bypass customer short limit');
  VPN_Chat_Store::query('DELETE FROM '.VPN_Chat_Store::table('rate_limits'));$key=hash('sha256','message:long:'.$same['customer_id'].':'.intdiv(time(),300));$wpdb->replace(VPN_Chat_Store::table('rate_limits'),['bucket'=>$key,'hits'=>200,'expires_at'=>gmdate('Y-m-d H:i:s',time()+300)]);ac(rest_chat('guest/send',$q,$rateCookies,0,$rb['csrf'])->get_status()===429,'long interval limit enforced');
  VPN_Chat_Store::query('DELETE FROM '.VPN_Chat_Store::table('rate_limits'));$key=hash('sha256','message:ip:'.VPN_Chat_Security::ip().':'.intdiv(time(),300));$wpdb->replace(VPN_Chat_Store::table('rate_limits'),['bucket'=>$key,'hits'=>1000,'expires_at'=>gmdate('Y-m-d H:i:s',time()+300)]);ac(rest_chat('guest/send',$q,$rateCookies,0,$rb['csrf'])->get_status()===429,'IP-wide message limit enforced');
- VPN_Chat_Store::query('DELETE FROM '.VPN_Chat_Store::table('rate_limits'));$key=hash('sha256','create:c:'.$same['customer_id'].':'.intdiv(time(),600));$wpdb->replace(VPN_Chat_Store::table('rate_limits'),['bucket'=>$key,'hits'=>20,'expires_at'=>gmdate('Y-m-d H:i:s',time()+600)]);$q=['message'=>'Too many chats','client_message_id'=>bin2hex(random_bytes(16))];ac(rest_chat('guest/start',$q,$rateCookies,0,$rb['csrf'])->get_status()===429,'new conversation quota enforced');
+ VPN_Chat_Store::query('DELETE FROM '.VPN_Chat_Store::table('rate_limits'));$key=hash('sha256','create:c:'.$same['customer_id'].':'.intdiv(time(),600));$wpdb->replace(VPN_Chat_Store::table('rate_limits'),['bucket'=>$key,'hits'=>20,'expires_at'=>gmdate('Y-m-d H:i:s',time()+600)]);$q=['email'=>'acceptance@example.invalid','message'=>'Too many chats','client_message_id'=>bin2hex(random_bytes(16))];ac(rest_chat('guest/start',$q,$rateCookies,0,$rb['csrf'])->get_status()===429,'new conversation quota enforced');
  $opts=VPN_Chat_Settings::get();$opts['widget']=true;$opts['accept_new']=false;update_option('vpn_chat_settings',$opts,false);delete_option('vpn_chat_rate_limits_version');VPN_Chat_Settings::upgrade_rate_limits();ac(VPN_Chat_Settings::get()['accept_new'],'upgrade enables approved chat on existing widget');$opts['accept_new']=false;update_option('vpn_chat_settings',$opts,false);VPN_Chat_Settings::upgrade_rate_limits();ac(!VPN_Chat_Settings::get()['accept_new'],'upgrade preserves later admin disable');
  $scope='rate-test-'.bin2hex(random_bytes(8));$barrier=__DIR__.'/runtime/'.$scope;$workers=[];
  try{

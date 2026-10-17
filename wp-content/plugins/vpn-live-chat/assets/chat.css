@@ -144,3 +144,12 @@
 .vpn-chat-panel #vpn-chat-add-email:hover{text-decoration:underline}
 .vpn-chat-panel .vpn-chat-footer{margin:0;font-size:12px;white-space:nowrap}
 @media(max-width:600px){.vpn-chat-panel .vpn-chat-content{padding:14px}.vpn-chat-panel .vpn-chat-contact{padding:14px}}
+/* Required email and centered send controls for both initial and ongoing messages. */
+.vpn-chat-panel .vpn-chat-email-entry{margin:0 0 12px}
+.vpn-chat-panel .vpn-chat-email-entry label{margin:0;font-size:13px;font-weight:600}
+.vpn-chat-panel #vpn-chat-email{margin:5px 0 0;min-height:44px;padding:9px 12px;border-radius:10px;font-size:16px}
+.vpn-chat-panel .vpn-chat-email-help{margin:5px 0 0;font:12px/1.5 Arial,sans-serif;color:var(--vpn-chat-muted)}
+.vpn-chat-panel #vpn-chat-first-composer,.vpn-chat-panel #vpn-chat-reply{align-items:flex-end;gap:8px}
+.vpn-chat-panel #vpn-chat-first,.vpn-chat-panel #vpn-chat-message{width:0;min-width:0;flex:1 1 0;line-height:24px}
+.vpn-chat-panel #vpn-chat-start-button,.vpn-chat-panel #vpn-chat-send-button{display:flex;align-items:center;justify-content:center;align-content:center;flex:0 0 48px;width:48px;min-width:48px;max-width:48px;height:48px;min-height:48px;margin:0;padding:0;line-height:1;text-align:center}
+.vpn-chat-panel #vpn-chat-start-button svg,.vpn-chat-panel #vpn-chat-send-button svg{display:block;position:static;flex:none;width:22px;height:22px;margin:0;padding:0;transform:none}

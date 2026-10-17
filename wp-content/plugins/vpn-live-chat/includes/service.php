@@ -3,6 +3,13 @@ defined('ABSPATH') || exit;
 final class VPN_Chat_Service {
     const STATES = ['unassigned', 'assigned', 'waiting_customer', 'follow_up', 'closed', 'spam'];
     const LABELS = ['', 'needs_sample', 'needs_quote', 'qualified', 'quote_sent', 'won', 'lost'];
+    public static function required_email($value): string {
+        if (!is_string($value)) { throw new VPN_Chat_Fault('invalid_email'); }
+        $email = trim($value);
+        if ($email === '') { throw new VPN_Chat_Fault('email_required'); }
+        if (mb_strlen($email) > 254 || !is_email($email)) { throw new VPN_Chat_Fault('invalid_email'); }
+        return $email;
+    }
     private static function receipt(array $c, int $seq, string $sender): array {
         global $wpdb;
         $result=['saved'=>true,'seq'=>$seq,'id'=>$c['public_id']];
@@ -53,13 +60,7 @@ final class VPN_Chat_Service {
         if (!is_string($name)) { throw new VPN_Chat_Fault('invalid_text'); }
         $name = trim($name);
         if ($name !== '') { $name = VPN_Chat_Security::text($name, 100); }
-        $email = $p['email'] ?? '';
-        if (!is_string($email)) { throw new VPN_Chat_Fault('invalid_email'); }
-        $email = trim($email);
-        if ($email !== '') {
-            $email = VPN_Chat_Security::text($email, 254);
-            if (!is_email($email)) { throw new VPN_Chat_Fault('invalid_email'); }
-        }
+        $email = self::required_email($p['email'] ?? '');
         $metadata = [];
         foreach (['utm_source','utm_medium','utm_campaign'] as $key) {
             if (isset($p['metadata'][$key]) && is_string($p['metadata'][$key])) { $metadata[$key] = sanitize_text_field(mb_substr($p['metadata'][$key], 0, 100)); }
@@ -116,6 +117,7 @@ final class VPN_Chat_Service {
                 $c=VPN_Chat_Store::conversation($id,true);
             }
             VPN_Chat_Store::authorize($c, $s, true);
+            if ($s) { self::required_email($c['email']); }
             return self::send_locked($c, $body, $client, $s ? 'guest' : (!empty($p['note']) ? 'note' : 'agent'), $s ? 0 : get_current_user_id());
         });
     }

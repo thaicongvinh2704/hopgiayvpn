@@ -62,10 +62,7 @@ final class VPN_Chat_REST {
                 elseif ($path === 'guest/send') { $data = VPN_Chat_Service::send((string) ($p['id'] ?? ''), $p, $s); }
                 elseif ($path === 'guest/contact') {
                     VPN_Chat_Security::quota('contact:'.$s['id'],10,60);
-                    $email=$p['email']??'';
-                    if(!is_string($email))throw new VPN_Chat_Fault('invalid_email');
-                    $email=trim($email);
-                    if($email!=='' && (!is_email($email)||mb_strlen($email)>254))throw new VPN_Chat_Fault('invalid_email');
+                    $email=VPN_Chat_Service::required_email($p['email']??'');
                     $data=VPN_Chat_Store::transaction(static function()use($p,$s,$email){
                         global $wpdb;
                         $c=VPN_Chat_Store::conversation((string)($p['id']??''),true);VPN_Chat_Store::authorize($c,$s);

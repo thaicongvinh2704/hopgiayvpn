@@ -1,6 +1,12 @@
-# VPN Live Chat 1.10.0
+# VPN Live Chat 1.11.0
 
 Plugin độc lập cho WordPress, guest UI tiếng Anh, inbox sales tiếng Việt. PHP/WordPress REST + MySQL/MariaDB InnoDB + JavaScript thuần. ZIP chứa assets sẵn; production không chạy npm, Node, Redis hay WebSocket. Đây là bản MVP đã kiểm thử local; chưa phê duyệt production/pilot trên shared hosting.
+
+## 1.11.0 — Email bắt buộc trước khi nhắn, 17/10/2026
+
+Ô email hiện ngay trên composer, dùng `type=email`, `autocomplete=email`, không yêu cầu tên. API bắt buộc email hợp lệ khi tạo chat và trước tin nhắn khách trong hội thoại cũ chưa có email. Contact đang lưu có thể sửa thành email khác hợp lệ; không thể xóa thành rỗng. Email tự khai báo không xác minh danh tính hoặc cấp quyền lịch sử. Lời chào và câu trả lời về quyền riêng tư được cập nhật cùng chính sách; không tự đăng ký marketing.
+
+Căn giữa SVG trong cả nút gửi đầu tiên và nút gửi tiếp, bỏ tác động `justify-content:space-between` cũ. Giữ nháp khi gửi lỗi. Không đổi schema hay dữ liệu hội thoại cũ. Deploy cả thư mục plugin và purge cache để frontend/backend cùng phiên bản. Đã kiểm tra trên local; chưa đẩy Git hoặc triển khai hosting.
 
 ## 1.10.0 — Mở rộng kịch bản và email trực tiếp, 13/10/2026
 
