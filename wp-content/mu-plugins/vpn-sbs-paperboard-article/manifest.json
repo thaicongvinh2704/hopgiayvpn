@@ -1,0 +1,81 @@
+{
+  "title": "SBS Paperboard: Grades, Thickness, Printing and FBB Comparison",
+  "slug": "sbs-paperboard",
+  "status": "publish",
+  "excerpt": "Understand SBS paperboard grades, C1S and C2S coatings, thickness, GSM, printing options and FBB alternatives before ordering custom folding cartons.",
+  "category": {
+    "name": "Packaging Materials",
+    "slug": "packaging-materials"
+  },
+  "tags": [
+    "SBS Paperboard",
+    "Folding Cartons",
+    "FBB",
+    "Paperboard Thickness",
+    "C1S",
+    "C2S"
+  ],
+  "meta": {
+    "rank_math_title": "SBS Paperboard: Grades, Thickness & FBB Comparison",
+    "rank_math_description": "Learn what SBS paperboard is, compare C1S and C2S, understand thickness and GSM, and review SBS vs FBB before specifying custom folding cartons.",
+    "rank_math_focus_keyword": "sbs paperboard"
+  },
+  "content_sha256": "ed982ed4809bc4d5197f60dbcd1af8fafd3c7a08859d4336ab4cd723c7a2dc92",
+  "images": [
+    {
+      "file": "sbs-paperboard-grades-thickness-fbb-comparison.webp",
+      "title": "SBS Paperboard Grades and FBB Comparison",
+      "alt": "SBS paperboard samples with printed folding cartons and material measuring tools",
+      "caption": "Visual overview of paperboard samples, a folding carton and thickness-measuring tools.",
+      "featured": true,
+      "bytes": 97872,
+      "width": 1600,
+      "height": 900,
+      "sha256": "8b7b76d39519f327410efa2db031bb193146231729a86a99ed9a6585d2f0d723"
+    },
+    {
+      "file": "sbs-c1s-vs-c2s-surface-comparison.webp",
+      "title": "C1S and C2S Paperboard Surface Comparison",
+      "alt": "Comparison of coated one side and coated two sides SBS paperboard samples",
+      "caption": "C1S and C2S describe whether one or both faces are coated; confirm the exact grade with its supplier.",
+      "slot": 1,
+      "bytes": 93616,
+      "width": 1600,
+      "height": 900,
+      "sha256": "39bdf29506058d9359fe353587b297e6f82cf3275cef2e8e57daad8f53dea7cc"
+    },
+    {
+      "file": "sbs-paperboard-thickness-caliper-measurement.webp",
+      "title": "SBS Paperboard Caliper Measurement",
+      "alt": "Digital caliper checking the thickness of a white paperboard sample",
+      "caption": "Caliper measures physical board thickness; GSM measures mass per area, so the two specifications are not interchangeable.",
+      "slot": 2,
+      "bytes": 95212,
+      "width": 1600,
+      "height": 900,
+      "sha256": "aeef9367ec62bfb5ed60f047d2ef9fb36810a49a1163d7cf6a2da75b6e6fcb8b"
+    },
+    {
+      "file": "sbs-vs-fbb-board-cross-section.webp",
+      "title": "SBS and FBB Board Cross-Section Comparison",
+      "alt": "SBS and FBB paperboard cut edges shown side by side",
+      "caption": "Compare the named board construction with the supplier's data before approving a grade substitution.",
+      "slot": 3,
+      "bytes": 95184,
+      "width": 1600,
+      "height": 900,
+      "sha256": "dab8a42378523ee0391aaf890c1cdb4c028e981e197ad5b896ad00b5d481fafa"
+    },
+    {
+      "file": "sbs-printed-carton-crease-quality-check.webp",
+      "title": "Printed Folding Carton Crease Review",
+      "alt": "Printed folding carton sample inspected for ink finish and crease quality",
+      "caption": "Check print appearance and fold lines on a sample made with the intended board and finish.",
+      "slot": 4,
+      "bytes": 98318,
+      "width": 1600,
+      "height": 900,
+      "sha256": "a09dcd012d0996b40bf00caaabacdbd47332122d1d31456a075d3a1df771bd70"
+    }
+  ]
+}

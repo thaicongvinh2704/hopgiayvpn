@@ -1,0 +1,94 @@
+PHẦN 2: BẢNG METADATA CỦA BÀI VIẾT
+SEO và WordPress
+Trường	Nội dung
+Post Title / H1	SBS Paperboard: Grades, Thickness, Printing and FBB Comparison
+SEO Title	SBS Paperboard: Grades, Thickness & FBB Comparison
+Slug	sbs-paperboard
+Suggested URL	https://hopgiayvpn.com/sbs-paperboard/
+Primary Keyword	sbs paperboard
+SEO Focus Keyword	sbs paperboard
+SEO Meta Description	Learn what SBS paperboard is, compare C1S and C2S, understand thickness and GSM, and review SBS vs FBB before specifying custom folding cartons.
+Excerpt	Understand SBS paperboard grades, C1S and C2S coatings, thickness, GSM, printing options and FBB alternatives before ordering custom folding cartons.
+Category	Packaging Materials
+Tags	SBS Paperboard, Folding Cartons, FBB, Paperboard Thickness, C1S, C2S
+Secondary Keywords	solid bleached sulfate sbs paperboard; printed sbs paperboard; sbs paperboard specifications; what is sbs paperboard; is sbs paperboard recyclable; sbs vs fbb
+Semantic Entities	caliper, GSM, stiffness, grain direction, coating, bleached chemical pulp, MD/CD, CMYK, spot colours, die-cutting, creasing, recycling
+Featured Image Filename	sbs-paperboard-grades-thickness-fbb-comparison.webp
+Featured Image Alt Text	SBS paperboard samples and folding cartons showing material thickness and print surfaces
+Article DNA và chiến lược nội dung
+Trường	Nội dung
+Content Mode	Technical Explainer + Buyer Advisory
+Article Shape	Material Decision Guide + Specification Builder
+Voice Lens	Material sourcing / Prepress / QC
+Opening Device	Definition followed by specification problem
+Article DNA Summary	SBS là tên họ vật liệu, không phải thông số mua hàng hoàn chỉnh. Bài đi từ hiểu cấu tạo đến lựa chọn grade, kiểm tra kỹ thuật và chuẩn bị RFQ.
+Decision Path	Understand SBS → Choose coating → Interpret caliper → Compare FBB → Validate print and structure → Specify RFQ
+Evidence Mix	Manufacturer documentation, unit conversion, grade comparison, sample specification, conditional approval logic
+Signature Section	SBS Paperboard Specifications for a Packaging Quote
+Closing Device	Specification-based quotation CTA
+Content Fingerprint	SBS-MATERIAL-DECISION-CALIPER-FBB-QUOTE-V1
+Search Intent	Informational, secondary commercial investigation
+Intent Lock Summary	Giúp procurement và brand owner xác định vật liệu phù hợp trước khi hỏi báo giá hộp giấy
+Reader Profile	Packaging buyers, sourcing managers, importers, cosmetic and retail brands
+Reader Outcome Lock	Biết thông số nào cần yêu cầu và điều kiện nào phải kiểm tra bằng mẫu
+Page Type Recommendation	Informational blog
+Blog Role	Support material-selection journey leading to folding-carton category
+Unique Angle	Phân biệt GSM và caliper bằng dữ liệu grade cụ thể; kiểm tra equivalence khi thay grade; bảng RFQ thực dụng
+Information Gain	Bảng quy đổi pt–mm chính xác; ví dụ datasheet FBB thực; checklist phê duyệt board substitution; mẫu RFQ
+Query Fan-out Coverage	SBS definition, C1S/C2S, caliper, GSM, FBB comparison, print proof, end-use, recyclability
+AI Answerability Summary	Các câu hỏi có câu trả lời rõ, kèm điều kiện giới hạn, nguồn nhà sản xuất và ví dụ
+Unique Source Value	Technical data từ Smurfit Westrock và Metsä Board kết hợp logic chọn vật liệu cho hộp thực tế
+Structural Similarity Risk	Low–Medium: có chồng lấn nhẹ với buyer guide folding cartons của VPN
+Avoid Overlap With	Folding carton category; cosmetic packaging sourcing guide; paper materials guide
+CTA Link	https://hopgiayvpn.com/products/folding-carton-boxes/
+CTA Angle	Submit product specifications for a material and sample review
+Research và QA metadata
+Trường	Kết quả
+SERP Research Status	Completed — accessible search results
+SERP Validation Summary	Kết quả gồm trang nhà sản xuất giấy, trang giải thích vật liệu và các hướng dẫn so sánh SBS/FBB
+AI Search Research Status	Partial — không xác minh trực tiếp toàn bộ AI Overview/AI Mode
+AIO Presence Observation	Not directly observable
+Competitor Gap Used	Diễn giải từ góc độ RFQ, độ tương đương grade và kiểm tra mẫu
+Site Overlap Check	Completed for relevant publicly accessible pages
+Website Brand Facts Used	Yes — folding cartons and custom printed paper boxes
+Page-Specific Claim Used	Yes — khả năng phát triển folding cartons theo brief; không khẳng định mã grade có sẵn
+Internal Links Executed	2
+Source Context Risk	Low for cited technical facts; medium for unverified factory-specific details
+Claim Safety Mode	Conservative for grade availability and actual QC results
+AI Visibility Readiness	8.5/10, editorial assessment only
+Publish Risk	Medium until original evidence is supplied
+Human Review Needed	Yes — grade availability, factory photos, signed technical comment
+Hard Gate Result	Conditional
+Publish Readiness Score	88/100 — not yet cleared for publication
+
+PHẦN 3: BẢNG ẢNH VÀ VỊ TRÍ ĐẶT ẢNH
+Bài này nên có 1 featured image + 4 ảnh inline, vì hình ảnh có giá trị kỹ thuật thực sự khi giúp người đọc xem bề mặt, độ dày, mặt cắt và kết quả kiểm tra in.
+Ảnh	Filename	Alt text	Vị trí	Mục đích
+Featured	sbs-paperboard-grades-thickness-fbb-comparison.webp	SBS paperboard samples with printed folding cartons and material measuring tools	Thumbnail	Giới thiệu tổng thể chủ đề
+1	sbs-c1s-vs-c2s-surface-comparison.webp	Comparison of coated one side and coated two sides SBS paperboard samples	IMAGE_SLOT_1	Giúp khách hiểu hai mặt tráng phủ
+2	sbs-paperboard-thickness-caliper-measurement.webp	Digital caliper checking the thickness of a white paperboard sample	IMAGE_SLOT_2	Minh họa cách kiểm tra caliper
+3	sbs-vs-fbb-board-cross-section.webp	Verified SBS and FBB paperboard cut edges shown side by side	IMAGE_SLOT_3	Thể hiện khác biệt vật liệu
+4	sbs-printed-carton-crease-quality-check.webp	Printed folding carton sample inspected for ink finish and crease quality	IMAGE_SLOT_4	Minh họa QC và phê duyệt mẫu
+Tham chiếu hình ảnh cho đội chụp tại VPN
+
+
+
+
+
+
+
+
+
+Featured / ảnh 2: Bàn mẫu và dụng cụ đo
+
+
+
+
+
+
+
+
+
+Ảnh 1 / 3: Bề mặt và mặt cắt giấy
+
+Ảnh tham chiếu bên trên không được xem là ảnh xưởng VPN hoặc bằng chứng kiểm tra của VPN.
