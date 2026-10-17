@@ -1617,7 +1617,7 @@ function custom_box_handle_quote_form() {
     $quote_data['spam_score'] = 0;
     $quote_data['spam_reasons'] = array();
 
-    if (in_array($quote_source, array('paper_bag_ads_landing', 'custom_paper_bags_manufacturer', 'custom_pizza_boxes_manufacturer', 'website_email_popup'), true) && 'yes' !== $privacy_consent) {
+    if (in_array($quote_source, array('paper_bag_ads_landing', 'custom_paper_bags_manufacturer', 'custom_pizza_boxes_manufacturer'), true) && 'yes' !== $privacy_consent) {
         custom_box_quote_form_reject('consent', 400, array('validation' => 'landing_privacy_consent_required'));
     }
 
@@ -1710,8 +1710,11 @@ function custom_box_handle_quote_form() {
     }
 
     $quote_data['full_name'] = $full_name;
-    if (in_array($quote_source, array('custom_pizza_boxes_manufacturer', 'custom_paper_bags_manufacturer', 'website_email_popup'), true)) {
+    if (in_array($quote_source, array('custom_pizza_boxes_manufacturer', 'custom_paper_bags_manufacturer'), true)) {
         $quote_data['privacy_consent'] = $privacy_consent;
+    }
+    if ('website_email_popup' === $quote_source) {
+        $quote_data['contact_request_basis'] = 'quote_request_submission';
     }
 
     custom_box_quote_form_log(

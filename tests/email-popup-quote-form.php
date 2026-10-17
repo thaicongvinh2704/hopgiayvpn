@@ -3,7 +3,7 @@
 if ('cli' !== PHP_SAPI) { http_response_code(403); exit; }
 $case = $argv[1] ?? 'minimal';
 $expected = array('minimal'=>'success', 'canada'=>'success', 'attribution'=>'success', 'mail-failure'=>'received',
-    'missing-email'=>'missing', 'invalid-email'=>'missing', 'missing-country'=>'success', 'consent'=>'consent',
+    'missing-email'=>'missing', 'invalid-email'=>'missing', 'missing-country'=>'success', 'consent'=>'success', 'legacy-checkbox'=>'success',
     'invalid-nonce'=>'invalid', 'quantity'=>'success', 'fraction'=>'success', 'huge-quantity'=>'success',
     'duplicate'=>'duplicate', 'file-type'=>'file', 'file-size'=>'file', 'native'=>'success', 'other-source'=>'success');
 if (!isset($expected[$case])) { exit(2); }
@@ -28,7 +28,7 @@ $_POST=array('action'=>'custom_box_quote_form','quote_source'=>'website_email_po
     'response_format'=>'email_popup_json','form_location'=>'paper_bags_hero','form_anchor'=>'quote',
     '_wp_http_referer'=>custom_box_custom_paper_bags_url(),'current_page_url'=>custom_box_custom_paper_bags_url(),
     'product_name'=>'Custom paper bags','email'=>'paper-bag-qa@example.invalid','full_name'=>'','quantity'=>'',
-    'country'=>'','privacy_consent'=>'yes','website_url'=>'','custom_box_form_context'=>'quote',
+    'country'=>'','website_url'=>'','custom_box_form_context'=>'quote',
     'custom_box_form_started_at'=>$started,'custom_box_form_signature'=>custom_box_quote_form_timestamp_signature($started,'quote'),
     'custom_box_quote_nonce'=>wp_create_nonce('custom_box_quote_form'));
 if('canada'===$case){$_POST['country']='Canada';}
@@ -37,6 +37,7 @@ if('missing-email'===$case){$_POST['email']='';}
 if('invalid-email'===$case){$_POST['email']='invalid email';}
 if('missing-country'===$case){$_POST['country']='';}
 if('consent'===$case){unset($_POST['privacy_consent']);}
+if('legacy-checkbox'===$case){$_POST['privacy_consent']='yes';}
 if('invalid-nonce'===$case){$_POST['custom_box_quote_nonce']='bad';}
 if('quantity'===$case){$_POST['quantity']='999';}
 if('fraction'===$case){$_POST['quantity']='1000.5';}
@@ -44,7 +45,7 @@ if('huge-quantity'===$case){$_POST['quantity']='100000001';}
 if('file-type'===$case){$_FILES['artwork']=array('name'=>'bad.exe','size'=>4);}
 if('file-size'===$case){$_FILES['artwork']=array('name'=>'large.pdf','size'=>11*1024*1024);}
 if('native'===$case){$_POST['response_format']='';}
-if('other-source'===$case){$_POST['quote_source']='custom_pizza_boxes_manufacturer';$_POST['full_name']='Paper Bag QA';}
+if('other-source'===$case){$_POST['quote_source']='custom_pizza_boxes_manufacturer';$_POST['full_name']='Paper Bag QA';$_POST['privacy_consent']='yes';}
 $duplicate_key=custom_box_quote_form_duplicate_key($_POST['email'],'',$_POST['product_name'],$_POST['quantity']);
 $prior_duplicate=get_transient($duplicate_key);delete_transient($duplicate_key);
 if('duplicate'===$case){set_transient($duplicate_key,123,60);}
@@ -70,7 +71,9 @@ register_shutdown_function(static function()use($case,$expected,&$saved,&$errors
         $data=get_post_meta($id,'_custom_box_quote_data',true);
         if('private'!==get_post_status($id)){$errors[]='Lead not private';}
         if('Website email enquiry'!==($data['full_name']??'')&&'other-source'!==$case){$errors[]='Optional name fallback failed';}
-        if('yes'!==($data['privacy_consent']??'')){$errors[]='Consent not saved';}
+        if('other-source'===$case){
+            if('yes'!==($data['privacy_consent']??'')){$errors[]='Other form consent not saved';}
+        }elseif('quote_request_submission'!==($data['contact_request_basis']??'')||isset($data['privacy_consent'])){$errors[]='Popup submission basis not recorded accurately';}
         if('attribution'===$case){foreach(array('utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','gbraid','wbraid','referrer_url')as$key){if(($data[$key]??'')!==$_POST[$key]){$errors[]='Attribution missing: '.$key;}}}
         if('mail-failure'===$case&&'failed'!==get_post_meta($id,'_custom_box_quote_mail_status',true)){$errors[]='Wrong queued mail state';}
         wp_clear_scheduled_hook('custom_box_send_queued_quote_email',array($id));wp_delete_post($id,true);

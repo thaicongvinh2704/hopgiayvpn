@@ -7,6 +7,7 @@ Local implementation: desktop center modal and mobile bottom sheet. Uses the the
 - Stops after confirmed quote receipt; boolean cookie lasts one year. Form interaction suppresses the current visit; active chat also suppresses it.
 - Frequency is per browser/site; clearing storage or changing device resets it. No email or message is persisted in browser storage or sent to analytics.
 - Email uses native autocomplete=email. Actual suggestions depend on the visitor browser and its saved data.
+- Email is the only required field. The contact notice and privacy-policy link sit below the submit button; there is no consent checkbox. Saved popup leads record a quote-request submission, not a checked consent flag.
 - The public token endpoint refreshes WordPress form tokens on submission, including cached pages.
 - Local administrators can use the admin toolbar "Xem thử popup" to preview immediately without consuming a display allowance. The URL flag is ignored for guests and outside the local environment. Dismissing a preview keeps it closed until another preview page load. Diagnostic data attributes expose only the suppression reason and elapsed seconds, never contact data.
 - Legal, checkout, account, preview, 404, feed and admin views are excluded.

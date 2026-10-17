@@ -27,7 +27,8 @@ function check(name, ok) { checks.push({ name, passed: !!ok }); if (!ok) throw n
     await advance(page, 3000); await page.waitForFunction(() => document.querySelector('#vpn-email-popup').open);
     check('One appearance counted', (await state(page)).state.count === 1);
     check('Email native autofill', await page.locator('#vep-email').getAttribute('autocomplete') === 'email');
-    check('Consent starts unchecked', !await page.locator('.vep-consent input').isChecked());
+    check('No consent checkbox required', await page.locator('.vep-form input[type=checkbox]').count() === 0);
+    check('Contact notice below submit', await page.locator('.vep-submit + .vep-contact-notice').isVisible());
     check('Email not autofocused', await page.evaluate(() => document.activeElement.id !== 'vep-email'));
     check('Desktop photo visible', await page.locator('.vep-photo').isVisible());
     check('No horizontal overflow desktop', await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
@@ -53,7 +54,7 @@ function check(name, ok) { checks.push({ name, passed: !!ok }); if (!ok) throw n
     // Exercise error then confirmed receipt without sending a test email over HTTP.
     await mobile.page.route('**/wp-admin/admin-post.php', route => route.fulfill({ status: 503, contentType: 'application/json', body: JSON.stringify({ success: false, data: { status: 'failed' } }) }));
     await mobile.page.locator('#vep-email').fill('popup-browser-qa@example.invalid');
-    await mobile.page.locator('.vep-consent input').check(); await mobile.page.locator('.vep-submit').click();
+    await mobile.page.locator('.vep-submit').click();
     await mobile.page.waitForFunction(() => !document.querySelector('.vep-status').hidden);
     check('Failure preserves email', await mobile.page.locator('#vep-email').inputValue() === 'popup-browser-qa@example.invalid');
     check('Failure does not mark captured', !(await state(mobile.page)).state.captured);
@@ -63,6 +64,8 @@ function check(name, ok) { checks.push({ name, passed: !!ok }); if (!ok) throw n
     await mobile.page.locator('.vep-submit').click();
     await mobile.page.waitForFunction(() => document.querySelector('#vpn-email-popup').classList.contains('vep-saved'));
     check('Context sent with email', submitted.includes('website_email_popup') && submitted.includes('current_page_url'));
+    check('Email-only submission has no consent flag', !submitted.includes('privacy_consent'));
+    check('Contact notice hidden after receipt', !await mobile.page.locator('.vep-contact-notice').isVisible());
     check('Confirmed receipt suppresses future appearances', (await state(mobile.page)).state.captured);
     check('No PII in persistent state', !JSON.stringify(await state(mobile.page)).includes('example.invalid'));
     await mobile.page.goto(base); await advance(mobile.page);

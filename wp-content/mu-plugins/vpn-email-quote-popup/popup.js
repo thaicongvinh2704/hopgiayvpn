@@ -106,14 +106,14 @@ function vpnStartEmailPopup() {
       const response = await fetch(form.getAttribute('action'), { method: 'POST', credentials: 'same-origin', body: data, signal: controller.signal });
       const result = await response.json();
       if (!response.ok || !result.success || !/^vpn-quote-\d+$/.test(result.data?.receipt || '')) {
-        const messages = { missing: 'Please enter a valid email address.', consent: 'Please agree to be contacted about this request.', duplicate: 'This request was already received. Our team will contact you.', rate_limited: 'Please wait a few minutes and try again.' };
+        const messages = { missing: 'Please enter a valid email address.', duplicate: 'This request was already received. Our team will contact you.', rate_limited: 'Please wait a few minutes and try again.' };
         throw new Error(messages[result.data?.status] || 'We could not confirm your request. Please try again or email sales.vpn@hopgiayvpn.com.');
       }
       // Only a confirmed private record counts as received. Never store contact details in the browser.
       state.captured = true;
       try { persist(); } catch (_) {}
       document.cookie = cookie + '=1; Max-Age=31536000; Path=' + cfg.cookiePath + '; SameSite=Lax' + (location.protocol === 'https:' ? '; Secure' : '');
-      form.querySelectorAll('label,details,.vep-submit').forEach(node => { node.hidden = true; node.style.display = 'none'; });
+      form.querySelectorAll('label,details,.vep-submit,.vep-contact-notice').forEach(node => { node.hidden = true; node.style.display = 'none'; });
       form.reset(); dialog.classList.add('vep-saved');
       dialog.querySelector('h2').textContent = 'Thank you — request received.';
       dialog.querySelector('.vep-intro p').textContent = 'Our team will contact you about your packaging quote.';

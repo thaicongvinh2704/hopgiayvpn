@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VPN Website Email Quote Popup
  * Description: Sitewide, frequency-capped email enquiries using the shared private quote inbox.
- * Version: 1.0.1
+ * Version: 1.0.2
  */
 defined('ABSPATH') || exit;
 
@@ -81,9 +81,9 @@ add_action('wp_footer', function () {
                     <?php wp_nonce_field('custom_box_quote_form', 'custom_box_quote_nonce'); custom_box_quote_form_anti_spam_fields('quote'); ?>
                     <label class="vep-email-label" for="vep-email">Email <input id="vep-email" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" maxlength="254" placeholder="you@company.com" required></label>
                     <details class="vep-details"><summary><span aria-hidden="true">＋</span> Add project details <span class="vep-chevron" aria-hidden="true">⌄</span></summary><label for="vep-message">What packaging do you need? <span>(optional)</span></label><textarea id="vep-message" name="message" rows="3" maxlength="3000" placeholder="Product, size, quantity and delivery country…"></textarea></details>
-                    <label class="vep-consent"><input type="checkbox" name="privacy_consent" value="yes" required><span>I agree to be contacted about this request.<br><a href="<?php echo esc_url($privacy); ?>" target="_blank" rel="noopener">Privacy policy</a></span></label>
                     <p class="vep-status" role="status" aria-live="polite" hidden></p>
                     <button class="vep-submit" type="submit">Request a quote</button>
+                    <p class="vep-contact-notice">By submitting, you agree to be contacted about your enquiry. <a href="<?php echo esc_url($privacy); ?>" target="_blank" rel="noopener">Privacy policy</a></p>
                 </form>
                 <button type="button" class="vep-not-now">Not now</button>
             </div>
