@@ -11,6 +11,17 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/four-products-20261019-product-sync.php' => array(
+            'version' => 'four-products-20261019-v1',
+            'option' => 'custom_box_four_products_20261019_sync_version',
+            'slug' => 'custom-happy-birthday-gift-paper-bags',
+            'slugs' => array(
+                'custom-happy-birthday-gift-paper-bags',
+                'custom-brown-kraft-bakery-paper-bags',
+                'custom-printed-white-flat-paper-bags',
+                'custom-white-kraft-mailer-boxes',
+            ),
+        ),
         'inc/christmas-gift-boxes-20261001-product-sync.php' => array(
             'version' => '2026-10-01-christmas-v2',
             'option' => 'custom_box_christmas_gift_boxes_20261001_sync_version',
