@@ -131,8 +131,8 @@ $footer_social_links = array(
                     <li><a href="<?php echo esc_url($footer_shop_url); ?>"><?php esc_html_e('Products', 'custom-box-theme'); ?></a></li>
                     <li><a href="<?php echo esc_url($footer_blog_url); ?>"><?php esc_html_e('Blog', 'custom-box-theme'); ?></a></li>
                     <li><a href="<?php echo esc_url(home_url('/contact/')); ?>"><?php esc_html_e('Contact Us', 'custom-box-theme'); ?></a></li>
-                    <li><a href="<?php echo esc_url(home_url('/contact/#quote')); ?>"><?php esc_html_e('Request a Quote', 'custom-box-theme'); ?></a></li>
-                    <li><a href="<?php echo esc_url(home_url('/#faq')); ?>"><?php esc_html_e('Read FAQs', 'custom-box-theme'); ?></a></li>
+                    <li><a href="<?php echo esc_url($footer_is_paper_bags_landing ? '#quote' : home_url('/contact/#quote')); ?>"><?php esc_html_e('Request a Quote', 'custom-box-theme'); ?></a></li>
+                    <li><a href="<?php echo esc_url($footer_is_paper_bags_landing ? '#faq' : home_url('/#faq')); ?>"><?php esc_html_e('Read FAQs', 'custom-box-theme'); ?></a></li>
                 </ul>
             </details>
 
@@ -177,7 +177,7 @@ $footer_social_links = array(
     </div>
 </footer>
 
-<?php if (!is_page_template('page-contact.php') && !is_page('contact')) : ?>
+<?php if (!$footer_is_paper_bags_landing && !is_page_template('page-contact.php') && !is_page('contact')) : ?>
     <nav class="mobile-conversion-bar" aria-label="<?php esc_attr_e('Quick contact actions', 'custom-box-theme'); ?>" data-mobile-conversion-bar>
         <a class="mobile-conversion-bar__quote" href="<?php echo esc_url(home_url('/contact/#quote')); ?>">
             <i class="far fa-comment" aria-hidden="true"></i>

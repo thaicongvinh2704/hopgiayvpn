@@ -1,291 +1,145 @@
 (function () {
     'use strict';
-
-    var page = document.querySelector('.cpb-page');
     var form = document.getElementById('custom-paper-bags-quote-form');
-    var quickForm = document.querySelector('.cpb-quick-form');
-    var storageKey = 'vpn_custom_paper_bags_quote_draft_v1';
-    var successKey = 'vpn_custom_paper_bags_success_v1_' + window.location.pathname;
+    if (!form) return;
+    var message = document.getElementById('cpb-form-status');
+    var button = form.querySelector('[type="submit"]');
+    var buttonText = button.innerHTML;
+    var messages = (window.vpnPaperBagQuote || {}).messages || {};
+    var sourceKey = 'vpn_paper_bag_attribution_v2';
+    var receiptKey = 'vpn_paper_bag_receipts_v2';
+    var sourceFields = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid'];
+    var inFlight = false;
     var started = false;
-
-    function pushEvent(name, params) {
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push(Object.assign({ event: name }, params || {}));
+    var receipts = [];
+    function storage(method, key, value) {
+        try {
+            if (method === 'get') return JSON.parse(window.sessionStorage.getItem(key) || 'null');
+            window.sessionStorage.setItem(key, JSON.stringify(value));
+        } catch (e) { return null; }
     }
-
-    function eventLocation(element) {
-        var parent = element.closest('header, section, footer, .cpb-mobile-bar');
-        return parent ? (parent.id || parent.className.split(' ')[0]) : 'unknown';
+    receipts = storage('get', receiptKey) || [];
+    if (!Array.isArray(receipts)) receipts = [];
+    function track(event, params) {
+        // gtag events work with the site's existing tags; no GTM container is required.
+        var data = Object.assign({product_category: 'paper_bags', form_name: 'paper_bag_quote'}, params || {});
+        if (typeof window.gtag === 'function') window.gtag('event', event, data);
     }
-
-    document.querySelectorAll('[data-track]').forEach(function (element) {
-        element.addEventListener('click', function () {
-            var eventName = element.getAttribute('data-track');
-            pushEvent(eventName, {
-                cta_location: eventLocation(element),
-                product_category: 'paper_bags'
-            });
-        });
+    function attribution() {
+        var query = new URLSearchParams(window.location.search);
+        var incoming = sourceFields.some(function (key) { return query.has(key) && query.get(key); });
+        var saved = storage('get', sourceKey) || {};
+        // A new campaign replaces the previous attribution set rather than mixing old click IDs.
+        if (incoming) {
+            saved = {};
+            sourceFields.forEach(function (key) { saved[key] = (query.get(key) || '').slice(0, key.indexOf('utm_') === 0 ? 150 : 180); });
+            try { var ref = new URL(document.referrer); saved.referrer_url = (ref.origin + ref.pathname).slice(0, 500); } catch (e) { saved.referrer_url = ''; }
+            storage('set', sourceKey, saved);
+        }
+        if (!saved.referrer_url && document.referrer) {
+            try { var firstRef = new URL(document.referrer); saved.referrer_url = (firstRef.origin + firstRef.pathname).slice(0, 500); storage('set', sourceKey, saved); } catch (e) {}
+        }
+        sourceFields.concat(['referrer_url']).forEach(function (key) { if (form.elements[key]) form.elements[key].value = saved[key] || ''; });
+    }
+    function status(code, fallback) {
+        message.hidden = false;
+        message.dataset.status = code;
+        message.textContent = messages[code] || fallback || messages.failed || 'Please try again or email sales.vpn@hopgiayvpn.com.';
+    }
+    function busy(active) {
+        inFlight = active;
+        button.disabled = active;
+        button.innerHTML = active ? 'Sending your request…' : buttonText;
+        form.setAttribute('aria-busy', active ? 'true' : 'false');
+    }
+    function validate() {
+        var file = form.elements.artwork.files && form.elements.artwork.files[0];
+        form.elements.artwork.setCustomValidity('');
+        if (file && (file.size > 10 * 1024 * 1024 || !/\.(png|pdf|jpe?g|webp|docx?|gif|psd|cdr|eps)$/i.test(file.name))) {
+            form.elements.artwork.setCustomValidity(messages.file || 'Use a supported file no larger than 10MB.');
+        }
+        var hasSize = ['length', 'width', 'depth'].some(function (key) { return form.elements[key].value; });
+        form.elements.unit.setCustomValidity(hasSize && !form.elements.unit.value ? 'Please choose the unit for your dimensions.' : '');
+        var invalid = form.querySelector(':invalid');
+        if (invalid) {
+            var details = invalid.closest('details');
+            if (details) details.open = true;
+            form.reportValidity();
+            return false;
+        }
+        return true;
+    }
+    form.addEventListener('input', function (event) { event.target.setCustomValidity && event.target.setCustomValidity(''); });
+    form.addEventListener('change', function (event) { event.target.setCustomValidity && event.target.setCustomValidity(''); });
+    form.addEventListener('focusin', function () {
+        document.body.classList.add('cpb-form-focused');
+        if (!started) { track('paper_bag_form_start'); started = true; }
     });
-
-    function safeStorage(method, key, value) {
-        try {
-            if (method === 'get') {
-                return window.sessionStorage.getItem(key);
-            }
-            if (method === 'remove') {
-                window.sessionStorage.removeItem(key);
-                return null;
-            }
-            window.sessionStorage.setItem(key, value);
-        } catch (error) {
-            return null;
-        }
-        return value;
-    }
-
-    function fillAttributionFields() {
-        if (!form) {
-            return;
-        }
-
-        var params = new URLSearchParams(window.location.search);
-        ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'gclid', 'gbraid', 'wbraid'].forEach(function (key) {
-            var incoming = params.get(key);
-            if (incoming) {
-                safeStorage('set', 'vpn_custom_paper_bags_' + key, incoming.slice(0, 180));
-            }
-
-            var stored = safeStorage('get', 'vpn_custom_paper_bags_' + key);
-            var field = form.elements[key];
-            if (field && stored) {
-                field.value = stored;
-            }
-        });
-
-        if (form.elements.referrer_url && document.referrer) {
-            form.elements.referrer_url.value = document.referrer.slice(0, 500);
-        }
-    }
-
-    function saveDraft() {
-        if (!form) {
-            return;
-        }
-
-        var draft = {};
-        Array.prototype.forEach.call(form.elements, function (field) {
-            if (!field.name || field.type === 'file' || field.name.indexOf('nonce') !== -1 || field.name.indexOf('signature') !== -1) {
-                return;
-            }
-            draft[field.name] = field.type === 'checkbox' ? field.checked : field.value;
-        });
-        safeStorage('set', storageKey, JSON.stringify(draft));
-    }
-
-    function restoreDraft() {
-        if (!form || (page && page.getAttribute('data-quote-success') === '1')) {
-            return;
-        }
-
-        var stored = safeStorage('get', storageKey);
-        if (!stored) {
-            return;
-        }
-
-        try {
-            var draft = JSON.parse(stored);
-            Object.keys(draft).forEach(function (name) {
-                var field = form.elements[name];
-                if (!field || field.type === 'file') {
-                    return;
-                }
-                if (field.type === 'checkbox') {
-                    field.checked = Boolean(draft[name]);
-                } else if (!field.value && draft[name]) {
-                    field.value = draft[name];
-                }
-            });
-        } catch (error) {
-            safeStorage('remove', storageKey);
-        }
-    }
-
-    function showValidationErrors(invalidFields, customMessage) {
-        if (!form) {
-            return;
-        }
-
-        var summary = document.getElementById('cpb-form-errors');
-        if (!summary) {
-            return;
-        }
-
-        summary.innerHTML = '<strong>' + (customMessage || 'Please review the following fields:') + '</strong>';
-        if (invalidFields.length) {
-            var list = document.createElement('ul');
-            invalidFields.forEach(function (field) {
-                field.setAttribute('aria-invalid', 'true');
-                var label = form.querySelector('label[for="' + field.id + '"]');
-                var item = document.createElement('li');
-                var link = document.createElement('a');
-                link.href = '#' + field.id;
-                link.textContent = (label ? label.textContent.replace('*', '').trim() : field.name) + ': ' + (field.validationMessage || 'Please complete this field.');
-                item.appendChild(link);
-                list.appendChild(item);
-            });
-            summary.appendChild(list);
-        }
-        summary.hidden = false;
-        summary.focus();
-    }
-
+    form.addEventListener('focusout', function () {
+        window.setTimeout(function () { if (!form.contains(document.activeElement)) document.body.classList.remove('cpb-form-focused'); }, 0);
+    });
     document.querySelectorAll('[data-bag-type]').forEach(function (link) {
         link.addEventListener('click', function () {
-            if (!form || !form.elements.product_name) {
-                return;
-            }
-            form.elements.product_name.value = link.getAttribute('data-bag-type') || '';
+            form.elements.product_name.value = link.dataset.bagType;
+            track('paper_bag_select_style', {bag_style: link.dataset.bagType});
         });
     });
-
-    if (form) {
-        fillAttributionFields();
-        restoreDraft();
-
-        form.addEventListener('focusin', function () {
-            if (!started) {
-                started = true;
-                safeStorage('remove', successKey);
-                pushEvent('paper_bag_form_start', { form_name: 'custom_paper_bags_quote' });
-            }
+    document.querySelectorAll('[data-track]').forEach(function (element) {
+        element.addEventListener('click', function () { track(element.dataset.track, {cta_location: element.closest('section,header,nav')?.id || 'navigation'}); });
+    });
+    document.querySelectorAll('a[href="#quote"]').forEach(function (link) {
+        link.addEventListener('click', function () {
+            var heading = document.getElementById('cpb-quote-title');
+            heading.setAttribute('tabindex', '-1');
+            heading.focus({preventScroll: true});
         });
-
-        form.addEventListener('input', function (event) {
-            event.target.removeAttribute('aria-invalid');
-            saveDraft();
-        });
-        form.addEventListener('change', function (event) {
-            saveDraft();
-            if (event.target.type === 'file' && event.target.files && event.target.files.length) {
-                var file = event.target.files[0];
-                pushEvent('paper_bag_file_upload', {
-                    form_name: 'custom_paper_bags_quote',
-                    file_type: file.name.split('.').pop().toLowerCase(),
-                    file_size_bucket: file.size > 5242880 ? '5mb_plus' : 'under_5mb'
-                });
-            }
-        });
-
-        form.addEventListener('submit', function (event) {
-            fillAttributionFields();
-            var invalidFields = Array.prototype.filter.call(form.querySelectorAll('input, select, textarea'), function (field) {
-                return !field.checkValidity();
-            });
-            var fileField = form.elements.artwork;
-            var fileError = '';
-            if (fileField && fileField.files && fileField.files.length) {
-                var file = fileField.files[0];
-                var extension = file.name.split('.').pop().toLowerCase();
-                if (file.size > 10 * 1024 * 1024 || ['png', 'pdf', 'jpg', 'jpeg', 'webp', 'doc', 'docx', 'gif', 'psd', 'cdr', 'eps'].indexOf(extension) === -1) {
-                    fileError = 'Please upload a supported artwork file no larger than 10MB.';
-                    invalidFields.push(fileField);
-                }
-            }
-
-            if (invalidFields.length || fileError) {
-                event.preventDefault();
-                event.stopPropagation();
-                showValidationErrors(invalidFields, fileError || null);
-                invalidFields[0].focus();
+    });
+    attribution();
+    if (window.IntersectionObserver) {
+        new IntersectionObserver(function (entries) {
+            document.body.classList.toggle('cpb-form-in-view', entries[0].isIntersecting);
+        }).observe(document.getElementById('quote'));
+    }
+    if (!window.fetch || !window.FormData || !window.AbortController) return; // Native POST remains available.
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        if (inFlight || !validate()) return;
+        attribution();
+        var data = new FormData(form);
+        data.set('response_format', 'paper_bag_json');
+        var controller = new AbortController();
+        var timer = window.setTimeout(function () { controller.abort(); }, 45000);
+        busy(true);
+        status('pending', 'Sending your request…');
+        try {
+            var response = await fetch(form.getAttribute('action'), {method: 'POST', body: data, credentials: 'same-origin', headers: {'Accept': 'application/json'}, signal: controller.signal});
+            var result = await response.json();
+            if (!response.ok || result.success !== true) {
+                status(result.data && result.data.status || 'failed');
+                track('paper_bag_form_error', {error_type: result.data && result.data.status || 'failed'});
                 return;
             }
-
-            saveDraft();
-            form.classList.add('is-submitting');
-            form.setAttribute('aria-busy', 'true');
-            var submitButton = form.querySelector('[type="submit"]');
-            if (submitButton) {
-                submitButton.disabled = true;
-                submitButton.textContent = 'Sending…';
+            var receipt = result.data && result.data.receipt;
+            if (!/^vpn-quote-\d+$/.test(receipt || '') || !['success', 'received'].includes(result.data.status)) throw new Error('Unconfirmed receipt');
+            status(result.data.status);
+            if (!receipts.includes(receipt)) {
+                // Conversion follows server-confirmed storage, including an email queued for retry.
+                track('generate_lead', {quote_id: receipt});
+                if (typeof window.gtag === 'function') window.gtag('event', 'conversion', {send_to: 'AW-18190091085/6FzwCNKm0NscEM2G2-FD', transaction_id: receipt});
+                receipts.push(receipt);
+                receipts = receipts.slice(-50);
+                storage('set', receiptKey, receipts);
             }
-        });
-    }
-
-    if (quickForm && !quickForm.dataset.quickQuoteReady) {
-        quickForm.dataset.quickQuoteReady = '1';
-        var quickIframeName = 'cpb_quick_quote_' + Date.now();
-        var quickIframe = document.createElement('iframe');
-        var quickSubmitted = false;
-        var quickButton = quickForm.querySelector('button[type="submit"]');
-        var quickMessage = quickForm.parentNode.querySelector('.cpb-quick-message');
-
-        quickIframe.name = quickIframeName;
-        quickIframe.hidden = true;
-        quickIframe.style.display = 'none';
-        quickIframe.title = 'Quick quote submission';
-        quickForm.parentNode.appendChild(quickIframe);
-
-        quickForm.addEventListener('submit', function (event) {
-            event.preventDefault();
-            quickForm.target = quickIframeName;
-            quickSubmitted = true;
-
-            if (quickMessage) {
-                quickMessage.hidden = false;
-                quickMessage.className = 'cpb-quick-message cpb-quick-message-pending';
-                quickMessage.textContent = 'Sending your request...';
-            }
-            if (quickButton) {
-                quickButton.disabled = true;
-            }
-
-            HTMLFormElement.prototype.submit.call(quickForm);
-        });
-
-        quickIframe.addEventListener('load', function () {
-            var status = '';
-            if (!quickSubmitted) {
-                return;
-            }
-
-            try {
-                status = new URL(quickIframe.contentWindow.location.href).searchParams.get('quote_status') || '';
-            } catch (error) {
-                status = '';
-            }
-
-            if (
-                'success' === status &&
-                !window.__vpnGoogleAdsQuoteConversionSent &&
-                typeof window.gtag === 'function'
-            ) {
-                window.gtag('event', 'conversion', {
-                    send_to: 'AW-18190091085/6FzwCNKm0NscEM2G2-FD'
-                });
-                window.__vpnGoogleAdsQuoteConversionSent = true;
-            }
-
-            if (quickMessage) {
-                quickMessage.hidden = false;
-                quickMessage.className = 'cpb-quick-message cpb-quick-message-' + (status || 'failed');
-                quickMessage.textContent = 'success' === status
-                    ? 'Thank you. Your quote request has been sent successfully.'
-                    : ('captcha' === status
-                        ? 'Security verification could not be completed. Please reload the page and try again.'
-                        : 'Sorry, we could not send your request right now. Please try again later.');
-            }
-
-            quickSubmitted = false;
-            if (quickButton) {
-                quickButton.disabled = false;
-            }
-        });
-    }
-
-    if (page && page.getAttribute('data-quote-success') === '1' && !safeStorage('get', successKey)) {
-        pushEvent('paper_bag_quote_submit_success', { form_name: 'custom_paper_bags_quote', product_category: 'paper_bags' });
-        safeStorage('set', successKey, '1');
-        safeStorage('remove', storageKey);
-    }
+            form.reset();
+            attribution();
+            form.elements['g-recaptcha-response'] && (form.elements['g-recaptcha-response'].value = '');
+            message.focus();
+        } catch (error) {
+            status('connection', 'We could not confirm the response. Your request may have been received. Please email sales.vpn@hopgiayvpn.com before resending.');
+            track('paper_bag_form_error', {error_type: 'connection'});
+        } finally {
+            window.clearTimeout(timer);
+            busy(false);
+        }
+    });
 }());
