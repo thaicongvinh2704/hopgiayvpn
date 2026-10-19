@@ -18,7 +18,7 @@ $factory_three = custom_box_get_local_image_data('anh-nha-may-3.webp', 'product-
                 <p class="vpn-profile-small-title">COMPANY PROFILE</p>
                 <h2 id="vpn-company-profile-title">VPN Paper Box Manufacturer</h2>
                 <p>
-                    VPN Paper Box Manufacturer is a professional packaging manufacturer based in Vietnam, specializing in custom paper boxes, paper bags, and fabric bags. With the advantage of being a direct factory, we provide optimized packaging solutions in terms of cost, quality, and lead time. Our team consists of experienced professionals in design, engineering, and production, ensuring every product meets high standards before reaching our customers. We offer a one-stop packaging solution from design and sampling to mass production, serving businesses, brands, and distributors both domestically and internationally.
+                    VPN Paper Box Manufacturer is a paper box factory in Vietnam serving brands, importers, distributors and retailers worldwide. As your paper box supplier, we develop packaging around your product, artwork and order quantity. Our range includes custom paper boxes, printed paper bags and fabric bags, with design support, sampling and quality checks at each production stage. For bulk custom paper boxes and wholesale orders, we review the structure, materials, printing and packing before production. Explore our <a href="<?php echo esc_url(home_url('/custom-packaging-boxes-manufacturer/')); ?>">custom box manufacturing options</a> or <a href="<?php echo esc_url(home_url('/custom-paper-bags-manufacturer/')); ?>">custom paper bag manufacturing options</a> to discuss your packaging requirements.
                 </p>
             </div>
 

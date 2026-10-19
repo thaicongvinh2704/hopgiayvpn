@@ -383,11 +383,11 @@ function custom_box_get_packaging_quote_thank_you_page_description() {
 }
 
 function custom_box_get_home_seo_title() {
-    return 'VPN Paper Box Manufacturer | Custom Paper Boxes Factory';
+    return 'Paper Box Manufacturer in Vietnam | Custom Boxes | VPN';
 }
 
 function custom_box_get_home_seo_description() {
-    return 'VPN Paper Box Manufacturer in Vietnam for custom rigid boxes, gift boxes, cosmetic packaging, paper bags, and factory-direct export packaging solutions.';
+    return 'Paper box manufacturer in Vietnam for custom rigid boxes, folding cartons and paper bags. Design support, approved samples and bulk orders. Request a quote.';
 }
 
 function custom_box_get_products_hub_title() {

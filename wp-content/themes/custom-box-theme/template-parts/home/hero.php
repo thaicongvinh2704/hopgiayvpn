@@ -32,7 +32,7 @@
             <!-- CTA -->
             <div class="hero-buttons" data-home-hero-actions>
                 <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>" class="btn-primary" data-primary-quote-action>Get Instant Quote</a>
-                <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>" class="btn-outline" data-secondary-sample-action>Request Free Sample</a>
+                <a href="<?php echo esc_url(home_url('/contact/#quote')); ?>" class="btn-outline" data-secondary-sample-action>Request Custom Sample</a>
             </div>
 
         </div>
