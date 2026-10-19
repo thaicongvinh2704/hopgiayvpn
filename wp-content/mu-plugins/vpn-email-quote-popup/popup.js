@@ -72,6 +72,7 @@ function vpnStartEmailPopup() {
       if (!state || blocked()) return;
       previousFocus = document.activeElement;
       dialog.showModal(); document.documentElement.classList.add('vep-open');
+      prepareInbox().catch(() => {});
       if (preview) { previewShown = true; }
       else { state.last = Date.now(); state.shownAt.push(state.last); state.count = state.shownAt.length; visit.shown = true; persist(); }
     };
@@ -90,6 +91,7 @@ function vpnStartEmailPopup() {
   }, 1000);
   document.addEventListener('visibilitychange', () => { lastTick = Date.now(); });
   let pendingQuote = null;
+  let inboxSession = null, preparingInbox = null;
   const messages = {
     email_required: 'Please enter your email address.', invalid_email: 'Please enter a valid email address.',
     invalid_text: 'Please keep the project details within 1,000 characters.',
@@ -104,17 +106,43 @@ function vpnStartEmailPopup() {
     if (csrf) headers['X-VPN-CSRF'] = csrf;
     const response = await fetch(url, { method: 'POST', credentials: 'same-origin', headers, body: JSON.stringify(payload), signal });
     const result = await response.json();
-    if (!response.ok) throw new Error(messages[result.code] || 'We could not save your request. Please try again shortly.');
+    if (!response.ok) {
+      const error = new Error(messages[result.code] || 'We could not save your request. Please try again shortly.');
+      error.code = result.code;
+      throw error;
+    }
     return result;
   }
+  async function prepareInbox() {
+    if (inboxSession && Date.now() - inboxSession.readyAt < 5 * 60000) return inboxSession;
+    if (preparingInbox) return preparingInbox;
+    dialog.dataset.vepInboxReady = '0';
+    preparingInbox = (async () => {
+      const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 12000);
+      try {
+        let bootstrapUrl = cfg.bootstrapUrl, inboxUrl = cfg.inboxUrl;
+        // Older cached HTML can still discover the endpoints without breaking delivery.
+        if (!bootstrapUrl || !inboxUrl) {
+          const response = await fetch(cfg.tokenUrl, { credentials: 'same-origin', cache: 'no-store', signal: controller.signal });
+          const session = await response.json();
+          if (!response.ok || !session.success || session.data?.delivery !== 'customer_inbox') throw new Error('unavailable');
+          bootstrapUrl = session.data.bootstrap_url; inboxUrl = session.data.inbox_url;
+        }
+        const boot = await inboxRequest(bootstrapUrl, {}, controller.signal);
+        if (typeof boot.csrf !== 'string' || !boot.csrf) throw new Error('unavailable');
+        inboxSession = { inboxUrl, csrf: boot.csrf, readyAt: Date.now() };
+        dialog.dataset.vepInboxReady = '1';
+        return inboxSession;
+      } finally { clearTimeout(timeout); }
+    })().finally(() => { preparingInbox = null; });
+    return preparingInbox;
+  }
+  form.addEventListener('focusin', () => { prepareInbox().catch(() => {}); });
   form.addEventListener('submit', async event => {
     event.preventDefault(); if (form.dataset.sending || !form.reportValidity()) return;
     form.dataset.sending = '1'; const button = form.querySelector('[type="submit"]'); button.disabled = true; button.textContent = 'Sending…'; status.hidden = true;
     const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 25000);
     try {
-      const tokenResponse = await fetch(cfg.tokenUrl, { credentials: 'same-origin', cache: 'no-store', signal: controller.signal });
-      const session = await tokenResponse.json();
-      if (!tokenResponse.ok || !session.success || session.data?.delivery !== 'customer_inbox') throw new Error('unavailable');
       const metadata = {}, query = new URLSearchParams(location.search);
       for (const field of ['utm_source', 'utm_medium', 'utm_campaign']) if (query.has(field)) metadata[field] = query.get(field).slice(0, 100);
       const payload = { email: form.elements.email.value.trim(), message: form.elements.message.value.trim(),
@@ -122,9 +150,16 @@ function vpnStartEmailPopup() {
       const fingerprint = JSON.stringify(payload);
       if (!pendingQuote || pendingQuote.fingerprint !== fingerprint) pendingQuote = { fingerprint, client: 'popup-' + crypto.randomUUID().replaceAll('-', '') };
       payload.client_message_id = pendingQuote.client;
-      const boot = await inboxRequest(session.data.bootstrap_url, {}, controller.signal);
-      if (typeof boot.csrf !== 'string' || !boot.csrf) throw new Error('unavailable');
-      const result = await inboxRequest(session.data.inbox_url, payload, controller.signal, boot.csrf);
+      let session = await prepareInbox();
+      let result;
+      try {
+        result = await inboxRequest(session.inboxUrl, payload, controller.signal, session.csrf);
+      } catch (error) {
+        if (!['session_expired', 'csrf_required'].includes(error.code)) throw error;
+        inboxSession = null;
+        session = await prepareInbox();
+        result = await inboxRequest(session.inboxUrl, payload, controller.signal, session.csrf);
+      }
       if (result.saved !== true || !/^vpn-inbox-[a-f0-9-]{36}-\d+$/.test(result.receipt || '')) throw new Error('unavailable');
       // Receipt is returned only after the private inbox transaction commits.
       state.captured = true;

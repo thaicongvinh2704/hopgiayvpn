@@ -7,6 +7,7 @@ const out = path.join(__dirname, 'results/popup-inbox'); fs.mkdirSync(out, { rec
 const checks = [];
 const marker = Date.now();
 let firstEmail = '';
+const timings = [];
 const check = (value, name) => { if (!value) throw Error(name); checks.push(name); };
 (async () => {
   const browser = await chromium.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: true });
@@ -16,15 +17,21 @@ const check = (value, name) => { if (!value) throw Error(name); checks.push(name
       await context.route('**/*', r => new URL(r.request().url()).hostname === '127.0.0.1' ? r.continue() : r.abort());
       await context.addInitScript(() => { let cfg; Object.defineProperty(window, 'vpnEmailPopup', { configurable: true, get: () => cfg, set: v => { cfg = { ...v, preview: '1' }; } }); });
       const page = await context.newPage();
+      const postRequests = [];
+      page.on('request', request => { if (request.method() === 'POST') postRequests.push(request.url()); });
       await page.goto(base + '/', { waitUntil: 'domcontentloaded' });
       await page.waitForFunction(() => document.querySelector('#vpn-email-popup')?.open);
+      await page.waitForFunction(() => document.querySelector('#vpn-email-popup').dataset.vepInboxReady === '1');
       check(await page.locator('#vep-email').getAttribute('autocomplete') === 'email', width + ': real page preserves saved email suggestions');
       const email = 'popup-http-' + width + '-' + marker + '@example.invalid';
       if (width === 1440) firstEmail = email;
       await page.locator('#vep-email').fill(email);
+      postRequests.length = 0; const clickedAt = Date.now();
       const responsePromise = page.waitForResponse(r => r.url().includes('/guest/email-quote') && r.request().method() === 'POST');
       await page.locator('.vep-submit').click(); const response = await responsePromise; const result = await response.json();
       check(response.status() === 200 && result.saved === true && result.receipt.startsWith('vpn-inbox-'), width + ': real HTTP saves inbox message');
+      timings.push({ width, click_to_receipt_ms: Date.now() - clickedAt });
+      check(postRequests[0]?.includes('/guest/email-quote'), width + ': first request after Send is the actual save, not session preparation');
       await page.locator('#vpn-email-popup.vep-saved').waitFor();
       check(await page.locator('.vep-status').innerText() === 'Your request has been saved.', width + ': receipt success visible');
       await page.screenshot({ path: path.join(out, 'success-' + width + '.png') });
@@ -49,5 +56,5 @@ const check = (value, name) => { if (!value) throw Error(name); checks.push(name
     await admin.close();
   } finally { await browser.close(); }
   fs.writeFileSync(path.join(out, 'checks.json'), JSON.stringify(checks, null, 2));
-  console.log(JSON.stringify({ passed: checks.length, checks }, null, 2));
+  console.log(JSON.stringify({ passed: checks.length, timings, checks }, null, 2));
 })().catch(error => { console.error(error); process.exitCode = 1; });

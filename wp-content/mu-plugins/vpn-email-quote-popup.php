@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VPN Website Email Quote Popup
  * Description: Sitewide, frequency-capped email enquiries saved in the VPN customer inbox.
- * Version: 1.1.0
+ * Version: 1.2.0
  */
 defined('ABSPATH') || exit;
 
@@ -48,6 +48,8 @@ add_action('wp_enqueue_scripts', function () {
         'scope' => vpn_email_popup_scope(),
         'cookiePath' => wp_parse_url(home_url('/'), PHP_URL_PATH) ?: '/',
         'tokenUrl' => admin_url('admin-ajax.php?action=vpn_email_popup_token'),
+        'bootstrapUrl' => rest_url('vpn-chat/v1/bootstrap'),
+        'inboxUrl' => rest_url('vpn-chat/v1/guest/email-quote'),
         'preview' => vpn_email_popup_preview_allowed() && isset($_GET['vpn_popup_preview']) && '1' === $_GET['vpn_popup_preview'],
     ));
 });

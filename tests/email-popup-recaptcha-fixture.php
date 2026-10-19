@@ -78,4 +78,5 @@ echo '<!doctype html><html><head><title>Popup regression</title></head><body><h1
 custom_box_print_recaptcha_v3_submit_handler();
 foreach ($actions['wp_footer'][90] as $callback) { $callback(); }
 echo '<form id="other-quote"><input name="action" value="custom_box_quote_form" type="hidden"><button type="submit">Other quote</button></form>';
-echo '<script>window.vpnEmailPopup={scope:"regression",cookiePath:"/",tokenUrl:"/session",preview:"1"};</script><script src="/popup.js"></script></body></html>';
+$urls = ($argv[2] ?? '') === 'cached-config' ? '' : ',bootstrapUrl:"/wp-json/vpn-chat/v1/bootstrap",inboxUrl:"/wp-json/vpn-chat/v1/guest/email-quote"';
+echo '<script>window.vpnEmailPopup={scope:"regression",cookiePath:"/",tokenUrl:"/session",preview:"1"' . $urls . '};</script><script src="/popup.js"></script></body></html>';

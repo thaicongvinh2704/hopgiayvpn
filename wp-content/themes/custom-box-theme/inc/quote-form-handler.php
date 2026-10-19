@@ -1424,17 +1424,24 @@ function custom_box_save_quote_request($quote_data, $attachments) {
     return $quote_id;
 }
 
-function custom_box_schedule_quote_email($quote_id) {
+function custom_box_schedule_quote_email($quote_id, $delay = 0) {
+    $quote_id = absint($quote_id);
     if ('sent' === get_post_meta((int) $quote_id, '_custom_box_quote_mail_status', true)) {
         return true;
     }
 
-    if (function_exists('as_enqueue_async_action')) {
-        return (bool) as_enqueue_async_action('custom_box_send_queued_quote_email', array($quote_id), 'custom-box-theme');
+    if (!$delay && function_exists('as_enqueue_async_action')) {
+        try {
+            if (as_enqueue_async_action('custom_box_send_queued_quote_email', array($quote_id), 'custom-box-theme', true)) { return true; }
+            if (function_exists('as_has_scheduled_action') && as_has_scheduled_action('custom_box_send_queued_quote_email', array($quote_id), 'custom-box-theme')) { return true; }
+        } catch (Throwable $e) {
+            custom_box_quote_form_log('mail_queue_fallback', array('quote_id' => $quote_id));
+        }
     }
 
     if (!wp_next_scheduled('custom_box_send_queued_quote_email', array($quote_id))) {
-        return wp_schedule_single_event(time() + 10, 'custom_box_send_queued_quote_email', array($quote_id));
+        $result = wp_schedule_single_event(time() + max(10, (int) $delay), 'custom_box_send_queued_quote_email', array($quote_id), true);
+        return !is_wp_error($result) && (bool) $result;
     }
 
     return true;
@@ -1488,8 +1495,11 @@ function custom_box_send_queued_quote_email($quote_id) {
     };
 
     add_action('wp_mail_failed', $mail_failure_listener);
-    $sent = wp_mail($recipient, $email['subject'], $email['body'], $email['headers'], $attachments);
-    remove_action('wp_mail_failed', $mail_failure_listener);
+    try {
+        $sent = wp_mail($recipient, $email['subject'], $email['body'], $email['headers'], $attachments);
+    } finally {
+        remove_action('wp_mail_failed', $mail_failure_listener);
+    }
 
     $attempts = (int) get_post_meta($quote_id, '_custom_box_quote_mail_attempts', true) + 1;
 
@@ -1521,7 +1531,48 @@ function custom_box_send_queued_quote_email($quote_id) {
 
     return (bool) $sent;
 }
-add_action('custom_box_send_queued_quote_email', 'custom_box_send_queued_quote_email');
+/** Background-only delivery; a connection failure never strands the visitor's form. */
+function custom_box_process_queued_quote_email($quote_id) {
+    global $wpdb;
+    $quote_id = absint($quote_id);
+    if (!$quote_id || 'custom_box_quote' !== get_post_type($quote_id) || 'sent' === get_post_meta($quote_id, '_custom_box_quote_mail_status', true) || (int) get_post_meta($quote_id, '_custom_box_quote_mail_attempts', true) >= 5) { return; }
+    $lock_name = 'custom_box_quote_mail_lock_' . $quote_id;
+    $lock_value = time() . ':' . wp_generate_uuid4();
+    $release = static function ($value) use ($wpdb, $lock_name) {
+        // Compare the owner token so an expired worker cannot remove a newer worker's lock.
+        $wpdb->query($wpdb->prepare("DELETE FROM {$wpdb->options} WHERE option_name=%s AND option_value=%s", $lock_name, $value));
+        wp_cache_delete($lock_name, 'options');
+    };
+    $old = get_option($lock_name, '');
+    if ($old && (int) $old < time() - 300) { $release($old); }
+    if (!add_option($lock_name, $lock_value, '', false)) {
+        custom_box_schedule_quote_email($quote_id, 60);
+        return;
+    }
+    $attempts_before = (int) get_post_meta($quote_id, '_custom_box_quote_mail_attempts', true);
+    $timeout = static function ($mailer) { $mailer->Timeout = 20; $mailer->Timelimit = 20; };
+    add_action('phpmailer_init', $timeout, PHP_INT_MAX);
+    try {
+        try {
+            $sent = custom_box_send_queued_quote_email($quote_id);
+        } catch (Throwable $e) {
+            $sent = false;
+            update_post_meta($quote_id, '_custom_box_quote_mail_status', 'failed');
+            update_post_meta($quote_id, '_custom_box_quote_mail_error', 'Email transport failed unexpectedly.');
+            update_post_meta($quote_id, '_custom_box_quote_mail_attempts', $attempts_before + 1);
+        }
+        $attempts = (int) get_post_meta($quote_id, '_custom_box_quote_mail_attempts', true);
+        if (!$sent && 'failed' === get_post_meta($quote_id, '_custom_box_quote_mail_status', true) && $attempts < 5) {
+            if (!custom_box_schedule_quote_email($quote_id, min(900, 60 * (2 ** max(0, $attempts - 1))))) {
+                update_post_meta($quote_id, '_custom_box_quote_mail_status', 'schedule_failed');
+            }
+        }
+    } finally {
+        remove_action('phpmailer_init', $timeout, PHP_INT_MAX);
+        $release($lock_value);
+    }
+}
+add_action('custom_box_send_queued_quote_email', 'custom_box_process_queued_quote_email');
 
 function custom_box_handle_quote_form() {
     custom_box_quote_form_log('request_received', array('method' => isset($_SERVER['REQUEST_METHOD']) ? sanitize_text_field(wp_unslash($_SERVER['REQUEST_METHOD'])) : ''));
@@ -1749,41 +1800,22 @@ function custom_box_handle_quote_form() {
     custom_box_quote_form_log('quote_saved', array('quote_id' => $quote_id));
     do_action('custom_box_quote_saved', $quote_id);
 
-    $sent = custom_box_send_queued_quote_email($quote_id);
+    // Acknowledge the persisted enquiry without waiting for an SMTP connection.
+    if (!custom_box_schedule_quote_email($quote_id)) {
+        update_post_meta($quote_id, '_custom_box_quote_mail_status', 'schedule_failed');
+        custom_box_quote_form_log('mail_schedule_failed', array('quote_id' => $quote_id));
+    }
 
     // A saved lead is received even when email needs retrying. Return only a receipt, never contact data.
     if (in_array($quote_source, array('custom_paper_bags_manufacturer', 'website_email_popup'), true)) {
-        if (!$sent && !custom_box_schedule_quote_email($quote_id)) {
-            update_post_meta($quote_id, '_custom_box_quote_mail_status', 'schedule_failed');
-        }
         if (custom_box_quote_json_request()) {
             nocache_headers();
             wp_send_json(array('success' => true, 'data' => array(
-                'status' => $sent ? 'success' : 'received',
+                'status' => 'received',
                 'receipt' => 'vpn-quote-' . (int) $quote_id,
             )));
         }
-        custom_box_quote_form_redirect($sent ? 'success' : 'received');
-    }
-
-    if (!$sent) {
-        if (!custom_box_schedule_quote_email($quote_id)) {
-            update_post_meta($quote_id, '_custom_box_quote_mail_status', 'schedule_failed');
-        }
-
-        // The lead is already stored even if the hosting mail transport fails.
-        if ('custom_pizza_boxes_manufacturer' === $quote_source) {
-            custom_box_quote_form_redirect('received');
-        }
-
-        custom_box_quote_form_reject(
-            'failed',
-            500,
-            array(
-                'quote_id'    => $quote_id,
-                'mail_status' => get_post_meta($quote_id, '_custom_box_quote_mail_status', true),
-            )
-        );
+        custom_box_quote_form_redirect('received');
     }
 
     if ('paper_box_manufacturer' === $quote_source) {

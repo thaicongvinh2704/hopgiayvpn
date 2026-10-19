@@ -1,5 +1,9 @@
 # Local test harness
 
+## Gửi form nhanh / email chạy nền
+
+`php tests/live-chat/fast-quote-submit.php` kiểm tra handler thật và worker email trên DB riêng 3311 (60 checks, mail bị chặn). Popup chuẩn bị phiên trước khi khách bấm: bộ `node tests/email-popup-inbox-browser.cjs` hiện có 106 checks, và HTTP thật `node tests/live-chat/popup-inbox-http.cjs` có 12 checks kèm thời gian nhận. Xem `docs/fast-form-submission-20261019.md`; các số checks ở phần release cũ bên dưới là lịch sử.
+
 ## 1.12.0 — Popup vào hộp thư khách hàng
 
 `php tests/live-chat/popup-inbox.php` kiểm tra REST/storage thật trên DB riêng 3311 (32 checks); `node tests/email-popup-inbox-browser.cjs` kiểm tra frontend mock (73 checks). Sau khi copy MU popup vào `runtime/wp/wp-content/mu-plugins/` cùng junction thư mục assets và chạy HTTP test 8091, `node tests/live-chat/popup-inbox-http.cjs` xác nhận 10 bước popup → database → chat → hộp thư admin. Mọi email và HTTP ra ngoài vẫn bị test sink chặn. `required-email.php` tiếp tục là regression chat thường. Các suite popup quote-mail/reCAPTCHA cũ chỉ là lịch sử, đã được thay bằng luồng lưu inbox. Xem `docs/email-popup-customer-inbox-20261019.md`.
