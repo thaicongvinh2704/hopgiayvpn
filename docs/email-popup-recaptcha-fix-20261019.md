@@ -20,3 +20,13 @@ PHP lint on both changed production PHP files, JavaScript syntax and scoped whit
 ## Deployment
 
 Pull `main`, deploy the complete commit (MU plugin loader + popup.js + shared theme quote handler), then purge page/asset/server/CDN caches. No SQL import or Product Sample Deploy is required. PHP OPcache may also need the host's normal deployment reset if file timestamp checks are disabled. Verify the popup on an uncached public page after deployment; do not count a screenshot of the old cached popup as evidence of the fix.
+
+## Follow-up: Google initialization race
+
+The next production screenshot reproduced on a clean browser: Google's api.js returned HTTP 200, but the loader checked for `grecaptcha.execute` at the script load event, before Google's secondary script had initialized it. The first mocked API installed `ready` and `execute` at the same time and missed this lifecycle difference.
+
+The popup now waits for `grecaptcha.ready` before checking or calling `execute`. An existing in-progress initialization is reused. The error text no longer attributes an initialization failure to the visitor's content blocker without evidence. Version 1.0.4.
+
+The expanded regression suite passes 73 checks, including delayed initialization and an already-loading API. In a clean browser on the public homepage, overriding only popup.js with the local fix caused the real Google API, secondary script, anchor and reload calls to return 200 and produced a token in the outgoing POST. That POST was intercepted to avoid a lead/email. This establishes client initialization/token acquisition, not production acceptance.
+
+A separate probe forced the email field empty before allowing the request to the real server, guaranteeing rejection before saving or sending. That probe still returned `captcha`; the public response does not disclose whether it is a score, key, action, hostname or provider verification failure. Therefore production backend acceptance and mail delivery remain unverified, and need a normal visitor test plus the existing server-side reCAPTCHA logs if rejection persists. No security threshold or backend verification was weakened.

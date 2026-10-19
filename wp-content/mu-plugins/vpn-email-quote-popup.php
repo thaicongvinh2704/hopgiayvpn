@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VPN Website Email Quote Popup
  * Description: Sitewide, frequency-capped email enquiries using the shared private quote inbox.
- * Version: 1.0.3
+ * Version: 1.0.4
  */
 defined('ABSPATH') || exit;
 

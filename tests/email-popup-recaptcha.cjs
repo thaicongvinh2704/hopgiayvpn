@@ -16,7 +16,7 @@ const check = (name, value) => { assert.ok(value, name); checks.push(name); };
     const session = php('session', 'suppressed');
     check('Fresh public key matches backend even if theme frontend is suppressed', JSON.parse(session).data.recaptcha_site_key === 'test-public-key');
     check('Session never returns the secret key', !session.includes('test-secret-never-exposed'));
-    for (const scenario of ['success', 'suppressed', 'off', 'captcha-rejected', 'load-retry', 'execute-retry', 'timeout', 'duplicate-click', 'legacy-form']) {
+    for (const scenario of ['success', 'delayed-initialization', 'existing-initialization', 'suppressed', 'off', 'captcha-rejected', 'load-retry', 'execute-retry', 'timeout', 'duplicate-click', 'legacy-form']) {
       const context = await browser.newContext();
       const page = await context.newPage();
       const mode = ['suppressed', 'off'].includes(scenario) ? scenario : '';
@@ -28,6 +28,7 @@ const check = (name, value) => { assert.ok(value, name); checks.push(name); };
         if (url.hostname === 'www.google.com') {
           loads++;
           if (scenario === 'load-retry' && loads === 1) return route.abort();
+          if (scenario === 'delayed-initialization') return route.fulfill({ contentType: 'application/javascript', body: 'const queue=[];window.grecaptcha={ready:fn=>queue.push(fn)};setTimeout(()=>{grecaptcha.execute=(key,opts)=>{window.calls=(window.calls||0)+1;window.lastAction=opts.action;return Promise.resolve("verified-token-"+window.calls);};queue.forEach(fn=>fn());grecaptcha.ready=fn=>fn();},50);' });
           return route.fulfill({ contentType: 'application/javascript', body: `window.grecaptcha={ready:fn=>fn(),execute:(key,opts)=>{window.calls=(window.calls||0)+1;window.lastAction=opts.action;${scenario === 'timeout' ? 'return new Promise(()=>{});' : scenario === 'execute-retry' ? 'if(window.calls===1)return Promise.reject(new Error("test failure"));' : ''}return Promise.resolve('verified-token-'+window.calls);}};` });
         }
         if (url.pathname === '/wp-admin/admin-post.php') {
@@ -43,6 +44,14 @@ const check = (name, value) => { assert.ok(value, name); checks.push(name); };
       await page.waitForFunction(() => document.querySelector('#vpn-email-popup').open);
       check(scenario + ': email autofill remains and no checkbox', await page.locator('#vep-email').getAttribute('autocomplete') === 'email' && await page.locator('.vep-form input[type=checkbox]').count() === 0);
       await page.locator('#vep-email').fill('test@example.invalid');
+      if (scenario === 'existing-initialization') await page.evaluate(() => {
+        const queue = [];
+        window.grecaptcha = { ready: fn => queue.push(fn) };
+        setTimeout(() => {
+          grecaptcha.execute = (key, opts) => { window.calls = (window.calls || 0) + 1; window.lastAction = opts.action; return Promise.resolve('verified-token-' + window.calls); };
+          queue.forEach(fn => fn()); grecaptcha.ready = fn => fn();
+        }, 300);
+      });
       if (scenario === 'timeout') await page.clock.install();
       const submit = () => page.locator('.vep-form').evaluate(form => form.requestSubmit());
       await submit();
@@ -67,6 +76,7 @@ const check = (name, value) => { assert.ok(value, name); checks.push(name); };
           check(scenario + ': verification sent in payload', posts[0].includes('g-recaptcha-response') && posts[0].includes('verified-token-'));
           check(scenario + ': correct server action', await page.evaluate(() => window.lastAction === 'quote_submit'));
           check(scenario + ': no duplicate legacy verification', await page.evaluate(() => window.calls) === (scenario === 'execute-retry' ? 2 : 1));
+          if (scenario === 'existing-initialization') check('Reuse the in-progress Google initialization without loading another script', loads === 0);
         } else check('Unconfigured sites make no Google request', loads === 0);
       }
       if (scenario === 'legacy-form') {

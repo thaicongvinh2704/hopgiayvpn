@@ -102,14 +102,17 @@ function vpnStartEmailPopup() {
         error ? reject(error) : resolve(token);
       };
       const abort = () => finish(new Error('Security verification timed out. Please try again or email sales.vpn@hopgiayvpn.com.'));
-      const failed = () => finish(new Error('Security verification could not load. Please check your connection or content blocker and try again.'));
+      const failed = () => finish(new Error('Security verification could not be completed. Please try again or email sales.vpn@hopgiayvpn.com.'));
       const execute = () => {
         if (settled) return;
         const api = window.grecaptcha;
-        if (!api?.ready || !api?.execute) { failed(); return; }
+        // api.js can finish loading before its secondary script installs execute().
+        // ready() is the initialization boundary, not the script load event.
+        if (!api?.ready) { failed(); return; }
         try {
           api.ready(() => {
             if (settled) return;
+            if (typeof api.execute !== 'function') { failed(); return; }
             Promise.resolve().then(() => api.execute(siteKey, { action: 'quote_submit' })).then(token => {
               if (typeof token !== 'string' || !token) { failed(); return; }
               finish(null, token);
@@ -119,7 +122,7 @@ function vpnStartEmailPopup() {
       };
       signal.addEventListener('abort', abort, { once: true });
       if (signal.aborted) { abort(); return; }
-      if (window.grecaptcha?.ready && window.grecaptcha?.execute) { execute(); return; }
+      if (window.grecaptcha?.ready) { execute(); return; }
       script = document.getElementById('custom-box-google-recaptcha-js');
       if (!script) {
         owned = true; script = document.createElement('script');
