@@ -89,51 +89,23 @@ function vpnStartEmailPopup() {
     if ((preview || visit.elapsed >= 30000) && !busy) { busy = true; show().finally(() => { busy = false; }); }
   }, 1000);
   document.addEventListener('visibilitychange', () => { lastTick = Date.now(); });
-  function recaptchaToken(siteKey, signal) {
-    if (!siteKey) return Promise.resolve('');
-    return new Promise((resolve, reject) => {
-      let script, owned = false, settled = false;
-      const finish = (error, token) => {
-        if (settled) return;
-        settled = true;
-        signal.removeEventListener('abort', abort);
-        if (script) { script.removeEventListener('load', execute); script.removeEventListener('error', failed); }
-        if (error && owned) script.remove();
-        error ? reject(error) : resolve(token);
-      };
-      const abort = () => finish(new Error('Security verification timed out. Please try again or email sales.vpn@hopgiayvpn.com.'));
-      const failed = () => finish(new Error('Security verification could not be completed. Please try again or email sales.vpn@hopgiayvpn.com.'));
-      const execute = () => {
-        if (settled) return;
-        const api = window.grecaptcha;
-        // api.js can finish loading before its secondary script installs execute().
-        // ready() is the initialization boundary, not the script load event.
-        if (!api?.ready) { failed(); return; }
-        try {
-          api.ready(() => {
-            if (settled) return;
-            if (typeof api.execute !== 'function') { failed(); return; }
-            Promise.resolve().then(() => api.execute(siteKey, { action: 'quote_submit' })).then(token => {
-              if (typeof token !== 'string' || !token) { failed(); return; }
-              finish(null, token);
-            }, failed);
-          });
-        } catch (_) { failed(); }
-      };
-      signal.addEventListener('abort', abort, { once: true });
-      if (signal.aborted) { abort(); return; }
-      if (window.grecaptcha?.ready) { execute(); return; }
-      script = document.getElementById('custom-box-google-recaptcha-js');
-      if (!script) {
-        owned = true; script = document.createElement('script');
-        script.id = 'custom-box-google-recaptcha-js';
-        script.src = 'https://www.google.com/recaptcha/api.js?render=' + encodeURIComponent(siteKey);
-        script.async = true; script.dataset.cfasync = 'false'; script.dataset.noOptimize = '1';
-      }
-      script.addEventListener('load', execute, { once: true });
-      script.addEventListener('error', failed, { once: true });
-      if (owned) document.head.appendChild(script);
-    });
+  let pendingQuote = null;
+  const messages = {
+    email_required: 'Please enter your email address.', invalid_email: 'Please enter a valid email address.',
+    invalid_text: 'Please keep the project details within 1,000 characters.',
+    rate_limited: 'Please wait a moment before sending another request.',
+    session_expired: 'Your session expired. Please try sending again.', csrf_required: 'Please try sending again to refresh your session.',
+    new_chat_unavailable: 'Our inbox is temporarily unavailable. Please try again shortly.',
+    storage_unavailable: 'We could not save your request. Please try again shortly.'
+  };
+  async function inboxRequest(url, payload, signal, csrf) {
+    if (new URL(url, location.href).origin !== location.origin) throw new Error('unavailable');
+    const headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' };
+    if (csrf) headers['X-VPN-CSRF'] = csrf;
+    const response = await fetch(url, { method: 'POST', credentials: 'same-origin', headers, body: JSON.stringify(payload), signal });
+    const result = await response.json();
+    if (!response.ok) throw new Error(messages[result.code] || 'We could not save your request. Please try again shortly.');
+    return result;
   }
   form.addEventListener('submit', async event => {
     event.preventDefault(); if (form.dataset.sending || !form.reportValidity()) return;
@@ -141,40 +113,33 @@ function vpnStartEmailPopup() {
     const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 25000);
     try {
       const tokenResponse = await fetch(cfg.tokenUrl, { credentials: 'same-origin', cache: 'no-store', signal: controller.signal });
-      const token = await tokenResponse.json(); if (!tokenResponse.ok || !token.success) throw new Error('token');
-      if (typeof token.data?.recaptcha_site_key !== 'string') throw new Error('token');
-      const verification = await recaptchaToken(token.data.recaptcha_site_key, controller.signal);
-      const data = new FormData(form);
-      data.set('custom_box_quote_nonce', token.data.nonce); data.set('custom_box_form_started_at', token.data.started); data.set('custom_box_form_signature', token.data.signature);
-      if (verification) data.set('g-recaptcha-response', verification);
-      data.set('current_page_url', location.origin + location.pathname);
-      data.set('product_name', (document.querySelector('h1')?.textContent.trim() || 'Custom packaging enquiry').slice(0, 200));
-      try { const ref = new URL(document.referrer); data.set('referrer_url', ref.origin + ref.pathname); } catch (_) {}
-      const query = new URLSearchParams(location.search);
-      for (const field of ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','gbraid','wbraid']) if (query.has(field)) data.set(field, query.get(field).slice(0, 180));
-      const response = await fetch(form.getAttribute('action'), { method: 'POST', credentials: 'same-origin', body: data, signal: controller.signal });
-      const result = await response.json();
-      if (!response.ok || !result.success || !/^vpn-quote-\d+$/.test(result.data?.receipt || '')) {
-        const messages = { missing: 'Please enter a valid email address.', duplicate: 'This request was already received. Our team will contact you.', rate_limited: 'Please wait a few minutes and try again.',
-          captcha: 'Security verification was not accepted. Please try again or email sales.vpn@hopgiayvpn.com.',
-          invalid: 'Your form session could not be verified. Please refresh this page and try again.',
-          spam: 'Your request could not pass the security check. Please try again or email sales.vpn@hopgiayvpn.com.',
-          failed: 'We could not save your request. Please try again or email sales.vpn@hopgiayvpn.com.' };
-        throw new Error(messages[result.data?.status] || 'We could not confirm your request. Please try again or email sales.vpn@hopgiayvpn.com.');
-      }
-      // Only a confirmed private record counts as received. Never store contact details in the browser.
+      const session = await tokenResponse.json();
+      if (!tokenResponse.ok || !session.success || session.data?.delivery !== 'customer_inbox') throw new Error('unavailable');
+      const metadata = {}, query = new URLSearchParams(location.search);
+      for (const field of ['utm_source', 'utm_medium', 'utm_campaign']) if (query.has(field)) metadata[field] = query.get(field).slice(0, 100);
+      const payload = { email: form.elements.email.value.trim(), message: form.elements.message.value.trim(),
+        product_title: (document.querySelector('h1')?.textContent.trim() || '').slice(0, 160), source_path: location.pathname, metadata };
+      const fingerprint = JSON.stringify(payload);
+      if (!pendingQuote || pendingQuote.fingerprint !== fingerprint) pendingQuote = { fingerprint, client: 'popup-' + crypto.randomUUID().replaceAll('-', '') };
+      payload.client_message_id = pendingQuote.client;
+      const boot = await inboxRequest(session.data.bootstrap_url, {}, controller.signal);
+      if (typeof boot.csrf !== 'string' || !boot.csrf) throw new Error('unavailable');
+      const result = await inboxRequest(session.data.inbox_url, payload, controller.signal, boot.csrf);
+      if (result.saved !== true || !/^vpn-inbox-[a-f0-9-]{36}-\d+$/.test(result.receipt || '')) throw new Error('unavailable');
+      // Receipt is returned only after the private inbox transaction commits.
       state.captured = true;
       try { persist(); } catch (_) {}
       document.cookie = cookie + '=1; Max-Age=31536000; Path=' + cfg.cookiePath + '; SameSite=Lax' + (location.protocol === 'https:' ? '; Secure' : '');
       form.querySelectorAll('label,details,.vep-submit,.vep-contact-notice').forEach(node => { node.hidden = true; node.style.display = 'none'; });
-      form.reset(); dialog.classList.add('vep-saved');
+      form.reset(); pendingQuote = null; dialog.classList.add('vep-saved');
       dialog.querySelector('h2').textContent = 'Thank you — request received.';
       dialog.querySelector('.vep-intro p').textContent = 'Our team will contact you about your packaging quote.';
       status.hidden = false; status.textContent = 'Your request has been saved.';
       dialog.querySelector('.vep-not-now').textContent = 'Close';
-      window.dispatchEvent(new CustomEvent('vpn:quote-received', { detail: { source: 'website_email_popup', receipt: result.data.receipt } }));
+      window.dispatchEvent(new CustomEvent('vpn:quote-received', { detail: { source: 'website_email_popup', receipt: result.receipt, id: result.id } }));
     } catch (error) {
-      status.hidden = false; status.textContent = error.message === 'token' || error.name === 'AbortError' || error instanceof TypeError || error instanceof SyntaxError ? 'Connection interrupted. Please try again or email sales.vpn@hopgiayvpn.com.' : error.message;
+      status.hidden = false;
+      status.textContent = error.message === 'unavailable' || error instanceof SyntaxError ? 'We could not confirm your request. Please try again shortly.' : error.name === 'AbortError' || error instanceof TypeError ? 'Connection interrupted. Your details are still here; please try again.' : error.message;
     } finally { clearTimeout(timeout); delete form.dataset.sending; button.disabled = false; button.textContent = 'Request a quote'; }
   });
 }

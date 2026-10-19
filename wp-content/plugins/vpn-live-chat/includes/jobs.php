@@ -27,8 +27,9 @@ final class VPN_Chat_Jobs {
                 return $row;
             });
             if (!$row) { break; }
-            $c = $wpdb->get_row($wpdb->prepare('SELECT owner_id,status FROM ' . VPN_Chat_Store::table('conversations') . ' WHERE id=%d', $row['conversation_id']), ARRAY_A);
-            $skip = !$c || $c['owner_id'] || $c['status'] !== 'unassigned';
+            $c = $wpdb->get_row($wpdb->prepare('SELECT owner_id,status,metadata FROM ' . VPN_Chat_Store::table('conversations') . ' WHERE id=%d', $row['conversation_id']), ARRAY_A);
+            $metadata = $c ? (json_decode((string) $c['metadata'], true) ?: []) : [];
+            $skip = !$c || $c['owner_id'] || $c['status'] !== 'unassigned' || ($metadata['email_notifications'] ?? true) === false;
             $email = VPN_Chat_Settings::get()['sales_email'];
             $timeout=static function($mailer){$mailer->Timeout=10;$mailer->Timelimit=10;};
             add_action('phpmailer_init',$timeout,PHP_INT_MAX);

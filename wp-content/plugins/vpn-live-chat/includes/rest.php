@@ -27,6 +27,7 @@ final class VPN_Chat_REST {
         }, 20, 3);
     }
     public static function routes(): void {
+        register_rest_route('vpn-chat/v1', '/guest/email-quote', ['methods' => 'POST', 'permission_callback' => [self::class, 'permission'], 'callback' => [self::class, 'dispatch']]);
         foreach (['bootstrap' => 'POST', 'guest/sync' => 'GET', 'guest/start' => 'POST', 'guest/send' => 'POST', 'guest/identity/request'=>'POST','guest/identity/verify'=>'POST','guest/history'=>'GET','guest/contact'=>'POST', 'guest/read'=>'POST', 'guest/revoke' => 'POST', 'agent/sync' => 'POST', 'agent/send' => 'POST', 'agent/update' => 'POST', 'agent/canned' => 'POST', 'manager/health' => 'GET', 'manager/block' => 'POST', 'manager/privacy' => 'POST'] as $path => $method) {
             register_rest_route('vpn-chat/v1', '/' . $path, ['methods' => $path==='guest/sync'?'GET, POST':$method, 'permission_callback' => [self::class, 'permission'], 'callback' => [self::class, 'dispatch']]);
         }
@@ -47,7 +48,7 @@ final class VPN_Chat_REST {
             $p = $r->get_method() === 'GET' ? $r->get_query_params() : ($r->get_json_params() ?? []);
             $path = substr($r->get_route(), strlen('/vpn-chat/v1/'));
             VPN_Chat_Security::$request_csrf = (string) $r->get_header('x-vpn-csrf');
-            if (in_array($path,['guest/start','guest/send','agent/send'],true)) {
+            if (in_array($path,['guest/start','guest/send','guest/email-quote','agent/send'],true)) {
                 foreach (['attachment','attachments','file','files','upload','uploads'] as $field) {
                     if (array_key_exists($field,$p)) { throw new VPN_Chat_Fault('attachments_not_supported',400); }
                 }
@@ -59,6 +60,7 @@ final class VPN_Chat_REST {
                 elseif($path==='guest/identity/verify'){$data=VPN_Chat_Identity::verify($s,$p);}
                 elseif($path==='guest/history'){VPN_Chat_Security::quota('history:'.$s['id'],30,60);$data=['history'=>VPN_Chat_Identity::history((int)$s['customer_id'])];}
                 elseif ($path === 'guest/start') { $data = VPN_Chat_Service::start($s, $p); }
+                elseif ($path === 'guest/email-quote') { $data = VPN_Chat_Email_Quote::capture($s, $p); }
                 elseif ($path === 'guest/send') { $data = VPN_Chat_Service::send((string) ($p['id'] ?? ''), $p, $s); }
                 elseif ($path === 'guest/contact') {
                     VPN_Chat_Security::quota('contact:'.$s['id'],10,60);

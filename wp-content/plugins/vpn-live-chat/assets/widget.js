@@ -199,6 +199,10 @@
  }
  function initialize(configuration,button){cfg=configuration;launch=button;if(!panel){build();paintConfig({support:cfg.support,presence:cfg.presence||'offline',accepting:false,fallback_url:cfg.fallback_url});$('vpn-chat-start-button').disabled=true;state('');}}
  window.VPNChatPrepare=initialize;
+ window.addEventListener('vpn:quote-received',event=>{
+  if(event.detail?.source!=='website_email_popup'||!panel||busy)return;
+  stop();bootstrap().catch(()=>state('Please reopen chat to refresh your saved request.'));
+ });
  window.VPNChatResume=async(configuration,button)=>{initialize(configuration,button);try{await bootstrap();}catch{activeFlag(false);}};
  window.VPNChatOpen=async(configuration,button)=>{
   initialize(configuration,button);if(opened){close();return;}opened=true;panel.hidden=false;launch.dataset.open='true';launch.setAttribute('aria-expanded','true');badge(unread);resizePanel();panel.focus({preventScroll:true});

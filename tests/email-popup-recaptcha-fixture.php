@@ -7,6 +7,12 @@ define('MINUTE_IN_SECONDS', 60);
 define('CUSTOM_BOX_RECAPTCHA_SITE_KEY', ($argv[2] ?? '') === 'off' ? '' : 'test-public-key');
 define('CUSTOM_BOX_RECAPTCHA_SECRET_KEY', 'test-secret-never-exposed');
 $actions = array();
+// Frontend fixture only: storage/session behavior is tested with real WP in live-chat/popup-inbox.php.
+final class VPN_Chat_Settings {
+    public static function ready() { return true; }
+    public static function get() { return ['accept_new' => true]; }
+}
+final class VPN_Chat_Email_Quote {}
 function add_action($name, $callback, $priority = 10, $args = 1) { global $actions; $actions[$name][$priority][] = $callback; }
 function add_filter() {}
 function apply_filters($name, $value, ...$args) {
@@ -15,6 +21,7 @@ function apply_filters($name, $value, ...$args) {
 }
 function home_url($path = '') { return 'https://popup.test' . $path; }
 function admin_url($path = '') { return home_url('/wp-admin/' . $path); }
+function rest_url($path = '') { return home_url('/wp-json/' . $path); }
 function plugin_dir_url($path) { return home_url('/wp-content/mu-plugins/'); }
 function wp_get_environment_type() { return 'production'; }
 function is_admin() { return false; }

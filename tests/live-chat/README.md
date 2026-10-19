@@ -1,5 +1,9 @@
 # Local test harness
 
+## 1.12.0 — Popup vào hộp thư khách hàng
+
+`php tests/live-chat/popup-inbox.php` kiểm tra REST/storage thật trên DB riêng 3311 (32 checks); `node tests/email-popup-inbox-browser.cjs` kiểm tra frontend mock (73 checks). Sau khi copy MU popup vào `runtime/wp/wp-content/mu-plugins/` cùng junction thư mục assets và chạy HTTP test 8091, `node tests/live-chat/popup-inbox-http.cjs` xác nhận 10 bước popup → database → chat → hộp thư admin. Mọi email và HTTP ra ngoài vẫn bị test sink chặn. `required-email.php` tiếp tục là regression chat thường. Các suite popup quote-mail/reCAPTCHA cũ chỉ là lịch sử, đã được thay bằng luồng lưu inbox. Xem `docs/email-popup-customer-inbox-20261019.md`.
+
 ## 1.11.0 — Email bắt buộc
 
 Bộ hiện hành: `php tests/live-chat/required-email.php` (REST thật, DB riêng 3311), `node tests/live-chat/required-email.mjs` (API giả lập, desktop/390/320px), và `php tests/live-chat/final-acceptance.php` đã cập nhật kỳ vọng email bắt buộc. Không cần HTTP 8091 cho hai bộ PHP dispatch REST trong cùng process. PHP luôn dọn bảng chat test và khôi phục cài đặt trong finally. Browser chỉ gửi dữ liệu giả vào route mock. Các bộ `optional-email`, `gentle-followup` và fixture keyword không email bên dưới ghi lại hành vi lịch sử trước 1.11.0, không dùng để nghiệm thu yêu cầu mới.
