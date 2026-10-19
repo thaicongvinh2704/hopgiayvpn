@@ -22,6 +22,7 @@ const check = (name, result) => { assert.ok(result, name); checks.push(name); };
         if (url.origin !== 'https://popup.test') { external++; return route.abort(); }
         if (url.pathname === '/popup.js') return route.fulfill({ contentType: 'application/javascript', body: js });
         if (url.pathname === '/popup.css') return route.fulfill({ contentType: 'text/css', body: css });
+        if (url.pathname.endsWith('/packaging-banner-20261019.webp')) return route.fulfill({ contentType: 'image/webp', body: fs.readFileSync(path.join(root, 'wp-content/mu-plugins/vpn-email-quote-popup/packaging-banner-20261019.webp')) });
         if (url.pathname === '/session') { tokenCalls++; return route.fulfill({ contentType: 'application/json', body: php('session') }); }
         if (url.pathname === '/wp-json/vpn-chat/v1/bootstrap') {
           bootstrapCalls++;

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VPN Website Email Quote Popup
  * Description: Sitewide, frequency-capped email enquiries saved in the VPN customer inbox.
- * Version: 1.2.1
+ * Version: 1.2.2
  */
 defined('ABSPATH') || exit;
 
@@ -112,12 +112,12 @@ add_action('wp_footer', function () {
     ?>
     <dialog id="vpn-email-popup" class="vep" aria-labelledby="vep-title" aria-describedby="vep-description">
         <div class="vep-layout">
-            <div class="vep-photo" aria-hidden="true"><img src="<?php echo esc_url(plugin_dir_url(__FILE__) . 'vpn-email-quote-popup/packaging.webp'); ?>" alt="" width="480" height="720" loading="lazy"></div>
+            <button class="vep-close" type="button" aria-label="Close quote invitation">×</button>
+            <div class="vep-photo" aria-hidden="true"><picture><source media="(max-width:600px)" srcset="<?php echo esc_url(plugin_dir_url(__FILE__) . 'vpn-email-quote-popup/packaging-banner-20261019.webp'); ?>"><img src="<?php echo esc_url(plugin_dir_url(__FILE__) . 'vpn-email-quote-popup/packaging.webp'); ?>" alt="" width="480" height="720" loading="lazy"></picture></div>
             <div class="vep-content">
-                <button class="vep-close" type="button" aria-label="Close quote invitation" autofocus>×</button>
                 <div class="vep-success-mark" aria-hidden="true" hidden><svg viewBox="0 0 32 32" width="32" height="32" fill="none"><path d="m8 16 5.5 5.5L24 11" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
                 <p class="vep-success-eyebrow" hidden>Enquiry received</p>
-                <div class="vep-intro"><h2 id="vep-title">Need a packaging quote?</h2><p id="vep-description">Leave your email. Our team will contact you.</p></div>
+                <div class="vep-intro"><h2 id="vep-title" tabindex="-1" autofocus>Need a packaging quote?</h2><p id="vep-description">Leave your email. Our team will contact you.</p></div>
                 <div class="vep-success-email" hidden><span>We’ll contact you at</span><strong></strong></div>
                 <form class="vep-form" data-vpn-recaptcha-managed="1" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
                     <input type="hidden" name="action" value="custom_box_quote_form">
@@ -126,7 +126,7 @@ add_action('wp_footer', function () {
                     <input type="hidden" name="form_location" value="sitewide_email_popup">
                     <?php wp_nonce_field('custom_box_quote_form', 'custom_box_quote_nonce'); ?>
                     <label class="vep-email-label" for="vep-email">Email <input id="vep-email" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" maxlength="254" placeholder="you@company.com" required></label>
-                    <details class="vep-details"><summary><span aria-hidden="true">＋</span> Add project details <span class="vep-chevron" aria-hidden="true">⌄</span></summary><label for="vep-message">What packaging do you need? <span>(optional)</span></label><textarea id="vep-message" name="message" rows="3" maxlength="1000" placeholder="Product, size, quantity and delivery country…"></textarea></details>
+                    <input type="hidden" name="message" value="">
                     <p class="vep-status" role="status" aria-live="polite" hidden></p>
                     <button class="vep-submit" type="submit">Request a quote</button>
                     <p class="vep-contact-notice">By submitting, you agree to be contacted about your enquiry. <a href="<?php echo esc_url($privacy); ?>" target="_blank" rel="noopener">Privacy policy</a></p>
