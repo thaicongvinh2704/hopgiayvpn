@@ -89,6 +89,49 @@ function vpnStartEmailPopup() {
     if ((preview || visit.elapsed >= 30000) && !busy) { busy = true; show().finally(() => { busy = false; }); }
   }, 1000);
   document.addEventListener('visibilitychange', () => { lastTick = Date.now(); });
+  function recaptchaToken(siteKey, signal) {
+    if (!siteKey) return Promise.resolve('');
+    return new Promise((resolve, reject) => {
+      let script, owned = false, settled = false;
+      const finish = (error, token) => {
+        if (settled) return;
+        settled = true;
+        signal.removeEventListener('abort', abort);
+        if (script) { script.removeEventListener('load', execute); script.removeEventListener('error', failed); }
+        if (error && owned) script.remove();
+        error ? reject(error) : resolve(token);
+      };
+      const abort = () => finish(new Error('Security verification timed out. Please try again or email sales.vpn@hopgiayvpn.com.'));
+      const failed = () => finish(new Error('Security verification could not load. Please check your connection or content blocker and try again.'));
+      const execute = () => {
+        if (settled) return;
+        const api = window.grecaptcha;
+        if (!api?.ready || !api?.execute) { failed(); return; }
+        try {
+          api.ready(() => {
+            if (settled) return;
+            Promise.resolve().then(() => api.execute(siteKey, { action: 'quote_submit' })).then(token => {
+              if (typeof token !== 'string' || !token) { failed(); return; }
+              finish(null, token);
+            }, failed);
+          });
+        } catch (_) { failed(); }
+      };
+      signal.addEventListener('abort', abort, { once: true });
+      if (signal.aborted) { abort(); return; }
+      if (window.grecaptcha?.ready && window.grecaptcha?.execute) { execute(); return; }
+      script = document.getElementById('custom-box-google-recaptcha-js');
+      if (!script) {
+        owned = true; script = document.createElement('script');
+        script.id = 'custom-box-google-recaptcha-js';
+        script.src = 'https://www.google.com/recaptcha/api.js?render=' + encodeURIComponent(siteKey);
+        script.async = true; script.dataset.cfasync = 'false'; script.dataset.noOptimize = '1';
+      }
+      script.addEventListener('load', execute, { once: true });
+      script.addEventListener('error', failed, { once: true });
+      if (owned) document.head.appendChild(script);
+    });
+  }
   form.addEventListener('submit', async event => {
     event.preventDefault(); if (form.dataset.sending || !form.reportValidity()) return;
     form.dataset.sending = '1'; const button = form.querySelector('[type="submit"]'); button.disabled = true; button.textContent = 'Sending…'; status.hidden = true;
@@ -96,8 +139,11 @@ function vpnStartEmailPopup() {
     try {
       const tokenResponse = await fetch(cfg.tokenUrl, { credentials: 'same-origin', cache: 'no-store', signal: controller.signal });
       const token = await tokenResponse.json(); if (!tokenResponse.ok || !token.success) throw new Error('token');
+      if (typeof token.data?.recaptcha_site_key !== 'string') throw new Error('token');
+      const verification = await recaptchaToken(token.data.recaptcha_site_key, controller.signal);
       const data = new FormData(form);
       data.set('custom_box_quote_nonce', token.data.nonce); data.set('custom_box_form_started_at', token.data.started); data.set('custom_box_form_signature', token.data.signature);
+      if (verification) data.set('g-recaptcha-response', verification);
       data.set('current_page_url', location.origin + location.pathname);
       data.set('product_name', (document.querySelector('h1')?.textContent.trim() || 'Custom packaging enquiry').slice(0, 200));
       try { const ref = new URL(document.referrer); data.set('referrer_url', ref.origin + ref.pathname); } catch (_) {}
@@ -106,7 +152,11 @@ function vpnStartEmailPopup() {
       const response = await fetch(form.getAttribute('action'), { method: 'POST', credentials: 'same-origin', body: data, signal: controller.signal });
       const result = await response.json();
       if (!response.ok || !result.success || !/^vpn-quote-\d+$/.test(result.data?.receipt || '')) {
-        const messages = { missing: 'Please enter a valid email address.', duplicate: 'This request was already received. Our team will contact you.', rate_limited: 'Please wait a few minutes and try again.' };
+        const messages = { missing: 'Please enter a valid email address.', duplicate: 'This request was already received. Our team will contact you.', rate_limited: 'Please wait a few minutes and try again.',
+          captcha: 'Security verification was not accepted. Please try again or email sales.vpn@hopgiayvpn.com.',
+          invalid: 'Your form session could not be verified. Please refresh this page and try again.',
+          spam: 'Your request could not pass the security check. Please try again or email sales.vpn@hopgiayvpn.com.',
+          failed: 'We could not save your request. Please try again or email sales.vpn@hopgiayvpn.com.' };
         throw new Error(messages[result.data?.status] || 'We could not confirm your request. Please try again or email sales.vpn@hopgiayvpn.com.');
       }
       // Only a confirmed private record counts as received. Never store contact details in the browser.

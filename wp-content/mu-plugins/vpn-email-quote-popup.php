@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VPN Website Email Quote Popup
  * Description: Sitewide, frequency-capped email enquiries using the shared private quote inbox.
- * Version: 1.0.2
+ * Version: 1.0.3
  */
 defined('ABSPATH') || exit;
 
@@ -58,7 +58,10 @@ function vpn_email_popup_token() {
     if (!function_exists('custom_box_quote_form_timestamp_signature')) { wp_send_json_error(null, 503); }
     $started = time() - 10;
     wp_send_json_success(array('nonce' => wp_create_nonce('custom_box_quote_form'),
-        'started' => $started, 'signature' => custom_box_quote_form_timestamp_signature($started, 'quote')));
+        'started' => $started, 'signature' => custom_box_quote_form_timestamp_signature($started, 'quote'),
+        // Match the server validator, including when a theme filter suppresses its frontend handler.
+        // Only the public site key is returned; the secret key stays on the server.
+        'recaptcha_site_key' => function_exists('custom_box_quote_form_recaptcha_site_key') ? custom_box_quote_form_recaptcha_site_key() : ''));
 }
 add_action('wp_ajax_nopriv_vpn_email_popup_token', 'vpn_email_popup_token');
 add_action('wp_ajax_vpn_email_popup_token', 'vpn_email_popup_token');
@@ -73,7 +76,7 @@ add_action('wp_footer', function () {
             <div class="vep-content">
                 <button class="vep-close" type="button" aria-label="Close quote invitation" autofocus>×</button>
                 <div class="vep-intro"><h2 id="vep-title">Need a packaging quote?</h2><p id="vep-description">Leave your email. Our team will contact you.</p></div>
-                <form class="vep-form" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
+                <form class="vep-form" data-vpn-recaptcha-managed="1" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
                     <input type="hidden" name="action" value="custom_box_quote_form">
                     <input type="hidden" name="quote_source" value="website_email_popup">
                     <input type="hidden" name="response_format" value="email_popup_json">

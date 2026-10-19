@@ -799,7 +799,7 @@ function custom_box_print_recaptcha_v3_submit_handler() {
         var loadPromise = null;
 
         function isQuoteForm(form) {
-            return form && form.matches && form.matches('form') && form.querySelector(selector);
+            return form && form.matches && form.matches('form') && form.dataset.vpnRecaptchaManaged !== '1' && form.querySelector(selector);
         }
 
         function findQuoteForm(target) {
