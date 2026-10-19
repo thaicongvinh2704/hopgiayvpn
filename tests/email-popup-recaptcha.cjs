@@ -16,6 +16,12 @@ const check = (name, value) => { assert.ok(value, name); checks.push(name); };
     const session = php('session', 'suppressed');
     check('Fresh public key matches backend even if theme frontend is suppressed', JSON.parse(session).data.recaptcha_site_key === 'test-public-key');
     check('Session never returns the secret key', !session.includes('test-secret-never-exposed'));
+    for (const [mode, reason] of Object.entries({ 'new-empty': 'checks_passed', 'new-filled': 'honeypot_filled', 'legacy-empty': 'checks_passed', 'legacy-filled': 'honeypot_filled', 'invalid-signature': 'timestamp_bad_signature', 'missing-captcha': 'recaptcha_missing', 'low-score': 'recaptcha_low_score' })) {
+      const result = JSON.parse(php('antispam', mode));
+      check(mode + ': real server anti-spam pipeline returns ' + reason, result.check.reason === reason);
+      check(mode + ': server still rejects unsafe submissions', result.check.success === (reason === 'checks_passed'));
+      if (reason === 'honeypot_filled') check(mode + ': filled bot trap rejected before contacting Google', result.verification_calls === 0);
+    }
     for (const scenario of ['success', 'delayed-initialization', 'existing-initialization', 'suppressed', 'off', 'captcha-rejected', 'load-retry', 'execute-retry', 'timeout', 'duplicate-click', 'legacy-form']) {
       const context = await browser.newContext();
       const page = await context.newPage();
@@ -43,6 +49,8 @@ const check = (name, value) => { assert.ok(value, name); checks.push(name); };
       await page.goto('https://popup.test/');
       await page.waitForFunction(() => document.querySelector('#vpn-email-popup').open);
       check(scenario + ': email autofill remains and no checkbox', await page.locator('#vep-email').getAttribute('autocomplete') === 'email' && await page.locator('.vep-form input[type=checkbox]').count() === 0);
+      check(scenario + ': no contact-like legacy trap for browser autofill', await page.locator('.vep-form [name="website_url"]').count() === 0);
+      check(scenario + ': popup guard cannot participate in visible autofill', await page.locator('.vep-form [name="vpn_quote_guard"]').evaluate(input => !!input.closest('[hidden][inert]') && getComputedStyle(input.parentElement.parentElement).display === 'none'));
       await page.locator('#vep-email').fill('test@example.invalid');
       if (scenario === 'existing-initialization') await page.evaluate(() => {
         const queue = [];
@@ -72,6 +80,7 @@ const check = (name, value) => { assert.ok(value, name); checks.push(name); };
         await page.waitForFunction(() => document.querySelector('#vpn-email-popup').classList.contains('vep-saved'));
         check(scenario + ': exactly one request reaches handler', posts.length === 1);
         check(scenario + ': fresh session nonce sent', posts[0].includes('fresh-nonce'));
+        check(scenario + ': guard is still submitted for server validation', posts[0].includes('name="vpn_quote_guard"'));
         if (scenario !== 'off') {
           check(scenario + ': verification sent in payload', posts[0].includes('g-recaptcha-response') && posts[0].includes('verified-token-'));
           check(scenario + ': correct server action', await page.evaluate(() => window.lastAction === 'quote_submit'));

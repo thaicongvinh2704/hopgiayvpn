@@ -3,12 +3,16 @@
 if (PHP_SAPI !== 'cli') { http_response_code(403); exit; }
 define('ABSPATH', dirname(__DIR__) . '/');
 define('DAY_IN_SECONDS', 86400);
+define('MINUTE_IN_SECONDS', 60);
 define('CUSTOM_BOX_RECAPTCHA_SITE_KEY', ($argv[2] ?? '') === 'off' ? '' : 'test-public-key');
 define('CUSTOM_BOX_RECAPTCHA_SECRET_KEY', 'test-secret-never-exposed');
 $actions = array();
 function add_action($name, $callback, $priority = 10, $args = 1) { global $actions; $actions[$name][$priority][] = $callback; }
 function add_filter() {}
-function apply_filters($name, $value, ...$args) { return $name === 'custom_box_quote_form_recaptcha_temporarily_disabled' ? (($GLOBALS['argv'][2] ?? '') === 'suppressed') : $value; }
+function apply_filters($name, $value, ...$args) {
+    if ('custom_box_quote_form_logging_enabled' === $name) { return false; }
+    return $name === 'custom_box_quote_form_recaptcha_temporarily_disabled' ? (($GLOBALS['argv'][2] ?? '') === 'suppressed') : $value;
+}
 function home_url($path = '') { return 'https://popup.test' . $path; }
 function admin_url($path = '') { return home_url('/wp-admin/' . $path); }
 function plugin_dir_url($path) { return home_url('/wp-content/mu-plugins/'); }
@@ -34,9 +38,35 @@ function nocache_headers() {}
 function wp_send_json_success($value) { echo json_encode(array('success' => true, 'data' => $value)); exit; }
 function wp_send_json_error($value, $status) { exit(1); }
 function add_query_arg($args, $url) { return $url . '?' . http_build_query($args); }
+function wp_unslash($value) { return $value; }
+function sanitize_text_field($value) { return strip_tags($value); }
+function wp_parse_url($value, $part) { return parse_url($value, $part); }
+function get_transient($name) { return false; }
+function set_transient($name, $value, $ttl) { return true; }
+function is_wp_error($value) { return false; }
+function wp_remote_post($url, $args) {
+    $GLOBALS['verification_calls'] = ($GLOBALS['verification_calls'] ?? 0) + 1;
+    return array('body' => json_encode(array('success' => true, 'action' => 'quote_submit', 'score' => ($GLOBALS['argv'][2] ?? '') === 'low-score' ? 0.1 : 0.9, 'hostname' => 'popup.test')));
+}
+function wp_remote_retrieve_body($response) { return $response['body']; }
 require ABSPATH . 'wp-content/themes/custom-box-theme/inc/quote-form-handler.php';
 require ABSPATH . 'wp-content/mu-plugins/vpn-email-quote-popup.php';
 if (($argv[1] ?? '') === 'session') { vpn_email_popup_token(); }
+if (($argv[1] ?? '') === 'antispam') {
+    $started = time() - 10;
+    $_POST = array('quote_source' => 'website_email_popup', 'vpn_quote_guard' => '',
+        'custom_box_form_context' => 'quote', 'custom_box_form_started_at' => $started,
+        'custom_box_form_signature' => custom_box_quote_form_timestamp_signature($started, 'quote'),
+        'g-recaptcha-response' => 'verified-token');
+    $mode = $argv[2] ?? '';
+    if ('new-filled' === $mode) { $_POST['vpn_quote_guard'] = 'bot filled this'; }
+    if ('legacy-filled' === $mode) { unset($_POST['vpn_quote_guard']); $_POST['website_url'] = 'bot filled this'; }
+    if ('legacy-empty' === $mode) { unset($_POST['vpn_quote_guard']); $_POST['website_url'] = ''; }
+    if ('invalid-signature' === $mode) { $_POST['custom_box_form_signature'] = 'invalid'; }
+    if ('missing-captcha' === $mode) { unset($_POST['g-recaptcha-response']); }
+    echo json_encode(array('check' => custom_box_public_form_antispam_check('quote'), 'verification_calls' => $GLOBALS['verification_calls'] ?? 0));
+    exit;
+}
 echo '<!doctype html><html><head><title>Popup regression</title></head><body><h1>Custom paper bags</h1>';
 custom_box_print_recaptcha_v3_submit_handler();
 foreach ($actions['wp_footer'][90] as $callback) { $callback(); }

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VPN Website Email Quote Popup
  * Description: Sitewide, frequency-capped email enquiries using the shared private quote inbox.
- * Version: 1.0.4
+ * Version: 1.0.5
  */
 defined('ABSPATH') || exit;
 
@@ -81,7 +81,7 @@ add_action('wp_footer', function () {
                     <input type="hidden" name="quote_source" value="website_email_popup">
                     <input type="hidden" name="response_format" value="email_popup_json">
                     <input type="hidden" name="form_location" value="sitewide_email_popup">
-                    <?php wp_nonce_field('custom_box_quote_form', 'custom_box_quote_nonce'); custom_box_quote_form_anti_spam_fields('quote'); ?>
+                    <?php wp_nonce_field('custom_box_quote_form', 'custom_box_quote_nonce'); custom_box_quote_form_anti_spam_fields('quote', 'vpn_quote_guard'); ?>
                     <label class="vep-email-label" for="vep-email">Email <input id="vep-email" name="email" type="email" autocomplete="email" inputmode="email" autocapitalize="none" spellcheck="false" maxlength="254" placeholder="you@company.com" required></label>
                     <details class="vep-details"><summary><span aria-hidden="true">＋</span> Add project details <span class="vep-chevron" aria-hidden="true">⌄</span></summary><label for="vep-message">What packaging do you need? <span>(optional)</span></label><textarea id="vep-message" name="message" rows="3" maxlength="3000" placeholder="Product, size, quantity and delivery country…"></textarea></details>
                     <p class="vep-status" role="status" aria-live="polite" hidden></p>

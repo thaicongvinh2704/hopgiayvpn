@@ -205,11 +205,15 @@ function custom_box_quote_form_timestamp_signature($timestamp, $context) {
     return hash_hmac('sha256', $timestamp . '|' . $context, wp_salt('auth'));
 }
 
-function custom_box_quote_form_anti_spam_fields($context = 'quote') {
+function custom_box_quote_form_anti_spam_fields($context = 'quote', $honeypot_name = 'website_url') {
     $context = custom_box_quote_form_anti_spam_context($context);
     $timestamp = time();
     ?>
+    <?php if ('vpn_quote_guard' === $honeypot_name) : ?>
+    <div hidden inert aria-hidden="true" style="display:none!important"><label>Leave this field empty<input type="text" name="vpn_quote_guard" tabindex="-1" autocomplete="off" data-1p-ignore data-lpignore="true" data-bwignore></label></div>
+    <?php else : ?>
     <input class="quote-hp custom-box-quote-honeypot" type="text" name="website_url" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden;opacity:0;">
+    <?php endif; ?>
     <input type="hidden" name="custom_box_form_started_at" value="<?php echo esc_attr($timestamp); ?>">
     <input type="hidden" name="custom_box_form_context" value="<?php echo esc_attr($context); ?>">
     <input type="hidden" name="custom_box_form_signature" value="<?php echo esc_attr(custom_box_quote_form_timestamp_signature($timestamp, $context)); ?>">
@@ -322,6 +326,11 @@ function custom_box_quote_form_duplicate_key($email, $phone, $product_name, $qua
 function custom_box_public_form_antispam_check($context = 'quote') {
     $context = custom_box_quote_form_anti_spam_context($context);
     $honeypot = custom_box_quote_form_post_text('website_url', 255);
+    // Keep legacy/cached forms protected, and validate the popup's non-contact guard too.
+    // A neutral name and a hidden, inert container keep browser contact autofill away.
+    if ('' === $honeypot && 'website_email_popup' === custom_box_quote_form_post_key('quote_source', 100)) {
+        $honeypot = custom_box_quote_form_post_text('vpn_quote_guard', 255);
+    }
 
     if ('' !== $honeypot) {
         return array(
