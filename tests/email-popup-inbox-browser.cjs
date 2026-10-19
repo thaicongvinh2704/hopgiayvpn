@@ -63,7 +63,7 @@ const check = (name, result) => { assert.ok(result, name); checks.push(name); };
       }
       if (!['malformed-receipt', 'boot-error', 'timeout'].includes(scenario)) {
         await page.waitForFunction(() => document.querySelector('#vpn-email-popup').classList.contains('vep-saved'));
-        check(scenario + ': success waits for inbox receipt', await page.locator('.vep-status').innerText() === 'Your request has been saved.');
+        check(scenario + ': success waits for inbox receipt', await page.locator('.vep-status').innerText() === 'Your email has been received. Our team will contact you as soon as possible.');
         check(scenario + ': only intended attempts submitted', payloads.length === (scenario.endsWith('retry') || scenario === 'expired-session' ? 2 : 1));
         check(scenario + ': email-only enquiry has optional empty details', payloads[0].email === 'buyer@example.invalid' && payloads[0].message === '');
         check(scenario + ': attribution reaches inbox', payloads[0].metadata.utm_source === 'google' && payloads[0].metadata.utm_campaign === 'bulk-bags');

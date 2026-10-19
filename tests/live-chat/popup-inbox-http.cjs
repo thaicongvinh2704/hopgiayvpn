@@ -33,7 +33,7 @@ const check = (value, name) => { if (!value) throw Error(name); checks.push(name
       timings.push({ width, click_to_receipt_ms: Date.now() - clickedAt });
       check(postRequests[0]?.includes('/guest/email-quote'), width + ': first request after Send is the actual save, not session preparation');
       await page.locator('#vpn-email-popup.vep-saved').waitFor();
-      check(await page.locator('.vep-status').innerText() === 'Your request has been saved.', width + ': receipt success visible');
+      check(await page.locator('.vep-status').innerText() === 'Your email has been received. Our team will contact you as soon as possible.', width + ': receipt success visible');
       await page.screenshot({ path: path.join(out, 'success-' + width + '.png') });
       await page.locator('.vep-not-now').click();
       await page.locator('#vpn-chat-launch').click();

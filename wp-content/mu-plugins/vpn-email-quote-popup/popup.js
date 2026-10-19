@@ -167,10 +167,16 @@ function vpnStartEmailPopup() {
       document.cookie = cookie + '=1; Max-Age=31536000; Path=' + cfg.cookiePath + '; SameSite=Lax' + (location.protocol === 'https:' ? '; Secure' : '');
       form.querySelectorAll('label,details,.vep-submit,.vep-contact-notice').forEach(node => { node.hidden = true; node.style.display = 'none'; });
       form.reset(); pendingQuote = null; dialog.classList.add('vep-saved');
-      dialog.querySelector('h2').textContent = 'Thank you — request received.';
-      dialog.querySelector('.vep-intro p').textContent = 'Our team will contact you about your packaging quote.';
-      status.hidden = false; status.textContent = 'Your request has been saved.';
-      dialog.querySelector('.vep-not-now').textContent = 'Close';
+      const title = dialog.querySelector('h2');
+      title.textContent = "We've received your email.";
+      dialog.querySelector('.vep-intro p').textContent = 'Thank you for getting in touch. Our team will review your packaging enquiry and contact you as soon as possible.';
+      dialog.querySelectorAll('.vep-success-mark,.vep-success-eyebrow,.vep-success-email').forEach(node => { node.hidden = false; });
+      const confirmedEmail = dialog.querySelector('.vep-success-email strong');
+      if (confirmedEmail) confirmedEmail.textContent = payload.email;
+      status.hidden = false; status.textContent = 'Your email has been received. Our team will contact you as soon as possible.';
+      dialog.querySelector('.vep-not-now').textContent = 'Continue browsing';
+      dialog.querySelector('.vep-close').setAttribute('aria-label', 'Close confirmation');
+      title.setAttribute('tabindex', '-1'); title.focus({ preventScroll: true });
       window.dispatchEvent(new CustomEvent('vpn:quote-received', { detail: { source: 'website_email_popup', receipt: result.receipt, id: result.id } }));
     } catch (error) {
       status.hidden = false;

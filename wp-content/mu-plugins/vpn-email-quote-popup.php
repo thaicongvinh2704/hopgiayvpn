@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VPN Website Email Quote Popup
  * Description: Sitewide, frequency-capped email enquiries saved in the VPN customer inbox.
- * Version: 1.2.0
+ * Version: 1.2.1
  */
 defined('ABSPATH') || exit;
 
@@ -115,7 +115,10 @@ add_action('wp_footer', function () {
             <div class="vep-photo" aria-hidden="true"><img src="<?php echo esc_url(plugin_dir_url(__FILE__) . 'vpn-email-quote-popup/packaging.webp'); ?>" alt="" width="480" height="720" loading="lazy"></div>
             <div class="vep-content">
                 <button class="vep-close" type="button" aria-label="Close quote invitation" autofocus>×</button>
+                <div class="vep-success-mark" aria-hidden="true" hidden><svg viewBox="0 0 32 32" width="32" height="32" fill="none"><path d="m8 16 5.5 5.5L24 11" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+                <p class="vep-success-eyebrow" hidden>Enquiry received</p>
                 <div class="vep-intro"><h2 id="vep-title">Need a packaging quote?</h2><p id="vep-description">Leave your email. Our team will contact you.</p></div>
+                <div class="vep-success-email" hidden><span>We’ll contact you at</span><strong></strong></div>
                 <form class="vep-form" data-vpn-recaptcha-managed="1" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post">
                     <input type="hidden" name="action" value="custom_box_quote_form">
                     <input type="hidden" name="quote_source" value="website_email_popup">
