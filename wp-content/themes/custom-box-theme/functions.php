@@ -24,6 +24,7 @@ $custom_box_inc_files = array(
     'inc/privacy-policy.php',
     'inc/paper-bag-ads-landing.php',
     'inc/custom-paper-bags-manufacturer-landing.php',
+    'inc/kraft-paper-bags-category.php',
     'inc/breadcrumbs.php',
     'inc/search-suggestions.php',
     'inc/product-specifications.php',

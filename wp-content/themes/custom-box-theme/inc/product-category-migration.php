@@ -361,7 +361,13 @@ function custom_box_category_migration_sync_hierarchy() {
     $detached = 0;
     $missing = array();
 
+    $category_profiles = function_exists('custom_box_get_product_category_manifest_categories')
+        ? custom_box_get_product_category_manifest_categories() : array();
+
     foreach ($active_slugs as $slug) {
+        $intended_parent = !empty($category_profiles[$slug]['parent_slug'])
+            ? get_term_by('slug', $category_profiles[$slug]['parent_slug'], 'product_cat') : null;
+        $intended_parent_id = $intended_parent && !is_wp_error($intended_parent) ? (int) $intended_parent->term_id : 0;
         $term = get_term_by('slug', $slug, 'product_cat');
 
         if (!$term || is_wp_error($term)) {
@@ -369,7 +375,7 @@ function custom_box_category_migration_sync_hierarchy() {
                 $slug,
                 isset($targets[$slug]) ? $targets[$slug] : ucwords(str_replace('-', ' ', $slug)),
                 true,
-                0
+                $intended_parent_id
             );
 
             if (!$term_id) {
@@ -385,12 +391,12 @@ function custom_box_category_migration_sync_hierarchy() {
         $term_id = (int) $term->term_id;
         $active_ids[] = $term_id;
 
-        if (0 === (int) $term->parent) {
+        if ($intended_parent_id === (int) $term->parent) {
             continue;
         }
 
         $updated = wp_update_term($term_id, 'product_cat', array(
-            'parent' => 0,
+            'parent' => $intended_parent_id,
         ));
 
         if (!is_wp_error($updated)) {

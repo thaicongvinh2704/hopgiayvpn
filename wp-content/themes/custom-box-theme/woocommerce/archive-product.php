@@ -207,6 +207,17 @@ if ($current_term && !is_wp_error($current_term) && 'drawer-boxes' === $current_
 }
 
 $parent_term = function_exists('custom_box_get_packaging_parent_category') ? custom_box_get_packaging_parent_category() : false;
+if (function_exists('vpn_kraft_is_category') && vpn_kraft_is_category($current_term)) {
+    $kraft = vpn_kraft_category_data();
+    $archive_title = $kraft['name'];
+    $archive_description = $kraft['intro'];
+    $archive_eyebrow = 'Made in Vietnam · Custom printing';
+    $archive_primary_cta = array('label' => 'Request a Kraft Bag Quote', 'url' => home_url('/custom-paper-bags-manufacturer/#quote'));
+    $archive_secondary_cta = array('label' => 'Choose a Bag Style', 'url' => '#kraft-bag-styles');
+    $archive_hero_proof_points = array('General MOQ 1,000 bags', 'Custom sizes & logo', 'Design support');
+    $archive_hero_alt = $kraft['hero_alt'];
+    $custom_category_guide = 'kraft-paper-bags-guide';
+}
 $sidebar_categories = array();
 $child_categories = array();
 $landing_categories = array();

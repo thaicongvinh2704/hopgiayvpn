@@ -1,6 +1,6 @@
 {
-    "version": 11,
-    "generated_at": "2026-09-28T00:00:00+07:00",
+    "version": 12,
+    "generated_at": "2026-10-23T09:32:00+07:00",
     "source_url": "http://localhost/website-backup/",
     "taxonomy": "product_cat",
     "mode": "strict_manifest_product_categories",
@@ -169,6 +169,12 @@
         "wine-premium-drink-packaging": {
             "name": "Wine and Premium Drink Packaging",
             "slug": "wine-premium-drink-packaging"
+        },
+        "custom-kraft-paper-bags": {
+            "name": "Custom Kraft Paper Bags",
+            "slug": "custom-kraft-paper-bags",
+            "group": "Paper Bags & Packaging Add-ons",
+            "parent_slug": "paper-bags-with-logo"
         }
     },
     "products": {
@@ -602,7 +608,8 @@
             "status": "publish",
             "categories": [
                 "paper-bags-with-logo",
-                "supplement-packaging-boxes"
+                "supplement-packaging-boxes",
+                "custom-kraft-paper-bags"
             ]
         },
         "custom-kraft-pastry-drawer-box-with-insert": {
@@ -1492,6 +1499,122 @@
                 "food-paper-boxes",
                 "folding-carton-boxes",
                 "halloween-packaging"
+            ]
+        },
+        "custom-brown-kraft-grocery-bags": {
+            "title": "Custom Brown Kraft Grocery Bags",
+            "status": "publish",
+            "categories": [
+                "paper-bags-with-logo",
+                "custom-kraft-paper-bags"
+            ]
+        },
+        "custom-brown-kraft-bakery-paper-bags": {
+            "title": "Custom Brown Kraft Bakery Paper Bags",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "paper-bags-with-logo",
+                "custom-kraft-paper-bags"
+            ]
+        },
+        "custom-square-bottom-bakery-paper-bags": {
+            "title": "Custom Square Bottom Bakery Paper Bags",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "food-paper-boxes",
+                "paper-bags-with-logo",
+                "custom-kraft-paper-bags"
+            ]
+        },
+        "custom-kraft-side-gusset-bread-bags": {
+            "title": "Custom Kraft Side Gusset Bread Bags",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "paper-bags-with-logo",
+                "custom-kraft-paper-bags"
+            ]
+        },
+        "custom-printed-flat-bread-paper-bags": {
+            "title": "Custom Printed Flat Bread Paper Bags",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "paper-bags-with-logo",
+                "custom-kraft-paper-bags"
+            ]
+        },
+        "custom-printed-baguette-paper-bags": {
+            "title": "Custom Printed Baguette Paper Bags",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "paper-bags-with-logo",
+                "custom-kraft-paper-bags"
+            ]
+        },
+        "custom-paper-bread-bags-with-window": {
+            "title": "Custom Paper Bread Bags With Window",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "food-paper-boxes",
+                "paper-bags-with-logo",
+                "custom-kraft-paper-bags"
+            ]
+        },
+        "custom-flat-handle-kraft-paper-bags": {
+            "title": "Custom Flat Handle Kraft Paper Bags",
+            "status": "publish",
+            "categories": [
+                "paper-bags-with-logo",
+                "custom-kraft-paper-bags"
+            ]
+        },
+        "custom-twisted-handle-kraft-paper-bags": {
+            "title": "Custom Twisted Handle Kraft Paper Bags",
+            "status": "publish",
+            "categories": [
+                "paper-bags-with-logo",
+                "custom-kraft-paper-bags"
+            ]
+        },
+        "custom-white-kraft-paper-bags-twisted-handles": {
+            "title": "Custom White Kraft Paper Bags with Twisted Handles",
+            "status": "publish",
+            "categories": [
+                "paper-bags-with-logo",
+                "custom-kraft-paper-bags"
+            ]
+        },
+        "custom-die-cut-handle-kraft-paper-bags": {
+            "title": "Custom Die Cut Handle Kraft Paper Bags",
+            "status": "publish",
+            "categories": [
+                "paper-bags-with-logo",
+                "custom-kraft-paper-bags"
+            ]
+        },
+        "custom-die-cut-handle-bakery-paper-bags": {
+            "title": "Custom Die Cut Handle Bakery Paper Bags",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "food-paper-boxes",
+                "paper-bags-with-logo",
+                "custom-kraft-paper-bags"
+            ]
+        },
+        "custom-twisted-handle-bakery-paper-bags": {
+            "title": "Custom Twisted Handle Bakery Paper Bags",
+            "status": "publish",
+            "categories": [
+                "bakery-packaging-boxes",
+                "food-paper-boxes",
+                "paper-bags-with-logo",
+                "custom-kraft-paper-bags"
             ]
         }
     }

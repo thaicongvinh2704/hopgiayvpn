@@ -214,6 +214,13 @@ function custom_box_product_category_manifest_sync(): void {
             return;
         }
 
+        $category_parent_id = $parent_id;
+        if (!empty($category['parent_slug'])) {
+            $category_parent = get_term_by('slug', sanitize_title($category['parent_slug']), 'product_cat');
+            if (!$category_parent || is_wp_error($category_parent)) { return; }
+            $category_parent_id = (int) $category_parent->term_id;
+        }
+
         $term = get_term_by('slug', $slug, 'product_cat');
 
         $term_id = 0;
@@ -224,7 +231,7 @@ function custom_box_product_category_manifest_sync(): void {
                 'product_cat',
                 array(
                     'name'   => $name,
-                    'parent' => $parent_id,
+                    'parent' => $category_parent_id,
                 )
             );
 
@@ -239,7 +246,7 @@ function custom_box_product_category_manifest_sync(): void {
                 'product_cat',
                 array(
                     'slug'   => $slug,
-                    'parent' => $parent_id,
+                    'parent' => $category_parent_id,
                 )
             );
 

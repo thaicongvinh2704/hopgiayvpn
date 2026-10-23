@@ -196,6 +196,7 @@ function custom_box_get_product_category_manifest_categories() {
             'name'            => $name,
             'slug'            => $slug,
             'group'           => !empty($category['group']) ? sanitize_text_field($category['group']) : '',
+            'parent_slug'     => !empty($category['parent_slug']) ? sanitize_title($category['parent_slug']) : '',
             'thumbnail_asset' => $thumbnail_asset,
         );
     }

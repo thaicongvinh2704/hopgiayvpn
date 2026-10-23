@@ -78,6 +78,7 @@ if ($drawer_listing && 'menu_order' === $orderby_value) {
     $product_query_args['orderby'] = 'post__in';
     unset($product_query_args['meta_key']);
 }
+$product_query_args = apply_filters('custom_box_archive_product_query_args', $product_query_args, $current_term, $orderby_value);
 $product_query = new WP_Query($product_query_args);
 ?>
 

@@ -116,7 +116,9 @@ $hero_image_dimensions = $hero_image_id ? array() : $get_local_image_dimensions(
             <a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'custom-box-theme'); ?></a>
             <a href="<?php echo esc_url($products_url); ?>"><?php esc_html_e('Products', 'custom-box-theme'); ?></a>
             <?php if ($current_term && !is_wp_error($current_term)) : ?>
-                <?php if (!empty($current_group['title'])) : ?>
+                <?php if (function_exists('vpn_kraft_is_category') && vpn_kraft_is_category($current_term)) : ?>
+                    <a href="<?php echo esc_url(home_url('/products/paper-bags-with-logo/')); ?>">Paper Bags with Logo</a>
+                <?php elseif (!empty($current_group['title'])) : ?>
                     <a href="<?php echo esc_url(function_exists('custom_box_get_packaging_group_url') ? custom_box_get_packaging_group_url($current_group['title']) : $products_url); ?>"><?php echo esc_html($current_group['title']); ?></a>
                 <?php endif; ?>
                 <span aria-current="page"><?php echo esc_html($current_term->name); ?></span>

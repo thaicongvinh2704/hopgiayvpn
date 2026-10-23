@@ -1,0 +1,37 @@
+{
+  "version": "2026-10-23.1",
+  "slug": "custom-kraft-paper-bags",
+  "name": "Custom Kraft Paper Bags",
+  "parent_slug": "paper-bags-with-logo",
+  "title": "Custom Kraft Paper Bags | Wholesale Logo Printing | VPN",
+  "description": "Custom kraft paper bags made in Vietnam for wholesale orders. Compare SOS, flat and handled styles, brown or white kraft, sizes and logo printing. Request a quote.",
+  "keyword": "custom kraft paper bags",
+  "intro": "Choose custom kraft paper bags for grocery, bakery, takeaway and retail packaging. VPN manufactures bags in Vietnam with your logo, dimensions and paper requirements. Browse no-handle, flat, window and handled styles, then send your quantity and delivery destination for a wholesale quotation.",
+  "hero_product": "custom-brown-kraft-grocery-bags",
+  "hero_alt": "Brown kraft paper grocery bag with an open top, side gussets and no handles",
+  "products": [
+    {"slug": "custom-brown-kraft-grocery-bags", "group": "sos", "reason": "Paper Type: brown kraft; handle-free grocery format"},
+    {"slug": "custom-brown-kraft-bakery-paper-bags", "group": "sos", "reason": "Paper Type: brown kraft; open top and side gussets"},
+    {"slug": "custom-square-bottom-bakery-paper-bags", "group": "sos", "reason": "Paper Type includes kraft; square-bottom construction"},
+    {"slug": "custom-kraft-side-gusset-bread-bags", "group": "bread", "reason": "Paper Type includes natural kraft; side-gusset bread bag"},
+    {"slug": "custom-printed-flat-bread-paper-bags", "group": "bread", "reason": "Paper Type includes kraft; flat bread bag"},
+    {"slug": "custom-printed-baguette-paper-bags", "group": "bread", "reason": "Kraft option in existing baguette product specification"},
+    {"slug": "custom-paper-bread-bags-with-window", "group": "window", "reason": "Paper Type includes kraft with a project-specific window film"},
+    {"slug": "custom-flat-handle-kraft-paper-bags", "group": "handled", "reason": "Paper Type: brown kraft; folded paper handles"},
+    {"slug": "custom-twisted-handle-kraft-paper-bags", "group": "handled", "reason": "Paper Type: brown kraft; twisted paper handles"},
+    {"slug": "custom-white-kraft-paper-bags-twisted-handles", "group": "handled", "reason": "Paper Type: white kraft; twisted paper handles"},
+    {"slug": "custom-die-cut-handle-kraft-paper-bags", "group": "handled", "reason": "Paper Type: brown kraft; integrated handhold"},
+    {"slug": "custom-die-cut-handle-bakery-paper-bags", "group": "handled", "reason": "Paper Type includes kraft; integrated bakery carry handle"},
+    {"slug": "custom-twisted-handle-bakery-paper-bags", "group": "handled", "reason": "Paper Type includes kraft; bakery carry format"},
+    {"slug": "custom-kraft-paper-bag-for-supplement-packaging", "group": "handled", "reason": "Paper Type: brown, white or recycled kraft; retail carrier"}
+  ],
+  "faqs": [
+    {"question": "Can I order custom kraft paper bags with my logo?", "answer": "Yes. VPN makes kraft paper bags to an agreed size, paper specification and artwork. Send your logo or artwork, bag style, quantity per design and destination. Design support is available, and the material and printed sample are reviewed before bulk production."},
+    {"question": "Which kraft bags are supplied without handles?", "answer": "Options in this collection include open-top grocery bags, square-bottom bakery bags and flat or side-gusset bread bags. SOS bags have side gussets and a flat base that opens for filling. A flat bread bag has a different construction, so confirm the base and filled dimensions as well as whether handles are needed."},
+    {"question": "What is the minimum order for wholesale kraft paper bags?", "answer": "The general minimum order is 1,000 bags. The quotation confirms the quantity for each size and design, along with paper, printing, handles and packing. For recurring or large-volume orders, include your total requirement and proposed delivery batches."},
+    {"question": "Can kraft bags be made in white as well as brown?", "answer": "Yes. Brown and white kraft can be reviewed for your design. They provide different printing backgrounds, so approve the paper and printed colors together. A brown appearance alone does not establish recycled content, and a white surface alone does not identify a kraft grade."},
+    {"question": "Can these bags hold bread, pastries or takeaway food?", "answer": "The bag must be specified for its actual use. State whether food touches the paper directly, whether it is hot or greasy, and how long it will be packed. Paper, inks, adhesive, grease resistance and any window or lining are reviewed for that application and destination. Ordinary kraft is not automatically a grease barrier."},
+    {"question": "How long do samples and production take?", "answer": "Custom samples take 7–15 days depending on the order. Production takes 7–45 days after sample approval, depending on the order. Shipping time is separate. Sample fees depend on the design; orders over 5,000 pieces qualify for a refund of 50% of the sample fee."},
+    {"question": "How are the bags checked and packed?", "answer": "Quality is checked at each production stage against the approved specification. The review covers printing, dimensions, folds, gluing and handle attachments where applicable. Finished bags can be packed in cartons or shrink-wrapped bundles according to the order requirements."}
+  ]
+}
