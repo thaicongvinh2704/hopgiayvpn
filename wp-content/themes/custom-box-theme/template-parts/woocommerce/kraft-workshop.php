@@ -2,6 +2,7 @@
 /** Existing VPN workshop material; general factory context, not a bag-line claim. */
 defined('ABSPATH') || exit;
 $factory_assets = get_template_directory_uri() . '/assets/images/supplier-factory-20261015/';
+$workshop_quote_url = !empty($args['quote_url']) ? $args['quote_url'] : home_url('/custom-paper-bags-manufacturer/#quote');
 $workshop_photos = array(
     array('file' => 'vpn-factory-offset-printing-20261009.webp', 'caption' => 'Offset printing equipment', 'alt' => 'Offset printing machine in the VPN paper packaging workshop'),
     array('file' => 'vpn-factory-paper-cutting-20261009.webp', 'caption' => 'Paper cutting equipment', 'alt' => 'Paper cutting machine and stacked sheets in the VPN packaging workshop'),
@@ -46,7 +47,7 @@ $workshop_photos = array(
                     <li>Carton packing or shrink-wrapped bundles</li>
                 </ul>
                 <p>Quality checks take place at each production stage. Tell us about any food-contact or carrying requirements when you send the brief.</p>
-                <a class="btn-primary" href="<?php echo esc_url(home_url('/custom-paper-bags-manufacturer/#quote')); ?>">Discuss Your Kraft Bag Order</a>
+                <a class="btn-primary" href="<?php echo esc_url($workshop_quote_url); ?>">Discuss Your Kraft Bag Order</a>
                 <a class="vpn-kraft-workshop-about" href="<?php echo esc_url(home_url('/about/')); ?>">More about VPN Packaging <span aria-hidden="true">→</span></a>
             </div>
         </div>

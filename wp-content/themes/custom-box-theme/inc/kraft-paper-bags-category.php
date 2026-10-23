@@ -1,6 +1,7 @@
 <?php
 /** Kraft bag collection: existing products, scoped SEO and repeatable category setup. */
 defined('ABSPATH') || exit;
+require_once __DIR__ . '/kraft-bakery-landing.php';
 
 add_action('wp_enqueue_scripts', static function () {
     if (!vpn_kraft_is_category() || (int) get_query_var('paged') > 1) { return; }
@@ -109,7 +110,7 @@ function vpn_kraft_meta_title($title) {
     if (!vpn_kraft_is_category()) { return $title; }
     $title = get_term_meta(get_queried_object_id(), 'rank_math_title', true) ?: vpn_kraft_category_data()['title'];
     $page = max(1, (int) get_query_var('paged'));
-    return $page > 1 ? str_replace(' | Wholesale', ' - Page ' . $page . ' | Wholesale', $title) : $title;
+    return $page > 1 ? preg_replace('/ \| VPN$/', ' - Page ' . $page . ' | VPN', $title) : $title;
 }
 foreach (array('pre_get_document_title', 'rank_math/frontend/title', 'rank_math/opengraph/facebook/title', 'rank_math/opengraph/twitter/title') as $hook) {
     add_filter($hook, 'vpn_kraft_meta_title', 65);
@@ -164,6 +165,15 @@ add_filter('rank_math/json_ld', static function ($nodes) {
     }
     $items = array();
     $page = max(1, (int) get_query_var('paged'));
+    if (vpn_kraft_bakery_is_landing()) {
+        foreach (vpn_kraft_bakery_products() as $index => $product) {
+            $items[] = array('@type' => 'ListItem', 'position' => $index + 1,
+                'name' => $product['label'], 'url' => $product['product']->get_permalink());
+        }
+        $nodes['vpn_kraft_items'] = array('@type' => 'ItemList', '@id' => $url . '#products', 'itemListElement' => $items);
+        $nodes[$collection_key]['mainEntity'] = array('@id' => $url . '#products');
+        return $nodes;
+    }
     // Match the same product order and 12-item pagination as the visible catalog.
     $args = apply_filters('custom_box_archive_product_query_args', array('post_type' => 'product', 'post_status' => 'publish',
         'posts_per_page' => 12, 'paged' => $page, 'fields' => 'ids',
