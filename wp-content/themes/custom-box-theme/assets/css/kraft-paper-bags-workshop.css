@@ -1,0 +1,90 @@
+/* Scoped to the first page of the kraft collection. Reuse the site's palette. */
+.vpn-kraft-workshop {
+    padding: clamp(36px, 5vw, 64px) 0;
+    background: #f4f8fb;
+    border-block: 1px solid #d8e4eb;
+    scroll-margin-top: 110px;
+    color: #123243;
+}
+.vpn-kraft-workshop-heading { max-width: 780px; margin-bottom: 26px; }
+.vpn-kraft-workshop-heading h2 { margin: 8px 0 14px; font-size: clamp(26px, 3vw, 36px); line-height: 1.2; }
+.vpn-kraft-workshop-heading p:last-child { margin: 0; color: #50606b; line-height: 1.75; }
+.vpn-kraft-workshop-photos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.vpn-kraft-workshop-photos figure { margin: 0; background: #fff; border: 1px solid #d8e4eb; border-radius: 8px; overflow: hidden; }
+.vpn-kraft-workshop-photos a { display: block; }
+.vpn-kraft-workshop-photos img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.vpn-kraft-workshop-photos figcaption { padding: 12px 16px; font-size: 14px; font-weight: 600; }
+.vpn-kraft-workshop-tour { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 36px; align-items: start; margin-top: 32px; }
+.vpn-kraft-workshop .factory-video-frame { aspect-ratio: 16 / 9; min-height: 0; border-radius: 8px; }
+.vpn-kraft-workshop .factory-video-play { background: #2a6a92; }
+.vpn-kraft-workshop-video-caption { margin: 10px 0 0; font-size: 13px; color: #50606b; line-height: 1.6; }
+.vpn-kraft-workshop-order h3 { margin: 0 0 14px; font-size: 24px; line-height: 1.3; }
+.vpn-kraft-workshop-order p, .vpn-kraft-workshop-order li { line-height: 1.7; }
+.vpn-kraft-workshop-order p { margin: 0 0 14px; }
+.vpn-kraft-workshop-order ul { margin: 0 0 16px; padding-left: 20px; }
+.vpn-kraft-workshop-order li + li { margin-top: 4px; }
+.vpn-kraft-workshop-about { display: block; width: fit-content; margin-top: 16px; font-weight: 600; }
+.vpn-kraft-workshop a:focus-visible { outline: 3px solid #2a6a92; outline-offset: 3px; }
+
+/* Editorial links stay within the text flow; standalone actions have their own shape. */
+.corrugated-mailer-guide.vpn-kraft-guide a:not(.btn-primary),
+.vpn-kraft-workshop-video-caption a,
+.vpn-kraft-workshop .vpn-kraft-workshop-about {
+    color: #245d78;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color .18s ease, background-color .18s ease, border-color .18s ease;
+}
+.corrugated-mailer-guide.vpn-kraft-guide a:not(.btn-primary):hover,
+.corrugated-mailer-guide.vpn-kraft-guide a:not(.btn-primary):focus-visible {
+    color: #144b68;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: .2em;
+}
+.corrugated-mailer-guide.vpn-kraft-guide a:focus-visible {
+    outline: 2px solid #2a6a92;
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+.vpn-kraft-workshop .vpn-kraft-workshop-about {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 15px;
+    border: 1px solid #c3d6e1;
+    border-radius: 6px;
+    background: #fff;
+    line-height: 1.5;
+}
+.vpn-kraft-workshop-video-caption a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 9px;
+    border: 1px solid #c3d6e1;
+    border-radius: 5px;
+    background: #fff;
+}
+.vpn-kraft-workshop-video-caption a::after { content: "\2197"; font-size: 15px; }
+.vpn-kraft-workshop-video-caption a:hover,
+.vpn-kraft-workshop .vpn-kraft-workshop-about:hover {
+    color: #144b68;
+    border-color: #2a6a92;
+    background: #eaf2f7;
+}
+.vpn-kraft-workshop .btn-primary { text-decoration: none; }
+.vpn-kraft-workshop-photos a { text-decoration: none; }
+@media (prefers-reduced-motion: reduce) {
+    .corrugated-mailer-guide.vpn-kraft-guide a:not(.btn-primary),
+    .vpn-kraft-workshop-video-caption a,
+    .vpn-kraft-workshop .vpn-kraft-workshop-about { transition: none; }
+}
+@media (max-width: 767px) {
+    .vpn-kraft-workshop-photos { grid-template-columns: 1fr; gap: 16px; }
+    .vpn-kraft-workshop-tour { grid-template-columns: 1fr; gap: 24px; margin-top: 24px; }
+    .vpn-kraft-workshop-order h3 { font-size: 22px; }
+    .vpn-kraft-workshop-order .btn-primary { max-width: 100%; white-space: normal; text-align: center; }
+    .vpn-kraft-workshop .factory-video-play { width: 56px; height: 56px; }
+    .vpn-kraft-workshop .factory-video-launch-label { bottom: 16px; font-size: 13px; }
+}

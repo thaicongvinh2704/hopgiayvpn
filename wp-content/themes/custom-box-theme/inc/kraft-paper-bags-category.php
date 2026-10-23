@@ -2,6 +2,12 @@
 /** Kraft bag collection: existing products, scoped SEO and repeatable category setup. */
 defined('ABSPATH') || exit;
 
+add_action('wp_enqueue_scripts', static function () {
+    if (!vpn_kraft_is_category() || (int) get_query_var('paged') > 1) { return; }
+    $file = '/assets/css/kraft-paper-bags-workshop.css';
+    wp_enqueue_style('vpn-kraft-workshop', get_template_directory_uri() . $file, array(), (string) filemtime(get_template_directory() . $file));
+}, 35);
+
 function vpn_kraft_category_data(): array {
     static $data;
     if (null === $data) {

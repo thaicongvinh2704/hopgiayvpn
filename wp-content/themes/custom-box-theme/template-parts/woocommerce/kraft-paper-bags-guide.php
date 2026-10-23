@@ -4,8 +4,9 @@ defined('ABSPATH') || exit;
 $data = vpn_kraft_category_data();
 $quote = home_url('/custom-paper-bags-manufacturer/#quote');
 $product_url = static function ($slug) { return home_url('/product/' . $slug . '/'); };
+get_template_part('template-parts/woocommerce/kraft-workshop');
 ?>
-<section class="corrugated-mailer-guide" aria-labelledby="kraft-guide-title">
+<section class="corrugated-mailer-guide vpn-kraft-guide" aria-labelledby="kraft-guide-title">
     <div class="container">
         <div class="corrugated-mailer-guide-intro" id="kraft-bag-styles">
             <p class="product-eyebrow">Choose the format for your product</p>
