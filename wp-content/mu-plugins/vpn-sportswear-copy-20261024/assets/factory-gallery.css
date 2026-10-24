@@ -1,0 +1,33 @@
+.vpn-factory-gallery {
+    padding: 64px 20px;
+    background: #f5f7fa;
+    color: #18334f;
+    border-top: 1px solid #e1e8ef;
+}
+.vpn-factory-gallery__inner { max-width: 1180px; margin: 0 auto; }
+.vpn-factory-gallery__heading { max-width: 850px; margin-bottom: 28px; }
+.vpn-factory-gallery__eyebrow { display: block; margin-bottom: 12px; color: #176294; font-size: 12px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; }
+.vpn-factory-gallery .vpn-factory-gallery__heading h2 { margin: 0 0 16px; color: #18334f; font-size: clamp(26px, 3vw, 38px); line-height: 1.2; }
+.vpn-factory-gallery__heading p { margin: 0; color: #52677a; font-size: 16px; line-height: 1.7; }
+.vpn-factory-gallery__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.vpn-factory-gallery--two .vpn-factory-gallery__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.vpn-factory-gallery .vpn-factory-gallery__card { min-width: 0; margin: 0; overflow: hidden; background: #fff; border: 1px solid #e1e8ef; border-radius: 10px; }
+.vpn-factory-gallery__card a { display: block; }
+.vpn-factory-gallery .vpn-factory-gallery__image { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; }
+.vpn-factory-gallery__card figcaption { padding: 16px 18px; color: #18334f; font-size: 15px; font-weight: 600; line-height: 1.5; }
+.vpn-factory-gallery__cta { margin: 26px 0 0; }
+.vpn-factory-gallery__cta a { display: inline-flex; gap: 10px; align-items: center; color: #176294; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+.vpn-factory-gallery a:focus-visible { outline: 3px solid #f28b36; outline-offset: 4px; }
+.vpn-packaging-factory-gallery.vpn-factory-overview { align-items: start; }
+.vpn-factory-overview figure { margin: 0; }
+.vpn-packaging-factory-gallery.vpn-factory-overview img,
+.vpn-packaging-factory-gallery.vpn-factory-overview img:first-child { width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; grid-row: auto; }
+.vpn-factory-overview figcaption { padding-top: 10px; color: #fff; font-size: 14px; line-height: 1.5; }
+@media (max-width: 959px) {
+    .vpn-factory-gallery__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 639px) {
+    .vpn-factory-gallery { padding: 42px 20px; }
+    .vpn-factory-gallery__grid,
+    .vpn-factory-gallery--two .vpn-factory-gallery__grid { grid-template-columns: minmax(0, 1fr); gap: 18px; }
+}

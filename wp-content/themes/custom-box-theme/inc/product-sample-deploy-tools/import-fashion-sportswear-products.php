@@ -458,6 +458,15 @@ $products = array(
 $audit = array( '# Fashion and Sportswear Product Import Audit', '' );
 
 foreach ( $products as $p ) {
+	// Preserve this reviewed product when the legacy sample batch is replayed.
+	if ( 'custom-sportswear-packaging-box' === $p['slug'] && function_exists( 'vpn_sportswear_release_data' ) ) {
+		$reviewed = get_page_by_path( $p['slug'], OBJECT, 'product' );
+		$release = vpn_sportswear_release_data();
+		if ( $reviewed && !empty( $release['version'] ) && $release['version'] === get_post_meta( $reviewed->ID, '_vpn_sportswear_release_version', true ) ) {
+			echo 'Preserved reviewed sportswear product (#' . (int) $reviewed->ID . ')' . PHP_EOL;
+			continue;
+		}
+	}
 	$image_ids = array();
 
 	foreach ( $p['images'] as $i => $image ) {
