@@ -1,0 +1,41 @@
+{
+  "version": "2026-10-26.1",
+  "articles": [
+    {
+      "slug": "custom-paper-bag-cost",
+      "anchor_text": "For a repeat program, separate an initial order from forecast demand. A yearly forecast can help discuss production and delivery planning, but it is not the same as a firm purchase commitment or a guaranteed price. Confirm whether a quoted saving assumes one shipment, scheduled releases or one production batch held in storage.",
+      "paragraph_id": "bakery-quotation-example",
+      "addition": "<p id=\"bakery-quotation-example\"><span style=\"font-size: 110%\">For a bakery chain, separate the order into baguette sleeves, pastry counter bags and carriers for boxed orders. Quote each size and artwork at its own quantity, then list repeat demand separately. The <a href=\"{{HOME}}/products/custom-bakery-bread-paper-bags/\">bakery bag collection</a> helps identify the constructions; use the <a href=\"{{HOME}}/paper-bag-sizes/\">size guide</a> to record each filled pack. This avoids treating several different bags as one interchangeable bulk run.</span></p>"
+    },
+    {
+      "slug": "paper-bag-sizes",
+      "anchor_text": "Use a straight ruler or tape without stretching the paper. Open the gusset gently and measure it fully opened. A single folded side pleat is not necessarily the quoted full gusset. If you are copying an existing bag, provide photographs showing the measuring points as well as the written dimensions.",
+      "paragraph_id": "bread-bag-measurement-example",
+      "addition": "<p id=\"bread-bag-measurement-example\"><span style=\"font-size: 110%\">For <a href=\"{{HOME}}/product/custom-printed-baguette-paper-bags/\">baguette bags</a>, record the longest and widest loaves you normally sell and whether the top remains open or is folded. A <a href=\"{{HOME}}/product/custom-kraft-side-gusset-bread-bags/\">gusseted loaf bag</a> also needs enough opened depth for the bread. Check fit with your products and normal loading method; do not copy a retail carrier size chart without checking the different construction.</span></p>"
+    },
+    {
+      "slug": "types-of-paper-bags",
+      "anchor_text": "For food-related projects, distinguish a carrier holding sealed food containers from packaging that touches unpackaged food. The intended contact, temperature, grease or moisture exposure should be reviewed with the supplier and documented for the destination market. Ordinary brown paper is not proof of suitability for direct food contact.",
+      "paragraph_id": "bakery-bag-construction-example",
+      "addition": "<p id=\"bakery-bag-construction-example\"><span style=\"font-size: 110%\">A bakery counter can need more than one family: a flat sleeve for a slim item, a gusseted bag for a thicker loaf and a handled carrier for a closed pastry box. Compare the <a href=\"{{HOME}}/products/custom-bakery-bread-paper-bags/\">bread and bakery bag formats</a> by the filled order and handover. A window or printed finish is an added specification, not a substitute for choosing the body and base.</span></p>"
+    },
+    {
+      "slug": "kraft-vs-coated-paper-bags",
+      "anchor_text": "For example, a quote describing coated art paper with no added film and a quote describing paper with matte film lamination are two different builds. A white calendered kraft grade is another possibility: Mondi identifies such a grade in its retail portfolio. Smoothness and whiteness alone therefore do not identify a coating. Inspect the named stock and its documentation rather than classify it from a photograph.",
+      "paragraph_id": "bakery-paper-barrier-example",
+      "addition": "<p id=\"bakery-paper-barrier-example\"><span style=\"font-size: 110%\">For bakery work, distinguish the printed surface from any required grease barrier. Specify whether the bag holds a closed pastry box or touches the food, together with packing temperature and holding time. Review the <a href=\"{{HOME}}/product/custom-greaseproof-bakery-paper-bags/\">paper and barrier for a greaseproof bakery bag</a> against those conditions; a decorative coating or laminated finish should not be accepted as proof of food-contact suitability.</span></p>"
+    },
+    {
+      "slug": "paper-bag-handle-types",
+      "anchor_text": "Die-cut also does not mean “no added components.” A reinforced version may include an internal strip or board. Ask the supplier to identify what is inside the quoted bag, especially when the product has a high weight relative to its footprint.",
+      "paragraph_id": "bakery-handle-example",
+      "addition": "<p id=\"bakery-handle-example\"><span style=\"font-size: 110%\">For a bakery carrying boxed pastries, compare <a href=\"{{HOME}}/product/custom-twisted-handle-bakery-paper-bags/\">twisted-paper loops</a> with an <a href=\"{{HOME}}/product/custom-die-cut-handle-bakery-paper-bags/\">integrated die-cut grip</a> on bags that fit the same box. Check whether staff can load the box without catching its corners, then carry the filled sample through the normal handover. Record any reinforcement needed; the handle name alone should not decide the choice.</span></p>"
+    },
+    {
+      "slug": "paper-bag-printing",
+      "anchor_text": "Check the outside view after folding. Place a paper printout around a blank sample or review a folded prototype. Confirm that the front, back and gusset graphics face the intended direction and that the visible top edge does not hide important content.",
+      "paragraph_id": "bakery-artwork-example",
+      "addition": "<p id=\"bakery-artwork-example\"><span style=\"font-size: 110%\">For a bread bag that will be folded at the counter, mark the intended closure depth on the artwork drawing and check the logo after filling and folding. On a <a href=\"{{HOME}}/product/custom-paper-bread-bags-with-window/\">window bread bag</a>, also confirm the viewing area, print boundaries and panel direction on the converted sample. A flat artwork approval should not stand in for those checks.</span></p>"
+    }
+  ]
+}
