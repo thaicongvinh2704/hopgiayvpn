@@ -39,7 +39,7 @@ $workshop_photos = array(
             </div>
             <div class="vpn-kraft-workshop-order">
                 <h3>Review your bag before production</h3>
-                <p>For a kraft bag order, we work from your product, artwork and agreed specification. Use the sample review to check:</p>
+                <p><?php echo esc_html($args['order_intro'] ?? 'For a kraft bag order, we work from your product, artwork and agreed specification. Use the sample review to check:'); ?></p>
                 <ul>
                     <li>Paper, printed colors and artwork placement</li>
                     <li>Size, opening and fit with the packed product</li>
@@ -47,7 +47,7 @@ $workshop_photos = array(
                     <li>Carton packing or shrink-wrapped bundles</li>
                 </ul>
                 <p>Quality checks take place at each production stage. Tell us about any food-contact or carrying requirements when you send the brief.</p>
-                <a class="btn-primary" href="<?php echo esc_url($workshop_quote_url); ?>">Discuss Your Kraft Bag Order</a>
+                <a class="btn-primary" href="<?php echo esc_url($workshop_quote_url); ?>"><?php echo esc_html($args['order_cta'] ?? 'Discuss Your Kraft Bag Order'); ?></a>
                 <a class="vpn-kraft-workshop-about" href="<?php echo esc_url(home_url('/about/')); ?>">More about VPN Packaging <span aria-hidden="true">→</span></a>
             </div>
         </div>

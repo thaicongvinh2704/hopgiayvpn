@@ -81,7 +81,7 @@ get_header();
         <div class="cpb-product-grid"><?php foreach ($featured_products as $product) : ?>
             <?php get_template_part('template-parts/woocommerce/paper-bag-landing-card', null, array('product' => $product)); ?>
         <?php endforeach; ?></div>
-        <div class="cpb-catalog-link"><p>Need another style? Explore more options in our paper bag category.</p><a class="cpb-button" href="<?php echo esc_url($category_url); ?>">View all <?php echo esc_html(count($products)); ?> paper bag products →</a></div>
+        <div class="cpb-catalog-link"><p>Need another style? Explore more options in our paper bag category. <?php if (function_exists('vpn_bakery_category_url') && get_term_by('slug', 'custom-bakery-bread-paper-bags', 'product_cat')) : ?>For bread and pastries, compare our <a class="cpb-text-link" href="<?php echo esc_url(vpn_bakery_category_url()); ?>">bakery and bread paper bags</a>.<?php endif; ?></p><a class="cpb-button" href="<?php echo esc_url($category_url); ?>">View all <?php echo esc_html(count($products)); ?> paper bag products →</a></div>
     </div></section>
     <?php if ($christmas_products) : ?>
     <section class="cpb-section cpb-christmas" id="christmas-bags" aria-labelledby="cpb-christmas-title"><div class="cpb-shell">

@@ -167,7 +167,7 @@ $product_query = new WP_Query($product_query_args);
                                         <img
                                             src="<?php echo esc_url($product_image_url); ?>"
                                             srcset="<?php echo esc_url($product_image_url); ?> <?php echo esc_attr((int) $product_image_size[0]); ?>w"
-                                            alt="<?php echo esc_attr($drawer_listing ? get_the_title() : ''); ?>"
+                                            alt="<?php echo esc_attr(($drawer_listing || (function_exists('vpn_bakery_is_category') && vpn_bakery_is_category($current_term))) ? get_the_title() : ''); ?>"
                                             width="<?php echo esc_attr((int) $product_image_size[0]); ?>"
                                             height="<?php echo esc_attr((int) $product_image_size[1]); ?>"
                                             loading="lazy"

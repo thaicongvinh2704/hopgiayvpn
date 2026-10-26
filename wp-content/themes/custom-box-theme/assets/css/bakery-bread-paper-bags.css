@@ -1,0 +1,33 @@
+/* Bakery category additions use the existing archive, button and guide styles. */
+.vpn-bakery-category-nav { padding: 20px 0 0; }
+.vpn-bakery-category-nav .container { display: flex; flex-wrap: wrap; gap: 10px; }
+.vpn-bakery-category-nav a { color: #245d78; background: #f4f8fb; border: 1px solid #d8e4eb; border-radius: 6px; padding: 10px 15px; font-weight: 600; line-height: 1.5; text-decoration: none; }
+.vpn-bakery-category-nav a:hover { background: #eaf2f7; border-color: #2a6a92; }
+.vpn-bakery-category-nav a:focus-visible, .vpn-bakery-guide a:focus-visible { outline: 2px solid #2a6a92; outline-offset: 3px; }
+.vpn-bakery-guide a:not(.btn-primary):not(.btn-outline) { color: #245d78; font-weight: 600; text-decoration: none; }
+.vpn-bakery-guide a:not(.btn-primary):not(.btn-outline):hover { color: #144b68; text-decoration: underline; text-underline-offset: .2em; }
+.vpn-bakery-guide .btn-primary, .vpn-bakery-guide .btn-outline { text-decoration: none; white-space: normal; text-align: center; }
+.vpn-bakery-guide [id] { scroll-margin-top: 110px; }
+.vpn-bakery-guide .corrugated-mailer-table-wrap { margin: 28px 0 36px; }
+.vpn-bakery-guide .corrugated-mailer-rfq-card { align-self: start; }
+.vpn-bakery-guide .vpn-bakery-small { font-size: 14px; margin: 14px 0 0; }
+.vpn-bakery-repeat { margin-top: 28px; max-width: 850px; }
+.vpn-bakery-repeat p { line-height: 1.75; margin: 0 0 20px; }
+.vpn-bakery-faq-section { padding-top: 44px; }
+.vpn-bakery-faq-section .corrugated-mailer-faq { margin-top: 0; }
+@media (max-width: 767px) {
+    .vpn-bakery-category-nav .container { gap: 8px; }
+    .vpn-bakery-category-nav a { flex: 1 1 calc(50% - 8px); text-align: center; padding: 10px; font-size: 14px; }
+    .vpn-bakery-guide .corrugated-mailer-rfq-card { padding: 24px 20px; }
+    .vpn-bakery-guide .btn-primary, .vpn-bakery-guide .btn-outline { max-width: 100%; }
+    .vpn-bakery-guide .corrugated-mailer-table-wrap { overflow: hidden; }
+    .vpn-bakery-guide table { display: block; min-width: 0; width: 100%; }
+    .vpn-bakery-guide caption { display: block; width: 100%; font-size: 20px; line-height: 1.35; padding: 20px; }
+    .vpn-bakery-guide thead { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); }
+    .vpn-bakery-guide tbody { display: block; width: 100%; }
+    .vpn-bakery-guide tbody tr { display: block; padding: 20px; border-bottom: 1px solid #d8e4eb; }
+    .vpn-bakery-guide tbody tr:last-child { border-bottom: 0; }
+    .vpn-bakery-guide tbody th { display: block; padding: 0; border: 0; font-size: 17px; }
+    .vpn-bakery-guide tbody td { display: block; padding: 12px 0 0; border: 0; }
+    .vpn-bakery-guide tbody td::before { content: attr(data-label); display: block; margin-bottom: 2px; font-size: 12px; font-weight: 700; color: #245d78; }
+}

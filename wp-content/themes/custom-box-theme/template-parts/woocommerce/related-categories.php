@@ -14,6 +14,12 @@ if (!$current_term || is_wp_error($current_term)) {
 $group = function_exists('custom_box_get_packaging_group_for_term') ? custom_box_get_packaging_group_for_term($current_term) : null;
 $products_url = function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
 $sibling_terms = array();
+if (function_exists('vpn_bakery_is_category') && vpn_bakery_is_category($current_term)) {
+    foreach (array('paper-bags-with-logo', 'custom-kraft-paper-bags', 'bakery-packaging-boxes') as $slug) {
+        $related = get_term_by('slug', $slug, 'product_cat');
+        if ($related) { $sibling_terms[] = $related; }
+    }
+}
 
 if (!empty($group['slugs'])) {
     foreach ($group['slugs'] as $slug) {

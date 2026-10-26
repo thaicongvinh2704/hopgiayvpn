@@ -218,6 +218,17 @@ if (function_exists('vpn_kraft_is_category') && vpn_kraft_is_category($current_t
     $archive_hero_alt = $kraft['hero_alt'];
     $custom_category_guide = 'kraft-paper-bags-guide';
 }
+if (function_exists('vpn_bakery_is_category') && vpn_bakery_is_category($current_term)) {
+    $bakery = vpn_bakery_category_data();
+    $archive_title = $bakery['name'];
+    $archive_description = $bakery['intro'];
+    $archive_eyebrow = 'Made in Vietnam · Wholesale & repeat orders';
+    $archive_primary_cta = array('label' => 'Request a Bakery Bag Quote', 'url' => home_url('/custom-paper-bags-manufacturer/#quote'));
+    $archive_secondary_cta = array('label' => 'Compare Bag Formats', 'url' => '#bakery-bag-selection');
+    $archive_hero_proof_points = array('General MOQ 1,000 bags', 'Custom sizes & logo', 'Design support');
+    $archive_hero_alt = $bakery['hero_alt'];
+    $custom_category_guide = 'bakery-bread-paper-bags-guide';
+}
 $sidebar_categories = array();
 $child_categories = array();
 $landing_categories = array();
@@ -286,6 +297,11 @@ $archive_context = compact(
 
 <main class="product-archive-page">
     <?php get_template_part('template-parts/woocommerce/' . ('drawer-boxes-guide' === $custom_category_guide ? 'drawer-boxes-hero' : 'archive-hero'), null, $archive_context); ?>
+    <?php if ('bakery-bread-paper-bags-guide' === $custom_category_guide && 1 === max(1, (int) get_query_var('paged'))) : ?>
+        <nav class="vpn-bakery-category-nav" aria-label="Bakery bag buying guide"><div class="container">
+            <a href="#bakery-bag-selection">Compare formats</a><a href="#bakery-specification">Size & printing</a><a href="#bakery-order-process">MOQ & samples</a><a href="#kraft-workshop">Our workshop</a><a href="#bakery-faq">FAQs</a>
+        </div></nav>
+    <?php endif; ?>
 
     <?php if (is_shop()) : ?>
         <?php get_template_part('template-parts/woocommerce/product-category-hub', null, $archive_context); ?>
@@ -316,7 +332,7 @@ $archive_context = compact(
     <?php if (!$custom_category_guide) : ?>
         <?php get_template_part('template-parts/home/faq'); ?>
     <?php endif; ?>
-    <?php get_template_part('template-parts/home/footer-cta'); ?>
+    <?php if ('bakery-bread-paper-bags-guide' !== $custom_category_guide || 1 !== max(1, (int) get_query_var('paged'))) { get_template_part('template-parts/home/footer-cta'); } ?>
 </main>
 
 <?php get_footer(); ?>
