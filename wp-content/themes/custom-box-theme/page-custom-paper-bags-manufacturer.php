@@ -25,13 +25,18 @@ get_header();
                 <h1 id="cpb-title">Custom paper bag<br><span>manufacturer in Vietnam.</span></h1>
                 <p class="cpb-hero-lead">We manufacture custom printed paper bags for importers, distributors, retail chains and brands. Order wholesale bags with your logo, custom sizes and handles, with design support for your product.</p>
                 <div class="cpb-hero-facts"><span><strong>1,000 pcs</strong> general MOQ</span><span><strong>Custom design</strong> support available</span></div>
+                <div class="cpb-hero-actions">
+                    <a class="cpb-button cpb-cta" href="#quote" data-track="paper_bag_quote_cta"><span class="cpb-cta-label">Get my paper bag quote</span><span class="cpb-cta-arrow" aria-hidden="true">→</span></a>
+                    <a class="cpb-whatsapp-link" href="https://wa.me/84933102653" target="_blank" rel="noopener" data-track="paper_bag_whatsapp_click"><i class="fab fa-whatsapp cpb-whatsapp-icon" aria-hidden="true"></i>WhatsApp us</a>
+                    <a class="cpb-text-link" href="#styles">Explore bag styles <span aria-hidden="true">→</span></a>
+                </div>
+                <p class="cpb-cta-note">Free quotation · No obligation</p>
                 <div class="cpb-hero-showcase" aria-label="Custom paper bag style examples">
                     <?php foreach (custom_box_paper_bag_hero_products() as $index => $product) : ?>
                     <a href="<?php echo esc_url($product->get_permalink()); ?>" aria-label="<?php echo esc_attr(get_the_title($product->get_id())); ?>"><?php echo custom_box_paper_bag_product_image($product, true, 0 === $index); ?><span>View bag <span aria-hidden="true">→</span></span></a>
                     <?php endforeach; ?>
                 </div>
                 <p class="cpb-reference-note">From our paper bag collection. Size, artwork and finishing can be customized.</p>
-                <a class="cpb-text-link" href="#styles">Explore bag styles <span aria-hidden="true">↓</span></a>
             </div>
             <aside class="cpb-quote-card" id="quote" aria-labelledby="cpb-quote-title">
                 <p class="cpb-eyebrow">Start with your project</p>
@@ -69,7 +74,7 @@ get_header();
                     </details>
                     <label class="cpb-consent" id="cpb-form-privacy"><input name="privacy_consent" type="checkbox" value="yes" required><span>I agree to the use of my details to review and respond to this quote request. <a href="<?php echo esc_url($privacy); ?>">Privacy policy</a>.</span></label>
                     <?php custom_box_quote_form_recaptcha_fields(); ?>
-                    <button class="cpb-button cpb-submit" type="submit">Request my quote <span aria-hidden="true">→</span></button>
+                    <button class="cpb-button cpb-cta cpb-submit" type="submit"><span class="cpb-cta-label">Request my quote</span><span class="cpb-cta-arrow" aria-hidden="true">→</span></button>
                     <p class="cpb-form-foot">Free quotation · No obligation<br>Prefer email? <a href="mailto:sales.vpn@hopgiayvpn.com">sales.vpn@hopgiayvpn.com</a></p>
                 </form>
             </aside>
@@ -100,7 +105,7 @@ get_header();
         <ol class="cpb-steps"><li><span>01</span><h3>Send your brief</h3><p>Start with your email, quantity, destination and bag style.</p></li><li><span>02</span><h3>Review your quote</h3><p>Confirm dimensions, paper, handles, printing, quantity per design and the included charges.</p></li><li><span>03</span><h3>Approve the sample</h3><p>Review the structure, artwork, color direction and finish before production.</p></li><li><span>04</span><h3>Produce &amp; pack</h3><p>Check quality at each stage and confirm packing and shipping arrangements.</p></li></ol>
     </div></section>
     <section class="cpb-section" id="shipping"><div class="cpb-shell cpb-two-column">
-        <div><p class="cpb-eyebrow">For international buyers</p><h2>Your paper bag supplier for international orders.</h2><p class="cpb-section-lead">Production is based in Vietnam. Share your quantity, delivery city, postal code and required receiving date. For orders with multiple delivery locations, include each destination so we can review the packing and shipment scope with your quotation.</p><a class="cpb-button" href="#quote" data-track="paper_bag_quote_cta">Get a project-specific quote →</a></div>
+        <div><p class="cpb-eyebrow">For international buyers</p><h2>Your paper bag supplier for international orders.</h2><p class="cpb-section-lead">Production is based in Vietnam. Share your quantity, delivery city, postal code and required receiving date. For orders with multiple delivery locations, include each destination so we can review the packing and shipment scope with your quotation.</p><a class="cpb-button cpb-cta" href="#quote" data-track="paper_bag_quote_cta"><span class="cpb-cta-label">Get a project-specific quote</span><span class="cpb-cta-arrow" aria-hidden="true">→</span></a></div>
         <div class="cpb-info-list"><article><h3>Inches or millimeters</h3><p>Use either unit. State width × height × gusset and the packed product weight; final dimensions are approved with the sample.</p></article><article><h3>Confirm what the quote includes</h3><p>Review sample, printing, finishing, packing and freight charges. Confirm applicable delivery terms, duties and taxes before ordering.</p></article><article><h3>Separate production and transit</h3><p>Production takes 7–45 days after sample approval depending on the order. Transit time depends on the agreed shipment and destination.</p></article><article><h3>Leave an email outside our working hours</h3><p>Our team works Monday–Saturday, 8:00 AM–6:00 PM Vietnam time (UTC+7). Leave your email and project details for follow-up.</p></article></div>
     </div></section>
     <section class="cpb-section cpb-section--ink" id="quality"><div class="cpb-shell">
@@ -116,7 +121,7 @@ get_header();
         </div><div class="cpb-quality-checks"><article><h3>Paper, print &amp; finish</h3><p>Confirm the agreed paper grade, artwork, color reference and finish. Recycled content or certification requirements need project-specific confirmation.</p></article><article><h3>Structure &amp; carry requirements</h3><p>Review folds, gluing, handle attachments, reinforcement and loaded carry requirements. GSM alone does not determine bag strength.</p></article><article><h3>Packing for your order</h3><p>Cartons or shrink-wrapped bundles are available according to the order requirements. Agree the packing method and quantities with the specification.</p></article><a class="cpb-text-link" href="<?php echo esc_url(home_url('/about/')); ?>">Meet VPN Paper Box →</a></div></div>
     </div></section>
     <section class="cpb-section" id="faq"><div class="cpb-shell cpb-faq-grid"><div><p class="cpb-eyebrow">Before you request a quote</p><h2>Your paper bag questions, answered.</h2><p class="cpb-section-lead">Not sure about the specifications? Start with your product and quantity. We can discuss the details by email.</p><a class="cpb-text-link" href="#quote">Ask about your project →</a></div><div class="cpb-faq-list"><?php foreach (custom_box_custom_paper_bags_faqs() as $faq) : ?><details><summary><?php echo esc_html($faq['question']); ?></summary><p><?php echo esc_html($faq['answer']); ?></p></details><?php endforeach; ?></div></div></section>
-    <section class="cpb-final"><div class="cpb-shell"><p class="cpb-eyebrow">Let’s find the right bag for your brand</p><h2>Your product. Your artwork.<br>A paper bag made around both.</h2><a class="cpb-button" href="#quote" data-track="paper_bag_quote_cta">Request my paper bag quote →</a><p>Or email <a href="mailto:sales.vpn@hopgiayvpn.com">sales.vpn@hopgiayvpn.com</a></p></div></section>
+    <section class="cpb-final"><div class="cpb-shell"><p class="cpb-eyebrow">Let’s find the right bag for your brand</p><h2>Your product. Your artwork.<br>A paper bag made around both.</h2><a class="cpb-button cpb-cta" href="#quote" data-track="paper_bag_quote_cta"><span class="cpb-cta-label">Get my paper bag quote</span><span class="cpb-cta-arrow" aria-hidden="true">→</span></a><p>Or email <a href="mailto:sales.vpn@hopgiayvpn.com">sales.vpn@hopgiayvpn.com</a></p></div></section>
 </main>
-<nav class="cpb-mobile-bar" aria-label="Paper bag quick actions"><a class="cpb-button" href="#quote" data-track="paper_bag_quote_cta">Get a quote</a><a href="https://wa.me/84933102653" target="_blank" rel="noopener" data-track="paper_bag_whatsapp_click">WhatsApp</a></nav>
+<nav class="cpb-mobile-bar" aria-label="Paper bag quick actions"><a class="cpb-button cpb-cta" href="#quote" data-track="paper_bag_quote_cta"><span class="cpb-cta-label">Get my paper bag quote</span><span class="cpb-cta-arrow" aria-hidden="true">→</span></a><a class="cpb-whatsapp-link" href="https://wa.me/84933102653" target="_blank" rel="noopener" data-track="paper_bag_whatsapp_click"><i class="fab fa-whatsapp cpb-whatsapp-icon" aria-hidden="true"></i>WhatsApp</a></nav>
 <?php get_footer(); ?>

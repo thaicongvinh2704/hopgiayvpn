@@ -198,3 +198,58 @@
 /* Crop only the built-in border around this existing front-view photo. */
 .cpb-product-media.custom-product-image img.cpb-photo-front-crop,
 .cpb-product-card:hover .cpb-product-media.custom-product-image img.cpb-photo-front-crop { transform:scale(1.27); }
+
+/* Approved concept 01: brand-blue quote actions. Keep site navigation untouched. */
+.vpn-custom-paper-bags-body { --cpb-cta-blue:#075ba8; --cpb-cta-deep:#03427c; }
+.cpb-page .cpb-cta,.cpb-mobile-bar .cpb-cta {
+ min-height:56px; padding:12px 18px; gap:14px; border:1px solid var(--cpb-cta-blue); border-radius:10px;
+ background:linear-gradient(160deg,var(--cpb-cta-blue),var(--cpb-cta-deep)); color:#fff; font-size:15px; font-weight:700;
+ box-shadow:0 5px 12px rgb(3 66 124 / 17%); transition:box-shadow .18s ease,background-color .18s ease;
+}
+.cpb-page .cpb-cta:hover,.cpb-mobile-bar .cpb-cta:hover { background:var(--cpb-cta-deep); border-color:var(--cpb-cta-deep); color:#fff; box-shadow:0 6px 16px rgb(3 66 124 / 23%); }
+.cpb-cta-label { flex:1; min-width:0; text-align:center; }
+.cpb-cta-arrow { flex:0 0 28px; display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:#fff; color:var(--cpb-cta-deep); font:400 19px/1 Arial,Helvetica,sans-serif; }
+.cpb-hero-actions { display:flex; align-items:center; flex-wrap:wrap; gap:10px 12px; }
+.cpb-hero-actions .cpb-cta { flex:1.55 1 280px; }
+.cpb-page .cpb-whatsapp-link,.cpb-mobile-bar .cpb-whatsapp-link { display:inline-flex; align-items:center; justify-content:center; gap:9px; min-height:56px; padding:12px 16px; border:1px solid var(--cpb-cta-blue); border-radius:10px; background:#fff; color:var(--cpb-cta-deep); font-size:15px; font-weight:700; text-decoration:none; }
+.cpb-hero-actions .cpb-whatsapp-link { flex:1 1 170px; }
+.cpb-page .cpb-whatsapp-link:hover,.cpb-mobile-bar .cpb-whatsapp-link:hover { background:var(--cpb-primary-soft); }
+.cpb-whatsapp-icon { color:#128c4a; font-size:22px; }
+.cpb-hero-actions .cpb-text-link { flex:0 0 100%; width:100%; min-height:36px; color:var(--cpb-cta-deep); text-decoration:none; }
+.cpb-hero-actions .cpb-text-link:hover { text-decoration:underline; }
+.cpb-hero-copy .cpb-cta-note { margin:0 0 22px; color:var(--cpb-muted); font-size:12px; line-height:1.5; }
+.cpb-quote-card { border-top:3px solid var(--cpb-cta-blue); box-shadow:0 10px 28px rgb(3 66 124 / 8%); }
+.cpb-workshop-next { display:flex; align-items:center; justify-content:space-between; gap:24px; margin-top:24px; padding:22px 24px; border:1px solid var(--cpb-line); border-radius:10px; background:var(--cpb-soft); }
+.cpb-page .cpb-workshop-next h3 { margin:0 0 5px; font-size:19px; line-height:1.4; }
+.cpb-workshop-next p { margin:0; color:var(--cpb-muted); font-size:13px; line-height:1.6; }
+.cpb-workshop-actions { display:flex; flex-direction:column; align-items:stretch; flex-shrink:0; gap:4px; }
+.cpb-workshop-actions .cpb-text-link { justify-content:center; font-size:12px; text-decoration:none; }
+.cpb-workshop-actions .cpb-text-link:hover { text-decoration:underline; }
+.cpb-product-actions.custom-product-actions { flex-direction:column; gap:2px; align-items:stretch; }
+.cpb-product-actions.custom-product-actions .cpb-card-quote { flex:none; width:100%; min-width:0; min-height:50px; padding:10px 14px; border-color:var(--cpb-cta-blue); background:linear-gradient(160deg,var(--cpb-cta-blue),var(--cpb-cta-deep)); color:#fff; font-size:14px; white-space:normal; }
+.cpb-product-actions.custom-product-actions .cpb-card-quote:hover { background:var(--cpb-cta-deep); }
+.cpb-product-actions.custom-product-actions .cpb-card-details { flex:none; width:100%; min-width:0; gap:8px; min-height:44px; padding:8px 0; border-color:transparent; background:transparent; color:var(--cpb-cta-deep); font-size:12px; font-weight:600; box-shadow:none; }
+.cpb-product-actions.custom-product-actions .cpb-card-details:hover { background:transparent; color:var(--cpb-cta-deep); text-decoration:underline; }
+.cpb-product-actions .cpb-cta-arrow { flex-basis:24px; width:24px; height:24px; font-size:17px; }
+@media(max-width:800px) {
+ .cpb-mobile-bar { gap:8px; box-shadow:0 -3px 16px rgb(23 49 59 / 9%); }
+ .cpb-mobile-bar .cpb-cta { flex:1.9; min-width:0; min-height:50px; gap:8px; padding:10px 12px; font-size:12px; }
+ .cpb-mobile-bar .cpb-cta-arrow { flex-basis:24px; width:24px; height:24px; font-size:17px; }
+ .cpb-mobile-bar .cpb-whatsapp-link { flex:1; min-height:50px; padding:10px 8px; gap:6px; font-size:12px; }
+ .cpb-mobile-bar .cpb-whatsapp-icon { font-size:20px; }
+ .vpn-custom-paper-bags-body.cpb-form-focused .cpb-mobile-bar { display:none; }
+ .cpb-workshop-next { gap:20px; padding:20px; }
+}
+@media(max-width:600px) {
+ .cpb-hero-actions { gap:9px; }
+ .cpb-hero-actions .cpb-cta,.cpb-hero-actions .cpb-whatsapp-link { flex-basis:100%; }
+ .cpb-hero-actions .cpb-cta { font-size:15px; }
+ .cpb-hero-actions .cpb-text-link { justify-content:center; margin-top:2px; font-size:12px; }
+ .cpb-hero-copy .cpb-cta-note { text-align:center; font-size:11px; margin-bottom:20px; }
+ .cpb-workshop-next { display:block; padding:20px; }
+ .cpb-workshop-actions { margin-top:16px; }
+ .cpb-product-actions.custom-product-actions .cpb-card-quote { gap:6px; padding:10px 9px; font-size:12px; }
+ .cpb-product-actions .cpb-cta-arrow { flex-basis:22px; width:22px; height:22px; font-size:16px; }
+ .cpb-page #shipping .cpb-cta { width:100%; }
+}
+@media(prefers-reduced-motion:reduce) { .cpb-mobile-bar .cpb-cta { transition:none; } }

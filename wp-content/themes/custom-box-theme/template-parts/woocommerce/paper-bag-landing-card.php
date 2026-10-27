@@ -11,8 +11,8 @@ $product_url = $bag_product->get_permalink();
     <div class="cpb-product-body custom-product-body">
         <h3><a class="custom-product-title" href="<?php echo esc_url($product_url); ?>"><?php echo esc_html(custom_box_paper_bag_display_title($bag_product)); ?></a></h3>
         <div class="cpb-product-actions custom-product-actions">
-            <a href="<?php echo esc_url($product_url); ?>" aria-label="<?php echo esc_attr('View details of ' . $product_title); ?>">Details</a>
-            <a href="#quote" data-bag-type="<?php echo esc_attr($product_title); ?>" aria-label="<?php echo esc_attr('Request a quote for ' . $product_title); ?>">Get quote</a>
+            <a class="cpb-button cpb-cta cpb-card-quote" href="#quote" data-bag-type="<?php echo esc_attr($product_title); ?>" aria-label="<?php echo esc_attr('Request a quote for ' . $product_title); ?>"><span class="cpb-cta-label">Quote this bag</span><span class="cpb-cta-arrow" aria-hidden="true">→</span></a>
+            <a class="cpb-card-details" href="<?php echo esc_url($product_url); ?>" aria-label="<?php echo esc_attr('View details of ' . $product_title); ?>">Details <span aria-hidden="true">→</span></a>
         </div>
     </div>
 </article>

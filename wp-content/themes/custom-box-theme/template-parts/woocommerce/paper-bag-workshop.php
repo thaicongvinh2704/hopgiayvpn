@@ -24,6 +24,12 @@ $workshop_photos = array(
             </figure>
             <?php endforeach; ?>
         </div>
-        <div class="cpb-workshop-links"><a class="cpb-text-link" href="#quality">Watch the factory tour <span aria-hidden="true">↓</span></a><a class="cpb-text-link" href="<?php echo esc_url(home_url('/about/')); ?>">Meet VPN Paper Box <span aria-hidden="true">→</span></a></div>
+        <div class="cpb-workshop-next">
+            <div><h3>Planning a paper bag order?</h3><p>Share your style and quantity. We’ll help you work through the details.</p></div>
+            <div class="cpb-workshop-actions">
+                <a class="cpb-button cpb-cta" href="#quote" data-track="paper_bag_quote_cta"><span class="cpb-cta-label">Discuss your order</span><span class="cpb-cta-arrow" aria-hidden="true">→</span></a>
+                <a class="cpb-text-link" href="#quality">Watch the factory tour <span aria-hidden="true">↓</span></a>
+            </div>
+        </div>
     </div>
 </section>
