@@ -1,4 +1,34 @@
 /* Paper bag landing: inherit the website palette and keep the shared site navigation. */
+/* Scoped workshop evidence; reuse the existing factory player and site palette. */
+.cpb-workshop { padding:36px 0 28px; border-bottom:1px solid var(--cpb-line); }
+.cpb-workshop-heading { display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:end; margin-bottom:22px; }
+.cpb-page .cpb-workshop-heading .cpb-eyebrow { margin-bottom:8px; }
+.cpb-page .cpb-workshop-heading h2 { font-size:clamp(24px,2.4vw,32px); line-height:1.2; letter-spacing:-.025em; margin:0; }
+.cpb-workshop-heading>p { color:var(--cpb-muted); font-size:14px; margin:0; }
+.cpb-workshop-photos { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; }
+.cpb-workshop-photos figure { margin:0; min-width:0; }
+.cpb-workshop-photos a { display:block; border-radius:8px; overflow:hidden; background:var(--cpb-soft); }
+.cpb-workshop-photos img { display:block; width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; }
+.cpb-workshop-photos figcaption { padding-top:10px; font-size:12px; line-height:1.5; color:var(--cpb-muted); }
+.cpb-workshop-links { display:flex; flex-wrap:wrap; gap:8px 28px; margin-top:14px; }
+.cpb-quality-photo .factory-video-frame { aspect-ratio:16/9; min-height:0; border-radius:8px; }
+.cpb-quality-photo .factory-video-launch img { height:100%; border-radius:0; }
+.cpb-quality-photo .factory-video-play { background:var(--cpb-primary); }
+.cpb-quality-photo .factory-video-launch-label { font-size:13px; bottom:16px; }
+.cpb-quality-photo p a { color:inherit; text-underline-offset:3px; }
+.cpb-quality-photo .factory-video-launch:focus-visible { outline:3px solid #fff; outline-offset:-5px; }
+@media (max-width:800px) {
+ .cpb-workshop { padding:30px 0 22px; }
+ .cpb-workshop-heading { grid-template-columns:1fr; gap:12px; margin-bottom:18px; }
+ .cpb-workshop-photos { gap:14px; }
+}
+@media (max-width:480px) {
+ .cpb-workshop-photos { grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px 12px; }
+ .cpb-workshop-photos figure:first-child { grid-column:1/-1; }
+ .cpb-workshop-photos figure:first-child img { aspect-ratio:16/9; }
+ .cpb-workshop-photos figcaption { font-size:11px; padding-top:7px; }
+ .cpb-quality-photo .factory-video-play { width:52px; height:52px; }
+}
 .vpn-custom-paper-bags-body { --cpb-primary:var(--color-primary,#2a6a92); --cpb-primary-dark:var(--color-primary-dark,#164c6d); --cpb-primary-soft:var(--color-primary-soft,#e9f3f8); --cpb-ink:var(--color-ink,#17313b); --cpb-muted:var(--color-muted,#5d6b73); --cpb-line:var(--color-line,#dce8ee); --cpb-soft:var(--color-surface-soft,#f7fafc); --cpb-accent:var(--color-accent,#f0a64b); background:#fff; color:var(--cpb-ink); }
 .vpn-custom-paper-bags-body .cpb-shell { width:min(1200px,calc(100% - 80px)); margin-inline:auto; }
 .cpb-page *, .cpb-header *, .cpb-mobile-bar * { box-sizing:border-box; }
