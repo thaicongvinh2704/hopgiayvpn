@@ -21,6 +21,16 @@ $about_url = home_url('/about/');
 $factory_url = function_exists('custom_box_get_packaging_money_page_url') ? custom_box_get_packaging_money_page_url() : home_url('/custom-packaging-boxes-manufacturer/');
 $faqs = custom_box_pizza_boxes_manufacturer_faqs();
 $guide_post = get_page_by_path('custom-pizza-boxes-with-logo-guide', OBJECT, 'post');
+$size_guide = get_page_by_path('large-pizza-box-dimensions', OBJECT, 'post');
+$format_descriptions = array(
+    'custom-fold-flat-pizza-delivery-box-full-color-print' => 'Discuss a fold-flat format with a printed lid for your takeaway or delivery program.',
+    'custom-pizza-packaging-box' => 'Start with your pizza dimensions and delivery setup, then choose the board, closure and artwork.',
+    'kraft-pizza-delivery-box' => 'A kraft-look direction for a branded delivery box, sized around your finished pizza.',
+    'personal-kraft-pizza-box' => 'A compact format to review for individual pizzas, smaller portions and takeaway orders.',
+    'rectangular-flatbread-pizza-box' => 'An elongated format for flatbreads and pizzas that need a rectangular footprint.',
+    'white-kraft-pizza-box' => 'Compare a light printed lid with kraft-look surfaces and any separately specified tray.',
+    'white-printed-pizza-box' => 'A light-colored printed surface for your logo and artwork on a custom-size box.',
+);
 $privacy_url = function_exists('custom_box_get_privacy_policy_url') ? custom_box_get_privacy_policy_url() : '';
 $quote_status = isset($_GET['quote_status']) ? sanitize_key(wp_unslash($_GET['quote_status'])) : '';
 $quote_messages = array(
@@ -44,11 +54,12 @@ get_header();
             <nav class="vpb-breadcrumbs" aria-label="Breadcrumb"><a href="<?php echo esc_url(home_url('/')); ?>">Home</a><span aria-hidden="true">&rsaquo;</span><a href="<?php echo esc_url(home_url('/products/')); ?>">Products</a><span aria-hidden="true">&rsaquo;</span><a href="<?php echo esc_url($category_url); ?>">Pizza Boxes</a><span aria-hidden="true">&rsaquo;</span><span>Custom Manufacturer</span></nav>
             <div class="vpb-hero-grid">
                 <div class="vpb-hero-copy">
-                    <p class="vpb-eyebrow">Custom Pizza Box Packaging</p>
-                    <h1 id="vpb-title">Custom Pizza Boxes for Delivery &amp; Foodservice</h1>
-                    <p class="vpb-hero-lead">Custom pizza cartons built around your food, brand and delivery route. Work with VPN Paper Box in Vietnam to review dimensions, board, artwork and samples before bulk production.</p>
-                    <div class="vpb-hero-actions"><a class="vpb-button" href="#vpb-quote">Request a Pizza Box Quote <span aria-hidden="true">&rarr;</span></a><a class="vpb-link-button" href="#vpb-products">Explore Pizza Box Formats</a></div>
-                    <p class="vpb-microcopy">Custom sizes &amp; logo printing &middot; Reference MOQ: 1,000 boxes</p>
+                    <p class="vpb-eyebrow">Made in Vietnam · For foodservice brands worldwide</p>
+                    <h1 id="vpb-title">Custom Pizza Box Manufacturer <span>in Vietnam.</span></h1>
+                    <p class="vpb-hero-lead">Made-to-order pizza boxes for pizzerias, restaurant groups and packaging distributors. Choose your size, board and logo printing, then review the sample before bulk production.</p>
+                    <div class="vpb-hero-facts"><span><strong>1,000 boxes</strong> general MOQ</span><span><strong>Custom design</strong> support available</span></div>
+                    <div class="vpb-hero-actions"><a class="vpb-button" href="#vpb-quote"><span>Get my pizza box quote</span><span class="vpb-arrow" aria-hidden="true">&rarr;</span></a><a class="vpb-link-button" href="https://wa.me/84933102653" target="_blank" rel="noopener"><i class="fab fa-whatsapp" aria-hidden="true"></i> WhatsApp us</a></div>
+                    <p class="vpb-microcopy">Free quotation · No obligation <a href="#vpb-products">Explore pizza box formats &darr;</a></p>
                     <figure class="vpb-hero-photo">
                         <img data-factory-image src="<?php echo esc_url(custom_box_pizza_boxes_manufacturer_factory_image($factory_asset, 800)); ?>"
                             srcset="<?php echo esc_url(custom_box_pizza_boxes_manufacturer_factory_image($factory_asset, 480)); ?> 480w, <?php echo esc_url(custom_box_pizza_boxes_manufacturer_factory_image($factory_asset, 800)); ?> 800w, <?php echo esc_url(custom_box_pizza_boxes_manufacturer_factory_image($factory_asset, 1280)); ?> 1280w"
@@ -60,6 +71,7 @@ get_header();
                 </div>
                 <aside class="vpb-quote-card" id="vpb-quote" aria-labelledby="vpb-quote-title">
                     <div class="vpb-quote-card-head"><p class="vpb-eyebrow">Project enquiry</p><h2 id="vpb-quote-title">Get a Custom Pizza Box Quote</h2><p>Share your starting requirements. We can confirm any open specification questions with you.</p></div>
+                    <p class="vpb-selected-format" data-pizza-selected-format role="status" hidden></p>
                     <div class="vpb-form-status quote-form-message vpb-form-status--<?php echo esc_attr($quote_status); ?>" role="status" aria-live="polite"<?php echo $quote_message ? '' : ' hidden'; ?>><?php echo esc_html($quote_message); ?></div>
                     <form class="vpb-form" action="<?php echo esc_url(admin_url('admin-post.php')); ?>" method="post" data-session-url="<?php echo esc_url(admin_url('admin-ajax.php')); ?>">
                         <input type="hidden" name="action" value="custom_box_quote_form">
@@ -75,13 +87,13 @@ get_header();
                             <label><span>Work email <b aria-hidden="true">*</b></span><input type="email" name="email" autocomplete="email" placeholder="name@company.com" required></label>
                             <label><span>Pizza box format</span><select name="stock_option"><option value="Custom pizza box - to be discussed">Select a format</option><option value="Square pizza delivery box">Square pizza box</option><option value="Personal-size pizza box">Personal-size box</option><option value="Rectangular flatbread box">Rectangular / flatbread box</option><option value="Not sure yet">Not sure yet</option></select></label>
                             <label><span>Estimated quantity</span><input type="text" name="quantity" inputmode="numeric" placeholder="e.g. 1,000 boxes"></label>
-                            <label><span>Delivery country</span><input type="text" name="country" autocomplete="country-name" placeholder="e.g. United States"></label>
+                            <label><span>Delivery country / region</span><input type="text" name="country" autocomplete="country-name" placeholder="Your delivery destination"></label>
                             <label><span>Phone / WhatsApp <small>Optional</small></span><input type="tel" name="phone" autocomplete="tel" placeholder="+1 234 567 8900"></label>
                             <label class="vpb-form-full"><span>Project notes <small>Size, pizza diameter, artwork or delivery setup</small></span><textarea name="message" rows="3" placeholder="Tell us what you know so far"></textarea></label>
                         </div>
                         <?php if (function_exists('custom_box_quote_form_recaptcha_fields')) { custom_box_quote_form_recaptcha_fields(); } ?>
                         <label class="vpb-consent"><input type="checkbox" name="privacy_consent" value="yes" required><span>I agree that VPN Paper Box may use these details to respond to this quotation request.<?php if ($privacy_url) : ?> <a href="<?php echo esc_url($privacy_url); ?>">Privacy Policy</a>.<?php endif; ?></span></label>
-                        <button class="vpb-button vpb-submit" type="submit">Send My Quote Request <span aria-hidden="true">&rarr;</span></button>
+                        <button class="vpb-button vpb-submit" type="submit"><span>Request my quote</span><span class="vpb-arrow" aria-hidden="true">&rarr;</span></button>
                         <p class="vpb-form-foot">No order is placed by sending this enquiry. Requirements and pricing are confirmed separately.</p>
                     </form>
                 </aside>
@@ -90,6 +102,7 @@ get_header();
     </section>
 
     <section class="vpb-proof-strip" aria-label="Pizza box project considerations"><div class="vpb-shell"><span>Size built around the food item</span><span>Board and structure discussed per route</span><span>Artwork and sample approvals defined by brief</span><span>MOQ reference: 1,000 boxes*</span></div></section>
+    <nav class="vpb-page-nav" aria-label="Explore pizza box manufacturing"><div class="vpb-shell"><a href="#vpb-products">Choose a format</a><a href="#vpb-factory">Our workshop</a><a href="#vpb-ordering">MOQ &amp; samples</a><a href="#vpb-quality">Sample checks</a><a href="#vpb-faq">FAQs</a></div></nav>
 
     <section class="vpb-section" id="vpb-products">
         <div class="vpb-shell">
@@ -101,7 +114,7 @@ get_header();
                             <a class="vpb-product-image" href="<?php echo esc_url(get_permalink($product_post)); ?>" aria-label="View <?php echo esc_attr(get_the_title($product_post)); ?>">
                                 <?php if ($product_image_id) { echo wp_get_attachment_image($product_image_id, 'woocommerce_thumbnail', false, array('alt' => get_the_title($product_post) . ($is_concept ? ' concept visualization' : ' product image'), 'loading' => 'lazy', 'decoding' => 'async', 'sizes' => '(min-width: 1001px) 286px, (min-width: 721px) 30vw, calc((100vw - 40px) / 2)')); } else { ?><span class="vpb-image-placeholder" aria-hidden="true">Pizza box<br>format</span><?php } ?>
                             </a>
-                            <div class="vpb-product-body"><p class="vpb-card-kicker"><?php echo $is_concept ? 'Concept visualization' : 'Pizza box product'; ?></p><h3><a href="<?php echo esc_url(get_permalink($product_post)); ?>"><?php echo esc_html(get_the_title($product_post)); ?></a></h3><p><?php echo esc_html(wp_trim_words(wp_strip_all_tags(get_the_excerpt($product_post)), 23, '...')); ?></p><a class="vpb-text-link" href="<?php echo esc_url(get_permalink($product_post)); ?>">View format details <span aria-hidden="true">&rarr;</span></a></div>
+                            <div class="vpb-product-body"><p class="vpb-card-kicker"><?php echo $is_concept ? 'Concept visualization' : 'Catalog reference'; ?></p><h3><a href="<?php echo esc_url(get_permalink($product_post)); ?>"><?php echo esc_html(get_the_title($product_post)); ?></a></h3><p><?php echo esc_html(isset($format_descriptions[$product_post->post_name]) ? $format_descriptions[$product_post->post_name] : 'Share your product measurements, artwork and delivery requirements to develop this format for your order.'); ?></p><div class="vpb-product-actions"><a class="vpb-button" href="#vpb-quote" data-pizza-quote-product="<?php echo esc_attr(get_the_title($product_post)); ?>" aria-label="<?php echo esc_attr('Request a quote for ' . get_the_title($product_post)); ?>"><span>Quote this format</span><span class="vpb-arrow" aria-hidden="true">&rarr;</span></a><a class="vpb-text-link" href="<?php echo esc_url(get_permalink($product_post)); ?>">View details <span aria-hidden="true">&rarr;</span></a></div></div>
                         </article>
                     <?php endforeach; ?>
                 </div>
@@ -139,9 +152,19 @@ get_header();
                     <div class="vpb-business-links"><a href="<?php echo esc_url($about_url); ?>">About our company &rarr;</a><?php if (!empty($business['hasMap'])) : ?><a href="<?php echo esc_url($business['hasMap']); ?>" target="_blank" rel="noopener">View factory location &rarr;</a><?php endif; ?></div>
                 </aside>
             </div>
-            <p class="vpb-caption">The photos show our general paper-packaging operation. Your pizza-box construction, materials and required approvals are confirmed for the individual order.</p>
+            <div class="vpb-video-row">
+                <div class="factory-video-frame vpb-video-frame"><button class="factory-video-launch" type="button" data-youtube-video-id="nD0iRaJHgLQ" aria-label="Play the VPN paper packaging factory tour"><img src="<?php echo esc_url(custom_box_pizza_boxes_manufacturer_factory_image('vpn-paper-packaging-workshop')); ?>" alt="" width="800" height="450" loading="lazy" decoding="async"><span class="vpb-video-play" aria-hidden="true">▶</span><span class="vpb-video-label">Watch the factory tour</span></button></div>
+                <div><h3>See the workshop behind your enquiry.</h3><p>These photographs and the video show VPN’s wider paper-packaging operation. Your pizza-box structure, materials and sample checks are agreed for the individual order.</p><a class="vpb-text-link" href="https://www.youtube.com/watch?v=nD0iRaJHgLQ" target="_blank" rel="noopener">Watch on YouTube &nearr;</a><p class="vpb-working-hours">Monday–Saturday, 8:00 AM–6:00 PM Vietnam time (UTC+7). Leave your brief for follow-up.</p></div>
+            </div>
         </div>
     </section>
+
+    <section class="vpb-section vpb-section--soft" id="vpb-ordering" aria-labelledby="vpb-ordering-title"><div class="vpb-shell">
+        <div class="vpb-section-heading"><p class="vpb-eyebrow">Before you order</p><h2 id="vpb-ordering-title">Clear sample and production steps.</h2><p>For a bulk or repeat order, tell us the quantity for each size and artwork. Your written quotation sets out the specification, sample charges and delivery scope.</p></div>
+        <dl class="vpb-order-facts"><div><dt>General minimum order</dt><dd>1,000 <span>boxes</span></dd><dd class="vpb-fact-note">Confirm the minimum for each size and artwork in your quote.</dd></div><div><dt>Custom sampling</dt><dd>7–15 <span>days</span></dd><dd class="vpb-fact-note">Depending on the order. Design support is available; fees depend on the requested design.</dd></div><div><dt>Production after sample approval</dt><dd>7–45 <span>days</span></dd><dd class="vpb-fact-note">Depending on the order. Shipping time is quoted separately.</dd></div></dl>
+        <div class="vpb-sample-refund"><div><strong>50% sample-fee refund</strong><p>Orders over 5,000 pieces qualify for a refund of 50% of the sample fee. Confirm the terms in your quotation.</p></div><a class="vpb-button" href="#vpb-quote"><span>Discuss your order</span><span class="vpb-arrow" aria-hidden="true">&rarr;</span></a></div>
+        <p class="vpb-caption">Carton packing or shrink-wrapped bundles can be agreed for the order. For international enquiries, include the delivery city, postal code and required receiving date; confirm freight, delivery terms and applicable duties or taxes in the quote.</p>
+    </div></section>
 
     <section class="vpb-section vpb-section--soft" id="vpb-specification"><div class="vpb-shell">
         <div class="vpb-section-heading"><p class="vpb-eyebrow">Plan the specification</p><h2>Build the Box Around the Pizza and the Delivery Route</h2><p>A useful brief connects the product dimensions to how it is packed, carried, stacked and delivered. The options below are discussion points, not performance promises.</p></div>
@@ -151,7 +174,13 @@ get_header();
             <article><span class="vpb-number">03</span><h3>Closure and airflow</h3><p>Review lid, tab, corner and opening details. If vents or a barrier are requested, define the location and intended purpose, then assess them on a prototype for the actual menu and route.</p></article>
             <article><span class="vpb-number">04</span><h3>Print and food contact</h3><p>Provide artwork and target colors. Specify which surfaces may contact food and the destination market so the proposed materials, coatings and any liner can be checked before approval.</p></article>
         </div>
-        <aside class="vpb-expert-note"><strong>Project-specific review</strong><p>Images and general material names are not proof of food-contact compliance. Confirm the construction and supporting documentation needed for the intended use and market with your packaging supplier and compliance team.</p></aside>
+        <aside class="vpb-expert-note"><strong>Food-contact requirements depend on the intended use</strong><p>Tell us the food-contact surfaces, temperature at packing, contact time and destination. Review the proposed board, inks, adhesive and any liner or barrier against that brief. The <a href="https://www.fda.gov/food/packaging-food-contact-substances-fcs/food-types-conditions-use-food-contact-substances" target="_blank" rel="noopener">FDA food types and conditions of use</a> explain why these details matter. This reference is not certification of VPN’s products.</p></aside>
+    </div></section>
+
+    <section class="vpb-section" id="vpb-quality" aria-labelledby="vpb-quality-title"><div class="vpb-shell">
+        <div class="vpb-section-heading"><p class="vpb-eyebrow">Sample review &amp; quality checkpoints</p><h2 id="vpb-quality-title">Approve the details before bulk production.</h2><p>Quality is checked at each stage against the approved sample and specification. Agree the inspection scope and acceptance criteria for your order; a practical sample review includes the points below.</p></div>
+        <div class="vpb-quality-grid"><article><span class="vpb-number">01</span><h3>Fit &amp; folding</h3><p>Check the internal footprint, lid clearance and closure with your pizza and any liner. Review folding at the packing bench and fit inside the delivery bag.</p></article><article><span class="vpb-number">02</span><h3>Print &amp; materials</h3><p>Approve artwork position, color reference, board construction and contact surfaces. Match the material documentation to the intended use and destination.</p></article><article><span class="vpb-number">03</span><h3>Your delivery trial</h3><p>Use your pizza, stack and route for an agreed filled-box trial. Review handling and condensation where relevant, and record the trial conditions with the sample approval.</p></article><article><span class="vpb-number">04</span><h3>Packing &amp; dispatch</h3><p>Confirm quantity per carton or bundle, flat-packed dimensions, labels and storage needs. Keep packing details consistent with the shipping quotation.</p></article></div>
+        <div class="vpb-quality-footer"><a class="vpb-button" href="#vpb-quote"><span>Plan my pizza box sample</span><span class="vpb-arrow" aria-hidden="true">&rarr;</span></a><?php if ($size_guide && 'publish' === $size_guide->post_status) : ?><a class="vpb-text-link" href="<?php echo esc_url(get_permalink($size_guide)); ?>">Read the pizza box size guide &rarr;</a><?php endif; ?></div>
     </div></section>
 
     <section class="vpb-section vpb-process-section" id="vpb-process"><div class="vpb-shell vpb-process-layout"><div><p class="vpb-eyebrow">How a project moves forward</p><h2>From Brief to Approved Pizza Box</h2><p class="vpb-section-intro">The order scope and schedule are agreed after requirements are reviewed.</p><a class="vpb-button" href="#vpb-quote">Start Your Project Brief <span aria-hidden="true">&rarr;</span></a></div><ol class="vpb-steps"><li><span>01</span><div><h3>Share product and route details</h3><p>Send product measurements, desired quantities, delivery country and any known artwork or timing needs.</p></div></li><li><span>02</span><div><h3>Review structure and quotation</h3><p>Confirm internal dimensions, board, closure, print, accessories, per-version quantities and any open requirements.</p></div></li><li><span>03</span><div><h3>Approve proof and sample scope</h3><p>Review the dieline and print proof; define a physical sample or filled-box trial when the project calls for one.</p></div></li><li><span>04</span><div><h3>Confirm production and delivery plan</h3><p>Proceed against the approved order specification, packing details and written schedule.</p></div></li></ol></div></section>

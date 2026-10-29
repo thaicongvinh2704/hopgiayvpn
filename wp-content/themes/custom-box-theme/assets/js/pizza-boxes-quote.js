@@ -1,7 +1,30 @@
 (function () {
     'use strict';
     var form = document.querySelector('.vpb-form[data-session-url]');
-    if (!form || !window.fetch) return;
+    if (!form) return;
+    if (window.IntersectionObserver) {
+        new IntersectionObserver(function (entries) {
+            document.body.classList.toggle('vpb-form-in-view', entries[0].isIntersecting);
+        }).observe(form);
+    }
+    var selectedFormat = document.querySelector('[data-pizza-selected-format]');
+    document.querySelectorAll('[data-pizza-quote-product]').forEach(function (link) {
+        link.addEventListener('click', function () {
+            form.elements.product_name.value = link.dataset.pizzaQuoteProduct;
+            var title = link.dataset.pizzaQuoteProduct;
+            form.elements.stock_option.value = /rectangular|flatbread/i.test(title) ? 'Rectangular flatbread box'
+                : (/personal/i.test(title) ? 'Personal-size pizza box' : 'Custom pizza box - to be discussed');
+            if (selectedFormat) {
+                selectedFormat.textContent = 'Selected format: ' + link.dataset.pizzaQuoteProduct;
+                selectedFormat.hidden = false;
+            }
+        });
+    });
+    form.elements.stock_option.addEventListener('change', function () {
+        form.elements.product_name.value = 'Custom pizza box packaging';
+        if (selectedFormat) selectedFormat.hidden = true;
+    });
+    if (!window.fetch) return;
     var message = form.parentNode.querySelector('.vpb-form-status');
     var button = form.querySelector('button[type="submit"]');
     var sessionPromise = null;

@@ -88,11 +88,11 @@ function custom_box_pizza_boxes_manufacturer_hero_preload() {
 add_action('wp_head', 'custom_box_pizza_boxes_manufacturer_hero_preload', 2);
 
 function custom_box_pizza_boxes_manufacturer_title() {
-    return 'Custom Pizza Boxes for Delivery & Foodservice | VPN Paper Box';
+    return 'Custom Pizza Box Manufacturer in Vietnam | VPN';
 }
 
 function custom_box_pizza_boxes_manufacturer_description() {
-    return 'Custom pizza boxes for pizzerias, restaurants and foodservice brands. Review box dimensions, board, print, sample approval and delivery requirements with VPN Paper Box in Vietnam.';
+    return 'Custom pizza box manufacturer in Vietnam for pizzerias, restaurant groups and distributors. Wholesale logo boxes, sample review and project-based quotes.';
 }
 
 function custom_box_pizza_boxes_manufacturer_faqs() {
@@ -115,11 +115,23 @@ function custom_box_pizza_boxes_manufacturer_faqs() {
         ),
         array(
             'question' => 'Can I approve a sample before placing a bulk order?',
-            'answer' => 'A sample or prototype review can be discussed for structure, fit, print and specified materials. The quotation should state what sample is included and what approvals are required before bulk production.',
+            'answer' => 'We support custom samples and design development. Sampling takes 7–15 days depending on the order, with fees based on the requested design. Orders over 5,000 pieces qualify for a refund of 50% of the sample fee. Confirm the sample scope and charges in your quotation.',
         ),
         array(
             'question' => 'What is the minimum order quantity and production time?',
-            'answer' => 'The current pizza-box product listings show a reference MOQ of 1,000 boxes. Confirm the final MOQ, quantities per size or artwork version, and production schedule in a written quotation after the specification and delivery plan are reviewed.',
+            'answer' => 'The general minimum is 1,000 boxes; confirm quantities for each size and artwork in the quotation. Production takes 7–45 days after sample approval depending on the order. Shipping time is separate and depends on the agreed transport and destination.',
+        ),
+        array(
+            'question' => 'Can you quote bulk orders for restaurant groups or distributors?',
+            'answer' => 'Yes. Share quantities for each size and artwork, expected repeat demand and delivery destinations. We review the specification, sample, packing and shipment scope before issuing a project-based quote. A demand forecast is separate from a confirmed order.',
+        ),
+        array(
+            'question' => 'What should we check on a pizza-box sample?',
+            'answer' => 'Check usable inside dimensions with your pizza, lid clearance, folding and closure, printing, and handling in your delivery bag. Agree the filled-box stack and route trial, and review material documentation for the intended food contact. Required tests and acceptance criteria are set for the project; no performance result is implied by a product image.',
+        ),
+        array(
+            'question' => 'Do you work with buyers outside Vietnam?',
+            'answer' => 'International buyers can send a brief with the delivery city, postal code, required receiving date and quantity per version. Confirm production, packing, shipping terms, freight charges and any applicable duties or taxes separately in the quotation.',
         ),
         array(
             'question' => 'Are the pizza-box images verified production samples?',
@@ -501,7 +513,7 @@ function custom_box_pizza_boxes_manufacturer_schema() {
                 'name' => 'Custom Pizza Box Manufacturing',
                 'serviceType' => 'Custom pizza box manufacturing',
                 'provider' => array('@id' => home_url('/#organization')),
-                'areaServed' => 'Vietnam',
+                'areaServed' => 'Worldwide',
                 'url' => $url,
             ),
             array('@type' => 'FAQPage', '@id' => $url . '#faq', 'mainEntity' => $faq_entities),
