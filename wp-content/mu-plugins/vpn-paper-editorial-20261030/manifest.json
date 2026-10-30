@@ -1,0 +1,240 @@
+{
+  "batch_key": "paper-bag-buying-20261030",
+  "revision": "2026-10-30.v2",
+  "status": "draft",
+  "articles": [
+    {
+      "title": "How to Choose a Paper Bag Supplier for Bulk Orders",
+      "slug": "choose-paper-bag-supplier-bulk-orders",
+      "excerpt": "Compare suppliers against the same bag specification, quantity split and delivery scope before committing to a bulk paper bag order.",
+      "seo_title": "Paper Bag Supplier for Bulk Orders: How to Choose | VPN",
+      "meta_description": "Choose a paper bag supplier for bulk orders with a clear quantity breakdown, comparable quotes, sample evidence and an agreed delivery plan.",
+      "focus_keyword": "paper bag supplier",
+      "key": "supplier",
+      "status": "draft",
+      "category": {
+        "name": "Supplier Resources",
+        "slug": "supplier-resources"
+      },
+      "content_sha256": "3f76fa7c762bcaf9532c0fad50dad8b5c126cb36317170e0ea02cf3a14f2270c",
+      "images": [
+        {
+          "filename": "supplier-thumbnail.webp",
+          "role": "featured",
+          "slot": null,
+          "alt": "Kraft counter and handled bags beside a quotation sheet; illustrated supplier buying guide",
+          "title": "Choosing a Paper Bag Supplier",
+          "caption": "Editorial illustration for the bulk paper bag buying guide.",
+          "origin": "AI-generated editorial illustration",
+          "width": 1279,
+          "height": 720,
+          "bytes": 89220,
+          "sha256": "f0eb8cf4053c65a757cd5fc0b59c28f0046d93e75abfbf085858a4cac5700ab0"
+        },
+        {
+          "filename": "supplier-quantity-v2.webp",
+          "role": "inline",
+          "slot": 1,
+          "alt": "Three kraft carrier specifications with illustrative quantities of 50,000, 30,000 and 20,000 bags",
+          "title": "Separate the quantity by specification",
+          "caption": "Illustration: this hypothetical 100,000-bag programme contains three separately quoted specifications.",
+          "origin": "AI-generated editorial illustration",
+          "width": 1280,
+          "height": 720,
+          "bytes": 128754,
+          "sha256": "6c6f2a100613878212c97745d2150e344223d1e98a5e61d2845ec2f079474437"
+        },
+        {
+          "filename": "supplier-paper-print-v2.webp",
+          "role": "inline",
+          "slot": 4,
+          "alt": "Brown and white kraft carriers with a similar green leaf design and paper swatches",
+          "title": "Compare clearly named paper alternatives",
+          "caption": "Illustration: specify brown and white kraft as named alternatives. This is not a measured colour comparison.",
+          "origin": "AI-generated editorial illustration",
+          "width": 1280,
+          "height": 720,
+          "bytes": 123986,
+          "sha256": "db4e7e038dd8f0390e43714ec361f3c3b9baa5367599e52554ea54208635d2d7"
+        },
+        {
+          "filename": "vpn-factory-offset-printing-20261009.webp",
+          "role": "inline",
+          "slot": 2,
+          "alt": "Offset printing equipment and paper sheets in the VPN packaging workshop",
+          "title": "Inside the wider VPN packaging workshop",
+          "caption": "Existing VPN workshop photograph: printing equipment. It does not establish the production method for a particular bag order.",
+          "origin": "existing VPN factory photograph",
+          "width": 1280,
+          "height": 960,
+          "bytes": 92134,
+          "sha256": "46344e1be9acabddc050d6cf1a822f84ea624246685d0c0670541a9257b82058"
+        },
+        {
+          "filename": "supplier-packing-v2.webp",
+          "role": "inline",
+          "slot": 3,
+          "alt": "Flattened paper bags separated into cartons marked A, B and C",
+          "title": "Keep bag specifications separate in packing",
+          "caption": "Illustration: separate specification labels and packing arrangements help receiving teams identify each bag line.",
+          "origin": "AI-generated editorial illustration",
+          "width": 1280,
+          "height": 720,
+          "bytes": 132968,
+          "sha256": "e847f266aeeaf544e36d7e3aa0217e402fe6cf5386fd474fae8f3e63e3c54122"
+        }
+      ]
+    },
+    {
+      "title": "SOS Paper Bags vs Baguette Bags: Which Fits Your Bakery?",
+      "slug": "sos-paper-bags-vs-baguette-bags",
+      "excerpt": "Match the opened base, usable length and paper specification to your bakery products, from takeaway rolls to long baguettes.",
+      "seo_title": "SOS Paper Bags vs Baguette Bags: Bakery Buying Guide",
+      "meta_description": "Compare SOS paper bags vs baguette bags by base construction, loaf fit, grease resistance and packing workflow before ordering custom bakery bags.",
+      "focus_keyword": "SOS paper bags vs baguette bags",
+      "key": "bakery",
+      "status": "draft",
+      "category": {
+        "name": "Food Packaging",
+        "slug": "food-packaging"
+      },
+      "content_sha256": "be64474f169d486a4aa6184bafab53b6dc5f62978d9f0fec84669e4dd7697dea",
+      "images": [
+        {
+          "filename": "bakery-thumbnail.webp",
+          "role": "featured",
+          "slot": null,
+          "alt": "Illustrated SOS counter bag with rolls beside a long paper baguette bag",
+          "title": "SOS Bags vs Baguette Bags",
+          "caption": "Editorial illustration comparing two bakery bag formats.",
+          "origin": "AI-generated editorial illustration",
+          "width": 1279,
+          "height": 720,
+          "bytes": 87296,
+          "sha256": "cdcd933e1e0e31acc3369f5ae1bf33ae58f4c2c6e25cfb6a7301f4afa76d6e4f"
+        },
+        {
+          "filename": "bakery-structures-v2.webp",
+          "role": "inline",
+          "slot": 1,
+          "alt": "Block-bottom SOS bags beside a long paper bag holding a baguette",
+          "title": "Compare the opened base and long bread format",
+          "caption": "Illustration: compare the opened base of an SOS bag with a long baguette format; names alone do not define every construction.",
+          "origin": "AI-generated editorial illustration",
+          "width": 1280,
+          "height": 720,
+          "bytes": 137204,
+          "sha256": "ce5e7fa7d4b3a38bbd565f09b60cfdad353280b68c2a6698c566759418b724e3"
+        },
+        {
+          "filename": "bakery-window-v2.webp",
+          "role": "inline",
+          "slot": 3,
+          "alt": "Close view of a paper bread bag with a clear window and folded side",
+          "title": "Specify the window as a separate component",
+          "caption": "Illustration: identify the window material and joining area separately from the paper. Appearance does not establish barrier or disposal performance.",
+          "origin": "AI-generated editorial illustration",
+          "width": 1280,
+          "height": 720,
+          "bytes": 145606,
+          "sha256": "ff04a772ea406fc0623b8488e9ca86fd5532549a405aae14d12331fb7331ee3b"
+        },
+        {
+          "filename": "bakery-fit-v2.webp",
+          "role": "inline",
+          "slot": 2,
+          "alt": "Rolls in an opened counter bag beside a baguette and a long paper bag",
+          "title": "Check the filled footprint and usable length",
+          "caption": "Illustration: test the filled footprint for mixed rolls and the usable length for a baguette. No dimensions are specified here.",
+          "origin": "AI-generated editorial illustration",
+          "width": 1280,
+          "height": 720,
+          "bytes": 130280,
+          "sha256": "217b2fa5254212e6ea80b035e0e42c9bb30668763436bfc6255dd7156d2eeec2"
+        }
+      ]
+    },
+    {
+      "title": "Paper Bag Sample Approval: What to Check Before Bulk Production",
+      "slug": "paper-bag-sample-approval",
+      "excerpt": "Turn sample comments into a controlled approval covering fit, construction, print, unresolved changes and the production handoff.",
+      "seo_title": "Paper Bag Sample Approval: Before Bulk Production | VPN",
+      "meta_description": "Use paper bag sample approval to check fit, handles, print and open changes, then record exactly what can proceed to bulk production.",
+      "focus_keyword": "paper bag sample approval",
+      "key": "approval",
+      "status": "draft",
+      "category": {
+        "name": "Packaging Testing & Quality Control",
+        "slug": "packaging-testing-quality-control"
+      },
+      "content_sha256": "3e18cddfaea462eda0600d32f049726a9194f267b521e9b761197515d1c342ac",
+      "images": [
+        {
+          "filename": "approval-thumbnail.webp",
+          "role": "featured",
+          "slot": null,
+          "alt": "Kraft carrier bag, paper references and ruler illustrating sample review",
+          "title": "Paper Bag Sample Approval",
+          "caption": "Editorial illustration for sample approval before bulk production.",
+          "origin": "AI-generated editorial illustration",
+          "width": 1280,
+          "height": 720,
+          "bytes": 90504,
+          "sha256": "ff17e87ae3449798b16862988f40dcfe1f52402d7a34a2abb6dda211d7e4105c"
+        },
+        {
+          "filename": "approval-evidence-v2.webp",
+          "role": "inline",
+          "slot": 1,
+          "alt": "Plain structural kraft bag beside a leaf artwork sheet and a printed kraft swatch",
+          "title": "Different samples answer different approval questions",
+          "caption": "Illustration: a structural bag, artwork and printed paper answer different questions. These are not approved production files or a VPN test record.",
+          "origin": "AI-generated editorial illustration",
+          "width": 1280,
+          "height": 720,
+          "bytes": 122056,
+          "sha256": "ef14023dd975f3b523bedf32805a670503729050aa4d654c3396c455dfd7100b"
+        },
+        {
+          "filename": "approval-construction-v2.webp",
+          "role": "inline",
+          "slot": 4,
+          "alt": "Illustrative close views of a twisted paper handle attachment and folded bag bottom",
+          "title": "Inspect the handle attachment and bottom folds",
+          "caption": "Illustration of two construction details to inspect. The actual attachment, materials and acceptance requirements must be specified for the order.",
+          "origin": "AI-generated editorial illustration",
+          "width": 1280,
+          "height": 720,
+          "bytes": 110404,
+          "sha256": "83e5060ea05a83fe8cd3f8b0087f8ff280c4e8b02ff075fcdab3f0679ee9f34d"
+        },
+        {
+          "filename": "vpn-factory-paper-cutting-20261009.webp",
+          "role": "inline",
+          "slot": 2,
+          "alt": "Paper cutting equipment and stacked material in the VPN packaging workshop",
+          "title": "Paper cutting in the VPN workshop",
+          "caption": "An existing photograph of the wider VPN packaging workshop. It is not a sample inspection record or food-contact certification.",
+          "origin": "existing VPN factory photograph",
+          "width": 1280,
+          "height": 960,
+          "bytes": 94520,
+          "sha256": "35f6ef849656cae06c3dd70fb492e5f0bd177286ebc2323b8f5881b1d04fc8b1"
+        },
+        {
+          "filename": "approval-revision-v2.webp",
+          "role": "inline",
+          "slot": 3,
+          "alt": "Two illustrative kraft bag print positions identified by revision cards R03 and R04",
+          "title": "Identify the revision before releasing print",
+          "caption": "Illustration: an artwork-position change needs an identified revision and release decision. R03 and R04 are example identifiers.",
+          "origin": "AI-generated editorial illustration",
+          "width": 1280,
+          "height": 720,
+          "bytes": 92944,
+          "sha256": "b3616f0cd8252d291a6687f100838b020130985c25e721c0dd462e67ecc643b6"
+        }
+      ]
+    }
+  ]
+}
