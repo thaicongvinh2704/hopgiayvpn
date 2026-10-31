@@ -23,7 +23,7 @@ function custom_box_pizza_boxes_manufacturer_quote_link($url, $path) {
 add_filter('home_url', 'custom_box_pizza_boxes_manufacturer_quote_link', 30, 2);
 
 function custom_box_pizza_boxes_manufacturer_image_url() {
-    return get_template_directory_uri() . '/assets/images/pizza-box-landing/vpn-printing-operator-800.webp';
+    return get_template_directory_uri() . '/assets/images/pizza-box-landing/pizza-box-catalog-800.webp';
 }
 
 /** Share one product query and prime image metadata for all rendered cards. */
@@ -77,9 +77,9 @@ function custom_box_pizza_boxes_manufacturer_hero_preload() {
     if (!custom_box_is_pizza_boxes_manufacturer_landing()) {
         return;
     }
-    $name = 'vpn-printing-operator';
+    $name = 'pizza-box-catalog';
     printf(
-        '<link rel="preload" as="image" href="%1$s" imagesrcset="%2$s 480w, %1$s 800w, %3$s 1280w" imagesizes="(min-width: 1001px) 667px, (min-width: 721px) 50vw, calc(100vw - 28px)" fetchpriority="high">' . "\n",
+        '<link rel="preload" as="image" href="%1$s" imagesrcset="%2$s 480w, %1$s 800w, %3$s 1254w" imagesizes="(min-width: 1001px) 560px, (min-width: 721px) 48vw, calc(100vw - 40px)" fetchpriority="high">' . "\n",
         esc_url(custom_box_pizza_boxes_manufacturer_factory_image($name, 800)),
         esc_url(custom_box_pizza_boxes_manufacturer_factory_image($name, 480)),
         esc_url(custom_box_pizza_boxes_manufacturer_factory_image($name, 1280))
@@ -490,7 +490,7 @@ function custom_box_pizza_boxes_manufacturer_schema() {
         'about' => array('@id' => $url . '#service'),
     );
     if ($image) {
-        $webpage_schema['primaryImageOfPage'] = array('@id' => $url . '#factory-photo');
+        $webpage_schema['primaryImageOfPage'] = array('@id' => $url . '#pizza-box-design');
     }
 
     $schema = array(
@@ -499,12 +499,12 @@ function custom_box_pizza_boxes_manufacturer_schema() {
             $webpage_schema,
             array(
                 '@type' => 'ImageObject',
-                '@id' => $url . '#factory-photo',
+                '@id' => $url . '#pizza-box-design',
                 'contentUrl' => $image,
                 'url' => $image,
                 'width' => 800,
-                'height' => 450,
-                'caption' => 'VPN team member operating a printing press at the paper-packaging workshop.',
+                'height' => 800,
+                'caption' => 'Printed pizza box design reference shown open and closed from the VPN product collection.',
                 'creditText' => 'VPN Paper Box',
             ),
             array(

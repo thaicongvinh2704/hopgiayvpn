@@ -81,6 +81,12 @@
     form.addEventListener('focusin', function () {
         if (Date.now() >= validUntil) refreshSession().catch(function () {});
     });
+    // Prepare the same validated session while the buyer moves to the form.
+    document.querySelectorAll('a[href$="#vpb-quote"]').forEach(function (link) {
+        link.addEventListener('click', function () {
+            if (Date.now() >= validUntil) refreshSession().catch(function () {});
+        });
+    });
 
     document.addEventListener('submit', function (event) {
         if (event.target !== form) return;

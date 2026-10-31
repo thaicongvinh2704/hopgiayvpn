@@ -12,6 +12,7 @@ if (!in_array(wp_parse_url(home_url('/'), PHP_URL_HOST), array('localhost', '127
 }
 wp_set_current_user(0);
 $ids = array(); $redirect = ''; $mail_calls = 0; $queue_calls = 0;
+$email_only = in_array('--email-only', $argv, true);
 add_filter('custom_box_quote_form_logging_enabled', '__return_false');
 add_filter('custom_box_quote_form_recaptcha_site_key', '__return_empty_string');
 add_action('wp_insert_post', static function ($id, $post) use (&$ids) {
@@ -40,7 +41,12 @@ $_POST = array(
     'custom_box_form_signature' => custom_box_quote_form_timestamp_signature($started_at, 'quote'),
     'custom_box_quote_nonce' => wp_create_nonce('custom_box_quote_form'),
 );
-register_shutdown_function(static function () use (&$ids, &$redirect, &$mail_calls, &$queue_calls, $rate_key, $previous_rate) {
+if ($email_only) {
+    $_POST['full_name'] = '';
+    $_POST['quantity'] = '';
+    $_POST['country'] = '';
+}
+register_shutdown_function(static function () use (&$ids, &$redirect, &$mail_calls, &$queue_calls, $rate_key, $previous_rate, $email_only) {
     $checks = array('one_private_lead' => count(array_unique($ids)) === 1, 'no_mail_sent' => $mail_calls === 0, 'queue_intercepted' => $queue_calls === 1);
     parse_str((string) wp_parse_url($redirect, PHP_URL_QUERY), $query);
     $checks['success_redirect'] = isset($query['quote_status']) && 'success' === $query['quote_status'] && 'vpb-quote' === wp_parse_url($redirect, PHP_URL_FRAGMENT);
@@ -49,6 +55,7 @@ register_shutdown_function(static function () use (&$ids, &$redirect, &$mail_cal
         $checks['selected_product_saved'] = is_array($data) && 'Rectangular Flatbread Pizza Box' === $data['product_name'];
         $checks['source_and_privacy_preserved'] = is_array($data) && 'custom_pizza_boxes_manufacturer' === $data['quote_source'] && 'yes' === $data['privacy_consent'];
         $checks['private_storage'] = 'private' === get_post_status($id);
+        if ($email_only) { $checks['no_name_required'] = 'Pizza box quote enquiry' === $data['full_name']; }
         $checks['mail_queued'] = 'queued' === get_post_meta($id, '_custom_box_quote_mail_status', true);
         wp_clear_scheduled_hook('custom_box_send_queued_quote_email', array($id));
         wp_delete_post($id, true);

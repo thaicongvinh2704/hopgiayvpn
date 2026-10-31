@@ -1716,6 +1716,11 @@ function custom_box_handle_quote_form() {
         if (!$full_name) {
             $full_name = $company ? $company : 'Paper bag quote enquiry';
         }
+    } elseif ('custom_pizza_boxes_manufacturer' === $quote_source) {
+        if (!$product_name || !$email || !is_email($email)) {
+            custom_box_quote_form_reject('missing', 400, array('validation' => 'pizza_email_required'));
+        }
+        $full_name = $full_name ? $full_name : 'Pizza box quote enquiry';
     } elseif (!$product_name || !$full_name || !$email || !is_email($email)) {
         custom_box_quote_form_reject('missing', 400, array('validation' => 'quote_required_fields'));
     }
