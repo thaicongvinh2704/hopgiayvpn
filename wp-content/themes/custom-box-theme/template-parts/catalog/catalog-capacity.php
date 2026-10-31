@@ -13,7 +13,7 @@ $capacity = isset($args['capacity']) && is_array($args['capacity']) ? $args['cap
         <div class="catalog-section-heading">
             <span class="catalog-kicker"><?php esc_html_e('Factory Capability', 'custom-box-theme'); ?></span>
             <h2><?php esc_html_e('Factory Production Capacity', 'custom-box-theme'); ?></h2>
-            <p><?php esc_html_e('VPN Packaging Factory supports custom paper box production from 10,000 to 3,000,000 boxes per month, depending on box structure, material, printing requirements, and finishing complexity.', 'custom-box-theme'); ?></p>
+            <p><?php esc_html_e('VPN Packaging Factory has a total production capacity of over 10 million products per month. Capacity for each order depends on product structure, material, printing requirements, and finishing complexity.', 'custom-box-theme'); ?></p>
         </div>
 
         <div class="catalog-stat-grid">

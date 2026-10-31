@@ -71,9 +71,9 @@ $header_brand_name = $header_is_paper_bag_landing ? 'VPN Paper Box' : (get_blogi
         <div class="top-left">
             <span>
                 <i class="far fa-envelope"></i>
-                <a href="mailto:sales.vpn@hopgiayvpn.com">sales.vpn@hopgiayvpn.com</a>
-                /
                 <a href="mailto:paperbox@hopgiayvpn.com">paperbox@hopgiayvpn.com</a>
+                /
+                <a href="mailto:sales.vpn@hopgiayvpn.com">sales.vpn@hopgiayvpn.com</a>
             </span>
         </div>
 

@@ -25,7 +25,7 @@
             <ul class="hero-features" data-home-proof-list>
                 <li>Free Design Support</li>
                 <li>Fast, Reliable Shipping</li>
-                <li>Production Capacity: 10,000 - 3,000,000 Boxes / Month</li>
+                <li>Production Capacity: Over 10 Million Products / Month</li>
                 <li>Built for Global B2B Paper Box Projects</li>
             </ul>
 

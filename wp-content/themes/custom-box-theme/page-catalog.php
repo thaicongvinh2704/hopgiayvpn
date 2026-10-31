@@ -301,7 +301,7 @@ $catalog_context = array(
     'capacity' => array(
         array('value' => '9+', 'label' => 'Years Manufacturing Experience', 'icon' => 'fa-award'),
         array('value' => '2,000 m2', 'label' => 'Factory Space', 'icon' => 'fa-industry'),
-        array('value' => '10,000 - 3,000,000', 'label' => 'Boxes / Month', 'icon' => 'fa-boxes-stacked'),
+        array('value' => 'Over 10 Million', 'label' => 'Products / Month', 'icon' => 'fa-boxes-stacked'),
         array('value' => 'OEM / ODM', 'label' => 'Packaging Support', 'icon' => 'fa-drafting-compass'),
         array('value' => 'Export-Ready', 'label' => 'Production', 'icon' => 'fa-earth-americas'),
         array('value' => 'Factory-Direct', 'label' => 'Pricing', 'icon' => 'fa-handshake'),

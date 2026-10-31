@@ -10,7 +10,7 @@ $factory_certificate_image = custom_box_get_local_image_data('vpn-packaging-iso-
         <div class="factory-video-layout">
             <div class="factory-capacity-panel">
                 <span>Production Capacity</span>
-                <p>At VPN Paper Box Manufacturer, we take pride in our strong and scalable manufacturing capabilities.</p>
+                <p>Our total production capacity exceeds 10 million products per month across our packaging range.</p>
 
                 <div class="factory-capacity-stat">
                     <small>Folding Carton Boxes</small>
