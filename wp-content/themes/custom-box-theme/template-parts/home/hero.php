@@ -38,8 +38,25 @@
         </div>
 
         <!-- RIGHT IMAGE -->
-        <div class="hero-image" data-home-hero-media>
-            <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1.webp'); ?>" srcset="<?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1-mobile.webp'); ?> 480w, <?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1.webp'); ?> 666w" alt="Custom luxury product packaging box" width="666" height="374" decoding="async" fetchpriority="high" sizes="(max-width: 767px) calc(100vw - 36px), 50vw">
+        <div class="hero-image home-hero-slideshow" data-home-hero-media data-hero-slideshow role="region" aria-roledescription="carousel" aria-label="Packaging examples">
+            <div class="home-hero-slideshow__stage" aria-live="off">
+                <div class="home-hero-slideshow__slide is-active" data-hero-slide role="group" aria-roledescription="slide" aria-label="1 of 3: Watch box">
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1.webp'); ?>" srcset="<?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1-mobile.webp'); ?> 480w, <?php echo esc_url(get_template_directory_uri() . '/assets/images/product-banner1.webp'); ?> 666w" alt="Watch presentation box with a cushion and matching lid" width="666" height="374" decoding="async" fetchpriority="high" sizes="(max-width: 767px) calc(100vw - 36px), 50vw">
+                </div>
+                <div class="home-hero-slideshow__slide" data-hero-slide role="group" aria-roledescription="slide" aria-label="2 of 3: Paper shopping bag" aria-hidden="true" hidden>
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/home-hero/vpn-black-paper-bag-approved-960.webp'); ?>" srcset="<?php echo esc_url(get_template_directory_uri() . '/assets/images/home-hero/vpn-black-paper-bag-approved-480.webp'); ?> 480w, <?php echo esc_url(get_template_directory_uri() . '/assets/images/home-hero/vpn-black-paper-bag-approved-960.webp'); ?> 960w" sizes="(max-width: 767px) calc(100vw - 36px), (max-width: 1024px) 620px, 50vw" alt="Black paper shopping bag with silver VPN Paper Box branding, design illustration" width="960" height="640" loading="lazy" decoding="async" fetchpriority="low">
+                </div>
+                <div class="home-hero-slideshow__slide" data-hero-slide role="group" aria-roledescription="slide" aria-label="3 of 3: Bread paper bag" aria-hidden="true" hidden>
+                    <img src="<?php echo esc_url(get_template_directory_uri() . '/assets/images/home-hero/vpn-bread-paper-bags-approved-960.webp'); ?>" srcset="<?php echo esc_url(get_template_directory_uri() . '/assets/images/home-hero/vpn-bread-paper-bags-approved-480.webp'); ?> 480w, <?php echo esc_url(get_template_directory_uri() . '/assets/images/home-hero/vpn-bread-paper-bags-approved-960.webp'); ?> 960w" sizes="(max-width: 767px) calc(100vw - 36px), (max-width: 1024px) 620px, 50vw" alt="Kraft bakery bags with VPN Paper Box branding, design illustration" width="960" height="640" loading="lazy" decoding="async" fetchpriority="low">
+                </div>
+            </div>
+            <div class="home-hero-slideshow__controls" data-hero-controls hidden>
+                <div class="home-hero-slideshow__dots" role="group" aria-label="Choose a packaging image">
+                    <button type="button" data-hero-select="0" aria-label="Show watch box" aria-pressed="true"><span></span></button>
+                    <button type="button" data-hero-select="1" aria-label="Show paper shopping bag" aria-pressed="false"><span></span></button>
+                    <button type="button" data-hero-select="2" aria-label="Show bread paper bag" aria-pressed="false"><span></span></button>
+                </div>
+            </div>
         </div>
 
     </div>

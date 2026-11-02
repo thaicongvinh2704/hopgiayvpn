@@ -1,0 +1,91 @@
+/* Home hero only: fixed stage, uncropped products and quiet controls. */
+.home-page .hero .home-hero-slideshow {
+    flex: 1 1 0;
+    width: 100%;
+    min-width: 0;
+    max-width: 620px;
+    aspect-ratio: auto;
+    overflow: visible;
+    border-radius: 0 !important;
+}
+
+.home-hero-slideshow__stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 666 / 374;
+}
+
+.home-hero-slideshow__slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 650ms ease, visibility 650ms;
+}
+
+.home-hero-slideshow__slide.is-active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.home-page .hero .home-hero-slideshow img,
+.home-page .hero .home-hero-slideshow:hover img {
+    display: block;
+    width: 100%;
+    height: 100% !important;
+    max-width: 100%;
+    object-fit: contain;
+    object-position: center;
+    cursor: default;
+    box-shadow: none;
+    transform: none;
+}
+
+.home-hero-slideshow__controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.home-hero-slideshow__controls[hidden] { display: none; }
+.home-hero-slideshow__dots { display: flex; }
+
+.home-hero-slideshow__controls button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    margin: 0;
+    padding: 8px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #2a6a92;
+    font: inherit;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.home-hero-slideshow__dots span {
+    width: 7px;
+    height: 7px;
+    border-radius: 10px;
+    background: #b6cbd8;
+    transition: width 200ms ease, background-color 200ms ease;
+}
+
+.home-hero-slideshow__dots [aria-pressed="true"] span {
+    width: 23px;
+    background: #2a6a92;
+}
+
+.home-hero-slideshow__controls button:hover { background: #eaf3f8; }
+.home-hero-slideshow__controls button:focus-visible { outline: 2px solid #2a6a92; outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+    .home-hero-slideshow__slide,
+    .home-hero-slideshow__dots span { transition: none; }
+}

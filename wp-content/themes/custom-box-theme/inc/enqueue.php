@@ -118,6 +118,20 @@ function custom_box_enqueue_assets() {
 
     if (is_front_page()) {
         wp_enqueue_style(
+            'home-hero-slideshow',
+            get_template_directory_uri() . '/assets/css/home-hero-slideshow.css',
+            array('main-style', 'responsive-style'),
+            filemtime(get_template_directory() . '/assets/css/home-hero-slideshow.css')
+        );
+        wp_enqueue_script(
+            'home-hero-slideshow',
+            get_template_directory_uri() . '/assets/js/home-hero-slideshow.js',
+            array(),
+            filemtime(get_template_directory() . '/assets/js/home-hero-slideshow.js'),
+            true
+        );
+        wp_script_add_data('home-hero-slideshow', 'strategy', 'defer');
+        wp_enqueue_style(
             'featured-paper-bags-style',
             get_template_directory_uri() . '/assets/css/featured-paper-bags.css',
             array('main-style', 'responsive-style'),
