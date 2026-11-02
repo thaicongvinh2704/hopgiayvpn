@@ -1,0 +1,612 @@
+{
+  "marker": "luxury-paper-bags-20261102-v1",
+  "status": "publish",
+  "scope": "approved-git-deploy",
+  "products": [
+    {
+      "code": "L01",
+      "folder": "L01_black_boutique",
+      "slug": "custom-black-boutique-paper-bags",
+      "title": "Custom Black Boutique Paper Bags with Rope Handles",
+      "keyword": "black boutique paper bags",
+      "secondary": [
+        "custom boutique bags wholesale",
+        "luxury paper shopping bags",
+        "rope handle paper bag supplier"
+      ],
+      "seo_title": "Black Boutique Paper Bags | Custom Wholesale | VPN",
+      "seo_description": "Black boutique paper bags with rope handles, custom sizes and your logo. Order wholesale from VPN in Vietnam. Request a sample and bulk quotation.",
+      "short": "Black boutique paper bags with a broad front panel, dark rope handles and a gold-tone logo direction. Made to order for fashion stores, accessories brands and retail packaging distributors.",
+      "short2": "Start with the folded garment or retail box dimensions and total packed weight. We can develop the paper, handle attachments, top fold and base around the way your staff pack and customers carry the order.",
+      "use": "Fashion boutiques, apparel groups, accessories retailers and packaging distributors",
+      "feature": "Landscape boutique format, rope handles and a restrained metallic-look branding direction",
+      "paper": "Black printing paper, dyed paper or printed coated stock; grade and surface finish confirmed with the sample",
+      "handle": "Dark rope handles; fibre, diameter, length and fixing method specified for the order",
+      "color": "Black body with gold-tone reference artwork; custom brand colors available",
+      "bullets": [
+        "Custom width, height and gusset for folded garments or retail boxes",
+        "Rope handles with top and base reinforcement specified to the contents",
+        "Logo printing or foil options reviewed on the selected black surface",
+        "Made-to-order wholesale production in Vietnam"
+      ],
+      "intro": "A boutique carrier needs to hold the purchase comfortably while keeping the store identity easy to recognize. This black design uses a wide front face and a small gold-tone wordmark rather than a busy all-over pattern. It is a useful starting point for apparel, leather accessories and boxed retail gifts, particularly when the bag needs to look consistent across a collection of sizes.",
+      "sections": [
+        [
+          "Choose the footprint around your retail pack",
+          "Measure the contents as they will leave the counter: a folded shirt with tissue, a shoe box, or several smaller accessories. Specify the usable width, height and side gusset, not only the outside face. Leave enough clearance for staff to load the pack without forcing the side folds. A bag for two lightweight garments may need more space than a compact but heavier accessories order, so size and carrying requirements should be reviewed together.",
+          "The two bag proportions in the main illustration show a design direction, not a fixed size set. For a store group, list the quantity for each size and explain which purchases it serves. This makes it possible to compare a smaller range of practical sizes with a wider collection before deciding on the production brief."
+        ],
+        [
+          "Make a small logo work on black paper",
+          "Dark stock changes how a printed color looks. A metallic-looking design on screen does not establish the foil shade, coverage or rub resistance of a physical bag. Send the original logo file and identify whether you want ink, foil, embossing or a combination. Keep enough space around the mark for a clean reading distance, especially on smaller variants.",
+          "Ask to review fine lettering, foil edges and the appearance of the dark surface after folding. A coated finish and an uncoated dyed sheet feel different and can show handling marks differently. The approved physical sample should settle that choice; a monitor preview is useful for placement, but not for deciding the final surface feel."
+        ],
+        [
+          "Specify rope handles and the base as one system",
+          "The handle detail shows a rope-handle direction with a folded upper edge. Rope composition, fixing method, reinforcement and any base board are agreed for the real contents. Do not choose the construction by paper weight alone. Include the complete packed weight and normal carrying conditions so the top and base can be reviewed together.",
+          "During sample approval, load the actual retail pack and check the grip, clearance above the contents, handle fixing points and base shape. Also inspect the seam and folds after the bag has been opened and carried. Any load requirement should be documented and tested under agreed conditions rather than inferred from the product illustration."
+        ]
+      ],
+      "faqs": [
+        [
+          "Can you supply these boutique bags with our own logo?",
+          "Yes. The black-and-gold reference can be adapted to your artwork, dimensions and handle direction. Send the vector logo, quantity by size and desired print or foil effect so VPN can review the specification and quote the work."
+        ],
+        [
+          "Should we choose dyed black paper or a printed black surface?",
+          "That depends on the desired feel, budget and finish. Compare the appearance of cut edges, folded corners and the logo on physical samples. We review the paper route with the artwork rather than treating every black finish as interchangeable."
+        ],
+        [
+          "Are the small and large bags in the image supplied as a set?",
+          "The images illustrate a coordinated size range. The number of sizes, quantity for each and packing arrangement are specified separately. They are not a stock assortment with fixed dimensions."
+        ],
+        [
+          "Can this bag be used to post clothing to customers?",
+          "This is a retail carrier, not a parcel mailer. If the order will travel through a courier network, specify a separate shipping pack and assess that pack with the garment and any inner box."
+        ]
+      ],
+      "brief": "Include the folded garment or retail-box footprint, packed weight, quantity per size, rope preference, black paper or finish reference, logo file and destination.",
+      "images": [
+        {
+          "file": "source/L01_black_boutique/L01_01_main.webp",
+          "sha256": "3e5de6a9e2926c0d620a7e3cd942715261ffc2003da49e264992e1a31d072426",
+          "title": "Black boutique paper bag with dark rope handles — main design and coordinated size references",
+          "alt": "Black boutique paper bag with dark rope handles, main design and coordinated size references",
+          "caption": "Main design and coordinated size references. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L01_black_boutique/L01_02_side_angle.webp",
+          "sha256": "a40ee322f2c1e28f43699fdc0575aae53d13d4432318e90155a981be8b7f648b",
+          "title": "Black boutique paper bag with dark rope handles — side angle and gusset",
+          "alt": "Black boutique paper bag with dark rope handles, side angle and gusset",
+          "caption": "Side angle and gusset. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L01_black_boutique/L01_03_handles_top.webp",
+          "sha256": "8e6662ac809f69ede789a8ca4859fdda8a06308d627a909fff0986a939b78602",
+          "title": "Black boutique paper bag with dark rope handles — handle attachments and folded top",
+          "alt": "Black boutique paper bag with dark rope handles, handle attachments and folded top",
+          "caption": "Handle attachments and folded top. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L01_black_boutique/L01_04_bottom.webp",
+          "sha256": "e8d73f4953bf3cd29f2f1f4222676e1f1d2fa3168b52a399dd996a53c8907abc",
+          "title": "Black boutique paper bag with dark rope handles — closed folded base",
+          "alt": "Black boutique paper bag with dark rope handles, closed folded base",
+          "caption": "Closed folded base. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L01_black_boutique/L01_05_print_texture.webp",
+          "sha256": "1baa31311a8849baa5ba5ea5e4ba98f78a6fc93d2bb30f77ac32f5587b13ea8a",
+          "title": "Black boutique paper bag with dark rope handles — paper surface and branding detail",
+          "alt": "Black boutique paper bag with dark rope handles, paper surface and branding detail",
+          "caption": "Paper surface and branding detail. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L01_black_boutique/L01_06_folded_quantity.webp",
+          "sha256": "6faf5e092c592fcbbabbb1e082c8d240a6051c0a0554f682b099f8e4c44f957f",
+          "title": "Black boutique paper bag with dark rope handles — folded bags grouped together",
+          "alt": "Black boutique paper bag with dark rope handles, folded bags grouped together",
+          "caption": "Folded bags grouped together. Design illustration; final construction follows the approved sample."
+        }
+      ],
+      "inline_order": [
+        2,
+        5,
+        3
+      ],
+      "content_file": "l01-description.html",
+      "content_sha256": "60111ea33b7a276ad14ca429cb16aa22345bd6c06d05ff735ca9ff6a3c7534da",
+      "wordcount": 1030,
+      "short_description": "<p>Black boutique paper bags with a broad front panel, dark rope handles and a gold-tone logo direction. Made to order for fashion stores, accessories brands and retail packaging distributors.</p><p>Start with the folded garment or retail box dimensions and total packed weight. We can develop the paper, handle attachments, top fold and base around the way your staff pack and customers carry the order.</p>",
+      "categories": [
+        "paper-bags-with-logo"
+      ],
+      "sku": "VPN-LUX-20261102-L01"
+    },
+    {
+      "code": "L02",
+      "folder": "L02_ivory_jewelry",
+      "slug": "custom-ivory-jewelry-paper-bags",
+      "title": "Custom Ivory Jewelry Paper Bags with Ribbon Handles",
+      "keyword": "ivory jewelry paper bags",
+      "secondary": [
+        "custom jewelry bags wholesale",
+        "jewelry paper bags with logo",
+        "ribbon handle jewelry bags"
+      ],
+      "seo_title": "Ivory Jewelry Paper Bags with Ribbon Handles | VPN",
+      "seo_description": "Ivory jewelry paper bags with ribbon handles and your logo. Custom sizes for boxed jewelry and boutique gifts. Ask VPN for a wholesale production quote.",
+      "short": "Ivory jewelry paper bags with ribbon-style handles, a small bow detail and a textured paper direction. A coordinated carrier for jewelry boxes, accessories and boutique gifting.",
+      "short2": "Develop the usable dimensions around your ring, bracelet or necklace boxes, with allowance for tissue and a gift card. The ivory tone, handle construction and logo finish are confirmed on a custom sample.",
+      "use": "Jewelry retailers, watch and accessories brands, boutique gifting programs",
+      "feature": "Ivory textured appearance, ribbon-style handles and decorative front bow",
+      "paper": "Ivory specialty, textured or coated paper options; grade and finish agreed during sampling",
+      "handle": "Champagne ribbon-style loops; material, width and attachment construction confirmed before production",
+      "color": "Ivory body and champagne handle reference; custom colors reviewed with samples",
+      "bullets": [
+        "Size the bag around the complete jewelry box and tissue wrap",
+        "Ivory paper and champagne ribbon-style handle direction",
+        "Logo print or metallic finish reviewed on a physical sample",
+        "Custom wholesale orders with design support"
+      ],
+      "intro": "The final counter handover is part of a jewelry purchase. An ivory carrier with a quiet wordmark and coordinated ribbon-style handles can complement a small presentation box without competing with it. This design is intended for boxed jewelry, watches and accessories; the bag dimensions are developed around your own box assortment rather than around the proportions shown in an illustration.",
+      "sections": [
+        [
+          "Fit the jewelry box before choosing the bag size",
+          "A low ring box, a long bracelet box and a necklace presentation box do not need the same bag footprint. Measure each closed box and decide whether it will be packed alone, with a pouch, or with several purchases. Specify usable width, height and gusset in millimeters, centimeters or inches, and include tissue and gift-card space.",
+          "Check how the box enters the opening as well as how it sits at the bottom. A tight mouth can make packing awkward even when the base dimensions appear adequate. If one bag is expected to cover several box sizes, review that mixed use with the largest and smallest packs before approving the dimensions."
+        ],
+        [
+          "Coordinate ivory paper, ribbon and logo",
+          "Ivory is a color direction rather than a single universal shade. A warm textured sheet, a smooth coated paper and a printed cream surface can look noticeably different next to a white jewelry box. Send a physical reference or an agreed color standard for the paper and handles, then compare the assembled sample alongside your existing packaging.",
+          "For a small front panel, a short wordmark often reads more clearly than a complicated logo with fine text. The reference uses a gold-tone appearance; a real metallic finish, ink color or emboss effect is a separate production choice. Review the mark at its finished size and under ordinary store lighting, including any loss of detail across a textured surface."
+        ],
+        [
+          "Treat the bow as decoration and check the handles",
+          "The front bow is a decorative feature in the reference, not a verified tamper seal or secure closure. If you need a bag that closes, describe whether the staff should tie a ribbon, apply a label or use another specified method. This affects the packing sequence and the amount of handle or closure material needed.",
+          "Confirm ribbon width, hand clearance, fixing points and any inner reinforcement with the packed sample. Try the bag with the actual jewelry box and check that edges do not catch the lining or opening. The bag is an outer retail carrier; valuable jewelry still needs appropriate inner presentation and protection."
+        ]
+      ],
+      "faqs": [
+        [
+          "Can the ivory bag match our existing jewelry boxes?",
+          "Yes, we can review the bag, paper shade, handle and logo together with your box reference. Approve them as an assembled set because paper, ribbon and box-wrap materials can reflect light differently."
+        ],
+        [
+          "Is the small bow a closure?",
+          "The shown bow is decorative. A working tie, seal or other closing method must be requested and sampled separately. Do not rely on the illustration for a secure closure design."
+        ],
+        [
+          "Can one size carry both ring and necklace boxes?",
+          "It can be developed for a shared range if the usable opening and base fit the complete assortment. Send the closed dimensions of each box and check both extremes in a physical sample."
+        ],
+        [
+          "Do the images confirm a particular ribbon or paper grade?",
+          "No. They illustrate the color, shape and handle direction. Exact fibre, paper weight, surface finish and handle attachment form part of the agreed production specification."
+        ]
+      ],
+      "brief": "Send the closed dimensions of each jewelry box, any tissue or pouch, total packed weight, ivory reference, logo artwork, bow or closure preference and quantities by size.",
+      "images": [
+        {
+          "file": "source/L02_ivory_jewelry/L02_01_main.webp",
+          "sha256": "7789570be5c6a7e98e9e9215519a6d9b4a23deb6152d2c4d37a165e1851c9ace",
+          "title": "Ivory jewelry paper bag with champagne ribbon-style handles — main design and coordinated size references",
+          "alt": "Ivory jewelry paper bag with champagne ribbon-style handles, main design and coordinated size references",
+          "caption": "Main design and coordinated size references. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L02_ivory_jewelry/L02_02_side_angle.webp",
+          "sha256": "9bad9df8ef7869e4120aadb3cdfc1c851f8983ac20f90a88205734092dce5a1f",
+          "title": "Ivory jewelry paper bag with champagne ribbon-style handles — side angle and gusset",
+          "alt": "Ivory jewelry paper bag with champagne ribbon-style handles, side angle and gusset",
+          "caption": "Side angle and gusset. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L02_ivory_jewelry/L02_03_handles_top.webp",
+          "sha256": "4fdf0dd21b4b5bd70bea881f8c48a172e36ef99fa77d5d771176d54c0d221ff4",
+          "title": "Ivory jewelry paper bag with champagne ribbon-style handles — handle attachments and folded top",
+          "alt": "Ivory jewelry paper bag with champagne ribbon-style handles, handle attachments and folded top",
+          "caption": "Handle attachments and folded top. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L02_ivory_jewelry/L02_04_bottom.webp",
+          "sha256": "e9d9893174fca9ffaa39c9ac8cd68ee9b4877525781347f5d73b53ba918450b1",
+          "title": "Ivory jewelry paper bag with champagne ribbon-style handles — closed folded base",
+          "alt": "Ivory jewelry paper bag with champagne ribbon-style handles, closed folded base",
+          "caption": "Closed folded base. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L02_ivory_jewelry/L02_05_print_texture.webp",
+          "sha256": "ec86733918ad0b29d222d63f6b2843dbe8d52102c518bc387c7e09aa61b836dc",
+          "title": "Ivory jewelry paper bag with champagne ribbon-style handles — paper surface and branding detail",
+          "alt": "Ivory jewelry paper bag with champagne ribbon-style handles, paper surface and branding detail",
+          "caption": "Paper surface and branding detail. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L02_ivory_jewelry/L02_06_folded_quantity.webp",
+          "sha256": "ea5783191864668431e4686e275244326f72c02d6346f2a71c3db742cfeb772c",
+          "title": "Ivory jewelry paper bag with champagne ribbon-style handles — folded bags grouped together",
+          "alt": "Ivory jewelry paper bag with champagne ribbon-style handles, folded bags grouped together",
+          "caption": "Folded bags grouped together. Design illustration; final construction follows the approved sample."
+        }
+      ],
+      "inline_order": [
+        2,
+        5,
+        3
+      ],
+      "content_file": "l02-description.html",
+      "content_sha256": "ecf90e30d0d1b1bab596b93d7993e30abaaba9669ef1998d892b30f75c0848fd",
+      "wordcount": 979,
+      "short_description": "<p>Ivory jewelry paper bags with ribbon-style handles, a small bow detail and a textured paper direction. A coordinated carrier for jewelry boxes, accessories and boutique gifting.</p><p>Develop the usable dimensions around your ring, bracelet or necklace boxes, with allowance for tissue and a gift card. The ivory tone, handle construction and logo finish are confirmed on a custom sample.</p>",
+      "categories": [
+        "paper-bags-with-logo"
+      ],
+      "sku": "VPN-LUX-20261102-L02"
+    },
+    {
+      "code": "L03",
+      "folder": "L03_blush_burgundy_beauty",
+      "slug": "custom-blush-pink-cosmetic-paper-bags",
+      "title": "Custom Blush Pink Cosmetic Paper Bags with Burgundy Handles",
+      "keyword": "pink cosmetic paper bags",
+      "secondary": [
+        "custom cosmetic bags wholesale",
+        "beauty paper bags with logo",
+        "custom beauty retail bags"
+      ],
+      "seo_title": "Pink Cosmetic Paper Bags | Custom Bulk Orders | VPN",
+      "seo_description": "Pink cosmetic paper bags with burgundy handles, custom logo and sizes. Develop bags for boxed skincare and beauty gifts with VPN. Request a bulk quote.",
+      "short": "Blush pink cosmetic paper bags with contrasting burgundy sides and flat loop handles. A retail packaging direction for boxed skincare, fragrance and beauty gift sets.",
+      "short2": "Plan the bag around the assembled carton or gift set, including tissue and any promotional insert. Body color, handle material, attachment reinforcement and branding are reviewed for your order.",
+      "use": "Beauty retailers, skincare and fragrance brands, salons and promotional gift programs",
+      "feature": "Blush front, burgundy side panels and contrasting flat loop handles",
+      "paper": "Printing or specialty paper selected to the two-tone artwork, folds and intended contents",
+      "handle": "Flat burgundy loops with attachment patches shown; handle material and reinforcement specified for the order",
+      "color": "Blush pink and burgundy reference; approved brand color targets used for production",
+      "bullets": [
+        "Two-tone blush and burgundy design with custom artwork",
+        "Usable dimensions developed around boxed beauty products",
+        "Flat loop handle construction and reinforcement agreed with the sample",
+        "Wholesale supply for beauty retail and launch programs"
+      ],
+      "intro": "These pink cosmetic paper bags use contrast rather than an all-over print: a blush front panel, darker burgundy sides and matching flat handles. The upright proportion suits a discussion about boxed skincare, fragrance cartons and compact beauty gift sets. You can use the design as a starting point for your own color palette, product mix and retail handover routine.",
+      "sections": [
+        [
+          "Plan for the assembled beauty set",
+          "Measure the complete set as it will be handed to the customer. Include outer cartons, a rigid gift box, tissue and promotional cards rather than only the dimensions of the individual bottles. Tell us whether the same bag must hold one carton or a mixed purchase, because that changes both the footprint and the way weight is distributed.",
+          "A tall fragrance carton may need more height while a multi-item skincare set may need a wider base. Check whether the product can enter the opening without catching the handles or scraping the print. The bags shown are outer retail carriers; any inserts, leak protection or bottle cushioning belong in the agreed inner packaging."
+        ],
+        [
+          "Keep the two-tone artwork consistent at the folds",
+          "The transition from blush front to burgundy side is a production detail worth reviewing. Specify where the color break should fall relative to the side creases and seam. Share a color standard or physical brand sample for both colors and identify the logo area, border and any metallic-looking accents.",
+          "A screen image cannot confirm a paper dye, ink system or metallic process. Those choices depend on the desired finish, stock and quantity. Inspect the sample opened and flattened so you can see the side panels, top fold and bottom. This helps reveal color breaks or unprinted areas that may be less obvious in a front view."
+        ],
+        [
+          "Choose the flat handles for your beauty set",
+          "The reference shows flat, burgundy loop handles and visible attachment areas. Choose the handle material to match how the bag will be used. Specify whether you want a paper-based or textile handle, its width and length, and the corresponding attachment and reinforcement arrangement.",
+          "For sample review, use the heaviest intended boxed set and inspect the handle grip, top edge, fixing patches and base after normal carrying. Agree any required carrying test in advance, including the weight, handling conditions and acceptance criteria."
+        ]
+      ],
+      "faqs": [
+        [
+          "Can the blush and burgundy colors be changed?",
+          "Yes. Send the two color references and artwork showing which panels receive each color. The final paper and print route are reviewed with a sample, particularly where the color changes at a fold."
+        ],
+        [
+          "Are the handles ribbon or paper?",
+          "The images show a flat loop-handle style. Material, width, fixing method and reinforcement must be confirmed in the quotation and sample; we do not infer fibre composition from the illustration."
+        ],
+        [
+          "Is this a bag for loose cosmetic bottles?",
+          "It is an outer retail carrier. For glass bottles or products that can leak, specify the appropriate carton, insert or other inner protection. Review the filled bag with the full set before approving it."
+        ],
+        [
+          "Can you coordinate the bag with a skincare gift box?",
+          "Yes. Share the finished box dimensions and brand references so the opening, base, print and handle direction can be reviewed together. The bag and box remain separately specified items in the quotation."
+        ]
+      ],
+      "brief": "Include the complete beauty set dimensions, total weight, color references, desired flat-handle material, logo and border artwork, quantities for each design and delivery country.",
+      "images": [
+        {
+          "file": "source/L03_blush_burgundy_beauty/L03_01_main.webp",
+          "sha256": "a2721f5a8c20cc15f91242ce8576bb6667bb88937af16d5046a910a573865147",
+          "title": "Blush cosmetic paper bag with burgundy flat handles — main design and coordinated size references",
+          "alt": "Blush cosmetic paper bag with burgundy flat handles, main design and coordinated size references",
+          "caption": "Main design and coordinated size references. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L03_blush_burgundy_beauty/L03_02_side_angle.webp",
+          "sha256": "7fa5de275f8c538999e0cd2a0e249112a544442194ca4c8c8f1394f325018af4",
+          "title": "Blush cosmetic paper bag with burgundy flat handles — side angle and gusset",
+          "alt": "Blush cosmetic paper bag with burgundy flat handles, side angle and gusset",
+          "caption": "Side angle and gusset. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L03_blush_burgundy_beauty/L03_03_handles_top.webp",
+          "sha256": "24906baa4ef01e26ca3cb5191d083306eed86da55c22cd801683e1189f6be774",
+          "title": "Blush cosmetic paper bag with burgundy flat handles — handle attachments and folded top",
+          "alt": "Blush cosmetic paper bag with burgundy flat handles, handle attachments and folded top",
+          "caption": "Handle attachments and folded top. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L03_blush_burgundy_beauty/L03_04_bottom.webp",
+          "sha256": "a892651f897ffb4f39e4654d8ac87dcb416dde5199658f557ff722cdba248bea",
+          "title": "Blush cosmetic paper bag with burgundy flat handles — closed folded base",
+          "alt": "Blush cosmetic paper bag with burgundy flat handles, closed folded base",
+          "caption": "Closed folded base. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L03_blush_burgundy_beauty/L03_05_print_texture.webp",
+          "sha256": "72c19a2209b67d363e8b03264e18354970fb52470f9c536891c0e9f25de1fc1e",
+          "title": "Blush cosmetic paper bag with burgundy flat handles — paper surface and branding detail",
+          "alt": "Blush cosmetic paper bag with burgundy flat handles, paper surface and branding detail",
+          "caption": "Paper surface and branding detail. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L03_blush_burgundy_beauty/L03_06_folded_quantity.webp",
+          "sha256": "b8d280d84da64b0100d1144a0a4c767a7eeeb2b34ce1804178aff56bd42d50e8",
+          "title": "Blush cosmetic paper bag with burgundy flat handles — folded bags grouped together",
+          "alt": "Blush cosmetic paper bag with burgundy flat handles, folded bags grouped together",
+          "caption": "Folded bags grouped together. Design illustration; final construction follows the approved sample."
+        }
+      ],
+      "inline_order": [
+        2,
+        5,
+        3
+      ],
+      "content_file": "l03-description.html",
+      "content_sha256": "611c59525cfea06a9bb7fe003c07f7e106713c30cee026184fe0e34a94868a53",
+      "wordcount": 952,
+      "short_description": "<p>Blush pink cosmetic paper bags with contrasting burgundy sides and flat loop handles. A retail packaging direction for boxed skincare, fragrance and beauty gift sets.</p><p>Plan the bag around the assembled carton or gift set, including tissue and any promotional insert. Body color, handle material, attachment reinforcement and branding are reviewed for your order.</p>",
+      "categories": [
+        "paper-bags-with-logo"
+      ],
+      "sku": "VPN-LUX-20261102-L03"
+    },
+    {
+      "code": "L04",
+      "folder": "L04_navy_wine",
+      "slug": "custom-navy-wine-paper-gift-bags",
+      "title": "Custom Navy Wine Paper Gift Bags with Rope Handles",
+      "keyword": "wine paper gift bags",
+      "secondary": [
+        "custom wine bags wholesale",
+        "wine bottle paper bags with logo",
+        "custom bottle gift bag supplier"
+      ],
+      "seo_title": "Wine Paper Gift Bags | Custom Navy Rope Handles | VPN",
+      "seo_description": "Wine paper gift bags in a navy rope-handle design, made to your bottle and logo. Review base reinforcement and samples with VPN. Request a wholesale quote.",
+      "short": "Navy wine paper gift bags with rope handles and a narrow, upright design. Custom branding and dimensions for wineries, bottle shops and corporate bottle gifts.",
+      "short2": "Provide the bottle diameter, full height and filled weight, or the dimensions of its presentation box. We review base reinforcement, handle construction and clearance before the order is approved.",
+      "use": "Wineries, bottle retailers, beverage brands and corporate bottle-gift programs",
+      "feature": "Tall navy bottle-carrier format, rope handles and a gold-tone logo direction",
+      "paper": "Navy dyed or printed paper options; grade, finish and reinforcement selected for the bottle pack",
+      "handle": "Navy rope-handle direction; fibre, fixing and carrying performance agreed with a filled sample",
+      "color": "Navy body with gold-tone reference artwork; colors customized to the brand",
+      "bullets": [
+        "Dimensions based on bottle or presentation-box measurements",
+        "Top, handle and base construction reviewed for the filled weight",
+        "Navy paper with custom logo and print or foil options",
+        "Retail gifting carrier; shipping protection specified separately"
+      ],
+      "intro": "A wine gift carrier needs more than the right height. Its base, usable opening and handles must work together around a filled glass bottle or its presentation box. This navy design offers a tall, narrow format with rope handles and a restrained gold-tone branding direction for cellar-door sales, bottle retail and corporate gifting.",
+      "sections": [
+        [
+          "Specify the actual bottle, not only its volume",
+          "Two bottles marked with the same volume can have different diameters, shoulders and heights. Send the maximum body diameter or width, total height including the closure, and filled weight. If the bottle goes into a gift box first, use the closed box measurements instead. Include any tissue, neck tag or other item that needs space in the bag.",
+          "The illustration suggests a single-bottle format, but it does not establish a standard bottle size. Ask for the usable internal dimensions and check the complete pack at sample stage. If you need a two-bottle carrier, treat it as a different construction requiring a wider footprint and any necessary separation; do not simply enlarge the artwork on this narrow bag."
+        ],
+        [
+          "Review the base and rope attachments under load",
+          "Glass concentrates weight into a small footprint. Specify whether a base board, additional reinforcement or a different construction is required for your bottle. Paper grade, seam, bottom folds and handle fixing points should be reviewed together. None of these can be rated from an illustration or selected only by the apparent thickness of the paper.",
+          "Use the actual filled bottle or complete boxed gift during sample approval. Inspect the base shape, seam, top fold and handle attachments after carrying under agreed conditions. Define any required test method and acceptance criteria with the project brief. A product page does not substitute for a carrying test or establish a maximum safe load."
+        ],
+        [
+          "Separate gift presentation from transit protection",
+          "The navy face and gold-tone wordmark can coordinate with a winery label or presentation box. Share the original artwork and a physical color reference if matching existing navy packaging matters. Metallic-looking details may be printed or foiled depending on the specification, so approve the real finish rather than relying on screen color.",
+          "This is a retail gifting carrier, not a shipping container for glass. A courier or export shipment needs separately specified outer packaging and, where appropriate, bottle protection or dividers. Tell us whether you are ordering empty bags for shops or complete packed gifts so the carton packing and logistics discussion starts from the correct use."
+        ]
+      ],
+      "faqs": [
+        [
+          "Will this bag fit any 750 ml wine bottle?",
+          "Not automatically. Bottle shapes vary. Send the maximum bottle dimensions and filled weight, or the dimensions of the presentation box, so the usable opening and base can be developed for that pack."
+        ],
+        [
+          "What load can the rope handles carry?",
+          "No rated load is claimed from the images. The rope, fixing points, top fold and bottom construction are selected for the contents and checked against agreed conditions using a filled sample."
+        ],
+        [
+          "Can the bag hold two bottles?",
+          "A two-bottle version needs its own footprint, handle and base review, and any suitable separation. State the bottle count and combined weight before requesting that variant."
+        ],
+        [
+          "Can this paper bag replace a protective wine shipping box?",
+          "No. It is a retail carrier. For delivery through a parcel or freight network, specify separate protective shipping packaging and assess the complete filled pack for that route."
+        ]
+      ],
+      "brief": "Send the bottle count, maximum bottle dimensions, filled weight, any presentation-box size, base-reinforcement requirement, logo finish, quantity and destination.",
+      "images": [
+        {
+          "file": "source/L04_navy_wine/L04_01_main.webp",
+          "sha256": "49358402e635145267cf714c2a15db22fe60fe64e97cf766141f9835a37f79d2",
+          "title": "Navy wine paper gift bag with rope handles — main design and coordinated size references",
+          "alt": "Navy wine paper gift bag with rope handles, main design and coordinated size references",
+          "caption": "Main design and coordinated size references. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L04_navy_wine/L04_02_side_angle.webp",
+          "sha256": "b172161c8412a76c400d5a7db1f766382ab6f1e1a55602210680373880c996a7",
+          "title": "Navy wine paper gift bag with rope handles — side angle and gusset",
+          "alt": "Navy wine paper gift bag with rope handles, side angle and gusset",
+          "caption": "Side angle and gusset. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L04_navy_wine/L04_03_handles_top.webp",
+          "sha256": "0e7332fadbb3c1ab36d35bf8cc358fe1d1dcfcfab66bfdc70e393aa33002e215",
+          "title": "Navy wine paper gift bag with rope handles — handle attachments and folded top",
+          "alt": "Navy wine paper gift bag with rope handles, handle attachments and folded top",
+          "caption": "Handle attachments and folded top. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L04_navy_wine/L04_04_bottom.webp",
+          "sha256": "a5481b6bbf5de450cd482ebb7c3733f3aa28e23370c0dd2d60c078e9756ec87d",
+          "title": "Navy wine paper gift bag with rope handles — closed folded base",
+          "alt": "Navy wine paper gift bag with rope handles, closed folded base",
+          "caption": "Closed folded base. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L04_navy_wine/L04_05_print_texture.webp",
+          "sha256": "261fd4f803bab379a259d037e1eb91cc488d55f50d4d550a21ca0b88774e9176",
+          "title": "Navy wine paper gift bag with rope handles — paper surface and branding detail",
+          "alt": "Navy wine paper gift bag with rope handles, paper surface and branding detail",
+          "caption": "Paper surface and branding detail. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L04_navy_wine/L04_06_folded_quantity.webp",
+          "sha256": "45dabbc1c5baa968e9b3db200eeab56c35662e6f9d155bb8d0cb99fd122c3b36",
+          "title": "Navy wine paper gift bag with rope handles — folded bags grouped together",
+          "alt": "Navy wine paper gift bag with rope handles, folded bags grouped together",
+          "caption": "Folded bags grouped together. Design illustration; final construction follows the approved sample."
+        }
+      ],
+      "inline_order": [
+        2,
+        4,
+        5
+      ],
+      "content_file": "l04-description.html",
+      "content_sha256": "bb1ae811d907c9cf925e8d8eecd50a75c64711c2fbebd7b8b9d10447239c1b8e",
+      "wordcount": 963,
+      "short_description": "<p>Navy wine paper gift bags with rope handles and a narrow, upright design. Custom branding and dimensions for wineries, bottle shops and corporate bottle gifts.</p><p>Provide the bottle diameter, full height and filled weight, or the dimensions of its presentation box. We review base reinforcement, handle construction and clearance before the order is approved.</p>",
+      "categories": [
+        "paper-bags-with-logo"
+      ],
+      "sku": "VPN-LUX-20261102-L04"
+    },
+    {
+      "code": "L05",
+      "folder": "L05_olive_gift",
+      "slug": "custom-olive-green-paper-gift-bags",
+      "title": "Custom Olive Green Paper Gift Bags with Flat Handles",
+      "keyword": "olive green paper gift bags",
+      "secondary": [
+        "custom paper gift bags wholesale",
+        "branded corporate gift bags",
+        "luxury gift bag supplier"
+      ],
+      "seo_title": "Olive Green Paper Gift Bags | Custom Wholesale | VPN",
+      "seo_description": "Olive green paper gift bags with flat handles, your logo and custom sizes. Plan boxed gifts and retail collections with VPN. Request a wholesale quote.",
+      "short": "Olive green paper gift bags with natural-tone flat handles and understated printed artwork. A custom carrier direction for boxed gifts, lifestyle retail and corporate welcome packs.",
+      "short2": "Specify the gift-box footprint, contents and total weight first. Paper finish, handle composition, reinforcement and any tissue or tags are agreed for the complete packaging brief.",
+      "use": "Corporate gift programs, lifestyle retailers, hospitality welcome packs and gift distributors",
+      "feature": "Olive textured appearance, natural-tone flat handles and minimal line artwork",
+      "paper": "Olive specialty, textured or printed paper options; grade and finish confirmed with the sample",
+      "handle": "Natural-tone flat woven-look handles; fibre, width and attachment specified before production",
+      "color": "Olive green and natural-tone handle reference; custom artwork and approved colors",
+      "bullets": [
+        "Custom usable dimensions for boxed gifts and mixed retail sets",
+        "Olive paper direction with natural-tone flat handles",
+        "Simple logo and line-art options reviewed for legibility",
+        "Quantity by size, design and delivery batch quoted to order"
+      ],
+      "intro": "Olive green paper gift bags give a coordinated outer layer to boxed gifts and lifestyle purchases without relying on elaborate decoration. The reference pairs an olive paper appearance with natural-tone flat handles and small line artwork. It can be adapted for corporate gifting, hospitality welcome packs or a retail collection using your own logo and usable dimensions.",
+      "sections": [
+        [
+          "Build the dimensions around the whole gift",
+          "A corporate pack may combine a rigid box, printed card and tissue, while a lifestyle purchase may include several differently shaped items. Measure the assembled pack and identify the heaviest expected combination. Allow enough opening space for staff to load the items without bending cards or forcing the gussets.",
+          "For a program with several gift tiers, compare which items share the same bag size before ordering a large assortment. Give quantities for each size and artwork, plus any delivery batches. The two reference proportions illustrate a family of bags; they do not indicate fixed stock sizes or a prepacked retail set."
+        ],
+        [
+          "Keep olive color and fine artwork under control",
+          "Olive can appear warmer or cooler depending on the paper surface and lighting. If the bag sits beside an existing gift box, send a physical reference or agreed color target and compare the assembled packaging together. A textured sheet and a smooth printed stock can produce different results even when they share a similar screen color.",
+          "The restrained leaf-style drawing is an artwork direction, not an environmental certification. Fine line work and a small wordmark should be checked at the actual print size. Ask for the paper and printing options to be reviewed together so the mark remains legible without filling the surface with additional finishes."
+        ],
+        [
+          "Confirm handle fibre and any environmental brief",
+          "The flat handles have a woven appearance, but the illustration does not establish cotton, paper or another fibre. Tell us your preferred material and whether a particular handling or environmental requirement matters. The attachment, top reinforcement and base should suit the gift weight and the way recipients will carry it.",
+          "An olive color, leaf motif or natural-looking handle does not prove recycled content, recyclability or a certification claim. If you need those properties, state the requirement for the paper, coatings, adhesive and handles and request the relevant supporting information. Approve the complete material combination rather than relying on the visual style."
+        ]
+      ],
+      "faqs": [
+        [
+          "Are the handles cotton?",
+          "The reference shows a flat woven-look handle. Exact fibre, weave, width and fixing method are selected and confirmed in the quotation and sample. Cotton should not be assumed from appearance alone."
+        ],
+        [
+          "Does the green design mean the bag is recycled or certified?",
+          "No. Color and artwork do not establish environmental properties. Specify the required material content or certification and ask for documentation for the exact agreed material combination."
+        ],
+        [
+          "Can you supply matching bags for several gift-box sizes?",
+          "Yes. Send the complete box dimensions and packed weight for each tier. We can review a coordinated bag range while confirming the quantities and specification of each size separately."
+        ],
+        [
+          "Are tissue, gift tags and inserts included?",
+          "They are included only when listed in the agreed quotation. Describe them in the brief, including size, artwork and how the gifts will be assembled, so the full packing arrangement can be reviewed."
+        ]
+      ],
+      "brief": "Include the assembled gift dimensions, heaviest contents, quantities by gift tier, handle fibre preference, olive reference, logo or line art, and any documented material requirements.",
+      "images": [
+        {
+          "file": "source/L05_olive_gift/L05_01_main.webp",
+          "sha256": "d22b8157a431e3b1a9b4beb8cfa6279b94b51018450c576bcb6ab1edc132bb42",
+          "title": "Olive green gift paper bag with natural-tone flat handles — main design and coordinated size references",
+          "alt": "Olive green gift paper bag with natural-tone flat handles, main design and coordinated size references",
+          "caption": "Main design and coordinated size references. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L05_olive_gift/L05_02_side_angle.webp",
+          "sha256": "1770b0e63f12a8e49685972430d949e2d36f3958949d1973f2eb71f5a1ae0d42",
+          "title": "Olive green gift paper bag with natural-tone flat handles — side angle and gusset",
+          "alt": "Olive green gift paper bag with natural-tone flat handles, side angle and gusset",
+          "caption": "Side angle and gusset. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L05_olive_gift/L05_03_handles_top.webp",
+          "sha256": "8a0c8f33e4a675d5517648ead42787d7fe3499c7bec791c00e1153476fcc84b7",
+          "title": "Olive green gift paper bag with natural-tone flat handles — handle attachments and folded top",
+          "alt": "Olive green gift paper bag with natural-tone flat handles, handle attachments and folded top",
+          "caption": "Handle attachments and folded top. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L05_olive_gift/L05_04_bottom.webp",
+          "sha256": "f433934f4da4f432561397e735111aa0373473b7640e396519ce828d139bdf4a",
+          "title": "Olive green gift paper bag with natural-tone flat handles — closed folded base",
+          "alt": "Olive green gift paper bag with natural-tone flat handles, closed folded base",
+          "caption": "Closed folded base. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L05_olive_gift/L05_05_print_texture.webp",
+          "sha256": "2c31779e1a921780490bea88a11defbec97242a395f9cb61384c0119e9397b61",
+          "title": "Olive green gift paper bag with natural-tone flat handles — paper surface and branding detail",
+          "alt": "Olive green gift paper bag with natural-tone flat handles, paper surface and branding detail",
+          "caption": "Paper surface and branding detail. Design illustration; final construction follows the approved sample."
+        },
+        {
+          "file": "source/L05_olive_gift/L05_06_folded_quantity.webp",
+          "sha256": "bfd3005389762e20df575282a774b10224408522f7cbdf05ade80a00c830c5e3",
+          "title": "Olive green gift paper bag with natural-tone flat handles — folded bags grouped together",
+          "alt": "Olive green gift paper bag with natural-tone flat handles, folded bags grouped together",
+          "caption": "Folded bags grouped together. Design illustration; final construction follows the approved sample."
+        }
+      ],
+      "inline_order": [
+        2,
+        5,
+        3
+      ],
+      "content_file": "l05-description.html",
+      "content_sha256": "859ae9290e2e8a167a970d0438d2c289dda174168cbfa7eba67140145816c6a4",
+      "wordcount": 945,
+      "short_description": "<p>Olive green paper gift bags with natural-tone flat handles and understated printed artwork. A custom carrier direction for boxed gifts, lifestyle retail and corporate welcome packs.</p><p>Specify the gift-box footprint, contents and total weight first. Paper finish, handle composition, reinforcement and any tissue or tags are agreed for the complete packaging brief.</p>",
+      "categories": [
+        "paper-bags-with-logo"
+      ],
+      "sku": "VPN-LUX-20261102-L05"
+    }
+  ]
+}
