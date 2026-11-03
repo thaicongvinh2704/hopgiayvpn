@@ -1,0 +1,584 @@
+{
+  "batch_key": "paper-buyer-guides-20261103",
+  "revision": "2026-11-03.v1",
+  "status": "publish",
+  "scope": "owner-approved-git-release",
+  "articles": [
+    {
+      "key": "container",
+      "title": "How Many Paper Bags Fit in a Container? A Bulk Shipping Guide",
+      "slug": "how-many-paper-bags-fit-in-a-container",
+      "focus_keyword": "how many paper bags fit in a container",
+      "secondary": [
+        "paper bag container loading",
+        "bulk paper bag shipping",
+        "paper bag packing volume"
+      ],
+      "seo_title": "How Many Paper Bags Fit in a Container? | VPN",
+      "meta_description": "How many paper bags fit in a container? Calculate from packed carton size, count, weight and loading method before confirming a bulk order.",
+      "excerpt": "Build a paper bag loading estimate from actual carton dimensions, pack counts, weight and receiving requirements, with transparent worked examples.",
+      "shape": "Calculation guide with worked counterexample and packing inputs",
+      "unique": [
+        "Carton revision tied to the loading estimate",
+        "Volume-only estimate versus integer layout",
+        "Mixed-SKU and receiving constraints without universal load promises"
+      ],
+      "wordcount": 1508,
+      "content_sha256": "e83b63f97bf73021221615d5356d570e3a35f0ffad3358c9cad6578d15cc0359",
+      "status": "publish",
+      "content_file": "article.html",
+      "category": {
+        "slug": "supplier-resources",
+        "name": "Supplier Resources"
+      },
+      "images": [
+        {
+          "filename": "container-thumbnail.webp",
+          "role": "featured",
+          "slot": null,
+          "alt": "Illustrated How Many Paper Bags Fit in a Container? A Bulk Shipping Guide",
+          "title": "How Many Paper Bags Fit in a Container? A Bulk Shipping Guide",
+          "caption": "Editorial cover illustration for this buying guide.",
+          "origin": "AI-generated with built-in image_gen; supplied VPN logo/style references",
+          "width": 1280,
+          "height": 720,
+          "bytes": 131268,
+          "sha256": "00af4344ff053aba75d10a63493d1d03a60195bfe407a84c133d0487511bb0c7"
+        },
+        {
+          "filename": "container-explanation.webp",
+          "role": "inline",
+          "slot": 1,
+          "alt": "Bags, cartons and load planning",
+          "title": "Bags, cartons and load planning",
+          "caption": "Illustration of folded paper bags, an export carton and a pallet; quantities are not a shipment record.",
+          "origin": "AI-generated explanatory illustration; not factory evidence",
+          "width": 1280,
+          "height": 720,
+          "bytes": 119304,
+          "sha256": "82a473aafabfe1b499124aa6540e78448823212267f36a9ef29645e5842a03ce"
+        },
+        {
+          "filename": "container-layout-worked-example.webp",
+          "role": "inline",
+          "slot": 2,
+          "alt": "Single-orientation carton layout",
+          "title": "Single-orientation carton layout",
+          "caption": "Hypothetical inputs from the worked example: 11 × 5 × 7 cartons. Actual loading requires review.",
+          "origin": "Original deterministic buyer worksheet / schematic; not test data",
+          "width": 1280,
+          "height": 800,
+          "bytes": 47368,
+          "sha256": "9163f7f822b1314f2b6fb17bd3952b2294c1ad057b66a02828859da75cd422a2"
+        },
+        {
+          "filename": "vpn-factory-carton-storage-20261009.webp",
+          "role": "inline",
+          "slot": 3,
+          "alt": "Existing VPN carton storage workshop photograph",
+          "title": "Inside the VPN packaging operation",
+          "caption": "Cartons in VPN’s packaging storage area. Final carton dimensions and pack counts remain order-specific.",
+          "origin": "Existing VPN website factory photograph, reused without retouching",
+          "width": 1280,
+          "height": 960,
+          "bytes": 99976,
+          "sha256": "edc61a30f526b20994352121e55935f4d2cab3d76c2f2bd567e0760255b7c1eb"
+        },
+        {
+          "filename": "mixed-sku-packing-worksheet.webp",
+          "role": "inline",
+          "slot": 4,
+          "alt": "Mixed-SKU carton volume worksheet",
+          "title": "Mixed-SKU carton volume worksheet",
+          "caption": "Illustrative worksheet: different carton volumes remain on separate order lines.",
+          "origin": "Original deterministic buyer worksheet / schematic; not test data",
+          "width": 1280,
+          "height": 800,
+          "bytes": 26100,
+          "sha256": "6bf2ef8bec0713ef0f057f6aebb26af3b173c460f4583d83d6e869ee2fbaa00c"
+        }
+      ],
+      "review_source_sha256": "e83b63f97bf73021221615d5356d570e3a35f0ffad3358c9cad6578d15cc0359"
+    },
+    {
+      "key": "qc",
+      "title": "Paper Bag Quality Control: A Bulk-Order Inspection Checklist",
+      "slug": "paper-bag-quality-control",
+      "focus_keyword": "paper bag quality control",
+      "secondary": [
+        "paper bag factory qc",
+        "paper bag inspection checklist",
+        "bulk paper bag inspection"
+      ],
+      "seo_title": "Paper Bag Quality Control: Bulk Inspection Checklist | VPN",
+      "meta_description": "Paper bag quality control for bulk orders: define production checks, inspect handles and seams, track defects and agree how the lot is released.",
+      "excerpt": "Connect the approved bag specification to incoming, in-process and finished-lot checks, with a practical evidence and defect-action checklist.",
+      "shape": "Production inspection and disposition framework",
+      "unique": [
+        "Separates sample approval from lot verification",
+        "Records inspected carton identity and scope",
+        "Connects defect, containment, reinspection and release responsibility"
+      ],
+      "wordcount": 1556,
+      "content_sha256": "520eae8d85ebf329275549c605711e23e5c9a3929005cb122ae00a74b3b37e73",
+      "status": "publish",
+      "content_file": "article.html",
+      "category": {
+        "slug": "packaging-quality-control",
+        "name": "Packaging Quality Control"
+      },
+      "images": [
+        {
+          "filename": "qc-thumbnail.webp",
+          "role": "featured",
+          "slot": null,
+          "alt": "Illustrated Paper Bag Quality Control: A Bulk-Order Inspection Checklist",
+          "title": "Paper Bag Quality Control: A Bulk-Order Inspection Checklist",
+          "caption": "Editorial cover illustration for this buying guide.",
+          "origin": "AI-generated with built-in image_gen; supplied VPN logo/style references",
+          "width": 1280,
+          "height": 720,
+          "bytes": 111698,
+          "sha256": "068b42531ef0bd392b973cc47f01f62153a1c7b0c7dd8e3cda700cf4fce3cb5c"
+        },
+        {
+          "filename": "qc-explanation.webp",
+          "role": "inline",
+          "slot": 1,
+          "alt": "Handle, base and dimension checks",
+          "title": "Handle, base and dimension checks",
+          "caption": "Illustrated inspection points. No test outcome or carrying capacity is established by this image.",
+          "origin": "AI-generated explanatory illustration; not factory evidence",
+          "width": 1280,
+          "height": 720,
+          "bytes": 122444,
+          "sha256": "0bd65754b7e834e7e778a94d7a01e8136eef02a75fa3110ac6b052ec14efbd0a"
+        },
+        {
+          "filename": "paper-bag-defect-action-flow.webp",
+          "role": "inline",
+          "slot": 2,
+          "alt": "From failed check to release decision",
+          "title": "From failed check to release decision",
+          "caption": "Planning flow showing containment, review and documented release; not an inspection result.",
+          "origin": "Original deterministic buyer worksheet / schematic; not test data",
+          "width": 1280,
+          "height": 800,
+          "bytes": 56542,
+          "sha256": "15b4646031cb1c6821b34b00e72c7314b3f25b75fd2d36918e34974c40212db4"
+        },
+        {
+          "filename": "vpn-factory-paper-cutting-20261009.webp",
+          "role": "inline",
+          "slot": 3,
+          "alt": "Existing VPN paper cutting workshop photograph",
+          "title": "Inside the VPN packaging operation",
+          "caption": "Paper cutting equipment in VPN’s wider packaging workshop, shown as production context rather than an inspection record.",
+          "origin": "Existing VPN website factory photograph, reused without retouching",
+          "width": 1280,
+          "height": 960,
+          "bytes": 94520,
+          "sha256": "35f6ef849656cae06c3dd70fb492e5f0bd177286ebc2323b8f5881b1d04fc8b1"
+        },
+        {
+          "filename": "paper-bag-inspection-record.webp",
+          "role": "inline",
+          "slot": 4,
+          "alt": "Inspection record fields",
+          "title": "Inspection record fields",
+          "caption": "Record template linking the selected goods, observations and disposition. No results are prefilled.",
+          "origin": "Original deterministic buyer worksheet / schematic; not test data",
+          "width": 1280,
+          "height": 800,
+          "bytes": 43414,
+          "sha256": "62897f28443e0c4a873af83d65457a4d24d321c33b16691999ecac3d36767415"
+        }
+      ],
+      "review_source_sha256": "520eae8d85ebf329275549c605711e23e5c9a3929005cb122ae00a74b3b37e73"
+    },
+    {
+      "key": "window",
+      "title": "Bread Bags with Window: Specifications for Wholesale Orders",
+      "slug": "bread-bags-with-window-buying-guide",
+      "focus_keyword": "bread bags with window",
+      "secondary": [
+        "custom bread bags with window",
+        "bakery window bags wholesale",
+        "window bread bag specifications"
+      ],
+      "seo_title": "Bread Bags with Window: Wholesale Buying Guide | VPN",
+      "meta_description": "Choose bread bags with window for wholesale orders. Review loaf fit, film, window position, printing, packing conditions and a usable physical sample.",
+      "excerpt": "Specify the window, loaf fit and closing action together before ordering printed bread bags for bakery shelves, takeaway or repeat wholesale supply.",
+      "shape": "Annotated drawing and filled-pack decision guide",
+      "unique": [
+        "Window, fold and artwork evaluated together",
+        "Clear material appearance separated from its identity",
+        "Filled-bag trials instead of universal freshness claims"
+      ],
+      "wordcount": 1529,
+      "content_sha256": "014e9dc2139e1bab9a5475ff3e040959e7fdf6d3d5cf2a3fd16b91a27199160d",
+      "status": "publish",
+      "content_file": "article.html",
+      "category": {
+        "slug": "food-packaging",
+        "name": "Food Packaging"
+      },
+      "images": [
+        {
+          "filename": "window-thumbnail.webp",
+          "role": "featured",
+          "slot": null,
+          "alt": "Illustrated Bread Bags with Window: Specifications for Wholesale Orders",
+          "title": "Bread Bags with Window: Specifications for Wholesale Orders",
+          "caption": "Editorial cover illustration for this buying guide.",
+          "origin": "AI-generated with built-in image_gen; supplied VPN logo/style references",
+          "width": 1280,
+          "height": 720,
+          "bytes": 145208,
+          "sha256": "ecc9e291df04159cbbec2c29eff021ac5099128927381bbcea98889c18b97e0f"
+        },
+        {
+          "filename": "window-catalogue-reference.webp",
+          "role": "inline",
+          "slot": 1,
+          "alt": "Existing window paper bag design reference",
+          "title": "VPN catalogue design reference",
+          "caption": "Existing catalogue design reference. Final dimensions, components and performance must be confirmed for the order.",
+          "origin": "Existing VPN product illustration; not used as documentary factory or test evidence",
+          "width": 450,
+          "height": 570,
+          "bytes": 22992,
+          "sha256": "2885490ef0a844514cbe74f7a52ee9f2b997a8f909a57dcef33aa39577fd6962"
+        },
+        {
+          "filename": "window-explanation.webp",
+          "role": "inline",
+          "slot": 2,
+          "alt": "Window and artwork after folding",
+          "title": "Window and artwork after folding",
+          "caption": "Illustration of a window bag before and after closing; confirm the actual drawing and filled sample.",
+          "origin": "AI-generated explanatory illustration; not factory evidence",
+          "width": 1280,
+          "height": 720,
+          "bytes": 98442,
+          "sha256": "caedd4037700f7978c20b6d3ce5aa0199984c09b6faaa74a6fe1b261e8416188"
+        },
+        {
+          "filename": "vpn-factory-offset-printing-20261009.webp",
+          "role": "inline",
+          "slot": 3,
+          "alt": "Existing VPN offset printing workshop photograph",
+          "title": "Inside the VPN packaging operation",
+          "caption": "Offset printing equipment in VPN’s wider packaging operation. The print route for a bag is confirmed with the selected paper and design.",
+          "origin": "Existing VPN website factory photograph, reused without retouching",
+          "width": 1280,
+          "height": 960,
+          "bytes": 92134,
+          "sha256": "46344e1be9acabddc050d6cf1a822f84ea624246685d0c0670541a9257b82058"
+        },
+        {
+          "filename": "window-bag-filled-trial.webp",
+          "role": "inline",
+          "slot": 4,
+          "alt": "Filled window-bag review sequence",
+          "title": "Filled window-bag review sequence",
+          "caption": "Review loading, closing, display and attachment using the same bag and loaf reference.",
+          "origin": "Original deterministic buyer worksheet / schematic; not test data",
+          "width": 1280,
+          "height": 800,
+          "bytes": 40638,
+          "sha256": "63e1f318fc5aa4691d9de8763186deeb043155633c2288819a449f0ea879d42e"
+        }
+      ],
+      "review_source_sha256": "014e9dc2139e1bab9a5475ff3e040959e7fdf6d3d5cf2a3fd16b91a27199160d"
+    },
+    {
+      "key": "greaseproof",
+      "title": "Greaseproof Bakery Bags: A Wholesale Buying Guide",
+      "slug": "greaseproof-bakery-bags-buying-guide",
+      "focus_keyword": "greaseproof bakery bags",
+      "secondary": [
+        "custom greaseproof paper bags",
+        "pastry paper bags wholesale",
+        "grease resistant bakery bags"
+      ],
+      "seo_title": "Greaseproof Bakery Bags: Wholesale Buying Guide | VPN",
+      "meta_description": "Specify greaseproof bakery bags around the pastry, packing conditions and food-contact use. Compare materials, sample trials, printing and bulk quotes.",
+      "excerpt": "Choose a bakery bag by its actual grease exposure, construction and food-contact conditions, then compare samples under a documented bakery scenario.",
+      "shape": "Application-first material selection and trial protocol",
+      "unique": [
+        "Grease, moisture and heat requirements remain separate",
+        "Food-specific trial captures seams and product presentation",
+        "Current FDA context without claiming VPN certifications"
+      ],
+      "wordcount": 1509,
+      "content_sha256": "c0611cbb57166977b8a312e85bced53921949a522a237773e7e8014c35c793c6",
+      "status": "publish",
+      "content_file": "article.html",
+      "category": {
+        "slug": "food-packaging",
+        "name": "Food Packaging"
+      },
+      "images": [
+        {
+          "filename": "greaseproof-thumbnail.webp",
+          "role": "featured",
+          "slot": null,
+          "alt": "Illustrated Greaseproof Bakery Bags: A Wholesale Buying Guide",
+          "title": "Greaseproof Bakery Bags: A Wholesale Buying Guide",
+          "caption": "Editorial cover illustration for this buying guide.",
+          "origin": "AI-generated with built-in image_gen; supplied VPN logo/style references",
+          "width": 1280,
+          "height": 720,
+          "bytes": 119718,
+          "sha256": "7547c0d7386af858b090cfca1ebe4668e19ba3fa063d60022c49a07e5955276a"
+        },
+        {
+          "filename": "greaseproof-explanation.webp",
+          "role": "inline",
+          "slot": 1,
+          "alt": "A bakery application-trial setup",
+          "title": "A bakery application-trial setup",
+          "caption": "Illustrative setup for observing comparable pastries and bags; no material comparison result is implied.",
+          "origin": "AI-generated explanatory illustration; not factory evidence",
+          "width": 1280,
+          "height": 720,
+          "bytes": 144992,
+          "sha256": "96c0092efe552ba225a7c9815379c58ef80b3342d24635980009a963ac8423d5"
+        },
+        {
+          "filename": "bakery-barrier-requirements.webp",
+          "role": "inline",
+          "slot": 2,
+          "alt": "Separate bakery bag requirements",
+          "title": "Separate bakery bag requirements",
+          "caption": "Specify grease, moisture, heating and food contact independently; no candidate material is rated here.",
+          "origin": "Original deterministic buyer worksheet / schematic; not test data",
+          "width": 1280,
+          "height": 800,
+          "bytes": 46836,
+          "sha256": "9eee45c1eb4edcfd7d7cf9af005ebcfbe9b6f12ba77800e82eff0c39481e4973"
+        },
+        {
+          "filename": "vpn-factory-entrance-20261009.webp",
+          "role": "inline",
+          "slot": 3,
+          "alt": "Existing VPN entrance workshop photograph",
+          "title": "Inside the VPN packaging operation",
+          "caption": "Exterior of the VPN packaging facility. Food-contact suitability needs evidence for the proposed materials.",
+          "origin": "Existing VPN website factory photograph, reused without retouching",
+          "width": 1280,
+          "height": 960,
+          "bytes": 95012,
+          "sha256": "5cb88f491c600f3cfdb4bd734e988d63fa7c430fa07535e1c6bcd979bafd0f9f"
+        },
+        {
+          "filename": "greaseproof-catalogue-reference.webp",
+          "role": "inline",
+          "slot": 4,
+          "alt": "Existing greaseproof paper bag design reference",
+          "title": "VPN catalogue design reference",
+          "caption": "Existing catalogue design reference. Final dimensions, components and performance must be confirmed for the order.",
+          "origin": "Existing VPN product illustration; not used as documentary factory or test evidence",
+          "width": 450,
+          "height": 570,
+          "bytes": 29850,
+          "sha256": "251bc30e4f73d13cabac46cebe0d4e396f5b76989ee237079e5151bb064d8da5"
+        }
+      ],
+      "review_source_sha256": "c0611cbb57166977b8a312e85bced53921949a522a237773e7e8014c35c793c6"
+    },
+    {
+      "key": "baguette",
+      "title": "Custom Printed Baguette Bags: A Guide for Bakery Chains",
+      "slug": "custom-printed-baguette-bags-buying-guide",
+      "focus_keyword": "custom printed baguette bags",
+      "secondary": [
+        "baguette bag manufacturer",
+        "baguette bags wholesale",
+        "printed bread bags for bakery chains"
+      ],
+      "seo_title": "Custom Printed Baguette Bags for Bakery Chains | VPN",
+      "meta_description": "Order custom printed baguette bags for bakery chains. Define loaf fit, artwork, quantities by size, bundle counts and repeat-order references.",
+      "excerpt": "Turn a baguette bag design into a repeatable bakery supply specification, from filled-bag fit and fold-safe artwork to quantities and store pack counts.",
+      "shape": "Multi-store purchasing and repeat-order specification",
+      "unique": [
+        "Quantity by format and artwork, not only grand total",
+        "Branch demand arithmetic clearly marked hypothetical",
+        "Artwork checked after packing and closing each size"
+      ],
+      "wordcount": 1491,
+      "content_sha256": "815aabe8df529676c2a9f3b395b448984c55ea022e5966a6e33134a2421f34f4",
+      "status": "publish",
+      "content_file": "article.html",
+      "category": {
+        "slug": "food-packaging",
+        "name": "Food Packaging"
+      },
+      "images": [
+        {
+          "filename": "baguette-thumbnail.webp",
+          "role": "featured",
+          "slot": null,
+          "alt": "Illustrated Custom Printed Baguette Bags: A Guide for Bakery Chains",
+          "title": "Custom Printed Baguette Bags: A Guide for Bakery Chains",
+          "caption": "Editorial cover illustration for this buying guide.",
+          "origin": "AI-generated with built-in image_gen; supplied VPN logo/style references",
+          "width": 1280,
+          "height": 720,
+          "bytes": 144396,
+          "sha256": "532b28320fd6190ae45cba35fcf10341d6bb28c39ac5cf6d69cddfd4eb422f34"
+        },
+        {
+          "filename": "baguette-catalogue-reference.webp",
+          "role": "inline",
+          "slot": 1,
+          "alt": "Existing baguette paper bag design reference",
+          "title": "VPN catalogue design reference",
+          "caption": "Existing catalogue design reference. Final dimensions, components and performance must be confirmed for the order.",
+          "origin": "Existing VPN product illustration; not used as documentary factory or test evidence",
+          "width": 450,
+          "height": 570,
+          "bytes": 28162,
+          "sha256": "f1940771b6ba8a7281cfdc930ad3e00032787637706b3c163631c6bd94946680"
+        },
+        {
+          "filename": "baguette-explanation.webp",
+          "role": "inline",
+          "slot": 2,
+          "alt": "Separate baguette bag formats",
+          "title": "Separate baguette bag formats",
+          "caption": "Illustrated formats and bundles, not standard dimensions or a confirmed order.",
+          "origin": "AI-generated explanatory illustration; not factory evidence",
+          "width": 1280,
+          "height": 720,
+          "bytes": 124916,
+          "sha256": "4d534f8dc7ac344761230b2bffa138d3fb3f15144c7479e4b07d8aa328ce53d8"
+        },
+        {
+          "filename": "bakery-chain-order-breakdown.webp",
+          "role": "inline",
+          "slot": 3,
+          "alt": "Baguette bag order by format and artwork",
+          "title": "Baguette bag order by format and artwork",
+          "caption": "Hypothetical 100,000-unit order split into three production items.",
+          "origin": "Original deterministic buyer worksheet / schematic; not test data",
+          "width": 1280,
+          "height": 800,
+          "bytes": 32330,
+          "sha256": "593b0998fc70830eaf81fc5527a617391297d6bfc9f1996dedcc4567c2b946de"
+        },
+        {
+          "filename": "vpn-factory-workshop-floor-20261009.webp",
+          "role": "inline",
+          "slot": 4,
+          "alt": "Existing VPN workshop floor workshop photograph",
+          "title": "Inside the VPN packaging operation",
+          "caption": "General packaging workspace at VPN. Bag specifications, bundle counts and production revisions are confirmed for each order.",
+          "origin": "Existing VPN website factory photograph, reused without retouching",
+          "width": 1152,
+          "height": 648,
+          "bytes": 97942,
+          "sha256": "325f5c4780e09cc8c7188d4ec99abdc8db87f3056f0f64cf04c0f4181a336377"
+        }
+      ],
+      "review_source_sha256": "815aabe8df529676c2a9f3b395b448984c55ea022e5966a6e33134a2421f34f4"
+    },
+    {
+      "key": "ribbon",
+      "title": "Custom Ribbon Handle Gift Bags: A Bulk Ordering Guide",
+      "slug": "ribbon-handle-gift-bags-buying-guide",
+      "focus_keyword": "ribbon handle gift bags",
+      "secondary": [
+        "custom gift bags with ribbon handles",
+        "ribbon handle gift bags oem quotes",
+        "custom ribbon handle paper bags"
+      ],
+      "seo_title": "Ribbon Handle Gift Bags: Custom Bulk Ordering Guide | VPN",
+      "meta_description": "Specify ribbon handle gift bags for bulk orders. Review box fit, ribbon attachment, paper, colour, branding, samples and protective carton packing.",
+      "excerpt": "Develop a ribbon-handle paper bag around the gift box, the actual handle components and the finish, with a clear multi-size quotation and sample brief.",
+      "shape": "Component-led gift carrier development guide",
+      "unique": [
+        "Satin appearance separated from fibre composition",
+        "Box clearance includes internal handle fixing",
+        "Multi-material colour approval and packed-surface protection"
+      ],
+      "wordcount": 1442,
+      "content_sha256": "2034b517c193d0d50a74553b213cdf230d9af98e4f25b2b95456e4228e486376",
+      "status": "publish",
+      "content_file": "article.html",
+      "category": {
+        "slug": "supplier-resources",
+        "name": "Supplier Resources"
+      },
+      "images": [
+        {
+          "filename": "ribbon-thumbnail.webp",
+          "role": "featured",
+          "slot": null,
+          "alt": "Illustrated Custom Ribbon Handle Gift Bags: A Bulk Ordering Guide",
+          "title": "Custom Ribbon Handle Gift Bags: A Bulk Ordering Guide",
+          "caption": "Editorial cover illustration for this buying guide.",
+          "origin": "AI-generated with built-in image_gen; supplied VPN logo/style references",
+          "width": 1280,
+          "height": 720,
+          "bytes": 110230,
+          "sha256": "578498781d4ff5e43ec73d6b6726b1c8336ce44d0b75ce23328a03b659ba5bc9"
+        },
+        {
+          "filename": "ribbon-catalogue-reference.webp",
+          "role": "inline",
+          "slot": 1,
+          "alt": "Existing ribbon paper bag design reference",
+          "title": "VPN catalogue design reference",
+          "caption": "Existing catalogue design reference. Final dimensions, components and performance must be confirmed for the order.",
+          "origin": "Existing VPN product illustration; not used as documentary factory or test evidence",
+          "width": 450,
+          "height": 570,
+          "bytes": 18580,
+          "sha256": "97fb9145d3e50320935c5fb2f9baa625023dc4804dc669479c5fbc4a992500a1"
+        },
+        {
+          "filename": "ribbon-explanation.webp",
+          "role": "inline",
+          "slot": 2,
+          "alt": "Ribbon attachment and boxed-product clearance",
+          "title": "Ribbon attachment and boxed-product clearance",
+          "caption": "Construction illustration; final attachment and product fit follow the approved sample.",
+          "origin": "AI-generated explanatory illustration; not factory evidence",
+          "width": 1280,
+          "height": 720,
+          "bytes": 128442,
+          "sha256": "dabb5ecf51f615af0462f42295096e941dd65723856b3d3c2ae0c4400e194f99"
+        },
+        {
+          "filename": "ribbon-bag-material-colour-review.webp",
+          "role": "inline",
+          "slot": 3,
+          "alt": "Paper, ribbon, foil and box colour review",
+          "title": "Paper, ribbon, foil and box colour review",
+          "caption": "Schematic material group for approval; these colours are not production references.",
+          "origin": "Original deterministic buyer worksheet / schematic; not test data",
+          "width": 1280,
+          "height": 800,
+          "bytes": 37208,
+          "sha256": "40d87d579f4f94190764a4239f1d9fb22a5115a39dbb4af0e8ca0717ca412857"
+        },
+        {
+          "filename": "vpn-factory-box-finishing-20261009.webp",
+          "role": "inline",
+          "slot": 4,
+          "alt": "Existing VPN box finishing workshop photograph",
+          "title": "Inside the VPN packaging operation",
+          "caption": "Box-finishing workstations in VPN’s wider paper-packaging operation; workshop context rather than ribbon-bag assembly.",
+          "origin": "Existing VPN website factory photograph, reused without retouching",
+          "width": 1280,
+          "height": 720,
+          "bytes": 97194,
+          "sha256": "171f5961b805163e0d946def04f6b62345e91a5dcdb527aa592fa74565ff6235"
+        }
+      ],
+      "review_source_sha256": "2034b517c193d0d50a74553b213cdf230d9af98e4f25b2b95456e4228e486376"
+    }
+  ]
+}
