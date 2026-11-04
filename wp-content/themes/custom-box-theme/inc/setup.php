@@ -610,12 +610,38 @@ function custom_box_get_all_categories_sidebar_links($fallback = '#') {
 
 function custom_box_get_product_category_by_slug($slug) {
     static $term_cache = array();
+    static $menu_terms_loaded = false;
 
     if (!taxonomy_exists('product_cat')) {
         return null;
     }
 
     $slug = sanitize_title($slug);
+
+    // The header asks for dozens of slugs. Fetch their existing terms together
+    // while retaining the configured grouping/order and the normal fallback.
+    if (!$menu_terms_loaded) {
+        $menu_terms_loaded = true;
+        $menu_slugs = array();
+        foreach (custom_box_get_packaging_menu_groups() as $group) {
+            $menu_slugs = array_merge($menu_slugs, $group['slugs']);
+        }
+        $menu_slugs = array_values(array_unique($menu_slugs));
+        if ($menu_slugs) {
+            $menu_terms = get_terms(array(
+                'taxonomy' => 'product_cat', 'slug' => $menu_slugs,
+                'get' => 'all', 'hide_empty' => false, 'orderby' => 'none',
+                'update_term_meta_cache' => false, 'suppress_filter' => true,
+            ));
+            if (!is_wp_error($menu_terms)) {
+                foreach ($menu_slugs as $menu_slug) { $term_cache[$menu_slug] = null; }
+                foreach ($menu_terms as $menu_term) {
+                    $resolved = get_term($menu_term, 'product_cat');
+                    $term_cache[$menu_term->slug] = !is_wp_error($resolved) ? $resolved : null;
+                }
+            }
+        }
+    }
 
     if (array_key_exists($slug, $term_cache)) {
         return $term_cache[$slug];

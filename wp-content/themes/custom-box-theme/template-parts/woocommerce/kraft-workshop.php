@@ -20,7 +20,7 @@ $workshop_photos = array(
             <?php foreach ($workshop_photos as $photo) : ?>
                 <figure>
                     <a href="<?php echo esc_url($factory_assets . $photo['file']); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr('View full image: ' . $photo['caption']); ?>">
-                        <img src="<?php echo esc_url($factory_assets . $photo['file']); ?>" alt="<?php echo esc_attr($photo['alt']); ?>" width="1280" height="960" loading="lazy" decoding="async">
+                        <img src="<?php echo esc_url($factory_assets . $photo['file']); ?>"<?php if (function_exists('vpn_performance_workshop_attributes')) { echo vpn_performance_workshop_attributes($photo['file'], '(max-width:767px) calc(100vw - 40px), (max-width:1200px) calc((100vw - 80px)/3), 387px'); } ?> alt="<?php echo esc_attr($photo['alt']); ?>" width="1280" height="960" loading="lazy" decoding="async">
                     </a>
                     <figcaption><?php echo esc_html($photo['caption']); ?></figcaption>
                 </figure>

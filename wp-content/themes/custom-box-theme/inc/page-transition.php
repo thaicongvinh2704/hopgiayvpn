@@ -47,8 +47,20 @@ function custom_box_page_transition_initial_bootstrap(): void
             var key = 'vpnInitialHomeLoaderSeenV1';
             var showDelay = 250;
             var hardLimit = 1800;
+            var logoUrl = <?php echo wp_json_encode(get_template_directory_uri() . '/assets/images/logo-hop-giay-vpn-loader.webp'); ?>;
 
             function prepareInitialLoader() {
+                // The initial overlay logo is the measured homepage LCP image.
+                // Discover it in <head>, without changing the loader's timing/UI.
+                if (!document.querySelector('[data-vpn-loader-preload]')) {
+                    var preload = document.createElement('link');
+                    preload.rel = 'preload';
+                    preload.as = 'image';
+                    preload.href = logoUrl;
+                    preload.setAttribute('fetchpriority', 'high');
+                    preload.setAttribute('data-vpn-loader-preload', '');
+                    document.head.appendChild(preload);
+                }
                 root.classList.add('vpn-initial-page-loading-pending');
 
                 window.vpnInitialLoaderShowTimer = window.setTimeout(function () {

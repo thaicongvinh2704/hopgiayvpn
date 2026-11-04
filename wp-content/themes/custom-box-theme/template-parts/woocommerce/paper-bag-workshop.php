@@ -18,7 +18,7 @@ $workshop_photos = array(
             <?php foreach ($workshop_photos as $photo) : ?>
             <figure>
                 <a href="<?php echo esc_url($workshop_assets . $photo['file']); ?>" target="_blank" rel="noopener" aria-label="<?php echo esc_attr('View full photograph: ' . $photo['caption']); ?>">
-                    <img src="<?php echo esc_url($workshop_assets . $photo['file']); ?>" alt="<?php echo esc_attr($photo['alt']); ?>" width="1280" height="960" loading="lazy" decoding="async">
+                    <img src="<?php echo esc_url($workshop_assets . $photo['file']); ?>"<?php if (function_exists('vpn_performance_workshop_attributes')) { echo vpn_performance_workshop_attributes($photo['file'], $photo === $workshop_photos[0] ? '(max-width:480px) calc(100vw - 32px), (max-width:800px) calc((100vw - 68px)/3), (max-width:1280px) calc((100vw - 120px)/3), 387px' : '(max-width:480px) calc((100vw - 44px)/2), (max-width:800px) calc((100vw - 68px)/3), (max-width:1280px) calc((100vw - 120px)/3), 387px'); } ?> alt="<?php echo esc_attr($photo['alt']); ?>" width="1280" height="960" loading="lazy" decoding="async">
                 </a>
                 <figcaption><?php echo esc_html($photo['caption']); ?></figcaption>
             </figure>

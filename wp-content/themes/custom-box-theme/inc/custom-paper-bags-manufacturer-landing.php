@@ -103,7 +103,7 @@ function custom_box_paper_bag_product_image($product, $hero = false, $priority =
     $front_crop = 'P02-01-kraft-flat-handle-main.webp' === wp_basename((string) get_post_meta($image_id, '_wp_attached_file', true));
     return wp_get_attachment_image($image_id, 'woocommerce_single', false, array(
         'class' => 'attachment-woocommerce_single size-woocommerce_single' . ($front_crop ? ' cpb-photo-front-crop' : ''),
-        'alt' => get_the_title($product->get_id()), 'loading' => $priority ? 'eager' : 'lazy',
+        'alt' => get_the_title($product->get_id()), 'loading' => ($hero || $priority) ? 'eager' : 'lazy',
         'decoding' => 'async', 'fetchpriority' => $priority ? 'high' : 'auto',
         'sizes' => $hero ? '(max-width: 800px) 30vw, 200px' : '(max-width: 600px) 45vw, (max-width: 1000px) 30vw, 282px',
     ));

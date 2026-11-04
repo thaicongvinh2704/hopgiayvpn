@@ -1,0 +1,13 @@
+# Only public editorial images, with an explicit format in each URL.
+# Featured files are content-addressed, byte-identical copies of public uploads.
+# No Accept negotiation, PHP, session data or private uploads in this directory.
+<IfModule mod_headers.c>
+<FilesMatch "\.(webp|avif|jpe?g|png)$">
+Header unset Cache-Control
+Header always set Cache-Control "public, max-age=604800"
+Header always unset X-LiteSpeed-Cache-Control
+</FilesMatch>
+<FilesMatch "^[a-f0-9]{64}\.(webp|avif|jpe?g|png)$">
+Header always set Cache-Control "public, max-age=31536000, immutable"
+</FilesMatch>
+</IfModule>
