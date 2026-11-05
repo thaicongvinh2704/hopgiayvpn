@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: VPN Three Paper Bag Category Metadata
- * Description: Reviewed metadata only; category content, design and assignments are preserved.
- * Version: 1.0.0
+ * Description: Reviewed category metadata and logo-bag pagination canonicals; content and design are preserved.
+ * Version: 1.0.1
  */
 defined('ABSPATH') || exit;
 
@@ -130,4 +130,27 @@ foreach (['pre_get_document_title','rank_math/frontend/title','rank_math/opengra
 }
 foreach (['rank_math/frontend/description','rank_math/opengraph/facebook/description','rank_math/opengraph/twitter/description'] as $hook) {
     add_filter($hook, 'vpn_paper_category_seo_description_20261105', 90);
+}
+
+/** Each product archive page has distinct products and needs its own clean canonical URL. */
+function vpn_paper_bag_pagination_canonical_20261105($canonical) {
+    if (is_admin() || is_404() || is_feed() || !function_exists('is_product_category')
+        || !is_product_category('paper-bags-with-logo')) {
+        return $canonical;
+    }
+    $term = get_queried_object();
+    if (!($term instanceof WP_Term) || 'product_cat' !== $term->taxonomy
+        || 'paper-bags-with-logo' !== $term->slug) {
+        return $canonical;
+    }
+    $url = get_term_link($term);
+    if (is_wp_error($url)) { return $canonical; }
+    $page = max(1, (int) get_query_var('paged'), (int) get_query_var('page'));
+    if ($page === 1) { return $url; }
+    global $wp_rewrite;
+    if (!$wp_rewrite->using_permalinks()) { return add_query_arg('paged', $page, $url); }
+    return trailingslashit($url) . user_trailingslashit($wp_rewrite->pagination_base . '/' . $page, 'paged');
+}
+foreach (['rank_math/frontend/canonical', 'get_canonical_url', 'rank_math/opengraph/facebook/og_url'] as $hook) {
+    add_filter($hook, 'vpn_paper_bag_pagination_canonical_20261105', 90);
 }
