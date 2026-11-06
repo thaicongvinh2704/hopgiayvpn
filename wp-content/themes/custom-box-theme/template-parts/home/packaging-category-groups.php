@@ -1,6 +1,8 @@
 <?php
 $resolve_category_url = function ($slug) {
-    $term = get_term_by('slug', $slug, 'product_cat');
+    $term = function_exists('custom_box_get_product_category_by_slug')
+        ? custom_box_get_product_category_by_slug($slug)
+        : get_term_by('slug', $slug, 'product_cat');
     if ($term && !is_wp_error($term)) {
         $term_link = get_term_link($term);
         if (!is_wp_error($term_link)) {
@@ -115,7 +117,9 @@ $resolve_local_image = static function ($image_url) use ($fallback_image_url, $f
                 $is_priority_category = in_array($category_slug, $priority_category_slugs, true);
 
                 if (!$category_image_url && function_exists('custom_box_get_product_category_card_image_url')) {
-                    $category_term = get_term_by('slug', $category_slug, 'product_cat');
+                    $category_term = function_exists('custom_box_get_product_category_by_slug')
+                        ? custom_box_get_product_category_by_slug($category_slug)
+                        : get_term_by('slug', $category_slug, 'product_cat');
 
                     if ($category_term && !is_wp_error($category_term)) {
                         $category_image_url = custom_box_get_product_category_card_image_url($category_term, 'medium_large');
@@ -123,7 +127,15 @@ $resolve_local_image = static function ($image_url) use ($fallback_image_url, $f
                 }
 
                 $category_image = $resolve_local_image($category_image_url);
-                $category_image_id = attachment_url_to_postid($category_image['url']);
+                // Theme files are not Media Library attachments. Avoid a postmeta
+                // lookup per card; keep URL resolvers supplied by other plugins intact.
+                $is_static_theme_image = str_starts_with(
+                    $category_image['url'], get_template_directory_uri() . '/assets/images/'
+                );
+                $has_attachment_resolver = has_filter('pre_attachment_url_to_postid')
+                    || has_filter('attachment_url_to_postid');
+                $category_image_id = $is_static_theme_image && !$has_attachment_resolver
+                    ? 0 : attachment_url_to_postid($category_image['url']);
                 ?>
                 <a
                     class="home-packaging-category-card<?php echo $is_priority_category ? ' is-priority-category' : ' is-additional-category'; ?>"
