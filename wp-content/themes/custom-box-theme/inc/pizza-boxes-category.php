@@ -272,3 +272,20 @@ function custom_box_pizza_boxes_category_paged_canonical($canonical) {
 }
 add_filter('rank_math/frontend/canonical', 'custom_box_pizza_boxes_category_paged_canonical', 42);
 add_filter('get_canonical_url', 'custom_box_pizza_boxes_category_paged_canonical', 42);
+
+
+/** Keep the pizza archive revision isolated from other categories and the landing. */
+function custom_box_pizza_category_enqueue_assets(): void {
+    if (!custom_box_is_pizza_boxes_category()) {
+        return;
+    }
+    $file = get_template_directory() . '/assets/css/pizza-category.css';
+    if (is_readable($file)) {
+        wp_enqueue_style('vpn-pizza-category', get_template_directory_uri() . '/assets/css/pizza-category.css', array('main-style', 'responsive-style'), filemtime($file));
+        $script = get_template_directory() . '/assets/js/pizza-category-gallery.js';
+        if (is_readable($script)) {
+            wp_enqueue_script('vpn-pizza-category-gallery', get_template_directory_uri() . '/assets/js/pizza-category-gallery.js', array(), filemtime($script), true);
+        }
+    }
+}
+add_action('wp_enqueue_scripts', 'custom_box_pizza_category_enqueue_assets', 40);

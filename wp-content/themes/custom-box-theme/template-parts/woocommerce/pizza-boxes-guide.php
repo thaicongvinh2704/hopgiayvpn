@@ -16,15 +16,17 @@ $pizza_product_url = static function ($slug, $fallback) {
 };
 $custom_pizza_url = $pizza_product_url('custom-pizza-packaging-box', '/product/custom-pizza-packaging-box/');
 $fold_flat_url = $pizza_product_url('custom-fold-flat-pizza-delivery-box-full-color-print', '/product/custom-fold-flat-pizza-delivery-box-full-color-print/');
-$quote_url = home_url('/contact/#quote');
+$quote_url = home_url('/custom-pizza-boxes-manufacturer/#vpb-quote');
 ?>
+
+<?php get_template_part('template-parts/woocommerce/pizza-category-workshop'); ?>
 
 <section id="pizza-box-buying-guide" class="corrugated-mailer-guide pizza-boxes-guide" aria-labelledby="pizza-box-buying-guide-title">
     <div class="container">
         <div class="corrugated-mailer-guide-intro">
             <p class="product-eyebrow">Pizza Box Buyer Guide</p>
             <h2 id="pizza-box-buying-guide-title">How to Specify Custom Pizza Boxes for Foodservice</h2>
-            <p class="corrugated-mailer-answer"><strong>Short answer:</strong> specify a pizza box from the baked product, service route and destination market. Start with clear internal dimensions, product height, stack and carrier limits, then agree the board, closure, print and any liner or barrier. The visual concepts in this collection help compare formats; they do not establish an exact size, food-contact status or test result. Approve the production dieline and a representative sample before ordering.</p>
+            <p class="corrugated-mailer-answer">Start with your pizza’s finished dimensions and how it will be packed and delivered. Then agree the inside-box fit, board, closure, print and any liner or barrier. Use the guide below to prepare a specification and approve a representative sample before ordering.</p>
             <div class="corrugated-mailer-facts" aria-label="Pizza box specification summary">
                 <article>
                     <h3>Formats to compare</h3>
@@ -41,6 +43,7 @@ $quote_url = home_url('/contact/#quote');
             </div>
         </div>
 
+        <details class="vpc-guide-details"><summary>Size, materials &amp; artwork: the detailed buying guide<span>Compare formats, prepare your brief and plan sample checks.</span></summary><div>
         <div class="corrugated-mailer-guide-grid">
             <div>
                 <h2>Compare the pizza box formats</h2>
@@ -160,6 +163,8 @@ $quote_url = home_url('/contact/#quote');
             <p>The listed minimum order quantity is 1,000 boxes. A written quotation should confirm whether that quantity applies to a single size and artwork version or how the order can be split. Price also depends on board, dimensions, print coverage, finish, components, packing and delivery destination. VPN Paper Box is based in Ho Chi Minh City, Vietnam; the production proposal should be tied to the buyer’s approved project specification.</p>
             <p>For a round-box comparison, view the <a href="<?php echo esc_url($custom_pizza_url); ?>">custom pizza packaging box</a>. For a delivery-oriented print format, see the <a href="<?php echo esc_url($fold_flat_url); ?>">fold-flat pizza delivery box with full-color print</a>. Browse the wider <a href="<?php echo esc_url($food_box_url); ?>">food paper box collection</a> or read the <a href="<?php echo esc_url($food_guide_url); ?>">food paper packaging guide</a>. When the brief is ready, <a href="<?php echo esc_url($quote_url); ?>">request a pizza box quotation</a>.</p>
         </div>
+
+        </div></details>
 
         <div class="corrugated-mailer-faq" aria-labelledby="pizza-box-faq-title">
             <h2 id="pizza-box-faq-title">Pizza Box Questions Buyers Ask</h2>

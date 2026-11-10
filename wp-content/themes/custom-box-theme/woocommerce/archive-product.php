@@ -296,7 +296,13 @@ $archive_context = compact(
 ?>
 
 <main class="product-archive-page">
-    <?php get_template_part('template-parts/woocommerce/' . ('drawer-boxes-guide' === $custom_category_guide ? 'drawer-boxes-hero' : 'archive-hero'), null, $archive_context); ?>
+    <?php
+    $archive_hero_part = 'drawer-boxes-guide' === $custom_category_guide ? 'drawer-boxes-hero' : 'archive-hero';
+    if ('pizza-boxes-guide' === $custom_category_guide && 1 === max(1, (int) get_query_var('paged'), (int) get_query_var('page'))) {
+        $archive_hero_part = 'pizza-category-hero';
+    }
+    get_template_part('template-parts/woocommerce/' . $archive_hero_part, null, $archive_context);
+    ?>
     <?php if ('bakery-bread-paper-bags-guide' === $custom_category_guide && 1 === max(1, (int) get_query_var('paged'))) : ?>
         <nav class="vpn-bakery-category-nav" aria-label="Bakery bag buying guide"><div class="container">
             <a href="#bakery-bag-selection">Compare formats</a><a href="#bakery-specification">Size & printing</a><a href="#bakery-order-process">MOQ & samples</a><a href="#kraft-workshop">Our workshop</a><a href="#bakery-faq">FAQs</a>
@@ -315,7 +321,7 @@ $archive_context = compact(
             <?php get_template_part('template-parts/woocommerce/drawer-boxes-models'); ?>
         <?php endif; ?>
         <?php get_template_part('template-parts/woocommerce/product-list', null, $archive_context); ?>
-        <?php if ($current_term && !is_wp_error($current_term)) : ?>
+        <?php if ($current_term && !is_wp_error($current_term) && 'pizza-boxes-guide' !== $custom_category_guide) : ?>
             <?php get_template_part('template-parts/woocommerce/related-categories', null, $archive_context); ?>
         <?php endif; ?>
         <?php if ($custom_category_guide && 1 === max(1, (int) get_query_var('paged'), (int) get_query_var('page'))) : ?>
@@ -332,7 +338,8 @@ $archive_context = compact(
     <?php if (!$custom_category_guide) : ?>
         <?php get_template_part('template-parts/home/faq'); ?>
     <?php endif; ?>
-    <?php if ('bakery-bread-paper-bags-guide' !== $custom_category_guide || 1 !== max(1, (int) get_query_var('paged'))) { get_template_part('template-parts/home/footer-cta'); } ?>
+    <?php if ('pizza-boxes-guide' === $custom_category_guide) { get_template_part('template-parts/woocommerce/related-categories', null, $archive_context); } ?>
+    <?php if (!in_array($custom_category_guide, array('bakery-bread-paper-bags-guide', 'pizza-boxes-guide'), true) || 1 !== max(1, (int) get_query_var('paged'), (int) get_query_var('page'))) { get_template_part('template-parts/home/footer-cta'); } ?>
 </main>
 
 <?php get_footer(); ?>

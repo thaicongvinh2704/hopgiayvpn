@@ -11,6 +11,7 @@ $landing_root_link = isset($args['landing_root_link']) ? $args['landing_root_lin
 $product_fallback_image_url = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
 
 $paged = max(1, (int) get_query_var('paged'), (int) get_query_var('page'));
+$pizza_listing = $current_term && !is_wp_error($current_term) && 'pizza-boxes' === $current_term->slug;
 $drawer_listing = $current_term && 'drawer-boxes' === $current_term->slug && function_exists('vpn_drawer_listing_ids');
 $default_orderby = function_exists('wc_get_loop_prop') && wc_get_loop_prop('is_search')
     ? 'relevance'
@@ -32,6 +33,10 @@ $catalog_orderby_options = apply_filters(
 
 if (function_exists('wc_review_ratings_enabled') && !wc_review_ratings_enabled()) {
     unset($catalog_orderby_options['rating']);
+}
+if ($pizza_listing) {
+    $catalog_orderby_options = array('menu_order' => 'Recommended formats', 'date' => 'Newest formats');
+    if (!isset($catalog_orderby_options[$orderby_value])) { $orderby_value = 'menu_order'; }
 }
 if ($drawer_listing) {
     $catalog_orderby_options = array('menu_order' => 'Recommended designs', 'date' => 'Newest designs');
@@ -167,7 +172,7 @@ $product_query = new WP_Query($product_query_args);
                                         <img
                                             src="<?php echo esc_url($product_image_url); ?>"
                                             srcset="<?php echo esc_url($product_image_url); ?> <?php echo esc_attr((int) $product_image_size[0]); ?>w"
-                                            alt="<?php echo esc_attr(($drawer_listing || (function_exists('vpn_bakery_is_category') && vpn_bakery_is_category($current_term))) ? get_the_title() : ''); ?>"
+                                            alt="<?php echo esc_attr(($drawer_listing || $pizza_listing || (function_exists('vpn_bakery_is_category') && vpn_bakery_is_category($current_term))) ? get_the_title() : ''); ?>"
                                             width="<?php echo esc_attr((int) $product_image_size[0]); ?>"
                                             height="<?php echo esc_attr((int) $product_image_size[1]); ?>"
                                             loading="lazy"
@@ -192,11 +197,18 @@ $product_query = new WP_Query($product_query_args);
                                     <?php endif; ?>
                                 </span>
                                 <span class="custom-product-body">
-                                    <h2 id="<?php echo esc_attr($product_title_id); ?>" class="custom-product-title"><?php the_title(); ?></h2>
+                                    <h2 id="<?php echo esc_attr($product_title_id); ?>" class="custom-product-title"><?php
+                                        if ($pizza_listing && 'custom-fold-flat-pizza-delivery-box-full-color-print' === get_post_field('post_name', get_the_ID())) {
+                                            echo esc_html('Custom Printed Pizza Box');
+                                        } else { the_title(); }
+                                    ?></h2>
                                     <?php $drawer_product = $drawer_listing ? vpn_drawer_product_profile(get_the_ID()) : array(); ?>
                                     <?php if ($drawer_product) : ?><span class="custom-product-detail"><?php echo esc_html($drawer_product['audience']); ?></span><?php endif; ?>
                                 </span>
                             </a>
+                            <?php if ($pizza_listing) : ?>
+                                <div class="vpc-card-actions"><a class="vpc-button" href="<?php echo esc_url(home_url('/custom-pizza-boxes-manufacturer/#vpb-quote')); ?>">Request a quote →</a><a class="vpc-secondary" href="<?php echo esc_url($product_link); ?>">View details →</a></div>
+                            <?php endif; ?>
                         </article>
                     <?php endwhile; ?>
                 </div>
