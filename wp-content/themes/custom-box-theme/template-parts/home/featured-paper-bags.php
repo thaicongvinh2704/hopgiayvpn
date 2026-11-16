@@ -74,6 +74,29 @@ $featured_paper_bags = array(
     ),
 );
 
+$featured_slugs = array_column($featured_paper_bags, 'slug');
+$featured_posts = get_posts(array(
+    'post_type' => 'product',
+    'post_status' => array_values(get_post_stati()),
+    'post_parent' => 0,
+    'post_name__in' => $featured_slugs,
+    'posts_per_page' => -1,
+));
+$products_by_slug = array();
+foreach ($featured_posts as $featured_post) {
+    $slug = $featured_post->post_name;
+    // Use the original path resolver if the slug is ambiguous or missing.
+    $products_by_slug[$slug] = array_key_exists($slug, $products_by_slug) ? null : $featured_post;
+}
+
+$featured_thumbnail_ids = array();
+foreach ($featured_slugs as $slug) {
+    $product = $products_by_slug[$slug] ?? get_page_by_path($slug, OBJECT, 'product');
+    $products_by_slug[$slug] = $product;
+    $featured_thumbnail_ids[$slug] = $product instanceof WP_Post ? get_post_thumbnail_id($product) : 0;
+}
+_prime_post_caches(array_unique(array_filter($featured_thumbnail_ids)), false, true);
+
 $fallback_image_url = get_template_directory_uri() . '/assets/images/Cardboard-Packaging.webp';
 ?>
 
@@ -90,11 +113,11 @@ $fallback_image_url = get_template_directory_uri() . '/assets/images/Cardboard-P
                 <div class="featured-paper-bags-track">
             <?php foreach ($featured_paper_bags as $featured_paper_bag) : ?>
                 <?php
-                $product = get_page_by_path($featured_paper_bag['slug'], OBJECT, 'product');
+                $product = $products_by_slug[$featured_paper_bag['slug']];
                 $product_url = $product instanceof WP_Post && 'publish' === $product->post_status
                     ? get_permalink($product)
                     : home_url('/product/' . $featured_paper_bag['slug'] . '/');
-                $thumbnail_id = $product instanceof WP_Post ? get_post_thumbnail_id($product) : 0;
+                $thumbnail_id = $featured_thumbnail_ids[$featured_paper_bag['slug']];
                 ?>
                 <div class="featured-paper-bags-slide">
                     <a class="featured-paper-bag-card" href="<?php echo esc_url($product_url); ?>">

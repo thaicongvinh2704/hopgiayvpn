@@ -15,7 +15,9 @@ $related_posts = new WP_Query(array(
     'post__not_in'        => array(get_the_ID()),
     'category__in'        => $related_category_ids,
     'ignore_sticky_posts' => true,
+    'no_found_rows'       => true,
 ));
+update_post_thumbnail_cache($related_posts);
 ?>
 
 <?php if ($related_posts->have_posts()) : ?>

@@ -6,6 +6,9 @@ $delivery_countries = function_exists('WC') && WC()->countries ? WC()->countries
 $featured_products = array_slice($products, 0, 12);
 $christmas_products = custom_box_paper_bag_christmas_products($products, $featured_products);
 $quote_products = array_merge($featured_products, $christmas_products);
+$hero_products = custom_box_paper_bag_hero_products();
+$image_ids = array_map('custom_box_paper_bag_image_id', array_merge($hero_products, $quote_products));
+_prime_post_caches(array_unique(array_filter($image_ids)), false, true);
 $christmas_category = get_term_by('slug', 'christmas-packaging', 'product_cat');
 $christmas_url = $christmas_category ? get_term_link($christmas_category) : home_url('/products/paper-bags-with-logo/');
 if (is_wp_error($christmas_url)) { $christmas_url = home_url('/products/paper-bags-with-logo/'); }
@@ -32,7 +35,7 @@ get_header();
                 </div>
                 <p class="cpb-cta-note">Free quotation · No obligation</p>
                 <div class="cpb-hero-showcase" aria-label="Custom paper bag style examples">
-                    <?php foreach (custom_box_paper_bag_hero_products() as $index => $product) : ?>
+                    <?php foreach ($hero_products as $index => $product) : ?>
                     <a href="<?php echo esc_url($product->get_permalink()); ?>" aria-label="<?php echo esc_attr(get_the_title($product->get_id())); ?>"><?php echo custom_box_paper_bag_product_image($product, true, 0 === $index); ?><span>View bag <span aria-hidden="true">→</span></span></a>
                     <?php endforeach; ?>
                 </div>

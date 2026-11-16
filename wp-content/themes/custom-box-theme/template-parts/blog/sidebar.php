@@ -10,6 +10,7 @@ $recent_posts = new WP_Query(array(
     'posts_per_page'      => 4,
     'post__not_in'        => array(get_the_ID()),
     'ignore_sticky_posts' => true,
+    'no_found_rows'       => true,
 ));
 
 $popular_products = function_exists('custom_box_get_blog_product_recommendations') ? custom_box_get_blog_product_recommendations(4) : array();

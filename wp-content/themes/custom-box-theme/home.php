@@ -28,6 +28,8 @@ if ($is_blog_page_template) {
     ));
 }
 
+update_post_thumbnail_cache($blog_query);
+
 if (is_category()) {
     $current_category = get_queried_object();
 

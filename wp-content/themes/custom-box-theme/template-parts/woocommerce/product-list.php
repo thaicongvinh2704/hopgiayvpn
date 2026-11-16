@@ -85,6 +85,7 @@ if ($drawer_listing && 'menu_order' === $orderby_value) {
 }
 $product_query_args = apply_filters('custom_box_archive_product_query_args', $product_query_args, $current_term, $orderby_value);
 $product_query = new WP_Query($product_query_args);
+update_post_thumbnail_cache($product_query);
 ?>
 
 <section class="product-category-landing-section product-listing-category-section" <?php if ($drawer_listing) { echo 'id="drawer-all-products"'; } ?>>

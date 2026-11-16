@@ -18,12 +18,9 @@ while (have_posts()) :
     $product_sample_url = $drawer_profile ? vpn_drawer_quote_url($drawer_profile['slug'], true) : home_url('/contact/#quote');
     $image_id = $product ? $product->get_image_id() : 0;
     $gallery_ids = $product ? $product->get_gallery_image_ids() : array();
-    $product_gallery_ids = array_values(
-        array_filter(
-            array_unique(array_merge($image_id ? array($image_id) : array(), $gallery_ids)),
-            'wp_attachment_is_image'
-        )
-    );
+    $gallery_ids = array_unique(array_merge($image_id ? array($image_id) : array(), $gallery_ids));
+    _prime_post_caches($gallery_ids, false, true);
+    $product_gallery_ids = array_values(array_filter($gallery_ids, 'wp_attachment_is_image'));
     $short_description = $product ? apply_filters('woocommerce_short_description', $product->get_short_description()) : '';
     $primary_product_category = function_exists('custom_box_get_primary_product_category') ? custom_box_get_primary_product_category($product_id) : null;
     $products_url = function_exists('custom_box_get_products_url') ? custom_box_get_products_url() : home_url('/products/');
@@ -114,6 +111,12 @@ while (have_posts()) :
     }
 
     $related_ids = $product ? wc_get_related_products($product_id, 8) : array();
+    _prime_post_caches($related_ids, true, true);
+    $related_products = array_filter(array_map('wc_get_product', $related_ids));
+    $related_image_ids = array_map(static function ($related_product) {
+        return $related_product->get_image_id();
+    }, $related_products);
+    _prime_post_caches(array_unique(array_filter($related_image_ids)), false, true);
 ?>
 
 <main class="product-detail-page wc-product-detail-page">
@@ -407,14 +410,10 @@ while (have_posts()) :
                     <p>Explore similar custom packaging options that can support your product line, campaign, or next bulk order.</p>
                 </div>
                 <div class="product-related-grid">
-                    <?php foreach ($related_ids as $related_id) : ?>
+                    <?php foreach ($related_products as $index => $related_product) : ?>
                         <?php
-                        $related_product = wc_get_product($related_id);
-                        if (!$related_product) {
-                            continue;
-                        }
-
-                        $related_image_id = (int) $related_product->get_image_id();
+                        $related_id = $related_ids[$index];
+                        $related_image_id = (int) $related_image_ids[$index];
                         $related_image_path = $related_image_id ? get_attached_file($related_image_id) : '';
                         $related_image_url = $related_image_id ? wp_get_attachment_url($related_image_id) : '';
                         $related_image_size = ($related_image_path && is_file($related_image_path))

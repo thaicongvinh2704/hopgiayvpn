@@ -67,6 +67,11 @@ function custom_box_paper_bag_image_id($product) {
 }
 /** Keep the hero selection independent of catalog display order. */
 function custom_box_paper_bag_hero_products() {
+    static $hero = null;
+    if (null !== $hero) {
+        return $hero;
+    }
+
     $products = custom_box_paper_bag_products();
     $by_slug = array();
     foreach ($products as $product) { $by_slug[$product->get_slug()] = $product; }
