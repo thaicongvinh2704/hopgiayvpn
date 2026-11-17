@@ -6,15 +6,15 @@
 defined('ABSPATH') || exit;
 
 $data = custom_box_folding_cartons_vietnam_category_data();
-$quote_url = home_url('/contact/#quote');
+$quote_url = home_url('/custom-packaging-boxes-manufacturer/#quote');
 ?>
 
 <section class="corrugated-mailer-guide folding-carton-vietnam-guide" aria-labelledby="folding-carton-vietnam-guide-title">
     <div class="container">
         <div class="corrugated-mailer-guide-intro">
             <p class="product-eyebrow">Vietnam Folding Carton Buyer Guide</p>
-            <h2 id="folding-carton-vietnam-guide-title">Source Custom Folding Cartons from Vietnam with a Production-Ready Specification</h2>
-            <p class="corrugated-mailer-answer"><strong>Short answer:</strong> custom folding cartons in Vietnam should be quoted from the finished product, filling method, artwork, destination market and order plan—not from dimensions and GSM alone. Approve the dieline, paperboard, print target, barcode and packed sample before bulk production.</p>
+            <h2 id="folding-carton-vietnam-guide-title">Choose Folding Cartons for Your Packing Process</h2>
+            <p class="corrugated-mailer-answer">Choose a folding carton when you need a printed retail pack that can be delivered flat and erected for packing. Tell us whether you fill cartons by hand or on a machine, then approve the board, closure and insert with your product inside.</p>
             <div class="corrugated-mailer-facts" aria-label="Vietnam folding carton manufacturing overview">
                 <article>
                     <h3>Manufacturing location</h3>
@@ -38,11 +38,11 @@ $quote_url = home_url('/contact/#quote');
                 <p>The term does not identify one fixed box. A folding carton can use tuck ends, a glued side seam, an auto-lock base, a window, a hang tab or an internal paperboard support. Referencing an <a href="https://ecma.org/uploads/Bestanden/ECMA%20Sales%20Toolkit/ECMA%20Support%20Tools/New%202022/ECMA%20Codes%20EN%202022.pdf" target="_blank" rel="noopener noreferrer">ECMA folding carton style</a> can make structural discussions clearer, but the generic code still needs product-specific dimensions and manufacturing details.</p>
             </div>
             <aside class="corrugated-mailer-rfq-card" aria-labelledby="folding-carton-rfq-title">
-                <h2 id="folding-carton-rfq-title">Send These 9 RFQ Inputs</h2>
+                <h2 id="folding-carton-rfq-title">Send Your Folding Carton Brief</h2>
                 <ol>
-                    <li>Product and final packed dimensions</li>
+                    <li>Contact email, product and final packed dimensions</li>
                     <li>Product weight and fragile features</li>
-                    <li>Quantity by SKU and artwork</li>
+                    <li>Quantity for each size, SKU and artwork</li>
                     <li>Manual or automated filling method</li>
                     <li>Preferred carton style and opening</li>
                     <li>Print colors, finishes and window needs</li>
@@ -56,7 +56,7 @@ $quote_url = home_url('/contact/#quote');
 
         <div class="corrugated-mailer-table-wrap" role="region" aria-labelledby="folding-carton-selection-title" tabindex="0">
             <table>
-                <caption id="folding-carton-selection-title">Folding carton structure selection guide</caption>
+                <caption id="folding-carton-selection-title">Folding carton starting structures to confirm with your product</caption>
                 <thead>
                     <tr>
                         <th scope="col">Packing requirement</th>
@@ -71,7 +71,7 @@ $quote_url = home_url('/contact/#quote');
                         <td>Panel fit, tuck retention, shelf orientation and packing speed</td>
                     </tr>
                     <tr>
-                        <th scope="row">Heavier bottle, jar or device</th>
+                        <th scope="row">Bottle, jar or device needing base support</th>
                         <td>Auto-lock or reinforced base with a product-specific insert if required</td>
                         <td>Bottom load, product movement, cap or pump clearance and removal access</td>
                     </tr>
@@ -91,7 +91,7 @@ $quote_url = home_url('/contact/#quote');
 
         <div class="corrugated-mailer-guide-grid corrugated-mailer-guide-grid-secondary">
             <div>
-                <h2>Choose Paperboard by Performance, Not GSM Alone</h2>
+                <h2>Choose Paperboard for the Packed Product</h2>
                 <p><strong>White paperboard such as SBS or FBB-style grades</strong> is a common direction for high-quality graphics and clean retail presentation. <strong>Kraft paperboard</strong> supports a natural appearance, while <strong>duplex board</strong> may be evaluated for cost-sensitive applications. Specialty papers can add color or texture but require print, fold and rub checks.</p>
                 <p>Grammage does not state stiffness, bulk, surface, fiber direction, moisture response or fold quality. Ask the manufacturer to return the proposed mill grade or controlled equivalent, caliper, grain direction and relevant test values. Compare the actual board using the final blank size and packed load. Read the <a href="<?php echo esc_url(home_url('/paper-materials-for-custom-paper-boxes/')); ?>">paper materials guide</a> before approving substitutions.</p>
             </div>
@@ -149,7 +149,7 @@ $quote_url = home_url('/contact/#quote');
             <div>
                 <h2>What Changes MOQ, Price and Lead Time?</h2>
                 <p>Commercial terms depend on carton dimensions and blank yield, board grade, print method, number of colors and artworks, tooling, windows, foil, embossing, coatings, insert complexity, inspection, packing and order quantity. Export freight, pallets, duties and destination services should be separated from the ex-factory unit price.</p>
-                <p>MOQ is therefore not one universal number. Consolidating sizes, colors or production windows may improve efficiency, while many short SKUs or specialty finishes may increase setup requirements. Request a written scope showing sample cost, tooling, quantity tolerance, unit packing, master cartons, Incoterm and estimated schedule.</p>
+                <p>Our general MOQ is 1,000 pieces. Samples take 7–15 days; production takes 7–45 days after sample approval. Timing depends on the order. Confirm sample fees, tooling, packing and shipping separately in the quotation. For a project that combines folding cartons with rigid gift boxes or mailers, include the quantity for each format in one <a href="<?php echo esc_url($quote_url); ?>">packaging quotation request</a>.</p>
             </div>
             <div>
                 <h2>Explore Folding Carton Applications</h2>

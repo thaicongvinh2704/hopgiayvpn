@@ -6,7 +6,7 @@
 defined('ABSPATH') || exit;
 
 $data = custom_box_rigid_box_manufacturer_vietnam_category_data();
-$quote_url = home_url('/contact/#quote');
+$quote_url = home_url('/custom-packaging-boxes-manufacturer/#quote');
 ?>
 
 <section class="corrugated-mailer-guide rigid-box-manufacturer-vietnam-guide" aria-labelledby="rigid-box-manufacturer-vietnam-guide-title">
@@ -14,7 +14,7 @@ $quote_url = home_url('/contact/#quote');
         <div class="corrugated-mailer-guide-intro">
             <p class="product-eyebrow">Vietnam Rigid Box Buyer Guide</p>
             <h2 id="rigid-box-manufacturer-vietnam-guide-title">Source Custom Rigid Boxes from a Vietnam Manufacturer</h2>
-            <p class="corrugated-mailer-answer"><strong>Short answer:</strong> a rigid box manufacturer in Vietnam should quote from the finished product, opening experience, insert, artwork, destination and order plan&mdash;not from outside dimensions alone. Approve the construction drawing, wrapped sample, insert fit, finish target and export packing before bulk production.</p>
+            <p class="corrugated-mailer-answer">For gift sets and premium retail products, choose the opening style and insert around how the product will be presented and removed. Share the quantity for each size and artwork, then approve the wrapped box with the full product set inside before bulk production.</p>
             <div class="corrugated-mailer-facts" aria-label="Vietnam rigid box manufacturing overview">
                 <article>
                     <h3>Manufacturing location</h3>
@@ -34,11 +34,11 @@ $quote_url = home_url('/contact/#quote');
         <div class="corrugated-mailer-guide-grid">
             <div>
                 <h2>What Is a Custom Rigid Box?</h2>
-                <p>A rigid box, often called a setup box, is built from a thick paperboard core that keeps its finished shape rather than folding flat like a carton. The core is cut and assembled, then wrapped with printed paper, specialty paper or another approved covering material. Inserts, ribbons, magnets or fitments can be added when the product and opening sequence require them.</p>
-                <p>The term describes a construction family, not one fixed design. A production specification must define the internal dimensions, board, joint and corner construction, wrap, opening action, insert, decoration and packed-product performance. Buyers comparing a <strong>rigid box manufacturer Vietnam</strong> program should evaluate the approved sample and documented tolerances, not appearance alone.</p>
+                <p>A rigid box, often called a setup box, uses a stiff paperboard core covered with printed or specialty paper. Most are supplied assembled. Collapsible versions use hinged panels and an assembly step to reduce space before use, so confirm the supplied format when comparing storage and freight. Inserts and closures are developed around the product and opening sequence.</p>
+                <p>For a repeat order, agree on the board, wrap, insert and artwork revision that each batch should follow. Include the internal dimensions, corner construction, opening action and packing method in the specification, then compare the finished sample against those details.</p>
             </div>
             <aside class="corrugated-mailer-rfq-card" aria-labelledby="rigid-box-rfq-title">
-                <h2 id="rigid-box-rfq-title">Send These 9 RFQ Inputs</h2>
+                <h2 id="rigid-box-rfq-title">Send Your Rigid Box Brief</h2>
                 <ol>
                     <li>Product dimensions, weight and fragile areas</li>
                     <li>Required internal clearance and orientation</li>
@@ -56,7 +56,7 @@ $quote_url = home_url('/contact/#quote');
 
         <div class="corrugated-mailer-table-wrap" role="region" aria-labelledby="rigid-box-selection-title" tabindex="0">
             <table>
-                <caption id="rigid-box-selection-title">Rigid box structure selection guide</caption>
+                <caption id="rigid-box-selection-title">Rigid box structures to review with a packed sample</caption>
                 <thead>
                     <tr>
                         <th scope="col">Presentation requirement</th>
@@ -124,7 +124,7 @@ $quote_url = home_url('/contact/#quote');
             <div>
                 <h2>What Changes MOQ, Price and Lead Time?</h2>
                 <p>Commercial terms depend on box dimensions and material yield, structure, board and wrap availability, number of artworks, printing, tooling, magnets, ribbons, inserts, foil or embossing, hand assembly, inspection and packing. Freight, pallets, duties and destination services should be separated from the ex-factory unit price.</p>
-                <p>MOQ is therefore not one universal number. Shared sizes or materials may improve production efficiency, while many short SKUs and complex hand-finishing increase setup time. Request a written scope showing sample cost, tooling, quantity tolerance, unit packing, master-carton details, Incoterm and estimated schedule.</p>
+                <p>Show the quantity for each size and artwork when comparing unit prices. Repeated dimensions and materials can affect setup and material use, while inserts and hand finishing add work. Include these details in your <a href="<?php echo esc_url($quote_url); ?>">rigid box quotation request</a> so the sample, tooling and packing scope can be reviewed together.</p>
             </div>
         </div>
 
@@ -140,9 +140,9 @@ $quote_url = home_url('/contact/#quote');
                 </thead>
                 <tbody>
                     <tr>
-                        <th scope="row">Rigid box</th>
+                        <th scope="row">Assembled rigid box</th>
                         <td>Premium gifting, luxury retail, sets and structured unboxing</td>
-                        <td>Higher assembly, storage and freight volume than a folding carton</td>
+                        <td>Assembled boxes occupy their full shape during storage and transit</td>
                     </tr>
                     <tr>
                         <th scope="row"><a href="<?php echo esc_url(home_url('/products/folding-carton-boxes/')); ?>">Folding carton</a></th>
@@ -160,7 +160,7 @@ $quote_url = home_url('/contact/#quote');
 
         <div class="corrugated-mailer-guide-grid corrugated-mailer-guide-grid-secondary">
             <div>
-                <h2>Choose a Manufacturer by Evidence, Not Claims Alone</h2>
+                <h2>What to Review with a Rigid Box Supplier</h2>
                 <p>Compare suppliers using the same RFQ and approval criteria. Ask who controls structural development, printing, cutting, wrapping, assembly, insert preparation, inspection and export packing. Review relevant factory images, representative samples and the written specification, then confirm which stages are performed directly or coordinated through approved partners.</p>
                 <p>A useful quotation separates assumptions from confirmed requirements and identifies exclusions. This gives buyers a clearer basis for comparing Vietnam rigid box manufacturing proposals without relying only on a low unit price or a generic sample photo.</p>
             </div>

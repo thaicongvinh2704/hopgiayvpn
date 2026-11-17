@@ -6,7 +6,7 @@
 defined('ABSPATH') || exit;
 
 $data = custom_box_corrugated_mailer_boxes_category_data();
-$quote_url = home_url('/contact/#quote');
+$quote_url = home_url('/custom-packaging-boxes-manufacturer/#quote');
 ?>
 
 <section class="corrugated-mailer-guide" aria-labelledby="corrugated-mailer-guide-title">
@@ -14,7 +14,7 @@ $quote_url = home_url('/contact/#quote');
         <div class="corrugated-mailer-guide-intro">
             <p class="product-eyebrow">Buyer Guide</p>
             <h2 id="corrugated-mailer-guide-title">Choose a Mailer Box by Pack-Out and Shipping Risk</h2>
-            <p class="corrugated-mailer-answer"><strong>Short answer:</strong> start with the finished product size, packed weight and delivery route. Then select the structure, flute, liner, print and insert as one system. A thicker board does not correct excess empty space, a weak closure or an unsupported product.</p>
+            <p class="corrugated-mailer-answer">For ecommerce and subscription orders, choose a mailer around the full pack, including accessories and protective inserts. Confirm the product dimensions, packed weight, closure and delivery route, then review the board and insert with a fully packed sample.</p>
             <div class="corrugated-mailer-facts" aria-label="Corrugated mailer box overview">
                 <article>
                     <h3>Common uses</h3>
@@ -38,11 +38,11 @@ $quote_url = home_url('/contact/#quote');
                 <p>“Mailer box” is a buying category, not a performance rating. Ask the supplier to identify the actual board construction, dimensions, closure and insert. When a standard style is used, a <a href="https://www.fefco.org/technical-information/fefco-code" target="_blank" rel="noopener noreferrer">FEFCO design reference</a> can reduce ambiguity between buyer, designer and factory.</p>
             </div>
             <aside class="corrugated-mailer-rfq-card" aria-labelledby="corrugated-mailer-rfq-title">
-                <h2 id="corrugated-mailer-rfq-title">Send These 8 RFQ Inputs</h2>
+                <h2 id="corrugated-mailer-rfq-title">Send Your Mailer Box Brief</h2>
                 <ol>
                     <li>Final packed length, width and height</li>
                     <li>Total packed weight and fragile points</li>
-                    <li>Quantity by size and artwork</li>
+                    <li>Quantity per size and artwork, including repeat orders</li>
                     <li>Destination and delivery method</li>
                     <li>Preferred opening and closure</li>
                     <li>Outside and inside print coverage</li>
@@ -55,7 +55,7 @@ $quote_url = home_url('/contact/#quote');
 
         <div class="corrugated-mailer-table-wrap" role="region" aria-labelledby="corrugated-mailer-comparison-title" tabindex="0">
             <table>
-                <caption id="corrugated-mailer-comparison-title">Corrugated mailer box selection guide</caption>
+                <caption id="corrugated-mailer-comparison-title">Mailer box starting points to confirm through packed-product checks</caption>
                 <thead>
                     <tr>
                         <th scope="col">Project need</th>
@@ -71,7 +71,7 @@ $quote_url = home_url('/contact/#quote');
                     </tr>
                     <tr>
                         <th scope="row">Heavier or fragile product</th>
-                        <td>B-flute or an engineered E-flute construction with a restraining insert</td>
+                        <td>Board and insert combination selected for the product load and handling route</td>
                         <td>Compression, impact, product movement, edge protection and route conditions</td>
                     </tr>
                     <tr>
@@ -117,7 +117,7 @@ $quote_url = home_url('/contact/#quote');
             <div>
                 <h2>What Changes the Unit Price?</h2>
                 <p>Price is driven by finished dimensions and blank area, paper combination, print coverage, number of colors, inside printing, tooling, finishes, insert complexity, order quantity, packing method and destination. Two mailers with the same outside size can have different costs because their board, artwork and converting steps differ.</p>
-                <p>For a comparable quotation, ask each supplier to state what is included: structural design, tooling, sample type, unit packing, master cartons, freight, duties and inspection. A unit price without those assumptions is not a complete comparison.</p>
+                <p>Compare quotes using the same product, packing method and quantity for each design. Specify the liner and print coverage, insert, sample, tooling and master-carton requirements in your <a href="<?php echo esc_url($quote_url); ?>">custom mailer box enquiry</a>. Confirm freight, duties and inspection costs separately.</p>
             </div>
             <div>
                 <h2>Explore Relevant Mailer Structures</h2>
