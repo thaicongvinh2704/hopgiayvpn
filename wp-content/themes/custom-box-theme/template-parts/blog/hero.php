@@ -62,7 +62,7 @@ $intro = has_excerpt() ? get_the_excerpt() : wp_trim_words(wp_strip_all_tags(get
                         'loading'       => 'eager',
                         'decoding'      => 'async',
                         'fetchpriority' => 'high',
-                        'sizes'         => '(max-width: 900px) 100vw, 50vw',
+                        'sizes'         => '(max-width: 980px) calc(100vw - 40px), 940px',
                     )
                 );
                 ?>

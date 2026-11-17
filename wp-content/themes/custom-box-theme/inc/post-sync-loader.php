@@ -11,6 +11,11 @@ defined('ABSPATH') || exit;
 function custom_box_post_sync_registry(): array
 {
     return array(
+        'inc/magnetic-closure-box-sample-post-sync.php' => array(
+            'version' => '2026-11-17-v1',
+            'option' => 'custom_box_magnetic_guide_sync_version',
+            'slug' => 'magnetic-closure-box-sample-approval',
+        ),
         'inc/four-products-20261019-product-sync.php' => array(
             'version' => 'four-products-20261019-v1',
             'option' => 'custom_box_four_products_20261019_sync_version',

@@ -1,0 +1,48 @@
+{
+  "slug": "magnetic-closure-box-sample-approval",
+  "title": "Magnetic Closure Box Sample Approval Before a Bulk Order",
+  "seo_title": "Magnetic Closure Box Sample Approval for Bulk Orders",
+  "focus_keyword": "magnetic closure box sample",
+  "meta_description": "Review a magnetic closure box sample before bulk production. Check lid alignment, insert height, packed fit and finishing, then record what you approve.",
+  "excerpt": "Check your magnetic box with the shell empty, with the insert installed and with the full product set packed. Use the results to approve the sample for bulk production.",
+  "category": "blog-packaging-production-guide",
+  "images": [
+    {
+      "file": "magnetic-closure-box-sample-approval-cover-hd.webp",
+      "slot": 0,
+      "title": "Magnetic box sample approval for bulk orders",
+      "alt": "Open white magnetic gift box with a hinged lid and black insert",
+      "caption": "Magnetic closure box sample approval guide for bulk packaging buyers.",
+      "origin": "Editorial layout using the existing VPN logo and catalog image of a white magnetic gift box.",
+      "sha256": "c30d731c0f7b558da2a2acd61c2bf07aa7a13977f4c8a50c506eebb4f8254444"
+    },
+    {
+      "file": "magnetic-closure-box-open-and-closed.webp",
+      "slot": 1,
+      "title": "Open and closed views of a magnetic perfume gift box",
+      "alt": "Closed burgundy box with gold foil beside an open view showing the hinge and black shaped insert",
+      "caption": "Catalog views of a magnetic perfume gift box. Inspect the front flap with the lid closed and the hinge and insert with it open.",
+      "origin": "Two existing catalog views of the same burgundy VPN perfume gift box, presented side by side.",
+      "sha256": "2f36e77e97b75d63fc09e7aa733bcb5c716254e4d6d26c86b9d61bd3c764656f"
+    },
+    {
+      "file": "magnetic-closure-box-three-pass-check.webp",
+      "slot": 2,
+      "title": "Three stages for checking magnetic box lid fit",
+      "alt": "Check lid fit with the empty shell, with the insert installed, and again with all products and accessories packed",
+      "caption": "Record the first stage at which the lid lifts. That helps the buyer and factory narrow down what to revise.",
+      "origin": "Original editorial diagram based on the three checks explained in the article.",
+      "sha256": "cb9e73fca8cf345466ae7da05bdfd0fa0fa51fecc9c547032ece9abcd1da8ca4"
+    },
+    {
+      "file": "vpn-box-finishing-workshop-sample-guide.webp",
+      "slot": 3,
+      "title": "VPN Packaging Factory box-finishing workshop",
+      "alt": "Workers and equipment on the box production floor at VPN Packaging Factory",
+      "caption": "Box-finishing area at VPN Packaging Factory in Vietnam.",
+      "origin": "Existing VPN workshop photograph, used for factory context.",
+      "sha256": "63caab9c55189bc4c533db36ca347fc3d1cab13e88a8896113cf3742fbc4ad1d"
+    }
+  ],
+  "content_sha256": "c67ba45f490e9eee60ea3405e7a9b4b70001071e66136393eeed3122d7a24dcd"
+}
