@@ -15,6 +15,9 @@ while (have_posts()) :
     $product_id = get_the_ID();
     $drawer_profile = function_exists('vpn_drawer_product_profile') ? vpn_drawer_product_profile($product_id) : array();
     $product_quote_url = $drawer_profile ? vpn_drawer_quote_url($drawer_profile['slug']) : home_url('/contact/#quote');
+    if ($product && $product->get_slug() === 'custom-pizza-packaging-box') {
+        $product_quote_url = '#quote';
+    }
     $product_sample_url = $drawer_profile ? vpn_drawer_quote_url($drawer_profile['slug'], true) : home_url('/contact/#quote');
     $image_id = $product ? $product->get_image_id() : 0;
     $gallery_ids = $product ? $product->get_gallery_image_ids() : array();
