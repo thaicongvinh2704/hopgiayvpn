@@ -300,12 +300,12 @@ function custom_box_custom_vial_boxes_sync_report(int $product_id): string
 
 function custom_box_custom_vial_boxes_meta_description(): string
 {
-    return 'Custom vial boxes made in Vietnam for bulk orders, with custom printing and fitted inserts. Request a sample and confirm the MOQ for your design.';
+    return 'Custom vial boxes with fitted inserts from Vietnam. Check cap clearance, vial removal and minimum quantities for your insert layout before ordering.';
 }
 
 function custom_box_custom_vial_boxes_short_description(): string
 {
-    return 'Custom printed paper boxes for glass vials, made in Ho Chi Minh City, Vietnam, for bulk orders. Choose a fitted paperboard, EVA, foam or molded-pulp insert and approve the fit with your vial before production.';
+    return 'Single-vial cartons and multi-vial packs with fitted inserts, manufactured in Ho Chi Minh City, Vietnam. Send the finished vial dimensions so we can check the fit before a bulk run.';
 }
 
 function custom_box_custom_vial_boxes_hero_bullets(): array
@@ -763,10 +763,10 @@ function custom_box_custom_vial_boxes_long_description(int $product_id): string
 <section class="product-seo-content custom-vial-boxes-content">
 
   <h2>Custom Vial Boxes Built Around the Vial and Insert</h2>
-  <p>VPN Paper Box manufactures custom printed cartons with fitted inserts for filled and sealed glass vials in Ho Chi Minh City, Vietnam. We make single-vial cartons and multi-vial packs for bulk orders from brands and packaging distributors.</p>
-  <p>We size each insert from the finished vial, including its height, body diameter, closure and label. These measurements help determine how the vial sits in the box and how easily it can be removed. Review the carton, insert and printed artwork together on a physical sample before bulk production.</p>
+  <p>A fitted insert needs to hold a filled glass vial steady, leave clearance for its cap and let staff lift it out without pulling on the closure. Check those fit points with a representative vial before approving the carton.</p>
+  <p>VPN manufactures printed outer cartons and fitted inserts in Ho Chi Minh City, Vietnam. For bulk orders, we develop single-vial or multi-vial layouts around the filled and sealed vials you intend to pack.</p>
   <aside class="vial-answer-summary" aria-label="Custom vial box sizing summary">
-    <p><strong>Short answer:</strong> choose the insert only after the finished vial has been measured. A nominal 2 mL, 5 mL or 10 mL volume does not define the body diameter, total height, shoulder, cap, label projection or filled weight. Those physical inputs—not the volume label alone—determine the cavity and outer box.</p>
+    <p><strong>For the fit sample:</strong> send the widest body diameter, total height, cap dimensions and filled weight. Include the label if it extends beyond the glass. Two 10 mL vials can have different shoulders and caps.</p>
   </aside>
 
   {$paper_insert_image}
@@ -1027,10 +1027,10 @@ function custom_box_custom_vial_boxes_long_description(int $product_id): string
   <p>A packed sample can be checked with the actual vial before shipment. This inspection provides a production acceptance reference, but it does not replace the buyer’s own product, labeling, transport or regulatory validation.</p>
   {$quality_control_image}
 
-  <h3>9. Export Packing and International Supply Experience</h3>
-  <p>We have experience exporting custom paper packaging in bulk from Vietnam to the United States, Canada, Australia and European markets. For a vial box order, send your quantity by design, delivery destination and required receiving date so we can confirm the packing and freight details in your quote.</p>
+  <h3>9. Pack Cartons and Inserts by SKU</h3>
+  <p>Before a bulk order leaves Vietnam, agree whether the cartons and fitted inserts should arrive assembled or packed separately. When several vial sizes share one carton design, label each insert layout by SKU so the receiving team can match it to the correct vial.</p>
   <p>Buyers sourcing <a href="{$pharma_url}">pharmaceutical packaging boxes</a> can also review our broader packaging category before confirming the structure, insert and artwork requirements for a specific vial project.</p>
-  <p>Before shipment, finished vial boxes are counted, protected and packed into export cartons according to the confirmed packing plan. Carton markings, packing quantities and shipping documentation are prepared according to the approved order requirements.</p>
+  <p>Confirm the count per carton and the outer carton markings in the quote. Match each packing label to the approved cavity layout and artwork version.</p>
   <p>Market-specific product claims, pharmaceutical labeling and regulatory wording remain subject to the buyer’s approval. Our responsibility is to manufacture the packaging according to the approved structure, artwork, material specification and production sample.</p>
 
   <h2>From Dieline to Finished Vial Packaging</h2>

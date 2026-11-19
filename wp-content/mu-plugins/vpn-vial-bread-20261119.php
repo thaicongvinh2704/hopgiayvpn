@@ -2,7 +2,7 @@
 /**
  * Plugin Name: VPN Vial and Window Bread Bag Release
  * Description: Installs the approved copy and SEO fields for two existing WooCommerce products.
- * Version: 2026.11.19.1
+ * Version: 2026.11.19.2
  */
 
 defined('ABSPATH') || exit;
@@ -13,13 +13,16 @@ function vpn_vial_bread_20261119_fingerprint(string $html): string {
 }
 
 function vpn_vial_bread_20261119_replace(string $content, array $edit): string {
-    if (substr_count($content, $edit['new']) === 1) {
+    if ($edit['new'] !== '' && substr_count($content, $edit['new']) === 1) {
         return $content;
     }
     foreach ($edit['old'] as $previous) {
         if (substr_count($content, $previous) === 1) {
             return str_replace($previous, $edit['new'], $content);
         }
+    }
+    if (!empty($edit['optional'])) {
+        return $content;
     }
     throw new RuntimeException('A reviewed paragraph has been edited since it was checked.');
 }
@@ -145,8 +148,8 @@ function vpn_vial_bread_20261119_apply(WP_Post $post, array $row, string $direct
 }
 
 add_action('admin_init', static function (): void {
-    $marker = 'vpn_vial_bread_20261119_done';
-    $error_key = 'vpn_vial_bread_20261119_error';
+    $marker = 'vpn_vial_bread_20261119_v2_done';
+    $error_key = 'vpn_vial_bread_20261119_v2_error';
     if (!current_user_can('manage_options') || !current_user_can('manage_woocommerce')
         || wp_doing_ajax() || wp_doing_cron() || !function_exists('wc_delete_product_transients')
         || !in_array(wp_parse_url(home_url('/'), PHP_URL_HOST), ['hopgiayvpn.com', 'www.hopgiayvpn.com'], true)
@@ -199,7 +202,7 @@ add_action('admin_init', static function (): void {
 }, 110);
 
 add_action('admin_notices', static function (): void {
-    $error = get_transient('vpn_vial_bread_20261119_error');
+    $error = get_transient('vpn_vial_bread_20261119_v2_error');
     if ($error && current_user_can('manage_options')) {
         echo '<div class="notice notice-warning"><p>' . esc_html('VPN product update: ' . $error) . '</p></div>';
     }
