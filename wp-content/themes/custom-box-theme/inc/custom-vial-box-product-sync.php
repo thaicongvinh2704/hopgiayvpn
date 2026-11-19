@@ -81,7 +81,7 @@ function custom_box_sync_custom_vial_boxes_product(bool $force = false)
     }
 
     update_post_meta($product_id, 'rank_math_title', 'Custom Vial Boxes with Inserts | Vietnam Manufacturer');
-    update_post_meta($product_id, 'rank_math_description', 'Custom vial boxes with paperboard, EVA, foam or molded-pulp inserts for 2 mL, 5 mL, 10 mL and multi-vial packs. Request a structural sample.');
+    update_post_meta($product_id, 'rank_math_description', custom_box_custom_vial_boxes_meta_description());
     update_post_meta($product_id, 'rank_math_focus_keyword', 'custom vial boxes');
     update_post_meta($product_id, '_custom_box_product_hero_bullets', custom_box_custom_vial_boxes_hero_bullets());
     update_post_meta($product_id, '_custom_box_product_faq_html', custom_box_custom_vial_boxes_faq_html());
@@ -245,7 +245,7 @@ function custom_box_custom_vial_boxes_validation_failures(int $product_id): arra
 
     if (
         'Custom Vial Boxes with Inserts | Vietnam Manufacturer' !== get_post_meta($product_id, 'rank_math_title', true)
-        || 'Custom vial boxes with paperboard, EVA, foam or molded-pulp inserts for 2 mL, 5 mL, 10 mL and multi-vial packs. Request a structural sample.' !== get_post_meta($product_id, 'rank_math_description', true)
+        || custom_box_custom_vial_boxes_meta_description() !== get_post_meta($product_id, 'rank_math_description', true)
         || 'custom vial boxes' !== get_post_meta($product_id, 'rank_math_focus_keyword', true)
     ) {
         $failures[] = 'Rank Math metadata';
@@ -298,9 +298,14 @@ function custom_box_custom_vial_boxes_sync_report(int $product_id): string
     return implode(PHP_EOL, $lines) . PHP_EOL;
 }
 
+function custom_box_custom_vial_boxes_meta_description(): string
+{
+    return 'Custom vial boxes made in Vietnam for bulk orders, with custom printing and fitted inserts. Request a sample and confirm the MOQ for your design.';
+}
+
 function custom_box_custom_vial_boxes_short_description(): string
 {
-    return 'Custom vial boxes with paperboard, EVA, foam or molded-pulp inserts for nominal 2 mL, 5 mL, 10 mL and multi-vial packs. VPN Paper Box Manufacturer develops each structure from the actual vial dimensions, insert fit, printed information and sample-approval requirements.';
+    return 'Custom printed paper boxes for glass vials, made in Ho Chi Minh City, Vietnam, for bulk orders. Choose a fitted paperboard, EVA, foam or molded-pulp insert and approve the fit with your vial before production.';
 }
 
 function custom_box_custom_vial_boxes_hero_bullets(): array
@@ -555,6 +560,68 @@ function custom_box_custom_vial_boxes_seo_image_figure(int $product_id, string $
     );
 }
 
+function custom_box_custom_vial_boxes_show_workshop(string $content): string
+{
+    $heading = '<h2>In-House Manufacturing Process for Custom Vial Boxes</h2>';
+    $next_heading = '<h2>From Dieline to Finished Vial Packaging</h2>';
+    $start = strpos($content, $heading);
+    $end = false === $start ? false : strpos($content, $next_heading, $start + strlen($heading));
+    if (false === $end || str_contains($content, 'id="manufacturing-workshop"')) {
+        return $content;
+    }
+
+    $gallery = custom_box_custom_vial_boxes_workshop_markup();
+    if ('' === $gallery) {
+        return $content;
+    }
+
+    $process = substr($content, $start, $end - $start);
+    $illustrations = 'digital-prototype-process|offset-printing-process|die-cutting-process|folding-gluing-insert-assembly|quality-control-export-packing';
+    $figure_pattern = '~<div class="product-content-image-grid product-content-image-grid--single">\s*'
+        . '<figure\b[^>]*>\s*<img\b[^>]*\bsrc="[^"]*/custom-vial-box-(?:' . $illustrations . ')(?:-\d+x\d+)?\.webp"[^>]*>\s*'
+        . '<figcaption\b[^>]*>[^<]*</figcaption>\s*</figure>\s*</div>~i';
+    $process = preg_replace($figure_pattern, '', $process) ?? $process;
+
+    $intro = substr($content, 0, $start);
+    $intro = str_replace(
+        '<strong>About the visuals on this page:</strong> the gallery, process and comparison visuals are identified as concept examples, concept visualizations or production-process illustrations. They help explain the structure; a project-specific physical sample with the real vial remains the approval reference.',
+        'The box and insert illustrations show design options. Approve the fit on a physical sample with your vial.',
+        $intro
+    );
+
+    return $intro . $gallery . "\n" . $process . substr($content, $end);
+}
+
+function custom_box_custom_vial_boxes_workshop_markup(): string
+{
+    $images = array(
+        array('pizza-box-landing/vpn-paper-packaging-workshop-800.webp', 800, 450, 'Paper packaging workstations in the VPN workshop in Ho Chi Minh City', 'Packaging workshop'),
+        array('pizza-box-landing/vpn-printing-operator-800.webp', 800, 450, 'Operator at a Ryobi printing press in the VPN workshop', 'Offset printing'),
+        array('supplier-factory-20261015/vpn-factory-die-cutting-20261009.webp', 1280, 960, 'Die-cutting press on the VPN packaging workshop floor', 'Die-cutting equipment'),
+    );
+    $assets = '/assets/images/';
+    $figures = array();
+    foreach ($images as [$file, $width, $height, $alt, $caption]) {
+        if (!is_readable(get_template_directory() . $assets . $file)) {
+            return '';
+        }
+        $figures[] = sprintf(
+            '<figure class="product-content-image-card"><img src="%s" alt="%s" width="%d" height="%d" loading="lazy" decoding="async"><figcaption>%s</figcaption></figure>',
+            esc_url(get_template_directory_uri() . $assets . $file),
+            esc_attr($alt),
+            $width,
+            $height,
+            esc_html($caption)
+        );
+    }
+
+    return '<section id="manufacturing-workshop" aria-labelledby="manufacturing-workshop-title">'
+        . '<h2 id="manufacturing-workshop-title">Inside Our Packaging Workshop in Ho Chi Minh City</h2>'
+        . '<p>These photos show our paper packaging workshop, including the printing and die-cutting equipment. For your vial box, we review the carton, fitted insert and artwork together on a sample before bulk production.</p>'
+        . '<div class="product-content-image-grid vial-workshop-image-grid">' . implode('', $figures) . '</div>'
+        . '</section>';
+}
+
 function custom_box_custom_vial_boxes_restore_inline_image_attributes(string $content): string
 {
     $restored = preg_replace_callback('/<img\b[^>]*>/i', static function (array $matches): string {
@@ -628,6 +695,10 @@ function custom_box_update_custom_vial_boxes_specs(int $product_id): void
         if ('Product Name' === $spec['label']) {
             $spec['value'] = 'Custom Vial Boxes';
         }
+
+        if ('Minimum Order Quantity (MOQ)' === $spec['label']) {
+            $spec['value'] = 'Confirmed by quotation based on the box structure and insert.';
+        }
     }
     unset($spec);
 
@@ -692,8 +763,8 @@ function custom_box_custom_vial_boxes_long_description(int $product_id): string
 <section class="product-seo-content custom-vial-boxes-content">
 
   <h2>Custom Vial Boxes Built Around the Vial and Insert</h2>
-  <p>Custom vial boxes need more control than a generic carton because a small glass vial can move, tilt or contact the box wall during handling. The structure should be planned around the vial diameter, height, cap or closure, insert depth, opening direction and information panel before artwork is finalized. That approach helps procurement teams compare a folding carton, sleeve-and-tray box or rigid kit on the factors that affect fit and production.</p>
-  <p>VPN Paper Box Manufacturer develops custom vial packaging boxes for brands, laboratories, supplement companies, healthcare suppliers, cosmetic sample programs and distributors. The product page is focused on standalone vial boxes, single-vial cartons, multi-vial cartons and protective inserts. The final structure, material and print specification should be confirmed with the real vial and an approved sample.</p>
+  <p>VPN Paper Box manufactures custom printed cartons with fitted inserts for filled and sealed glass vials in Ho Chi Minh City, Vietnam. We make single-vial cartons and multi-vial packs for bulk orders from brands and packaging distributors.</p>
+  <p>We size each insert from the finished vial, including its height, body diameter, closure and label. These measurements help determine how the vial sits in the box and how easily it can be removed. Review the carton, insert and printed artwork together on a physical sample before bulk production.</p>
   <aside class="vial-answer-summary" aria-label="Custom vial box sizing summary">
     <p><strong>Short answer:</strong> choose the insert only after the finished vial has been measured. A nominal 2 mL, 5 mL or 10 mL volume does not define the body diameter, total height, shoulder, cap, label projection or filled weight. Those physical inputs—not the volume label alone—determine the cavity and outer box.</p>
   </aside>
@@ -862,7 +933,7 @@ function custom_box_custom_vial_boxes_long_description(int $product_id): string
       </table>
     </div>
   </section>
-  <p class="vial-visual-evidence-note"><strong>About the visuals on this page:</strong> the gallery, process and comparison visuals are identified as concept examples, concept visualizations or production-process illustrations. They help explain the structure; a project-specific physical sample with the real vial remains the approval reference.</p>
+  <p class="vial-visual-evidence-note">The box and insert illustrations show design options. Approve the fit on a physical sample with your vial.</p>
 
   <h2>Materials, Printing and Information Panels</h2>
   <p>Material selection should follow the vial weight, sales channel, print requirements and protective insert. SBS or ivory paperboard can support clean graphics and small information panels. Kraft or recycled paperboard can support a natural visual direction when the board and insert still provide the required support. Rigid board is suited to a premium kit when the added structure is justified by the presentation goal. Buyers can review <a href="{$materials_url}">paper material options for custom paper boxes</a> before confirming the specification.</p>
@@ -957,7 +1028,7 @@ function custom_box_custom_vial_boxes_long_description(int $product_id): string
   {$quality_control_image}
 
   <h3>9. Export Packing and International Supply Experience</h3>
-  <p>Our team has supplied custom vial boxes and related paper packaging for customers in international markets including India, the United States, the United Kingdom, Pakistan and Australia. These projects have given us experience working with different box structures, artwork requirements, shipping destinations and export-packing instructions.</p>
+  <p>We have experience exporting custom paper packaging in bulk from Vietnam to the United States, Canada, Australia and European markets. For a vial box order, send your quantity by design, delivery destination and required receiving date so we can confirm the packing and freight details in your quote.</p>
   <p>Buyers sourcing <a href="{$pharma_url}">pharmaceutical packaging boxes</a> can also review our broader packaging category before confirming the structure, insert and artwork requirements for a specific vial project.</p>
   <p>Before shipment, finished vial boxes are counted, protected and packed into export cartons according to the confirmed packing plan. Carton markings, packing quantities and shipping documentation are prepared according to the approved order requirements.</p>
   <p>Market-specific product claims, pharmaceutical labeling and regulatory wording remain subject to the buyer’s approval. Our responsibility is to manufacture the packaging according to the approved structure, artwork, material specification and production sample.</p>
@@ -967,7 +1038,7 @@ function custom_box_custom_vial_boxes_long_description(int $product_id): string
   <p>To begin a project, use the RFQ checklist below. A product photo, reference box or physical vial sample will help the packaging team prepare a more accurate structural recommendation.</p>
 
   <h2>MOQ, Lead Time and Quotation Requirements</h2>
-  <p>Minimum order quantity and lead time depend on the confirmed box structure, board or rigid material, insert type, finishing, artwork status and order quantity. They should be confirmed in the quotation rather than assumed from a generic product page. Shipping and export packing requirements should also be discussed for the destination market and the finished pack-out.</p>
+  <p>We confirm the minimum order quantity and production lead time in your quote. The minimum depends on the box structure, board, fitted insert and artwork. If your order includes several designs, list the quantity for each one.</p>
 
   <h2>Request a Quote for Custom Vial Boxes</h2>
   <p>For a useful structural quotation, send:</p>
@@ -1027,7 +1098,7 @@ function custom_box_custom_vial_boxes_faq_html(): string
 
     <details class="faq-item">
       <summary>What is the minimum order quantity for custom vial boxes?</summary>
-      <div class="faq-answer"><p>The minimum order quantity is confirmed during quotation because it depends on the box structure, material, insert, finishing and order quantity. Send the target quantity with the product dimensions so the team can confirm the applicable production requirements.</p></div>
+      <div class="faq-answer"><p>We confirm the minimum order quantity in your quote based on the box structure, board, insert and artwork. Send the vial dimensions and the quantity for each design.</p></div>
     </details>
   </div>
 </section>
@@ -1179,6 +1250,16 @@ function custom_box_custom_vial_boxes_output_styles(): void
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 20px;
             margin: 28px 0;
+        }
+
+        .product-content-image-grid.vial-workshop-image-grid img {
+            object-fit: cover;
+        }
+
+        @media (min-width: 768px) {
+            .vial-workshop-image-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
         }
 
         .product-content-image-grid--single {

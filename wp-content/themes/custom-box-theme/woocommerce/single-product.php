@@ -15,7 +15,9 @@ while (have_posts()) :
     $product_id = get_the_ID();
     $drawer_profile = function_exists('vpn_drawer_product_profile') ? vpn_drawer_product_profile($product_id) : array();
     $product_quote_url = $drawer_profile ? vpn_drawer_quote_url($drawer_profile['slug']) : home_url('/contact/#quote');
-    if ($product && $product->get_slug() === 'custom-pizza-packaging-box') {
+    $product_slug = $product ? $product->get_slug() : '';
+    $is_vial_product = 'custom-vial-packaging-box' === $product_slug;
+    if ($is_vial_product || 'custom-pizza-packaging-box' === $product_slug) {
         $product_quote_url = '#quote';
     }
     $product_sample_url = $drawer_profile ? vpn_drawer_quote_url($drawer_profile['slug'], true) : home_url('/contact/#quote');
@@ -106,11 +108,9 @@ while (have_posts()) :
 
     $product_long_content_output = $product_long_content_html ? wp_kses_post($product_long_content_html) : '';
 
-    if (
-        829 === $product_id
-        && function_exists('custom_box_custom_vial_boxes_restore_inline_image_attributes')
-    ) {
+    if ($is_vial_product && function_exists('custom_box_custom_vial_boxes_restore_inline_image_attributes')) {
         $product_long_content_output = custom_box_custom_vial_boxes_restore_inline_image_attributes($product_long_content_output);
+        $product_long_content_output = custom_box_custom_vial_boxes_show_workshop($product_long_content_output);
     }
 
     $related_ids = $product ? wc_get_related_products($product_id, 8) : array();
