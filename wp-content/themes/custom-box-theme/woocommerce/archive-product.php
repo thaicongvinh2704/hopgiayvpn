@@ -277,6 +277,15 @@ if (is_shop()) {
     $archive_description = __('Explore custom packaging product categories including paper boxes, rigid boxes, drawer boxes, food paper boxes, cosmetic packaging boxes, gift boxes, paper bags, and specialty packaging solutions from VPN Paper Box Manufacturer.', 'custom-box-theme');
 }
 
+$buying_profile = function_exists('vpn_packaging_current_buying_page') ? vpn_packaging_current_buying_page() : array();
+if (isset($buying_profile['guide'])) {
+    $archive_title = $buying_profile['heading'];
+    $archive_description = $buying_profile['intro'];
+    $archive_primary_cta = array('label' => 'Request a Quote', 'url' => home_url('/contact/#quote'));
+    $archive_secondary_cta = array('label' => 'Compare Box Styles', 'url' => '#' . $buying_profile['anchor']);
+    $custom_category_guide = $buying_profile['guide'];
+}
+
 $archive_context = compact(
     'current_term',
     'archive_title',
@@ -287,6 +296,7 @@ $archive_context = compact(
     'archive_hero_proof_points',
     'archive_hero_alt',
     'custom_category_guide',
+    'buying_profile',
     'sidebar_categories',
     'landing_categories',
     'hub_groups',
@@ -321,7 +331,7 @@ $archive_context = compact(
             <?php get_template_part('template-parts/woocommerce/drawer-boxes-models'); ?>
         <?php endif; ?>
         <?php get_template_part('template-parts/woocommerce/product-list', null, $archive_context); ?>
-        <?php if ($current_term && !is_wp_error($current_term) && 'pizza-boxes-guide' !== $custom_category_guide) : ?>
+        <?php if ($current_term && !is_wp_error($current_term) && 'pizza-boxes-guide' !== $custom_category_guide && empty($buying_profile['guide'])) : ?>
             <?php get_template_part('template-parts/woocommerce/related-categories', null, $archive_context); ?>
         <?php endif; ?>
         <?php if ($custom_category_guide && 1 === max(1, (int) get_query_var('paged'), (int) get_query_var('page'))) : ?>
@@ -332,6 +342,9 @@ $archive_context = compact(
                 'copy_variant' => 'products',
             )));
             ?>
+        <?php endif; ?>
+        <?php if (isset($buying_profile['guide'])) : ?>
+            <?php get_template_part('template-parts/woocommerce/related-categories', null, $archive_context); ?>
         <?php endif; ?>
     <?php endif; ?>
 

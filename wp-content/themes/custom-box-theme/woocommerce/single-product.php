@@ -21,6 +21,17 @@ while (have_posts()) :
         $product_quote_url = '#quote';
     }
     $product_sample_url = $drawer_profile ? vpn_drawer_quote_url($drawer_profile['slug'], true) : home_url('/contact/#quote');
+    $buying_profile = function_exists('vpn_packaging_current_buying_page') ? vpn_packaging_current_buying_page() : array();
+    $has_buying_guide = !$drawer_profile && isset($buying_profile['file']);
+    if ($has_buying_guide) {
+        $product_quote_url = '#quote-form-panel';
+    }
+    $buying_quote_args = $has_buying_guide ? array(
+        'quote_source' => $product_slug,
+        'form_location' => 'product-detail',
+        'current_page_url' => get_permalink($product_id),
+        'form_panel_id' => 'quote-form-panel',
+    ) : array();
     $image_id = $product ? $product->get_image_id() : 0;
     $gallery_ids = $product ? $product->get_gallery_image_ids() : array();
     $gallery_ids = array_unique(array_merge($image_id ? array($image_id) : array(), $gallery_ids));
@@ -307,8 +318,10 @@ while (have_posts()) :
                 <?php endif; ?>
 
                 <div class="product-detail-actions" role="group" aria-label="<?php esc_attr_e('Product quote actions', 'custom-box-theme'); ?>">
-                    <a href="<?php echo esc_url($product_quote_url); ?>" class="btn-primary" data-product-primary-action><?php esc_html_e('Request Custom Packaging Quote', 'custom-box-theme'); ?></a>
-                    <a href="<?php echo esc_url($product_sample_url); ?>" class="btn-outline" data-product-secondary-action><?php esc_html_e('Discuss a Structural Sample', 'custom-box-theme'); ?></a>
+                    <a href="<?php echo esc_url($product_quote_url); ?>" class="btn-primary" data-product-primary-action><?php echo $has_buying_guide ? esc_html__('Request a Quote or Sample', 'custom-box-theme') : esc_html__('Request Custom Packaging Quote', 'custom-box-theme'); ?></a>
+                    <?php if (!$has_buying_guide) : ?>
+                        <a href="<?php echo esc_url($product_sample_url); ?>" class="btn-outline" data-product-secondary-action><?php esc_html_e('Discuss a Structural Sample', 'custom-box-theme'); ?></a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -386,7 +399,7 @@ while (have_posts()) :
     <?php get_template_part('template-parts/home/quote-form', null, $drawer_profile ? array(
         'product_value' => $drawer_profile['name'], 'quote_source' => 'drawer_boxes',
         'form_location' => 'drawer-product', 'current_page_url' => get_permalink($product_id),
-    ) : array()); ?>
+    ) : $buying_quote_args); ?>
 
     <section class="product-workflow-band">
         <div class="container product-workflow-inner">

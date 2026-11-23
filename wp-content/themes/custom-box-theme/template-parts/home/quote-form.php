@@ -3,6 +3,7 @@ $quote_args = is_array($args) ? $args : array();
 if (function_exists('vpn_drawer_quote_context')) { $quote_args = array_merge(vpn_drawer_quote_context(), $quote_args); }
 $quote_section_id = isset($quote_args['section_id']) ? sanitize_html_class($quote_args['section_id']) : 'quote';
 $quote_form_id = isset($quote_args['form_id']) ? sanitize_html_class($quote_args['form_id']) : $quote_section_id . '-request-form';
+$quote_form_panel_id = isset($quote_args['form_panel_id']) ? sanitize_html_class($quote_args['form_panel_id']) : '';
 $quote_id_prefix = $quote_section_id . '-field';
 $quote_heading_id = $quote_section_id . '-heading';
 $quote_error_id = $quote_section_id . '-errors';
@@ -148,9 +149,9 @@ $quote_status_message = isset($quote_messages[$quote_status]) ? $quote_messages[
             </ul>
         </div>
 
-        <div class="quote-form-box">
-            <div class="form-header" role="heading" aria-level="2"><?php echo $quote_is_paper_bag ? 'Request Your Custom Paper Bag Quote' : 'Get Your Custom Box Quote'; ?></div>
-            <p class="quote-form-intro"><?php echo $quote_is_paper_bag ? 'Share your bag specification and contact details. Fields marked ' : 'Tell us what you need. Fields marked '; ?><span aria-hidden="true">*</span><span class="screen-reader-text">required</span><?php echo $quote_is_paper_bag ? ' are required.' : ' are required.'; ?></p>
+        <div class="quote-form-box"<?php if ($quote_form_panel_id) : ?> id="<?php echo esc_attr($quote_form_panel_id); ?>" tabindex="-1"<?php endif; ?>>
+            <div class="form-header" role="heading" aria-level="2"><?php echo $quote_form_panel_id ? 'Request a Quote or Sample' : ($quote_is_paper_bag ? 'Request Your Custom Paper Bag Quote' : 'Get Your Custom Box Quote'); ?></div>
+            <p class="quote-form-intro"><?php echo $quote_form_panel_id ? 'Share your requirements and mention if you need a sample. Fields marked ' : ($quote_is_paper_bag ? 'Share your bag specification and contact details. Fields marked ' : 'Tell us what you need. Fields marked '); ?><span aria-hidden="true">*</span><span class="screen-reader-text">required</span> are required.</p>
 
             <div
                 class="quote-form-error-summary"
