@@ -5,6 +5,7 @@
 
 defined('ABSPATH') || exit;
 
+$is_buyer_guide = function_exists('vpn_blog_editorial_attribution_applies') && vpn_blog_editorial_attribution_applies();
 $blog_page_id = (int) get_option('page_for_posts');
 $blog_url = $blog_page_id ? get_permalink($blog_page_id) : home_url('/blog/');
 $featured_image_id = get_post_thumbnail_id(get_the_ID());
@@ -62,9 +63,18 @@ $intro = has_excerpt() ? get_the_excerpt() : wp_trim_words(wp_strip_all_tags(get
                         'loading'       => 'eager',
                         'decoding'      => 'async',
                         'fetchpriority' => 'high',
-                        'sizes'         => '(max-width: 980px) calc(100vw - 40px), 940px',
+                        'sizes'         => $is_buyer_guide
+                            ? '(max-width: 900px) calc(100vw - 40px), 550px'
+                            : '(max-width: 980px) calc(100vw - 40px), 940px',
                     )
                 );
+                if ($is_buyer_guide) {
+                    $caption = trim((string) wp_get_attachment_caption($featured_image_id));
+                    if ($caption !== '') {
+                        $caption = preg_match('/^illustration\b/i', $caption) ? $caption : 'Packaging illustration. ' . $caption;
+                        echo '<figcaption>' . esc_html($caption) . '</figcaption>';
+                    }
+                }
                 ?>
             <?php else : ?>
                 <img

@@ -1,0 +1,197 @@
+[
+  {
+    "slug": "fefco-0201-vs-0427",
+    "title": "FEFCO 0201 vs 0427: Which Box Fits Your Shipment?",
+    "seo_title": "FEFCO 0201 vs 0427: Carton or Mailer for Shipping?",
+    "description": "Compare FEFCO 0201 shipping cartons and 0427 mailers by pack-out, stacking and total cost. Use one sample brief to quote both from Vietnam.",
+    "keyword": "FEFCO 0201 vs 0427",
+    "excerpt": "Start with a taped 0201 for palletized loads or a hinged 0427 for shallow ecommerce kits. Use the same product and route to compare loaded samples and quote both styles.",
+    "baseline": {
+      "title": "FEFCO 0201 vs 0427: Which Box Fits Your Shipment?",
+      "content_sha256": "9b13bfad5517164a707851b0d0da4bd79ebe3189f088203e1c04441101981f5c",
+      "excerpt_sha256": "fc0e970485275b1bc5ef91d85941b868afc4bfe192219e0ec5d1d00d8bf1c27b"
+    },
+    "content_sha256": "cbd6c7011a12201bc0120fffd7fcbe767b0aa0fcc886beae96cbf165a08cbc39",
+    "product": {
+      "slug": "custom-corrugated-shipping-boxes",
+      "anchor": "custom 0201 corrugated shipping carton",
+      "fallback_category": "custom-packaging-boxes"
+    },
+    "category_dependencies": [
+      "corrugated-mailer-boxes"
+    ],
+    "images": [
+      {
+        "name": "fefco-0201-vs-0427.webp",
+        "path": "wp-content/mu-plugins/vpn-buyer-guides-20261127/images/fefco-0201-vs-0427.webp",
+        "title": "FEFCO 0201 carton beside a 0427 mailer",
+        "caption": "Illustration of a taped 0201-style carton and an open 0427-style mailer. Confirm the exact closure against the approved drawing.",
+        "alt": "A taped regular slotted carton beside an open, shallow corrugated mailer with a hinged lid.",
+        "placement": null,
+        "sha256": "6384a5d77decfa1992582ea744f18359a2b8a44c0c7466546108b7bb4b03df7d"
+      },
+      {
+        "name": "regular-slotted-carton-four-open-flaps.webp",
+        "path": "wp-content/mu-plugins/vpn-packaging-products-20261127/webp/custom-corrugated-shipping-boxes-04-open-four-flaps.webp",
+        "title": "Regular slotted carton with four top flaps",
+        "caption": "Structure illustration. Check the usable opening after the four top flaps unfold and measure the carton after assembly.",
+        "alt": "Open regular slotted corrugated carton showing the top flaps and its usable interior.",
+        "placement": "<h2>Compare protection and packing cost",
+        "sha256": "cb9e2a94c64708303ecd5621a9a6bb2b048401091202ef19b0b61afedea4564f"
+      },
+      {
+        "name": "loaded-corrugated-carton-with-paper-fill.webp",
+        "path": "wp-content/mu-plugins/vpn-packaging-products-20261127/webp/custom-corrugated-shipping-boxes-06-packed-example.webp",
+        "title": "Loaded corrugated carton with paper fill",
+        "caption": "Pack-out illustration. Include filler, pads and dividers in sample trials to check movement, closure and packing time.",
+        "alt": "An open corrugated shipping carton with the packed item supported by crumpled paper fill.",
+        "placement": "<h2>Run a side-by-side sample check",
+        "sha256": "aa9239bfcd2dbd7399c2d9f8c53df194cc6152e239ef15ddef02ec4d6c877a97"
+      },
+      {
+        "name": "vpn-paper-packaging-workshop-800.webp",
+        "path": "wp-content/themes/custom-box-theme/assets/images/pizza-box-landing/vpn-paper-packaging-workshop-800.webp",
+        "title": "VPN Packaging workshop photograph",
+        "caption": "Photograph from VPN’s factory library. It shows the general paper-packaging workshop in Ho Chi Minh City.",
+        "alt": "VPN staff and equipment on the paper-packaging workshop floor in Vietnam.",
+        "placement": "<!-- vpn-workshop-photo -->",
+        "sha256": "eca72cb53eb7cae58f911222901571ca2d840a4d8a9bddae2525278e00c44f42"
+      }
+    ],
+    "incoming": {
+      "slug": "custom-sized-boxes-for-shipping",
+      "before": "The carrier's rounding rule can matter more than a few millimetres",
+      "text": "If the box style is still open, compare the packed workflow for a <a href=\"{{HOME}}/fefco-0201-vs-0427/\">FEFCO 0201 shipping carton and a 0427 mailer</a> before you finalize the board or outside dimensions."
+    }
+  },
+  {
+    "slug": "cupcake-box-sizes",
+    "title": "Cupcake Box Sizes: How to Measure Boxes and Inserts",
+    "seo_title": "Cupcake Box Sizes & Insert Fit: 4, 6 and 12 Count",
+    "description": "Use the 4-, 6- and 12-count cupcake box size chart. Measure the liner, frosting and lid clearance before ordering custom inserts from Vietnam.",
+    "keyword": "cupcake box sizes",
+    "excerpt": "Size 4-, 6- and 12-count boxes from the widest frosting, the liner where the tray supports it, and the clearance under the closed lid. Use the chart to start a sample.",
+    "baseline": {
+      "title": "Cupcake Box Sizes: How to Measure Boxes and Inserts",
+      "content_sha256": "92e866a53b3a964540d197d92882b7c13b1f62938114db4b10ee3c5a1bc3c9b2",
+      "excerpt_sha256": "96a38cf325812a199545d5bab8bbee46b0c162c16a408ccd29886fd3ad689aa3"
+    },
+    "content_sha256": "709221cf8f32352ff87797deda702b17b3e99947cc3e42ef52b6eb5cebc44a31",
+    "product": {
+      "slug": "custom-cupcake-boxes-with-inserts",
+      "anchor": "custom cupcake boxes with inserts",
+      "fallback_category": null
+    },
+    "category_dependencies": [
+      "bakery-packaging-boxes"
+    ],
+    "images": [
+      {
+        "name": "cupcake-box-sizes.webp",
+        "path": "wp-content/mu-plugins/vpn-buyer-guides-20261127/images/cupcake-box-sizes.webp",
+        "title": "Decorated cupcakes in a four-cavity box insert",
+        "caption": "The empty fourth opening shows where the insert supports the liner. Check frosting clearance with the lid closed on the physical sample.",
+        "alt": "Open paperboard cupcake box holding three frosted cupcakes in a four-hole insert, with one cutout visible.",
+        "placement": null,
+        "sha256": "cdec75312ac5fb49c8eaf545e94dd5b8005365c7ab8ee78f58d83fcfd3c745cb"
+      },
+      {
+        "name": "cupcake-box-empty-4-cavity-insert.webp",
+        "path": "wp-content/mu-plugins/vpn-packaging-products-20261127/webp/custom-cupcake-boxes-with-inserts-03-empty-four-slot-tray.webp",
+        "title": "Four openings on a folded cupcake insert",
+        "caption": "Insert illustration. Measure the actual liner at its support height and check the distance between cavity centers.",
+        "alt": "Empty four-cavity paperboard insert inside an assembled cupcake box.",
+        "placement": "<h2>Check the closed lid and the route",
+        "sha256": "6ef70af5950b523fa06242866f9c1dad802d7e32a2546490e9da862e61369a59"
+      },
+      {
+        "name": "cupcake-box-closed-lid-edge.webp",
+        "path": "wp-content/mu-plugins/vpn-packaging-products-20261127/webp/custom-cupcake-boxes-with-inserts-06-closed-side-detail.webp",
+        "title": "Lid and side edge of a closed cupcake box",
+        "caption": "Closure illustration. Check the lowest lid feature and any downward flex using a loaded, closed sample.",
+        "alt": "Close-up of the lid meeting the side wall of a closed floral paperboard cupcake box.",
+        "placement": "<h2>Approve a loaded sample",
+        "sha256": "daa9ff625ed9a346ad128cb122789b91eac2c353d26b9b97a49c902daadeae91"
+      },
+      {
+        "name": "vpn-box-assembly-floor-800.webp",
+        "path": "wp-content/themes/custom-box-theme/assets/images/pizza-box-landing/vpn-box-assembly-floor-800.webp",
+        "title": "VPN Packaging workshop photograph",
+        "caption": "Photograph from VPN’s factory library. It shows the general box assembly and finishing area.",
+        "alt": "VPN employees working at box assembly and finishing tables in Vietnam.",
+        "placement": "<!-- vpn-workshop-photo -->",
+        "sha256": "734099e8359a14973c3d80a7badc247af9dace0df8cd7533ecb7a520bec8fbfe"
+      }
+    ],
+    "incoming": {
+      "slug": "how-to-choose-bakery-packaging-materials",
+      "before": "Plan for Grease and Moisture Before Production",
+      "text": "For decorated cupcakes, use the guide to <a href=\"{{HOME}}/cupcake-box-sizes/\">cupcake box sizes, tray openings and lid clearance</a> to turn finished cake measurements into a sample brief."
+    }
+  },
+  {
+    "slug": "glassine-bags-for-bakeries",
+    "title": "Glassine Bags for Bakeries: Choosing the Right Bag",
+    "seo_title": "Glassine Bags for Bakeries: How to Choose & Test",
+    "description": "Choose glassine bags for bakery cookies. Compare usable size, print contrast and oil transfer on filled samples before ordering from Vietnam.",
+    "keyword": "glassine bags for bakeries",
+    "excerpt": "Try glassine when shoppers need to see the cookie. Compare finished bags using the same recipe and service window, then check fit, oil transfer and logo readability.",
+    "baseline": {
+      "title": "Glassine Bags for Bakeries: Choosing the Right Bag",
+      "content_sha256": "63208ff14b14d11b9840e17cf5fa5235ba3bcb28198ea01185d22ecf1824705e",
+      "excerpt_sha256": "394b30838a523d02bd9bb00f0c8033113c47ebf363a88c69af2b25a5200e74f7"
+    },
+    "content_sha256": "da8bab05466aac02971d590d0f727cc3ce47eb420773cd8a3b039a9dfc089b28",
+    "product": {
+      "slug": "custom-glassine-paper-bags",
+      "anchor": "custom glassine paper bags",
+      "fallback_category": null
+    },
+    "category_dependencies": [
+      "custom-bakery-bread-paper-bags"
+    ],
+    "images": [
+      {
+        "name": "glassine-bags-for-bakeries.webp",
+        "path": "wp-content/mu-plugins/vpn-buyer-guides-20261127/images/glassine-bags-for-bakeries.webp",
+        "title": "Translucent glassine bags for cookies",
+        "caption": "Illustration of how translucent paper softens the view of a cookie. Test the actual paper grade, seams and recipe before approving the bag.",
+        "alt": "A cookie visible through a folded glassine paper bag beside an empty bag and an uncovered cookie.",
+        "placement": null,
+        "sha256": "ded4293d167d2dfad3d61ee5aa7c78ec6c20d2c615a7cee56e5a4527ed5221d6"
+      },
+      {
+        "name": "glassine-paper-print-contrast-detail.webp",
+        "path": "wp-content/mu-plugins/vpn-packaging-products-20261127/webp/custom-glassine-paper-bags-04-paper-and-print-detail.webp",
+        "title": "Print on the face of a translucent glassine bag",
+        "caption": "Print illustration. Compare logo readability and product visibility on filled samples at the counter.",
+        "alt": "Close-up of a filled glassine paper bag with printed graphics on its translucent surface.",
+        "placement": "<h2>Measure the bag around",
+        "sha256": "37f2e4e62b6fc989744f3298e6ab4b1c27953dc2cf3f32ee556abf2e35af3ab1"
+      },
+      {
+        "name": "glassine-bag-cookie-opening-fit.webp",
+        "path": "wp-content/mu-plugins/vpn-packaging-products-20261127/webp/custom-glassine-paper-bags-06-cookie-loading.webp",
+        "title": "Cookie and opening of a glassine bakery bag",
+        "caption": "Pack-out illustration. Trial the widest cookie in the planned opening before setting bag dimensions.",
+        "alt": "A cookie partly inside a glassine bakery bag, with the opening and fit visible.",
+        "placement": "<h2>Run a finished bag test",
+        "sha256": "4a94859669e9139c03a59e5fc9295b4e10aef586d01971ca72b590c578ffd26b"
+      },
+      {
+        "name": "vpn-printing-operator-800.webp",
+        "path": "wp-content/themes/custom-box-theme/assets/images/pizza-box-landing/vpn-printing-operator-800.webp",
+        "title": "VPN Packaging workshop photograph",
+        "caption": "Photograph from VPN’s factory library. It shows an operator at the printing press in Ho Chi Minh City.",
+        "alt": "A VPN operator working at a printing press in the paper-packaging workshop.",
+        "placement": "<!-- vpn-workshop-photo -->",
+        "sha256": "c95fd1dd2bc645c7e3bd2e539d7c30bbf630296d90ad25e0f83398fb13466c85"
+      }
+    ],
+    "incoming": {
+      "slug": "greaseproof-bakery-bags-buying-guide",
+      "before": "Tell the supplier what the pastry will do to the pack",
+      "text": "If customers need to see a cooled cookie through the paper, first compare a <a href=\"{{HOME}}/glassine-bags-for-bakeries/\">glassine bakery bag</a> on visibility, fold quality and oil transfer over the planned service window."
+    }
+  }
+]

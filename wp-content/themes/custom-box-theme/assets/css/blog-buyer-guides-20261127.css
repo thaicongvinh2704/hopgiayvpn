@@ -1,0 +1,148 @@
+.vpn-buyer-guide .blog-seo-hero {
+    padding: 34px 0 30px;
+    background: #f5f9fa;
+}
+.vpn-buyer-guide .blog-seo-hero-grid {
+    max-width: 1164px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    align-items: center;
+    gap: clamp(24px, 4vw, 56px);
+}
+.vpn-buyer-guide .blog-seo-hero-copy {
+    min-width: 0;
+    text-align: left;
+}
+.vpn-buyer-guide .blog-seo-hero-copy .blog-breadcrumb,
+.vpn-buyer-guide .blog-seo-meta {
+    justify-content: flex-start;
+}
+.vpn-buyer-guide .blog-breadcrumb span:last-child {
+    display: none;
+}
+.vpn-buyer-guide .blog-seo-hero h1 {
+    font-size: clamp(34px, 4vw, 49px);
+    line-height: 1.11;
+    margin: 10px 0 12px;
+}
+.vpn-buyer-guide .blog-seo-hero-copy > p {
+    font-size: 17px;
+    line-height: 1.55;
+    margin: 0;
+    max-width: 60ch;
+}
+.vpn-buyer-guide .blog-seo-meta {
+    gap: 8px 14px;
+    margin-top: 17px;
+}
+.vpn-buyer-guide .blog-seo-hero-image {
+    border-radius: 10px;
+    background: #fff;
+    border: 1px solid #dce7eb;
+}
+.vpn-buyer-guide .blog-seo-hero-image figcaption {
+    color: #475e67;
+    padding: 9px 14px;
+    font-size: 0.84rem;
+    line-height: 1.45;
+}
+.vpn-buyer-guide .blog-article-section {
+    padding-top: 32px;
+}
+.vpn-buyer-guide .blog-article-content .vpn-buyer-summary,
+.vpn-buyer-guide .blog-article-content .vpn-buyer-approval,
+.vpn-buyer-guide .blog-article-content .vpn-buyer-next {
+    margin: 22px 0 32px;
+    padding: clamp(15px, 2.4vw, 26px);
+    border-radius: 10px;
+    border: 1px solid #cfdee3;
+    background: #f1f7f8;
+}
+.vpn-buyer-guide .blog-article-content .vpn-buyer-approval {
+    background: #f8f8f3;
+    border-color: #dedfd1;
+}
+.vpn-buyer-guide .blog-article-content .vpn-buyer-panel-title {
+    margin: 0 0 9px;
+    color: #173e53;
+    font-size: 1.12rem;
+    line-height: 1.4;
+}
+.vpn-buyer-guide .blog-article-content dl {
+    padding: 0;
+    margin: 0;
+}
+.vpn-buyer-guide .blog-article-content dl > div {
+    display: grid;
+    grid-template-columns: minmax(8.8rem,0.7fr) minmax(0,1.8fr);
+    gap: 12px;
+    padding: 10px 0;
+    border-top: 1px solid #d6e1e4;
+}
+.vpn-buyer-guide .blog-article-content dt {
+    color: #173e53;
+    font-weight: 700;
+}
+.vpn-buyer-guide .blog-article-content dd {
+    margin: 0;
+    line-height: 1.55;
+}
+.vpn-buyer-guide .blog-article-content .vpn-buyer-note {
+    margin: 10px 0 0;
+}
+.vpn-buyer-guide .blog-article-content .vpn-buyer-next ul {
+    margin: 0 0 14px;
+}
+.vpn-buyer-guide .blog-article-content a.vpn-buyer-button {
+    background: #195b79;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    line-height: 1.35;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 10px 14px;
+    border-radius: 6px;
+}
+.vpn-buyer-guide .blog-article-content a.vpn-buyer-button:hover,
+.vpn-buyer-guide .blog-article-content a.vpn-buyer-button:focus-visible {
+    background: #124360;
+    color: #fff;
+}
+.vpn-buyer-guide .blog-article-content .vpn-blog-factory-evidence {
+    max-width: 780px;
+    margin-inline: auto;
+}
+@media (max-width: 900px) {
+    .vpn-buyer-guide .blog-seo-hero {
+        padding: 22px 0 20px;
+    }
+    .vpn-buyer-guide .blog-seo-hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 16px;
+    }
+    .vpn-buyer-guide .blog-seo-hero h1 {
+        font-size: clamp(28px, 6.3vw, 40px);
+    }
+    .vpn-buyer-guide .blog-seo-hero-copy > p {
+        font-size: 16px;
+    }
+    .vpn-buyer-guide .blog-seo-meta {
+        margin-top: 12px;
+    }
+    .vpn-buyer-guide .blog-article-section {
+        padding-top: 23px;
+    }
+}
+@media (max-width: 520px) {
+    .vpn-buyer-guide .blog-article-content dl > div {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 2px;
+    }
+}
+
+@media (max-width: 600px) {
+    .vpn-buyer-guide #vpn-chat-greeting {
+        display: none;
+    }
+}
