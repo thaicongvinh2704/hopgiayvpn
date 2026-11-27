@@ -2,16 +2,13 @@
   {
     "slug": "fefco-0201-vs-0427",
     "title": "FEFCO 0201 vs 0427: Which Box Fits Your Shipment?",
-    "seo_title": "FEFCO 0201 vs 0427: Carton or Mailer for Shipping?",
-    "description": "Compare FEFCO 0201 shipping cartons and 0427 mailers by pack-out, stacking and total cost. Use one sample brief to quote both from Vietnam.",
-    "keyword": "FEFCO 0201 vs 0427",
     "excerpt": "Start with a taped 0201 for palletized loads or a hinged 0427 for shallow ecommerce kits. Use the same product and route to compare loaded samples and quote both styles.",
     "baseline": {
       "title": "FEFCO 0201 vs 0427: Which Box Fits Your Shipment?",
       "content_sha256": "9b13bfad5517164a707851b0d0da4bd79ebe3189f088203e1c04441101981f5c",
       "excerpt_sha256": "fc0e970485275b1bc5ef91d85941b868afc4bfe192219e0ec5d1d00d8bf1c27b"
     },
-    "content_sha256": "9a7a02bd12e48393e7e2322d4c420918d6abc885f3f549837250dd928d928c56",
+    "content_sha256": "4ffb46e6f5e44a51b89701e268e9d1cfad38f53b62ac17945075255f0c8599d8",
     "product": {
       "slug": "custom-corrugated-shipping-boxes",
       "anchor": "custom 0201 corrugated shipping carton",
@@ -27,8 +24,88 @@
         "title": "FEFCO 0201 carton beside a 0427 mailer",
         "caption": "Illustration of a taped 0201-style carton and an open 0427-style mailer. Confirm the exact closure against the approved drawing.",
         "alt": "A taped regular slotted carton beside an open, shallow corrugated mailer with a hinged lid.",
-        "placement": null,
-        "sha256": "6384a5d77decfa1992582ea744f18359a2b8a44c0c7466546108b7bb4b03df7d"
+        "sha256": "6384a5d77decfa1992582ea744f18359a2b8a44c0c7466546108b7bb4b03df7d",
+        "metadata": {
+          "width": 1536,
+          "height": 1024,
+          "file": "fefco-0201-vs-0427.webp",
+          "filesize": 255382,
+          "sizes": {
+            "medium": {
+              "file": "fefco-0201-vs-0427-300x200.webp",
+              "width": 300,
+              "height": 200,
+              "mime-type": "image/webp",
+              "filesize": 12832
+            },
+            "large": {
+              "file": "fefco-0201-vs-0427-1024x683.webp",
+              "width": 1024,
+              "height": 683,
+              "mime-type": "image/webp",
+              "filesize": 126530
+            },
+            "thumbnail": {
+              "file": "fefco-0201-vs-0427-150x150.webp",
+              "width": 150,
+              "height": 150,
+              "mime-type": "image/webp",
+              "filesize": 4482
+            },
+            "medium_large": {
+              "file": "fefco-0201-vs-0427-768x512.webp",
+              "width": 768,
+              "height": 512,
+              "mime-type": "image/webp",
+              "filesize": 84684
+            },
+            "woocommerce_thumbnail": {
+              "file": "fefco-0201-vs-0427-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 16296,
+              "uncropped": false
+            },
+            "woocommerce_single": {
+              "file": "fefco-0201-vs-0427-600x400.webp",
+              "width": 600,
+              "height": 400,
+              "mime-type": "image/webp",
+              "filesize": 46710
+            },
+            "woocommerce_gallery_thumbnail": {
+              "file": "fefco-0201-vs-0427-100x100.webp",
+              "width": 100,
+              "height": 100,
+              "mime-type": "image/webp",
+              "filesize": 2364
+            }
+          },
+          "image_meta": {
+            "aperture": "0",
+            "credit": "",
+            "camera": "",
+            "caption": "",
+            "created_timestamp": "0",
+            "copyright": "",
+            "focal_length": "0",
+            "iso": "0",
+            "shutter_speed": "0",
+            "title": "",
+            "orientation": "0",
+            "keywords": []
+          }
+        },
+        "variants": {
+          "fefco-0201-vs-0427-300x200.webp": "e02db2de6de0fdb54afb86b1a54eb92138dfc0aea91fc325de449a5f9ee35004",
+          "fefco-0201-vs-0427-1024x683.webp": "3cf2ba151a97155790e713c359184ecf0ac7bd8c90e6d7d911344a81b84542fe",
+          "fefco-0201-vs-0427-150x150.webp": "b893f5289bdb11e88b0741939879de65b08188651d3a9e1bc9929a6642abdd80",
+          "fefco-0201-vs-0427-768x512.webp": "355a0bdb8c42470a2d14598d749a9f96b258669c1afb1efa6efc0b635013a4f7",
+          "fefco-0201-vs-0427-300x300.webp": "98e6977af873b854417955ae04cc809dcd53b51bd133ef25e0db2f3124cb0b78",
+          "fefco-0201-vs-0427-600x400.webp": "29afa447faeae18ca554f5fd88f77d46d9edf115ac3840b361492edec493161a",
+          "fefco-0201-vs-0427-100x100.webp": "eaa50bb61bfd139e091a16c6434202e8001620ae35ac127a9f5b8737fd06164d"
+        }
       },
       {
         "name": "regular-slotted-carton-four-open-flaps.webp",
@@ -36,8 +113,87 @@
         "title": "Regular slotted carton with four top flaps",
         "caption": "Structure illustration. Check the usable opening after the four top flaps unfold and measure the carton after assembly.",
         "alt": "Open regular slotted corrugated carton showing the top flaps and its usable interior.",
-        "placement": "<h2>Compare protection and packing cost",
-        "sha256": "cb9e2a94c64708303ecd5621a9a6bb2b048401091202ef19b0b61afedea4564f"
+        "sha256": "cb9e2a94c64708303ecd5621a9a6bb2b048401091202ef19b0b61afedea4564f",
+        "metadata": {
+          "width": 1100,
+          "height": 1100,
+          "file": "regular-slotted-carton-four-open-flaps.webp",
+          "filesize": 151620,
+          "sizes": {
+            "medium": {
+              "file": "regular-slotted-carton-four-open-flaps-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 17928
+            },
+            "large": {
+              "file": "regular-slotted-carton-four-open-flaps-1024x1024.webp",
+              "width": 1024,
+              "height": 1024,
+              "mime-type": "image/webp",
+              "filesize": 130706
+            },
+            "thumbnail": {
+              "file": "regular-slotted-carton-four-open-flaps-150x150.webp",
+              "width": 150,
+              "height": 150,
+              "mime-type": "image/webp",
+              "filesize": 5534
+            },
+            "medium_large": {
+              "file": "regular-slotted-carton-four-open-flaps-768x768.webp",
+              "width": 768,
+              "height": 768,
+              "mime-type": "image/webp",
+              "filesize": 86612
+            },
+            "woocommerce_thumbnail": {
+              "file": "regular-slotted-carton-four-open-flaps-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 17928,
+              "uncropped": false
+            },
+            "woocommerce_single": {
+              "file": "regular-slotted-carton-four-open-flaps-600x600.webp",
+              "width": 600,
+              "height": 600,
+              "mime-type": "image/webp",
+              "filesize": 61578
+            },
+            "woocommerce_gallery_thumbnail": {
+              "file": "regular-slotted-carton-four-open-flaps-100x100.webp",
+              "width": 100,
+              "height": 100,
+              "mime-type": "image/webp",
+              "filesize": 2830
+            }
+          },
+          "image_meta": {
+            "aperture": "0",
+            "credit": "",
+            "camera": "",
+            "caption": "",
+            "created_timestamp": "0",
+            "copyright": "",
+            "focal_length": "0",
+            "iso": "0",
+            "shutter_speed": "0",
+            "title": "",
+            "orientation": "0",
+            "keywords": []
+          }
+        },
+        "variants": {
+          "regular-slotted-carton-four-open-flaps-300x300.webp": "eeebbbc864af426fd658a9a2884364a823f52561ed6ca7ad37d49c73f505ffe9",
+          "regular-slotted-carton-four-open-flaps-1024x1024.webp": "fc8bb807a7f8c1eeb7bdc5ea8a160074f1828a1530d592df65458f70504f7834",
+          "regular-slotted-carton-four-open-flaps-150x150.webp": "68e96006857074dc25421117b97df8bbe543ac3fa3edbbae5f01c4cdb43503f6",
+          "regular-slotted-carton-four-open-flaps-768x768.webp": "62e6b360fe6c203e39b84a523559f443cbdc6ac5bc787b5bb55433dea68713e4",
+          "regular-slotted-carton-four-open-flaps-600x600.webp": "e336d889da144d8578d7b7ba0916a447d6d74dde1e251af4ac724b44b32613a3",
+          "regular-slotted-carton-four-open-flaps-100x100.webp": "4bb4e7e1b43c9be60ede70609e184e09f6570192c7501fb34ca37fa31fba6000"
+        }
       },
       {
         "name": "loaded-corrugated-carton-with-paper-fill.webp",
@@ -45,8 +201,87 @@
         "title": "Loaded corrugated carton with paper fill",
         "caption": "Pack-out illustration. Include filler, pads and dividers in sample trials to check movement, closure and packing time.",
         "alt": "An open corrugated shipping carton with the packed item supported by crumpled paper fill.",
-        "placement": "<h2>Run a side-by-side sample check",
-        "sha256": "aa9239bfcd2dbd7399c2d9f8c53df194cc6152e239ef15ddef02ec4d6c877a97"
+        "sha256": "aa9239bfcd2dbd7399c2d9f8c53df194cc6152e239ef15ddef02ec4d6c877a97",
+        "metadata": {
+          "width": 1100,
+          "height": 1100,
+          "file": "loaded-corrugated-carton-with-paper-fill.webp",
+          "filesize": 148628,
+          "sizes": {
+            "medium": {
+              "file": "loaded-corrugated-carton-with-paper-fill-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 16366
+            },
+            "large": {
+              "file": "loaded-corrugated-carton-with-paper-fill-1024x1024.webp",
+              "width": 1024,
+              "height": 1024,
+              "mime-type": "image/webp",
+              "filesize": 113484
+            },
+            "thumbnail": {
+              "file": "loaded-corrugated-carton-with-paper-fill-150x150.webp",
+              "width": 150,
+              "height": 150,
+              "mime-type": "image/webp",
+              "filesize": 5306
+            },
+            "medium_large": {
+              "file": "loaded-corrugated-carton-with-paper-fill-768x768.webp",
+              "width": 768,
+              "height": 768,
+              "mime-type": "image/webp",
+              "filesize": 74684
+            },
+            "woocommerce_thumbnail": {
+              "file": "loaded-corrugated-carton-with-paper-fill-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 16366,
+              "uncropped": false
+            },
+            "woocommerce_single": {
+              "file": "loaded-corrugated-carton-with-paper-fill-600x600.webp",
+              "width": 600,
+              "height": 600,
+              "mime-type": "image/webp",
+              "filesize": 51212
+            },
+            "woocommerce_gallery_thumbnail": {
+              "file": "loaded-corrugated-carton-with-paper-fill-100x100.webp",
+              "width": 100,
+              "height": 100,
+              "mime-type": "image/webp",
+              "filesize": 2834
+            }
+          },
+          "image_meta": {
+            "aperture": "0",
+            "credit": "",
+            "camera": "",
+            "caption": "",
+            "created_timestamp": "0",
+            "copyright": "",
+            "focal_length": "0",
+            "iso": "0",
+            "shutter_speed": "0",
+            "title": "",
+            "orientation": "0",
+            "keywords": []
+          }
+        },
+        "variants": {
+          "loaded-corrugated-carton-with-paper-fill-300x300.webp": "9031e18b141648698862c8dd9b703c87d0e5368d378f1cedf6a76c42d97e92bd",
+          "loaded-corrugated-carton-with-paper-fill-1024x1024.webp": "89fa959f56f7d6ecc7976957240eaa8915f119c92c8e3dd4afa888961ff92dc3",
+          "loaded-corrugated-carton-with-paper-fill-150x150.webp": "01d626ca993e3641b195f13f01a2806942d43b422b48c58e411c9275b6b500f1",
+          "loaded-corrugated-carton-with-paper-fill-768x768.webp": "250a8a17773817cca26f5684abcf16b0548ef8ba20ba7331d3d043d33b41e04b",
+          "loaded-corrugated-carton-with-paper-fill-600x600.webp": "44dcabdf3c9eaa54007f168523b364ff1a1dbaa7ea41240c51dbbf3157c08136",
+          "loaded-corrugated-carton-with-paper-fill-100x100.webp": "0f7e40a89b7a5b778da44075c98d9137e09007dd745d55cbba9220ace4d50964"
+        }
       },
       {
         "name": "vpn-paper-packaging-workshop-800.webp",
@@ -54,29 +289,105 @@
         "title": "VPN Packaging workshop photograph",
         "caption": "Photograph from VPN’s factory library. It shows the general paper-packaging workshop in Ho Chi Minh City.",
         "alt": "VPN staff and equipment on the paper-packaging workshop floor in Vietnam.",
-        "placement": "<!-- vpn-workshop-photo -->",
-        "sha256": "eca72cb53eb7cae58f911222901571ca2d840a4d8a9bddae2525278e00c44f42"
+        "sha256": "eca72cb53eb7cae58f911222901571ca2d840a4d8a9bddae2525278e00c44f42",
+        "metadata": {
+          "width": 800,
+          "height": 450,
+          "file": "vpn-paper-packaging-workshop-800.webp",
+          "filesize": 43004,
+          "sizes": {
+            "medium": {
+              "file": "vpn-paper-packaging-workshop-800-300x169.webp",
+              "width": 300,
+              "height": 169,
+              "mime-type": "image/webp",
+              "filesize": 14842
+            },
+            "thumbnail": {
+              "file": "vpn-paper-packaging-workshop-800-150x150.webp",
+              "width": 150,
+              "height": 150,
+              "mime-type": "image/webp",
+              "filesize": 7718
+            },
+            "medium_large": {
+              "file": "vpn-paper-packaging-workshop-800-768x432.webp",
+              "width": 768,
+              "height": 432,
+              "mime-type": "image/webp",
+              "filesize": 52824
+            },
+            "woocommerce_thumbnail": {
+              "file": "vpn-paper-packaging-workshop-800-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 19738,
+              "uncropped": false
+            },
+            "woocommerce_single": {
+              "file": "vpn-paper-packaging-workshop-800-600x338.webp",
+              "width": 600,
+              "height": 338,
+              "mime-type": "image/webp",
+              "filesize": 39676
+            },
+            "woocommerce_gallery_thumbnail": {
+              "file": "vpn-paper-packaging-workshop-800-100x100.webp",
+              "width": 100,
+              "height": 100,
+              "mime-type": "image/webp",
+              "filesize": 4094
+            }
+          },
+          "image_meta": {
+            "aperture": "0",
+            "credit": "",
+            "camera": "",
+            "caption": "",
+            "created_timestamp": "0",
+            "copyright": "",
+            "focal_length": "0",
+            "iso": "0",
+            "shutter_speed": "0",
+            "title": "",
+            "orientation": "0",
+            "keywords": []
+          }
+        },
+        "variants": {
+          "vpn-paper-packaging-workshop-800-300x169.webp": "b9a6f3c47344e25fac7d22ac9064729a053e8ec638e44b78191f96bc7aa15d11",
+          "vpn-paper-packaging-workshop-800-150x150.webp": "62fbc327126cdcd1faee5350aed7324ba2a732d1b7615f34b2e69f23d6b57798",
+          "vpn-paper-packaging-workshop-800-768x432.webp": "ea05fd6cf3b07ecac5b908e877e74fda0b137353dbc68fdc6d2baa9083ebbfca",
+          "vpn-paper-packaging-workshop-800-300x300.webp": "3530ab3ba03683fb42308b1aa36dca00b7480991325dea56ccf64e72f37afb6c",
+          "vpn-paper-packaging-workshop-800-600x338.webp": "6da6b40c4b19ced4e0bf5019996777fc814932f8f38e18f67c519fc4a6b78888",
+          "vpn-paper-packaging-workshop-800-100x100.webp": "852384d985c6360d8fdbbb6ebd3bfc6a45c87da2352d30ac0643dcc1ba5501b6"
+        }
       }
     ],
     "incoming": {
       "slug": "custom-sized-boxes-for-shipping",
       "before": "The carrier's rounding rule can matter more than a few millimetres",
       "text": "If the box style is still open, compare the packed workflow for a <a href=\"{{HOME}}/fefco-0201-vs-0427/\">FEFCO 0201 shipping carton and a 0427 mailer</a> before you finalize the board or outside dimensions."
+    },
+    "seo": {
+      "rank_math_title": "FEFCO 0201 vs 0427: Carton or Mailer for Shipping?",
+      "rank_math_description": "Compare FEFCO 0201 shipping cartons and 0427 mailers by pack-out, stacking and total cost. Use one sample brief to quote both from Vietnam.",
+      "rank_math_focus_keyword": "FEFCO 0201 vs 0427",
+      "rank_math_facebook_title": "FEFCO 0201 vs 0427: Carton or Mailer for Shipping?",
+      "rank_math_facebook_description": "Compare FEFCO 0201 shipping cartons and 0427 mailers by pack-out, stacking and total cost. Use one sample brief to quote both from Vietnam."
     }
   },
   {
     "slug": "cupcake-box-sizes",
     "title": "Cupcake Box Sizes: How to Measure Boxes and Inserts",
-    "seo_title": "Cupcake Box Sizes & Insert Fit: 4, 6 and 12 Count",
-    "description": "Use the 4-, 6- and 12-count cupcake box size chart. Measure the liner, frosting and lid clearance before ordering custom inserts from Vietnam.",
-    "keyword": "cupcake box sizes",
     "excerpt": "Size 4-, 6- and 12-count boxes from the widest frosting, the liner where the tray supports it, and the clearance under the closed lid. Use the chart to start a sample.",
     "baseline": {
       "title": "Cupcake Box Sizes: How to Measure Boxes and Inserts",
       "content_sha256": "92e866a53b3a964540d197d92882b7c13b1f62938114db4b10ee3c5a1bc3c9b2",
       "excerpt_sha256": "96a38cf325812a199545d5bab8bbee46b0c162c16a408ccd29886fd3ad689aa3"
     },
-    "content_sha256": "44ef1cc9f16fc44f53c184c407468749f66638f86b554972606dee033fa3afcd",
+    "content_sha256": "62e0e086a918ac075ac07073992d31f47564c8f232ed27c6dee76d071605d585",
     "product": {
       "slug": "custom-cupcake-boxes-with-inserts",
       "anchor": "custom cupcake boxes with inserts",
@@ -92,8 +403,88 @@
         "title": "Decorated cupcakes in a four-cavity box insert",
         "caption": "The empty fourth opening shows where the insert supports the liner. Check frosting clearance with the lid closed on the physical sample.",
         "alt": "Open paperboard cupcake box holding three frosted cupcakes in a four-hole insert, with one cutout visible.",
-        "placement": null,
-        "sha256": "cdec75312ac5fb49c8eaf545e94dd5b8005365c7ab8ee78f58d83fcfd3c745cb"
+        "sha256": "cdec75312ac5fb49c8eaf545e94dd5b8005365c7ab8ee78f58d83fcfd3c745cb",
+        "metadata": {
+          "width": 1536,
+          "height": 1024,
+          "file": "cupcake-box-sizes.webp",
+          "filesize": 162322,
+          "sizes": {
+            "medium": {
+              "file": "cupcake-box-sizes-300x200.webp",
+              "width": 300,
+              "height": 200,
+              "mime-type": "image/webp",
+              "filesize": 13450
+            },
+            "large": {
+              "file": "cupcake-box-sizes-1024x683.webp",
+              "width": 1024,
+              "height": 683,
+              "mime-type": "image/webp",
+              "filesize": 93866
+            },
+            "thumbnail": {
+              "file": "cupcake-box-sizes-150x150.webp",
+              "width": 150,
+              "height": 150,
+              "mime-type": "image/webp",
+              "filesize": 5552
+            },
+            "medium_large": {
+              "file": "cupcake-box-sizes-768x512.webp",
+              "width": 768,
+              "height": 512,
+              "mime-type": "image/webp",
+              "filesize": 64800
+            },
+            "woocommerce_thumbnail": {
+              "file": "cupcake-box-sizes-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 16552,
+              "uncropped": false
+            },
+            "woocommerce_single": {
+              "file": "cupcake-box-sizes-600x400.webp",
+              "width": 600,
+              "height": 400,
+              "mime-type": "image/webp",
+              "filesize": 41564
+            },
+            "woocommerce_gallery_thumbnail": {
+              "file": "cupcake-box-sizes-100x100.webp",
+              "width": 100,
+              "height": 100,
+              "mime-type": "image/webp",
+              "filesize": 2880
+            }
+          },
+          "image_meta": {
+            "aperture": "0",
+            "credit": "",
+            "camera": "",
+            "caption": "",
+            "created_timestamp": "0",
+            "copyright": "",
+            "focal_length": "0",
+            "iso": "0",
+            "shutter_speed": "0",
+            "title": "",
+            "orientation": "0",
+            "keywords": []
+          }
+        },
+        "variants": {
+          "cupcake-box-sizes-300x200.webp": "d9756f441c39a729cceebe9eecf6c8d0b22382b83890d0fc663af7c0d5242812",
+          "cupcake-box-sizes-1024x683.webp": "236cd3f4813f633dc5d83950b9c27b2671e668ee15ff40c90a0941be1bfcca96",
+          "cupcake-box-sizes-150x150.webp": "c14d42908316a3bb071237e6b7414980927d9c1b18d5a19a086d49f910a82f76",
+          "cupcake-box-sizes-768x512.webp": "590921ef20135b5331a33233745852f7172ff5d3856ed28aeac280cd6ad833af",
+          "cupcake-box-sizes-300x300.webp": "825dba2b8cf1196206006a394a88f4bbcb8aeba7d425b277bcb176220552acbe",
+          "cupcake-box-sizes-600x400.webp": "4220edafea211132bc5b081b2905bc1ded239b0eeec947ef7b5343323d78ff6b",
+          "cupcake-box-sizes-100x100.webp": "b629de86b34df231769df9f470b9f34e7376bec848419396992042bcc8c1dfe2"
+        }
       },
       {
         "name": "cupcake-box-empty-4-cavity-insert.webp",
@@ -101,8 +492,87 @@
         "title": "Four openings on a folded cupcake insert",
         "caption": "Insert illustration. Measure the actual liner at its support height and check the distance between cavity centers.",
         "alt": "Empty four-cavity paperboard insert inside an assembled cupcake box.",
-        "placement": "<h2>Check the closed lid and the route",
-        "sha256": "6ef70af5950b523fa06242866f9c1dad802d7e32a2546490e9da862e61369a59"
+        "sha256": "6ef70af5950b523fa06242866f9c1dad802d7e32a2546490e9da862e61369a59",
+        "metadata": {
+          "width": 1100,
+          "height": 1100,
+          "file": "cupcake-box-empty-4-cavity-insert.webp",
+          "filesize": 140498,
+          "sizes": {
+            "medium": {
+              "file": "cupcake-box-empty-4-cavity-insert-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 16820
+            },
+            "large": {
+              "file": "cupcake-box-empty-4-cavity-insert-1024x1024.webp",
+              "width": 1024,
+              "height": 1024,
+              "mime-type": "image/webp",
+              "filesize": 114368
+            },
+            "thumbnail": {
+              "file": "cupcake-box-empty-4-cavity-insert-150x150.webp",
+              "width": 150,
+              "height": 150,
+              "mime-type": "image/webp",
+              "filesize": 5322
+            },
+            "medium_large": {
+              "file": "cupcake-box-empty-4-cavity-insert-768x768.webp",
+              "width": 768,
+              "height": 768,
+              "mime-type": "image/webp",
+              "filesize": 75926
+            },
+            "woocommerce_thumbnail": {
+              "file": "cupcake-box-empty-4-cavity-insert-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 16820,
+              "uncropped": false
+            },
+            "woocommerce_single": {
+              "file": "cupcake-box-empty-4-cavity-insert-600x600.webp",
+              "width": 600,
+              "height": 600,
+              "mime-type": "image/webp",
+              "filesize": 54158
+            },
+            "woocommerce_gallery_thumbnail": {
+              "file": "cupcake-box-empty-4-cavity-insert-100x100.webp",
+              "width": 100,
+              "height": 100,
+              "mime-type": "image/webp",
+              "filesize": 2752
+            }
+          },
+          "image_meta": {
+            "aperture": "0",
+            "credit": "",
+            "camera": "",
+            "caption": "",
+            "created_timestamp": "0",
+            "copyright": "",
+            "focal_length": "0",
+            "iso": "0",
+            "shutter_speed": "0",
+            "title": "",
+            "orientation": "0",
+            "keywords": []
+          }
+        },
+        "variants": {
+          "cupcake-box-empty-4-cavity-insert-300x300.webp": "b4ba504115c1d84b908fcb0e7c99bee31fe25bdaf8d45f8636d8455be9f83e90",
+          "cupcake-box-empty-4-cavity-insert-1024x1024.webp": "1db0466ac7ce0f760ad86426decb20bc1a748ac1839b0ad497811a5a988a65e2",
+          "cupcake-box-empty-4-cavity-insert-150x150.webp": "d7164e761c46bc75f15af92a431364d2f43635387d35b069c797fefdda01c004",
+          "cupcake-box-empty-4-cavity-insert-768x768.webp": "3d91988249241199dfaa2c66bed20b1dee7fde43b626dc953a6f6c9387e37286",
+          "cupcake-box-empty-4-cavity-insert-600x600.webp": "90d9c951f179a5da96515e04a9d91c03d23497ac16e8f22ba849cc6c24c3920a",
+          "cupcake-box-empty-4-cavity-insert-100x100.webp": "0a402ab67d0600e184f752c506ac4f5a5d331206cc4c1610dd5d0a83fb7a47fb"
+        }
       },
       {
         "name": "cupcake-box-closed-lid-edge.webp",
@@ -110,8 +580,87 @@
         "title": "Lid and side edge of a closed cupcake box",
         "caption": "Closure illustration. Check the lowest lid feature and any downward flex using a loaded, closed sample.",
         "alt": "Close-up of the lid meeting the side wall of a closed floral paperboard cupcake box.",
-        "placement": "<h2>Approve a loaded sample",
-        "sha256": "daa9ff625ed9a346ad128cb122789b91eac2c353d26b9b97a49c902daadeae91"
+        "sha256": "daa9ff625ed9a346ad128cb122789b91eac2c353d26b9b97a49c902daadeae91",
+        "metadata": {
+          "width": 1100,
+          "height": 1100,
+          "file": "cupcake-box-closed-lid-edge.webp",
+          "filesize": 104688,
+          "sizes": {
+            "medium": {
+              "file": "cupcake-box-closed-lid-edge-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 11184
+            },
+            "large": {
+              "file": "cupcake-box-closed-lid-edge-1024x1024.webp",
+              "width": 1024,
+              "height": 1024,
+              "mime-type": "image/webp",
+              "filesize": 81248
+            },
+            "thumbnail": {
+              "file": "cupcake-box-closed-lid-edge-150x150.webp",
+              "width": 150,
+              "height": 150,
+              "mime-type": "image/webp",
+              "filesize": 3734
+            },
+            "medium_large": {
+              "file": "cupcake-box-closed-lid-edge-768x768.webp",
+              "width": 768,
+              "height": 768,
+              "mime-type": "image/webp",
+              "filesize": 53328
+            },
+            "woocommerce_thumbnail": {
+              "file": "cupcake-box-closed-lid-edge-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 11184,
+              "uncropped": false
+            },
+            "woocommerce_single": {
+              "file": "cupcake-box-closed-lid-edge-600x600.webp",
+              "width": 600,
+              "height": 600,
+              "mime-type": "image/webp",
+              "filesize": 36986
+            },
+            "woocommerce_gallery_thumbnail": {
+              "file": "cupcake-box-closed-lid-edge-100x100.webp",
+              "width": 100,
+              "height": 100,
+              "mime-type": "image/webp",
+              "filesize": 2012
+            }
+          },
+          "image_meta": {
+            "aperture": "0",
+            "credit": "",
+            "camera": "",
+            "caption": "",
+            "created_timestamp": "0",
+            "copyright": "",
+            "focal_length": "0",
+            "iso": "0",
+            "shutter_speed": "0",
+            "title": "",
+            "orientation": "0",
+            "keywords": []
+          }
+        },
+        "variants": {
+          "cupcake-box-closed-lid-edge-300x300.webp": "cf2e23d7041a9941132856513fb6a304b8cb36bfc184497189a74a9819ba8c92",
+          "cupcake-box-closed-lid-edge-1024x1024.webp": "42e89f8ab610a84e0c2bea5c66d3035171de38e0617df39327914099c0432a9c",
+          "cupcake-box-closed-lid-edge-150x150.webp": "1e29ebe5697daaa676885571fb5b29021eb0c58f218bf5aa4e68ad8236cabb2d",
+          "cupcake-box-closed-lid-edge-768x768.webp": "33dc48c8939727b202c976c4e5d73e3c97d0f0a7d16c378974c686c9b6220867",
+          "cupcake-box-closed-lid-edge-600x600.webp": "7acd0ccf2224821951d71d05f8934b219379bd6347fb7ecf9a8f07a7ba04530a",
+          "cupcake-box-closed-lid-edge-100x100.webp": "6ad717bece62ada34c9d0db922a1d80ad14d57f0119018025d1f46fded52d075"
+        }
       },
       {
         "name": "vpn-box-assembly-floor-800.webp",
@@ -119,29 +668,105 @@
         "title": "VPN Packaging workshop photograph",
         "caption": "Photograph from VPN’s factory library. It shows the general box assembly and finishing area.",
         "alt": "VPN employees working at box assembly and finishing tables in Vietnam.",
-        "placement": "<!-- vpn-workshop-photo -->",
-        "sha256": "734099e8359a14973c3d80a7badc247af9dace0df8cd7533ecb7a520bec8fbfe"
+        "sha256": "734099e8359a14973c3d80a7badc247af9dace0df8cd7533ecb7a520bec8fbfe",
+        "metadata": {
+          "width": 800,
+          "height": 450,
+          "file": "vpn-box-assembly-floor-800.webp",
+          "filesize": 44764,
+          "sizes": {
+            "medium": {
+              "file": "vpn-box-assembly-floor-800-300x169.webp",
+              "width": 300,
+              "height": 169,
+              "mime-type": "image/webp",
+              "filesize": 17234
+            },
+            "thumbnail": {
+              "file": "vpn-box-assembly-floor-800-150x150.webp",
+              "width": 150,
+              "height": 150,
+              "mime-type": "image/webp",
+              "filesize": 9446
+            },
+            "medium_large": {
+              "file": "vpn-box-assembly-floor-800-768x432.webp",
+              "width": 768,
+              "height": 432,
+              "mime-type": "image/webp",
+              "filesize": 56052
+            },
+            "woocommerce_thumbnail": {
+              "file": "vpn-box-assembly-floor-800-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 23724,
+              "uncropped": false
+            },
+            "woocommerce_single": {
+              "file": "vpn-box-assembly-floor-800-600x338.webp",
+              "width": 600,
+              "height": 338,
+              "mime-type": "image/webp",
+              "filesize": 43216
+            },
+            "woocommerce_gallery_thumbnail": {
+              "file": "vpn-box-assembly-floor-800-100x100.webp",
+              "width": 100,
+              "height": 100,
+              "mime-type": "image/webp",
+              "filesize": 4886
+            }
+          },
+          "image_meta": {
+            "aperture": "0",
+            "credit": "",
+            "camera": "",
+            "caption": "",
+            "created_timestamp": "0",
+            "copyright": "",
+            "focal_length": "0",
+            "iso": "0",
+            "shutter_speed": "0",
+            "title": "",
+            "orientation": "0",
+            "keywords": []
+          }
+        },
+        "variants": {
+          "vpn-box-assembly-floor-800-300x169.webp": "76982ce2f492c0ed2b0729a47dfcffd48c64663edbb41c6d5abad426461266d1",
+          "vpn-box-assembly-floor-800-150x150.webp": "d996c7486506b50d630f0baf641f59efd5d5ff87d788b16132fa4bcbac5e626d",
+          "vpn-box-assembly-floor-800-768x432.webp": "6837da9b17c9ed78bcc514853527d0bde1b5ce425cf1ff0c902c5e61c7c2ab7f",
+          "vpn-box-assembly-floor-800-300x300.webp": "0ea8fface19634daaf251c1c25fbeb326fb2c8c91335ddfcf0c48ec4953f19e5",
+          "vpn-box-assembly-floor-800-600x338.webp": "28fbd280db8a32857c88eb9b51f931528f9ebdce82d994ecb233da4171780052",
+          "vpn-box-assembly-floor-800-100x100.webp": "b55911166692df1537e96f68b4ab68b4677d75bb585c8d79ddf4dfe14730b226"
+        }
       }
     ],
     "incoming": {
       "slug": "how-to-choose-bakery-packaging-materials",
       "before": "Plan for Grease and Moisture Before Production",
       "text": "For decorated cupcakes, use the guide to <a href=\"{{HOME}}/cupcake-box-sizes/\">cupcake box sizes, tray openings and lid clearance</a> to turn finished cake measurements into a sample brief."
+    },
+    "seo": {
+      "rank_math_title": "Cupcake Box Sizes & Insert Fit: 4, 6 and 12 Count",
+      "rank_math_description": "Use the 4-, 6- and 12-count cupcake box size chart. Measure the liner, frosting and lid clearance before ordering custom inserts from Vietnam.",
+      "rank_math_focus_keyword": "cupcake box sizes",
+      "rank_math_facebook_title": "Cupcake Box Sizes & Insert Fit: 4, 6 and 12 Count",
+      "rank_math_facebook_description": "Use the 4-, 6- and 12-count cupcake box size chart. Measure the liner, frosting and lid clearance before ordering custom inserts from Vietnam."
     }
   },
   {
     "slug": "glassine-bags-for-bakeries",
     "title": "Glassine Bags for Bakeries: Choosing the Right Bag",
-    "seo_title": "Glassine Bags for Bakeries: How to Choose & Test",
-    "description": "Choose glassine bags for bakery cookies. Compare usable size, print contrast and oil transfer on filled samples before ordering from Vietnam.",
-    "keyword": "glassine bags for bakeries",
     "excerpt": "Try glassine when shoppers need to see the cookie. Compare finished bags using the same recipe and service window, then check fit, oil transfer and logo readability.",
     "baseline": {
       "title": "Glassine Bags for Bakeries: Choosing the Right Bag",
       "content_sha256": "63208ff14b14d11b9840e17cf5fa5235ba3bcb28198ea01185d22ecf1824705e",
       "excerpt_sha256": "394b30838a523d02bd9bb00f0c8033113c47ebf363a88c69af2b25a5200e74f7"
     },
-    "content_sha256": "8a40d838da4cd908f5098fa523514aaf472a8fc906ca0226751caea309a2e09f",
+    "content_sha256": "68f12be38ff9160b3f09ebe581aa7e1ab729050599ead3ecdaa353dfe400a9d1",
     "product": {
       "slug": "custom-glassine-paper-bags",
       "anchor": "custom glassine paper bags",
@@ -157,8 +782,88 @@
         "title": "Translucent glassine bags for cookies",
         "caption": "Illustration of how translucent paper softens the view of a cookie. Test the actual paper grade, seams and recipe before approving the bag.",
         "alt": "A cookie visible through a folded glassine paper bag beside an empty bag and an uncovered cookie.",
-        "placement": null,
-        "sha256": "ded4293d167d2dfad3d61ee5aa7c78ec6c20d2c615a7cee56e5a4527ed5221d6"
+        "sha256": "ded4293d167d2dfad3d61ee5aa7c78ec6c20d2c615a7cee56e5a4527ed5221d6",
+        "metadata": {
+          "width": 1536,
+          "height": 1024,
+          "file": "glassine-bags-for-bakeries.webp",
+          "filesize": 132522,
+          "sizes": {
+            "medium": {
+              "file": "glassine-bags-for-bakeries-300x200.webp",
+              "width": 300,
+              "height": 200,
+              "mime-type": "image/webp",
+              "filesize": 10160
+            },
+            "large": {
+              "file": "glassine-bags-for-bakeries-1024x683.webp",
+              "width": 1024,
+              "height": 683,
+              "mime-type": "image/webp",
+              "filesize": 72868
+            },
+            "thumbnail": {
+              "file": "glassine-bags-for-bakeries-150x150.webp",
+              "width": 150,
+              "height": 150,
+              "mime-type": "image/webp",
+              "filesize": 4184
+            },
+            "medium_large": {
+              "file": "glassine-bags-for-bakeries-768x512.webp",
+              "width": 768,
+              "height": 512,
+              "mime-type": "image/webp",
+              "filesize": 49850
+            },
+            "woocommerce_thumbnail": {
+              "file": "glassine-bags-for-bakeries-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 12540,
+              "uncropped": false
+            },
+            "woocommerce_single": {
+              "file": "glassine-bags-for-bakeries-600x400.webp",
+              "width": 600,
+              "height": 400,
+              "mime-type": "image/webp",
+              "filesize": 31060
+            },
+            "woocommerce_gallery_thumbnail": {
+              "file": "glassine-bags-for-bakeries-100x100.webp",
+              "width": 100,
+              "height": 100,
+              "mime-type": "image/webp",
+              "filesize": 2112
+            }
+          },
+          "image_meta": {
+            "aperture": "0",
+            "credit": "",
+            "camera": "",
+            "caption": "",
+            "created_timestamp": "0",
+            "copyright": "",
+            "focal_length": "0",
+            "iso": "0",
+            "shutter_speed": "0",
+            "title": "",
+            "orientation": "0",
+            "keywords": []
+          }
+        },
+        "variants": {
+          "glassine-bags-for-bakeries-300x200.webp": "b16ed360c572b8d930f587e5920b0899ee2d791e5c4ea0978c3e14d756b1b658",
+          "glassine-bags-for-bakeries-1024x683.webp": "b2f2b7b6d82758f3d2f8724dbe9cfe6e0c1a1d100d2c8b41fffd11c955c81db6",
+          "glassine-bags-for-bakeries-150x150.webp": "6ca4ce6de0cf4940422c41fbdbcc0feacfa1591faa609ca5c1d960618b2d34f2",
+          "glassine-bags-for-bakeries-768x512.webp": "dfbea3e43d1b9c55a373d8303558e2c0bc02fc13f0bd8baa5123e9cc71f11de4",
+          "glassine-bags-for-bakeries-300x300.webp": "cbdd5579d810555a3301fc2d4bef54dcc61d51c1e12922c5b1e49c5c31917a81",
+          "glassine-bags-for-bakeries-600x400.webp": "8575f06ceee6d15ae2c949575ad26c965b022821c265e5085cc8f08e5254eae3",
+          "glassine-bags-for-bakeries-100x100.webp": "5785b659baad6cd4a7344579b8f4b423c6a4b3596c73b1d4e85b4d58c1dc00a9"
+        }
       },
       {
         "name": "glassine-paper-print-contrast-detail.webp",
@@ -166,8 +871,87 @@
         "title": "Print on the face of a translucent glassine bag",
         "caption": "Print illustration. Compare logo readability and product visibility on filled samples at the counter.",
         "alt": "Close-up of a filled glassine paper bag with printed graphics on its translucent surface.",
-        "placement": "<h2>Measure the bag around",
-        "sha256": "37f2e4e62b6fc989744f3298e6ab4b1c27953dc2cf3f32ee556abf2e35af3ab1"
+        "sha256": "37f2e4e62b6fc989744f3298e6ab4b1c27953dc2cf3f32ee556abf2e35af3ab1",
+        "metadata": {
+          "width": 1100,
+          "height": 1100,
+          "file": "glassine-paper-print-contrast-detail.webp",
+          "filesize": 133434,
+          "sizes": {
+            "medium": {
+              "file": "glassine-paper-print-contrast-detail-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 16158
+            },
+            "large": {
+              "file": "glassine-paper-print-contrast-detail-1024x1024.webp",
+              "width": 1024,
+              "height": 1024,
+              "mime-type": "image/webp",
+              "filesize": 139110
+            },
+            "thumbnail": {
+              "file": "glassine-paper-print-contrast-detail-150x150.webp",
+              "width": 150,
+              "height": 150,
+              "mime-type": "image/webp",
+              "filesize": 4658
+            },
+            "medium_large": {
+              "file": "glassine-paper-print-contrast-detail-768x768.webp",
+              "width": 768,
+              "height": 768,
+              "mime-type": "image/webp",
+              "filesize": 93186
+            },
+            "woocommerce_thumbnail": {
+              "file": "glassine-paper-print-contrast-detail-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 16158,
+              "uncropped": false
+            },
+            "woocommerce_single": {
+              "file": "glassine-paper-print-contrast-detail-600x600.webp",
+              "width": 600,
+              "height": 600,
+              "mime-type": "image/webp",
+              "filesize": 63728
+            },
+            "woocommerce_gallery_thumbnail": {
+              "file": "glassine-paper-print-contrast-detail-100x100.webp",
+              "width": 100,
+              "height": 100,
+              "mime-type": "image/webp",
+              "filesize": 2334
+            }
+          },
+          "image_meta": {
+            "aperture": "0",
+            "credit": "",
+            "camera": "",
+            "caption": "",
+            "created_timestamp": "0",
+            "copyright": "",
+            "focal_length": "0",
+            "iso": "0",
+            "shutter_speed": "0",
+            "title": "",
+            "orientation": "0",
+            "keywords": []
+          }
+        },
+        "variants": {
+          "glassine-paper-print-contrast-detail-300x300.webp": "8936a51c4531f4c5a2eab9a494f1fc5f2dc6fd1c84d0dd23e391f33de19b1794",
+          "glassine-paper-print-contrast-detail-1024x1024.webp": "a67a3e85941dc2e99eab411858b71d6fb5523e1eceae5eff868409ad5a0780de",
+          "glassine-paper-print-contrast-detail-150x150.webp": "78a2b60dcd0e58155e3fb9730b8c62353e9aba52d81d024b04dd4caaac7f7a0b",
+          "glassine-paper-print-contrast-detail-768x768.webp": "6d121e86f7c27be52e759c1f347f018d340f2c7aedfc8d83e65884046b0e266c",
+          "glassine-paper-print-contrast-detail-600x600.webp": "25b67fc38ff38e75c34838fb8b610f9d45ec46d60ea3323d5ffe4643e7296268",
+          "glassine-paper-print-contrast-detail-100x100.webp": "bb311024be9a80aa91530864a57445e96f82e669bd31fc929e5c42689312633a"
+        }
       },
       {
         "name": "glassine-bag-cookie-opening-fit.webp",
@@ -175,8 +959,87 @@
         "title": "Cookie and opening of a glassine bakery bag",
         "caption": "Pack-out illustration. Trial the widest cookie in the planned opening before setting bag dimensions.",
         "alt": "A cookie partly inside a glassine bakery bag, with the opening and fit visible.",
-        "placement": "<h2>Run a finished bag test",
-        "sha256": "4a94859669e9139c03a59e5fc9295b4e10aef586d01971ca72b590c578ffd26b"
+        "sha256": "4a94859669e9139c03a59e5fc9295b4e10aef586d01971ca72b590c578ffd26b",
+        "metadata": {
+          "width": 1100,
+          "height": 1100,
+          "file": "glassine-bag-cookie-opening-fit.webp",
+          "filesize": 146554,
+          "sizes": {
+            "medium": {
+              "file": "glassine-bag-cookie-opening-fit-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 17748
+            },
+            "large": {
+              "file": "glassine-bag-cookie-opening-fit-1024x1024.webp",
+              "width": 1024,
+              "height": 1024,
+              "mime-type": "image/webp",
+              "filesize": 133344
+            },
+            "thumbnail": {
+              "file": "glassine-bag-cookie-opening-fit-150x150.webp",
+              "width": 150,
+              "height": 150,
+              "mime-type": "image/webp",
+              "filesize": 5170
+            },
+            "medium_large": {
+              "file": "glassine-bag-cookie-opening-fit-768x768.webp",
+              "width": 768,
+              "height": 768,
+              "mime-type": "image/webp",
+              "filesize": 89234
+            },
+            "woocommerce_thumbnail": {
+              "file": "glassine-bag-cookie-opening-fit-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 17748,
+              "uncropped": false
+            },
+            "woocommerce_single": {
+              "file": "glassine-bag-cookie-opening-fit-600x600.webp",
+              "width": 600,
+              "height": 600,
+              "mime-type": "image/webp",
+              "filesize": 61074
+            },
+            "woocommerce_gallery_thumbnail": {
+              "file": "glassine-bag-cookie-opening-fit-100x100.webp",
+              "width": 100,
+              "height": 100,
+              "mime-type": "image/webp",
+              "filesize": 2630
+            }
+          },
+          "image_meta": {
+            "aperture": "0",
+            "credit": "",
+            "camera": "",
+            "caption": "",
+            "created_timestamp": "0",
+            "copyright": "",
+            "focal_length": "0",
+            "iso": "0",
+            "shutter_speed": "0",
+            "title": "",
+            "orientation": "0",
+            "keywords": []
+          }
+        },
+        "variants": {
+          "glassine-bag-cookie-opening-fit-300x300.webp": "5b3ca062889e3b12fd917d3ff6d9056146984cd70c19bc94f5657aa633f3df70",
+          "glassine-bag-cookie-opening-fit-1024x1024.webp": "cc57ffb42aa11d2cbe93c827348910e365e1d2497b1bad5a7202eaafd908baf9",
+          "glassine-bag-cookie-opening-fit-150x150.webp": "407f0c4cca3f58b69a963a1706ef4acadfc78e67cd99004a010c6a1a0b4b8333",
+          "glassine-bag-cookie-opening-fit-768x768.webp": "b2b4110c4b5935551d565b61d4c59b8d0ff6725934ea988c0a4177ac4fb086f8",
+          "glassine-bag-cookie-opening-fit-600x600.webp": "af7c6e4e5f5dbddf66fcb2fc63cf3ac1db445f9a3f79c1f3a40f048e65f2cc9d",
+          "glassine-bag-cookie-opening-fit-100x100.webp": "0ca5b4d65af14f6df95a4b1492eb9626994fbdb53726d3e134916a1cd98c99ec"
+        }
       },
       {
         "name": "vpn-printing-operator-800.webp",
@@ -184,14 +1047,93 @@
         "title": "VPN Packaging workshop photograph",
         "caption": "Photograph from VPN’s factory library. It shows an operator at the printing press in Ho Chi Minh City.",
         "alt": "A VPN operator working at a printing press in the paper-packaging workshop.",
-        "placement": "<!-- vpn-workshop-photo -->",
-        "sha256": "c95fd1dd2bc645c7e3bd2e539d7c30bbf630296d90ad25e0f83398fb13466c85"
+        "sha256": "c95fd1dd2bc645c7e3bd2e539d7c30bbf630296d90ad25e0f83398fb13466c85",
+        "metadata": {
+          "width": 800,
+          "height": 450,
+          "file": "vpn-printing-operator-800.webp",
+          "filesize": 19376,
+          "sizes": {
+            "medium": {
+              "file": "vpn-printing-operator-800-300x169.webp",
+              "width": 300,
+              "height": 169,
+              "mime-type": "image/webp",
+              "filesize": 7452
+            },
+            "thumbnail": {
+              "file": "vpn-printing-operator-800-150x150.webp",
+              "width": 150,
+              "height": 150,
+              "mime-type": "image/webp",
+              "filesize": 4370
+            },
+            "medium_large": {
+              "file": "vpn-printing-operator-800-768x432.webp",
+              "width": 768,
+              "height": 432,
+              "mime-type": "image/webp",
+              "filesize": 23606
+            },
+            "woocommerce_thumbnail": {
+              "file": "vpn-printing-operator-800-300x300.webp",
+              "width": 300,
+              "height": 300,
+              "mime-type": "image/webp",
+              "filesize": 10390,
+              "uncropped": false
+            },
+            "woocommerce_single": {
+              "file": "vpn-printing-operator-800-600x338.webp",
+              "width": 600,
+              "height": 338,
+              "mime-type": "image/webp",
+              "filesize": 18116
+            },
+            "woocommerce_gallery_thumbnail": {
+              "file": "vpn-printing-operator-800-100x100.webp",
+              "width": 100,
+              "height": 100,
+              "mime-type": "image/webp",
+              "filesize": 2344
+            }
+          },
+          "image_meta": {
+            "aperture": "0",
+            "credit": "",
+            "camera": "",
+            "caption": "",
+            "created_timestamp": "0",
+            "copyright": "",
+            "focal_length": "0",
+            "iso": "0",
+            "shutter_speed": "0",
+            "title": "",
+            "orientation": "0",
+            "keywords": []
+          }
+        },
+        "variants": {
+          "vpn-printing-operator-800-300x169.webp": "18afffea318c2b15f1ba4930421119ffcc5e5ac7a287cf8b7db5a7ec689f87d4",
+          "vpn-printing-operator-800-150x150.webp": "d7f858ec6d900d35f2769b707a44c284f33035163f7a1e77859358ea72a9ebd9",
+          "vpn-printing-operator-800-768x432.webp": "91da3ee1b52b4706cdbb97c006b76d3005f9c233c6c6b0659eb63925f9a04464",
+          "vpn-printing-operator-800-300x300.webp": "237f26563d3aa224e3ca40f47c98a9e9863a313079063f9db92dffb8c682fe25",
+          "vpn-printing-operator-800-600x338.webp": "33840f260977cb5f544287a13fe4aa47c9076de83fbf048abf10a039913f2828",
+          "vpn-printing-operator-800-100x100.webp": "14e6968e407d1304dbb903bd848e639ec16ecb69738c8b189dc9be5e19995400"
+        }
       }
     ],
     "incoming": {
       "slug": "greaseproof-bakery-bags-buying-guide",
       "before": "Tell the supplier what the pastry will do to the pack",
       "text": "If customers need to see a cooled cookie through the paper, first compare a <a href=\"{{HOME}}/glassine-bags-for-bakeries/\">glassine bakery bag</a> on visibility, fold quality and oil transfer over the planned service window."
+    },
+    "seo": {
+      "rank_math_title": "Glassine Bags for Bakeries: How to Choose & Test",
+      "rank_math_description": "Choose glassine bags for bakery cookies. Compare usable size, print contrast and oil transfer on filled samples before ordering from Vietnam.",
+      "rank_math_focus_keyword": "glassine bags for bakeries",
+      "rank_math_facebook_title": "Glassine Bags for Bakeries: How to Choose & Test",
+      "rank_math_facebook_description": "Choose glassine bags for bakery cookies. Compare usable size, print contrast and oil transfer on filled samples before ordering from Vietnam."
     }
   }
 ]
