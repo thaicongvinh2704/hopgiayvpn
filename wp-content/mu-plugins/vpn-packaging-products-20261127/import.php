@@ -128,8 +128,13 @@ function vpn_packaging_nov_release_rows(): array {
             && !isset($slugs[$slug]) && !isset($skus[$row['sku']]), 'Duplicate or invalid product identifier: ' . $slug);
         $slugs[$slug] = $skus[$row['sku']] = true;
         $path = __DIR__ . '/content/' . $slug . '.html';
-        vpn_packaging_nov_require(is_file($path) && hash_file('sha256', $path) === $row['content_sha'], 'Invalid product content: ' . $slug);
-        $body = trim(file_get_contents($path));
+        $raw_body = is_file($path) && is_readable($path) ? file_get_contents($path) : false;
+        vpn_packaging_nov_require(is_string($raw_body), 'Missing or unreadable product content: ' . $slug);
+        // Manifest checksums use LF so Git checkouts can use different line endings.
+        $source_body = str_replace(["\r\n", "\r"], "\n", $raw_body);
+        vpn_packaging_nov_require(hash_equals($row['content_sha'], hash('sha256', $source_body)),
+            'Product content checksum differs: ' . $slug);
+        $body = trim($source_body);
         $row['body'] = wp_kses_post(str_replace('{{HOME}}', esc_url(untrailingslashit(home_url('/'))), $body));
         $row['excerpt'] = trim(wp_kses_post($row['excerpt']));
         vpn_packaging_nov_require(substr_count($row['body'], '<h2>') >= 3 && str_contains($row['body'], '/contact/#quote') &&

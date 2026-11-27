@@ -77,8 +77,13 @@ function vpn_buyer_guides_preflight(): array {
         $slug = $row['slug'];
         vpn_buyer_guides_require($slug === sanitize_title($slug), 'Invalid article slug.');
         $path = __DIR__ . '/content/' . $slug . '.html';
-        vpn_buyer_guides_require(is_file($path) && hash_file('sha256', $path) === $row['content_sha256'], 'Invalid article source: ' . $slug);
-        $content = trim(file_get_contents($path));
+        $raw_content = is_file($path) && is_readable($path) ? file_get_contents($path) : false;
+        vpn_buyer_guides_require(is_string($raw_content), 'Missing or unreadable article source: ' . $slug);
+        // Validate the full file with LF before trimming it for WordPress.
+        $source_content = str_replace(["\r\n", "\r"], "\n", $raw_content);
+        vpn_buyer_guides_require(hash_equals($row['content_sha256'], hash('sha256', $source_content)),
+            'Article content checksum differs: ' . $slug);
+        $content = trim($source_content);
         vpn_buyer_guides_require(substr_count($content, '<h2>') === 8 && substr_count($content, '{{PRODUCT_OPTION}}') === 1 &&
             str_starts_with(strtolower($row['seo_title']), strtolower($row['keyword'])) &&
             str_contains($row['description'], 'Vietnam') && count($row['images']) === 4, 'Incomplete article: ' . $slug);
